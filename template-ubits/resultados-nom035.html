@@ -336,6 +336,309 @@
             display: block;
         }
 
+        /* Panel Emocional - Nuevos Estilos */
+        .panel-container {
+            display: flex;
+            gap: 16px;
+            height: 600px;
+        }
+
+        .participants-panel {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .participant-details-panel {
+            flex: 2;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .panel-header h3 {
+            margin: 0;
+            color: #1f2937;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .search-container {
+            position: relative;
+            margin-top: 12px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px 8px 36px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--ubits-accent-brand);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .participants-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .participant-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 4px;
+            border-left: 4px solid transparent;
+        }
+
+        .participant-item:hover {
+            background: #f3f4f6;
+        }
+
+        .participant-item.selected {
+            background: #eff6ff;
+            border-left-color: var(--ubits-accent-brand);
+        }
+
+        .participant-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            margin-right: 12px;
+        }
+
+        .participant-info-content {
+            flex: 1;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .participant-role {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .risk-level {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .risk-nulo { background: #f3f4f6; color: #6b7280; }
+        .risk-bajo { background: #dcfce7; color: #166534; }
+        .risk-medio { background: #fef3c7; color: #92400e; }
+        .risk-alto { background: #fed7aa; color: #c2410c; }
+        .risk-muy-alto { background: #fecaca; color: #dc2626; }
+
+        .no-selection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #9ca3af;
+        }
+
+        .no-selection i {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .no-selection p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .participant-info {
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .participant-details {
+            display: none;
+        }
+
+        .participant-details.show {
+            display: block;
+        }
+
+        .participant-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .participant-avatar-large {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 20px;
+            margin-right: 16px;
+        }
+
+        .participant-details-content h4 {
+            margin: 0 0 4px 0;
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .participant-details-content p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .survey-results {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .survey-section {
+            margin-bottom: 16px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: #f9fafb;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 4px solid #e5e7eb;
+        }
+
+        .section-header:hover {
+            background: #f3f4f6;
+        }
+
+        .section-header.open {
+            background: #eff6ff;
+            border-left-color: var(--ubits-accent-brand);
+        }
+
+        .section-icon {
+            margin-right: 12px;
+            font-size: 16px;
+            color: #6b7280;
+        }
+
+        .section-title {
+            flex: 1;
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 14px;
+        }
+
+        .section-chevron {
+            color: #9ca3af;
+            font-size: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .section-header.open .section-chevron {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            display: none;
+            padding: 16px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+        }
+
+        .section-content.open {
+            display: block;
+        }
+
+        .question-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .question-item:last-child {
+            border-bottom: none;
+        }
+
+        .question-text {
+            flex: 1;
+            color: #374151;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .question-answer {
+            margin-left: 16px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .answer-yes {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .answer-no {
+            background: #fecaca;
+            color: #dc2626;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .survey-details {
@@ -350,6 +653,16 @@
             
             .tabs-header {
                 flex-direction: column;
+            }
+
+            .panel-container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .participants-panel,
+            .participant-details-panel {
+                flex: none;
             }
         }
     </style>
@@ -502,16 +815,36 @@
                         <div class="tab-content">
                             <!-- Panel emocional -->
                             <div class="tab-panel active" id="panel-emocional">
-                                <h3 style="margin-bottom: 16px; color: #1f2937; font-size: 18px; font-weight: 600;">Panel Emocional ATS</h3>
-                                <p style="color: #6b7280; margin-bottom: 24px; line-height: 1.5;">
-                                    Análisis detallado de los factores de riesgo psicosocial relacionados con el bienestar emocional de los colaboradores.
-                                </p>
-                                <!-- Aquí iría el contenido específico del panel emocional -->
-                                <div style="margin-top: 24px; padding: 20px; background: #f9fafb; border-radius: 8px; text-align: center;">
-                                    <i class="far fa-chart-line" style="font-size: 48px; color: #9ca3af; margin-bottom: 16px;"></i>
-                                    <p style="color: #6b7280;">
-                                        Contenido del panel emocional se cargará aquí
-                                    </p>
+                                <div class="panel-container">
+                                    <!-- Panel Izquierdo - Lista de Participantes -->
+                                    <div class="participants-panel">
+                                        <div class="panel-header">
+                                            <h3>Participantes</h3>
+                                            <div class="search-container">
+                                                <input type="text" id="participant-search" placeholder="Buscar participante..." class="search-input">
+                                                <i class="far fa-search search-icon"></i>
+                                            </div>
+                                        </div>
+                                        <div class="participants-list" id="participants-list">
+                                            <!-- Lista de participantes se generará dinámicamente -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Panel Derecho - Detalles del Participante -->
+                                    <div class="participant-details-panel">
+                                        <div class="panel-header">
+                                            <h3>Detalles del Participante</h3>
+                                        </div>
+                                        <div class="participant-info" id="participant-info">
+                                            <div class="no-selection">
+                                                <i class="far fa-user"></i>
+                                                <p>Selecciona un participante para ver sus detalles</p>
+                                            </div>
+                                        </div>
+                                        <div class="survey-results" id="survey-results">
+                                            <!-- Resultados de la encuesta se mostrarán aquí -->
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -641,6 +974,380 @@
                 });
             }
 
+        });
+
+        // Datos de participantes de ejemplo
+        const participantsData = [
+            {
+                id: 1,
+                name: "María González",
+                role: "Gerente de Ventas",
+                riskLevel: "muy-alto",
+                avatar: "MG",
+                avatarColor: "#dc2626",
+                details: {
+                    age: 35,
+                    department: "Ventas",
+                    experience: "8 años",
+                    email: "maria.gonzalez@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "Sí" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "Sí" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "Sí" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "Sí" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "Sí" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "Sí" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "Sí" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "Sí" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "Sí" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "Sí" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "Sí" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "Sí" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "Sí" }
+                    ]
+                }
+            },
+            {
+                id: 2,
+                name: "Carlos Rodríguez",
+                role: "Desarrollador Senior",
+                riskLevel: "alto",
+                avatar: "CR",
+                avatarColor: "#c2410c",
+                details: {
+                    age: 28,
+                    department: "Tecnología",
+                    experience: "5 años",
+                    email: "carlos.rodriguez@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "Sí" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "Sí" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "Sí" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "No" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "Sí" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "Sí" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "Sí" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            },
+            {
+                id: 3,
+                name: "Ana Martínez",
+                role: "Analista de Recursos Humanos",
+                riskLevel: "medio",
+                avatar: "AM",
+                avatarColor: "#92400e",
+                details: {
+                    age: 32,
+                    department: "Recursos Humanos",
+                    experience: "6 años",
+                    email: "ana.martinez@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "No" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "No" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "No" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "No" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "Sí" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "No" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "Sí" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            },
+            {
+                id: 4,
+                name: "Luis Fernández",
+                role: "Contador",
+                riskLevel: "bajo",
+                avatar: "LF",
+                avatarColor: "#166534",
+                details: {
+                    age: 45,
+                    department: "Finanzas",
+                    experience: "12 años",
+                    email: "luis.fernandez@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "No" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "No" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "No" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "No" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "No" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "No" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "No" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            },
+            {
+                id: 5,
+                name: "Sofia Herrera",
+                role: "Asistente Administrativa",
+                riskLevel: "nulo",
+                avatar: "SH",
+                avatarColor: "#6b7280",
+                details: {
+                    age: 26,
+                    department: "Administración",
+                    experience: "3 años",
+                    email: "sofia.herrera@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "No" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "No" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "No" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "No" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "No" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "No" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "No" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            }
+        ];
+
+        // Inicializar panel emocional
+        function initializeEmotionalPanel() {
+            renderParticipantsList();
+            setupSearch();
+        }
+
+        // Renderizar lista de participantes
+        function renderParticipantsList(participants = participantsData) {
+            const participantsList = document.getElementById('participants-list');
+            participantsList.innerHTML = '';
+
+            participants.forEach(participant => {
+                const participantItem = document.createElement('div');
+                participantItem.className = 'participant-item';
+                participantItem.dataset.participantId = participant.id;
+                
+                participantItem.innerHTML = `
+                    <div class="participant-avatar" style="background-color: ${participant.avatarColor}">
+                        ${participant.avatar}
+                    </div>
+                    <div class="participant-info-content">
+                        <div class="participant-name">${participant.name}</div>
+                        <div class="participant-role">${participant.role}</div>
+                    </div>
+                    <div class="risk-level risk-${participant.riskLevel}">
+                        ${participant.riskLevel.replace('-', ' ')}
+                    </div>
+                `;
+
+                participantItem.addEventListener('click', () => {
+                    selectParticipant(participant.id);
+                });
+
+                participantsList.appendChild(participantItem);
+            });
+        }
+
+        // Seleccionar participante
+        function selectParticipant(participantId) {
+            // Remover selección anterior
+            document.querySelectorAll('.participant-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            // Agregar selección al item actual
+            document.querySelector(`[data-participant-id="${participantId}"]`).classList.add('selected');
+
+            // Mostrar detalles del participante
+            showParticipantDetails(participantId);
+        }
+
+        // Mostrar detalles del participante
+        function showParticipantDetails(participantId) {
+            const participant = participantsData.find(p => p.id === participantId);
+            if (!participant) return;
+
+            const participantInfo = document.getElementById('participant-info');
+            const surveyResults = document.getElementById('survey-results');
+
+            // Mostrar información del participante
+            participantInfo.innerHTML = `
+                <div class="participant-details show">
+                    <div class="participant-header">
+                        <div class="participant-avatar-large" style="background-color: ${participant.avatarColor}">
+                            ${participant.avatar}
+                        </div>
+                        <div class="participant-details-content">
+                            <h4>${participant.name}</h4>
+                            <p>${participant.role} • ${participant.details.department}</p>
+                            <p>${participant.details.age} años • ${participant.details.experience} de experiencia</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Mostrar resultados de la encuesta
+            surveyResults.innerHTML = `
+                <div class="survey-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <i class="far fa-comment section-icon"></i>
+                        <div class="section-title">💬 Encuesta Emocional — NOM-035 (Guía I: Acontecimientos Traumáticos Severos)</div>
+                        <i class="far fa-chevron-down section-chevron"></i>
+                    </div>
+                    <div class="section-content">
+                        ${Object.entries(participant.surveyResults).map(([sectionName, questions]) => `
+                            <div class="survey-section">
+                                <div class="section-header" onclick="toggleSection(this)">
+                                    <i class="far fa-circle section-icon"></i>
+                                    <div class="section-title">🔹 ${sectionName}</div>
+                                    <i class="far fa-chevron-down section-chevron"></i>
+                                </div>
+                                <div class="section-content">
+                                    ${questions.map(q => `
+                                        <div class="question-item">
+                                            <div class="question-text">${q.question}</div>
+                                            <div class="question-answer ${q.answer === 'Sí' ? 'answer-yes' : 'answer-no'}">
+                                                ${q.answer}
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle de secciones (acordeones)
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const isOpen = content.classList.contains('open');
+
+            // Cerrar todas las secciones del mismo nivel
+            const parent = header.closest('.section-content');
+            if (parent) {
+                parent.querySelectorAll('.section-content').forEach(section => {
+                    section.classList.remove('open');
+                    section.previousElementSibling.classList.remove('open');
+                });
+            }
+
+            // Toggle de la sección actual
+            if (!isOpen) {
+                content.classList.add('open');
+                header.classList.add('open');
+            }
+        }
+
+        // Configurar búsqueda
+        function setupSearch() {
+            const searchInput = document.getElementById('participant-search');
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const filteredParticipants = participantsData.filter(participant => 
+                    participant.name.toLowerCase().includes(searchTerm) ||
+                    participant.role.toLowerCase().includes(searchTerm) ||
+                    participant.details.department.toLowerCase().includes(searchTerm)
+                );
+                renderParticipantsList(filteredParticipants);
+            });
+        }
+
+        // Inicializar panel emocional cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                initializeEmotionalPanel();
+            }, 500);
         });
     </script>
 </body>
