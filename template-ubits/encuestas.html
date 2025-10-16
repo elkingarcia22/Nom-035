@@ -127,6 +127,152 @@
                 padding: 12px !important; /* !important para sobrescribir el reset */
             }
         }
+
+        /* Estilos mejorados para la tabla */
+        .surveys-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .surveys-table thead {
+            background: var(--ubits-bg-2);
+        }
+
+        .surveys-table th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--ubits-fg-1-medium);
+            border: none;
+            font-size: 14px;
+        }
+
+        .surveys-table tbody tr {
+            border-bottom: 1px solid var(--ubits-border-1);
+            transition: background-color 0.2s ease;
+        }
+
+        .surveys-table tbody tr:hover {
+            background: var(--ubits-bg-2);
+        }
+
+        .surveys-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .surveys-table td {
+            padding: 16px;
+            border: none;
+            vertical-align: middle;
+        }
+
+        .surveys-table .survey-name {
+            color: var(--ubits-fg-1-high);
+            font-weight: 500;
+        }
+
+        .surveys-table .survey-type {
+            color: var(--ubits-fg-1-medium);
+        }
+
+        .surveys-table .survey-dates {
+            color: var(--ubits-fg-1-medium);
+        }
+
+        .surveys-table .survey-participants {
+            color: var(--ubits-fg-1-medium);
+            text-align: center;
+        }
+
+        /* Status badges mejorados */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.completed {
+            background: var(--ubits-feedback-accent-success);
+            color: white;
+        }
+
+        .status-badge.in-progress {
+            background: var(--ubits-accent-brand);
+            color: white;
+        }
+
+        .status-badge.draft {
+            background: var(--ubits-bg-3);
+            color: var(--ubits-fg-1-medium);
+            border: 1px solid var(--ubits-border-1);
+        }
+
+        /* Progress bars mejorados */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .progress-bar {
+            width: 80px;
+            height: 6px;
+            background: var(--ubits-bg-3);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--ubits-accent-brand);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-fill.completed {
+            background: var(--ubits-feedback-accent-success);
+        }
+
+        .progress-fill.in-progress {
+            background: var(--ubits-accent-brand);
+        }
+
+        .progress-fill.draft {
+            background: var(--ubits-bg-3);
+        }
+
+        .progress-text {
+            color: var(--ubits-fg-1-medium);
+            font-size: 14px;
+            font-weight: 500;
+            min-width: 35px;
+        }
+
+        /* Checkboxes mejorados */
+        .table-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--ubits-accent-brand);
+            cursor: pointer;
+        }
+
+        /* Clickable rows */
+        .clickable-row {
+            cursor: pointer;
+        }
+
+        .clickable-row:hover {
+            background: var(--ubits-bg-2) !important;
+        }
     </style>
 </head>
 <body data-theme="light">
@@ -191,315 +337,313 @@
                             </div>
 
 
-                            <!-- Tabla de encuestas -->
-                            <div style="background: var(--ubits-bg-1); border-radius: 8px; overflow: hidden; border: 1px solid var(--ubits-border-1);">
-                                <table style="width: 100%; border-collapse: collapse;">
-                                    <!-- Header de la tabla -->
-                                    <thead>
-                                        <tr style="background: var(--ubits-bg-2); border-bottom: 1px solid var(--ubits-border-1);">
-                                            <th style="padding: 12px 16px; text-align: left; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
-                                            </th>
-                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">Nombre de la encuesta</th>
-                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">Tipo</th>
-                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">Estado</th>
-                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">Fecha inicio</th>
-                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">Fecha cierre</th>
-                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">Participantes</th>
-                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">% de finalización</th>
-                                        </tr>
-                                    </thead>
+                            <!-- Tabla de encuestas mejorada -->
+                            <table class="surveys-table">
+                                <!-- Header de la tabla -->
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" class="table-checkbox">
+                                        </th>
+                                        <th>Nombre de la encuesta</th>
+                                        <th>Tipo</th>
+                                        <th>Estado</th>
+                                        <th>Fecha inicio</th>
+                                        <th>Fecha cierre</th>
+                                        <th>Participantes</th>
+                                        <th>% de finalización</th>
+                                    </tr>
+                                </thead>
                                     <!-- Cuerpo de la tabla -->
                                     <tbody>
                                         <!-- Fila 1: NOM 035 - emocional -->
-                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-1); cursor: pointer;" onclick="window.location.href='resultados-nom035.html'">
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);" onclick="event.stopPropagation();">
+                                        <tr class="clickable-row" onclick="window.location.href='resultados-nom035.html'">
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox" onclick="event.stopPropagation();">
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">NOM 035 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">NOM 035 - emocional</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-feedback-accent-success); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">Completado</span>
+                                            <td class="survey-name">NOM 035 2024</td>
+                                            <td class="survey-type">NOM 035 - emocional</td>
+                                            <td>
+                                                <span class="status-badge completed">Completado</span>
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">15 octubre 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">15 noviembre 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">150</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <div style="display: flex; align-items: center; gap: 8px;">
-                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
-                                                        <div style="width: 100%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                            <td class="survey-dates">15 octubre 2024</td>
+                                            <td class="survey-dates">15 noviembre 2024</td>
+                                            <td class="survey-participants">150</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill completed" style="width: 100%;"></div>
                                                     </div>
-                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">100%</span>
+                                                    <span class="progress-text">100%</span>
                                                 </div>
                                             </td>
                                         </tr>
                                         <!-- Fila 2: NOM 035 - entorno laboral -->
-                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-2); cursor: pointer;" onclick="window.location.href='resultados-nom035.html'">
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);" onclick="event.stopPropagation();">
+                                        <tr class="clickable-row" onclick="window.location.href='resultados-nom035.html'">
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox" onclick="event.stopPropagation();">
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">NOM 035 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">NOM 035 - entorno laboral</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-feedback-accent-success); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">Completado</span>
+                                            <td class="survey-name">NOM 035 2024</td>
+                                            <td class="survey-type">NOM 035 - entorno laboral</td>
+                                            <td>
+                                                <span class="status-badge completed">Completado</span>
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">15 octubre 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">15 noviembre 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">150</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <div style="display: flex; align-items: center; gap: 8px;">
-                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
-                                                        <div style="width: 100%; height: 100%; background: var(--ubits-accent-brand); border-radius: 2px;"></div>
+                                            <td class="survey-dates">15 octubre 2024</td>
+                                            <td class="survey-dates">15 noviembre 2024</td>
+                                            <td class="survey-participants">150</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill completed" style="width: 100%;"></div>
                                                     </div>
-                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">100%</span>
+                                                    <span class="progress-text">100%</span>
                                                 </div>
                                             </td>
                                         </tr>
                                         <!-- Fila 3: Clima 2024 -->
-                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-2);">
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Clima 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Clima</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-accent-brand); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">En progreso</span>
+                                            <td class="survey-name">Clima 2024</td>
+                                            <td class="survey-type">Clima</td>
+                                            <td>
+                                                <span class="status-badge in-progress">En progreso</span>
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 enero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 febrero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">200</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <div style="display: flex; align-items: center; gap: 8px;">
-                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
-                                                        <div style="width: 50%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                            <td class="survey-dates">10 enero 2025</td>
+                                            <td class="survey-dates">10 febrero 2025</td>
+                                            <td class="survey-participants">200</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill in-progress" style="width: 50%;"></div>
                                                     </div>
-                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">50%</span>
+                                                    <span class="progress-text">50%</span>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <!-- Fila 3: eNPS 2024 -->
-                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-1);">
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                        <!-- Fila 4: eNPS 2024 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">eNPS 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">eNPS</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-bg-2); color: var(--ubits-fg-1-medium); padding: 4px 8px; border-radius: 4px; font-size: 12px;">Borrador</span>
+                                            <td class="survey-name">eNPS 2024</td>
+                                            <td class="survey-type">eNPS</td>
+                                            <td>
+                                                <span class="status-badge draft">Borrador</span>
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">--</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">--</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">--</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <div style="display: flex; align-items: center; gap: 8px;">
-                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
-                                                        <div style="width: 0%; height: 100%; background: var(--ubits-bg-3);"></div>
+                                            <td class="survey-dates">--</td>
+                                            <td class="survey-dates">--</td>
+                                            <td class="survey-participants">--</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill draft" style="width: 0%;"></div>
                                                     </div>
-                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">0%</span>
+                                                    <span class="progress-text">0%</span>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <!-- Fila 4: Cultura 2024 -->
-                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-2);">
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                        <!-- Fila 5: Cultura 2024 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Cultura 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Cultura</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-accent-brand); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">En progreso</span>
+                                            <td class="survey-name">Cultura 2024</td>
+                                            <td class="survey-type">Cultura</td>
+                                            <td>
+                                                <span class="status-badge in-progress">En progreso</span>
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 enero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 febrero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">200</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <div style="display: flex; align-items: center; gap: 8px;">
-                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
-                                                        <div style="width: 60%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                            <td class="survey-dates">10 enero 2025</td>
+                                            <td class="survey-dates">10 febrero 2025</td>
+                                            <td class="survey-participants">200</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill in-progress" style="width: 60%;"></div>
                                                     </div>
-                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">60%</span>
+                                                    <span class="progress-text">60%</span>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <!-- Fila 5: Clima 2024 -->
-                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-1);">
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                        <!-- Fila 6: Clima 2024 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Clima 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Clima</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-accent-brand); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">En progreso</span>
+                                            <td class="survey-name">Clima 2024</td>
+                                            <td class="survey-type">Clima</td>
+                                            <td>
+                                                <span class="status-badge in-progress">En progreso</span>
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 enero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 febrero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">200</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <div style="display: flex; align-items: center; gap: 8px;">
-                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
-                                                        <div style="width: 60%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                            <td class="survey-dates">10 enero 2025</td>
+                                            <td class="survey-dates">10 febrero 2025</td>
+                                            <td class="survey-participants">200</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill in-progress" style="width: 60%;"></div>
                                                     </div>
-                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">60%</span>
+                                                    <span class="progress-text">60%</span>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <!-- Fila 6: Cultura 2023 -->
-                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-2);">
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                        <!-- Fila 7: Cultura 2023 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Cultura 2023</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Cultura</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-accent-brand); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">En progreso</span>
+                                            <td class="survey-name">Cultura 2023</td>
+                                            <td class="survey-type">Cultura</td>
+                                            <td>
+                                                <span class="status-badge in-progress">En progreso</span>
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 enero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 febrero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">200</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <div style="display: flex; align-items: center; gap: 8px;">
-                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
-                                                        <div style="width: 70%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                            <td class="survey-dates">10 enero 2025</td>
+                                            <td class="survey-dates">10 febrero 2025</td>
+                                            <td class="survey-participants">200</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill in-progress" style="width: 70%;"></div>
                                                     </div>
-                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">70%</span>
+                                                    <span class="progress-text">70%</span>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <!-- Fila 7: Cultura 2022 -->
-                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-1);">
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                        <!-- Fila 8: Cultura 2022 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Cultura 2022</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Cultura</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-accent-brand); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">En progreso</span>
+                                            <td class="survey-name">Cultura 2022</td>
+                                            <td class="survey-type">Cultura</td>
+                                            <td>
+                                                <span class="status-badge in-progress">En progreso</span>
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 enero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 febrero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">200</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <div style="display: flex; align-items: center; gap: 8px;">
-                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
-                                                        <div style="width: 80%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                            <td class="survey-dates">10 enero 2025</td>
+                                            <td class="survey-dates">10 febrero 2025</td>
+                                            <td class="survey-participants">200</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill in-progress" style="width: 80%;"></div>
                                                     </div>
-                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">80%</span>
+                                                    <span class="progress-text">80%</span>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <!-- Fila 8: Cultura 2021 -->
-                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-2);">
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                        <!-- Fila 9: Cultura 2021 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Cultura 2021</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Cultura</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-feedback-accent-success); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">Completado</span>
+                                            <td class="survey-name">Cultura 2021</td>
+                                            <td class="survey-type">Cultura</td>
+                                            <td>
+                                                <span class="status-badge completed">Completado</span>
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 enero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 febrero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">200</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <div style="display: flex; align-items: center; gap: 8px;">
-                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
-                                                        <div style="width: 100%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                            <td class="survey-dates">10 enero 2025</td>
+                                            <td class="survey-dates">10 febrero 2025</td>
+                                            <td class="survey-participants">200</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill completed" style="width: 100%;"></div>
                                                     </div>
-                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">100%</span>
+                                                    <span class="progress-text">100%</span>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <!-- Fila 9: Satisfacción 2024 -->
-                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-1);">
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                        <!-- Fila 10: Satisfacción 2024 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Satisfacción 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Satisfacción</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-accent-brand); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">En progreso</span>
+                                            <td class="survey-name">Satisfacción 2024</td>
+                                            <td class="survey-type">Satisfacción</td>
+                                            <td>
+                                                <span class="status-badge in-progress">En progreso</span>
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">1 diciembre 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">31 diciembre 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">180</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <div style="display: flex; align-items: center; gap: 8px;">
-                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
-                                                        <div style="width: 45%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                            <td class="survey-dates">1 diciembre 2024</td>
+                                            <td class="survey-dates">31 diciembre 2024</td>
+                                            <td class="survey-participants">180</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill in-progress" style="width: 45%;"></div>
                                                     </div>
-                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">45%</span>
+                                                    <span class="progress-text">45%</span>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <!-- Fila 10: Bienestar 2024 -->
-                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-2);">
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                        <!-- Fila 11: Bienestar 2024 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Bienestar 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Bienestar</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-bg-2); color: var(--ubits-fg-1-medium); padding: 4px 8px; border-radius: 4px; font-size: 12px;">Borrador</span>
+                                            <td class="survey-name">Bienestar 2024</td>
+                                            <td class="survey-type">Bienestar</td>
+                                            <td>
+                                                <span class="status-badge draft">Borrador</span>
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">--</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">--</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">--</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <div style="display: flex; align-items: center; gap: 8px;">
-                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
-                                                        <div style="width: 0%; height: 100%; background: var(--ubits-bg-3);"></div>
+                                            <td class="survey-dates">--</td>
+                                            <td class="survey-dates">--</td>
+                                            <td class="survey-participants">--</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill draft" style="width: 0%;"></div>
                                                     </div>
-                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">0%</span>
+                                                    <span class="progress-text">0%</span>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <!-- Fila 11: Liderazgo 2024 -->
-                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-1);">
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                        <!-- Fila 12: Liderazgo 2024 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Liderazgo 2024</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Liderazgo</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-bg-3); color: var(--ubits-fg-1-medium); padding: 4px 8px; border-radius: 4px; font-size: 12px;">Por iniciar</span>
+                                            <td class="survey-name">Liderazgo 2024</td>
+                                            <td class="survey-type">Liderazgo</td>
+                                            <td>
+                                                <span class="status-badge draft">Por iniciar</span>
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">15 enero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">15 febrero 2025</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">120</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <div style="display: flex; align-items: center; gap: 8px;">
-                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
-                                                        <div style="width: 0%; height: 100%; background: var(--ubits-bg-3);"></div>
+                                            <td class="survey-dates">15 enero 2025</td>
+                                            <td class="survey-dates">15 febrero 2025</td>
+                                            <td class="survey-participants">120</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill draft" style="width: 0%;"></div>
                                                     </div>
-                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">0%</span>
+                                                    <span class="progress-text">0%</span>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <!-- Fila 12: NOM 035 2023 -->
-                                        <tr style="background: var(--ubits-bg-2); cursor: pointer;" onclick="window.location.href='resultados-nom035.html'">
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);" onclick="event.stopPropagation();">
+                                        <!-- Fila 13: NOM 035 2023 -->
+                                        <tr class="clickable-row" onclick="window.location.href='resultados-nom035.html'">
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox" onclick="event.stopPropagation();">
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">NOM 035 2023</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">NOM 035</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-feedback-accent-success); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">Completado</span>
+                                            <td class="survey-name">NOM 035 2023</td>
+                                            <td class="survey-type">NOM 035</td>
+                                            <td>
+                                                <span class="status-badge completed">Completado</span>
                                             </td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">15 octubre 2023</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">15 noviembre 2023</td>
-                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">140</td>
-                                            <td style="padding: 12px 16px; border: none;">
-                                                <div style="display: flex; align-items: center; gap: 8px;">
-                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
-                                                        <div style="width: 100%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                            <td class="survey-dates">15 octubre 2023</td>
+                                            <td class="survey-dates">15 noviembre 2023</td>
+                                            <td class="survey-participants">140</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill completed" style="width: 100%;"></div>
                                                     </div>
-                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">100%</span>
+                                                    <span class="progress-text">100%</span>
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
                         </div>
                     </div>
                 </div>
