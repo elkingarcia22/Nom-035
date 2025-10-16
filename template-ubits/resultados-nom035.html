@@ -42,17 +42,21 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: none;
-            border: none;
-            color: #1e40af;
-            cursor: pointer;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            color: #374151;
             font-size: 14px;
             font-weight: 500;
-            padding: 0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .back-button:hover {
-            color: #1d4ed8;
+            background: #e5e7eb;
+            border-color: #9ca3af;
+            color: #1f2937;
         }
 
         .title-section {
@@ -82,7 +86,7 @@
         }
 
         .download-button {
-            background: #3b82f6;
+            background: #2563eb;
             color: white;
             border: none;
             padding: 8px 16px;
@@ -96,23 +100,68 @@
             transition: all 0.2s ease;
             text-decoration: none;
             outline: none;
-        }
-
-        .download-button:hover {
-            background: #2563eb;
-            color: white;
+            position: relative;
             transform: translateY(-1px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .download-button:active {
+        .download-button:hover {
             background: #1d4ed8;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .download-button:active {
+            background: #1e40af;
             transform: translateY(0);
         }
 
         .download-button:focus {
             outline: 2px solid #3b82f6;
             outline-offset: 2px;
+        }
+
+        .download-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 160px;
+            z-index: 1000;
+            display: none;
+            margin-top: 4px;
+        }
+
+        .download-dropdown.show {
+            display: block;
+        }
+
+        .download-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            color: #374151;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+        }
+
+        .download-dropdown-item:hover {
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .download-dropdown-item:first-child {
+            border-radius: 6px 6px 0 0;
+        }
+
+        .download-dropdown-item:last-child {
+            border-radius: 0 0 6px 6px;
         }
 
         /* Información de la encuesta - EXACTO COMO LA IMAGEN */
@@ -348,11 +397,26 @@
                                 <i class="far fa-info"></i>
                             </div>
                         </div>
-                        <div style="margin-left: auto;">
-                            <button class="download-button" type="button">
+                        <div style="margin-left: auto; position: relative;">
+                            <button class="download-button" type="button" id="download-btn">
                                 <i class="far fa-download"></i>
                                 <span>Descargar</span>
+                                <i class="far fa-chevron-down" style="margin-left: 4px; font-size: 12px;"></i>
                             </button>
+                            <div class="download-dropdown" id="download-dropdown">
+                                <a href="#" class="download-dropdown-item">
+                                    <i class="far fa-file-pdf"></i>
+                                    <span>PDF</span>
+                                </a>
+                                <a href="#" class="download-dropdown-item">
+                                    <i class="far fa-file-excel"></i>
+                                    <span>Excel</span>
+                                </a>
+                                <a href="#" class="download-dropdown-item">
+                                    <i class="far fa-file-csv"></i>
+                                    <span>CSV</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -577,6 +641,24 @@
                     document.getElementById(targetTab).classList.add('active');
                 });
             });
+
+            // Funcionalidad del desplegable de descarga
+            const downloadBtn = document.getElementById('download-btn');
+            const downloadDropdown = document.getElementById('download-dropdown');
+            
+            if (downloadBtn && downloadDropdown) {
+                downloadBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    downloadDropdown.classList.toggle('show');
+                });
+                
+                // Cerrar desplegable al hacer clic fuera
+                document.addEventListener('click', function(e) {
+                    if (!downloadBtn.contains(e.target) && !downloadDropdown.contains(e.target)) {
+                        downloadDropdown.classList.remove('show');
+                    }
+                });
+            }
 
         });
     </script>
