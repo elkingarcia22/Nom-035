@@ -35,7 +35,7 @@
             display: flex;
             align-items: center;
             gap: 24px;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         .back-button {
@@ -86,7 +86,7 @@
         }
 
         .download-button {
-            background: #3b82f6;
+            background: var(--ubits-accent-brand);
             color: white;
             border: none;
             padding: 8px 16px;
@@ -104,19 +104,17 @@
         }
 
         .download-button:hover {
-            background: #2563eb;
+            background: var(--ubits-accent-brand-hover);
             color: white;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .download-button:active {
-            background: #1e40af;
-            transform: translateY(0);
+            background: var(--ubits-accent-brand);
+            transform: translateY(1px);
         }
 
         .download-button:focus {
-            outline: 2px solid #3b82f6;
+            outline: 2px solid var(--ubits-accent-brand);
             outline-offset: 2px;
         }
 
@@ -396,7 +394,7 @@
                             </div>
                         </div>
                         <div style="margin-left: auto; position: relative;">
-                            <button class="download-button" type="button" id="download-btn">
+                            <button class="ubits-button ubits-button--primary ubits-button--md download-button" type="button" id="download-btn">
                                 <i class="far fa-download"></i>
                                 <span>Descargar</span>
                                 <i class="far fa-chevron-down" style="margin-left: 4px; font-size: 12px;"></i>
