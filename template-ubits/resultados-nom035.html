@@ -1718,6 +1718,11 @@
         function initializeEmotionalPanel() {
             renderParticipantsList();
             setupSearch();
+            
+            // Seleccionar automáticamente el primer participante
+            if (participantsData.length > 0) {
+                selectParticipant(participantsData[0].id);
+            }
         }
 
         // Renderizar lista de participantes
