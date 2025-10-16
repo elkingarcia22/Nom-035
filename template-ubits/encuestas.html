@@ -190,55 +190,6 @@
                                 </div>
                             </div>
 
-                            <!-- Panel de filtros desplegable -->
-                            <div id="filter-panel" style="display: none; background: var(--ubits-bg-2); border: 1px solid var(--ubits-border-1); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
-                                <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-                                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                                        <label class="ubits-body-sm-semibold" style="color: var(--ubits-fg-1-medium);">Estado:</label>
-                                        <select id="estado-filter" style="padding: 6px 8px; border: 1px solid var(--ubits-border-1); border-radius: 4px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); font-size: 14px;">
-                                            <option value="">Todos los estados</option>
-                                            <option value="Completado">Completado</option>
-                                            <option value="En progreso">En progreso</option>
-                                            <option value="Borrador">Borrador</option>
-                                            <option value="Por iniciar">Por iniciar</option>
-                                        </select>
-                                    </div>
-                                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                                        <label class="ubits-body-sm-semibold" style="color: var(--ubits-fg-1-medium);">Tipo:</label>
-                                        <select id="tipo-filter" style="padding: 6px 8px; border: 1px solid var(--ubits-border-1); border-radius: 4px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); font-size: 14px;">
-                                            <option value="">Todos los tipos</option>
-                                            <option value="NOM 035">NOM 035</option>
-                                            <option value="Cultura">Cultura</option>
-                                            <option value="Clima">Clima</option>
-                                            <option value="eNPS">eNPS</option>
-                                            <option value="Satisfacción">Satisfacción</option>
-                                            <option value="Bienestar">Bienestar</option>
-                                            <option value="Liderazgo">Liderazgo</option>
-                                        </select>
-                                    </div>
-                                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                                        <label class="ubits-body-sm-semibold" style="color: var(--ubits-fg-1-medium);">Año:</label>
-                                        <select id="año-filter" style="padding: 6px 8px; border: 1px solid var(--ubits-border-1); border-radius: 4px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); font-size: 14px;">
-                                            <option value="">Todos los años</option>
-                                            <option value="2025">2025</option>
-                                            <option value="2024">2024</option>
-                                            <option value="2023">2023</option>
-                                            <option value="2022">2022</option>
-                                            <option value="2021">2021</option>
-                                        </select>
-                                    </div>
-                                    <div style="display: flex; gap: 8px; align-items: end;">
-                                        <button id="apply-filters" class="ubits-button ubits-button--primary ubits-button--sm">
-                                            <i class="far fa-check"></i>
-                                            <span>Aplicar</span>
-                                        </button>
-                                        <button id="clear-filters" class="ubits-button ubits-button--secondary ubits-button--sm">
-                                            <i class="far fa-times"></i>
-                                            <span>Limpiar</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
 
                             <!-- Tabla de encuestas -->
                             <div style="background: var(--ubits-bg-1); border-radius: 8px; overflow: hidden; border: 1px solid var(--ubits-border-1);">
@@ -534,6 +485,75 @@
         </main>
     </div>
 
+    <!-- Side Panel de Filtros -->
+    <div id="filter-side-panel" style="position: fixed; top: 0; right: -400px; width: 400px; height: 100vh; background: var(--ubits-bg-1); border-left: 1px solid var(--ubits-border-1); box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1); z-index: 1000; transition: right 0.3s ease; overflow-y: auto;">
+        <!-- Header del side panel -->
+        <div style="padding: 20px; border-bottom: 1px solid var(--ubits-border-1); display: flex; justify-content: space-between; align-items: center;">
+            <h2 class="ubits-heading-h2" style="margin: 0; color: var(--ubits-fg-1-high);">Filtros</h2>
+            <button id="close-filter-panel" style="background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer; font-size: 18px;">
+                <i class="far fa-times"></i>
+            </button>
+        </div>
+        
+        <!-- Contenido del side panel -->
+        <div style="padding: 20px;">
+            <!-- Filtro por Estado -->
+            <div style="margin-bottom: 24px;">
+                <label class="ubits-body-sm-semibold" style="color: var(--ubits-fg-1-medium); margin-bottom: 8px; display: block;">Estado</label>
+                <select id="estado-filter" style="width: 100%; padding: 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); font-size: 14px;">
+                    <option value="">Todos los estados</option>
+                    <option value="Completado">Completado</option>
+                    <option value="En progreso">En progreso</option>
+                    <option value="Borrador">Borrador</option>
+                    <option value="Por iniciar">Por iniciar</option>
+                </select>
+            </div>
+            
+            <!-- Filtro por Tipo -->
+            <div style="margin-bottom: 24px;">
+                <label class="ubits-body-sm-semibold" style="color: var(--ubits-fg-1-medium); margin-bottom: 8px; display: block;">Tipo</label>
+                <select id="tipo-filter" style="width: 100%; padding: 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); font-size: 14px;">
+                    <option value="">Todos los tipos</option>
+                    <option value="NOM 035">NOM 035</option>
+                    <option value="Cultura">Cultura</option>
+                    <option value="Clima">Clima</option>
+                    <option value="eNPS">eNPS</option>
+                    <option value="Satisfacción">Satisfacción</option>
+                    <option value="Bienestar">Bienestar</option>
+                    <option value="Liderazgo">Liderazgo</option>
+                </select>
+            </div>
+            
+            <!-- Filtro por Año -->
+            <div style="margin-bottom: 24px;">
+                <label class="ubits-body-sm-semibold" style="color: var(--ubits-fg-1-medium); margin-bottom: 8px; display: block;">Año</label>
+                <select id="año-filter" style="width: 100%; padding: 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); font-size: 14px;">
+                    <option value="">Todos los años</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                </select>
+            </div>
+            
+            <!-- Botones de acción -->
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 32px;">
+                <button id="apply-filters" class="ubits-button ubits-button--primary ubits-button--md" style="width: 100%;">
+                    <i class="far fa-check"></i>
+                    <span>Aplicar filtros</span>
+                </button>
+                <button id="clear-filters" class="ubits-button ubits-button--secondary ubits-button--md" style="width: 100%;">
+                    <i class="far fa-times"></i>
+                    <span>Limpiar filtros</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay para cerrar el side panel -->
+    <div id="filter-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; display: none;"></div>
+
     <!-- Tab Bar Container -->
     <div id="tab-bar-container"></div>
 
@@ -609,7 +629,9 @@
             const searchInput = document.getElementById('search-input');
             const closeSearch = document.getElementById('close-search');
             const filterBtn = document.getElementById('filter-btn');
-            const filterPanel = document.getElementById('filter-panel');
+            const filterSidePanel = document.getElementById('filter-side-panel');
+            const filterOverlay = document.getElementById('filter-overlay');
+            const closeFilterPanel = document.getElementById('close-filter-panel');
             const applyFilters = document.getElementById('apply-filters');
             const clearFilters = document.getElementById('clear-filters');
             const resultadosCount = document.getElementById('resultados-count');
@@ -661,14 +683,23 @@
                 filterTable();
             });
             
-            // Mostrar/ocultar filtros
+            // Mostrar/ocultar side panel de filtros
             filterBtn.addEventListener('click', function() {
-                if (filterPanel.style.display === 'none') {
-                    filterPanel.style.display = 'block';
-                } else {
-                    filterPanel.style.display = 'none';
-                }
+                filterSidePanel.style.right = '0';
+                filterOverlay.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Prevenir scroll del body
             });
+            
+            // Cerrar side panel
+            function closeFilterSidePanel() {
+                filterSidePanel.style.right = '-400px';
+                filterOverlay.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restaurar scroll del body
+            }
+            
+            // Event listeners para cerrar el side panel
+            closeFilterPanel.addEventListener('click', closeFilterSidePanel);
+            filterOverlay.addEventListener('click', closeFilterSidePanel);
             
             // Aplicar filtros
             applyFilters.addEventListener('click', function() {
@@ -683,6 +714,7 @@
                 searchInput.value = '';
                 searchContainer.style.display = 'none';
                 filterTable();
+                closeFilterSidePanel(); // Cerrar el side panel después de limpiar
             });
             
             // Función principal de filtrado
