@@ -230,15 +230,16 @@
             transform: translateX(-50%);
             background: #1f2937;
             color: white;
-            padding: 6px 10px;
-            border-radius: 4px;
-            font-size: 11px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
             white-space: nowrap;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.2s ease;
-            margin-bottom: 4px;
+            transition: all 0.3s ease;
+            margin-bottom: 8px;
+            pointer-events: none;
         }
 
         .tooltip::after {
@@ -247,7 +248,7 @@
             top: 100%;
             left: 50%;
             transform: translateX(-50%);
-            border: 3px solid transparent;
+            border: 4px solid transparent;
             border-top-color: #1f2937;
         }
 
@@ -266,11 +267,16 @@
             visibility: visible;
         }
 
+        .progress-segment:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .progress-bar {
             width: 100%;
-            height: 6px;
+            height: 8px;
             background: #f3f4f6;
-            border-radius: 3px;
+            border-radius: 4px;
             overflow: hidden;
             position: relative;
             cursor: pointer;
@@ -459,7 +465,7 @@
                             <div class="metric-value">45</div>
                             <div class="progress-bar">
                                 <div class="tooltip">
-                                    Nulo: 12 (27%) | Bajo: 18 (40%) | Medio: 10 (22%) | Alto: 4 (9%) | Muy alto: 1 (2%)
+                                    Nulo (0-20): 12 casos (27%) | Bajo (21-45): 18 casos (40%) | Medio (46-70): 10 casos (22%) | Alto (71-90): 4 casos (9%) | Muy alto (>90): 1 caso (2%)
                                 </div>
                                 <div class="progress-multicolor">
                                     <div class="progress-segment green" style="width: 27%;"></div>
@@ -637,6 +643,26 @@
                     // Activar el botón y panel seleccionado
                     this.classList.add('active');
                     document.getElementById(targetTab).classList.add('active');
+                });
+            });
+
+            // Funcionalidad de tooltips en barras de progreso
+            const progressBars = document.querySelectorAll('.progress-bar');
+            progressBars.forEach(bar => {
+                bar.addEventListener('mouseenter', function() {
+                    const tooltip = this.querySelector('.tooltip');
+                    if (tooltip) {
+                        tooltip.style.opacity = '1';
+                        tooltip.style.visibility = 'visible';
+                    }
+                });
+                
+                bar.addEventListener('mouseleave', function() {
+                    const tooltip = this.querySelector('.tooltip');
+                    if (tooltip) {
+                        tooltip.style.opacity = '0';
+                        tooltip.style.visibility = 'hidden';
+                    }
                 });
             });
         });
