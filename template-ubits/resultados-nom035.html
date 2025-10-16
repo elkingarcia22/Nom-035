@@ -551,7 +551,12 @@
             margin-bottom: 12px;
         }
 
-        .filter-select {
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-trigger {
             width: 100%;
             padding: 8px 12px;
             border: 1px solid #d1d5db;
@@ -559,18 +564,78 @@
             background: #fff;
             color: #374151;
             font-size: 14px;
-            outline: none;
-            transition: border-color 0.2s ease;
             cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.2s ease;
         }
 
-        .filter-select:focus {
+        .select-trigger:hover {
+            border-color: #9ca3af;
+        }
+
+        .select-trigger.active {
             border-color: var(--ubits-accent-brand);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        .filter-select option {
-            padding: 8px;
+        .select-trigger .select-text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .select-trigger .select-arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .select-trigger.active .select-arrow {
+            transform: rotate(180deg);
+        }
+
+        .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .select-dropdown.show {
+            display: block;
+        }
+
+        .select-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .select-option:hover {
+            background: #f3f4f6;
+        }
+
+        .select-option.selected {
+            background: #eff6ff;
+            color: var(--ubits-accent-brand);
+        }
+
+        .select-option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .select-option .option-text {
+            flex: 1;
         }
 
         .filter-actions {
@@ -1063,51 +1128,161 @@
                                         <div class="filters-content">
                                             <div class="filter-group">
                                                 <label class="filter-label">Nivel de Riesgo</label>
-                                                <select class="filter-select" id="risk-filter" multiple>
-                                                    <option value="nulo">Nulo</option>
-                                                    <option value="bajo">Bajo</option>
-                                                    <option value="medio">Medio</option>
-                                                    <option value="alto">Alto</option>
-                                                    <option value="muy-alto">Muy Alto</option>
-                                                </select>
+                                                <div class="custom-select" id="risk-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar niveles</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="risk-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="nulo">
+                                                            <input type="checkbox" id="risk-nulo">
+                                                            <span class="option-text">Nulo</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="bajo">
+                                                            <input type="checkbox" id="risk-bajo">
+                                                            <span class="option-text">Bajo</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="medio">
+                                                            <input type="checkbox" id="risk-medio">
+                                                            <span class="option-text">Medio</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="alto">
+                                                            <input type="checkbox" id="risk-alto">
+                                                            <span class="option-text">Alto</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="muy-alto">
+                                                            <input type="checkbox" id="risk-muy-alto">
+                                                            <span class="option-text">Muy Alto</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="filter-group">
                                                 <label class="filter-label">Departamento</label>
-                                                <select class="filter-select" id="department-filter" multiple>
-                                                    <option value="Ventas">Ventas</option>
-                                                    <option value="Tecnología">Tecnología</option>
-                                                    <option value="Recursos Humanos">Recursos Humanos</option>
-                                                    <option value="Finanzas">Finanzas</option>
-                                                    <option value="Administración">Administración</option>
-                                                </select>
+                                                <div class="custom-select" id="department-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar departamentos</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="dept-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Ventas">
+                                                            <input type="checkbox" id="dept-ventas">
+                                                            <span class="option-text">Ventas</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Tecnología">
+                                                            <input type="checkbox" id="dept-tecnologia">
+                                                            <span class="option-text">Tecnología</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Recursos Humanos">
+                                                            <input type="checkbox" id="dept-rrhh">
+                                                            <span class="option-text">Recursos Humanos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Finanzas">
+                                                            <input type="checkbox" id="dept-finanzas">
+                                                            <span class="option-text">Finanzas</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Administración">
+                                                            <input type="checkbox" id="dept-administracion">
+                                                            <span class="option-text">Administración</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             
                                             <div class="filter-group">
                                                 <label class="filter-label">Cargo</label>
-                                                <select class="filter-select" id="position-filter" multiple>
-                                                    <option value="Gerente">Gerente</option>
-                                                    <option value="Desarrollador">Desarrollador</option>
-                                                    <option value="Analista">Analista</option>
-                                                    <option value="Contador">Contador</option>
-                                                    <option value="Asistente">Asistente</option>
-                                                </select>
+                                                <div class="custom-select" id="position-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar cargos</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="pos-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Gerente">
+                                                            <input type="checkbox" id="pos-gerente">
+                                                            <span class="option-text">Gerente</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Desarrollador">
+                                                            <input type="checkbox" id="pos-desarrollador">
+                                                            <span class="option-text">Desarrollador</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Analista">
+                                                            <input type="checkbox" id="pos-analista">
+                                                            <span class="option-text">Analista</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Contador">
+                                                            <input type="checkbox" id="pos-contador">
+                                                            <span class="option-text">Contador</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Asistente">
+                                                            <input type="checkbox" id="pos-asistente">
+                                                            <span class="option-text">Asistente</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             
                                             <div class="filter-group">
                                                 <label class="filter-label">Sexo</label>
-                                                <select class="filter-select" id="gender-filter" multiple>
-                                                    <option value="Femenino">Femenino</option>
-                                                    <option value="Masculino">Masculino</option>
-                                                </select>
+                                                <div class="custom-select" id="gender-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar sexo</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="gen-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Femenino">
+                                                            <input type="checkbox" id="gen-femenino">
+                                                            <span class="option-text">Femenino</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Masculino">
+                                                            <input type="checkbox" id="gen-masculino">
+                                                            <span class="option-text">Masculino</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             
                                             <div class="filter-group">
                                                 <label class="filter-label">Estado Civil</label>
-                                                <select class="filter-select" id="marital-status-filter" multiple>
-                                                    <option value="Soltero">Soltero</option>
-                                                    <option value="Casado">Casado</option>
-                                                    <option value="Divorciada">Divorciada</option>
-                                                </select>
+                                                <div class="custom-select" id="marital-status-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar estado civil</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="est-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Soltero">
+                                                            <input type="checkbox" id="est-soltero">
+                                                            <span class="option-text">Soltero</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Casado">
+                                                            <input type="checkbox" id="est-casado">
+                                                            <span class="option-text">Casado</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Divorciada">
+                                                            <input type="checkbox" id="est-divorciada">
+                                                            <span class="option-text">Divorciada</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="filter-actions">
                                                 <button class="apply-filters-btn" id="apply-filters-btn">
@@ -1663,6 +1838,106 @@
             }, 500);
         });
 
+        // Función para actualizar el texto del select
+        function updateSelectText(selectId) {
+            const select = document.getElementById(selectId);
+            const selectedValues = getSelectedValues(selectId);
+            const selectText = select.querySelector('.select-text');
+            
+            if (selectedValues.length === 0) {
+                selectText.textContent = selectText.textContent.split(':')[0] + ': Seleccionar';
+            } else if (selectedValues.includes('todos')) {
+                selectText.textContent = selectText.textContent.split(':')[0] + ': Todos';
+            } else if (selectedValues.length === 1) {
+                selectText.textContent = selectText.textContent.split(':')[0] + ': ' + selectedValues[0];
+            } else {
+                selectText.textContent = selectText.textContent.split(':')[0] + ': ' + selectedValues.length + ' seleccionados';
+            }
+        }
+
+        // Función para manejar la opción "Todos"
+        function handleTodosOption(selectId, todosCheckbox) {
+            const select = document.getElementById(selectId);
+            const allCheckboxes = select.querySelectorAll('input[type="checkbox"]');
+            
+            if (todosCheckbox.checked) {
+                // Si se selecciona "Todos", deseleccionar todo lo demás
+                allCheckboxes.forEach(cb => {
+                    if (cb !== todosCheckbox) {
+                        cb.checked = false;
+                    }
+                });
+            } else {
+                // Si se deselecciona "Todos", verificar si hay otras opciones seleccionadas
+                const otherSelected = Array.from(allCheckboxes).some(cb => cb !== todosCheckbox && cb.checked);
+                if (!otherSelected) {
+                    // Si no hay otras opciones seleccionadas, seleccionar "Todos"
+                    todosCheckbox.checked = true;
+                }
+            }
+        }
+
+        // Configurar componente select personalizado
+        function setupCustomSelects() {
+            const customSelects = document.querySelectorAll('.custom-select');
+            
+            customSelects.forEach(select => {
+                const trigger = select.querySelector('.select-trigger');
+                const dropdown = select.querySelector('.select-dropdown');
+                const options = select.querySelectorAll('.select-option');
+                
+                // Toggle dropdown
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = trigger.classList.contains('active');
+                    
+                    // Cerrar otros selects
+                    customSelects.forEach(otherSelect => {
+                        if (otherSelect !== select) {
+                            otherSelect.querySelector('.select-trigger').classList.remove('active');
+                            otherSelect.querySelector('.select-dropdown').classList.remove('show');
+                        }
+                    });
+                    
+                    // Toggle current select
+                    trigger.classList.toggle('active');
+                    dropdown.classList.toggle('show');
+                });
+                
+                // Manejar clics en opciones
+                options.forEach(option => {
+                    const checkbox = option.querySelector('input[type="checkbox"]');
+                    
+                    option.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        checkbox.checked = !checkbox.checked;
+                        
+                        // Manejar opción "Todos"
+                        if (option.dataset.value === 'todos') {
+                            handleTodosOption(select.id, checkbox);
+                        } else {
+                            // Si se selecciona una opción específica, deseleccionar "Todos"
+                            const todosCheckbox = select.querySelector('input[type="checkbox"][id$="-todos"]');
+                            if (todosCheckbox && todosCheckbox.checked) {
+                                todosCheckbox.checked = false;
+                            }
+                        }
+                        
+                        updateSelectText(select.id);
+                        applyFilters();
+                    });
+                });
+            });
+            
+            // Cerrar dropdowns al hacer clic fuera
+            document.addEventListener('click', () => {
+                customSelects.forEach(select => {
+                    select.querySelector('.select-trigger').classList.remove('active');
+                    select.querySelector('.select-dropdown').classList.remove('show');
+                });
+            });
+        }
+
         // Configurar funcionalidad de filtros
         function setupFilters() {
             const filtersBtn = document.getElementById('filters-btn');
@@ -1699,28 +1974,17 @@
                 applyFilters();
             });
 
-            // Aplicar filtros automáticamente cuando cambien los selects
-            const filterSelects = document.querySelectorAll('.filter-select');
-            filterSelects.forEach(select => {
-                select.addEventListener('change', () => {
-                    applyFilters();
-                });
-            });
+            // Configurar selects personalizados
+            setupCustomSelects();
         }
 
         // Aplicar filtros
         function applyFilters() {
-            const riskSelect = document.getElementById('risk-filter');
-            const departmentSelect = document.getElementById('department-filter');
-            const positionSelect = document.getElementById('position-filter');
-            const genderSelect = document.getElementById('gender-filter');
-            const maritalStatusSelect = document.getElementById('marital-status-filter');
-            
-            const riskFilters = Array.from(riskSelect.selectedOptions).map(option => option.value);
-            const departmentFilters = Array.from(departmentSelect.selectedOptions).map(option => option.value);
-            const positionFilters = Array.from(positionSelect.selectedOptions).map(option => option.value);
-            const genderFilters = Array.from(genderSelect.selectedOptions).map(option => option.value);
-            const maritalStatusFilters = Array.from(maritalStatusSelect.selectedOptions).map(option => option.value);
+            const riskFilters = getSelectedValues('risk-select');
+            const departmentFilters = getSelectedValues('department-select');
+            const positionFilters = getSelectedValues('position-select');
+            const genderFilters = getSelectedValues('gender-select');
+            const maritalStatusFilters = getSelectedValues('marital-status-select');
             const searchTerm = document.getElementById('participant-search').value.toLowerCase();
 
             let filteredParticipants = participantsData.filter(participant => {
@@ -1734,19 +1998,19 @@
                     participant.details.maritalStatus.toLowerCase().includes(searchTerm);
 
                 // Filtro por nivel de riesgo
-                const matchesRisk = riskFilters.length === 0 || riskFilters.includes(participant.riskLevel);
+                const matchesRisk = riskFilters.length === 0 || riskFilters.includes('todos') || riskFilters.includes(participant.riskLevel);
 
                 // Filtro por departamento
-                const matchesDepartment = departmentFilters.length === 0 || departmentFilters.includes(participant.details.department);
+                const matchesDepartment = departmentFilters.length === 0 || departmentFilters.includes('todos') || departmentFilters.includes(participant.details.department);
 
                 // Filtro por cargo
-                const matchesPosition = positionFilters.length === 0 || positionFilters.includes(participant.details.position);
+                const matchesPosition = positionFilters.length === 0 || positionFilters.includes('todos') || positionFilters.includes(participant.details.position);
 
                 // Filtro por sexo
-                const matchesGender = genderFilters.length === 0 || genderFilters.includes(participant.details.gender);
+                const matchesGender = genderFilters.length === 0 || genderFilters.includes('todos') || genderFilters.includes(participant.details.gender);
 
                 // Filtro por estado civil
-                const matchesMaritalStatus = maritalStatusFilters.length === 0 || maritalStatusFilters.includes(participant.details.maritalStatus);
+                const matchesMaritalStatus = maritalStatusFilters.length === 0 || maritalStatusFilters.includes('todos') || maritalStatusFilters.includes(participant.details.maritalStatus);
 
                 return matchesSearch && matchesRisk && matchesDepartment && matchesPosition && matchesGender && matchesMaritalStatus;
             });
@@ -1754,13 +2018,24 @@
             renderParticipantsList(filteredParticipants);
         }
 
+        // Función auxiliar para obtener valores seleccionados
+        function getSelectedValues(selectId) {
+            const select = document.getElementById(selectId);
+            const checkboxes = select.querySelectorAll('input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(cb => cb.closest('.select-option').dataset.value);
+        }
+
         // Limpiar filtros
         function clearFilters() {
-            document.getElementById('risk-filter').selectedIndex = -1;
-            document.getElementById('department-filter').selectedIndex = -1;
-            document.getElementById('position-filter').selectedIndex = -1;
-            document.getElementById('gender-filter').selectedIndex = -1;
-            document.getElementById('marital-status-filter').selectedIndex = -1;
+            const selectIds = ['risk-select', 'department-select', 'position-select', 'gender-select', 'marital-status-select'];
+            
+            selectIds.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                const checkboxes = select.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(cb => cb.checked = false);
+                updateSelectText(selectId);
+            });
+            
             document.getElementById('participant-search').value = '';
             renderParticipantsList(participantsData);
         }
