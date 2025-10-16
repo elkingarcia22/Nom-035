@@ -1125,6 +1125,64 @@
                                                     </label>
                                                 </div>
                                             </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Cargo</label>
+                                                <div class="filter-options">
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Gerente" class="position-filter">
+                                                        Gerente
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Desarrollador" class="position-filter">
+                                                        Desarrollador
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Analista" class="position-filter">
+                                                        Analista
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Contador" class="position-filter">
+                                                        Contador
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Asistente" class="position-filter">
+                                                        Asistente
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Sexo</label>
+                                                <div class="filter-options">
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Femenino" class="gender-filter">
+                                                        Femenino
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Masculino" class="gender-filter">
+                                                        Masculino
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Estado Civil</label>
+                                                <div class="filter-options">
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Soltero" class="marital-status-filter">
+                                                        Soltero
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Casado" class="marital-status-filter">
+                                                        Casado
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Divorciada" class="marital-status-filter">
+                                                        Divorciada
+                                                    </label>
+                                                </div>
+                                            </div>
                                             <div class="filter-actions">
                                                 <button class="apply-filters-btn" id="apply-filters-btn">
                                                     <i class="far fa-check"></i>
@@ -1297,6 +1355,9 @@
                 details: {
                     age: 35,
                     department: "Ventas",
+                    position: "Gerente",
+                    gender: "Femenino",
+                    maritalStatus: "Casada",
                     experience: "8 años",
                     email: "maria.gonzalez@empresa.com"
                 },
@@ -1341,6 +1402,9 @@
                 details: {
                     age: 28,
                     department: "Tecnología",
+                    position: "Desarrollador",
+                    gender: "Masculino",
+                    maritalStatus: "Soltero",
                     experience: "5 años",
                     email: "carlos.rodriguez@empresa.com"
                 },
@@ -1385,6 +1449,9 @@
                 details: {
                     age: 32,
                     department: "Recursos Humanos",
+                    position: "Analista",
+                    gender: "Femenino",
+                    maritalStatus: "Divorciada",
                     experience: "6 años",
                     email: "ana.martinez@empresa.com"
                 },
@@ -1429,6 +1496,9 @@
                 details: {
                     age: 45,
                     department: "Finanzas",
+                    position: "Contador",
+                    gender: "Masculino",
+                    maritalStatus: "Casado",
                     experience: "12 años",
                     email: "luis.fernandez@empresa.com"
                 },
@@ -1473,6 +1543,9 @@
                 details: {
                     age: 26,
                     department: "Administración",
+                    position: "Asistente",
+                    gender: "Femenino",
+                    maritalStatus: "Soltera",
                     experience: "3 años",
                     email: "sofia.herrera@empresa.com"
                 },
@@ -1578,7 +1651,8 @@
                         <div class="participant-details-content">
                             <h4>${participant.name}</h4>
                             <p>${participant.role} • ${participant.details.department}</p>
-                            <p>${participant.details.age} años • ${participant.details.experience} de experiencia</p>
+                            <p>${participant.details.age} años • ${participant.details.gender} • ${participant.details.maritalStatus}</p>
+                            <p>${participant.details.experience} de experiencia</p>
                         </div>
                     </div>
                 </div>
@@ -1646,7 +1720,10 @@
                 const filteredParticipants = participantsData.filter(participant => 
                     participant.name.toLowerCase().includes(searchTerm) ||
                     participant.role.toLowerCase().includes(searchTerm) ||
-                    participant.details.department.toLowerCase().includes(searchTerm)
+                    participant.details.department.toLowerCase().includes(searchTerm) ||
+                    participant.details.position.toLowerCase().includes(searchTerm) ||
+                    participant.details.gender.toLowerCase().includes(searchTerm) ||
+                    participant.details.maritalStatus.toLowerCase().includes(searchTerm)
                 );
                 renderParticipantsList(filteredParticipants);
             });
@@ -1701,6 +1778,9 @@
         function applyFilters() {
             const riskFilters = Array.from(document.querySelectorAll('.risk-filter:checked')).map(cb => cb.value);
             const departmentFilters = Array.from(document.querySelectorAll('.department-filter:checked')).map(cb => cb.value);
+            const positionFilters = Array.from(document.querySelectorAll('.position-filter:checked')).map(cb => cb.value);
+            const genderFilters = Array.from(document.querySelectorAll('.gender-filter:checked')).map(cb => cb.value);
+            const maritalStatusFilters = Array.from(document.querySelectorAll('.marital-status-filter:checked')).map(cb => cb.value);
             const searchTerm = document.getElementById('participant-search').value.toLowerCase();
 
             let filteredParticipants = participantsData.filter(participant => {
@@ -1708,7 +1788,10 @@
                 const matchesSearch = !searchTerm || 
                     participant.name.toLowerCase().includes(searchTerm) ||
                     participant.role.toLowerCase().includes(searchTerm) ||
-                    participant.details.department.toLowerCase().includes(searchTerm);
+                    participant.details.department.toLowerCase().includes(searchTerm) ||
+                    participant.details.position.toLowerCase().includes(searchTerm) ||
+                    participant.details.gender.toLowerCase().includes(searchTerm) ||
+                    participant.details.maritalStatus.toLowerCase().includes(searchTerm);
 
                 // Filtro por nivel de riesgo
                 const matchesRisk = riskFilters.length === 0 || riskFilters.includes(participant.riskLevel);
@@ -1716,7 +1799,16 @@
                 // Filtro por departamento
                 const matchesDepartment = departmentFilters.length === 0 || departmentFilters.includes(participant.details.department);
 
-                return matchesSearch && matchesRisk && matchesDepartment;
+                // Filtro por cargo
+                const matchesPosition = positionFilters.length === 0 || positionFilters.includes(participant.details.position);
+
+                // Filtro por sexo
+                const matchesGender = genderFilters.length === 0 || genderFilters.includes(participant.details.gender);
+
+                // Filtro por estado civil
+                const matchesMaritalStatus = maritalStatusFilters.length === 0 || maritalStatusFilters.includes(participant.details.maritalStatus);
+
+                return matchesSearch && matchesRisk && matchesDepartment && matchesPosition && matchesGender && matchesMaritalStatus;
             });
 
             renderParticipantsList(filteredParticipants);
@@ -1724,10 +1816,11 @@
 
         // Limpiar filtros
         function clearFilters() {
-            document.querySelectorAll('.risk-filter, .department-filter').forEach(checkbox => {
+            document.querySelectorAll('.risk-filter, .department-filter, .position-filter, .gender-filter, .marital-status-filter').forEach(checkbox => {
                 checkbox.checked = false;
             });
             document.getElementById('participant-search').value = '';
+            renderParticipantsList(participantsData);
         }
 
         // Actualizar función de búsqueda para incluir filtros
