@@ -1298,11 +1298,11 @@
         .filters-content {
             flex: 1;
             padding: 24px;
-            overflow-y: auto;
+            overflow-y: visible;
         }
 
         .filter-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .filter-label {
@@ -1868,177 +1868,6 @@
                                             </div>
                                         </div>
 
-                                        <div class="filter-group">
-                                            <label class="filter-label">Área</label>
-                                            <div class="custom-select" id="table-area-select">
-                                                <div class="select-trigger">
-                                                    <span class="select-text">Seleccionar áreas</span>
-                                                    <i class="fas fa-chevron-down select-arrow"></i>
-                                                </div>
-                                                <div class="select-dropdown">
-                                                    <div class="select-option" data-value="todos">
-                                                        <input type="checkbox" id="table-area-todos" checked>
-                                                        <span class="option-text">Todos</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Recursos Humanos">
-                                                        <input type="checkbox" id="table-area-rrhh">
-                                                        <span class="option-text">Recursos Humanos</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Ventas">
-                                                        <input type="checkbox" id="table-area-ventas">
-                                                        <span class="option-text">Ventas</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Marketing">
-                                                        <input type="checkbox" id="table-area-marketing">
-                                                        <span class="option-text">Marketing</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Finanzas">
-                                                        <input type="checkbox" id="table-area-finanzas">
-                                                        <span class="option-text">Finanzas</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Operaciones">
-                                                        <input type="checkbox" id="table-area-operaciones">
-                                                        <span class="option-text">Operaciones</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Tecnología">
-                                                        <input type="checkbox" id="table-area-tecnologia">
-                                                        <span class="option-text">Tecnología</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="filter-group">
-                                            <label class="filter-label">Cargo</label>
-                                            <div class="custom-select" id="table-position-select">
-                                                <div class="select-trigger">
-                                                    <span class="select-text">Seleccionar cargos</span>
-                                                    <i class="fas fa-chevron-down select-arrow"></i>
-                                                </div>
-                                                <div class="select-dropdown">
-                                                    <div class="select-option" data-value="todos">
-                                                        <input type="checkbox" id="table-position-todos" checked>
-                                                        <span class="option-text">Todos</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Gerente">
-                                                        <input type="checkbox" id="table-position-gerente">
-                                                        <span class="option-text">Gerente</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Coordinador">
-                                                        <input type="checkbox" id="table-position-coordinador">
-                                                        <span class="option-text">Coordinador</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Analista">
-                                                        <input type="checkbox" id="table-position-analista">
-                                                        <span class="option-text">Analista</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Asistente">
-                                                        <input type="checkbox" id="table-position-asistente">
-                                                        <span class="option-text">Asistente</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Especialista">
-                                                        <input type="checkbox" id="table-position-especialista">
-                                                        <span class="option-text">Especialista</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="filter-group">
-                                            <label class="filter-label">Sexo</label>
-                                            <div class="custom-select" id="table-gender-select">
-                                                <div class="select-trigger">
-                                                    <span class="select-text">Seleccionar sexo</span>
-                                                    <i class="fas fa-chevron-down select-arrow"></i>
-                                                </div>
-                                                <div class="select-dropdown">
-                                                    <div class="select-option" data-value="todos">
-                                                        <input type="checkbox" id="table-gender-todos" checked>
-                                                        <span class="option-text">Todos</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Masculino">
-                                                        <input type="checkbox" id="table-gender-masculino">
-                                                        <span class="option-text">Masculino</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Femenino">
-                                                        <input type="checkbox" id="table-gender-femenino">
-                                                        <span class="option-text">Femenino</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Otro">
-                                                        <input type="checkbox" id="table-gender-otro">
-                                                        <span class="option-text">Otro</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="filter-group">
-                                            <label class="filter-label">Estado Civil</label>
-                                            <div class="custom-select" id="table-marital-select">
-                                                <div class="select-trigger">
-                                                    <span class="select-text">Seleccionar estado civil</span>
-                                                    <i class="fas fa-chevron-down select-arrow"></i>
-                                                </div>
-                                                <div class="select-dropdown">
-                                                    <div class="select-option" data-value="todos">
-                                                        <input type="checkbox" id="table-marital-todos" checked>
-                                                        <span class="option-text">Todos</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Soltero">
-                                                        <input type="checkbox" id="table-marital-soltero">
-                                                        <span class="option-text">Soltero</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Casado">
-                                                        <input type="checkbox" id="table-marital-casado">
-                                                        <span class="option-text">Casado</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Divorciado">
-                                                        <input type="checkbox" id="table-marital-divorciado">
-                                                        <span class="option-text">Divorciado</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="Viudo">
-                                                        <input type="checkbox" id="table-marital-viudo">
-                                                        <span class="option-text">Viudo</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="filter-group">
-                                            <label class="filter-label">Edad</label>
-                                            <div class="custom-select" id="table-age-select">
-                                                <div class="select-trigger">
-                                                    <span class="select-text">Seleccionar rango de edad</span>
-                                                    <i class="fas fa-chevron-down select-arrow"></i>
-                                                </div>
-                                                <div class="select-dropdown">
-                                                    <div class="select-option" data-value="todos">
-                                                        <input type="checkbox" id="table-age-todos" checked>
-                                                        <span class="option-text">Todos</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="18-25">
-                                                        <input type="checkbox" id="table-age-18-25">
-                                                        <span class="option-text">18-25 años</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="26-35">
-                                                        <input type="checkbox" id="table-age-26-35">
-                                                        <span class="option-text">26-35 años</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="36-45">
-                                                        <input type="checkbox" id="table-age-36-45">
-                                                        <span class="option-text">36-45 años</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="46-55">
-                                                        <input type="checkbox" id="table-age-46-55">
-                                                        <span class="option-text">46-55 años</span>
-                                                    </div>
-                                                    <div class="select-option" data-value="55+">
-                                                        <input type="checkbox" id="table-age-55+">
-                                                        <span class="option-text">55+ años</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="filter-actions">
                                             <button class="apply-filters-btn" id="apply-table-filters-btn">
                                                 <i class="far fa-check"></i>
@@ -2303,7 +2132,7 @@
         }
 
         function setupTableCustomSelects() {
-            const selectIds = ['table-risk-select', 'table-category-select', 'table-area-select', 'table-position-select', 'table-gender-select', 'table-marital-select', 'table-age-select'];
+            const selectIds = ['table-risk-select', 'table-category-select'];
             
             selectIds.forEach(selectId => {
                 const select = document.getElementById(selectId);
