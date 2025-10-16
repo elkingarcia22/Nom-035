@@ -1142,9 +1142,25 @@
 
         .category-cell {
             font-weight: 600;
-            background-color: #f8fafc;
+            background-color: white;
             border-right: 1px solid #e5e7eb;
             min-width: 200px;
+        }
+
+        .category-summary {
+            background-color: #f8fafc;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .category-summary .category-cell {
+            font-weight: 700;
+            background-color: #f8fafc;
+        }
+
+        .summary-text {
+            font-weight: 600;
+            color: #6b7280;
+            font-style: italic;
         }
 
         .risk-count {
@@ -1345,16 +1361,33 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <!-- Categoría: Ambiente de trabajo -->
+                                                <tr class="category-summary">
+                                                    <td class="category-cell">Ambiente de trabajo</td>
+                                                    <td colspan="2" class="summary-text">Resumen General</td>
+                                                    <td class="risk-count">12</td>
+                                                    <td class="percentage">8.0%</td>
+                                                    <td><span class="risk-badge bajo">Bajo</span></td>
+                                                </tr>
                                                 <tr>
-                                                    <td rowspan="1" class="category-cell">🟦 Ambiente de trabajo</td>
+                                                    <td class="category-cell"></td>
                                                     <td>Condiciones en el ambiente de trabajo</td>
                                                     <td>Condiciones físicas, seguridad y comodidad</td>
                                                     <td class="risk-count">12</td>
                                                     <td class="percentage">8.0%</td>
                                                     <td><span class="risk-badge bajo">Bajo</span></td>
                                                 </tr>
+                                                
+                                                <!-- Categoría: Factores propios de la actividad -->
+                                                <tr class="category-summary">
+                                                    <td class="category-cell">Factores propios de la actividad</td>
+                                                    <td colspan="2" class="summary-text">Resumen General</td>
+                                                    <td class="risk-count">43</td>
+                                                    <td class="percentage">28.7%</td>
+                                                    <td><span class="risk-badge medio">Medio</span></td>
+                                                </tr>
                                                 <tr>
-                                                    <td rowspan="2" class="category-cell">🟨 Factores propios de la actividad</td>
+                                                    <td class="category-cell"></td>
                                                     <td>Carga de trabajo</td>
                                                     <td>Exigencias cuantitativas, mentales y emocionales</td>
                                                     <td class="risk-count">28</td>
@@ -1362,22 +1395,41 @@
                                                     <td><span class="risk-badge medio">Medio</span></td>
                                                 </tr>
                                                 <tr>
+                                                    <td class="category-cell"></td>
                                                     <td>Falta de control sobre el trabajo</td>
                                                     <td>Claridad de rol, autonomía, reconocimiento</td>
                                                     <td class="risk-count">15</td>
                                                     <td class="percentage">10.0%</td>
                                                     <td><span class="risk-badge bajo">Bajo</span></td>
                                                 </tr>
+                                                
+                                                <!-- Categoría: Organización del tiempo de trabajo -->
+                                                <tr class="category-summary">
+                                                    <td class="category-cell">Organización del tiempo de trabajo</td>
+                                                    <td colspan="2" class="summary-text">Resumen General</td>
+                                                    <td class="risk-count">22</td>
+                                                    <td class="percentage">14.7%</td>
+                                                    <td><span class="risk-badge medio">Medio</span></td>
+                                                </tr>
                                                 <tr>
-                                                    <td rowspan="1" class="category-cell">🟩 Organización del tiempo de trabajo</td>
+                                                    <td class="category-cell"></td>
                                                     <td>Jornada de trabajo</td>
                                                     <td>Duración, distribución y pausas</td>
                                                     <td class="risk-count">22</td>
                                                     <td class="percentage">14.7%</td>
                                                     <td><span class="risk-badge medio">Medio</span></td>
                                                 </tr>
+                                                
+                                                <!-- Categoría: Liderazgo y relaciones en el trabajo -->
+                                                <tr class="category-summary">
+                                                    <td class="category-cell">Liderazgo y relaciones en el trabajo</td>
+                                                    <td colspan="2" class="summary-text">Resumen General</td>
+                                                    <td class="risk-count">26</td>
+                                                    <td class="percentage">17.3%</td>
+                                                    <td><span class="risk-badge bajo">Bajo</span></td>
+                                                </tr>
                                                 <tr>
-                                                    <td rowspan="2" class="category-cell">🟧 Liderazgo y relaciones en el trabajo</td>
+                                                    <td class="category-cell"></td>
                                                     <td>Liderazgo</td>
                                                     <td>Estilo de liderazgo, comunicación, apoyo</td>
                                                     <td class="risk-count">18</td>
@@ -1385,22 +1437,41 @@
                                                     <td><span class="risk-badge bajo">Bajo</span></td>
                                                 </tr>
                                                 <tr>
+                                                    <td class="category-cell"></td>
                                                     <td>Relaciones en el trabajo</td>
                                                     <td>Comunicación, colaboración, confianza, respeto</td>
                                                     <td class="risk-count">8</td>
                                                     <td class="percentage">5.3%</td>
                                                     <td><span class="risk-badge nulo">Nulo</span></td>
                                                 </tr>
+                                                
+                                                <!-- Categoría: Violencia laboral -->
+                                                <tr class="category-summary">
+                                                    <td class="category-cell">Violencia laboral</td>
+                                                    <td colspan="2" class="summary-text">Resumen General</td>
+                                                    <td class="risk-count">5</td>
+                                                    <td class="percentage">3.3%</td>
+                                                    <td><span class="risk-badge nulo">Nulo</span></td>
+                                                </tr>
                                                 <tr>
-                                                    <td rowspan="1" class="category-cell">🟥 Violencia laboral</td>
+                                                    <td class="category-cell"></td>
                                                     <td>Violencia laboral</td>
                                                     <td>Maltrato, acoso, discriminación, hostigamiento</td>
                                                     <td class="risk-count">5</td>
                                                     <td class="percentage">3.3%</td>
                                                     <td><span class="risk-badge nulo">Nulo</span></td>
                                                 </tr>
+                                                
+                                                <!-- Categoría: Entorno organizacional -->
+                                                <tr class="category-summary">
+                                                    <td class="category-cell">Entorno organizacional</td>
+                                                    <td colspan="2" class="summary-text">Resumen General</td>
+                                                    <td class="risk-count">77</td>
+                                                    <td class="percentage">51.3%</td>
+                                                    <td><span class="risk-badge alto">Alto</span></td>
+                                                </tr>
                                                 <tr>
-                                                    <td rowspan="3" class="category-cell">🟪 Entorno organizacional</td>
+                                                    <td class="category-cell"></td>
                                                     <td>Reconocimiento del desempeño</td>
                                                     <td>Estímulo, desarrollo y valoración</td>
                                                     <td class="risk-count">25</td>
@@ -1408,6 +1479,7 @@
                                                     <td><span class="risk-badge medio">Medio</span></td>
                                                 </tr>
                                                 <tr>
+                                                    <td class="category-cell"></td>
                                                     <td>Sentido de pertenencia e identidad organizacional</td>
                                                     <td>Orgullo, compromiso y participación</td>
                                                     <td class="risk-count">20</td>
@@ -1415,6 +1487,7 @@
                                                     <td><span class="risk-badge bajo">Bajo</span></td>
                                                 </tr>
                                                 <tr>
+                                                    <td class="category-cell"></td>
                                                     <td>Estabilidad y justicia organizacional</td>
                                                     <td>Equidad, respeto y seguridad laboral</td>
                                                     <td class="risk-count">32</td>
