@@ -46,7 +46,10 @@ const TOP_NAV_VARIANTS = {
     encuestas: {
         name: 'Encuestas',
         tabs: [
-            { id: 'encuestas', label: 'Encuestas', icon: 'far fa-clipboard-list-check', url: 'encuestas.html' }
+            { id: 'encuestas', label: 'Encuestas', icon: 'far fa-clipboard-list-check', url: 'encuestas.html' },
+            { id: 'demograficos', label: 'Datos demográficos', icon: 'far fa-users', url: '#' },
+            { id: 'plantilla', label: 'Crear con plantilla', icon: 'far fa-file-plus', url: '#' },
+            { id: 'crear', label: 'Crear encuesta', icon: 'far fa-plus-circle', url: '#' }
         ]
     },
     tareas: {
