@@ -917,8 +917,7 @@
             color: #9ca3af;
         }
 
-        .simple-search-container::before {
-            content: "⚲";
+        .simple-search-icon {
             position: absolute;
             left: 12px;
             top: 50%;
@@ -1136,9 +1135,10 @@
                                         <div class="panel-header">
                                             <h3>Participantes</h3>
                                             <div class="search-filters-container">
-                                                <div class="simple-search-container" style="flex: 1;">
-                                                    <input type="text" id="participant-search" placeholder="Buscar participante..." class="simple-search-input">
-                                                </div>
+                                            <div class="simple-search-container" style="flex: 1;">
+                                                <i class="far fa-search simple-search-icon"></i>
+                                                <input type="text" id="participant-search" placeholder="Buscar participante..." class="simple-search-input">
+                                            </div>
                                                 <button class="filters-button" id="filters-btn" title="Filtros">
                                                     <i class="far fa-filter"></i>
                                                     <span class="filter-badge" id="filter-badge" style="display: none;">0</span>
