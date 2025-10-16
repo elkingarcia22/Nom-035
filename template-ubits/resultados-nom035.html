@@ -870,10 +870,19 @@
             text-align: right;
         }
 
-        .section-icon {
+        .section-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: #e5e7eb;
+            color: #374151;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 600;
             margin-right: 12px;
-            font-size: 16px;
-            color: #6b7280;
+            flex-shrink: 0;
         }
 
         .section-title {
@@ -2230,8 +2239,8 @@
                 ${Object.entries(participant.surveyResults).map(([sectionName, questions], index) => `
                     <div class="survey-section">
                         <div class="section-header" onclick="toggleSection(this)">
-                            <i class="far fa-circle section-icon"></i>
-                            <div class="section-title">🔹 ${sectionName}</div>
+                            <div class="section-number">${index + 1}</div>
+                            <div class="section-title">${sectionName}</div>
                             <div class="section-risk-info">
                                 <span class="section-risk-level ${getSectionRiskLevel(questions)}">${getSectionRiskLevel(questions)}</span>
                                 <span class="section-percentage">${getSectionPercentage(questions)}%</span>

@@ -234,38 +234,40 @@
         }
 
         .progress-bar {
-            width: 80px;
-            height: 6px;
-            background: var(--ubits-bg-3);
-            border-radius: 3px;
+            width: 120px;
+            height: 12px;
+            background: #f3f4f6;
+            border-radius: 6px;
             overflow: hidden;
             position: relative;
+            border: 1px solid #e5e7eb;
         }
 
         .progress-fill {
             height: 100%;
-            background: var(--ubits-accent-brand);
-            border-radius: 3px;
+            background: #3b82f6;
+            border-radius: 5px;
             transition: width 0.3s ease;
         }
 
         .progress-fill.completed {
-            background: var(--ubits-feedback-accent-success);
+            background: #10b981;
         }
 
         .progress-fill.in-progress {
-            background: var(--ubits-accent-brand);
+            background: #3b82f6;
         }
 
         .progress-fill.draft {
-            background: var(--ubits-bg-3);
+            background: #9ca3af;
         }
 
         .progress-text {
-            color: var(--ubits-fg-1-medium);
-            font-size: 14px;
-            font-weight: 500;
-            min-width: 35px;
+            color: #374151;
+            font-size: 13px;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: right;
         }
 
         /* Checkboxes mejorados */
