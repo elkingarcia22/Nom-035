@@ -121,6 +121,12 @@
             align-items: center;
         }
 
+        .detail-separator {
+            width: 1px;
+            height: 16px;
+            background: #d1d5db;
+        }
+
         .detail-item {
             display: flex;
             align-items: center;
@@ -129,13 +135,17 @@
             font-size: 14px;
         }
 
+        .detail-item.bold {
+            font-weight: 600;
+        }
+
         .detail-item i {
             color: #9ca3af;
             font-size: 14px;
         }
 
         .status-badge {
-            background: #f59e0b;
+            background: #10b981;
             color: white;
             padding: 4px 8px;
             border-radius: 12px;
@@ -338,19 +348,22 @@
                                 <i class="far fa-users"></i>
                                 <span>Enviado a 150 colaboradores</span>
                             </div>
+                            <div class="detail-separator"></div>
                             <div class="detail-item">
                                 <i class="far fa-calendar"></i>
-                                <span>Inicio 15 octubre</span>
+                                <span>Inicio 15 octubre 2024</span>
                             </div>
                             <div class="detail-item">
                                 <span>Hasta 15 noviembre 2024</span>
                             </div>
+                            <div class="detail-separator"></div>
                             <div class="detail-item">
                                 <span>Privacidad Anónima</span>
                             </div>
+                            <div class="detail-separator"></div>
                             <div class="detail-item">
                                 <span>Estado</span>
-                                <span class="status-badge">En progreso</span>
+                                <span class="status-badge">Completado</span>
                             </div>
                         </div>
                     </div>
