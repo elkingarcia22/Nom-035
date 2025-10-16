@@ -1145,6 +1145,7 @@
     </div>
 
     <!-- Scripts -->
+    <script src="script.js"></script>
     <script src="components/sidebar.js"></script>
     <script src="components/tab-bar.js"></script>
     <script src="components/floating-menu.js"></script>
@@ -1193,10 +1194,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Cargar componentes
             setTimeout(() => {
-                loadSidebar('sidebar-container', 'encuestas');
+                loadSidebar('encuestas');
                 loadProfileMenu('profile-menu-container');
                 loadFloatingMenu('floating-menu-container');
-            }, 100);
+            }, 200);
         });
     </script>
 </body>
