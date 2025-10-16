@@ -1360,6 +1360,86 @@
                                                 </button>
                                             </div>
                                         </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">País</label>
+                                            <div class="custom-select" id="country-select">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Seleccionar países</span>
+                                                    <i class="fas fa-chevron-down select-arrow"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos">
+                                                        <input type="checkbox" id="country-todos">
+                                                        <span class="option-text">Todos</span>
+                                                    </div>
+                                                    <div class="select-option" data-value="Colombia">
+                                                        <input type="checkbox" id="country-colombia">
+                                                        <span class="option-text">Colombia</span>
+                                                    </div>
+                                                    <div class="select-option" data-value="México">
+                                                        <input type="checkbox" id="country-mexico">
+                                                        <span class="option-text">México</span>
+                                                    </div>
+                                                    <div class="select-option" data-value="Argentina">
+                                                        <input type="checkbox" id="country-argentina">
+                                                        <span class="option-text">Argentina</span>
+                                                    </div>
+                                                    <div class="select-option" data-value="Chile">
+                                                        <input type="checkbox" id="country-chile">
+                                                        <span class="option-text">Chile</span>
+                                                    </div>
+                                                    <div class="select-option" data-value="Perú">
+                                                        <input type="checkbox" id="country-peru">
+                                                        <span class="option-text">Perú</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Ciudad</label>
+                                            <div class="custom-select" id="city-select">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Seleccionar ciudades</span>
+                                                    <i class="fas fa-chevron-down select-arrow"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos">
+                                                        <input type="checkbox" id="city-todos">
+                                                        <span class="option-text">Todos</span>
+                                                    </div>
+                                                    <div class="select-option" data-value="Bogotá">
+                                                        <input type="checkbox" id="city-bogota">
+                                                        <span class="option-text">Bogotá</span>
+                                                    </div>
+                                                    <div class="select-option" data-value="Medellín">
+                                                        <input type="checkbox" id="city-medellin">
+                                                        <span class="option-text">Medellín</span>
+                                                    </div>
+                                                    <div class="select-option" data-value="Cali">
+                                                        <input type="checkbox" id="city-cali">
+                                                        <span class="option-text">Cali</span>
+                                                    </div>
+                                                    <div class="select-option" data-value="Ciudad de México">
+                                                        <input type="checkbox" id="city-mexico">
+                                                        <span class="option-text">Ciudad de México</span>
+                                                    </div>
+                                                    <div class="select-option" data-value="Buenos Aires">
+                                                        <input type="checkbox" id="city-buenos-aires">
+                                                        <span class="option-text">Buenos Aires</span>
+                                                    </div>
+                                                    <div class="select-option" data-value="Santiago">
+                                                        <input type="checkbox" id="city-santiago">
+                                                        <span class="option-text">Santiago</span>
+                                                    </div>
+                                                    <div class="select-option" data-value="Lima">
+                                                        <input type="checkbox" id="city-lima">
+                                                        <span class="option-text">Lima</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="filters-overlay" id="filters-overlay"></div>
 
@@ -1491,6 +1571,8 @@
                     position: "Gerente",
                     gender: "Femenino",
                     maritalStatus: "Casada",
+                    country: "Colombia",
+                    city: "Bogotá",
                     experience: "8 años",
                     email: "maria.gonzalez@empresa.com"
                 },
@@ -1538,6 +1620,8 @@
                     position: "Desarrollador",
                     gender: "Masculino",
                     maritalStatus: "Soltero",
+                    country: "México",
+                    city: "Ciudad de México",
                     experience: "5 años",
                     email: "carlos.rodriguez@empresa.com"
                 },
@@ -2497,6 +2581,8 @@
             const genderFilters = getSelectedValues('gender-select');
             const maritalStatusFilters = getSelectedValues('marital-status-select');
             const ageFilters = getSelectedValues('age-select');
+            const countryFilters = getSelectedValues('country-select');
+            const cityFilters = getSelectedValues('city-select');
             const searchTerm = document.getElementById('participant-search').value.toLowerCase();
 
             console.log('Aplicando filtros:', {
@@ -2517,7 +2603,9 @@
                     participant.details.department.toLowerCase().includes(searchTerm) ||
                     participant.details.position.toLowerCase().includes(searchTerm) ||
                     participant.details.gender.toLowerCase().includes(searchTerm) ||
-                    participant.details.maritalStatus.toLowerCase().includes(searchTerm);
+                    participant.details.maritalStatus.toLowerCase().includes(searchTerm) ||
+                    participant.details.country.toLowerCase().includes(searchTerm) ||
+                    participant.details.city.toLowerCase().includes(searchTerm);
 
                 // Filtro por nivel de riesgo
                 const matchesRisk = riskFilters.length === 0 || riskFilters.includes('todos') || riskFilters.includes(participant.riskLevel);
@@ -2536,8 +2624,14 @@
 
                 // Filtro por edad
                 const matchesAge = ageFilters.length === 0 || ageFilters.includes('todos') || matchesAgeRange(participant.details.age, ageFilters);
+                
+                // Filtro por país
+                const matchesCountry = countryFilters.length === 0 || countryFilters.includes('todos') || countryFilters.includes(participant.details.country);
+                
+                // Filtro por ciudad
+                const matchesCity = cityFilters.length === 0 || cityFilters.includes('todos') || cityFilters.includes(participant.details.city);
 
-                const matches = matchesSearch && matchesRisk && matchesDepartment && matchesPosition && matchesGender && matchesMaritalStatus && matchesAge;
+                const matches = matchesSearch && matchesRisk && matchesDepartment && matchesPosition && matchesGender && matchesMaritalStatus && matchesAge && matchesCountry && matchesCity;
                 
                 if (departmentFilters.length > 0 && !departmentFilters.includes('todos')) {
                     console.log(`Participante ${participant.name} (${participant.details.department}): matchesDepartment = ${matchesDepartment}, departmentFilters = ${departmentFilters}`);
@@ -2550,11 +2644,11 @@
             renderParticipantsList(filteredParticipants);
             
             // Actualizar badge de filtros
-            updateFilterBadge(riskFilters, departmentFilters, positionFilters, genderFilters, maritalStatusFilters, ageFilters, searchTerm);
+            updateFilterBadge(riskFilters, departmentFilters, positionFilters, genderFilters, maritalStatusFilters, ageFilters, countryFilters, cityFilters, searchTerm);
         }
 
         // Actualizar badge de filtros
-        function updateFilterBadge(riskFilters, departmentFilters, positionFilters, genderFilters, maritalStatusFilters, ageFilters, searchTerm) {
+        function updateFilterBadge(riskFilters, departmentFilters, positionFilters, genderFilters, maritalStatusFilters, ageFilters, countryFilters, cityFilters, searchTerm) {
             const badge = document.getElementById('filter-badge');
             let activeFiltersCount = 0;
 
@@ -2566,6 +2660,8 @@
                 genderFilters,
                 maritalStatusFilters,
                 ageFilters,
+                countryFilters,
+                cityFilters,
                 searchTerm
             });
 
@@ -2593,6 +2689,16 @@
             if (ageFilters.length > 0 && !ageFilters.includes('todos')) {
                 activeFiltersCount++;
                 console.log('Badge: +1 por ageFilters');
+            }
+            
+            if (countryFilters.length > 0 && !countryFilters.includes('todos')) {
+                activeFiltersCount++;
+                console.log('Badge: +1 por countryFilters');
+            }
+            
+            if (cityFilters.length > 0 && !cityFilters.includes('todos')) {
+                activeFiltersCount++;
+                console.log('Badge: +1 por cityFilters');
             }
             if (searchTerm && searchTerm.trim() !== '') {
                 activeFiltersCount++;
