@@ -212,24 +212,6 @@
             line-height: 1.2;
         }
 
-        .metric-info {
-            position: relative;
-            display: inline-block;
-            margin-left: 4px;
-        }
-
-        .info-icon-small {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #f3f4f6;
-            color: #6b7280;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 9px;
-            cursor: pointer;
-        }
 
         .progress-bar {
             position: relative;
@@ -249,9 +231,10 @@
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: opacity 0.3s ease;
             margin-bottom: 8px;
             pointer-events: none;
+            display: none;
         }
 
         .tooltip::after {
@@ -264,12 +247,10 @@
             border-top-color: #1f2937;
         }
 
-        .progress-bar:hover .tooltip,
-        .progress-multicolor:hover .tooltip,
-        .progress-fill:hover .tooltip,
-        .progress-segment:hover .tooltip {
-            opacity: 1 !important;
-            visibility: visible !important;
+        .progress-bar:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            display: block;
         }
 
         .progress-bar {
@@ -458,11 +439,6 @@
                                     <i class="far fa-chart-bar"></i>
                                 </div>
                                 <h3 class="metric-title">Total de casos de riesgo</h3>
-                                <div class="metric-info">
-                                    <div class="info-icon-small">
-                                        <i class="far fa-info"></i>
-                                    </div>
-                                </div>
                             </div>
                             <div class="metric-content">
                                 <div class="metric-progress-container">
@@ -490,11 +466,6 @@
                                     <i class="far fa-users"></i>
                                 </div>
                                 <h3 class="metric-title">Total canalizados / en seguimiento</h3>
-                                <div class="metric-info">
-                                    <div class="info-icon-small">
-                                        <i class="far fa-info"></i>
-                                    </div>
-                                </div>
                             </div>
                             <div class="metric-content">
                                 <div class="metric-progress-container">
@@ -662,49 +633,38 @@
                 });
             });
 
-            // Funcionalidad de tooltips en barras de progreso
-            const progressBars = document.querySelectorAll('.progress-bar');
-            progressBars.forEach(bar => {
-                bar.addEventListener('mouseenter', function() {
-                    const tooltip = this.querySelector('.tooltip');
-                    if (tooltip) {
-                        tooltip.style.opacity = '1';
-                        tooltip.style.visibility = 'visible';
-                        tooltip.style.display = 'block';
-                    }
-                });
+            // Funcionalidad de tooltips en barras de progreso - SIMPLIFICADO
+            setTimeout(() => {
+                const progressBars = document.querySelectorAll('.progress-bar');
+                console.log('Progress bars encontradas:', progressBars.length);
                 
-                bar.addEventListener('mouseleave', function() {
-                    const tooltip = this.querySelector('.tooltip');
-                    if (tooltip) {
-                        tooltip.style.opacity = '0';
-                        tooltip.style.visibility = 'hidden';
-                        tooltip.style.display = 'none';
-                    }
+                progressBars.forEach((bar, index) => {
+                    console.log(`Configurando tooltip para barra ${index + 1}`);
+                    
+                    bar.addEventListener('mouseenter', function() {
+                        console.log('Mouse enter en barra');
+                        const tooltip = this.querySelector('.tooltip');
+                        if (tooltip) {
+                            console.log('Tooltip encontrado, mostrando...');
+                            tooltip.style.display = 'block';
+                            tooltip.style.opacity = '1';
+                            tooltip.style.visibility = 'visible';
+                        } else {
+                            console.log('Tooltip NO encontrado');
+                        }
+                    });
+                    
+                    bar.addEventListener('mouseleave', function() {
+                        console.log('Mouse leave en barra');
+                        const tooltip = this.querySelector('.tooltip');
+                        if (tooltip) {
+                            tooltip.style.display = 'none';
+                            tooltip.style.opacity = '0';
+                            tooltip.style.visibility = 'hidden';
+                        }
+                    });
                 });
-            });
-
-            // También agregar eventos a los segmentos
-            const progressSegments = document.querySelectorAll('.progress-segment, .progress-fill, .progress-multicolor');
-            progressSegments.forEach(segment => {
-                segment.addEventListener('mouseenter', function() {
-                    const tooltip = this.closest('.progress-bar').querySelector('.tooltip');
-                    if (tooltip) {
-                        tooltip.style.opacity = '1';
-                        tooltip.style.visibility = 'visible';
-                        tooltip.style.display = 'block';
-                    }
-                });
-                
-                segment.addEventListener('mouseleave', function() {
-                    const tooltip = this.closest('.progress-bar').querySelector('.tooltip');
-                    if (tooltip) {
-                        tooltip.style.opacity = '0';
-                        tooltip.style.visibility = 'hidden';
-                        tooltip.style.display = 'none';
-                    }
-                });
-            });
+            }, 1000);
         });
     </script>
 </body>
