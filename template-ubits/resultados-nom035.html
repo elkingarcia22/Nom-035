@@ -116,47 +116,6 @@
             outline-offset: 2px;
         }
 
-        .download-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            min-width: 160px;
-            z-index: 1000;
-            display: none;
-            margin-top: 4px;
-        }
-
-        .download-dropdown.show {
-            display: block;
-        }
-
-        .download-dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 16px;
-            color: #374151;
-            text-decoration: none;
-            font-size: 14px;
-            transition: background-color 0.2s ease;
-        }
-
-        .download-dropdown-item:hover {
-            background: #f3f4f6;
-            color: #1f2937;
-        }
-
-        .download-dropdown-item:first-child {
-            border-radius: 6px 6px 0 0;
-        }
-
-        .download-dropdown-item:last-child {
-            border-radius: 0 0 6px 6px;
-        }
 
         /* Información de la encuesta - EXACTO COMO LA IMAGEN */
         .survey-info {
@@ -1027,26 +986,11 @@
                             <h1>NOM 035 Emocional</h1>
                             <span class="status-badge">Completado</span>
                         </div>
-                        <div style="margin-left: auto; position: relative;">
-                            <button class="ubits-button ubits-button--primary ubits-button--md download-button" type="button" id="download-btn">
+                        <div style="margin-left: auto;">
+                            <button class="ubits-button ubits-button--primary ubits-button--md" type="button" id="download-csv-btn">
                                 <i class="far fa-download"></i>
-                                <span>Descargar</span>
-                                <i class="far fa-chevron-down" style="margin-left: 4px; font-size: 12px;"></i>
+                                <span>Descargar CSV respuestas</span>
                             </button>
-                            <div class="download-dropdown" id="download-dropdown">
-                                <a href="#" class="download-dropdown-item">
-                                    <i class="far fa-file-pdf"></i>
-                                    <span>PDF</span>
-                                </a>
-                                <a href="#" class="download-dropdown-item">
-                                    <i class="far fa-file-excel"></i>
-                                    <span>Excel</span>
-                                </a>
-                                <a href="#" class="download-dropdown-item">
-                                    <i class="far fa-file-csv"></i>
-                                    <span>CSV</span>
-                                </a>
-                            </div>
                         </div>
                     </div>
 
@@ -1135,7 +1079,7 @@
                                             <div class="search-filters-container">
                                                 <div class="ubits-input-wrapper ubits-input-wrapper--left-icon" style="flex: 1;">
                                                     <input type="text" id="participant-search" placeholder="Buscar participante..." class="ubits-input ubits-input--md">
-                                                    <i class="far fa-search ubits-input-icon-left"></i>
+                                                    <i class="fas fa-search ubits-input-icon-left"></i>
                                                 </div>
                                                 <button class="filters-button" id="filters-btn" title="Filtros">
                                                     <i class="far fa-filter"></i>
