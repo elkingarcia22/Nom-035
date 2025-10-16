@@ -82,7 +82,7 @@
         }
 
         .download-button {
-            background: var(--ubits-accent-brand);
+            background: #3b82f6;
             color: white;
             border: none;
             padding: 8px 16px;
@@ -93,12 +93,26 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: background-color 0.2s ease;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            outline: none;
         }
 
         .download-button:hover {
-            background: var(--ubits-accent-brand-hover) !important;
-            color: white !important;
+            background: #2563eb;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-button:active {
+            background: #1d4ed8;
+            transform: translateY(0);
+        }
+
+        .download-button:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: 2px;
         }
 
         /* Información de la encuesta - EXACTO COMO LA IMAGEN */
@@ -335,9 +349,9 @@
                             </div>
                         </div>
                         <div style="margin-left: auto;">
-                            <button class="download-button">
+                            <button class="download-button" type="button">
+                                <i class="far fa-download"></i>
                                 <span>Descargar</span>
-                                <i class="far fa-chevron-down"></i>
                             </button>
                         </div>
                     </div>
