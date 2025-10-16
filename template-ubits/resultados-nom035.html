@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="fontawesome-icons.css">
     <link rel="stylesheet" href="ubits-typography.css">
-    <link rel="stylesheet" href="components/sub-nav.css">
     <link rel="stylesheet" href="components-sidebar.css">
     <link rel="stylesheet" href="components/tab-bar.css">
     <link rel="stylesheet" href="components/floating-menu.css">
@@ -70,6 +69,16 @@
             color: #1f2937;
             font-size: 24px;
             font-weight: 700;
+        }
+
+        .title-section .status-badge {
+            background: #10b981;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
         }
 
 
@@ -964,9 +973,6 @@
 
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Top Navigation -->
-            <div id="top-nav-container"></div>
-            
             <!-- Content Area -->
             <div class="content-area">
                 <div class="results-container">
@@ -978,6 +984,7 @@
                         </button>
                         <div class="title-section">
                             <h1>NOM 035</h1>
+                            <span class="status-badge">Completado</span>
                         </div>
                         <div style="margin-left: auto; position: relative;">
                             <button class="ubits-button ubits-button--primary ubits-button--md download-button" type="button" id="download-btn">
@@ -1004,9 +1011,6 @@
 
                     <!-- Información de la encuesta - EXACTO COMO LA IMAGEN -->
                     <div class="survey-info">
-                        <p class="survey-description">
-                            Esta encuesta te permite evaluar los factores de riesgo psicosocial y el entorno organizacional favorable en el trabajo.
-                        </p>
                         <div class="survey-details">
                             <div class="detail-item">
                                 <i class="far fa-users"></i>
@@ -1023,11 +1027,6 @@
                             <div class="detail-separator"></div>
                             <div class="detail-item">
                                 <span>Privacidad Anónima</span>
-                            </div>
-                            <div class="detail-separator"></div>
-                            <div class="detail-item">
-                                <span>Estado</span>
-                                <span class="status-badge">Completado</span>
                             </div>
                         </div>
 
@@ -1168,36 +1167,32 @@
                                                 </div>
                                             </div>
                                             <div class="filter-group">
-                                                <label class="filter-label">Departamento</label>
-                                                <div class="custom-select" id="department-select">
+                                                <label class="filter-label">Edad</label>
+                                                <div class="custom-select" id="age-select">
                                                     <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar departamentos</span>
+                                                        <span class="select-text">Seleccionar rango de edad</span>
                                                         <i class="fas fa-chevron-down select-arrow"></i>
                                                     </div>
                                                     <div class="select-dropdown">
                                                         <div class="select-option" data-value="todos">
-                                                            <input type="checkbox" id="dept-todos">
+                                                            <input type="checkbox" id="age-todos">
                                                             <span class="option-text">Todos</span>
                                                         </div>
-                                                        <div class="select-option" data-value="Ventas">
-                                                            <input type="checkbox" id="dept-ventas">
-                                                            <span class="option-text">Ventas</span>
+                                                        <div class="select-option" data-value="20-30">
+                                                            <input type="checkbox" id="age-20-30">
+                                                            <span class="option-text">20-30 años</span>
                                                         </div>
-                                                        <div class="select-option" data-value="Tecnología">
-                                                            <input type="checkbox" id="dept-tecnologia">
-                                                            <span class="option-text">Tecnología</span>
+                                                        <div class="select-option" data-value="31-40">
+                                                            <input type="checkbox" id="age-31-40">
+                                                            <span class="option-text">31-40 años</span>
                                                         </div>
-                                                        <div class="select-option" data-value="Recursos Humanos">
-                                                            <input type="checkbox" id="dept-rrhh">
-                                                            <span class="option-text">Recursos Humanos</span>
+                                                        <div class="select-option" data-value="41-50">
+                                                            <input type="checkbox" id="age-41-50">
+                                                            <span class="option-text">41-50 años</span>
                                                         </div>
-                                                        <div class="select-option" data-value="Finanzas">
-                                                            <input type="checkbox" id="dept-finanzas">
-                                                            <span class="option-text">Finanzas</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Administración">
-                                                            <input type="checkbox" id="dept-administracion">
-                                                            <span class="option-text">Administración</span>
+                                                        <div class="select-option" data-value="51+">
+                                                            <input type="checkbox" id="age-51+">
+                                                            <span class="option-text">51+ años</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1290,38 +1285,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                                            <div class="filter-group">
-                                                <label class="filter-label">Rango de Edad</label>
-                                                <div class="custom-select" id="age-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar rango de edad</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos">
-                                                            <input type="checkbox" id="age-todos">
-                                                            <span class="option-text">Todos</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="20-30">
-                                                            <input type="checkbox" id="age-20-30">
-                                                            <span class="option-text">20-30 años</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="31-40">
-                                                            <input type="checkbox" id="age-31-40">
-                                                            <span class="option-text">31-40 años</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="41-50">
-                                                            <input type="checkbox" id="age-41-50">
-                                                            <span class="option-text">41-50 años</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="51+">
-                                                            <input type="checkbox" id="age-51+">
-                                                            <span class="option-text">51+ años</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="filter-actions">
                                                 <button class="apply-filters-btn" id="apply-filters-btn">
                                                     <i class="far fa-check"></i>
@@ -1385,7 +1348,6 @@
     <div id="profile-menu-container"></div>
 
     <script src="components/sidebar.js"></script>
-    <script src="components/sub-nav.js"></script>
     <script src="components/tab-bar.js"></script>
     <script src="components/floating-menu.js"></script>
     <script src="components/profile-menu.js"></script>
@@ -1394,7 +1356,6 @@
         // Cargar componentes dinámicamente
         document.addEventListener('DOMContentLoaded', function() {
             loadSidebar('sidebar-container', 'encuestas');
-            loadSubNav('top-nav-container', 'encuestas');
             loadTabBar('tab-bar-container');
             loadFloatingMenu('floating-menu-container');
             loadProfileMenu('profile-menu-container');
@@ -2019,11 +1980,10 @@
         // Aplicar filtros
         function applyFilters() {
             const riskFilters = getSelectedValues('risk-select');
-            const departmentFilters = getSelectedValues('department-select');
+            const ageFilters = getSelectedValues('age-select');
             const positionFilters = getSelectedValues('position-select');
             const genderFilters = getSelectedValues('gender-select');
             const maritalStatusFilters = getSelectedValues('marital-status-select');
-            const ageFilters = getSelectedValues('age-select');
             const searchTerm = document.getElementById('participant-search').value.toLowerCase();
 
             let filteredParticipants = participantsData.filter(participant => {
@@ -2039,8 +1999,8 @@
                 // Filtro por nivel de riesgo
                 const matchesRisk = riskFilters.length === 0 || riskFilters.includes('todos') || riskFilters.includes(participant.riskLevel);
 
-                // Filtro por departamento
-                const matchesDepartment = departmentFilters.length === 0 || departmentFilters.includes('todos') || departmentFilters.includes(participant.details.department);
+                // Filtro por edad
+                const matchesAge = ageFilters.length === 0 || ageFilters.includes('todos') || matchesAgeRange(participant.details.age, ageFilters);
 
                 // Filtro por cargo
                 const matchesPosition = positionFilters.length === 0 || positionFilters.includes('todos') || positionFilters.includes(participant.details.position);
@@ -2051,10 +2011,7 @@
                 // Filtro por estado civil
                 const matchesMaritalStatus = maritalStatusFilters.length === 0 || maritalStatusFilters.includes('todos') || maritalStatusFilters.includes(participant.details.maritalStatus);
 
-                // Filtro por edad
-                const matchesAge = ageFilters.length === 0 || ageFilters.includes('todos') || matchesAgeRange(participant.details.age, ageFilters);
-
-                return matchesSearch && matchesRisk && matchesDepartment && matchesPosition && matchesGender && matchesMaritalStatus && matchesAge;
+                return matchesSearch && matchesRisk && matchesAge && matchesPosition && matchesGender && matchesMaritalStatus;
             });
 
             renderParticipantsList(filteredParticipants);
@@ -2087,7 +2044,7 @@
 
         // Limpiar filtros
         function clearFilters() {
-            const selectIds = ['risk-select', 'department-select', 'position-select', 'gender-select', 'marital-status-select', 'age-select'];
+            const selectIds = ['risk-select', 'age-select', 'position-select', 'gender-select', 'marital-status-select'];
             
             selectIds.forEach(selectId => {
                 const select = document.getElementById(selectId);
