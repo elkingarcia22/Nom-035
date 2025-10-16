@@ -974,6 +974,54 @@
                 display: none;
             }
         }
+
+        /* Download Dropdown Styles */
+        .download-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .download-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            z-index: 1000;
+            top: 100%;
+            margin-top: 4px;
+        }
+
+        .download-dropdown-content.show {
+            display: block;
+        }
+
+        .download-dropdown-content a {
+            color: #374151;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .download-dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .download-dropdown-content a:hover {
+            background-color: #f9fafb;
+        }
+
+        .download-dropdown-content a i {
+            width: 16px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -1000,10 +1048,27 @@
                             <span class="status-badge">Completado</span>
                         </div>
                         <div style="margin-left: auto;">
-                            <button class="ubits-button ubits-button--primary ubits-button--md" type="button" id="download-csv-btn">
-                                <i class="far fa-download"></i>
-                                <span>Descargar CSV respuestas</span>
-                            </button>
+                            <div class="download-dropdown">
+                                <button class="ubits-button ubits-button--primary ubits-button--md" type="button" id="download-btn" onclick="toggleDownloadDropdown()">
+                                    <i class="far fa-download"></i>
+                                    <span>Descargar</span>
+                                    <i class="far fa-chevron-down"></i>
+                                </button>
+                                <div class="download-dropdown-content" id="download-dropdown-content">
+                                    <a href="#" onclick="downloadCSV()">
+                                        <i class="far fa-file-csv"></i>
+                                        Descargar CSV
+                                    </a>
+                                    <a href="#" onclick="downloadPDF()">
+                                        <i class="far fa-file-pdf"></i>
+                                        Descargar PDF
+                                    </a>
+                                    <a href="#" onclick="downloadExcel()">
+                                        <i class="far fa-file-excel"></i>
+                                        Descargar Excel
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1089,6 +1154,40 @@
     <script src="profile.js"></script>
 
     <script>
+
+        // Funciones para el dropdown de descarga
+        function toggleDownloadDropdown() {
+            const dropdown = document.getElementById('download-dropdown-content');
+            dropdown.classList.toggle('show');
+        }
+
+        function downloadCSV() {
+            alert('Descargando CSV de resultados de entorno laboral...');
+            closeDownloadDropdown();
+        }
+
+        function downloadPDF() {
+            alert('Descargando PDF de resultados de entorno laboral...');
+            closeDownloadDropdown();
+        }
+
+        function downloadExcel() {
+            alert('Descargando Excel de resultados de entorno laboral...');
+            closeDownloadDropdown();
+        }
+
+        function closeDownloadDropdown() {
+            const dropdown = document.getElementById('download-dropdown-content');
+            dropdown.classList.remove('show');
+        }
+
+        // Cerrar dropdown al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            const dropdown = document.querySelector('.download-dropdown');
+            if (dropdown && !dropdown.contains(event.target)) {
+                closeDownloadDropdown();
+            }
+        });
 
         // Inicializar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
