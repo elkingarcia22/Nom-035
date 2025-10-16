@@ -375,9 +375,16 @@
             font-weight: 600;
         }
 
+        .search-filters-container {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+        }
+
         .search-container {
             position: relative;
-            margin-top: 12px;
+            flex: 1;
         }
 
         .search-input {
@@ -402,6 +409,195 @@
             transform: translateY(-50%);
             color: #9ca3af;
             font-size: 14px;
+        }
+
+        .filters-button {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            color: #6b7280;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            width: 36px;
+            height: 36px;
+        }
+
+        .filters-button:hover {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .filters-button:active {
+            background: #d1d5db;
+        }
+
+        /* Side Panel de Filtros */
+        .filters-side-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filters-side-panel.show {
+            right: 0;
+        }
+
+        .filters-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .filters-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+
+        .filters-header h3 {
+            margin: 0;
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .close-filters-btn {
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .close-filters-btn:hover {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .filters-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .filter-group {
+            margin-bottom: 24px;
+        }
+
+        .filter-label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+        .filter-option:hover {
+            background: #f3f4f6;
+        }
+
+        .filter-option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .risk-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .apply-filters-btn {
+            flex: 1;
+            background: var(--ubits-accent-brand);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .apply-filters-btn:hover {
+            background: var(--ubits-accent-brand-hover);
+        }
+
+        .clear-filters-btn {
+            background: #f3f4f6;
+            color: #6b7280;
+            border: 1px solid #d1d5db;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .clear-filters-btn:hover {
+            background: #e5e7eb;
+            color: #374151;
         }
 
         .participants-list {
@@ -493,7 +689,7 @@
         }
 
         .participant-info {
-            padding: 16px;
+            padding: 12px 16px;
             border-bottom: 1px solid #e5e7eb;
         }
 
@@ -508,33 +704,33 @@
         .participant-header {
             display: flex;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 8px;
         }
 
         .participant-avatar-large {
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: 600;
-            font-size: 20px;
-            margin-right: 16px;
+            font-size: 14px;
+            margin-right: 12px;
         }
 
         .participant-details-content h4 {
-            margin: 0 0 4px 0;
+            margin: 0 0 2px 0;
             color: #1f2937;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
         }
 
         .participant-details-content p {
             margin: 0;
             color: #6b7280;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .survey-results {
@@ -820,15 +1016,98 @@
                                     <div class="participants-panel">
                                         <div class="panel-header">
                                             <h3>Participantes</h3>
-                                            <div class="search-container">
-                                                <input type="text" id="participant-search" placeholder="Buscar participante..." class="search-input">
-                                                <i class="far fa-search search-icon"></i>
+                                            <div class="search-filters-container">
+                                                <div class="search-container">
+                                                    <input type="text" id="participant-search" placeholder="Buscar participante..." class="search-input">
+                                                    <i class="far fa-search search-icon"></i>
+                                                </div>
+                                                <button class="filters-button" id="filters-btn" title="Filtros">
+                                                    <i class="far fa-filter"></i>
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="participants-list" id="participants-list">
                                             <!-- Lista de participantes se generará dinámicamente -->
                                         </div>
                                     </div>
+
+                                    <!-- Side Panel de Filtros -->
+                                    <div class="filters-side-panel" id="filters-side-panel">
+                                        <div class="filters-header">
+                                            <h3>Filtros</h3>
+                                            <button class="close-filters-btn" id="close-filters-btn">
+                                                <i class="far fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <div class="filters-content">
+                                            <div class="filter-group">
+                                                <label class="filter-label">Nivel de Riesgo</label>
+                                                <div class="filter-options">
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="nulo" class="risk-filter">
+                                                        <span class="risk-indicator risk-nulo"></span>
+                                                        Nulo
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="bajo" class="risk-filter">
+                                                        <span class="risk-indicator risk-bajo"></span>
+                                                        Bajo
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="medio" class="risk-filter">
+                                                        <span class="risk-indicator risk-medio"></span>
+                                                        Medio
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="alto" class="risk-filter">
+                                                        <span class="risk-indicator risk-alto"></span>
+                                                        Alto
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="muy-alto" class="risk-filter">
+                                                        <span class="risk-indicator risk-muy-alto"></span>
+                                                        Muy Alto
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="filter-group">
+                                                <label class="filter-label">Departamento</label>
+                                                <div class="filter-options">
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Ventas" class="department-filter">
+                                                        Ventas
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Tecnología" class="department-filter">
+                                                        Tecnología
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Recursos Humanos" class="department-filter">
+                                                        Recursos Humanos
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Finanzas" class="department-filter">
+                                                        Finanzas
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Administración" class="department-filter">
+                                                        Administración
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="filter-actions">
+                                                <button class="apply-filters-btn" id="apply-filters-btn">
+                                                    <i class="far fa-check"></i>
+                                                    Aplicar Filtros
+                                                </button>
+                                                <button class="clear-filters-btn" id="clear-filters-btn">
+                                                    <i class="far fa-times"></i>
+                                                    Limpiar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="filters-overlay" id="filters-overlay"></div>
 
                                     <!-- Panel Derecho - Detalles del Participante -->
                                     <div class="participant-details-panel">
@@ -1347,8 +1626,87 @@
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 initializeEmotionalPanel();
+                setupFilters();
             }, 500);
         });
+
+        // Configurar funcionalidad de filtros
+        function setupFilters() {
+            const filtersBtn = document.getElementById('filters-btn');
+            const filtersSidePanel = document.getElementById('filters-side-panel');
+            const filtersOverlay = document.getElementById('filters-overlay');
+            const closeFiltersBtn = document.getElementById('close-filters-btn');
+            const applyFiltersBtn = document.getElementById('apply-filters-btn');
+            const clearFiltersBtn = document.getElementById('clear-filters-btn');
+
+            // Abrir side panel
+            filtersBtn.addEventListener('click', () => {
+                filtersSidePanel.classList.add('show');
+                filtersOverlay.classList.add('show');
+            });
+
+            // Cerrar side panel
+            function closeFilters() {
+                filtersSidePanel.classList.remove('show');
+                filtersOverlay.classList.remove('show');
+            }
+
+            closeFiltersBtn.addEventListener('click', closeFilters);
+            filtersOverlay.addEventListener('click', closeFilters);
+
+            // Aplicar filtros
+            applyFiltersBtn.addEventListener('click', () => {
+                applyFilters();
+                closeFilters();
+            });
+
+            // Limpiar filtros
+            clearFiltersBtn.addEventListener('click', () => {
+                clearFilters();
+                applyFilters();
+            });
+        }
+
+        // Aplicar filtros
+        function applyFilters() {
+            const riskFilters = Array.from(document.querySelectorAll('.risk-filter:checked')).map(cb => cb.value);
+            const departmentFilters = Array.from(document.querySelectorAll('.department-filter:checked')).map(cb => cb.value);
+            const searchTerm = document.getElementById('participant-search').value.toLowerCase();
+
+            let filteredParticipants = participantsData.filter(participant => {
+                // Filtro por búsqueda
+                const matchesSearch = !searchTerm || 
+                    participant.name.toLowerCase().includes(searchTerm) ||
+                    participant.role.toLowerCase().includes(searchTerm) ||
+                    participant.details.department.toLowerCase().includes(searchTerm);
+
+                // Filtro por nivel de riesgo
+                const matchesRisk = riskFilters.length === 0 || riskFilters.includes(participant.riskLevel);
+
+                // Filtro por departamento
+                const matchesDepartment = departmentFilters.length === 0 || departmentFilters.includes(participant.details.department);
+
+                return matchesSearch && matchesRisk && matchesDepartment;
+            });
+
+            renderParticipantsList(filteredParticipants);
+        }
+
+        // Limpiar filtros
+        function clearFilters() {
+            document.querySelectorAll('.risk-filter, .department-filter').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            document.getElementById('participant-search').value = '';
+        }
+
+        // Actualizar función de búsqueda para incluir filtros
+        function setupSearch() {
+            const searchInput = document.getElementById('participant-search');
+            searchInput.addEventListener('input', () => {
+                applyFilters();
+            });
+        }
     </script>
 </body>
 </html>
