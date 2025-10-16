@@ -1848,22 +1848,6 @@
             }
         }
 
-        // Configurar búsqueda
-        function setupSearch() {
-            const searchInput = document.getElementById('participant-search');
-            searchInput.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase();
-                const filteredParticipants = participantsData.filter(participant => 
-                    participant.name.toLowerCase().includes(searchTerm) ||
-                    participant.role.toLowerCase().includes(searchTerm) ||
-                    participant.details.department.toLowerCase().includes(searchTerm) ||
-                    participant.details.position.toLowerCase().includes(searchTerm) ||
-                    participant.details.gender.toLowerCase().includes(searchTerm) ||
-                    participant.details.maritalStatus.toLowerCase().includes(searchTerm)
-                );
-                renderParticipantsList(filteredParticipants);
-            });
-        }
 
         // Inicializar panel emocional cuando se carga la página
         document.addEventListener('DOMContentLoaded', function() {
@@ -2023,6 +2007,16 @@
             const ageFilters = getSelectedValues('age-select');
             const searchTerm = document.getElementById('participant-search').value.toLowerCase();
 
+            console.log('Aplicando filtros:', {
+                riskFilters,
+                departmentFilters,
+                positionFilters,
+                genderFilters,
+                maritalStatusFilters,
+                ageFilters,
+                searchTerm
+            });
+
             let filteredParticipants = participantsData.filter(participant => {
                 // Filtro por búsqueda
                 const matchesSearch = !searchTerm || 
@@ -2051,9 +2045,16 @@
                 // Filtro por edad
                 const matchesAge = ageFilters.length === 0 || ageFilters.includes('todos') || matchesAgeRange(participant.details.age, ageFilters);
 
-                return matchesSearch && matchesRisk && matchesDepartment && matchesPosition && matchesGender && matchesMaritalStatus && matchesAge;
+                const matches = matchesSearch && matchesRisk && matchesDepartment && matchesPosition && matchesGender && matchesMaritalStatus && matchesAge;
+                
+                if (departmentFilters.length > 0 && !departmentFilters.includes('todos')) {
+                    console.log(`Participante ${participant.name} (${participant.details.department}): matchesDepartment = ${matchesDepartment}, departmentFilters = ${departmentFilters}`);
+                }
+                
+                return matches;
             });
 
+            console.log(`Filtrados ${filteredParticipants.length} de ${participantsData.length} participantes`);
             renderParticipantsList(filteredParticipants);
         }
 
