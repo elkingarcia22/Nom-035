@@ -2602,28 +2602,48 @@
             const badge = document.getElementById('filter-badge');
             let activeFiltersCount = 0;
 
+            // Debug: Mostrar valores recibidos
+            console.log('Badge Debug - Valores recibidos:', {
+                riskFilters,
+                departmentFilters,
+                positionFilters,
+                genderFilters,
+                maritalStatusFilters,
+                ageFilters,
+                searchTerm
+            });
+
             // Contar filtros activos (excluyendo "todos" y búsqueda vacía)
             if (riskFilters.length > 0 && !riskFilters.includes('todos')) {
                 activeFiltersCount++;
+                console.log('Badge: +1 por riskFilters');
             }
             if (departmentFilters.length > 0 && !departmentFilters.includes('todos')) {
                 activeFiltersCount++;
+                console.log('Badge: +1 por departmentFilters');
             }
             if (positionFilters.length > 0 && !positionFilters.includes('todos')) {
                 activeFiltersCount++;
+                console.log('Badge: +1 por positionFilters');
             }
             if (genderFilters.length > 0 && !genderFilters.includes('todos')) {
                 activeFiltersCount++;
+                console.log('Badge: +1 por genderFilters');
             }
             if (maritalStatusFilters.length > 0 && !maritalStatusFilters.includes('todos')) {
                 activeFiltersCount++;
+                console.log('Badge: +1 por maritalStatusFilters');
             }
             if (ageFilters.length > 0 && !ageFilters.includes('todos')) {
                 activeFiltersCount++;
+                console.log('Badge: +1 por ageFilters');
             }
             if (searchTerm && searchTerm.trim() !== '') {
                 activeFiltersCount++;
+                console.log('Badge: +1 por searchTerm');
             }
+
+            console.log('Badge: Total de filtros activos:', activeFiltersCount);
 
             // Mostrar/ocultar badge y actualizar número
             if (activeFiltersCount > 0) {
