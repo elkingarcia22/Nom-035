@@ -392,6 +392,9 @@
             align-items: center;
             width: 100%;
             max-width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
         }
 
         .search-container {
@@ -400,6 +403,9 @@
             width: 100%;
             max-width: calc(100% - 44px);
             min-width: 0;
+            background: transparent;
+            border: none;
+            outline: none;
         }
 
         .search-input {
@@ -410,6 +416,8 @@
             font-size: 14px;
             background: white;
             box-sizing: border-box;
+            position: relative;
+            z-index: 1;
         }
 
         .search-input:focus {
@@ -425,6 +433,8 @@
             transform: translateY(-50%);
             color: #9ca3af;
             font-size: 14px;
+            z-index: 2;
+            pointer-events: none;
         }
 
         .filters-button {
