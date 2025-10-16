@@ -33,8 +33,8 @@
         /* Header de resultados - EXACTO COMO LA IMAGEN */
         .results-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 24px;
             margin-bottom: 24px;
         }
 
@@ -82,7 +82,7 @@
         }
 
         .download-button {
-            background: #1e40af;
+            background: var(--ubits-accent-brand);
             color: white;
             border: none;
             padding: 8px 16px;
@@ -96,7 +96,7 @@
         }
 
         .download-button:hover {
-            background: #1d4ed8;
+            background: var(--ubits-accent-brand-hover);
         }
 
         /* Información de la encuesta - EXACTO COMO LA IMAGEN */
@@ -320,10 +320,12 @@
                                 <i class="far fa-info"></i>
                             </div>
                         </div>
-                        <button class="download-button">
-                            <span>Descargar</span>
-                            <i class="far fa-chevron-down"></i>
-                        </button>
+                        <div style="margin-left: auto;">
+                            <button class="download-button">
+                                <span>Descargar</span>
+                                <i class="far fa-chevron-down"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Información de la encuesta - EXACTO COMO LA IMAGEN -->
