@@ -283,8 +283,8 @@
 
 
 
-        /* Tabs - NUEVO ESTILO CON ICONOS A LA DERECHA */
-        .tabs-container {
+        /* Panel emocional container */
+        .panel-emocional-container {
             background: transparent;
             border-radius: 8px;
             padding: 0;
@@ -1146,25 +1146,8 @@
                         </div>
                     </div>
 
-                    <!-- Tabs de navegación - EXACTO COMO LA IMAGEN -->
-                    <div class="tabs-container">
-                        <div class="tabs-header">
-                            <button class="tab-button active" data-tab="panel-emocional">
-                                <div class="tab-icon">
-                                    <i class="far fa-heart"></i>
-                                </div>
-                                Panel emocional ATS
-                            </button>
-                            <button class="tab-button" data-tab="general">
-                                <div class="tab-icon">
-                                    <i class="far fa-chart-bar"></i>
-                                </div>
-                                General
-                            </button>
-                        </div>
-                        <div class="tab-content">
-                            <!-- Panel emocional -->
-                            <div class="tab-panel active" id="panel-emocional">
+                    <!-- Panel emocional ATS -->
+                    <div class="panel-emocional-container">
                                 <div class="panel-container">
                                     <!-- Panel Izquierdo - Lista de Participantes -->
                                     <div class="participants-panel">
@@ -1415,22 +1398,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- General -->
-                            <div class="tab-panel" id="general">
-                                <h3 style="margin-bottom: 16px; color: #1f2937; font-size: 18px; font-weight: 600;">General</h3>
-                                <p style="color: #6b7280; margin-bottom: 24px; line-height: 1.5;">
-                                    Vista general de todos los resultados de la encuesta NOM 035, incluyendo métricas consolidadas y tendencias.
-                                </p>
-                                <!-- Aquí iría el contenido específico del panel general -->
-                                <div style="margin-top: 24px; padding: 20px; background: #f9fafb; border-radius: 8px; text-align: center;">
-                                    <i class="far fa-chart-bar" style="font-size: 48px; color: #9ca3af; margin-bottom: 16px;"></i>
-                                    <p style="color: #6b7280;">
-                                        Contenido del panel general se cargará aquí
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1505,22 +1472,6 @@
 
         // Funcionalidad de tabs
         document.addEventListener('DOMContentLoaded', function() {
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabPanels = document.querySelectorAll('.tab-panel');
-
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const targetTab = this.getAttribute('data-tab');
-                    
-                    // Remover active de todos los botones y paneles
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    tabPanels.forEach(panel => panel.classList.remove('active'));
-                    
-                    // Activar el botón y panel seleccionado
-                    this.classList.add('active');
-                    document.getElementById(targetTab).classList.add('active');
-                });
-            });
 
             // Funcionalidad del desplegable de descarga
             const downloadBtn = document.getElementById('download-btn');
