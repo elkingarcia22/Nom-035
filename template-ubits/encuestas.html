@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UBITS Playground - Dashboard</title>
+    
+    <!-- Estilos locales -->
+    <link rel="stylesheet" href="ubits-colors.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fontawesome-icons.css">
+    <link rel="stylesheet" href="ubits-typography.css">
+    <link rel="stylesheet" href="components/sub-nav.css">
+    <link rel="stylesheet" href="components-sidebar.css">
+    <link rel="stylesheet" href="components/tab-bar.css">
+    <link rel="stylesheet" href="components/floating-menu.css">
+    <link rel="stylesheet" href="components/profile-menu.css">
+    <link rel="stylesheet" href="components/button.css">
+    <link rel="stylesheet" href="profile.css">
+    <style>
+        /* ¡A LA MIERDA LAS REGLAS PENDEJAS! */
+
+        /* Estilos específicos para content-sections - idéntico a left-wrapper */
+        .content-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+            overflow: visible;
+            max-height: none;
+        }
+
+        /* Espaciador para alinear elementos - idéntico a left-wrapper */
+        .content-sections > *:not(:last-child):not(.section-dual):not(.section-single):not(.section-triple):not(.section-quad) {
+            margin-bottom: 16px;
+        }
+
+        /* Espaciador final - idéntico a left-wrapper */
+        .content-sections::after {
+            content: '';
+            height: 0px;
+            flex-shrink: 0;
+        }
+
+        /* Reducir el gap del último elemento - idéntico a left-wrapper */
+        .content-sections > *:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Secciones de widgets */
+        .section-single {
+            display: flex;
+            width: 100%;
+        }
+
+        .section-dual {
+            display: flex;
+            gap: 20px;
+        }
+
+        .section-triple {
+            display: flex;
+            gap: 20px;
+        }
+
+        .section-quad {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Widgets en secciones - sin altura mínima forzada */
+        .section-single > div,
+        .section-dual > div,
+        .section-triple > div,
+        .section-quad > div {
+            background-color: var(--ubits-bg-1);
+            border: none;
+            border-radius: 8px;
+            padding: 16px !important; /* !important para sobrescribir el reset */
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Distribución de anchos */
+        .section-single > div {
+            flex: 1;
+        }
+
+        .section-dual > div {
+            flex: 1;
+        }
+
+        .section-triple > div {
+            flex: 1;
+        }
+
+        .section-quad > div {
+            flex: 1;
+        }
+
+        /* Responsive para secciones */
+        @media (max-width: 1023px) {
+            .content-sections {
+                padding-bottom: 0;
+            }
+            
+            .section-dual,
+            .section-triple,
+            .section-quad {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            /* Ajustar widgets para móvil - sin altura mínima forzada */
+        }
+
+        @media (max-width: 480px) {
+            /* Padding reducido en móviles pequeños - sin altura mínima forzada */
+            .section-single > div,
+            .section-dual > div,
+            .section-triple > div,
+            .section-quad > div {
+                padding: 12px !important; /* !important para sobrescribir el reset */
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="dashboard-container">
+        <div class="tooltip" id="tooltip"></div>
+        
+        <!-- Sidebar Container -->
+        <div id="sidebar-container"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navigation -->
+            <div id="top-nav-container"></div>
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Content wrapper con secciones de widgets -->
+                <div class="content-sections">
+                    <!-- Sección contenido encuestas -->
+                    <div class="section-single">
+                        <div class="widget-contenido-encuestas">
+                            <!-- Header con título y botones de acción -->
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <h1 class="ubits-heading-h1" style="margin: 0; color: var(--ubits-fg-1-high);">Lista de finalizados</h1>
+                                    <span class="ubits-body-md-regular" style="color: var(--ubits-accent-brand);">206 resultados</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <button class="ubits-button ubits-button--tertiary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                        <i class="far fa-search"></i>
+                                    </button>
+                                    <button class="ubits-button ubits-button--tertiary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                        <i class="far fa-filter"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Tabla de encuestas -->
+                            <div style="background: var(--ubits-bg-1); border-radius: 8px; overflow: hidden; border: 1px solid var(--ubits-border-1);">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <!-- Header de la tabla -->
+                                    <thead>
+                                        <tr style="background: var(--ubits-bg-2); border-bottom: 1px solid var(--ubits-border-1);">
+                                            <th style="padding: 12px 16px; text-align: left; border: none;">
+                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                            </th>
+                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">Nombre de la encuesta</th>
+                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">Tipo</th>
+                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">Estado</th>
+                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">Fecha inicio</th>
+                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">Fecha cierre</th>
+                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">Participantes</th>
+                                            <th class="ubits-body-sm-semibold" style="padding: 12px 16px; text-align: left; border: none; color: var(--ubits-fg-1-medium);">% de finalización</th>
+                                        </tr>
+                                    </thead>
+                                    <!-- Cuerpo de la tabla -->
+                                    <tbody>
+                                        <!-- Fila 1: Cultura 2025 -->
+                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-1);">
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Cultura 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Cultura</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-bg-3); color: var(--ubits-fg-1-medium); padding: 4px 8px; border-radius: 4px; font-size: 12px;">Por iniciar</span>
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 enero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 febrero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">200</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
+                                                        <div style="width: 0%; height: 100%; background: var(--ubits-bg-3);"></div>
+                                                    </div>
+                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">0%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 2: Clima 2024 -->
+                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-2);">
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Clima 2024</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Clima</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-accent-brand); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">En progreso</span>
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 enero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 febrero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">200</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
+                                                        <div style="width: 50%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                                    </div>
+                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">50%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 3: eNPS 2024 -->
+                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-1);">
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">eNPS 2024</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">eNPS</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-bg-2); color: var(--ubits-fg-1-medium); padding: 4px 8px; border-radius: 4px; font-size: 12px;">Borrador</span>
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">--</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">--</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">--</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
+                                                        <div style="width: 0%; height: 100%; background: var(--ubits-bg-3);"></div>
+                                                    </div>
+                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">0%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 4: Cultura 2024 -->
+                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-2);">
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Cultura 2024</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Cultura</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-accent-brand); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">En progreso</span>
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 enero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 febrero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">200</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
+                                                        <div style="width: 60%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                                    </div>
+                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">60%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 5: Clima 2024 -->
+                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-1);">
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Clima 2024</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Clima</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-accent-brand); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">En progreso</span>
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 enero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 febrero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">200</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
+                                                        <div style="width: 60%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                                    </div>
+                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">60%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 6: Cultura 2023 -->
+                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-2);">
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Cultura 2023</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Cultura</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-accent-brand); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">En progreso</span>
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 enero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 febrero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">200</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
+                                                        <div style="width: 70%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                                    </div>
+                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">70%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 7: Cultura 2022 -->
+                                        <tr style="border-bottom: 1px solid var(--ubits-border-1); background: var(--ubits-bg-1);">
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Cultura 2022</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Cultura</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-accent-brand); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">En progreso</span>
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 enero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 febrero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">200</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
+                                                        <div style="width: 80%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                                    </div>
+                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">80%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 8: Cultura 2021 -->
+                                        <tr style="background: var(--ubits-bg-2);">
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <input type="checkbox" style="width: 16px; height: 16px; accent-color: var(--ubits-accent-brand);">
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-high);">Cultura 2021</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">Cultura</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <span class="ubits-body-sm-semibold" style="background: var(--ubits-feedback-accent-success); color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">Completado</span>
+                                            </td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 enero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">10 febrero 2025</td>
+                                            <td class="ubits-body-sm-regular" style="padding: 12px 16px; border: none; color: var(--ubits-fg-1-medium);">200</td>
+                                            <td style="padding: 12px 16px; border: none;">
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <div style="width: 60px; height: 4px; background: var(--ubits-bg-3); border-radius: 2px; overflow: hidden;">
+                                                        <div style="width: 100%; height: 100%; background: var(--ubits-accent-brand);"></div>
+                                                    </div>
+                                                    <span class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium);">100%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Tab Bar Container -->
+    <div id="tab-bar-container"></div>
+
+    <!-- Floating Menu Container -->
+    <div id="floating-menu-container"></div>
+    
+    <!-- Profile Menu Container -->
+    <div id="profile-menu-container"></div>
+
+    <script src="components/sidebar.js"></script>
+    <script src="components/sub-nav.js"></script>
+    <script src="components/tab-bar.js"></script>
+    <script src="components/floating-menu.js"></script>
+    <script src="components/profile-menu.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Cargar componentes dinámicamente
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSidebar('sidebar-container', 'encuestas');
+            loadSubNav('top-nav-container', 'encuestas');
+            loadTabBar('tab-bar-container');
+            loadFloatingMenu('floating-menu-container');
+            loadProfileMenu('profile-menu-container');
+            
+            // Activar el tab "Encuestas" específicamente después de cargar el SubNav
+            setTimeout(() => {
+                // Remover active de todos los tabs (desktop y móvil)
+                document.querySelectorAll('.nav-tab, .hamburger-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Activar el tab Encuestas en desktop
+                const encuestasTab = document.querySelector('.nav-tab[data-tab="encuestas"]');
+                if (encuestasTab) {
+                    encuestasTab.classList.add('active');
+                }
+                
+                // Activar el tab Encuestas en móvil (hamburger menu)
+                const encuestasHamburger = document.querySelector('.hamburger-item[data-tab="encuestas"]');
+                if (encuestasHamburger) {
+                    encuestasHamburger.classList.add('active');
+                }
+                
+                // Activar el botón de encuestas en el sidebar
+                const encuestasButton = document.querySelector('.nav-button[data-section="encuestas"]');
+                if (encuestasButton) {
+                    // Remover active de todos los botones del sidebar
+                    document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+                    // Activar el botón de encuestas
+                    encuestasButton.classList.add('active');
+                }
+                
+                // Activar el botón "Módulos" del Tab-bar móvil
+                const modulosTabBarItem = document.querySelector('.tab-bar-item[data-tab="modulos"]');
+                if (modulosTabBarItem) {
+                    // Remover active de todos los items del tab-bar
+                    document.querySelectorAll('.tab-bar-item').forEach(item => item.classList.remove('active'));
+                    // Activar el item módulos
+                    modulosTabBarItem.classList.add('active');
+                }
+                
+                // Activar la opción "Encuestas" como direct link del floating menu
+                if (typeof setActiveDirectLink === 'function') {
+                    setActiveDirectLink('encuestas');
+                }
+            }, 200);
+        });
+    </script>
+</body>
+</html>
