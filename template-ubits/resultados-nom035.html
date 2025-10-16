@@ -107,6 +107,12 @@
             border: 1px solid #e5e7eb;
         }
 
+        .survey-info .metrics-grid {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+        }
+
         .survey-description {
             color: #6b7280;
             margin-bottom: 16px;
@@ -428,76 +434,77 @@
                                 <span class="status-badge">Completado</span>
                             </div>
                         </div>
+
+                        <!-- Métricas clave - DENTRO DEL CONTENEDOR SUPERIOR -->
+                        <div class="metrics-grid">
+                            <!-- Métrica 1: Total de casos de riesgo -->
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <div class="metric-icon">
+                                        <i class="far fa-chart-bar"></i>
+                                    </div>
+                                    <h3 class="metric-title">Total de casos de riesgo</h3>
+                                </div>
+                                <div class="metric-content">
+                                    <div class="metric-progress-container">
+                                        <div class="progress-bar">
+                                            <div class="tooltip">
+                                                Nulo (0-20): 12 casos (27%) | Bajo (21-45): 18 casos (40%) | Medio (46-70): 10 casos (22%) | Alto (71-90): 4 casos (9%) | Muy alto (>90): 1 caso (2%)
+                                            </div>
+                                            <div class="progress-multicolor">
+                                                <div class="progress-segment green" style="width: 27%;"></div>
+                                                <div class="progress-segment orange" style="width: 40%;"></div>
+                                                <div class="progress-segment blue" style="width: 22%;"></div>
+                                                <div class="progress-segment red" style="width: 9%;"></div>
+                                                <div class="progress-segment purple" style="width: 2%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="metric-value">100%<br><span style="font-size: 12px; color: #6b7280;">45 casos</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Métrica 2: Total canalizados / en seguimiento -->
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <div class="metric-icon">
+                                        <i class="far fa-users"></i>
+                                    </div>
+                                    <h3 class="metric-title">Total canalizados / en seguimiento</h3>
+                                </div>
+                                <div class="metric-content">
+                                    <div class="metric-progress-container">
+                                        <div class="progress-bar">
+                                            <div class="tooltip">
+                                                Canalizados: 15 (54%) | En seguimiento: 13 (46%)
+                                            </div>
+                                            <div class="progress-fill follow" style="width: 62%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="metric-value">62%<br><span style="font-size: 12px; color: #6b7280;">28 casos</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Métrica 3: % de participación -->
+                            <div class="metric-card">
+                                <div class="metric-header">
+                                    <div class="metric-icon">
+                                        <i class="far fa-check-circle"></i>
+                                    </div>
+                                    <h3 class="metric-title">% de participación</h3>
+                                </div>
+                                <div class="metric-content">
+                                    <div class="metric-progress-container">
+                                        <div class="progress-bar">
+                                            <div class="progress-fill participation" style="width: 93%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="metric-value">93%<br><span style="font-size: 12px; color: #6b7280;">140/150</span></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Métricas clave - COMPACTAS COMO LA IMAGEN -->
-                    <div class="metrics-grid">
-                        <!-- Métrica 1: Total de casos de riesgo -->
-                        <div class="metric-card">
-                            <div class="metric-header">
-                                <div class="metric-icon">
-                                    <i class="far fa-chart-bar"></i>
-                                </div>
-                                <h3 class="metric-title">Total de casos de riesgo</h3>
-                            </div>
-                            <div class="metric-content">
-                                <div class="metric-progress-container">
-                                    <div class="progress-bar">
-                                        <div class="tooltip">
-                                            Nulo (0-20): 12 casos (27%) | Bajo (21-45): 18 casos (40%) | Medio (46-70): 10 casos (22%) | Alto (71-90): 4 casos (9%) | Muy alto (>90): 1 caso (2%)
-                                        </div>
-                                        <div class="progress-multicolor">
-                                            <div class="progress-segment green" style="width: 27%;"></div>
-                                            <div class="progress-segment orange" style="width: 40%;"></div>
-                                            <div class="progress-segment blue" style="width: 22%;"></div>
-                                            <div class="progress-segment red" style="width: 9%;"></div>
-                                            <div class="progress-segment purple" style="width: 2%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="metric-value">100%<br><span style="font-size: 12px; color: #6b7280;">45 casos</span></div>
-                            </div>
-                        </div>
-
-                        <!-- Métrica 2: Total canalizados / en seguimiento -->
-                        <div class="metric-card">
-                            <div class="metric-header">
-                                <div class="metric-icon">
-                                    <i class="far fa-users"></i>
-                                </div>
-                                <h3 class="metric-title">Total canalizados / en seguimiento</h3>
-                            </div>
-                            <div class="metric-content">
-                                <div class="metric-progress-container">
-                                    <div class="progress-bar">
-                                        <div class="tooltip">
-                                            Canalizados: 15 (54%) | En seguimiento: 13 (46%)
-                                        </div>
-                                        <div class="progress-fill follow" style="width: 62%;"></div>
-                                    </div>
-                                </div>
-                                <div class="metric-value">62%<br><span style="font-size: 12px; color: #6b7280;">28 casos</span></div>
-                            </div>
-                        </div>
-
-                        <!-- Métrica 3: % de participación -->
-                        <div class="metric-card">
-                            <div class="metric-header">
-                                <div class="metric-icon">
-                                    <i class="far fa-check-circle"></i>
-                                </div>
-                                <h3 class="metric-title">% de participación</h3>
-                            </div>
-                            <div class="metric-content">
-                                <div class="metric-progress-container">
-                                    <div class="progress-bar">
-                                        <div class="progress-fill participation" style="width: 93%;"></div>
-                                    </div>
-                                </div>
-                                <div class="metric-value">93%<br><span style="font-size: 12px; color: #6b7280;">140/150</span></div>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Tabs de navegación - EXACTO COMO LA IMAGEN -->
                     <div class="tabs-container">
