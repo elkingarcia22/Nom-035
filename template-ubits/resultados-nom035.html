@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="components/floating-menu.css">
     <link rel="stylesheet" href="components/profile-menu.css">
     <link rel="stylesheet" href="components/button.css">
+    <link rel="stylesheet" href="components/input.css">
     <link rel="stylesheet" href="profile.css">
     <style>
         /* Estilos específicos para la página de resultados - FIEL AL DISEÑO */
@@ -394,41 +395,11 @@
             font-weight: 600;
         }
 
-        /* Search Component - Enfoque completamente nuevo */
+        /* Search and Filters Container - Solo layout básico */
         .search-filters-container {
             display: flex;
             align-items: center;
             gap: 12px;
-        }
-
-        .search-container {
-            position: relative;
-            flex: 1;
-        }
-
-        .search-input {
-            width: 100%;
-            height: 40px;
-            padding-left: 40px;
-            padding-right: 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 14px;
-            background: white;
-            color: #374151;
-            outline: none;
-        }
-
-        .search-input:focus {
-            border-color: var(--ubits-accent-brand);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            top: 12px;
-            color: #9ca3af;
-            font-size: 16px;
         }
 
         /* Filters Button - Tamaño fijo y bien alineado */
@@ -1162,9 +1133,9 @@
                                         <div class="panel-header">
                                             <h3>Participantes</h3>
                                             <div class="search-filters-container">
-                                                <div class="search-container">
-                                                    <input type="text" id="participant-search" placeholder="Buscar participante..." class="search-input">
-                                                    <i class="far fa-search search-icon"></i>
+                                                <div class="ubits-input-wrapper ubits-input-wrapper--left-icon" style="flex: 1;">
+                                                    <input type="text" id="participant-search" placeholder="Buscar participante..." class="ubits-input ubits-input--md">
+                                                    <i class="far fa-search ubits-input-icon-left"></i>
                                                 </div>
                                                 <button class="filters-button" id="filters-btn" title="Filtros">
                                                     <i class="far fa-filter"></i>
@@ -1426,6 +1397,7 @@
     <script src="components/tab-bar.js"></script>
     <script src="components/floating-menu.js"></script>
     <script src="components/profile-menu.js"></script>
+    <script src="components/input.js"></script>
     <script src="script.js"></script>
     <script>
         // Cargar componentes dinámicamente
