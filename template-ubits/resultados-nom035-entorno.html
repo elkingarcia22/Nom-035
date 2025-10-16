@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UBITS Playground - Resultados NOM 035 Entorno Laboral</title>
+    
+    <!-- Estilos locales -->
+    <link rel="stylesheet" href="ubits-colors.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fontawesome-icons.css">
+    <link rel="stylesheet" href="ubits-typography.css">
+    <!-- Font Awesome CDN como respaldo -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="components-sidebar.css">
+    <link rel="stylesheet" href="components/tab-bar.css">
+    <link rel="stylesheet" href="components/floating-menu.css">
+    <link rel="stylesheet" href="components/profile-menu.css">
+    <link rel="stylesheet" href="components/button.css">
+    <link rel="stylesheet" href="components/input.css">
+    <link rel="stylesheet" href="profile.css">
+    <style>
+        /* Estilos específicos para la página de resultados - FIEL AL DISEÑO */
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+            overflow: visible;
+            max-height: none;
+        }
+
+        /* Header de resultados - EXACTO COMO LA IMAGEN */
+        .results-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 2px;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background: #e5e7eb;
+            border-color: #9ca3af;
+            color: #1f2937;
+        }
+
+        .title-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .title-section h1 {
+            margin: 0;
+            color: #1f2937;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .title-section .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid;
+            width: 100px;
+            text-align: center;
+            background: #f0fdf4;
+            color: #166534;
+            border-color: #22c55e;
+        }
+
+        .download-button {
+            background: var(--ubits-accent-brand);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .download-button:hover {
+            background: var(--ubits-accent-brand-hover);
+        }
+
+        /* Información de la encuesta - EXACTO COMO LA IMAGEN */
+        .survey-info {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 0px;
+        }
+
+        .survey-description {
+            color: #6b7280;
+            margin-bottom: 0px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .survey-details {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .detail-separator {
+            width: 1px;
+            height: 16px;
+            background: #d1d5db;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.completed {
+            background: #10b981;
+            color: white;
+        }
+
+        /* Métricas - COMPACTAS COMO LA IMAGEN */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 2px;
+            margin-bottom: 8px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .metric-title-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .metric-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f3f4f6;
+            border-radius: 6px;
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .metric-title {
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .metric-value-section {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .metric-main-number {
+            color: #1f2937;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .metric-unit-text {
+            color: #6b7280;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        /* Panel emocional container */
+        .panel-emocional-container {
+            background: transparent;
+            border-radius: 8px;
+            padding: 0;
+            margin-bottom: 2px;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tab-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-direction: row;
+        }
+
+        .tab-button:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: var(--ubits-accent-brand);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-icon {
+            font-size: 16px;
+        }
+
+        .tab-content {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            padding: 16px 0 0 0;
+            margin-top: 8px;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Panel Container - Layout de dos columnas */
+        .panel-container {
+            display: flex;
+            height: 600px;
+            gap: 0;
+        }
+
+        .participants-panel {
+            flex: 1;
+            border-right: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .participant-details-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Panel Header - Rediseñado desde cero */
+        .panel-header {
+            padding: 12px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .panel-header h3 {
+            margin: 0 0 8px 0;
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Search and Filters Container - Solo layout básico */
+        .search-filters-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Buscador simple */
+        .simple-search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .simple-search-input {
+            width: 100%;
+            height: 40px;
+            padding: 8px 12px 8px 40px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            color: #374151;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease;
+        }
+
+        .simple-search-input:focus {
+            border-color: var(--ubits-accent-brand);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .simple-search-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .simple-search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #6b7280;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .filters-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .filters-button:hover {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .filter-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Filters Side Panel */
+        .filters-side-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filters-side-panel.show {
+            right: 0;
+        }
+
+        .filters-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .filters-overlay.show {
+            display: block;
+        }
+
+        .filters-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .filters-header h3 {
+            margin: 0;
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .close-filters-btn {
+            background: none;
+            border: none;
+            color: #6b7280;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+
+        .close-filters-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .filters-content {
+            flex: 1;
+            padding: 20px 20px 0 20px;
+            overflow-y: auto;
+            padding-bottom: 100px; /* Espacio para los botones fijos */
+        }
+
+        .filter-group {
+            margin-bottom: 24px;
+        }
+
+        .filter-label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .filter-option:hover {
+            background: #f3f4f6;
+        }
+
+        .filter-option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .risk-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .risk-indicator.nulo { background: #9ca3af; }
+        .risk-indicator.bajo { background: #10b981; }
+        .risk-indicator.medio { background: #f59e0b; }
+        .risk-indicator.alto { background: #ef4444; }
+        .risk-indicator.muy-alto { background: #7c3aed; }
+
+        .filter-actions {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            gap: 12px;
+            padding: 20px;
+            background: #fff;
+            border-top: 1px solid #e5e7eb;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .apply-filters-btn, .clear-filters-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .apply-filters-btn {
+            background: var(--ubits-accent-brand);
+            color: white;
+        }
+
+        .apply-filters-btn:hover {
+            background: var(--ubits-accent-brand-hover);
+        }
+
+        .clear-filters-btn {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .clear-filters-btn:hover {
+            background: #e5e7eb;
+        }
+
+        /* Participants List */
+        .participants-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .participant-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 2px;
+            border-left: 4px solid transparent;
+        }
+
+        .participant-item:hover {
+            background: #f3f4f6;
+        }
+
+        .participant-item.selected {
+            background: #eff6ff;
+            border-left-color: var(--ubits-accent-brand);
+        }
+
+        .participant-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .participant-info-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .participant-name {
+            color: #1f2937;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .participant-role {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .risk-level {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .risk-level.nulo { background: #f3f4f6; color: #6b7280; }
+        .risk-level.bajo { background: #dcfce7; color: #166534; }
+        .risk-level.medio { background: #fef3c7; color: #92400e; }
+        .risk-level.alto { background: #fee2e2; color: #991b1b; }
+        .risk-level.muy-alto { background: #f3e8ff; color: #6b21a8; }
+
+        /* Participant Details */
+        .no-selection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #9ca3af;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .no-selection i {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .participant-details {
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .participant-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .participant-avatar-large {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .participant-details-content h4 {
+            margin: 0 0 2px 0;
+            color: #1f2937;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .participant-details-content p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .participant-info {
+            padding: 12px 16px;
+        }
+
+        .participant-info-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .participant-separator {
+            color: #d1d5db;
+        }
+
+        .participant-age, .participant-area, .participant-position, .participant-gender, .participant-marital {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* Survey Results */
+        .survey-results {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .survey-section {
+            margin-bottom: 8px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: #f9fafb;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 4px solid #e5e7eb;
+        }
+
+        .section-header:hover {
+            background: #f3f4f6;
+        }
+
+        .section-header.open {
+            background: #eff6ff;
+            border-left-color: var(--ubits-accent-brand);
+        }
+
+        .section-risk-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .section-risk-level {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-risk-level.nulo { background: #f3f4f6; color: #6b7280; }
+        .section-risk-level.bajo { background: #dcfce7; color: #166534; }
+        .section-risk-level.medio { background: #fef3c7; color: #92400e; }
+        .section-risk-level.alto { background: #fee2e2; color: #991b1b; }
+        .section-risk-level.muy-alto { background: #f3e8ff; color: #6b21a8; }
+
+        .section-percentage {
+            color: #6b7280;
+            font-size: 12px;
+            font-weight: 500;
+            min-width: 35px;
+            text-align: right;
+        }
+
+        .section-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: transparent;
+            color: #374151;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            flex: 1;
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 14px;
+        }
+
+        .section-chevron {
+            color: #6b7280;
+            font-size: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .section-header.open .section-chevron {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            display: none;
+            padding: 16px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+        }
+
+        .section-content.open {
+            display: block;
+        }
+
+        .question-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .question-item:last-child {
+            border-bottom: none;
+        }
+
+        .question-text {
+            flex: 1;
+            color: #374151;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .question-answer {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .answer-yes {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .answer-no {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        /* Custom Select Component */
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-trigger {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: #fff;
+            color: #374151;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.2s ease;
+        }
+
+        .select-trigger:hover {
+            border-color: #9ca3af;
+        }
+
+        .select-trigger.active {
+            border-color: var(--ubits-accent-brand);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .select-trigger .select-text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .select-trigger .select-arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .select-trigger.active .select-arrow {
+            transform: rotate(180deg);
+        }
+
+        .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .select-dropdown.show {
+            display: block;
+        }
+
+        .select-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .select-option:hover {
+            background: #f3f4f6;
+        }
+
+        .select-option.selected {
+            background: #eff6ff;
+            color: var(--ubits-accent-brand);
+        }
+
+        .select-option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .select-option .option-text {
+            flex: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .panel-container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .participants-panel {
+                border-right: none;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .survey-details {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .detail-separator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div id="sidebar-container"></div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Navigation -->
+            <div id="top-nav-container"></div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="results-container">
+                    <!-- Header de resultados -->
+                    <div class="results-header">
+                        <button class="back-button" onclick="window.history.back()">
+                            <i class="far fa-arrow-left"></i>
+                            <span>Regresar</span>
+                        </button>
+                        <div class="title-section">
+                            <h1>NOM 035 Entorno Laboral</h1>
+                            <span class="status-badge">Completado</span>
+                        </div>
+                        <div style="margin-left: auto;">
+                            <button class="ubits-button ubits-button--primary ubits-button--md" type="button" id="download-csv-btn">
+                                <i class="far fa-download"></i>
+                                <span>Descargar CSV respuestas</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Información de la encuesta -->
+                    <div class="survey-info">
+                        <div class="survey-details">
+                            <div class="detail-item">
+                                <i class="far fa-users"></i>
+                                <span>Enviado a <strong>150 colaboradores</strong></span>
+                            </div>
+                            <div class="detail-separator"></div>
+                            <div class="detail-item">
+                                <i class="far fa-calendar"></i>
+                                <span>Inicio <strong>15 octubre 2024</strong></span>
+                            </div>
+                            <div class="detail-separator"></div>
+                            <div class="detail-item">
+                                <i class="far fa-calendar"></i>
+                                <span>Hasta <strong>15 noviembre 2024</strong></span>
+                            </div>
+                            <div class="detail-separator"></div>
+                            <div class="detail-item">
+                                <i class="far fa-globe"></i>
+                                <span>Respuestas: <strong>Pública</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Métricas -->
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-title-section">
+                                <div class="metric-icon">
+                                    <i class="far fa-chart-bar"></i>
+                                </div>
+                                <h3 class="metric-title">Total de casos en riesgo alto y muy alto</h3>
+                            </div>
+                            <div class="metric-value-section">
+                                <div class="metric-main-number">8</div>
+                                <div class="metric-unit-text">Casos</div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-title-section">
+                                <div class="metric-icon">
+                                    <i class="far fa-users"></i>
+                                </div>
+                                <h3 class="metric-title">Total de casos canalizados</h3>
+                            </div>
+                            <div class="metric-value-section">
+                                <div class="metric-main-number">5</div>
+                                <div class="metric-unit-text">Casos</div>
+                            </div>
+                        </div>
+
+                        <div class="metric-card">
+                            <div class="metric-title-section">
+                                <div class="metric-icon">
+                                    <i class="far fa-check-circle"></i>
+                                </div>
+                                <h3 class="metric-title">% de participación</h3>
+                            </div>
+                            <div class="metric-value-section">
+                                <div class="metric-main-number">140 / 150</div>
+                                <div class="metric-unit-text">Colaboradores</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel de entorno laboral -->
+                    <div class="panel-emocional-container">
+                        <div class="panel-container">
+                            <!-- Panel Izquierdo - Lista de Participantes -->
+                            <div class="participants-panel">
+                                <div class="panel-header">
+                                    <h3>Participantes</h3>
+                                    <div class="search-filters-container">
+                                        <div class="simple-search-container" style="flex: 1;">
+                                            <i class="far fa-search simple-search-icon"></i>
+                                            <input type="text" id="participant-search" placeholder="Buscar participante..." class="simple-search-input">
+                                        </div>
+                                        <button class="filters-button" id="filters-btn" title="Filtros">
+                                            <i class="far fa-filter"></i>
+                                            <span class="filter-badge" id="filter-badge" style="display: none;">0</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="participants-list" id="participants-list">
+                                    <!-- Lista de participantes se generará dinámicamente -->
+                                </div>
+                            </div>
+
+                            <!-- Filters Side Panel -->
+                            <div class="filters-side-panel" id="filters-side-panel">
+                                <div class="filters-header">
+                                    <h3>Filtros</h3>
+                                    <button class="close-filters-btn" id="close-filters-btn">
+                                        <i class="far fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="filters-content">
+                                    <div class="filter-group">
+                                        <label class="filter-label">Nivel de Riesgo</label>
+                                        <div class="custom-select" id="risk-select">
+                                            <div class="select-trigger">
+                                                <span class="select-text">Seleccionar niveles</span>
+                                                <i class="fas fa-chevron-down select-arrow"></i>
+                                            </div>
+                                            <div class="select-dropdown">
+                                                <div class="select-option" data-value="todos">
+                                                    <input type="checkbox" id="risk-todos" checked>
+                                                    <span class="option-text">Todos</span>
+                                                </div>
+                                                <div class="select-option" data-value="nulo">
+                                                    <input type="checkbox" id="risk-nulo">
+                                                    <div class="risk-indicator nulo"></div>
+                                                    <span class="option-text">Nulo</span>
+                                                </div>
+                                                <div class="select-option" data-value="bajo">
+                                                    <input type="checkbox" id="risk-bajo">
+                                                    <div class="risk-indicator bajo"></div>
+                                                    <span class="option-text">Bajo</span>
+                                                </div>
+                                                <div class="select-option" data-value="medio">
+                                                    <input type="checkbox" id="risk-medio">
+                                                    <div class="risk-indicator medio"></div>
+                                                    <span class="option-text">Medio</span>
+                                                </div>
+                                                <div class="select-option" data-value="alto">
+                                                    <input type="checkbox" id="risk-alto">
+                                                    <div class="risk-indicator alto"></div>
+                                                    <span class="option-text">Alto</span>
+                                                </div>
+                                                <div class="select-option" data-value="muy-alto">
+                                                    <input type="checkbox" id="risk-muy-alto">
+                                                    <div class="risk-indicator muy-alto"></div>
+                                                    <span class="option-text">Muy Alto</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="filter-group">
+                                        <label class="filter-label">Área</label>
+                                        <div class="custom-select" id="area-select">
+                                            <div class="select-trigger">
+                                                <span class="select-text">Seleccionar áreas</span>
+                                                <i class="fas fa-chevron-down select-arrow"></i>
+                                            </div>
+                                            <div class="select-dropdown">
+                                                <div class="select-option" data-value="todos">
+                                                    <input type="checkbox" id="area-todos" checked>
+                                                    <span class="option-text">Todos</span>
+                                                </div>
+                                                <div class="select-option" data-value="ventas">
+                                                    <input type="checkbox" id="area-ventas">
+                                                    <span class="option-text">Ventas</span>
+                                                </div>
+                                                <div class="select-option" data-value="tecnologia">
+                                                    <input type="checkbox" id="area-tecnologia">
+                                                    <span class="option-text">Tecnología</span>
+                                                </div>
+                                                <div class="select-option" data-value="rrhh">
+                                                    <input type="checkbox" id="area-rrhh">
+                                                    <span class="option-text">RRHH</span>
+                                                </div>
+                                                <div class="select-option" data-value="finanzas">
+                                                    <input type="checkbox" id="area-finanzas">
+                                                    <span class="option-text">Finanzas</span>
+                                                </div>
+                                                <div class="select-option" data-value="administracion">
+                                                    <input type="checkbox" id="area-administracion">
+                                                    <span class="option-text">Administración</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="filter-group">
+                                        <label class="filter-label">Cargo</label>
+                                        <div class="custom-select" id="position-select">
+                                            <div class="select-trigger">
+                                                <span class="select-text">Seleccionar cargos</span>
+                                                <i class="fas fa-chevron-down select-arrow"></i>
+                                            </div>
+                                            <div class="select-dropdown">
+                                                <div class="select-option" data-value="todos">
+                                                    <input type="checkbox" id="position-todos" checked>
+                                                    <span class="option-text">Todos</span>
+                                                </div>
+                                                <div class="select-option" data-value="gerente">
+                                                    <input type="checkbox" id="position-gerente">
+                                                    <span class="option-text">Gerente</span>
+                                                </div>
+                                                <div class="select-option" data-value="coordinador">
+                                                    <input type="checkbox" id="position-coordinador">
+                                                    <span class="option-text">Coordinador</span>
+                                                </div>
+                                                <div class="select-option" data-value="analista">
+                                                    <input type="checkbox" id="position-analista">
+                                                    <span class="option-text">Analista</span>
+                                                </div>
+                                                <div class="select-option" data-value="asistente">
+                                                    <input type="checkbox" id="position-asistente">
+                                                    <span class="option-text">Asistente</span>
+                                                </div>
+                                                <div class="select-option" data-value="operario">
+                                                    <input type="checkbox" id="position-operario">
+                                                    <span class="option-text">Operario</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="filter-group">
+                                        <label class="filter-label">Sexo</label>
+                                        <div class="custom-select" id="gender-select">
+                                            <div class="select-trigger">
+                                                <span class="select-text">Seleccionar sexo</span>
+                                                <i class="fas fa-chevron-down select-arrow"></i>
+                                            </div>
+                                            <div class="select-dropdown">
+                                                <div class="select-option" data-value="todos">
+                                                    <input type="checkbox" id="gender-todos" checked>
+                                                    <span class="option-text">Todos</span>
+                                                </div>
+                                                <div class="select-option" data-value="masculino">
+                                                    <input type="checkbox" id="gender-masculino">
+                                                    <span class="option-text">Masculino</span>
+                                                </div>
+                                                <div class="select-option" data-value="femenino">
+                                                    <input type="checkbox" id="gender-femenino">
+                                                    <span class="option-text">Femenino</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="filter-group">
+                                        <label class="filter-label">Estado Civil</label>
+                                        <div class="custom-select" id="marital-select">
+                                            <div class="select-trigger">
+                                                <span class="select-text">Seleccionar estado civil</span>
+                                                <i class="fas fa-chevron-down select-arrow"></i>
+                                            </div>
+                                            <div class="select-dropdown">
+                                                <div class="select-option" data-value="todos">
+                                                    <input type="checkbox" id="marital-todos" checked>
+                                                    <span class="option-text">Todos</span>
+                                                </div>
+                                                <div class="select-option" data-value="soltero">
+                                                    <input type="checkbox" id="marital-soltero">
+                                                    <span class="option-text">Soltero</span>
+                                                </div>
+                                                <div class="select-option" data-value="casado">
+                                                    <input type="checkbox" id="marital-casado">
+                                                    <span class="option-text">Casado</span>
+                                                </div>
+                                                <div class="select-option" data-value="divorciado">
+                                                    <input type="checkbox" id="marital-divorciado">
+                                                    <span class="option-text">Divorciado</span>
+                                                </div>
+                                                <div class="select-option" data-value="viudo">
+                                                    <input type="checkbox" id="marital-viudo">
+                                                    <span class="option-text">Viudo</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="filter-group">
+                                        <label class="filter-label">Rango de Edad</label>
+                                        <div class="custom-select" id="age-select">
+                                            <div class="select-trigger">
+                                                <span class="select-text">Seleccionar rango de edad</span>
+                                                <i class="fas fa-chevron-down select-arrow"></i>
+                                            </div>
+                                            <div class="select-dropdown">
+                                                <div class="select-option" data-value="todos">
+                                                    <input type="checkbox" id="age-todos" checked>
+                                                    <span class="option-text">Todos</span>
+                                                </div>
+                                                <div class="select-option" data-value="20-30">
+                                                    <input type="checkbox" id="age-20-30">
+                                                    <span class="option-text">20-30 años</span>
+                                                </div>
+                                                <div class="select-option" data-value="31-40">
+                                                    <input type="checkbox" id="age-31-40">
+                                                    <span class="option-text">31-40 años</span>
+                                                </div>
+                                                <div class="select-option" data-value="41-50">
+                                                    <input type="checkbox" id="age-41-50">
+                                                    <span class="option-text">41-50 años</span>
+                                                </div>
+                                                <div class="select-option" data-value="51+">
+                                                    <input type="checkbox" id="age-51+">
+                                                    <span class="option-text">51+ años</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="filter-actions">
+                                    <button class="apply-filters-btn" id="apply-filters-btn">
+                                        <i class="far fa-check"></i>
+                                        Aplicar Filtros
+                                    </button>
+                                    <button class="clear-filters-btn" id="clear-filters-btn">
+                                        <i class="far fa-times"></i>
+                                        Limpiar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Filters Overlay -->
+                            <div class="filters-overlay" id="filters-overlay"></div>
+
+                            <!-- Panel Derecho - Detalles del Participante -->
+                            <div class="participant-details-panel">
+                                <div class="panel-header">
+                                    <h3>Detalles del Participante</h3>
+                                </div>
+                                <div class="participant-info" id="participant-info">
+                                    <div class="no-selection">
+                                        <i class="far fa-user"></i>
+                                        <p>Selecciona un participante para ver sus detalles</p>
+                                    </div>
+                                </div>
+                                <div class="survey-results" id="survey-results">
+                                    <!-- Resultados de la encuesta se generarán dinámicamente -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="components/sidebar.js"></script>
+    <script src="components/tab-bar.js"></script>
+    <script src="components/floating-menu.js"></script>
+    <script src="components/profile-menu.js"></script>
+    <script src="components/button.js"></script>
+    <script src="components/input.js"></script>
+    <script src="profile.js"></script>
+
+    <script>
+        // Datos de ejemplo para participantes de entorno laboral
+        const participantsData = [
+            {
+                id: 1,
+                name: "María González",
+                role: "Gerente de Ventas",
+                riskLevel: "alto",
+                avatar: "MG",
+                avatarColor: "#ef4444",
+                details: {
+                    age: 35,
+                    area: "Ventas",
+                    position: "Gerente",
+                    gender: "Femenino",
+                    maritalStatus: "Casada"
+                },
+                surveyResults: {
+                    "Sección I. Condiciones en el entorno de trabajo": [
+                        { question: "¿Tu lugar de trabajo tiene condiciones adecuadas de iluminación?", answer: "Sí" },
+                        { question: "¿El ruido en tu área de trabajo interfiere con tus actividades?", answer: "No" },
+                        { question: "¿Tienes acceso a herramientas y equipos necesarios para realizar tu trabajo?", answer: "Sí" },
+                        { question: "¿El espacio físico donde trabajas es suficiente para tus actividades?", answer: "No" },
+                        { question: "¿Las condiciones de temperatura en tu lugar de trabajo son adecuadas?", answer: "Sí" }
+                    ],
+                    "Sección II. Carga de trabajo": [
+                        { question: "¿La cantidad de trabajo que tienes asignado es razonable?", answer: "No" },
+                        { question: "¿Tienes tiempo suficiente para completar tus tareas?", answer: "No" },
+                        { question: "¿El trabajo requiere que realices múltiples tareas al mismo tiempo?", answer: "Sí" },
+                        { question: "¿Sientes que el trabajo es monótono o repetitivo?", answer: "No" }
+                    ],
+                    "Sección III. Jornada de trabajo": [
+                        { question: "¿Tu horario de trabajo es fijo y predecible?", answer: "Sí" },
+                        { question: "¿Trabajas horas extras frecuentemente?", answer: "Sí" },
+                        { question: "¿Tienes descansos adecuados durante tu jornada laboral?", answer: "No" },
+                        { question: "¿Tu trabajo interfiere con tu vida personal?", answer: "Sí" }
+                    ],
+                    "Sección IV. Liderazgo y relaciones en el trabajo": [
+                        { question: "¿Recibes instrucciones claras de tu supervisor?", answer: "Sí" },
+                        { question: "¿Tu supervisor reconoce tu trabajo y esfuerzo?", answer: "No" },
+                        { question: "¿Tienes buena relación con tus compañeros de trabajo?", answer: "Sí" },
+                        { question: "¿Existe apoyo mutuo entre los miembros del equipo?", answer: "Sí" }
+                    ]
+                }
+            },
+            {
+                id: 2,
+                name: "Carlos Rodríguez",
+                role: "Analista de Sistemas",
+                riskLevel: "medio",
+                avatar: "CR",
+                avatarColor: "#f59e0b",
+                details: {
+                    age: 28,
+                    area: "Tecnología",
+                    position: "Analista",
+                    gender: "Masculino",
+                    maritalStatus: "Soltero"
+                },
+                surveyResults: {
+                    "Sección I. Condiciones en el entorno de trabajo": [
+                        { question: "¿Tu lugar de trabajo tiene condiciones adecuadas de iluminación?", answer: "Sí" },
+                        { question: "¿El ruido en tu área de trabajo interfiere con tus actividades?", answer: "No" },
+                        { question: "¿Tienes acceso a herramientas y equipos necesarios para realizar tu trabajo?", answer: "Sí" },
+                        { question: "¿El espacio físico donde trabajas es suficiente para tus actividades?", answer: "Sí" },
+                        { question: "¿Las condiciones de temperatura en tu lugar de trabajo son adecuadas?", answer: "Sí" }
+                    ],
+                    "Sección II. Carga de trabajo": [
+                        { question: "¿La cantidad de trabajo que tienes asignado es razonable?", answer: "Sí" },
+                        { question: "¿Tienes tiempo suficiente para completar tus tareas?", answer: "Sí" },
+                        { question: "¿El trabajo requiere que realices múltiples tareas al mismo tiempo?", answer: "No" },
+                        { question: "¿Sientes que el trabajo es monótono o repetitivo?", answer: "No" }
+                    ],
+                    "Sección III. Jornada de trabajo": [
+                        { question: "¿Tu horario de trabajo es fijo y predecible?", answer: "Sí" },
+                        { question: "¿Trabajas horas extras frecuentemente?", answer: "No" },
+                        { question: "¿Tienes descansos adecuados durante tu jornada laboral?", answer: "Sí" },
+                        { question: "¿Tu trabajo interfiere con tu vida personal?", answer: "No" }
+                    ],
+                    "Sección IV. Liderazgo y relaciones en el trabajo": [
+                        { question: "¿Recibes instrucciones claras de tu supervisor?", answer: "Sí" },
+                        { question: "¿Tu supervisor reconoce tu trabajo y esfuerzo?", answer: "Sí" },
+                        { question: "¿Tienes buena relación con tus compañeros de trabajo?", answer: "Sí" },
+                        { question: "¿Existe apoyo mutuo entre los miembros del equipo?", answer: "Sí" }
+                    ]
+                }
+            }
+        ];
+
+        // Funciones para el panel de entorno laboral
+        function initializeEntornoPanel() {
+            renderParticipantsList(participantsData);
+            setupSearch();
+            // Seleccionar el primer participante por defecto
+            if (participantsData.length > 0) {
+                selectParticipant(participantsData[0].id);
+            }
+        }
+
+        function renderParticipantsList(participants) {
+            const participantsList = document.getElementById('participants-list');
+            participantsList.innerHTML = participants.map(participant => `
+                <div class="participant-item" onclick="selectParticipant(${participant.id})">
+                    <div class="participant-avatar" style="background-color: ${participant.avatarColor}">
+                        ${participant.avatar}
+                    </div>
+                    <div class="participant-info-content">
+                        <div class="participant-name">${participant.name}</div>
+                        <div class="participant-role">${participant.role}</div>
+                    </div>
+                    <div class="risk-level ${participant.riskLevel}">${participant.riskLevel}</div>
+                </div>
+            `).join('');
+        }
+
+        function selectParticipant(participantId) {
+            // Remover selección anterior
+            document.querySelectorAll('.participant-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            // Agregar selección actual
+            const selectedItem = document.querySelector(`[onclick="selectParticipant(${participantId})"]`);
+            if (selectedItem) {
+                selectedItem.classList.add('selected');
+            }
+
+            showParticipantDetails(participantId);
+        }
+
+        function showParticipantDetails(participantId) {
+            const participant = participantsData.find(p => p.id === participantId);
+            if (!participant) return;
+
+            const participantInfo = document.getElementById('participant-info');
+            const surveyResults = document.getElementById('survey-results');
+
+            // Mostrar información del participante
+            participantInfo.innerHTML = `
+                <div class="participant-details">
+                    <div class="participant-header">
+                        <div class="participant-avatar-large" style="background-color: ${participant.avatarColor}">
+                            ${participant.avatar}
+                        </div>
+                        <div class="participant-details-content">
+                            <h4>${participant.name}</h4>
+                            <p>${participant.role}</p>
+                        </div>
+                    </div>
+                    <div class="participant-info">
+                        <div class="participant-info-line">
+                            <span class="participant-name">${participant.name}</span>
+                            <span class="participant-separator">•</span>
+                            <span class="participant-age">${participant.details.age} años</span>
+                            <span class="participant-separator">•</span>
+                            <span class="participant-area">${participant.details.area}</span>
+                            <span class="participant-separator">•</span>
+                            <span class="participant-position">${participant.details.position}</span>
+                            <span class="participant-separator">•</span>
+                            <span class="participant-gender">${participant.details.gender}</span>
+                            <span class="participant-separator">•</span>
+                            <span class="participant-marital">${participant.details.maritalStatus}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Mostrar resultados de la encuesta
+            surveyResults.innerHTML = `
+                ${Object.entries(participant.surveyResults).map(([sectionName, questions], index) => `
+                    <div class="survey-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <div class="section-number">${index + 1}</div>
+                            <div class="section-title">${sectionName}</div>
+                            <div class="section-risk-info">
+                                <span class="section-risk-level ${getSectionRiskLevel(questions)}">${getSectionRiskLevel(questions)}</span>
+                                <span class="section-percentage">${getSectionPercentage(questions)}%</span>
+                            </div>
+                            <i class="far fa-chevron-down section-chevron"></i>
+                        </div>
+                        <div class="section-content ${index === 0 ? 'open' : ''}">
+                            ${questions.map(q => `
+                                <div class="question-item">
+                                    <div class="question-text">${q.question}</div>
+                                    <div class="question-answer ${q.answer === 'Sí' ? 'answer-yes' : 'answer-no'}">${q.answer}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const isOpen = content.classList.contains('open');
+            
+            if (isOpen) {
+                content.classList.remove('open');
+                header.classList.remove('open');
+            } else {
+                content.classList.add('open');
+                header.classList.add('open');
+            }
+        }
+
+        function getSectionRiskLevel(questions) {
+            const yesAnswers = questions.filter(q => q.answer === 'Sí').length;
+            const percentage = (yesAnswers / questions.length) * 100;
+            
+            if (percentage >= 80) return 'muy-alto';
+            if (percentage >= 60) return 'alto';
+            if (percentage >= 40) return 'medio';
+            if (percentage >= 20) return 'bajo';
+            return 'nulo';
+        }
+
+        function getSectionPercentage(questions) {
+            const yesAnswers = questions.filter(q => q.answer === 'Sí').length;
+            return Math.round((yesAnswers / questions.length) * 100);
+        }
+
+        function setupSearch() {
+            const searchInput = document.getElementById('participant-search');
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const filteredParticipants = participantsData.filter(participant => 
+                    participant.name.toLowerCase().includes(searchTerm) ||
+                    participant.role.toLowerCase().includes(searchTerm) ||
+                    participant.details.area.toLowerCase().includes(searchTerm) ||
+                    participant.details.position.toLowerCase().includes(searchTerm) ||
+                    participant.details.gender.toLowerCase().includes(searchTerm) ||
+                    participant.details.maritalStatus.toLowerCase().includes(searchTerm)
+                );
+                renderParticipantsList(filteredParticipants);
+                applyFilters();
+            });
+        }
+
+        function setupFilters() {
+            const filtersBtn = document.getElementById('filters-btn');
+            const filtersSidePanel = document.getElementById('filters-side-panel');
+            const filtersOverlay = document.getElementById('filters-overlay');
+            const closeFiltersBtn = document.getElementById('close-filters-btn');
+            const applyFiltersBtn = document.getElementById('apply-filters-btn');
+            const clearFiltersBtn = document.getElementById('clear-filters-btn');
+
+            // Abrir panel de filtros
+            filtersBtn.addEventListener('click', () => {
+                filtersSidePanel.classList.add('show');
+                filtersOverlay.classList.add('show');
+            });
+
+            // Cerrar panel de filtros
+            closeFiltersBtn.addEventListener('click', closeFiltersPanel);
+            filtersOverlay.addEventListener('click', closeFiltersPanel);
+
+            // Aplicar filtros
+            applyFiltersBtn.addEventListener('click', () => {
+                applyFilters();
+                closeFiltersPanel();
+            });
+
+            // Limpiar filtros
+            clearFiltersBtn.addEventListener('click', clearFilters);
+
+            // Configurar selects personalizados
+            setupCustomSelects();
+        }
+
+        function closeFiltersPanel() {
+            document.getElementById('filters-side-panel').classList.remove('show');
+            document.getElementById('filters-overlay').classList.remove('show');
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('participant-search').value.toLowerCase();
+            const riskFilters = getSelectedValues('risk-select');
+            const areaFilters = getSelectedValues('area-select');
+            const positionFilters = getSelectedValues('position-select');
+            const genderFilters = getSelectedValues('gender-select');
+            const maritalStatusFilters = getSelectedValues('marital-select');
+            const ageFilters = getSelectedValues('age-select');
+
+            const filteredParticipants = participantsData.filter(participant => {
+                // Filtro de búsqueda
+                const matchesSearch = searchTerm === '' || 
+                    participant.name.toLowerCase().includes(searchTerm) ||
+                    participant.role.toLowerCase().includes(searchTerm) ||
+                    participant.details.area.toLowerCase().includes(searchTerm) ||
+                    participant.details.position.toLowerCase().includes(searchTerm) ||
+                    participant.details.gender.toLowerCase().includes(searchTerm) ||
+                    participant.details.maritalStatus.toLowerCase().includes(searchTerm);
+
+                // Filtros de criterios
+                const matchesRisk = riskFilters.length === 0 || riskFilters.includes('todos') || riskFilters.includes(participant.riskLevel);
+                const matchesArea = areaFilters.length === 0 || areaFilters.includes('todos') || areaFilters.includes(participant.details.area.toLowerCase());
+                const matchesPosition = positionFilters.length === 0 || positionFilters.includes('todos') || positionFilters.includes(participant.details.position.toLowerCase());
+                const matchesGender = genderFilters.length === 0 || genderFilters.includes('todos') || genderFilters.includes(participant.details.gender.toLowerCase());
+                const matchesMarital = maritalStatusFilters.length === 0 || maritalStatusFilters.includes('todos') || maritalStatusFilters.includes(participant.details.maritalStatus.toLowerCase());
+                const matchesAge = ageFilters.length === 0 || ageFilters.includes('todos') || matchesAgeRange(participant.details.age, ageFilters);
+
+                return matchesSearch && matchesRisk && matchesArea && matchesPosition && matchesGender && matchesMarital && matchesAge;
+            });
+
+            renderParticipantsList(filteredParticipants);
+            updateFilterBadge();
+        }
+
+        function matchesAgeRange(age, ageFilters) {
+            return ageFilters.some(range => {
+                switch(range) {
+                    case '20-30': return age >= 20 && age <= 30;
+                    case '31-40': return age >= 31 && age <= 40;
+                    case '41-50': return age >= 41 && age <= 50;
+                    case '51+': return age >= 51;
+                    default: return false;
+                }
+            });
+        }
+
+        function clearFilters() {
+            const selectIds = ['risk-select', 'area-select', 'position-select', 'gender-select', 'marital-select', 'age-select'];
+            
+            selectIds.forEach(selectId => {
+                const checkboxes = document.querySelectorAll(`#${selectId} input[type="checkbox"]`);
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                
+                // Marcar "Todos" como seleccionado
+                const todosCheckbox = document.querySelector(`#${selectId} input[type="checkbox"][id$="-todos"]`);
+                if (todosCheckbox) {
+                    todosCheckbox.checked = true;
+                }
+                
+                updateSelectText(selectId);
+            });
+
+            document.getElementById('participant-search').value = '';
+            renderParticipantsList(participantsData);
+            
+            const badge = document.getElementById('filter-badge');
+            badge.style.display = 'none';
+        }
+
+        function updateFilterBadge() {
+            const badge = document.getElementById('filter-badge');
+            let activeFilters = 0;
+
+            const selectIds = ['risk-select', 'area-select', 'position-select', 'gender-select', 'marital-select', 'age-select'];
+            
+            selectIds.forEach(selectId => {
+                const selectedValues = getSelectedValues(selectId);
+                if (selectedValues.length > 0 && !selectedValues.includes('todos')) {
+                    activeFilters++;
+                }
+            });
+
+            if (activeFilters > 0) {
+                badge.textContent = activeFilters;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function setupCustomSelects() {
+            const selectIds = ['risk-select', 'area-select', 'position-select', 'gender-select', 'marital-select', 'age-select'];
+            
+            selectIds.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                const trigger = select.querySelector('.select-trigger');
+                const dropdown = select.querySelector('.select-dropdown');
+                const options = select.querySelectorAll('.select-option');
+
+                // Toggle dropdown
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = trigger.classList.contains('active');
+                    
+                    // Cerrar otros selects
+                    selectIds.forEach(id => {
+                        if (id !== selectId) {
+                            document.getElementById(id).querySelector('.select-trigger').classList.remove('active');
+                            document.getElementById(id).querySelector('.select-dropdown').classList.remove('show');
+                        }
+                    });
+                    
+                    trigger.classList.toggle('active');
+                    dropdown.classList.toggle('show');
+                });
+
+                // Manejar clics en opciones
+                options.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const checkbox = option.querySelector('input[type="checkbox"]');
+                        const isTodos = option.dataset.value === 'todos';
+                        
+                        if (isTodos) {
+                            handleTodosOption(selectId, checkbox);
+                        } else {
+                            checkbox.checked = !checkbox.checked;
+                            
+                            // Si se selecciona cualquier opción que no sea "Todos", desmarcar "Todos"
+                            const todosCheckbox = select.querySelector('input[type="checkbox"][id$="-todos"]');
+                            if (checkbox.checked && todosCheckbox.checked) {
+                                todosCheckbox.checked = false;
+                            }
+                            
+                            // Si no hay ninguna opción seleccionada, marcar "Todos"
+                            const allCheckboxes = select.querySelectorAll('input[type="checkbox"]:not([id$="-todos"])');
+                            const checkedBoxes = select.querySelectorAll('input[type="checkbox"]:not([id$="-todos"]):checked');
+                            if (checkedBoxes.length === 0) {
+                                todosCheckbox.checked = true;
+                            }
+                        }
+                        
+                        updateSelectText(selectId);
+                    });
+                });
+            });
+
+            // Cerrar dropdowns al hacer clic fuera
+            document.addEventListener('click', () => {
+                selectIds.forEach(selectId => {
+                    const select = document.getElementById(selectId);
+                    select.querySelector('.select-trigger').classList.remove('active');
+                    select.querySelector('.select-dropdown').classList.remove('show');
+                });
+            });
+        }
+
+        function handleTodosOption(selectId, todosCheckbox) {
+            const select = document.getElementById(selectId);
+            const allCheckboxes = select.querySelectorAll('input[type="checkbox"]');
+            
+            if (todosCheckbox.checked) {
+                // Si "Todos" está marcado, desmarcar todo
+                allCheckboxes.forEach(cb => cb.checked = false);
+            } else {
+                // Si "Todos" no está marcado, marcar "Todos" y desmarcar el resto
+                allCheckboxes.forEach(cb => cb.checked = false);
+                todosCheckbox.checked = true;
+            }
+        }
+
+        function updateSelectText(selectId) {
+            const select = document.getElementById(selectId);
+            const textElement = select.querySelector('.select-text');
+            const selectedValues = getSelectedValues(selectId);
+            
+            if (selectedValues.length === 0 || selectedValues.includes('todos')) {
+                textElement.textContent = 'Seleccionar opciones';
+            } else if (selectedValues.length === 1) {
+                textElement.textContent = selectedValues[0];
+            } else {
+                textElement.textContent = `${selectedValues.length} seleccionados`;
+            }
+        }
+
+        function getSelectedValues(selectId) {
+            const select = document.getElementById(selectId);
+            const checkedBoxes = select.querySelectorAll('input[type="checkbox"]:checked');
+            return Array.from(checkedBoxes).map(cb => cb.id.replace(selectId.replace('-select', '-'), '').replace('-todos', 'todos'));
+        }
+
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar componentes
+            setTimeout(() => {
+                loadSidebar('sidebar-container', 'encuestas');
+                loadProfileMenu('profile-menu-container');
+                loadFloatingMenu('floating-menu-container');
+                
+                // Inicializar panel de entorno laboral
+                initializeEntornoPanel();
+                setupFilters();
+            }, 100);
+        });
+    </script>
+</body>
+</html>
