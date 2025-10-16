@@ -1231,40 +1231,6 @@
             gap: 12px;
         }
 
-        .search-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .search-input {
-            padding: 8px 12px 8px 40px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 14px;
-            width: 300px;
-            background: white;
-            color: #374151;
-            outline: none;
-            transition: border-color 0.2s ease;
-        }
-
-        .search-input:focus {
-            border-color: var(--ubits-accent-brand);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .search-input::placeholder {
-            color: #9ca3af;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            color: #6b7280;
-            font-size: 14px;
-            pointer-events: none;
-        }
 
         .filter-badge {
             background-color: #ef4444;
@@ -1646,13 +1612,19 @@
                                     <div class="table-header">
                                         <h3>Vista General de Resultados NOM-035</h3>
                                         <div class="table-controls">
-                                            <div class="search-container">
-                                                <input type="text" id="table-search" placeholder="Buscar en resultados..." class="search-input">
-                                                <i class="far fa-search search-icon"></i>
+                                            <!-- Campo de búsqueda desplegable -->
+                                            <div id="table-search-container" style="display: none; position: relative;">
+                                                <input type="text" id="table-search" placeholder="Buscar en resultados..." 
+                                                       style="padding: 8px 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); width: 250px; font-size: 14px;">
+                                                <button id="close-table-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer;">
+                                                    <i class="far fa-times"></i>
+                                                </button>
                                             </div>
-                                            <button class="ubits-button ubits-button--secondary ubits-button--md" id="table-filters-btn">
+                                            <button id="table-search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                                <i class="far fa-search"></i>
+                                            </button>
+                                            <button id="table-filters-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
                                                 <i class="far fa-filter"></i>
-                                                <span>Filtros</span>
                                                 <span class="filter-badge" id="table-filter-badge" style="display: none;">0</span>
                                             </button>
                                         </div>
@@ -2006,13 +1978,28 @@
 
         // Funciones para búsqueda y filtros de la tabla
         function initializeTableFilters() {
+            const searchBtn = document.getElementById('table-search-btn');
+            const searchContainer = document.getElementById('table-search-container');
+            const searchInput = document.getElementById('table-search');
+            const closeSearch = document.getElementById('close-table-search');
             const filtersBtn = document.getElementById('table-filters-btn');
             const filtersSidePanel = document.getElementById('table-filters-side-panel');
             const filtersOverlay = document.getElementById('table-filters-overlay');
             const closeFiltersBtn = document.getElementById('close-table-filters-btn');
             const applyFiltersBtn = document.getElementById('apply-table-filters-btn');
             const clearFiltersBtn = document.getElementById('clear-table-filters-btn');
-            const searchInput = document.getElementById('table-search');
+
+            // Funcionalidad de búsqueda desplegable
+            searchBtn.addEventListener('click', () => {
+                searchContainer.style.display = 'block';
+                searchInput.focus();
+            });
+
+            closeSearch.addEventListener('click', () => {
+                searchContainer.style.display = 'none';
+                searchInput.value = '';
+                applyTableFilters();
+            });
 
             // Abrir panel de filtros
             filtersBtn.addEventListener('click', () => {
