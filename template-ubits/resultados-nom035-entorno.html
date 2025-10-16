@@ -1098,6 +1098,101 @@
             color: #6b7280;
             line-height: 1.6;
         }
+
+        /* Results Table Styles */
+        .results-table-container {
+            overflow-x: auto;
+            margin-top: 16px;
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .results-table thead {
+            background: #f8fafc;
+        }
+
+        .results-table th {
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            color: #374151;
+            border-bottom: 1px solid #e5e7eb;
+            white-space: nowrap;
+        }
+
+        .results-table td {
+            padding: 12px;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 14px;
+            color: #374151;
+            vertical-align: top;
+        }
+
+        .results-table tbody tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .category-cell {
+            font-weight: 600;
+            background-color: #f8fafc;
+            border-right: 1px solid #e5e7eb;
+            min-width: 200px;
+        }
+
+        .risk-count {
+            font-weight: 600;
+            text-align: center;
+            color: #374151;
+        }
+
+        .percentage {
+            font-weight: 600;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .risk-badge.nulo {
+            background-color: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .risk-badge.bajo {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .risk-badge.medio {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .risk-badge.alto {
+            background-color: #fed7d7;
+            color: #c53030;
+        }
+
+        .risk-badge.muy-alto {
+            background-color: #fecaca;
+            color: #991b1b;
+        }
     </style>
 </head>
 <body>
@@ -1236,8 +1331,99 @@
                         <div class="tab-content">
                             <div class="tab-panel active" id="general-panel">
                                 <div class="panel-content">
-                                    <h3>Contenido General</h3>
-                                    <p>Aquí va el contenido del tab General con información general de la encuesta de entorno laboral.</p>
+                                    <h3>Vista General de Resultados NOM-035</h3>
+                                    <div class="results-table-container">
+                                        <table class="results-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Categoría</th>
+                                                    <th>Dominio</th>
+                                                    <th>Dimensión</th>
+                                                    <th>Total Usuarios en Riesgo</th>
+                                                    <th>% Colaboradores Afectados</th>
+                                                    <th>Nivel de Riesgo</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="1" class="category-cell">🟦 Ambiente de trabajo</td>
+                                                    <td>Condiciones en el ambiente de trabajo</td>
+                                                    <td>Condiciones físicas, seguridad y comodidad</td>
+                                                    <td class="risk-count">12</td>
+                                                    <td class="percentage">8.0%</td>
+                                                    <td><span class="risk-badge bajo">Bajo</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td rowspan="2" class="category-cell">🟨 Factores propios de la actividad</td>
+                                                    <td>Carga de trabajo</td>
+                                                    <td>Exigencias cuantitativas, mentales y emocionales</td>
+                                                    <td class="risk-count">28</td>
+                                                    <td class="percentage">18.7%</td>
+                                                    <td><span class="risk-badge medio">Medio</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Falta de control sobre el trabajo</td>
+                                                    <td>Claridad de rol, autonomía, reconocimiento</td>
+                                                    <td class="risk-count">15</td>
+                                                    <td class="percentage">10.0%</td>
+                                                    <td><span class="risk-badge bajo">Bajo</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td rowspan="1" class="category-cell">🟩 Organización del tiempo de trabajo</td>
+                                                    <td>Jornada de trabajo</td>
+                                                    <td>Duración, distribución y pausas</td>
+                                                    <td class="risk-count">22</td>
+                                                    <td class="percentage">14.7%</td>
+                                                    <td><span class="risk-badge medio">Medio</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td rowspan="2" class="category-cell">🟧 Liderazgo y relaciones en el trabajo</td>
+                                                    <td>Liderazgo</td>
+                                                    <td>Estilo de liderazgo, comunicación, apoyo</td>
+                                                    <td class="risk-count">18</td>
+                                                    <td class="percentage">12.0%</td>
+                                                    <td><span class="risk-badge bajo">Bajo</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Relaciones en el trabajo</td>
+                                                    <td>Comunicación, colaboración, confianza, respeto</td>
+                                                    <td class="risk-count">8</td>
+                                                    <td class="percentage">5.3%</td>
+                                                    <td><span class="risk-badge nulo">Nulo</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td rowspan="1" class="category-cell">🟥 Violencia laboral</td>
+                                                    <td>Violencia laboral</td>
+                                                    <td>Maltrato, acoso, discriminación, hostigamiento</td>
+                                                    <td class="risk-count">5</td>
+                                                    <td class="percentage">3.3%</td>
+                                                    <td><span class="risk-badge nulo">Nulo</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td rowspan="3" class="category-cell">🟪 Entorno organizacional</td>
+                                                    <td>Reconocimiento del desempeño</td>
+                                                    <td>Estímulo, desarrollo y valoración</td>
+                                                    <td class="risk-count">25</td>
+                                                    <td class="percentage">16.7%</td>
+                                                    <td><span class="risk-badge medio">Medio</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Sentido de pertenencia e identidad organizacional</td>
+                                                    <td>Orgullo, compromiso y participación</td>
+                                                    <td class="risk-count">20</td>
+                                                    <td class="percentage">13.3%</td>
+                                                    <td><span class="risk-badge bajo">Bajo</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Estabilidad y justicia organizacional</td>
+                                                    <td>Equidad, respeto y seguridad laboral</td>
+                                                    <td class="risk-count">32</td>
+                                                    <td class="percentage">21.3%</td>
+                                                    <td><span class="risk-badge alto">Alto</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             
