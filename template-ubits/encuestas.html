@@ -188,63 +188,40 @@
             text-align: center;
         }
 
-        /* Status badges mejorados con mejor contraste */
+        /* Status badges estilo minimalista */
         .status-badge {
             display: inline-block;
-            padding: 8px 14px;
-            border-radius: 8px;
+            padding: 6px 12px;
+            border-radius: 4px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+            border: 1px solid;
         }
 
         .status-badge.completed {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            border: 1px solid #047857;
+            background: #f0f9ff;
+            color: #0369a1;
+            border-color: #0ea5e9;
         }
 
         .status-badge.in-progress {
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: white;
-            border: 1px solid #1d4ed8;
+            background: #f0f9ff;
+            color: #0369a1;
+            border-color: #0ea5e9;
         }
 
         .status-badge.draft {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: white;
-            border: 1px solid #b45309;
+            background: #f0f9ff;
+            color: #0369a1;
+            border-color: #0ea5e9;
         }
 
         .status-badge.pending {
-            background: linear-gradient(135deg, #6b7280, #4b5563);
-            color: white;
-            border: 1px solid #374151;
-        }
-
-        /* Efectos hover para mejor interactividad */
-        .status-badge:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-        }
-
-        .status-badge.completed:hover {
-            background: linear-gradient(135deg, #059669, #047857);
-        }
-
-        .status-badge.in-progress:hover {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-        }
-
-        .status-badge.draft:hover {
-            background: linear-gradient(135deg, #d97706, #b45309);
-        }
-
-        .status-badge.pending:hover {
-            background: linear-gradient(135deg, #4b5563, #374151);
+            background: #f9fafb;
+            color: #6b7280;
+            border-color: #d1d5db;
         }
 
         /* Progress bars mejorados */
