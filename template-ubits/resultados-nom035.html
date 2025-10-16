@@ -852,27 +852,6 @@
             padding: 16px;
         }
 
-        .survey-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px;
-            background: #f8fafc;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            border-left: 4px solid var(--ubits-accent-brand);
-        }
-
-        .survey-title .section-icon {
-            color: var(--ubits-accent-brand);
-            font-size: 16px;
-        }
-
-        .survey-title .section-title {
-            font-weight: 600;
-            color: #1f2937;
-            font-size: 14px;
-        }
 
         .survey-section {
             margin-bottom: 16px;
@@ -1847,10 +1826,6 @@
 
             // Mostrar resultados de la encuesta
             surveyResults.innerHTML = `
-                <div class="survey-title">
-                    <i class="far fa-comment section-icon"></i>
-                    <div class="section-title">💬 Encuesta Emocional — NOM-035 (Guía I: Acontecimientos Traumáticos Severos)</div>
-                </div>
                 ${Object.entries(participant.surveyResults).map(([sectionName, questions], index) => `
                     <div class="survey-section">
                         <div class="section-header" onclick="toggleSection(this)">
