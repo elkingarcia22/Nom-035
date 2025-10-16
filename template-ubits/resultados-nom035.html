@@ -350,6 +350,8 @@
             border: 1px solid #e5e7eb;
             display: flex;
             flex-direction: column;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .participant-details-panel {
@@ -366,6 +368,8 @@
             border-bottom: 1px solid #e5e7eb;
             background: #f9fafb;
             border-radius: 8px 8px 0 0;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .panel-header h3 {
@@ -380,11 +384,13 @@
             gap: 8px;
             margin-top: 12px;
             align-items: center;
+            width: 100%;
         }
 
         .search-container {
             position: relative;
             flex: 1;
+            width: 100%;
         }
 
         .search-input {
@@ -394,6 +400,7 @@
             border-radius: 6px;
             font-size: 14px;
             background: white;
+            box-sizing: border-box;
         }
 
         .search-input:focus {
@@ -424,6 +431,8 @@
             transition: all 0.2s ease;
             width: 36px;
             height: 36px;
+            flex-shrink: 0;
+            box-sizing: border-box;
         }
 
         .filters-button:hover {
