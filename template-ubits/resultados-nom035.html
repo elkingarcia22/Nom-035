@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UBITS Playground - Resultados NOM 035</title>
+    
+    <!-- Estilos locales -->
+    <link rel="stylesheet" href="ubits-colors.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fontawesome-icons.css">
+    <link rel="stylesheet" href="ubits-typography.css">
+    <link rel="stylesheet" href="components/sub-nav.css">
+    <link rel="stylesheet" href="components-sidebar.css">
+    <link rel="stylesheet" href="components/tab-bar.css">
+    <link rel="stylesheet" href="components/floating-menu.css">
+    <link rel="stylesheet" href="components/profile-menu.css">
+    <link rel="stylesheet" href="components/button.css">
+    <link rel="stylesheet" href="profile.css">
+    <style>
+        /* Estilos específicos para la página de resultados */
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+            overflow: visible;
+            max-height: none;
+        }
+
+        /* Header de resultados */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            color: var(--ubits-accent-brand);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            color: var(--ubits-accent-brand-hover);
+        }
+
+        .title-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .title-section h1 {
+            margin: 0;
+            color: var(--ubits-fg-1-high);
+        }
+
+        .info-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--ubits-bg-3);
+            color: var(--ubits-fg-1-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Información de la encuesta */
+        .survey-info {
+            background: var(--ubits-bg-1);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--ubits-border-1);
+        }
+
+        .survey-description {
+            color: var(--ubits-fg-1-medium);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .survey-details {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--ubits-fg-1-medium);
+            font-size: 14px;
+        }
+
+        .status-badge {
+            background: var(--ubits-feedback-accent-warning);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Métricas */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .metric-card {
+            background: var(--ubits-bg-1);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--ubits-border-1);
+        }
+
+        .metric-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .metric-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+        }
+
+        .metric-icon.risk { background: var(--ubits-feedback-accent-error); }
+        .metric-icon.follow { background: var(--ubits-accent-brand); }
+        .metric-icon.participation { background: var(--ubits-feedback-accent-success); }
+
+        .metric-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--ubits-fg-1-high);
+            margin: 0;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--ubits-fg-1-high);
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--ubits-bg-3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--ubits-accent-brand);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            background: var(--ubits-bg-1);
+            border-radius: 8px;
+            border: 1px solid var(--ubits-border-1);
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid var(--ubits-border-1);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 16px 24px;
+            background: none;
+            border: none;
+            color: var(--ubits-fg-1-medium);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .tab-button.active {
+            color: var(--ubits-accent-brand);
+            background: var(--ubits-bg-2);
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--ubits-accent-brand);
+        }
+
+        .tab-content {
+            padding: 24px;
+            min-height: 400px;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .survey-details {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="dashboard-container">
+        <div class="tooltip" id="tooltip"></div>
+        
+        <!-- Sidebar Container -->
+        <div id="sidebar-container"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navigation -->
+            <div id="top-nav-container"></div>
+            
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="results-container">
+                    <!-- Header de resultados -->
+                    <div class="results-header">
+                        <button class="back-button" onclick="window.history.back()">
+                            <i class="far fa-arrow-left"></i>
+                            <span>Regresar</span>
+                        </button>
+                        <div class="title-section">
+                            <h1 class="ubits-heading-h1">NOM 035</h1>
+                            <div class="info-icon">
+                                <i class="far fa-info"></i>
+                            </div>
+                        </div>
+                        <button class="ubits-button ubits-button--primary ubits-button--md">
+                            <i class="far fa-download"></i>
+                            <span>Descargar</span>
+                        </button>
+                    </div>
+
+                    <!-- Información de la encuesta -->
+                    <div class="survey-info">
+                        <p class="survey-description">
+                            Esta encuesta te permite evaluar los factores de riesgo psicosocial y el entorno organizacional favorable en el trabajo.
+                        </p>
+                        <div class="survey-details">
+                            <div class="detail-item">
+                                <i class="far fa-users"></i>
+                                <span>Enviado a 150 colaboradores</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="far fa-calendar"></i>
+                                <span>Inicio 15 octubre 2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="far fa-calendar-check"></i>
+                                <span>Hasta 15 noviembre 2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="far fa-shield-check"></i>
+                                <span>Privacidad Anónima</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Estado</span>
+                                <span class="status-badge">Completado</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Métricas clave -->
+                    <div class="metrics-grid">
+                        <!-- Métrica 1: Total de casos de riesgo -->
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <div class="metric-icon risk">
+                                    <i class="far fa-exclamation-triangle"></i>
+                                </div>
+                                <h3 class="metric-title">Total de casos de riesgo</h3>
+                            </div>
+                            <div class="metric-value">45</div>
+                            <div style="display: flex; gap: 8px; margin-bottom: 12px; font-size: 12px; color: var(--ubits-fg-1-medium);">
+                                <span>Nulo: 12</span>
+                                <span>Bajo: 18</span>
+                                <span>Medio: 10</span>
+                                <span>Alto: 4</span>
+                                <span>Muy alto: 1</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 30%; background: var(--ubits-feedback-accent-warning);"></div>
+                            </div>
+                        </div>
+
+                        <!-- Métrica 2: Total canalizados / en seguimiento -->
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <div class="metric-icon follow">
+                                    <i class="far fa-user-check"></i>
+                                </div>
+                                <h3 class="metric-title">Total canalizados / en seguimiento</h3>
+                            </div>
+                            <div class="metric-value">28</div>
+                            <div style="display: flex; gap: 8px; margin-bottom: 12px; font-size: 12px; color: var(--ubits-fg-1-medium);">
+                                <span>Canalizados: 15</span>
+                                <span>En seguimiento: 13</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 62%; background: var(--ubits-accent-brand);"></div>
+                            </div>
+                        </div>
+
+                        <!-- Métrica 3: % de participación -->
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <div class="metric-icon participation">
+                                    <i class="far fa-chart-pie"></i>
+                                </div>
+                                <h3 class="metric-title">% de participación</h3>
+                            </div>
+                            <div class="metric-value">93%</div>
+                            <div style="display: flex; gap: 8px; margin-bottom: 12px; font-size: 12px; color: var(--ubits-fg-1-medium);">
+                                <span>140/150 colaboradores</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 93%; background: var(--ubits-feedback-accent-success);"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabs de navegación -->
+                    <div class="tabs-container">
+                        <div class="tabs-header">
+                            <button class="tab-button active" data-tab="panel-emocional">
+                                Panel emocional
+                            </button>
+                            <button class="tab-button" data-tab="general">
+                                General
+                            </button>
+                        </div>
+                        <div class="tab-content">
+                            <!-- Panel emocional -->
+                            <div class="tab-panel active" id="panel-emocional">
+                                <h3 class="ubits-heading-h3" style="margin-bottom: 16px;">Panel Emocional</h3>
+                                <p class="ubits-body-md-regular" style="color: var(--ubits-fg-1-medium);">
+                                    Análisis detallado de los factores de riesgo psicosocial relacionados con el bienestar emocional de los colaboradores.
+                                </p>
+                                <!-- Aquí iría el contenido específico del panel emocional -->
+                                <div style="margin-top: 24px; padding: 20px; background: var(--ubits-bg-2); border-radius: 8px; text-align: center;">
+                                    <i class="far fa-chart-line" style="font-size: 48px; color: var(--ubits-fg-1-medium); margin-bottom: 16px;"></i>
+                                    <p class="ubits-body-md-regular" style="color: var(--ubits-fg-1-medium);">
+                                        Contenido del panel emocional se cargará aquí
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- General -->
+                            <div class="tab-panel" id="general">
+                                <h3 class="ubits-heading-h3" style="margin-bottom: 16px;">General</h3>
+                                <p class="ubits-body-md-regular" style="color: var(--ubits-fg-1-medium);">
+                                    Vista general de todos los resultados de la encuesta NOM 035, incluyendo métricas consolidadas y tendencias.
+                                </p>
+                                <!-- Aquí iría el contenido específico del panel general -->
+                                <div style="margin-top: 24px; padding: 20px; background: var(--ubits-bg-2); border-radius: 8px; text-align: center;">
+                                    <i class="far fa-chart-bar" style="font-size: 48px; color: var(--ubits-fg-1-medium); margin-bottom: 16px;"></i>
+                                    <p class="ubits-body-md-regular" style="color: var(--ubits-fg-1-medium);">
+                                        Contenido del panel general se cargará aquí
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Tab Bar Container -->
+    <div id="tab-bar-container"></div>
+
+    <!-- Floating Menu Container -->
+    <div id="floating-menu-container"></div>
+    
+    <!-- Profile Menu Container -->
+    <div id="profile-menu-container"></div>
+
+    <script src="components/sidebar.js"></script>
+    <script src="components/sub-nav.js"></script>
+    <script src="components/tab-bar.js"></script>
+    <script src="components/floating-menu.js"></script>
+    <script src="components/profile-menu.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Cargar componentes dinámicamente
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSidebar('sidebar-container', 'encuestas');
+            loadSubNav('top-nav-container', 'encuestas');
+            loadTabBar('tab-bar-container');
+            loadFloatingMenu('floating-menu-container');
+            loadProfileMenu('profile-menu-container');
+            
+            // Activar el tab "Encuestas" específicamente después de cargar el SubNav
+            setTimeout(() => {
+                // Remover active de todos los tabs (desktop y móvil)
+                document.querySelectorAll('.nav-tab, .hamburger-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Activar el tab Encuestas en desktop
+                const encuestasTab = document.querySelector('.nav-tab[data-tab="encuestas"]');
+                if (encuestasTab) {
+                    encuestasTab.classList.add('active');
+                }
+                
+                // Activar el tab Encuestas en móvil (hamburger menu)
+                const encuestasHamburger = document.querySelector('.hamburger-item[data-tab="encuestas"]');
+                if (encuestasHamburger) {
+                    encuestasHamburger.classList.add('active');
+                }
+                
+                // Activar el botón de encuestas en el sidebar
+                const encuestasButton = document.querySelector('.nav-button[data-section="encuestas"]');
+                if (encuestasButton) {
+                    // Remover active de todos los botones del sidebar
+                    document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+                    // Activar el botón de encuestas
+                    encuestasButton.classList.add('active');
+                }
+                
+                // Activar el botón "Módulos" del Tab-bar móvil
+                const modulosTabBarItem = document.querySelector('.tab-bar-item[data-tab="modulos"]');
+                if (modulosTabBarItem) {
+                    // Remover active de todos los items del tab-bar
+                    document.querySelectorAll('.tab-bar-item').forEach(item => item.classList.remove('active'));
+                    // Activar el item módulos
+                    modulosTabBarItem.classList.add('active');
+                }
+                
+                // Activar la opción "Encuestas" como direct link del floating menu
+                if (typeof setActiveDirectLink === 'function') {
+                    setActiveDirectLink('encuestas');
+                }
+            }, 200);
+        });
+
+        // Funcionalidad de tabs
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // Remover active de todos los botones y paneles
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanels.forEach(panel => panel.classList.remove('active'));
+                    
+                    // Activar el botón y panel seleccionado
+                    this.classList.add('active');
+                    document.getElementById(targetTab).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
