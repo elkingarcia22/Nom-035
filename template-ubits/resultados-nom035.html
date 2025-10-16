@@ -877,6 +877,56 @@
             border-left-color: var(--ubits-accent-brand);
         }
 
+        .section-risk-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+            margin-right: 12px;
+        }
+
+        .section-risk-level {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-risk-level.nulo {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .section-risk-level.bajo {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .section-risk-level.medio {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .section-risk-level.alto {
+            background: #fed7aa;
+            color: #c2410c;
+        }
+
+        .section-risk-level.muy-alto {
+            background: #fecaca;
+            color: #dc2626;
+        }
+
+        .section-percentage {
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            min-width: 35px;
+            text-align: right;
+        }
+
         .section-icon {
             margin-right: 12px;
             font-size: 16px;
@@ -1831,6 +1881,10 @@
                         <div class="section-header" onclick="toggleSection(this)">
                             <i class="far fa-circle section-icon"></i>
                             <div class="section-title">🔹 ${sectionName}</div>
+                            <div class="section-risk-info">
+                                <span class="section-risk-level ${getSectionRiskLevel(questions)}">${getSectionRiskLevel(questions)}</span>
+                                <span class="section-percentage">${getSectionPercentage(questions)}%</span>
+                            </div>
                             <i class="far fa-chevron-down section-chevron"></i>
                         </div>
                         <div class="section-content ${index === 0 ? 'open' : ''}">
@@ -1846,6 +1900,26 @@
                     </div>
                 `).join('')}
             `;
+        }
+
+        // Calcular nivel de riesgo de una sección
+        function getSectionRiskLevel(questions) {
+            const yesCount = questions.filter(q => q.answer === 'Sí').length;
+            const totalQuestions = questions.length;
+            const percentage = (yesCount / totalQuestions) * 100;
+            
+            if (percentage >= 80) return 'muy-alto';
+            if (percentage >= 60) return 'alto';
+            if (percentage >= 40) return 'medio';
+            if (percentage >= 20) return 'bajo';
+            return 'nulo';
+        }
+
+        // Calcular porcentaje de una sección
+        function getSectionPercentage(questions) {
+            const yesCount = questions.filter(q => q.answer === 'Sí').length;
+            const totalQuestions = questions.length;
+            return Math.round((yesCount / totalQuestions) * 100);
         }
 
         // Toggle de secciones (acordeones)
