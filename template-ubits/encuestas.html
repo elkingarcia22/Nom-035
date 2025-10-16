@@ -170,15 +170,73 @@
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                                 <div style="display: flex; align-items: center; gap: 12px;">
                                     <h1 class="ubits-heading-h1" style="margin: 0; color: var(--ubits-fg-1-high);">Lista de finalizados</h1>
-                                    <span class="ubits-body-md-regular" style="color: var(--ubits-accent-brand);">12 resultados</span>
+                                    <span class="ubits-body-md-regular" id="resultados-count" style="color: var(--ubits-accent-brand);">12 resultados</span>
                                 </div>
                                 <div style="display: flex; align-items: center; gap: 8px;">
-                                    <button class="ubits-button ubits-button--tertiary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                    <!-- Campo de búsqueda desplegable -->
+                                    <div id="search-container" style="display: none; position: relative;">
+                                        <input type="text" id="search-input" placeholder="Buscar encuestas..." 
+                                               style="padding: 8px 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); width: 250px; font-size: 14px;">
+                                        <button id="close-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer;">
+                                            <i class="far fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <button id="search-btn" class="ubits-button ubits-button--tertiary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
                                         <i class="far fa-search"></i>
                                     </button>
-                                    <button class="ubits-button ubits-button--tertiary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                    <button id="filter-btn" class="ubits-button ubits-button--tertiary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
                                         <i class="far fa-filter"></i>
                                     </button>
+                                </div>
+                            </div>
+
+                            <!-- Panel de filtros desplegable -->
+                            <div id="filter-panel" style="display: none; background: var(--ubits-bg-2); border: 1px solid var(--ubits-border-1); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                                <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <label class="ubits-body-sm-semibold" style="color: var(--ubits-fg-1-medium);">Estado:</label>
+                                        <select id="estado-filter" style="padding: 6px 8px; border: 1px solid var(--ubits-border-1); border-radius: 4px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); font-size: 14px;">
+                                            <option value="">Todos los estados</option>
+                                            <option value="Completado">Completado</option>
+                                            <option value="En progreso">En progreso</option>
+                                            <option value="Borrador">Borrador</option>
+                                            <option value="Por iniciar">Por iniciar</option>
+                                        </select>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <label class="ubits-body-sm-semibold" style="color: var(--ubits-fg-1-medium);">Tipo:</label>
+                                        <select id="tipo-filter" style="padding: 6px 8px; border: 1px solid var(--ubits-border-1); border-radius: 4px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); font-size: 14px;">
+                                            <option value="">Todos los tipos</option>
+                                            <option value="NOM 035">NOM 035</option>
+                                            <option value="Cultura">Cultura</option>
+                                            <option value="Clima">Clima</option>
+                                            <option value="eNPS">eNPS</option>
+                                            <option value="Satisfacción">Satisfacción</option>
+                                            <option value="Bienestar">Bienestar</option>
+                                            <option value="Liderazgo">Liderazgo</option>
+                                        </select>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <label class="ubits-body-sm-semibold" style="color: var(--ubits-fg-1-medium);">Año:</label>
+                                        <select id="año-filter" style="padding: 6px 8px; border: 1px solid var(--ubits-border-1); border-radius: 4px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); font-size: 14px;">
+                                            <option value="">Todos los años</option>
+                                            <option value="2025">2025</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2021">2021</option>
+                                        </select>
+                                    </div>
+                                    <div style="display: flex; gap: 8px; align-items: end;">
+                                        <button id="apply-filters" class="ubits-button ubits-button--primary ubits-button--sm">
+                                            <i class="far fa-check"></i>
+                                            <span>Aplicar</span>
+                                        </button>
+                                        <button id="clear-filters" class="ubits-button ubits-button--secondary ubits-button--sm">
+                                            <i class="far fa-times"></i>
+                                            <span>Limpiar</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -542,6 +600,137 @@
                     setActiveDirectLink('encuestas');
                 }
             }, 200);
+        });
+
+        // Funcionalidad de búsqueda y filtros
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBtn = document.getElementById('search-btn');
+            const searchContainer = document.getElementById('search-container');
+            const searchInput = document.getElementById('search-input');
+            const closeSearch = document.getElementById('close-search');
+            const filterBtn = document.getElementById('filter-btn');
+            const filterPanel = document.getElementById('filter-panel');
+            const applyFilters = document.getElementById('apply-filters');
+            const clearFilters = document.getElementById('clear-filters');
+            const resultadosCount = document.getElementById('resultados-count');
+            
+            // Datos originales de la tabla
+            let originalData = [];
+            let filteredData = [];
+            
+            // Inicializar datos
+            function initializeData() {
+                const rows = document.querySelectorAll('tbody tr');
+                originalData = Array.from(rows).map(row => {
+                    const cells = row.querySelectorAll('td');
+                    return {
+                        element: row,
+                        nombre: cells[1]?.textContent?.trim() || '',
+                        tipo: cells[2]?.textContent?.trim() || '',
+                        estado: cells[3]?.querySelector('span')?.textContent?.trim() || '',
+                        fechaInicio: cells[4]?.textContent?.trim() || '',
+                        fechaCierre: cells[5]?.textContent?.trim() || '',
+                        participantes: cells[6]?.textContent?.trim() || '',
+                        finalizacion: cells[7]?.textContent?.trim() || ''
+                    };
+                });
+                filteredData = [...originalData];
+            }
+            
+            // Mostrar/ocultar búsqueda
+            searchBtn.addEventListener('click', function() {
+                if (searchContainer.style.display === 'none') {
+                    searchContainer.style.display = 'block';
+                    searchInput.focus();
+                } else {
+                    searchContainer.style.display = 'none';
+                    searchInput.value = '';
+                    filterTable();
+                }
+            });
+            
+            // Cerrar búsqueda
+            closeSearch.addEventListener('click', function() {
+                searchContainer.style.display = 'none';
+                searchInput.value = '';
+                filterTable();
+            });
+            
+            // Búsqueda en tiempo real
+            searchInput.addEventListener('input', function() {
+                filterTable();
+            });
+            
+            // Mostrar/ocultar filtros
+            filterBtn.addEventListener('click', function() {
+                if (filterPanel.style.display === 'none') {
+                    filterPanel.style.display = 'block';
+                } else {
+                    filterPanel.style.display = 'none';
+                }
+            });
+            
+            // Aplicar filtros
+            applyFilters.addEventListener('click', function() {
+                filterTable();
+            });
+            
+            // Limpiar filtros
+            clearFilters.addEventListener('click', function() {
+                document.getElementById('estado-filter').value = '';
+                document.getElementById('tipo-filter').value = '';
+                document.getElementById('año-filter').value = '';
+                searchInput.value = '';
+                searchContainer.style.display = 'none';
+                filterTable();
+            });
+            
+            // Función principal de filtrado
+            function filterTable() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const estadoFilter = document.getElementById('estado-filter').value;
+                const tipoFilter = document.getElementById('tipo-filter').value;
+                const añoFilter = document.getElementById('año-filter').value;
+                
+                // Ocultar todas las filas
+                originalData.forEach(item => {
+                    item.element.style.display = 'none';
+                });
+                
+                // Filtrar datos
+                filteredData = originalData.filter(item => {
+                    // Filtro de búsqueda
+                    const matchesSearch = !searchTerm || 
+                        item.nombre.toLowerCase().includes(searchTerm) ||
+                        item.tipo.toLowerCase().includes(searchTerm) ||
+                        item.estado.toLowerCase().includes(searchTerm);
+                    
+                    // Filtro de estado
+                    const matchesEstado = !estadoFilter || item.estado === estadoFilter;
+                    
+                    // Filtro de tipo
+                    const matchesTipo = !tipoFilter || item.tipo === tipoFilter;
+                    
+                    // Filtro de año
+                    const matchesAño = !añoFilter || item.nombre.includes(añoFilter);
+                    
+                    return matchesSearch && matchesEstado && matchesTipo && matchesAño;
+                });
+                
+                // Mostrar filas filtradas
+                filteredData.forEach(item => {
+                    item.element.style.display = '';
+                });
+                
+                // Actualizar contador
+                const count = filteredData.length;
+                resultadosCount.textContent = `${count} resultado${count !== 1 ? 's' : ''}`;
+            }
+            
+            // Inicializar cuando se carga la página
+            setTimeout(() => {
+                initializeData();
+            }, 500);
         });
     </script>
 </body>
