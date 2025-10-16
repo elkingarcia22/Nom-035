@@ -264,24 +264,12 @@
             border-top-color: #1f2937;
         }
 
-        .progress-bar:hover .tooltip {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .progress-multicolor:hover .tooltip {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .progress-fill:hover .tooltip {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        .progress-bar:hover .tooltip,
+        .progress-multicolor:hover .tooltip,
+        .progress-fill:hover .tooltip,
         .progress-segment:hover .tooltip {
-            opacity: 1;
-            visibility: visible;
+            opacity: 1 !important;
+            visibility: visible !important;
         }
 
         .progress-bar {
@@ -321,6 +309,8 @@
         .progress-segment.green { background: #10b981; }
         .progress-segment.orange { background: #f59e0b; }
         .progress-segment.red { background: #ef4444; }
+        .progress-segment.blue { background: #3b82f6; }
+        .progress-segment.purple { background: #8b5cf6; }
 
         /* Tabs - EXACTO COMO LA IMAGEN */
         .tabs-container {
@@ -483,11 +473,13 @@
                                         <div class="progress-multicolor">
                                             <div class="progress-segment green" style="width: 27%;"></div>
                                             <div class="progress-segment orange" style="width: 40%;"></div>
-                                            <div class="progress-segment red" style="width: 33%;"></div>
+                                            <div class="progress-segment blue" style="width: 22%;"></div>
+                                            <div class="progress-segment red" style="width: 9%;"></div>
+                                            <div class="progress-segment purple" style="width: 2%;"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="metric-value">30%<br><span style="font-size: 12px; color: #6b7280;">45 casos</span></div>
+                                <div class="metric-value">100%<br><span style="font-size: 12px; color: #6b7280;">45 casos</span></div>
                             </div>
                         </div>
 
@@ -678,6 +670,7 @@
                     if (tooltip) {
                         tooltip.style.opacity = '1';
                         tooltip.style.visibility = 'visible';
+                        tooltip.style.display = 'block';
                     }
                 });
                 
@@ -686,6 +679,29 @@
                     if (tooltip) {
                         tooltip.style.opacity = '0';
                         tooltip.style.visibility = 'hidden';
+                        tooltip.style.display = 'none';
+                    }
+                });
+            });
+
+            // También agregar eventos a los segmentos
+            const progressSegments = document.querySelectorAll('.progress-segment, .progress-fill, .progress-multicolor');
+            progressSegments.forEach(segment => {
+                segment.addEventListener('mouseenter', function() {
+                    const tooltip = this.closest('.progress-bar').querySelector('.tooltip');
+                    if (tooltip) {
+                        tooltip.style.opacity = '1';
+                        tooltip.style.visibility = 'visible';
+                        tooltip.style.display = 'block';
+                    }
+                });
+                
+                segment.addEventListener('mouseleave', function() {
+                    const tooltip = this.closest('.progress-bar').querySelector('.tooltip');
+                    if (tooltip) {
+                        tooltip.style.opacity = '0';
+                        tooltip.style.visibility = 'hidden';
+                        tooltip.style.display = 'none';
                     }
                 });
             });
