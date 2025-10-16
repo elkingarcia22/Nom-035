@@ -816,17 +816,34 @@
             margin-right: 12px;
         }
 
-        .participant-details-content h4 {
-            margin: 0 0 2px 0;
-            color: #1f2937;
-            font-size: 16px;
-            font-weight: 600;
+        .participant-info-line {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            font-size: 13px;
+            line-height: 1.4;
         }
 
-        .participant-details-content p {
-            margin: 0;
+        .participant-name {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 14px;
+        }
+
+        .participant-separator {
+            color: #9ca3af;
+            font-weight: 300;
+        }
+
+        .participant-role,
+        .participant-department,
+        .participant-age,
+        .participant-gender,
+        .participant-status,
+        .participant-experience {
             color: #6b7280;
-            font-size: 12px;
+            font-size: 13px;
         }
 
         .survey-results {
@@ -1786,10 +1803,21 @@
                             ${participant.avatar}
                         </div>
                         <div class="participant-details-content">
-                            <h4>${participant.name}</h4>
-                            <p>${participant.role} • ${participant.details.department}</p>
-                            <p>${participant.details.age} años • ${participant.details.gender} • ${participant.details.maritalStatus}</p>
-                            <p>${participant.details.experience} de experiencia</p>
+                            <div class="participant-info-line">
+                                <span class="participant-name">${participant.name}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-role">${participant.role}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-department">${participant.details.department}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-age">${participant.details.age} años</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-gender">${participant.details.gender}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-status">${participant.details.maritalStatus}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-experience">${participant.details.experience} de experiencia</span>
+                            </div>
                         </div>
                     </div>
                 </div>
