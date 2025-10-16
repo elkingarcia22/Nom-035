@@ -1209,6 +1209,303 @@
             background-color: #fecaca;
             color: #991b1b;
         }
+
+        /* Table Header and Controls */
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .table-header h3 {
+            margin: 0;
+            color: #374151;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .table-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 8px 12px 8px 40px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 300px;
+            background: white;
+            color: #374151;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--ubits-accent-brand);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            color: #6b7280;
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        .filter-badge {
+            background-color: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        /* Filters Side Panel Styles */
+        .filters-side-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filters-side-panel.show {
+            right: 0;
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .filters-header h3 {
+            margin: 0;
+            color: #374151;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .close-filters-btn {
+            background: none;
+            border: none;
+            color: #6b7280;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+
+        .close-filters-btn:hover {
+            background-color: #f3f4f6;
+        }
+
+        .filters-content {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .filter-group {
+            margin-bottom: 24px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+
+        .select-trigger:hover {
+            border-color: #9ca3af;
+        }
+
+        .select-trigger.active {
+            border-color: var(--ubits-accent-brand);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .select-text {
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .select-arrow {
+            color: #6b7280;
+            font-size: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .select-trigger.active .select-arrow {
+            transform: rotate(180deg);
+        }
+
+        .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1001;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .select-dropdown.show {
+            display: block;
+        }
+
+        .select-option {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            gap: 8px;
+        }
+
+        .select-option:hover {
+            background-color: #f9fafb;
+        }
+
+        .select-option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .risk-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .risk-indicator.nulo {
+            background-color: #f3f4f6;
+        }
+
+        .risk-indicator.bajo {
+            background-color: #dcfce7;
+        }
+
+        .risk-indicator.medio {
+            background-color: #fef3c7;
+        }
+
+        .risk-indicator.alto {
+            background-color: #fed7d7;
+        }
+
+        .risk-indicator.muy-alto {
+            background-color: #fecaca;
+        }
+
+        .filter-actions {
+            padding: 20px 24px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 12px;
+        }
+
+        .apply-filters-btn,
+        .clear-filters-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .apply-filters-btn {
+            background: var(--ubits-accent-brand);
+            color: white;
+        }
+
+        .apply-filters-btn:hover {
+            background: #2563eb;
+        }
+
+        .clear-filters-btn {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .clear-filters-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .filters-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .filters-overlay.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -1346,7 +1643,20 @@
                         <!-- Tab Content -->
                         <div class="tab-panel active" id="general-panel">
                                 <div class="panel-content">
-                                    <h3>Vista General de Resultados NOM-035</h3>
+                                    <div class="table-header">
+                                        <h3>Vista General de Resultados NOM-035</h3>
+                                        <div class="table-controls">
+                                            <div class="search-container">
+                                                <input type="text" id="table-search" placeholder="Buscar en resultados..." class="search-input">
+                                                <i class="far fa-search search-icon"></i>
+                                            </div>
+                                            <button class="ubits-button ubits-button--secondary ubits-button--md" id="table-filters-btn">
+                                                <i class="far fa-filter"></i>
+                                                <span>Filtros</span>
+                                                <span class="filter-badge" id="table-filter-badge" style="display: none;">0</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                     <table class="results-table">
                                             <thead>
                                                 <tr>
@@ -1494,6 +1804,111 @@
                                                 </tr>
                                             </tbody>
                                     </table>
+                                    
+                                    <!-- Filters Side Panel -->
+                                    <div class="filters-side-panel" id="table-filters-side-panel">
+                                        <div class="filters-header">
+                                            <h3>Filtros</h3>
+                                            <button class="close-filters-btn" id="close-table-filters-btn">
+                                                <i class="far fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <div class="filters-content">
+                                            <div class="filter-group">
+                                                <label class="filter-label">Nivel de Riesgo</label>
+                                                <div class="custom-select" id="table-risk-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar niveles</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="table-risk-todos" checked>
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="nulo">
+                                                            <input type="checkbox" id="table-risk-nulo">
+                                                            <div class="risk-indicator nulo"></div>
+                                                            <span class="option-text">Nulo</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="bajo">
+                                                            <input type="checkbox" id="table-risk-bajo">
+                                                            <div class="risk-indicator bajo"></div>
+                                                            <span class="option-text">Bajo</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="medio">
+                                                            <input type="checkbox" id="table-risk-medio">
+                                                            <div class="risk-indicator medio"></div>
+                                                            <span class="option-text">Medio</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="alto">
+                                                            <input type="checkbox" id="table-risk-alto">
+                                                            <div class="risk-indicator alto"></div>
+                                                            <span class="option-text">Alto</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="muy-alto">
+                                                            <input type="checkbox" id="table-risk-muy-alto">
+                                                            <div class="risk-indicator muy-alto"></div>
+                                                            <span class="option-text">Muy Alto</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="filter-group">
+                                                <label class="filter-label">Categoría</label>
+                                                <div class="custom-select" id="table-category-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar categorías</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="table-category-todos" checked>
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="ambiente">
+                                                            <input type="checkbox" id="table-category-ambiente">
+                                                            <span class="option-text">Ambiente de trabajo</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="factores">
+                                                            <input type="checkbox" id="table-category-factores">
+                                                            <span class="option-text">Factores propios de la actividad</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="organizacion">
+                                                            <input type="checkbox" id="table-category-organizacion">
+                                                            <span class="option-text">Organización del tiempo de trabajo</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="liderazgo">
+                                                            <input type="checkbox" id="table-category-liderazgo">
+                                                            <span class="option-text">Liderazgo y relaciones en el trabajo</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="violencia">
+                                                            <input type="checkbox" id="table-category-violencia">
+                                                            <span class="option-text">Violencia laboral</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="entorno">
+                                                            <input type="checkbox" id="table-category-entorno">
+                                                            <span class="option-text">Entorno organizacional</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="filter-actions">
+                                            <button class="apply-filters-btn" id="apply-table-filters-btn">
+                                                <i class="far fa-check"></i>
+                                                Aplicar Filtros
+                                            </button>
+                                            <button class="clear-filters-btn" id="clear-table-filters-btn">
+                                                <i class="far fa-times"></i>
+                                                Limpiar
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Filters Overlay -->
+                                    <div class="filters-overlay" id="table-filters-overlay"></div>
                                 </div>
                             
                             <div class="tab-panel" id="dimension-panel">
@@ -1589,6 +2004,246 @@
             });
         }
 
+        // Funciones para búsqueda y filtros de la tabla
+        function initializeTableFilters() {
+            const filtersBtn = document.getElementById('table-filters-btn');
+            const filtersSidePanel = document.getElementById('table-filters-side-panel');
+            const filtersOverlay = document.getElementById('table-filters-overlay');
+            const closeFiltersBtn = document.getElementById('close-table-filters-btn');
+            const applyFiltersBtn = document.getElementById('apply-table-filters-btn');
+            const clearFiltersBtn = document.getElementById('clear-table-filters-btn');
+            const searchInput = document.getElementById('table-search');
+
+            // Abrir panel de filtros
+            filtersBtn.addEventListener('click', () => {
+                filtersSidePanel.classList.add('show');
+                filtersOverlay.classList.add('show');
+            });
+
+            // Cerrar panel de filtros
+            closeFiltersBtn.addEventListener('click', closeTableFiltersPanel);
+            filtersOverlay.addEventListener('click', closeTableFiltersPanel);
+
+            // Aplicar filtros
+            applyFiltersBtn.addEventListener('click', () => {
+                applyTableFilters();
+                closeTableFiltersPanel();
+            });
+
+            // Limpiar filtros
+            clearFiltersBtn.addEventListener('click', clearTableFilters);
+
+            // Búsqueda en tiempo real
+            searchInput.addEventListener('input', applyTableFilters);
+
+            // Configurar selects personalizados
+            setupTableCustomSelects();
+        }
+
+        function closeTableFiltersPanel() {
+            document.getElementById('table-filters-side-panel').classList.remove('show');
+            document.getElementById('table-filters-overlay').classList.remove('show');
+        }
+
+        function applyTableFilters() {
+            const searchTerm = document.getElementById('table-search').value.toLowerCase();
+            const riskFilters = getTableSelectedValues('table-risk-select');
+            const categoryFilters = getTableSelectedValues('table-category-select');
+
+            const tableRows = document.querySelectorAll('.results-table tbody tr');
+            
+            tableRows.forEach(row => {
+                const categoryText = row.querySelector('.category-cell')?.textContent.toLowerCase() || '';
+                const domainText = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
+                const dimensionText = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+                const riskBadge = row.querySelector('.risk-badge');
+                const riskLevel = riskBadge ? riskBadge.textContent.toLowerCase().trim() : '';
+
+                // Filtro de búsqueda
+                const matchesSearch = searchTerm === '' || 
+                    categoryText.includes(searchTerm) ||
+                    domainText.includes(searchTerm) ||
+                    dimensionText.includes(searchTerm);
+
+                // Filtro de nivel de riesgo
+                const matchesRisk = riskFilters.length === 0 || riskFilters.includes('todos') || riskFilters.includes(riskLevel);
+
+                // Filtro de categoría
+                const matchesCategory = categoryFilters.length === 0 || categoryFilters.includes('todos') || 
+                    (categoryText.includes('ambiente') && categoryFilters.includes('ambiente')) ||
+                    (categoryText.includes('factores') && categoryFilters.includes('factores')) ||
+                    (categoryText.includes('organización') && categoryFilters.includes('organizacion')) ||
+                    (categoryText.includes('liderazgo') && categoryFilters.includes('liderazgo')) ||
+                    (categoryText.includes('violencia') && categoryFilters.includes('violencia')) ||
+                    (categoryText.includes('entorno') && categoryFilters.includes('entorno'));
+
+                if (matchesSearch && matchesRisk && matchesCategory) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            updateTableFilterBadge();
+        }
+
+        function clearTableFilters() {
+            const selectIds = ['table-risk-select', 'table-category-select'];
+            
+            selectIds.forEach(selectId => {
+                const checkboxes = document.querySelectorAll(`#${selectId} input[type="checkbox"]`);
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                
+                // Marcar "Todos" como seleccionado
+                const todosCheckbox = document.querySelector(`#${selectId} input[type="checkbox"][id$="-todos"]`);
+                if (todosCheckbox) {
+                    todosCheckbox.checked = true;
+                }
+                
+                updateTableSelectText(selectId);
+            });
+
+            document.getElementById('table-search').value = '';
+            
+            // Mostrar todas las filas
+            const tableRows = document.querySelectorAll('.results-table tbody tr');
+            tableRows.forEach(row => {
+                row.style.display = '';
+            });
+            
+            const badge = document.getElementById('table-filter-badge');
+            badge.style.display = 'none';
+        }
+
+        function updateTableFilterBadge() {
+            const badge = document.getElementById('table-filter-badge');
+            let activeFilters = 0;
+
+            const selectIds = ['table-risk-select', 'table-category-select'];
+            
+            selectIds.forEach(selectId => {
+                const selectedValues = getTableSelectedValues(selectId);
+                if (selectedValues.length > 0 && !selectedValues.includes('todos')) {
+                    activeFilters++;
+                }
+            });
+
+            const searchTerm = document.getElementById('table-search').value;
+            if (searchTerm.trim() !== '') {
+                activeFilters++;
+            }
+
+            if (activeFilters > 0) {
+                badge.textContent = activeFilters;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function setupTableCustomSelects() {
+            const selectIds = ['table-risk-select', 'table-category-select'];
+            
+            selectIds.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                const trigger = select.querySelector('.select-trigger');
+                const dropdown = select.querySelector('.select-dropdown');
+                const options = select.querySelectorAll('.select-option');
+
+                // Toggle dropdown
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = trigger.classList.contains('active');
+                    
+                    // Cerrar otros selects
+                    selectIds.forEach(id => {
+                        if (id !== selectId) {
+                            document.getElementById(id).querySelector('.select-trigger').classList.remove('active');
+                            document.getElementById(id).querySelector('.select-dropdown').classList.remove('show');
+                        }
+                    });
+                    
+                    trigger.classList.toggle('active');
+                    dropdown.classList.toggle('show');
+                });
+
+                // Manejar clics en opciones
+                options.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const checkbox = option.querySelector('input[type="checkbox"]');
+                        const isTodos = option.dataset.value === 'todos';
+                        
+                        if (isTodos) {
+                            handleTableTodosOption(selectId, checkbox);
+                        } else {
+                            checkbox.checked = !checkbox.checked;
+                            
+                            // Si se selecciona cualquier opción que no sea "Todos", desmarcar "Todos"
+                            const todosCheckbox = select.querySelector('input[type="checkbox"][id$="-todos"]');
+                            if (checkbox.checked && todosCheckbox.checked) {
+                                todosCheckbox.checked = false;
+                            }
+                            
+                            // Si no hay ninguna opción seleccionada, marcar "Todos"
+                            const allCheckboxes = select.querySelectorAll('input[type="checkbox"]:not([id$="-todos"])');
+                            const checkedBoxes = select.querySelectorAll('input[type="checkbox"]:not([id$="-todos"]):checked');
+                            if (checkedBoxes.length === 0) {
+                                todosCheckbox.checked = true;
+                            }
+                        }
+                        
+                        updateTableSelectText(selectId);
+                    });
+                });
+            });
+
+            // Cerrar dropdowns al hacer clic fuera
+            document.addEventListener('click', () => {
+                selectIds.forEach(selectId => {
+                    const select = document.getElementById(selectId);
+                    select.querySelector('.select-trigger').classList.remove('active');
+                    select.querySelector('.select-dropdown').classList.remove('show');
+                });
+            });
+        }
+
+        function handleTableTodosOption(selectId, todosCheckbox) {
+            const select = document.getElementById(selectId);
+            const allCheckboxes = select.querySelectorAll('input[type="checkbox"]');
+            
+            if (todosCheckbox.checked) {
+                // Si "Todos" está marcado, desmarcar todo
+                allCheckboxes.forEach(cb => cb.checked = false);
+            } else {
+                // Si "Todos" no está marcado, marcar "Todos" y desmarcar el resto
+                allCheckboxes.forEach(cb => cb.checked = false);
+                todosCheckbox.checked = true;
+            }
+        }
+
+        function updateTableSelectText(selectId) {
+            const select = document.getElementById(selectId);
+            const textElement = select.querySelector('.select-text');
+            const selectedValues = getTableSelectedValues(selectId);
+            
+            if (selectedValues.length === 0 || selectedValues.includes('todos')) {
+                textElement.textContent = 'Seleccionar opciones';
+            } else if (selectedValues.length === 1) {
+                textElement.textContent = selectedValues[0];
+            } else {
+                textElement.textContent = `${selectedValues.length} seleccionados`;
+            }
+        }
+
+        function getTableSelectedValues(selectId) {
+            const select = document.getElementById(selectId);
+            const checkedBoxes = select.querySelectorAll('input[type="checkbox"]:checked');
+            return Array.from(checkedBoxes).map(cb => cb.id.replace(selectId.replace('-select', '-'), '').replace('-todos', 'todos'));
+        }
+
         // Inicializar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             // Cargar componentes
@@ -1597,6 +2252,7 @@
                 loadProfileMenu('profile-menu-container');
                 loadFloatingMenu('floating-menu-container');
                 initializeTabs();
+                initializeTableFilters();
             }, 200);
         });
     </script>
