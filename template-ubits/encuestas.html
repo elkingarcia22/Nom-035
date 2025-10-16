@@ -188,31 +188,63 @@
             text-align: center;
         }
 
-        /* Status badges mejorados */
+        /* Status badges mejorados con mejor contraste */
         .status-badge {
             display: inline-block;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 8px 14px;
+            border-radius: 8px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
         }
 
         .status-badge.completed {
-            background: var(--ubits-feedback-accent-success);
+            background: linear-gradient(135deg, #10b981, #059669);
             color: white;
+            border: 1px solid #047857;
         }
 
         .status-badge.in-progress {
-            background: var(--ubits-accent-brand);
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: white;
+            border: 1px solid #1d4ed8;
         }
 
         .status-badge.draft {
-            background: var(--ubits-bg-3);
-            color: var(--ubits-fg-1-medium);
-            border: 1px solid var(--ubits-border-1);
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            border: 1px solid #b45309;
+        }
+
+        .status-badge.pending {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            color: white;
+            border: 1px solid #374151;
+        }
+
+        /* Efectos hover para mejor interactividad */
+        .status-badge:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .status-badge.completed:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+        }
+
+        .status-badge.in-progress:hover {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        }
+
+        .status-badge.draft:hover {
+            background: linear-gradient(135deg, #d97706, #b45309);
+        }
+
+        .status-badge.pending:hover {
+            background: linear-gradient(135deg, #4b5563, #374151);
         }
 
         /* Progress bars mejorados */
@@ -606,7 +638,7 @@
                                             <td class="survey-name">Liderazgo 2024</td>
                                             <td class="survey-type">Liderazgo</td>
                                             <td>
-                                                <span class="status-badge draft">Por iniciar</span>
+                                                <span class="status-badge pending">Por iniciar</span>
                                             </td>
                                             <td class="survey-dates">15 enero 2025</td>
                                             <td class="survey-dates">15 febrero 2025</td>
