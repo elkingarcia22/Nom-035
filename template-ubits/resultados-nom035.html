@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="components/button.css">
     <link rel="stylesheet" href="profile.css">
     <style>
-        /* Estilos específicos para la página de resultados */
+        /* Estilos específicos para la página de resultados - FIEL AL DISEÑO */
         .results-container {
             display: flex;
             flex-direction: column;
@@ -30,7 +30,7 @@
             max-height: none;
         }
 
-        /* Header de resultados */
+        /* Header de resultados - EXACTO COMO LA IMAGEN */
         .results-header {
             display: flex;
             justify-content: space-between;
@@ -44,57 +44,79 @@
             gap: 8px;
             background: none;
             border: none;
-            color: var(--ubits-accent-brand);
+            color: #1e40af;
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
+            padding: 0;
         }
 
         .back-button:hover {
-            color: var(--ubits-accent-brand-hover);
+            color: #1d4ed8;
         }
 
         .title-section {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
         .title-section h1 {
             margin: 0;
-            color: var(--ubits-fg-1-high);
+            color: #1f2937;
+            font-size: 24px;
+            font-weight: 700;
         }
 
         .info-icon {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
-            background: var(--ubits-bg-3);
-            color: var(--ubits-fg-1-medium);
+            background: #e5e7eb;
+            color: #6b7280;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 10px;
             cursor: pointer;
         }
 
-        /* Información de la encuesta */
+        .download-button {
+            background: #1e40af;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .download-button:hover {
+            background: #1d4ed8;
+        }
+
+        /* Información de la encuesta - EXACTO COMO LA IMAGEN */
         .survey-info {
-            background: var(--ubits-bg-1);
+            background: white;
             border-radius: 8px;
             padding: 20px;
-            border: 1px solid var(--ubits-border-1);
+            border: 1px solid #e5e7eb;
         }
 
         .survey-description {
-            color: var(--ubits-fg-1-medium);
+            color: #6b7280;
             margin-bottom: 16px;
             line-height: 1.5;
+            font-size: 14px;
         }
 
         .survey-details {
             display: flex;
-            gap: 32px;
+            gap: 24px;
             flex-wrap: wrap;
             align-items: center;
         }
@@ -102,32 +124,37 @@
         .detail-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: var(--ubits-fg-1-medium);
+            gap: 6px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .detail-item i {
+            color: #9ca3af;
             font-size: 14px;
         }
 
         .status-badge {
-            background: var(--ubits-feedback-accent-warning);
+            background: #f59e0b;
             color: white;
-            padding: 4px 12px;
-            border-radius: 16px;
+            padding: 4px 8px;
+            border-radius: 12px;
             font-size: 12px;
             font-weight: 600;
         }
 
-        /* Métricas */
+        /* Métricas - EXACTO COMO LA IMAGEN */
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
         }
 
         .metric-card {
-            background: var(--ubits-bg-1);
+            background: white;
             border-radius: 8px;
             padding: 20px;
-            border: 1px solid var(--ubits-border-1);
+            border: 1px solid #e5e7eb;
         }
 
         .metric-header {
@@ -148,50 +175,63 @@
             color: white;
         }
 
-        .metric-icon.risk { background: var(--ubits-feedback-accent-error); }
-        .metric-icon.follow { background: var(--ubits-accent-brand); }
-        .metric-icon.participation { background: var(--ubits-feedback-accent-success); }
+        .metric-icon.risk { background: #ef4444; }
+        .metric-icon.follow { background: #3b82f6; }
+        .metric-icon.participation { background: #10b981; }
 
         .metric-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
-            color: var(--ubits-fg-1-high);
+            color: #374151;
             margin: 0;
         }
 
         .metric-value {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
-            color: var(--ubits-fg-1-high);
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .metric-details {
+            display: flex;
+            gap: 8px;
             margin-bottom: 12px;
+            font-size: 12px;
+            color: #6b7280;
+            flex-wrap: wrap;
         }
 
         .progress-bar {
             width: 100%;
-            height: 8px;
-            background: var(--ubits-bg-3);
-            border-radius: 4px;
+            height: 6px;
+            background: #f3f4f6;
+            border-radius: 3px;
             overflow: hidden;
+            position: relative;
         }
 
         .progress-fill {
             height: 100%;
-            background: var(--ubits-accent-brand);
-            border-radius: 4px;
+            border-radius: 3px;
             transition: width 0.3s ease;
         }
 
-        /* Tabs */
+        .progress-fill.risk { background: #f59e0b; }
+        .progress-fill.follow { background: #3b82f6; }
+        .progress-fill.participation { background: #10b981; }
+
+        /* Tabs - EXACTO COMO LA IMAGEN */
         .tabs-container {
-            background: var(--ubits-bg-1);
+            background: white;
             border-radius: 8px;
-            border: 1px solid var(--ubits-border-1);
+            border: 1px solid #e5e7eb;
             overflow: hidden;
         }
 
         .tabs-header {
             display: flex;
-            border-bottom: 1px solid var(--ubits-border-1);
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .tab-button {
@@ -199,7 +239,7 @@
             padding: 16px 24px;
             background: none;
             border: none;
-            color: var(--ubits-fg-1-medium);
+            color: #9ca3af;
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
@@ -208,8 +248,8 @@
         }
 
         .tab-button.active {
-            color: var(--ubits-accent-brand);
-            background: var(--ubits-bg-2);
+            color: #1f2937;
+            background: #f9fafb;
         }
 
         .tab-button.active::after {
@@ -219,7 +259,7 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: var(--ubits-accent-brand);
+            background: #3b82f6;
         }
 
         .tab-content {
@@ -268,25 +308,25 @@
             <!-- Content Area -->
             <div class="content-area">
                 <div class="results-container">
-                    <!-- Header de resultados -->
+                    <!-- Header de resultados - EXACTO COMO LA IMAGEN -->
                     <div class="results-header">
                         <button class="back-button" onclick="window.history.back()">
                             <i class="far fa-arrow-left"></i>
                             <span>Regresar</span>
                         </button>
                         <div class="title-section">
-                            <h1 class="ubits-heading-h1">NOM 035</h1>
+                            <h1>NOM 035</h1>
                             <div class="info-icon">
                                 <i class="far fa-info"></i>
                             </div>
                         </div>
-                        <button class="ubits-button ubits-button--primary ubits-button--md">
-                            <i class="far fa-download"></i>
+                        <button class="download-button">
                             <span>Descargar</span>
+                            <i class="far fa-chevron-down"></i>
                         </button>
                     </div>
 
-                    <!-- Información de la encuesta -->
+                    <!-- Información de la encuesta - EXACTO COMO LA IMAGEN -->
                     <div class="survey-info">
                         <p class="survey-description">
                             Esta encuesta te permite evaluar los factores de riesgo psicosocial y el entorno organizacional favorable en el trabajo.
@@ -298,35 +338,33 @@
                             </div>
                             <div class="detail-item">
                                 <i class="far fa-calendar"></i>
-                                <span>Inicio 15 octubre 2024</span>
+                                <span>Inicio 15 octubre</span>
                             </div>
                             <div class="detail-item">
-                                <i class="far fa-calendar-check"></i>
                                 <span>Hasta 15 noviembre 2024</span>
                             </div>
                             <div class="detail-item">
-                                <i class="far fa-shield-check"></i>
                                 <span>Privacidad Anónima</span>
                             </div>
                             <div class="detail-item">
                                 <span>Estado</span>
-                                <span class="status-badge">Completado</span>
+                                <span class="status-badge">En progreso</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Métricas clave -->
+                    <!-- Métricas clave - EXACTO COMO LA IMAGEN -->
                     <div class="metrics-grid">
                         <!-- Métrica 1: Total de casos de riesgo -->
                         <div class="metric-card">
                             <div class="metric-header">
                                 <div class="metric-icon risk">
-                                    <i class="far fa-exclamation-triangle"></i>
+                                    <i class="far fa-chart-bar"></i>
                                 </div>
                                 <h3 class="metric-title">Total de casos de riesgo</h3>
                             </div>
                             <div class="metric-value">45</div>
-                            <div style="display: flex; gap: 8px; margin-bottom: 12px; font-size: 12px; color: var(--ubits-fg-1-medium);">
+                            <div class="metric-details">
                                 <span>Nulo: 12</span>
                                 <span>Bajo: 18</span>
                                 <span>Medio: 10</span>
@@ -334,7 +372,7 @@
                                 <span>Muy alto: 1</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 30%; background: var(--ubits-feedback-accent-warning);"></div>
+                                <div class="progress-fill risk" style="width: 30%;"></div>
                             </div>
                         </div>
 
@@ -342,17 +380,17 @@
                         <div class="metric-card">
                             <div class="metric-header">
                                 <div class="metric-icon follow">
-                                    <i class="far fa-user-check"></i>
+                                    <i class="far fa-users"></i>
                                 </div>
                                 <h3 class="metric-title">Total canalizados / en seguimiento</h3>
                             </div>
                             <div class="metric-value">28</div>
-                            <div style="display: flex; gap: 8px; margin-bottom: 12px; font-size: 12px; color: var(--ubits-fg-1-medium);">
+                            <div class="metric-details">
                                 <span>Canalizados: 15</span>
                                 <span>En seguimiento: 13</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 62%; background: var(--ubits-accent-brand);"></div>
+                                <div class="progress-fill follow" style="width: 62%;"></div>
                             </div>
                         </div>
 
@@ -360,21 +398,21 @@
                         <div class="metric-card">
                             <div class="metric-header">
                                 <div class="metric-icon participation">
-                                    <i class="far fa-chart-pie"></i>
+                                    <i class="far fa-check-circle"></i>
                                 </div>
                                 <h3 class="metric-title">% de participación</h3>
                             </div>
                             <div class="metric-value">93%</div>
-                            <div style="display: flex; gap: 8px; margin-bottom: 12px; font-size: 12px; color: var(--ubits-fg-1-medium);">
+                            <div class="metric-details">
                                 <span>140/150 colaboradores</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 93%; background: var(--ubits-feedback-accent-success);"></div>
+                                <div class="progress-fill participation" style="width: 93%;"></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Tabs de navegación -->
+                    <!-- Tabs de navegación - EXACTO COMO LA IMAGEN -->
                     <div class="tabs-container">
                         <div class="tabs-header">
                             <button class="tab-button active" data-tab="panel-emocional">
@@ -387,14 +425,14 @@
                         <div class="tab-content">
                             <!-- Panel emocional -->
                             <div class="tab-panel active" id="panel-emocional">
-                                <h3 class="ubits-heading-h3" style="margin-bottom: 16px;">Panel Emocional</h3>
-                                <p class="ubits-body-md-regular" style="color: var(--ubits-fg-1-medium);">
+                                <h3 style="margin-bottom: 16px; color: #1f2937; font-size: 18px; font-weight: 600;">Panel Emocional</h3>
+                                <p style="color: #6b7280; margin-bottom: 24px; line-height: 1.5;">
                                     Análisis detallado de los factores de riesgo psicosocial relacionados con el bienestar emocional de los colaboradores.
                                 </p>
                                 <!-- Aquí iría el contenido específico del panel emocional -->
-                                <div style="margin-top: 24px; padding: 20px; background: var(--ubits-bg-2); border-radius: 8px; text-align: center;">
-                                    <i class="far fa-chart-line" style="font-size: 48px; color: var(--ubits-fg-1-medium); margin-bottom: 16px;"></i>
-                                    <p class="ubits-body-md-regular" style="color: var(--ubits-fg-1-medium);">
+                                <div style="margin-top: 24px; padding: 20px; background: #f9fafb; border-radius: 8px; text-align: center;">
+                                    <i class="far fa-chart-line" style="font-size: 48px; color: #9ca3af; margin-bottom: 16px;"></i>
+                                    <p style="color: #6b7280;">
                                         Contenido del panel emocional se cargará aquí
                                     </p>
                                 </div>
@@ -402,14 +440,14 @@
 
                             <!-- General -->
                             <div class="tab-panel" id="general">
-                                <h3 class="ubits-heading-h3" style="margin-bottom: 16px;">General</h3>
-                                <p class="ubits-body-md-regular" style="color: var(--ubits-fg-1-medium);">
+                                <h3 style="margin-bottom: 16px; color: #1f2937; font-size: 18px; font-weight: 600;">General</h3>
+                                <p style="color: #6b7280; margin-bottom: 24px; line-height: 1.5;">
                                     Vista general de todos los resultados de la encuesta NOM 035, incluyendo métricas consolidadas y tendencias.
                                 </p>
                                 <!-- Aquí iría el contenido específico del panel general -->
-                                <div style="margin-top: 24px; padding: 20px; background: var(--ubits-bg-2); border-radius: 8px; text-align: center;">
-                                    <i class="far fa-chart-bar" style="font-size: 48px; color: var(--ubits-fg-1-medium); margin-bottom: 16px;"></i>
-                                    <p class="ubits-body-md-regular" style="color: var(--ubits-fg-1-medium);">
+                                <div style="margin-top: 24px; padding: 20px; background: #f9fafb; border-radius: 8px; text-align: center;">
+                                    <i class="far fa-chart-bar" style="font-size: 48px; color: #9ca3af; margin-bottom: 16px;"></i>
+                                    <p style="color: #6b7280;">
                                         Contenido del panel general se cargará aquí
                                     </p>
                                 </div>
