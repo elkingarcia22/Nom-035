@@ -551,35 +551,26 @@
             margin-bottom: 12px;
         }
 
-        .filter-options {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .filter-option {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            padding: 8px;
+        .filter-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
             border-radius: 6px;
-            transition: background-color 0.2s ease;
+            background: #fff;
+            color: #374151;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s ease;
+            cursor: pointer;
         }
 
-        .filter-option:hover {
-            background: #f3f4f6;
+        .filter-select:focus {
+            border-color: var(--ubits-accent-brand);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        .filter-option input[type="checkbox"] {
-            margin: 0;
-        }
-
-        .risk-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
+        .filter-select option {
+            padding: 8px;
         }
 
         .filter-actions {
@@ -1072,116 +1063,51 @@
                                         <div class="filters-content">
                                             <div class="filter-group">
                                                 <label class="filter-label">Nivel de Riesgo</label>
-                                                <div class="filter-options">
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="nulo" class="risk-filter">
-                                                        <span class="risk-indicator risk-nulo"></span>
-                                                        Nulo
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="bajo" class="risk-filter">
-                                                        <span class="risk-indicator risk-bajo"></span>
-                                                        Bajo
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="medio" class="risk-filter">
-                                                        <span class="risk-indicator risk-medio"></span>
-                                                        Medio
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="alto" class="risk-filter">
-                                                        <span class="risk-indicator risk-alto"></span>
-                                                        Alto
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="muy-alto" class="risk-filter">
-                                                        <span class="risk-indicator risk-muy-alto"></span>
-                                                        Muy Alto
-                                                    </label>
-                                                </div>
+                                                <select class="filter-select" id="risk-filter" multiple>
+                                                    <option value="nulo">Nulo</option>
+                                                    <option value="bajo">Bajo</option>
+                                                    <option value="medio">Medio</option>
+                                                    <option value="alto">Alto</option>
+                                                    <option value="muy-alto">Muy Alto</option>
+                                                </select>
                                             </div>
                                             <div class="filter-group">
                                                 <label class="filter-label">Departamento</label>
-                                                <div class="filter-options">
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Ventas" class="department-filter">
-                                                        Ventas
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Tecnología" class="department-filter">
-                                                        Tecnología
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Recursos Humanos" class="department-filter">
-                                                        Recursos Humanos
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Finanzas" class="department-filter">
-                                                        Finanzas
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Administración" class="department-filter">
-                                                        Administración
-                                                    </label>
-                                                </div>
+                                                <select class="filter-select" id="department-filter" multiple>
+                                                    <option value="Ventas">Ventas</option>
+                                                    <option value="Tecnología">Tecnología</option>
+                                                    <option value="Recursos Humanos">Recursos Humanos</option>
+                                                    <option value="Finanzas">Finanzas</option>
+                                                    <option value="Administración">Administración</option>
+                                                </select>
                                             </div>
                                             
                                             <div class="filter-group">
                                                 <label class="filter-label">Cargo</label>
-                                                <div class="filter-options">
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Gerente" class="position-filter">
-                                                        Gerente
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Desarrollador" class="position-filter">
-                                                        Desarrollador
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Analista" class="position-filter">
-                                                        Analista
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Contador" class="position-filter">
-                                                        Contador
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Asistente" class="position-filter">
-                                                        Asistente
-                                                    </label>
-                                                </div>
+                                                <select class="filter-select" id="position-filter" multiple>
+                                                    <option value="Gerente">Gerente</option>
+                                                    <option value="Desarrollador">Desarrollador</option>
+                                                    <option value="Analista">Analista</option>
+                                                    <option value="Contador">Contador</option>
+                                                    <option value="Asistente">Asistente</option>
+                                                </select>
                                             </div>
                                             
                                             <div class="filter-group">
                                                 <label class="filter-label">Sexo</label>
-                                                <div class="filter-options">
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Femenino" class="gender-filter">
-                                                        Femenino
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Masculino" class="gender-filter">
-                                                        Masculino
-                                                    </label>
-                                                </div>
+                                                <select class="filter-select" id="gender-filter" multiple>
+                                                    <option value="Femenino">Femenino</option>
+                                                    <option value="Masculino">Masculino</option>
+                                                </select>
                                             </div>
                                             
                                             <div class="filter-group">
                                                 <label class="filter-label">Estado Civil</label>
-                                                <div class="filter-options">
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Soltero" class="marital-status-filter">
-                                                        Soltero
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Casado" class="marital-status-filter">
-                                                        Casado
-                                                    </label>
-                                                    <label class="filter-option">
-                                                        <input type="checkbox" value="Divorciada" class="marital-status-filter">
-                                                        Divorciada
-                                                    </label>
-                                                </div>
+                                                <select class="filter-select" id="marital-status-filter" multiple>
+                                                    <option value="Soltero">Soltero</option>
+                                                    <option value="Casado">Casado</option>
+                                                    <option value="Divorciada">Divorciada</option>
+                                                </select>
                                             </div>
                                             <div class="filter-actions">
                                                 <button class="apply-filters-btn" id="apply-filters-btn">
@@ -1772,15 +1698,29 @@
                 clearFilters();
                 applyFilters();
             });
+
+            // Aplicar filtros automáticamente cuando cambien los selects
+            const filterSelects = document.querySelectorAll('.filter-select');
+            filterSelects.forEach(select => {
+                select.addEventListener('change', () => {
+                    applyFilters();
+                });
+            });
         }
 
         // Aplicar filtros
         function applyFilters() {
-            const riskFilters = Array.from(document.querySelectorAll('.risk-filter:checked')).map(cb => cb.value);
-            const departmentFilters = Array.from(document.querySelectorAll('.department-filter:checked')).map(cb => cb.value);
-            const positionFilters = Array.from(document.querySelectorAll('.position-filter:checked')).map(cb => cb.value);
-            const genderFilters = Array.from(document.querySelectorAll('.gender-filter:checked')).map(cb => cb.value);
-            const maritalStatusFilters = Array.from(document.querySelectorAll('.marital-status-filter:checked')).map(cb => cb.value);
+            const riskSelect = document.getElementById('risk-filter');
+            const departmentSelect = document.getElementById('department-filter');
+            const positionSelect = document.getElementById('position-filter');
+            const genderSelect = document.getElementById('gender-filter');
+            const maritalStatusSelect = document.getElementById('marital-status-filter');
+            
+            const riskFilters = Array.from(riskSelect.selectedOptions).map(option => option.value);
+            const departmentFilters = Array.from(departmentSelect.selectedOptions).map(option => option.value);
+            const positionFilters = Array.from(positionSelect.selectedOptions).map(option => option.value);
+            const genderFilters = Array.from(genderSelect.selectedOptions).map(option => option.value);
+            const maritalStatusFilters = Array.from(maritalStatusSelect.selectedOptions).map(option => option.value);
             const searchTerm = document.getElementById('participant-search').value.toLowerCase();
 
             let filteredParticipants = participantsData.filter(participant => {
@@ -1816,9 +1756,11 @@
 
         // Limpiar filtros
         function clearFilters() {
-            document.querySelectorAll('.risk-filter, .department-filter, .position-filter, .gender-filter, .marital-status-filter').forEach(checkbox => {
-                checkbox.checked = false;
-            });
+            document.getElementById('risk-filter').selectedIndex = -1;
+            document.getElementById('department-filter').selectedIndex = -1;
+            document.getElementById('position-filter').selectedIndex = -1;
+            document.getElementById('gender-filter').selectedIndex = -1;
+            document.getElementById('marital-status-filter').selectedIndex = -1;
             document.getElementById('participant-search').value = '';
             renderParticipantsList(participantsData);
         }
