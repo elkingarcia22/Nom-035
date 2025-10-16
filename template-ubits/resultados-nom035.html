@@ -852,6 +852,28 @@
             padding: 16px;
         }
 
+        .survey-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--ubits-accent-brand);
+        }
+
+        .survey-title .section-icon {
+            color: var(--ubits-accent-brand);
+            font-size: 16px;
+        }
+
+        .survey-title .section-title {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 14px;
+        }
+
         .survey-section {
             margin-bottom: 16px;
         }
@@ -1825,34 +1847,29 @@
 
             // Mostrar resultados de la encuesta
             surveyResults.innerHTML = `
-                <div class="survey-section">
-                    <div class="section-header" onclick="toggleSection(this)">
-                        <i class="far fa-comment section-icon"></i>
-                        <div class="section-title">💬 Encuesta Emocional — NOM-035 (Guía I: Acontecimientos Traumáticos Severos)</div>
-                        <i class="far fa-chevron-down section-chevron"></i>
-                    </div>
-                    <div class="section-content">
-                        ${Object.entries(participant.surveyResults).map(([sectionName, questions]) => `
-                            <div class="survey-section">
-                                <div class="section-header" onclick="toggleSection(this)">
-                                    <i class="far fa-circle section-icon"></i>
-                                    <div class="section-title">🔹 ${sectionName}</div>
-                                    <i class="far fa-chevron-down section-chevron"></i>
-                                </div>
-                                <div class="section-content">
-                                    ${questions.map(q => `
-                                        <div class="question-item">
-                                            <div class="question-text">${q.question}</div>
-                                            <div class="question-answer ${q.answer === 'Sí' ? 'answer-yes' : 'answer-no'}">
-                                                ${q.answer}
-                                            </div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
+                <div class="survey-title">
+                    <i class="far fa-comment section-icon"></i>
+                    <div class="section-title">💬 Encuesta Emocional — NOM-035 (Guía I: Acontecimientos Traumáticos Severos)</div>
                 </div>
+                ${Object.entries(participant.surveyResults).map(([sectionName, questions], index) => `
+                    <div class="survey-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <i class="far fa-circle section-icon"></i>
+                            <div class="section-title">🔹 ${sectionName}</div>
+                            <i class="far fa-chevron-down section-chevron"></i>
+                        </div>
+                        <div class="section-content ${index === 0 ? 'open' : ''}">
+                            ${questions.map(q => `
+                                <div class="question-item">
+                                    <div class="question-text">${q.question}</div>
+                                    <div class="question-answer ${q.answer === 'Sí' ? 'answer-yes' : 'answer-no'}">
+                                        ${q.answer}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('')}
             `;
         }
 
@@ -1861,19 +1878,13 @@
             const content = header.nextElementSibling;
             const isOpen = content.classList.contains('open');
 
-            // Cerrar todas las secciones del mismo nivel
-            const parent = header.closest('.section-content');
-            if (parent) {
-                parent.querySelectorAll('.section-content').forEach(section => {
-                    section.classList.remove('open');
-                    section.previousElementSibling.classList.remove('open');
-                });
-            }
-
             // Toggle de la sección actual
             if (!isOpen) {
                 content.classList.add('open');
                 header.classList.add('open');
+            } else {
+                content.classList.remove('open');
+                header.classList.remove('open');
             }
         }
 
