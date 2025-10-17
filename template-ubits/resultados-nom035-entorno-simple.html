@@ -18,62 +18,74 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="profile.css">
     
-    <!-- Estilos para Tabs -->
+    <!-- Estilos para Tabs - Versión Debug -->
     <style>
         .tabs-container {
-            background: var(--ubits-bg-1);
+            background: #ffffff !important;
+            border: 3px solid #ff0000 !important;
             border-radius: 8px;
             overflow: hidden;
             margin-top: 24px;
+            min-height: 200px !important;
         }
         
         .tabs-header {
-            display: flex;
-            background: var(--ubits-bg-2);
-            border-bottom: 1px solid var(--ubits-border-1);
+            display: flex !important;
+            background: #f0f0f0 !important;
+            border-bottom: 2px solid #000000 !important;
+            padding: 10px !important;
         }
         
         .tab-button {
-            display: flex;
+            display: flex !important;
             align-items: center;
             gap: 8px;
-            padding: 12px 20px;
-            background: none;
-            border: none;
-            color: var(--ubits-fg-1-medium);
-            font-size: 14px;
-            font-weight: 500;
+            padding: 15px 25px !important;
+            background: #e0e0e0 !important;
+            border: 2px solid #000000 !important;
+            color: #000000 !important;
+            font-size: 16px !important;
+            font-weight: bold !important;
             cursor: pointer;
             transition: all 0.2s ease;
-            border-bottom: 2px solid transparent;
+            margin-right: 10px !important;
         }
         
         .tab-button:hover {
-            background: var(--ubits-bg-3);
-            color: var(--ubits-fg-1-high);
+            background: #cccccc !important;
+            color: #000000 !important;
         }
         
         .tab-button.active {
-            background: var(--ubits-bg-1);
-            color: var(--ubits-fg-1-high);
-            border-bottom-color: var(--ubits-accent-primary);
+            background: #007bff !important;
+            color: #ffffff !important;
+            border-color: #0056b3 !important;
         }
         
         .tab-button i {
-            font-size: 16px;
+            font-size: 18px !important;
         }
         
         .tab-panel {
-            display: none;
-            padding: 0;
+            display: none !important;
+            padding: 20px !important;
+            background: #f9f9f9 !important;
+            border: 2px solid #00ff00 !important;
+            min-height: 300px !important;
         }
         
         .tab-panel.active {
-            display: block;
+            display: block !important;
         }
         
         .panel-content {
-            padding: 24px;
+            padding: 24px !important;
+            background: #ffffff !important;
+        }
+        
+        /* Debug: Hacer todo muy visible */
+        .tabs-container * {
+            box-sizing: border-box !important;
         }
         
         @media (max-width: 768px) {
@@ -173,6 +185,9 @@
 
             <!-- Tabs Container -->
             <div class="tabs-container">
+                <div style="background: #ffff00; color: #000000; padding: 10px; font-weight: bold; text-align: center;">
+                    🚨 DEBUG: ESTE ES EL CONTENEDOR DE TABS - SI VES ESTO, EL HTML ESTÁ FUNCIONANDO
+                </div>
                 <div class="tabs-header">
                     <button class="tab-button active" data-tab="general">
                         <i class="far fa-chart-bar"></i>
@@ -884,7 +899,23 @@
 
         // Inicialización cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Inicializando página con tabs...');
+            console.log('🚨 DEBUG: Inicializando página con tabs...');
+            
+            // Debug: Verificar si los elementos existen
+            const tabsContainer = document.querySelector('.tabs-container');
+            const tabsHeader = document.querySelector('.tabs-header');
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            
+            console.log('🚨 DEBUG: tabs-container encontrado:', tabsContainer);
+            console.log('🚨 DEBUG: tabs-header encontrado:', tabsHeader);
+            console.log('🚨 DEBUG: tab-buttons encontrados:', tabButtons.length);
+            console.log('🚨 DEBUG: tab-panels encontrados:', tabPanels.length);
+            
+            if (tabsContainer) {
+                console.log('🚨 DEBUG: tabs-container visible:', tabsContainer.offsetHeight > 0);
+                console.log('🚨 DEBUG: tabs-container display:', window.getComputedStyle(tabsContainer).display);
+            }
             
             // Cargar componentes
             loadSidebar('ninguno');
@@ -905,7 +936,18 @@
                 toggleCategoryRow(firstCategoryRow);
             }
             
-            console.log('Página inicializada correctamente con tabs');
+            console.log('🚨 DEBUG: Página inicializada correctamente con tabs');
+            
+            // Debug adicional después de 2 segundos
+            setTimeout(() => {
+                console.log('🚨 DEBUG: Verificación después de 2 segundos...');
+                const tabsContainerAfter = document.querySelector('.tabs-container');
+                if (tabsContainerAfter) {
+                    console.log('🚨 DEBUG: tabs-container altura:', tabsContainerAfter.offsetHeight);
+                    console.log('🚨 DEBUG: tabs-container ancho:', tabsContainerAfter.offsetWidth);
+                    console.log('🚨 DEBUG: tabs-container posición:', tabsContainerAfter.getBoundingClientRect());
+                }
+            }, 2000);
         });
     </script>
 </body>
