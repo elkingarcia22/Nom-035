@@ -1814,6 +1814,10 @@
                                 <i class="far fa-chart-line"></i>
                                 <span>Dimensiones 2</span>
                             </button>
+                            <button class="tab-button" data-tab="test">
+                                <i class="far fa-bug"></i>
+                                <span>Test</span>
+                            </button>
                         </div>
                         
                         <!-- Tab Content -->
@@ -2992,6 +2996,20 @@
                                     </table>
                                 </div>
                             </div>
+                            
+                            <!-- Tab Test - Súper Simple -->
+                            <div class="tab-panel" id="test-panel">
+                                <div style="padding: 20px; background: #f3f4f6; border-radius: 8px; margin: 20px;">
+                                    <h2 style="color: #1f2937; margin-bottom: 16px;">🧪 Tab de Prueba</h2>
+                                    <p style="color: #374151; margin-bottom: 16px;">Si ves este contenido, los tabs funcionan correctamente.</p>
+                                    <div style="background: #10b981; color: white; padding: 12px; border-radius: 6px; margin-bottom: 16px;">
+                                        ✅ <strong>¡Éxito!</strong> El sistema de tabs está funcionando.
+                                    </div>
+                                    <button onclick="alert('¡JavaScript funciona!')" style="background: #3b82f6; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer;">
+                                        Probar JavaScript
+                                    </button>
+                                </div>
+                            </div>
                     </div>
 
                 </div>
@@ -4092,7 +4110,7 @@
                 
                 // Prueba inmediata de tabs
                 console.log('=== PRUEBA DE TABS ===');
-                const allTabs = ['general', 'dimension', 'individual', 'dimensiones2'];
+                const allTabs = ['general', 'dimension', 'individual', 'dimensiones2', 'test'];
                 allTabs.forEach(tab => {
                     const button = document.querySelector(`[data-tab="${tab}"]`);
                     const panel = document.getElementById(`${tab}-panel`);
@@ -4104,6 +4122,23 @@
                     });
                 });
                 console.log('=== FIN PRUEBA ===');
+                
+                // Prueba manual del tab test
+                setTimeout(() => {
+                    console.log('=== PRUEBA MANUAL TAB TEST ===');
+                    const testButton = document.querySelector('[data-tab="test"]');
+                    const testPanel = document.getElementById('test-panel');
+                    console.log('Test button:', testButton);
+                    console.log('Test panel:', testPanel);
+                    if (testButton && testPanel) {
+                        console.log('Haciendo clic en tab test...');
+                        testButton.click();
+                        setTimeout(() => {
+                            console.log('Panel test activo:', testPanel.classList.contains('active'));
+                        }, 100);
+                    }
+                    console.log('=== FIN PRUEBA MANUAL ===');
+                }, 2000);
                 
                 // Abrir la primera categoría por defecto
                 const firstCategoryRow = document.querySelector('.category-summary');
