@@ -1628,6 +1628,56 @@
         .filters-overlay.show {
             display: block;
         }
+
+        /* Estilos para la tabla de dimensiones */
+        .dimension-row {
+            border-bottom: 1px solid var(--ubits-border-1);
+        }
+
+        .dimension-row:hover {
+            background: var(--ubits-bg-2);
+        }
+
+        .dimension-cell {
+            padding: 12px 16px;
+            font-weight: 600;
+            color: var(--ubits-fg-1-high);
+            background: inherit !important;
+        }
+
+        .dimension-header-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dimension-number {
+            background: var(--ubits-fg-1-medium);
+            color: var(--ubits-bg-1);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .dimension-domain-info {
+            font-size: 13px;
+            color: var(--ubits-fg-1-medium);
+            font-weight: 500;
+            padding: 12px 16px;
+            background: inherit !important;
+        }
+
+        .dimension-risk-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -2472,8 +2522,342 @@
                             
                             <div class="tab-panel" id="dimension-panel">
                                 <div class="panel-content">
-                                    <h3>Contenido Dimensión</h3>
-                                    <p>Aquí va el contenido del tab Dimensión con análisis por dimensiones del entorno laboral.</p>
+                                    <div class="table-header">
+                                        <h3>Análisis por Dimensiones NOM-035</h3>
+                                        <div class="table-controls">
+                                            <!-- Campo de búsqueda desplegable -->
+                                            <div id="dimension-search-container" style="display: none; position: relative;">
+                                                <input type="text" id="dimension-search" placeholder="Buscar en dimensiones..." 
+                                                       style="padding: 8px 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); width: 250px; font-size: 14px;">
+                                                <button id="close-dimension-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer;">
+                                                    <i class="far fa-times"></i>
+                                                </button>
+                                            </div>
+                                            <button id="dimension-search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                                <i class="far fa-search"></i>
+                                            </button>
+                                            <button id="dimension-filters-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                                <i class="far fa-filter"></i>
+                                                <span class="filter-badge" id="dimension-filter-badge" style="display: none;">0</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <table class="results-table" id="dimension-results-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Dimensión</th>
+                                                    <th>Dominio</th>
+                                                    <th>Total Usuarios en Riesgo</th>
+                                                    <th>% Colaboradores Afectados</th>
+                                                    <th>Nivel de Riesgo</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="dimension-results-tbody">
+                                                <!-- Las dimensiones se cargarán dinámicamente -->
+                                            </tbody>
+                                        </table>
+                                    
+                                    <!-- Filters Side Panel -->
+                                    <div class="filters-side-panel" id="dimension-filters-side-panel">
+                                        <div class="filters-header">
+                                            <h3>Filtros</h3>
+                                            <button class="close-filters-btn" id="close-dimension-filters-btn">
+                                                <i class="far fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <div class="filters-content">
+                                            <div class="filter-group">
+                                                <label class="filter-label">Nivel de Riesgo</label>
+                                                <div class="custom-select" id="dimension-risk-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar niveles</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="dimension-risk-todos" checked>
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="nulo">
+                                                            <input type="checkbox" id="dimension-risk-nulo">
+                                                            <div class="risk-indicator nulo"></div>
+                                                            <span class="option-text">Nulo</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="bajo">
+                                                            <input type="checkbox" id="dimension-risk-bajo">
+                                                            <div class="risk-indicator bajo"></div>
+                                                            <span class="option-text">Bajo</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="medio">
+                                                            <input type="checkbox" id="dimension-risk-medio">
+                                                            <div class="risk-indicator medio"></div>
+                                                            <span class="option-text">Medio</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="alto">
+                                                            <input type="checkbox" id="dimension-risk-alto">
+                                                            <div class="risk-indicator alto"></div>
+                                                            <span class="option-text">Alto</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="muy-alto">
+                                                            <input type="checkbox" id="dimension-risk-muy-alto">
+                                                            <div class="risk-indicator muy-alto"></div>
+                                                            <span class="option-text">Muy Alto</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Área</label>
+                                                <div class="custom-select" id="dimension-area-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar áreas</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="dimension-area-todos" checked>
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="ventas">
+                                                            <input type="checkbox" id="dimension-area-ventas">
+                                                            <span class="option-text">Ventas</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="marketing">
+                                                            <input type="checkbox" id="dimension-area-marketing">
+                                                            <span class="option-text">Marketing</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="desarrollo">
+                                                            <input type="checkbox" id="dimension-area-desarrollo">
+                                                            <span class="option-text">Desarrollo</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="recursos-humanos">
+                                                            <input type="checkbox" id="dimension-area-recursos-humanos">
+                                                            <span class="option-text">Recursos Humanos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="finanzas">
+                                                            <input type="checkbox" id="dimension-area-finanzas">
+                                                            <span class="option-text">Finanzas</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Cargo</label>
+                                                <div class="custom-select" id="dimension-position-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar cargos</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="dimension-position-todos" checked>
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="gerente">
+                                                            <input type="checkbox" id="dimension-position-gerente">
+                                                            <span class="option-text">Gerente</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="coordinador">
+                                                            <input type="checkbox" id="dimension-position-coordinador">
+                                                            <span class="option-text">Coordinador</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="analista">
+                                                            <input type="checkbox" id="dimension-position-analista">
+                                                            <span class="option-text">Analista</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="asistente">
+                                                            <input type="checkbox" id="dimension-position-asistente">
+                                                            <span class="option-text">Asistente</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Género</label>
+                                                <div class="custom-select" id="dimension-gender-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar géneros</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="dimension-gender-todos" checked>
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="masculino">
+                                                            <input type="checkbox" id="dimension-gender-masculino">
+                                                            <span class="option-text">Masculino</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="femenino">
+                                                            <input type="checkbox" id="dimension-gender-femenino">
+                                                            <span class="option-text">Femenino</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="otro">
+                                                            <input type="checkbox" id="dimension-gender-otro">
+                                                            <span class="option-text">Otro</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Estado Civil</label>
+                                                <div class="custom-select" id="dimension-marital-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar estados</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="dimension-marital-todos" checked>
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="soltero">
+                                                            <input type="checkbox" id="dimension-marital-soltero">
+                                                            <span class="option-text">Soltero</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="casado">
+                                                            <input type="checkbox" id="dimension-marital-casado">
+                                                            <span class="option-text">Casado</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="divorciado">
+                                                            <input type="checkbox" id="dimension-marital-divorciado">
+                                                            <span class="option-text">Divorciado</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="viudo">
+                                                            <input type="checkbox" id="dimension-marital-viudo">
+                                                            <span class="option-text">Viudo</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Rango de Edad</label>
+                                                <div class="custom-select" id="dimension-age-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar rangos</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="dimension-age-todos" checked>
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="18-25">
+                                                            <input type="checkbox" id="dimension-age-18-25">
+                                                            <span class="option-text">18-25 años</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="26-35">
+                                                            <input type="checkbox" id="dimension-age-26-35">
+                                                            <span class="option-text">26-35 años</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="36-45">
+                                                            <input type="checkbox" id="dimension-age-36-45">
+                                                            <span class="option-text">36-45 años</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="46-55">
+                                                            <input type="checkbox" id="dimension-age-46-55">
+                                                            <span class="option-text">46-55 años</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="56+">
+                                                            <input type="checkbox" id="dimension-age-56+">
+                                                            <span class="option-text">56+ años</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">País</label>
+                                                <div class="custom-select" id="dimension-country-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar países</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="dimension-country-todos" checked>
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="colombia">
+                                                            <input type="checkbox" id="dimension-country-colombia">
+                                                            <span class="option-text">Colombia</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="mexico">
+                                                            <input type="checkbox" id="dimension-country-mexico">
+                                                            <span class="option-text">México</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="argentina">
+                                                            <input type="checkbox" id="dimension-country-argentina">
+                                                            <span class="option-text">Argentina</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="chile">
+                                                            <input type="checkbox" id="dimension-country-chile">
+                                                            <span class="option-text">Chile</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="peru">
+                                                            <input type="checkbox" id="dimension-country-peru">
+                                                            <span class="option-text">Perú</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Ciudad</label>
+                                                <div class="custom-select" id="dimension-city-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar ciudades</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="dimension-city-todos" checked>
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="bogota">
+                                                            <input type="checkbox" id="dimension-city-bogota">
+                                                            <span class="option-text">Bogotá</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="medellin">
+                                                            <input type="checkbox" id="dimension-city-medellin">
+                                                            <span class="option-text">Medellín</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="cali">
+                                                            <input type="checkbox" id="dimension-city-cali">
+                                                            <span class="option-text">Cali</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="barranquilla">
+                                                            <input type="checkbox" id="dimension-city-barranquilla">
+                                                            <span class="option-text">Barranquilla</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="cartagena">
+                                                            <input type="checkbox" id="dimension-city-cartagena">
+                                                            <span class="option-text">Cartagena</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-actions">
+                                                <button class="ubits-button ubits-button--secondary ubits-button--sm" id="dimension-clear-filters-btn">
+                                                    <i class="far fa-times"></i>
+                                                    <span>Limpiar Filtros</span>
+                                                </button>
+                                                <button class="ubits-button ubits-button--primary ubits-button--sm" id="dimension-apply-filters-btn">
+                                                    <i class="far fa-check"></i>
+                                                    <span>Aplicar Filtros</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Overlay para cerrar filtros -->
+                                    <div class="filters-overlay" id="dimension-filters-overlay"></div>
                                 </div>
                             </div>
                             
@@ -2612,6 +2996,231 @@
 
             // Configurar selects personalizados
             setupTableCustomSelects();
+        }
+
+        // Funciones para búsqueda y filtros de la tabla de dimensiones
+        function initializeDimensionFilters() {
+            const searchBtn = document.getElementById('dimension-search-btn');
+            const searchContainer = document.getElementById('dimension-search-container');
+            const searchInput = document.getElementById('dimension-search');
+            const closeSearch = document.getElementById('close-dimension-search');
+            const filtersBtn = document.getElementById('dimension-filters-btn');
+            const filtersSidePanel = document.getElementById('dimension-filters-side-panel');
+            const filtersOverlay = document.getElementById('dimension-filters-overlay');
+            const closeFiltersBtn = document.getElementById('close-dimension-filters-btn');
+            const applyFiltersBtn = document.getElementById('dimension-apply-filters-btn');
+            const clearFiltersBtn = document.getElementById('dimension-clear-filters-btn');
+
+            // Funcionalidad de búsqueda desplegable
+            searchBtn.addEventListener('click', () => {
+                searchContainer.style.display = 'block';
+                searchInput.focus();
+            });
+
+            closeSearch.addEventListener('click', () => {
+                searchContainer.style.display = 'none';
+                searchInput.value = '';
+                applyDimensionFilters();
+            });
+
+            // Abrir panel de filtros
+            filtersBtn.addEventListener('click', () => {
+                filtersSidePanel.classList.add('show');
+                filtersOverlay.classList.add('show');
+            });
+
+            // Cerrar panel de filtros
+            closeFiltersBtn.addEventListener('click', closeDimensionFiltersPanel);
+            filtersOverlay.addEventListener('click', closeDimensionFiltersPanel);
+
+            // Aplicar filtros
+            applyFiltersBtn.addEventListener('click', () => {
+                applyDimensionFilters();
+                closeDimensionFiltersPanel();
+            });
+
+            // Limpiar filtros
+            clearFiltersBtn.addEventListener('click', clearDimensionFilters);
+
+            // Búsqueda en tiempo real
+            searchInput.addEventListener('input', applyDimensionFilters);
+
+            // Configurar selects personalizados
+            setupDimensionCustomSelects();
+        }
+
+        function closeDimensionFiltersPanel() {
+            document.getElementById('dimension-filters-side-panel').classList.remove('show');
+            document.getElementById('dimension-filters-overlay').classList.remove('show');
+        }
+
+        function applyDimensionFilters() {
+            const searchTerm = document.getElementById('dimension-search').value.toLowerCase();
+            const riskFilters = getDimensionSelectedValues('dimension-risk-select');
+            const areaFilters = getDimensionSelectedValues('dimension-area-select');
+            const positionFilters = getDimensionSelectedValues('dimension-position-select');
+            const genderFilters = getDimensionSelectedValues('dimension-gender-select');
+            const maritalFilters = getDimensionSelectedValues('dimension-marital-select');
+            const ageFilters = getDimensionSelectedValues('dimension-age-select');
+            const countryFilters = getDimensionSelectedValues('dimension-country-select');
+            const cityFilters = getDimensionSelectedValues('dimension-city-select');
+
+            const tableRows = document.querySelectorAll('#dimension-results-table tbody tr');
+            
+            tableRows.forEach(row => {
+                const dimensionText = row.querySelector('.dimension-cell')?.textContent.toLowerCase() || '';
+                const domainText = row.querySelector('.dimension-domain-info')?.textContent.toLowerCase() || '';
+                const riskBadge = row.querySelector('.risk-badge');
+                const riskLevel = riskBadge ? riskBadge.textContent.toLowerCase().trim() : '';
+
+                // Filtro de búsqueda
+                const matchesSearch = searchTerm === '' || 
+                    dimensionText.includes(searchTerm) ||
+                    domainText.includes(searchTerm);
+
+                // Filtro de nivel de riesgo
+                const matchesRisk = riskFilters.length === 0 || riskFilters.includes('todos') || riskFilters.includes(riskLevel);
+
+                // Mostrar/ocultar fila basado en filtros
+                const shouldShow = matchesSearch && matchesRisk;
+                row.style.display = shouldShow ? '' : 'none';
+            });
+
+            // Actualizar contador de filtros activos
+            updateDimensionFilterBadge();
+        }
+
+        function clearDimensionFilters() {
+            // Limpiar búsqueda
+            document.getElementById('dimension-search').value = '';
+            document.getElementById('dimension-search-container').style.display = 'none';
+
+            // Resetear todos los selects a "Todos"
+            const selects = ['dimension-risk-select', 'dimension-area-select', 'dimension-position-select', 
+                           'dimension-gender-select', 'dimension-marital-select', 'dimension-age-select', 
+                           'dimension-country-select', 'dimension-city-select'];
+            
+            selects.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                const todosOption = select.querySelector('[data-value="todos"] input');
+                if (todosOption) {
+                    todosOption.checked = true;
+                }
+                // Desmarcar todas las otras opciones
+                select.querySelectorAll('.select-option:not([data-value="todos"]) input').forEach(input => {
+                    input.checked = false;
+                });
+                // Actualizar texto del trigger
+                const trigger = select.querySelector('.select-trigger .select-text');
+                if (trigger) {
+                    trigger.textContent = 'Seleccionar ' + selectId.replace('dimension-', '').replace('-select', 's');
+                }
+            });
+
+            // Aplicar filtros (que ahora están limpios)
+            applyDimensionFilters();
+        }
+
+        function getDimensionSelectedValues(selectId) {
+            const select = document.getElementById(selectId);
+            const checkedInputs = select.querySelectorAll('input:checked');
+            return Array.from(checkedInputs).map(input => input.closest('.select-option').dataset.value);
+        }
+
+        function updateDimensionFilterBadge() {
+            const badge = document.getElementById('dimension-filter-badge');
+            let activeFilters = 0;
+
+            // Contar filtros activos (excluyendo "Todos")
+            const selects = ['dimension-risk-select', 'dimension-area-select', 'dimension-position-select', 
+                           'dimension-gender-select', 'dimension-marital-select', 'dimension-age-select', 
+                           'dimension-country-select', 'dimension-city-select'];
+            
+            selects.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                const checkedInputs = select.querySelectorAll('input:checked:not([id$="-todos"])');
+                if (checkedInputs.length > 0) {
+                    activeFilters++;
+                }
+            });
+
+            // Contar búsqueda activa
+            const searchTerm = document.getElementById('dimension-search').value.trim();
+            if (searchTerm !== '') {
+                activeFilters++;
+            }
+
+            if (activeFilters > 0) {
+                badge.textContent = activeFilters;
+                badge.style.display = 'inline';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function setupDimensionCustomSelects() {
+            const selects = ['dimension-risk-select', 'dimension-area-select', 'dimension-position-select', 
+                           'dimension-gender-select', 'dimension-marital-select', 'dimension-age-select', 
+                           'dimension-country-select', 'dimension-city-select'];
+            
+            selects.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                const trigger = select.querySelector('.select-trigger');
+                const dropdown = select.querySelector('.select-dropdown');
+                const options = select.querySelectorAll('.select-option');
+
+                trigger.addEventListener('click', () => {
+                    select.classList.toggle('open');
+                });
+
+                options.forEach(option => {
+                    const input = option.querySelector('input');
+                    input.addEventListener('change', () => {
+                        if (input.checked) {
+                            // Si se selecciona "Todos", desmarcar los demás
+                            if (option.dataset.value === 'todos') {
+                                options.forEach(opt => {
+                                    if (opt !== option) {
+                                        opt.querySelector('input').checked = false;
+                                    }
+                                });
+                            } else {
+                                // Si se selecciona una opción específica, desmarcar "Todos"
+                                const todosOption = select.querySelector('[data-value="todos"] input');
+                                if (todosOption) {
+                                    todosOption.checked = false;
+                                }
+                            }
+                        }
+                        
+                        // Actualizar texto del trigger
+                        updateDimensionSelectTrigger(select);
+                        applyDimensionFilters();
+                    });
+                });
+
+                // Cerrar dropdown al hacer clic fuera
+                document.addEventListener('click', (e) => {
+                    if (!select.contains(e.target)) {
+                        select.classList.remove('open');
+                    }
+                });
+            });
+        }
+
+        function updateDimensionSelectTrigger(select) {
+            const trigger = select.querySelector('.select-trigger .select-text');
+            const checkedInputs = select.querySelectorAll('input:checked:not([id$="-todos"])');
+            
+            if (checkedInputs.length === 0) {
+                const selectId = select.id;
+                const label = selectId.replace('dimension-', '').replace('-select', 's');
+                trigger.textContent = 'Seleccionar ' + label;
+            } else if (checkedInputs.length === 1) {
+                trigger.textContent = checkedInputs[0].closest('.select-option').querySelector('.option-text').textContent;
+            } else {
+                trigger.textContent = `${checkedInputs.length} seleccionados`;
+            }
         }
 
         function closeTableFiltersPanel() {
@@ -2812,6 +3421,88 @@
                 }
                 row.classList.add('open');
             }
+        }
+
+        // Función para cargar dimensiones en la tabla de dimensiones
+        function loadDimensionResults() {
+            const dimensionResultsTbody = document.getElementById('dimension-results-tbody');
+            
+            // Datos de dimensiones (basados en las categorías de NOM-035)
+            const dimensionsData = [
+                {
+                    dimension: "Condiciones físicas, seguridad y comodidad",
+                    domain: "Condiciones en el ambiente de trabajo",
+                    riskCount: 12,
+                    percentage: 8.0,
+                    riskLevel: "bajo"
+                },
+                {
+                    dimension: "Exigencias cuantitativas, mentales y emocionales",
+                    domain: "Carga de trabajo",
+                    riskCount: 43,
+                    percentage: 28.7,
+                    riskLevel: "medio"
+                },
+                {
+                    dimension: "Duración, distribución y pausas",
+                    domain: "Jornada de trabajo",
+                    riskCount: 22,
+                    percentage: 14.7,
+                    riskLevel: "medio"
+                },
+                {
+                    dimension: "Estilo de liderazgo, comunicación, apoyo y relaciones",
+                    domain: "Liderazgo y Relaciones interpersonales",
+                    riskCount: 26,
+                    percentage: 17.3,
+                    riskLevel: "bajo"
+                },
+                {
+                    dimension: "Acoso, hostigamiento y violencia",
+                    domain: "Violencia laboral",
+                    riskCount: 5,
+                    percentage: 3.3,
+                    riskLevel: "nulo"
+                },
+                {
+                    dimension: "Cultura organizacional y políticas",
+                    domain: "Entorno organizacional",
+                    riskCount: 77,
+                    percentage: 51.3,
+                    riskLevel: "alto"
+                }
+            ];
+            
+            dimensionResultsTbody.innerHTML = dimensionsData.map((dimension, index) => `
+                <tr class="dimension-row">
+                    <td class="dimension-cell">
+                        <div class="dimension-header-row">
+                            <div class="dimension-number">${index + 1}</div>
+                            <span>${dimension.dimension}</span>
+                        </div>
+                    </td>
+                    <td class="dimension-domain-info">${dimension.domain}</td>
+                    <td class="risk-count">${dimension.riskCount}</td>
+                    <td class="percentage">${dimension.percentage}%</td>
+                    <td>
+                        <div class="dimension-risk-info">
+                            <span class="risk-badge ${dimension.riskLevel}">${getRiskLevelText(dimension.riskLevel)}</span>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Función para obtener el texto del nivel de riesgo
+        function getRiskLevelText(riskLevel) {
+            const riskLevels = {
+                'nulo': 'Nulo',
+                'bajo': 'Bajo',
+                'medio': 'Medio',
+                'alto': 'Alto',
+                'muy-alto': 'Muy Alto'
+            };
+            return riskLevels[riskLevel] || 'Nulo';
         }
 
         // Función para actualizar números de dominio basados en filtros demográficos
@@ -3111,6 +3802,8 @@
                 loadFloatingMenu('floating-menu-container');
                 initializeTabs();
                 initializeTableFilters();
+                loadDimensionResults();
+                initializeDimensionFilters();
                 
                 // Abrir la primera categoría por defecto
                 const firstCategoryRow = document.querySelector('.category-summary');
