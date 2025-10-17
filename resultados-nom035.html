@@ -1,0 +1,2880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UBITS Playground - Resultados NOM 035 Emocional</title>
+    
+    <!-- Estilos locales -->
+    <link rel="stylesheet" href="ubits-colors.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fontawesome-icons.css">
+    <link rel="stylesheet" href="ubits-typography.css">
+    <!-- Font Awesome CDN como respaldo -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="components-sidebar.css">
+    <link rel="stylesheet" href="components/tab-bar.css">
+    <link rel="stylesheet" href="components/floating-menu.css">
+    <link rel="stylesheet" href="components/profile-menu.css">
+    <link rel="stylesheet" href="components/button.css">
+    <link rel="stylesheet" href="components/input.css">
+    <link rel="stylesheet" href="profile.css">
+    <style>
+        /* Estilos específicos para la página de resultados - FIEL AL DISEÑO */
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+            overflow: visible;
+            max-height: none;
+        }
+
+        /* Header de resultados - EXACTO COMO LA IMAGEN */
+        .results-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 2px;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background: #e5e7eb;
+            border-color: #9ca3af;
+            color: #1f2937;
+        }
+
+        .title-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .title-section h1 {
+            margin: 0;
+            color: #1f2937;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .title-section .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid;
+            width: 100px;
+            text-align: center;
+            background: #f0fdf4;
+            color: #166534;
+            border-color: #22c55e;
+        }
+
+
+        .download-button {
+            background: var(--ubits-accent-brand);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            outline: none;
+            position: relative;
+        }
+
+        .download-button:hover {
+            background: var(--ubits-accent-brand-hover);
+            color: white;
+        }
+
+        .download-button:active {
+            background: var(--ubits-accent-brand);
+            transform: translateY(1px);
+        }
+
+        .download-button:focus {
+            outline: 2px solid var(--ubits-accent-brand);
+            outline-offset: 2px;
+        }
+
+
+        /* Información de la encuesta - EXACTO COMO LA IMAGEN */
+        .survey-info {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 0px;
+        }
+
+
+        .survey-description {
+            color: #6b7280;
+            margin-bottom: 0px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .survey-details {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .detail-separator {
+            width: 1px;
+            height: 16px;
+            background: #d1d5db;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .detail-item.bold {
+            font-weight: 600;
+        }
+
+        .detail-item i {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .status-badge {
+            background: #10b981;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Métricas - COMPACTAS COMO LA IMAGEN */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 2px;
+            margin-bottom: 8px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .metric-title-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .metric-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .metric-title {
+            font-size: 14px;
+            color: #374151;
+            margin: 0;
+            font-weight: 600;
+        }
+
+
+        .metric-value-section {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .metric-main-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            line-height: 1;
+        }
+
+        .metric-unit-text {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 400;
+        }
+
+
+
+        /* Panel emocional container */
+        .panel-emocional-container {
+            background: transparent;
+            border-radius: 8px;
+            padding: 0;
+            margin-bottom: 2px;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tab-button {
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-direction: row;
+        }
+
+        .tab-button:hover {
+            color: #374151;
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-button.active {
+            color: #1d4ed8;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .tab-content {
+            padding: 16px 0 0 0;
+            min-height: 400px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .tab-panel {
+            display: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Panel Emocional - Nuevos Estilos */
+        .panel-container {
+            display: flex;
+            gap: 16px;
+            height: 600px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .participants-panel {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .participant-details-panel {
+            flex: 2;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Panel Header - Rediseñado desde cero */
+        .panel-header {
+            padding: 12px 24px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .panel-header h3 {
+            margin: 0 0 8px 0;
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Search and Filters Container - Solo layout básico */
+        .search-filters-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Filters Button - Tamaño fijo y bien alineado */
+        .filters-button {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            color: #6b7280;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .filters-button:hover {
+            background: #e5e7eb;
+            color: #374151;
+            border-color: #9ca3af;
+        }
+
+        .filters-button:active {
+            background: #d1d5db;
+        }
+
+        .filter-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--ubits-accent-brand);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            min-width: 18px;
+        }
+
+        /* Side Panel de Filtros */
+        .filters-side-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filters-side-panel.show {
+            right: 0;
+        }
+
+        .filters-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .filters-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+
+        .filters-header h3 {
+            margin: 0;
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .close-filters-btn {
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .close-filters-btn:hover {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .filters-content {
+            flex: 1;
+            padding: 20px 20px 0 20px;
+            overflow-y: auto;
+            padding-bottom: 100px; /* Espacio para los botones fijos */
+        }
+
+        .filter-group {
+            margin-bottom: 24px;
+        }
+
+        .filter-label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-trigger {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: #fff;
+            color: #374151;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.2s ease;
+        }
+
+        .select-trigger:hover {
+            border-color: #9ca3af;
+        }
+
+        .select-trigger.active {
+            border-color: var(--ubits-accent-brand);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .select-trigger .select-text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .select-trigger .select-arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .select-trigger.active .select-arrow {
+            transform: rotate(180deg);
+        }
+
+        .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .select-dropdown.show {
+            display: block;
+        }
+
+        .select-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .select-option:hover {
+            background: #f3f4f6;
+        }
+
+        .select-option.selected {
+            background: #eff6ff;
+            color: var(--ubits-accent-brand);
+        }
+
+        .select-option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .select-option .option-text {
+            flex: 1;
+        }
+
+        .filter-actions {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            gap: 12px;
+            padding: 20px;
+            background: #fff;
+            border-top: 1px solid #e5e7eb;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .apply-filters-btn {
+            flex: 1;
+            background: var(--ubits-accent-brand);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .apply-filters-btn:hover {
+            background: var(--ubits-accent-brand-hover);
+        }
+
+        .clear-filters-btn {
+            flex: 1;
+            background: #f3f4f6;
+            color: #6b7280;
+            border: 1px solid #d1d5db;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .clear-filters-btn:hover {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .participants-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .participant-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 2px;
+            border-left: 4px solid transparent;
+        }
+
+        .participant-item:hover {
+            background: #f3f4f6;
+        }
+
+        .participant-item.selected {
+            background: #eff6ff;
+            border-left-color: var(--ubits-accent-brand);
+        }
+
+        .participant-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            margin-right: 12px;
+        }
+
+        .participant-info-content {
+            flex: 1;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .participant-role {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .risk-level {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .risk-nulo { background: #f3f4f6; color: #6b7280; }
+        .risk-bajo { background: #dcfce7; color: #166534; }
+        .risk-medio { background: #fef3c7; color: #92400e; }
+        .risk-alto { background: #fed7aa; color: #c2410c; }
+        .risk-muy-alto { background: #fecaca; color: #dc2626; }
+
+        .no-selection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #9ca3af;
+        }
+
+        .no-selection i {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .no-selection p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .participant-info {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .participant-details {
+            display: none;
+        }
+
+        .participant-details.show {
+            display: block;
+        }
+
+        .participant-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .participant-avatar-large {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            margin-right: 12px;
+        }
+
+        .participant-info-line {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 14px;
+        }
+
+        .participant-separator {
+            color: #9ca3af;
+            font-weight: 300;
+        }
+
+        .participant-role,
+        .participant-department,
+        .participant-age,
+        .participant-gender,
+        .participant-status,
+        .participant-country,
+        .participant-city,
+        .participant-experience {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .survey-results {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+
+        .survey-section {
+            margin-bottom: 8px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: #f9fafb;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 4px solid #e5e7eb;
+        }
+
+        .section-header:hover {
+            background: #f3f4f6;
+        }
+
+        .section-header.open {
+            background: #eff6ff;
+            border-left-color: var(--ubits-accent-brand);
+        }
+
+        .section-risk-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: auto;
+            margin-right: 12px;
+        }
+
+        .section-risk-level {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-risk-level.nulo {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .section-risk-level.bajo {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .section-risk-level.medio {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .section-risk-level.alto {
+            background: #fed7aa;
+            color: #c2410c;
+        }
+
+        .section-risk-level.muy-alto {
+            background: #fecaca;
+            color: #dc2626;
+        }
+
+        .section-percentage {
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            min-width: 35px;
+            text-align: right;
+        }
+
+        .section-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: transparent;
+            color: #374151;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        /* Buscador simple */
+        .simple-search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .simple-search-input {
+            width: 100%;
+            height: 40px;
+            padding: 8px 12px 8px 40px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            color: #374151;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease;
+        }
+
+        .simple-search-input:focus {
+            border-color: var(--ubits-accent-brand);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .simple-search-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .simple-search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #6b7280;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .section-title {
+            flex: 1;
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 14px;
+        }
+
+        .section-chevron {
+            color: #9ca3af;
+            font-size: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .section-header.open .section-chevron {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            display: none;
+            padding: 16px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+        }
+
+        .section-content.open {
+            display: block;
+        }
+
+        .question-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .question-item:last-child {
+            border-bottom: none;
+        }
+
+        .question-text {
+            flex: 1;
+            color: #374151;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .question-answer {
+            margin-left: 16px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .answer-yes {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .answer-no {
+            background: #fecaca;
+            color: #dc2626;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .survey-details {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs-header {
+                flex-direction: column;
+            }
+
+            .panel-container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .participants-panel,
+            .participant-details-panel {
+                flex: none;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="dashboard-container">
+        <div class="tooltip" id="tooltip"></div>
+        
+        <!-- Sidebar Container -->
+        <div id="sidebar-container"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="results-container">
+                    <!-- Header de resultados - EXACTO COMO LA IMAGEN -->
+                    <div class="results-header">
+                        <button class="back-button" onclick="window.history.back()">
+                            <i class="far fa-arrow-left"></i>
+                            <span>Regresar</span>
+                        </button>
+                        <div class="title-section">
+                            <h1>NOM 035 Emocional</h1>
+                            <span class="status-badge">Completado</span>
+                        </div>
+                        <div style="margin-left: auto;">
+                            <button class="ubits-button ubits-button--primary ubits-button--md" type="button" id="download-csv-btn">
+                                <i class="far fa-download"></i>
+                                <span>Descargar CSV respuestas</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Información de la encuesta - EXACTO COMO LA IMAGEN -->
+                    <div class="survey-info">
+                        <div class="survey-details">
+                            <div class="detail-item">
+                                <i class="far fa-users"></i>
+                                <span>Enviado a <strong>150 colaboradores</strong></span>
+                            </div>
+                            <div class="detail-separator"></div>
+                            <div class="detail-item">
+                                <i class="far fa-calendar"></i>
+                                <span>Inicio <strong>15 octubre 2024</strong></span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Hasta <strong>15 noviembre 2024</strong></span>
+                            </div>
+                            <div class="detail-separator"></div>
+                            <div class="detail-item">
+                                <i class="far fa-globe"></i>
+                                <span>Respuestas: <strong>Pública</strong></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Métricas clave - FUERA DEL CONTENEDOR SUPERIOR -->
+                    <div class="metrics-grid">
+                        <!-- Métrica 1: Total de casos de riesgo -->
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <div class="metric-title-section">
+                                    <div class="metric-icon">
+                                        <i class="far fa-chart-bar"></i>
+                                    </div>
+                                    <h3 class="metric-title">Total de casos en riesgo alto y muy alto</h3>
+                                </div>
+                            </div>
+                            <div class="metric-value-section">
+                                <div class="metric-main-number">5</div>
+                                <div class="metric-unit-text">Casos</div>
+                            </div>
+                        </div>
+
+                        <!-- Métrica 2: Total canalizados -->
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <div class="metric-title-section">
+                                    <div class="metric-icon">
+                                        <i class="far fa-users"></i>
+                                    </div>
+                                    <h3 class="metric-title">Total de casos canalizados</h3>
+                                </div>
+                            </div>
+                            <div class="metric-value-section">
+                                <div class="metric-main-number">3</div>
+                                <div class="metric-unit-text">Casos</div>
+                            </div>
+                        </div>
+
+                        <!-- Métrica 3: % de participación -->
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <div class="metric-title-section">
+                                    <div class="metric-icon">
+                                        <i class="far fa-check-circle"></i>
+                                    </div>
+                                    <h3 class="metric-title">% de participación</h3>
+                                </div>
+                            </div>
+                            <div class="metric-value-section">
+                                <div class="metric-main-number">140 / 150</div>
+                                <div class="metric-unit-text">Colaboradores</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel emocional ATS -->
+                    <div class="panel-emocional-container">
+                                <div class="panel-container">
+                                    <!-- Panel Izquierdo - Lista de Participantes -->
+                                    <div class="participants-panel">
+                                        <div class="panel-header">
+                                            <h3>Participantes</h3>
+                                            <div class="search-filters-container">
+                                            <div class="simple-search-container" style="flex: 1;">
+                                                <i class="far fa-search simple-search-icon"></i>
+                                                <input type="text" id="participant-search" placeholder="Buscar participante..." class="simple-search-input">
+                                            </div>
+                                                <button class="filters-button" id="filters-btn" title="Filtros">
+                                                    <i class="far fa-filter"></i>
+                                                    <span class="filter-badge" id="filter-badge" style="display: none;">0</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="participants-list" id="participants-list">
+                                            <!-- Lista de participantes se generará dinámicamente -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Side Panel de Filtros -->
+                                    <div class="filters-side-panel" id="filters-side-panel">
+                                        <div class="filters-header">
+                                            <h3>Filtros</h3>
+                                            <button class="close-filters-btn" id="close-filters-btn">
+                                                <i class="far fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <div class="filters-content">
+                                            <div class="filter-group">
+                                                <label class="filter-label">Nivel de Riesgo</label>
+                                                <div class="custom-select" id="risk-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar niveles</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="risk-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="nulo">
+                                                            <input type="checkbox" id="risk-nulo">
+                                                            <span class="option-text">Nulo</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="bajo">
+                                                            <input type="checkbox" id="risk-bajo">
+                                                            <span class="option-text">Bajo</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="medio">
+                                                            <input type="checkbox" id="risk-medio">
+                                                            <span class="option-text">Medio</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="alto">
+                                                            <input type="checkbox" id="risk-alto">
+                                                            <span class="option-text">Alto</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="muy-alto">
+                                                            <input type="checkbox" id="risk-muy-alto">
+                                                            <span class="option-text">Muy Alto</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="filter-group">
+                                                <label class="filter-label">Área</label>
+                                                <div class="custom-select" id="department-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar áreas</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="dept-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Ventas">
+                                                            <input type="checkbox" id="dept-ventas">
+                                                            <span class="option-text">Ventas</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Tecnología">
+                                                            <input type="checkbox" id="dept-tecnologia">
+                                                            <span class="option-text">Tecnología</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Recursos Humanos">
+                                                            <input type="checkbox" id="dept-rrhh">
+                                                            <span class="option-text">Recursos Humanos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Finanzas">
+                                                            <input type="checkbox" id="dept-finanzas">
+                                                            <span class="option-text">Finanzas</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Administración">
+                                                            <input type="checkbox" id="dept-administracion">
+                                                            <span class="option-text">Administración</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Cargo</label>
+                                                <div class="custom-select" id="position-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar cargos</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="pos-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Gerente">
+                                                            <input type="checkbox" id="pos-gerente">
+                                                            <span class="option-text">Gerente</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Desarrollador">
+                                                            <input type="checkbox" id="pos-desarrollador">
+                                                            <span class="option-text">Desarrollador</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Analista">
+                                                            <input type="checkbox" id="pos-analista">
+                                                            <span class="option-text">Analista</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Contador">
+                                                            <input type="checkbox" id="pos-contador">
+                                                            <span class="option-text">Contador</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Asistente">
+                                                            <input type="checkbox" id="pos-asistente">
+                                                            <span class="option-text">Asistente</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Sexo</label>
+                                                <div class="custom-select" id="gender-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar sexo</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="gen-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Femenino">
+                                                            <input type="checkbox" id="gen-femenino">
+                                                            <span class="option-text">Femenino</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Masculino">
+                                                            <input type="checkbox" id="gen-masculino">
+                                                            <span class="option-text">Masculino</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Estado Civil</label>
+                                                <div class="custom-select" id="marital-status-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar estado civil</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="est-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Soltero">
+                                                            <input type="checkbox" id="est-soltero">
+                                                            <span class="option-text">Soltero</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Casado">
+                                                            <input type="checkbox" id="est-casado">
+                                                            <span class="option-text">Casado</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Divorciada">
+                                                            <input type="checkbox" id="est-divorciada">
+                                                            <span class="option-text">Divorciada</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Edad</label>
+                                                <div class="custom-select" id="age-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar rango de edad</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="age-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="20-30">
+                                                            <input type="checkbox" id="age-20-30">
+                                                            <span class="option-text">20-30 años</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="31-40">
+                                                            <input type="checkbox" id="age-31-40">
+                                                            <span class="option-text">31-40 años</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="41-50">
+                                                            <input type="checkbox" id="age-41-50">
+                                                            <span class="option-text">41-50 años</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="51+">
+                                                            <input type="checkbox" id="age-51+">
+                                                            <span class="option-text">51+ años</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="filter-group">
+                                                <label class="filter-label">País</label>
+                                                <div class="custom-select" id="country-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar países</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="country-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Colombia">
+                                                            <input type="checkbox" id="country-colombia">
+                                                            <span class="option-text">Colombia</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="México">
+                                                            <input type="checkbox" id="country-mexico">
+                                                            <span class="option-text">México</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Argentina">
+                                                            <input type="checkbox" id="country-argentina">
+                                                            <span class="option-text">Argentina</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Chile">
+                                                            <input type="checkbox" id="country-chile">
+                                                            <span class="option-text">Chile</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Perú">
+                                                            <input type="checkbox" id="country-peru">
+                                                            <span class="option-text">Perú</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="filter-group">
+                                                <label class="filter-label">Ciudad</label>
+                                                <div class="custom-select" id="city-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar ciudades</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="city-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Bogotá">
+                                                            <input type="checkbox" id="city-bogota">
+                                                            <span class="option-text">Bogotá</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Medellín">
+                                                            <input type="checkbox" id="city-medellin">
+                                                            <span class="option-text">Medellín</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Cali">
+                                                            <input type="checkbox" id="city-cali">
+                                                            <span class="option-text">Cali</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Ciudad de México">
+                                                            <input type="checkbox" id="city-mexico">
+                                                            <span class="option-text">Ciudad de México</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Buenos Aires">
+                                                            <input type="checkbox" id="city-buenos-aires">
+                                                            <span class="option-text">Buenos Aires</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Santiago">
+                                                            <input type="checkbox" id="city-santiago">
+                                                            <span class="option-text">Santiago</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Lima">
+                                                            <input type="checkbox" id="city-lima">
+                                                            <span class="option-text">Lima</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="filter-actions">
+                                                <button class="apply-filters-btn" id="apply-filters-btn">
+                                                    <i class="far fa-check"></i>
+                                                    Aplicar Filtros
+                                                </button>
+                                                <button class="clear-filters-btn" id="clear-filters-btn">
+                                                    <i class="far fa-times"></i>
+                                                    Limpiar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="filters-overlay" id="filters-overlay"></div>
+
+                                    <!-- Panel Derecho - Detalles del Participante -->
+                                    <div class="participant-details-panel">
+                                        <div class="panel-header">
+                                            <h3>Detalles del Participante</h3>
+                                        </div>
+                                        <div class="participant-info" id="participant-info">
+                                            <div class="no-selection">
+                                                <i class="far fa-user"></i>
+                                                <p>Selecciona un participante para ver sus detalles</p>
+                                            </div>
+                                        </div>
+                                        <div class="survey-results" id="survey-results">
+                                            <!-- Resultados de la encuesta se mostrarán aquí -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Tab Bar Container -->
+    <div id="tab-bar-container"></div>
+
+    <!-- Floating Menu Container -->
+    <div id="floating-menu-container"></div>
+    
+    <!-- Profile Menu Container -->
+    <div id="profile-menu-container"></div>
+
+    <script src="components/sidebar.js"></script>
+    <script src="components/tab-bar.js"></script>
+    <script src="components/floating-menu.js"></script>
+    <script src="components/profile-menu.js"></script>
+    <script src="components/input.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Cargar componentes dinámicamente
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSidebar('sidebar-container', 'encuestas');
+            loadTabBar('tab-bar-container');
+            loadFloatingMenu('floating-menu-container');
+            loadProfileMenu('profile-menu-container');
+            
+            // Activar el tab "Encuestas" específicamente después de cargar el SubNav
+            setTimeout(() => {
+                // Remover active de todos los tabs (desktop y móvil)
+                document.querySelectorAll('.nav-tab, .hamburger-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Activar el tab Encuestas en desktop
+                const encuestasTab = document.querySelector('.nav-tab[data-tab="encuestas"]');
+                if (encuestasTab) {
+                    encuestasTab.classList.add('active');
+                }
+                
+                // Activar el tab Encuestas en móvil (hamburger menu)
+                const encuestasHamburger = document.querySelector('.hamburger-item[data-tab="encuestas"]');
+                if (encuestasHamburger) {
+                    encuestasHamburger.classList.add('active');
+                }
+                
+                // Activar el botón de encuestas en el sidebar
+                const encuestasButton = document.querySelector('.nav-button[data-section="encuestas"]');
+                if (encuestasButton) {
+                    // Remover active de todos los botones del sidebar
+                    document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+                    // Activar el botón de encuestas
+                    encuestasButton.classList.add('active');
+                }
+                
+                // Activar el botón "Módulos" del Tab-bar móvil
+                const modulosTabBarItem = document.querySelector('.tab-bar-item[data-tab="modulos"]');
+                if (modulosTabBarItem) {
+                    // Remover active de todos los items del tab-bar
+                    document.querySelectorAll('.tab-bar-item').forEach(item => item.classList.remove('active'));
+                    // Activar el item módulos
+                    modulosTabBarItem.classList.add('active');
+                }
+                
+                // Activar la opción "Encuestas" como direct link del floating menu
+                if (typeof setActiveDirectLink === 'function') {
+                    setActiveDirectLink('encuestas');
+                }
+            }, 200);
+        });
+
+        // Funcionalidad de tabs
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Funcionalidad del desplegable de descarga
+            const downloadBtn = document.getElementById('download-btn');
+            const downloadDropdown = document.getElementById('download-dropdown');
+            
+            if (downloadBtn && downloadDropdown) {
+                downloadBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    downloadDropdown.classList.toggle('show');
+                });
+                
+                // Cerrar desplegable al hacer clic fuera
+                document.addEventListener('click', function(e) {
+                    if (!downloadBtn.contains(e.target) && !downloadDropdown.contains(e.target)) {
+                        downloadDropdown.classList.remove('show');
+                    }
+                });
+            }
+
+        });
+
+        // Datos de participantes de ejemplo
+        const participantsData = [
+            {
+                id: 1,
+                name: "María González",
+                role: "Gerente de Ventas",
+                riskLevel: "muy-alto",
+                avatar: "MG",
+                avatarColor: "#dc2626",
+                details: {
+                    age: 35,
+                    department: "Ventas",
+                    position: "Gerente",
+                    gender: "Femenino",
+                    maritalStatus: "Casada",
+                    country: "Colombia",
+                    city: "Bogotá",
+                    experience: "8 años",
+                    email: "maria.gonzalez@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "Sí" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "Sí" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "Sí" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "Sí" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "Sí" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "Sí" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "Sí" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "Sí" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "Sí" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "Sí" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "Sí" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "Sí" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "Sí" }
+                    ]
+                }
+            },
+            {
+                id: 2,
+                name: "Carlos Rodríguez",
+                role: "Desarrollador Senior",
+                riskLevel: "alto",
+                avatar: "CR",
+                avatarColor: "#c2410c",
+                details: {
+                    age: 28,
+                    department: "Tecnología",
+                    position: "Desarrollador",
+                    gender: "Masculino",
+                    maritalStatus: "Soltero",
+                    country: "México",
+                    city: "Ciudad de México",
+                    experience: "5 años",
+                    email: "carlos.rodriguez@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "Sí" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "Sí" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "Sí" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "No" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "Sí" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "Sí" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "Sí" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            },
+            {
+                id: 3,
+                name: "Ana Martínez",
+                role: "Analista de Recursos Humanos",
+                riskLevel: "medio",
+                avatar: "AM",
+                avatarColor: "#92400e",
+                details: {
+                    age: 32,
+                    department: "Recursos Humanos",
+                    position: "Analista",
+                    gender: "Femenino",
+                    maritalStatus: "Divorciada",
+                    country: "Argentina",
+                    city: "Buenos Aires",
+                    experience: "6 años",
+                    email: "ana.martinez@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "No" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "No" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "No" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "No" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "Sí" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "No" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "Sí" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            },
+            {
+                id: 4,
+                name: "Luis Fernández",
+                role: "Contador",
+                riskLevel: "bajo",
+                avatar: "LF",
+                avatarColor: "#166534",
+                details: {
+                    age: 45,
+                    department: "Finanzas",
+                    position: "Contador",
+                    gender: "Masculino",
+                    maritalStatus: "Casado",
+                    country: "Chile",
+                    city: "Santiago",
+                    experience: "12 años",
+                    email: "luis.fernandez@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "No" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "No" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "No" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "No" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "No" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "No" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "No" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            },
+            {
+                id: 5,
+                name: "Sofia Herrera",
+                role: "Asistente Administrativa",
+                riskLevel: "nulo",
+                avatar: "SH",
+                avatarColor: "#6b7280",
+                details: {
+                    age: 26,
+                    department: "Administración",
+                    position: "Asistente",
+                    gender: "Femenino",
+                    maritalStatus: "Soltera",
+                    country: "Perú",
+                    city: "Lima",
+                    experience: "3 años",
+                    email: "sofia.herrera@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "No" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "No" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "No" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "No" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "No" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "No" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "No" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            },
+            {
+                id: 6,
+                name: "Roberto Silva",
+                role: "Director de Marketing",
+                riskLevel: "bajo",
+                avatar: "RS",
+                avatarColor: "#166534",
+                details: {
+                    age: 42,
+                    department: "Marketing",
+                    position: "Director",
+                    gender: "Masculino",
+                    maritalStatus: "Casado",
+                    country: "España",
+                    city: "Madrid",
+                    experience: "12 años",
+                    email: "roberto.silva@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "No" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "No" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "No" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "No" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "No" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "No" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "No" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            },
+            {
+                id: 7,
+                name: "Carmen López",
+                role: "Diseñadora UX",
+                riskLevel: "medio",
+                avatar: "CL",
+                avatarColor: "#92400e",
+                details: {
+                    age: 29,
+                    department: "Tecnología",
+                    position: "Diseñadora",
+                    gender: "Femenino",
+                    maritalStatus: "Soltera",
+                    country: "Uruguay",
+                    city: "Montevideo",
+                    experience: "4 años",
+                    email: "carmen.lopez@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "Sí" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "Sí" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "Sí" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "No" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "Sí" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "No" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            },
+            {
+                id: 8,
+                name: "Diego Morales",
+                role: "Analista Financiero",
+                riskLevel: "nulo",
+                avatar: "DM",
+                avatarColor: "#6b7280",
+                details: {
+                    age: 31,
+                    department: "Finanzas",
+                    position: "Analista",
+                    gender: "Masculino",
+                    maritalStatus: "Casado",
+                    country: "Ecuador",
+                    city: "Quito",
+                    experience: "7 años",
+                    email: "diego.morales@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "No" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "No" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "No" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "No" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "No" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "No" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "No" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            },
+            {
+                id: 9,
+                name: "Patricia Vega",
+                role: "Coordinadora de Proyectos",
+                riskLevel: "alto",
+                avatar: "PV",
+                avatarColor: "#c2410c",
+                details: {
+                    age: 38,
+                    department: "Administración",
+                    position: "Coordinadora",
+                    gender: "Femenino",
+                    maritalStatus: "Divorciada",
+                    country: "Venezuela",
+                    city: "Caracas",
+                    experience: "10 años",
+                    email: "patricia.vega@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "Sí" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "Sí" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "Sí" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "Sí" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "Sí" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "Sí" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "Sí" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "Sí" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "Sí" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "Sí" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "Sí" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "Sí" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "Sí" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "Sí" }
+                    ]
+                }
+            },
+            {
+                id: 10,
+                name: "Fernando Ruiz",
+                role: "Especialista en Seguridad",
+                riskLevel: "muy-alto",
+                avatar: "FR",
+                avatarColor: "#dc2626",
+                details: {
+                    age: 45,
+                    department: "Seguridad",
+                    position: "Especialista",
+                    gender: "Masculino",
+                    maritalStatus: "Casado",
+                    experience: "15 años",
+                    email: "fernando.ruiz@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "Sí" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "Sí" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "Sí" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "Sí" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "Sí" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "Sí" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "Sí" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "Sí" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "Sí" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "Sí" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "Sí" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "Sí" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "Sí" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "Sí" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "Sí" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "Sí" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "Sí" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "Sí" }
+                    ]
+                }
+            },
+            {
+                id: 11,
+                name: "Isabel Torres",
+                role: "Supervisora de Producción",
+                riskLevel: "medio",
+                avatar: "IT",
+                avatarColor: "#92400e",
+                details: {
+                    age: 33,
+                    department: "Producción",
+                    position: "Supervisora",
+                    gender: "Femenino",
+                    maritalStatus: "Casada",
+                    experience: "9 años",
+                    email: "isabel.torres@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "No" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "Sí" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "Sí" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "No" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "No" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "No" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "No" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            },
+            {
+                id: 12,
+                name: "Miguel Castro",
+                role: "Técnico de Mantenimiento",
+                riskLevel: "bajo",
+                avatar: "MC",
+                avatarColor: "#166534",
+                details: {
+                    age: 41,
+                    department: "Mantenimiento",
+                    position: "Técnico",
+                    gender: "Masculino",
+                    maritalStatus: "Casado",
+                    experience: "11 años",
+                    email: "miguel.castro@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "No" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "No" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "No" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "No" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "No" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "No" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "No" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            },
+            {
+                id: 13,
+                name: "Laura Jiménez",
+                role: "Psicóloga Organizacional",
+                riskLevel: "nulo",
+                avatar: "LJ",
+                avatarColor: "#6b7280",
+                details: {
+                    age: 36,
+                    department: "Recursos Humanos",
+                    position: "Psicóloga",
+                    gender: "Femenino",
+                    maritalStatus: "Soltera",
+                    experience: "8 años",
+                    email: "laura.jimenez@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "No" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "No" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "No" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "No" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "No" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "No" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "No" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            },
+            {
+                id: 14,
+                name: "Andrés Mendoza",
+                role: "Gerente de Ventas",
+                riskLevel: "alto",
+                avatar: "AM",
+                avatarColor: "#c2410c",
+                details: {
+                    age: 44,
+                    department: "Ventas",
+                    position: "Gerente",
+                    gender: "Masculino",
+                    maritalStatus: "Casado",
+                    experience: "13 años",
+                    email: "andres.mendoza@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "Sí" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "Sí" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "Sí" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "Sí" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "Sí" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "Sí" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "Sí" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "Sí" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "Sí" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "Sí" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "Sí" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "Sí" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "Sí" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "Sí" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "Sí" }
+                    ]
+                }
+            },
+            {
+                id: 15,
+                name: "Valentina Herrera",
+                role: "Desarrolladora Frontend",
+                riskLevel: "bajo",
+                avatar: "VH",
+                avatarColor: "#166534",
+                details: {
+                    age: 27,
+                    department: "Tecnología",
+                    position: "Desarrolladora",
+                    gender: "Femenino",
+                    maritalStatus: "Soltera",
+                    experience: "3 años",
+                    email: "valentina.herrera@empresa.com"
+                },
+                surveyResults: {
+                    "Sección I. Acontecimiento traumático severo": [
+                        { question: "¿Has presenciado o vivido algún accidente grave en tu trabajo?", answer: "No" },
+                        { question: "¿Has sufrido lesiones que pusieron en riesgo tu vida en el trabajo?", answer: "No" },
+                        { question: "¿Has sido testigo de la muerte o lesiones graves de algún compañero?", answer: "No" },
+                        { question: "¿Has sido amenazado de muerte o sufrido algún tipo de agresión en tu trabajo?", answer: "No" },
+                        { question: "¿Has vivido algún asalto, secuestro o intento de agresión en tu entorno laboral?", answer: "No" },
+                        { question: "¿Has estado en situaciones de incendio, explosión o desastre natural en el trabajo?", answer: "No" }
+                    ],
+                    "Sección II. Recuerdos persistentes sobre el acontecimiento": [
+                        { question: "¿Vuelves a pensar constantemente en lo que ocurrió o en las imágenes del suceso?", answer: "No" },
+                        { question: "¿Tienes pesadillas o sueños repetitivos sobre lo que pasó?", answer: "No" }
+                    ],
+                    "Sección III. Esfuerzo por evitar circunstancias parecidas o asociadas al acontecimiento": [
+                        { question: "¿Evitas hablar o pensar en lo que ocurrió porque te hace sentir mal?", answer: "No" },
+                        { question: "¿Evitas lugares o personas que te recuerdan lo sucedido?", answer: "No" },
+                        { question: "¿Sientes que lo ocurrido sigue afectando tu vida diaria?", answer: "No" },
+                        { question: "¿Has notado que te cuesta disfrutar de cosas que antes te gustaban?", answer: "No" },
+                        { question: "¿Sientes que te has alejado emocionalmente de otras personas?", answer: "No" },
+                        { question: "¿Tienes dificultad para sentir cariño o cercanía con los demás?", answer: "No" },
+                        { question: "¿Te cuesta mantener el interés por tu trabajo o por las actividades cotidianas?", answer: "No" }
+                    ],
+                    "Sección IV. Afectación": [
+                        { question: "¿Has notado dificultad para dormir después de lo ocurrido?", answer: "No" },
+                        { question: "¿Te irritas con facilidad o te cuesta controlar tu enojo?", answer: "No" },
+                        { question: "¿Te cuesta concentrarte en tus tareas diarias?", answer: "No" },
+                        { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
+                        { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
+                    ]
+                }
+            }
+        ];
+
+        // Inicializar panel emocional
+        function initializeEmotionalPanel() {
+            renderParticipantsList();
+            setupSearch();
+            
+            // Seleccionar automáticamente el primer participante
+            if (participantsData.length > 0) {
+                selectParticipant(participantsData[0].id);
+            }
+        }
+
+        // Renderizar lista de participantes
+        function renderParticipantsList(participants = participantsData) {
+            console.log('🔍 Renderizando lista de participantes:', participants.length);
+            const participantsList = document.getElementById('participants-list');
+            console.log('🔍 Elemento participants-list encontrado:', participantsList);
+            
+            if (!participantsList) {
+                console.error('🔍 ERROR: No se encontró el elemento participants-list');
+                return;
+            }
+            
+            participantsList.innerHTML = '';
+
+            participants.forEach(participant => {
+                const participantItem = document.createElement('div');
+                participantItem.className = 'participant-item';
+                participantItem.dataset.participantId = participant.id;
+                
+                participantItem.innerHTML = `
+                    <div class="participant-avatar" style="background-color: ${participant.avatarColor}">
+                        ${participant.avatar}
+                    </div>
+                    <div class="participant-info-content">
+                        <div class="participant-name">${participant.name}</div>
+                        <div class="participant-role">${participant.role}</div>
+                    </div>
+                    <div class="risk-level risk-${participant.riskLevel}">
+                        ${participant.riskLevel.replace('-', ' ')}
+                    </div>
+                `;
+
+                participantItem.addEventListener('click', () => {
+                    selectParticipant(participant.id);
+                });
+
+                participantsList.appendChild(participantItem);
+            });
+        }
+
+        // Seleccionar participante
+        function selectParticipant(participantId) {
+            // Remover selección anterior
+            document.querySelectorAll('.participant-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            // Agregar selección al item actual
+            document.querySelector(`[data-participant-id="${participantId}"]`).classList.add('selected');
+
+            // Mostrar detalles del participante
+            showParticipantDetails(participantId);
+        }
+
+        // Mostrar detalles del participante
+        function showParticipantDetails(participantId) {
+            const participant = participantsData.find(p => p.id === participantId);
+            if (!participant) return;
+
+            const participantInfo = document.getElementById('participant-info');
+            const surveyResults = document.getElementById('survey-results');
+
+            // Mostrar información del participante
+            participantInfo.innerHTML = `
+                <div class="participant-details show">
+                    <div class="participant-header">
+                        <div class="participant-avatar-large" style="background-color: ${participant.avatarColor}">
+                            ${participant.avatar}
+                        </div>
+                        <div class="participant-details-content">
+                            <div class="participant-info-line">
+                                <span class="participant-name">${participant.name}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-role">${participant.role}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-department">${participant.details.department}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-age">${participant.details.age} años</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-gender">${participant.details.gender}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-status">${participant.details.maritalStatus}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-country">${participant.details.country}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-city">${participant.details.city}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-experience">${participant.details.experience} de experiencia</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Mostrar resultados de la encuesta
+            surveyResults.innerHTML = `
+                ${Object.entries(participant.surveyResults).map(([sectionName, questions], index) => `
+                    <div class="survey-section">
+                        <div class="section-header" onclick="toggleSection(this)">
+                            <div class="section-number">${index + 1}</div>
+                            <div class="section-title">${sectionName}</div>
+                            <div class="section-risk-info">
+                                <span class="section-risk-level ${getSectionRiskLevel(questions)}">${getSectionRiskLevel(questions)}</span>
+                                <span class="section-percentage">${getSectionPercentage(questions)}%</span>
+                            </div>
+                            <i class="far fa-chevron-down section-chevron"></i>
+                        </div>
+                        <div class="section-content ${index === 0 ? 'open' : ''}">
+                            ${questions.map(q => `
+                                <div class="question-item">
+                                    <div class="question-text">${q.question}</div>
+                                    <div class="question-answer ${q.answer === 'Sí' ? 'answer-yes' : 'answer-no'}">
+                                        ${q.answer}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+        }
+
+        // Calcular nivel de riesgo de una sección
+        function getSectionRiskLevel(questions) {
+            const yesCount = questions.filter(q => q.answer === 'Sí').length;
+            const totalQuestions = questions.length;
+            const percentage = (yesCount / totalQuestions) * 100;
+            
+            if (percentage >= 80) return 'muy-alto';
+            if (percentage >= 60) return 'alto';
+            if (percentage >= 40) return 'medio';
+            if (percentage >= 20) return 'bajo';
+            return 'nulo';
+        }
+
+        // Calcular porcentaje de una sección
+        function getSectionPercentage(questions) {
+            const yesCount = questions.filter(q => q.answer === 'Sí').length;
+            const totalQuestions = questions.length;
+            return Math.round((yesCount / totalQuestions) * 100);
+        }
+
+
+        // Toggle de secciones (acordeones)
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const isOpen = content.classList.contains('open');
+
+            // Toggle de la sección actual
+            if (!isOpen) {
+                content.classList.add('open');
+                header.classList.add('open');
+            } else {
+                content.classList.remove('open');
+                header.classList.remove('open');
+            }
+        }
+
+
+        // Inicializar panel emocional cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔍 DOM cargado, iniciando configuración...');
+            
+            // Función para verificar que todos los elementos estén disponibles
+            function checkElementsReady() {
+                const searchInput = document.getElementById('participant-search');
+                const participantsList = document.getElementById('participants-list');
+                const filtersBtn = document.getElementById('filters-btn');
+                
+                console.log('🔍 Verificando elementos:');
+                console.log('  - participant-search:', !!searchInput);
+                console.log('  - participants-list:', !!participantsList);
+                console.log('  - filters-btn:', !!filtersBtn);
+                
+                return searchInput && participantsList && filtersBtn;
+            }
+            
+            // Intentar inicializar inmediatamente
+            if (checkElementsReady()) {
+                console.log('🔍 Todos los elementos están listos, inicializando...');
+                initializeEmotionalPanel();
+                setupFilters();
+            } else {
+                console.log('🔍 Elementos no listos, esperando...');
+                // Si no están listos, intentar cada 100ms hasta 10 segundos
+                let attempts = 0;
+                const maxAttempts = 100;
+                const interval = setInterval(() => {
+                    attempts++;
+                    console.log(`🔍 Intento ${attempts} de verificar elementos...`);
+                    
+                    if (checkElementsReady() || attempts >= maxAttempts) {
+                        clearInterval(interval);
+                        if (attempts >= maxAttempts) {
+                            console.error('🔍 ERROR: No se pudieron encontrar todos los elementos después de 10 segundos');
+                        } else {
+                            console.log('🔍 Elementos listos, inicializando...');
+                            initializeEmotionalPanel();
+                            setupFilters();
+                        }
+                    }
+                }, 100);
+            }
+        });
+
+        // Función para actualizar el texto del select
+        function updateSelectText(selectId) {
+            const select = document.getElementById(selectId);
+            const selectedValues = getSelectedValues(selectId);
+            const selectText = select.querySelector('.select-text');
+            
+            if (selectedValues.length === 0) {
+                selectText.textContent = selectText.textContent.split(':')[0] + ': Seleccionar';
+            } else if (selectedValues.includes('todos')) {
+                selectText.textContent = selectText.textContent.split(':')[0] + ': Todos';
+            } else if (selectedValues.length === 1) {
+                selectText.textContent = selectText.textContent.split(':')[0] + ': ' + selectedValues[0];
+            } else {
+                selectText.textContent = selectText.textContent.split(':')[0] + ': ' + selectedValues.length + ' seleccionados';
+            }
+        }
+
+        // Función para manejar la opción "Todos"
+        function handleTodosOption(selectId, todosCheckbox) {
+            const select = document.getElementById(selectId);
+            const allCheckboxes = select.querySelectorAll('input[type="checkbox"]');
+            
+            if (todosCheckbox.checked) {
+                // Si se selecciona "Todos", deseleccionar todo lo demás
+                allCheckboxes.forEach(cb => {
+                    if (cb !== todosCheckbox) {
+                        cb.checked = false;
+                    }
+                });
+            } else {
+                // Si se deselecciona "Todos", verificar si hay otras opciones seleccionadas
+                const otherSelected = Array.from(allCheckboxes).some(cb => cb !== todosCheckbox && cb.checked);
+                if (!otherSelected) {
+                    // Si no hay otras opciones seleccionadas, seleccionar "Todos"
+                    todosCheckbox.checked = true;
+                }
+            }
+        }
+
+        // Configurar componente select personalizado
+        function setupCustomSelects() {
+            const customSelects = document.querySelectorAll('.custom-select');
+            
+            customSelects.forEach(select => {
+                const trigger = select.querySelector('.select-trigger');
+                const dropdown = select.querySelector('.select-dropdown');
+                const options = select.querySelectorAll('.select-option');
+                
+                // Toggle dropdown
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = trigger.classList.contains('active');
+                    
+                    // Cerrar otros selects
+                    customSelects.forEach(otherSelect => {
+                        if (otherSelect !== select) {
+                            otherSelect.querySelector('.select-trigger').classList.remove('active');
+                            otherSelect.querySelector('.select-dropdown').classList.remove('show');
+                        }
+                    });
+                    
+                    // Toggle current select
+                    trigger.classList.toggle('active');
+                    dropdown.classList.toggle('show');
+                });
+                
+                // Manejar clics en opciones
+                options.forEach(option => {
+                    const checkbox = option.querySelector('input[type="checkbox"]');
+                    
+                    option.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        checkbox.checked = !checkbox.checked;
+                        
+                        // Manejar opción "Todos"
+                        if (option.dataset.value === 'todos') {
+                            handleTodosOption(select.id, checkbox);
+                        } else {
+                            // Si se selecciona una opción específica, deseleccionar "Todos"
+                            const todosCheckbox = select.querySelector('input[type="checkbox"][id$="-todos"]');
+                            if (todosCheckbox && todosCheckbox.checked) {
+                                todosCheckbox.checked = false;
+                            }
+                        }
+                        
+                        updateSelectText(select.id);
+                        applyFilters();
+                    });
+                });
+            });
+            
+            // Cerrar dropdowns al hacer clic fuera
+            document.addEventListener('click', () => {
+                customSelects.forEach(select => {
+                    select.querySelector('.select-trigger').classList.remove('active');
+                    select.querySelector('.select-dropdown').classList.remove('show');
+                });
+            });
+        }
+
+        // Configurar funcionalidad de filtros
+        function setupFilters() {
+            const filtersBtn = document.getElementById('filters-btn');
+            const filtersSidePanel = document.getElementById('filters-side-panel');
+            const filtersOverlay = document.getElementById('filters-overlay');
+            const closeFiltersBtn = document.getElementById('close-filters-btn');
+            const applyFiltersBtn = document.getElementById('apply-filters-btn');
+            const clearFiltersBtn = document.getElementById('clear-filters-btn');
+
+            // Abrir side panel
+            filtersBtn.addEventListener('click', () => {
+                filtersSidePanel.classList.add('show');
+                filtersOverlay.classList.add('show');
+            });
+
+            // Cerrar side panel
+            function closeFilters() {
+                filtersSidePanel.classList.remove('show');
+                filtersOverlay.classList.remove('show');
+            }
+
+            closeFiltersBtn.addEventListener('click', closeFilters);
+            filtersOverlay.addEventListener('click', closeFilters);
+
+            // Aplicar filtros
+            applyFiltersBtn.addEventListener('click', () => {
+                applyFilters();
+                closeFilters();
+            });
+
+            // Limpiar filtros
+            clearFiltersBtn.addEventListener('click', () => {
+                clearFilters();
+                applyFilters();
+            });
+
+            // Configurar selects personalizados
+            setupCustomSelects();
+        }
+
+        // Aplicar filtros
+        function applyFilters() {
+            console.log('🔍 Aplicando filtros...');
+            const riskFilters = getSelectedValues('risk-select');
+            const departmentFilters = getSelectedValues('department-select');
+            const positionFilters = getSelectedValues('position-select');
+            const genderFilters = getSelectedValues('gender-select');
+            const maritalStatusFilters = getSelectedValues('marital-status-select');
+            const ageFilters = getSelectedValues('age-select');
+            const countryFilters = getSelectedValues('country-select');
+            const cityFilters = getSelectedValues('city-select');
+            const searchTerm = document.getElementById('participant-search').value.toLowerCase();
+            console.log('🔍 Término de búsqueda:', searchTerm);
+
+            console.log('Aplicando filtros:', {
+                riskFilters,
+                departmentFilters,
+                positionFilters,
+                genderFilters,
+                maritalStatusFilters,
+                ageFilters,
+                searchTerm
+            });
+
+            let filteredParticipants = participantsData.filter(participant => {
+                // Filtro por búsqueda
+                const matchesSearch = !searchTerm || 
+                    participant.name.toLowerCase().includes(searchTerm) ||
+                    participant.role.toLowerCase().includes(searchTerm) ||
+                    participant.details.department.toLowerCase().includes(searchTerm) ||
+                    participant.details.position.toLowerCase().includes(searchTerm) ||
+                    participant.details.gender.toLowerCase().includes(searchTerm) ||
+                    participant.details.maritalStatus.toLowerCase().includes(searchTerm) ||
+                    participant.details.country.toLowerCase().includes(searchTerm) ||
+                    participant.details.city.toLowerCase().includes(searchTerm);
+
+                // Filtro por nivel de riesgo
+                const matchesRisk = riskFilters.length === 0 || riskFilters.includes('todos') || riskFilters.includes(participant.riskLevel);
+
+                // Filtro por área (departamento)
+                const matchesDepartment = departmentFilters.length === 0 || departmentFilters.includes('todos') || departmentFilters.includes(participant.details.department);
+
+                // Filtro por cargo
+                const matchesPosition = positionFilters.length === 0 || positionFilters.includes('todos') || positionFilters.includes(participant.details.position);
+
+                // Filtro por sexo
+                const matchesGender = genderFilters.length === 0 || genderFilters.includes('todos') || genderFilters.includes(participant.details.gender);
+
+                // Filtro por estado civil
+                const matchesMaritalStatus = maritalStatusFilters.length === 0 || maritalStatusFilters.includes('todos') || maritalStatusFilters.includes(participant.details.maritalStatus);
+
+                // Filtro por edad
+                const matchesAge = ageFilters.length === 0 || ageFilters.includes('todos') || matchesAgeRange(participant.details.age, ageFilters);
+                
+                // Filtro por país
+                const matchesCountry = countryFilters.length === 0 || countryFilters.includes('todos') || countryFilters.includes(participant.details.country);
+                
+                // Filtro por ciudad
+                const matchesCity = cityFilters.length === 0 || cityFilters.includes('todos') || cityFilters.includes(participant.details.city);
+
+                const matches = matchesSearch && matchesRisk && matchesDepartment && matchesPosition && matchesGender && matchesMaritalStatus && matchesAge && matchesCountry && matchesCity;
+                
+                if (departmentFilters.length > 0 && !departmentFilters.includes('todos')) {
+                    console.log(`Participante ${participant.name} (${participant.details.department}): matchesDepartment = ${matchesDepartment}, departmentFilters = ${departmentFilters}`);
+                }
+                
+                return matches;
+            });
+
+            console.log(`Filtrados ${filteredParticipants.length} de ${participantsData.length} participantes`);
+            renderParticipantsList(filteredParticipants);
+            
+            // Actualizar badge de filtros
+            updateFilterBadge(riskFilters, departmentFilters, positionFilters, genderFilters, maritalStatusFilters, ageFilters, countryFilters, cityFilters, searchTerm);
+        }
+
+        // Actualizar badge de filtros
+        function updateFilterBadge(riskFilters, departmentFilters, positionFilters, genderFilters, maritalStatusFilters, ageFilters, countryFilters, cityFilters, searchTerm) {
+            const badge = document.getElementById('filter-badge');
+            let activeFiltersCount = 0;
+
+            // Debug: Mostrar valores recibidos
+            console.log('Badge Debug - Valores recibidos:', {
+                riskFilters,
+                departmentFilters,
+                positionFilters,
+                genderFilters,
+                maritalStatusFilters,
+                ageFilters,
+                countryFilters,
+                cityFilters,
+                searchTerm
+            });
+
+            // Contar filtros activos (excluyendo "todos" y búsqueda vacía)
+            if (riskFilters.length > 0 && !riskFilters.includes('todos')) {
+                activeFiltersCount++;
+                console.log('Badge: +1 por riskFilters');
+            }
+            if (departmentFilters.length > 0 && !departmentFilters.includes('todos')) {
+                activeFiltersCount++;
+                console.log('Badge: +1 por departmentFilters');
+            }
+            if (positionFilters.length > 0 && !positionFilters.includes('todos')) {
+                activeFiltersCount++;
+                console.log('Badge: +1 por positionFilters');
+            }
+            if (genderFilters.length > 0 && !genderFilters.includes('todos')) {
+                activeFiltersCount++;
+                console.log('Badge: +1 por genderFilters');
+            }
+            if (maritalStatusFilters.length > 0 && !maritalStatusFilters.includes('todos')) {
+                activeFiltersCount++;
+                console.log('Badge: +1 por maritalStatusFilters');
+            }
+            if (ageFilters.length > 0 && !ageFilters.includes('todos')) {
+                activeFiltersCount++;
+                console.log('Badge: +1 por ageFilters');
+            }
+            
+            if (countryFilters.length > 0 && !countryFilters.includes('todos')) {
+                activeFiltersCount++;
+                console.log('Badge: +1 por countryFilters');
+            }
+            
+            if (cityFilters.length > 0 && !cityFilters.includes('todos')) {
+                activeFiltersCount++;
+                console.log('Badge: +1 por cityFilters');
+            }
+            if (searchTerm && searchTerm.trim() !== '') {
+                activeFiltersCount++;
+                console.log('Badge: +1 por searchTerm');
+            }
+
+            console.log('Badge: Total de filtros activos:', activeFiltersCount);
+
+            // Mostrar/ocultar badge y actualizar número
+            if (activeFiltersCount > 0) {
+                badge.textContent = activeFiltersCount;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        // Función auxiliar para verificar rango de edad
+        function matchesAgeRange(age, ageFilters) {
+            return ageFilters.some(range => {
+                switch(range) {
+                    case '20-30':
+                        return age >= 20 && age <= 30;
+                    case '31-40':
+                        return age >= 31 && age <= 40;
+                    case '41-50':
+                        return age >= 41 && age <= 50;
+                    case '51+':
+                        return age >= 51;
+                    default:
+                        return false;
+                }
+            });
+        }
+
+        // Función auxiliar para obtener valores seleccionados
+        function getSelectedValues(selectId) {
+            const select = document.getElementById(selectId);
+            const checkboxes = select.querySelectorAll('input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(cb => cb.closest('.select-option').dataset.value);
+        }
+
+        // Limpiar filtros
+        function clearFilters() {
+            const selectIds = ['risk-select', 'department-select', 'position-select', 'gender-select', 'marital-status-select', 'age-select', 'country-select', 'city-select'];
+            
+            selectIds.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                const checkboxes = select.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(cb => cb.checked = false);
+                updateSelectText(selectId);
+            });
+            
+            document.getElementById('participant-search').value = '';
+            renderParticipantsList(participantsData);
+            
+            // Ocultar badge de filtros
+            const badge = document.getElementById('filter-badge');
+            badge.style.display = 'none';
+        }
+
+        // Actualizar función de búsqueda para incluir filtros
+        function setupSearch() {
+            console.log('🔍 Configurando buscador...');
+            
+            // Función para configurar el buscador cuando esté disponible
+            function configureSearch() {
+                const searchInput = document.getElementById('participant-search');
+                console.log('🔍 Elemento de búsqueda encontrado:', searchInput);
+                
+                if (searchInput) {
+                    // Remover event listeners existentes para evitar duplicados
+                    searchInput.removeEventListener('input', handleSearch);
+                    searchInput.addEventListener('input', handleSearch);
+                    console.log('🔍 Event listener agregado correctamente');
+                    return true;
+                } else {
+                    console.error('🔍 ERROR: No se encontró el elemento participant-search');
+                    return false;
+                }
+            }
+            
+            // Función para manejar la búsqueda
+            function handleSearch(e) {
+                console.log('🔍 Búsqueda activada:', e.target.value);
+                applyFilters();
+            }
+            
+            // Intentar configurar inmediatamente
+            if (!configureSearch()) {
+                // Si no se encuentra, intentar cada 100ms hasta 5 segundos
+                let attempts = 0;
+                const maxAttempts = 50;
+                const interval = setInterval(() => {
+                    attempts++;
+                    console.log(`🔍 Intento ${attempts} de encontrar el buscador...`);
+                    
+                    if (configureSearch() || attempts >= maxAttempts) {
+                        clearInterval(interval);
+                        if (attempts >= maxAttempts) {
+                            console.error('🔍 ERROR: No se pudo encontrar el buscador después de 5 segundos');
+                        }
+                    }
+                }, 100);
+            }
+        }
+    </script>
+</body>
+</html>
