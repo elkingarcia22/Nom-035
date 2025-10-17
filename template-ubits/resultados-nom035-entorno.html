@@ -1211,7 +1211,7 @@
             min-width: 200px;
             width: 200px;
             max-width: 200px;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: color 0.3s ease;
             background: inherit !important;
         }
 
@@ -1223,8 +1223,19 @@
             min-width: 250px;
             width: 250px;
             max-width: 250px;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: color 0.3s ease;
             background: inherit !important;
+        }
+
+        /* Asegurar que las celdas mantengan el fondo correcto en todos los estados */
+        .category-summary.open .category-domain-info,
+        .category-summary.open .category-dimension-info {
+            background: #dbeafe !important;
+        }
+
+        .category-summary:hover .category-domain-info,
+        .category-summary:hover .category-dimension-info {
+            background: #e5e7eb !important;
         }
 
         /* Eliminar borde inferior de las filas de categoría cuando están expandidas */
@@ -2781,23 +2792,23 @@
             if (isOpen) {
                 // Cerrar: mostrar información de dominio y dimensión en el encabezado
                 if (domainCell) {
-                    domainCell.style.visibility = 'visible';
-                    domainCell.style.opacity = '1';
+                    domainCell.style.color = '#374151';
+                    domainCell.style.textShadow = 'none';
                 }
                 if (dimensionCell) {
-                    dimensionCell.style.visibility = 'visible';
-                    dimensionCell.style.opacity = '1';
+                    dimensionCell.style.color = '#6b7280';
+                    dimensionCell.style.textShadow = 'none';
                 }
                 row.classList.remove('open');
             } else {
-                // Abrir: ocultar solo el texto pero mantener el espacio de las celdas
+                // Abrir: hacer texto transparente pero mantener el espacio
                 if (domainCell) {
-                    domainCell.style.visibility = 'hidden';
-                    domainCell.style.opacity = '0';
+                    domainCell.style.color = 'transparent';
+                    domainCell.style.textShadow = 'none';
                 }
                 if (dimensionCell) {
-                    dimensionCell.style.visibility = 'hidden';
-                    dimensionCell.style.opacity = '0';
+                    dimensionCell.style.color = 'transparent';
+                    dimensionCell.style.textShadow = 'none';
                 }
                 row.classList.add('open');
             }
