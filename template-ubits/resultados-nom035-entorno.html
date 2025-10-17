@@ -1810,6 +1810,10 @@
                                 <i class="far fa-user"></i>
                                 <span>Individual</span>
                             </button>
+                            <button class="tab-button" data-tab="dimensiones2">
+                                <i class="far fa-chart-line"></i>
+                                <span>Dimensiones 2</span>
+                            </button>
                         </div>
                         
                         <!-- Tab Content -->
@@ -2867,6 +2871,37 @@
                                     <p>Aquí va el contenido del tab Individual con análisis individual de participantes.</p>
                                 </div>
                             </div>
+                            
+                            <div class="tab-panel" id="dimensiones2-panel">
+                                <div class="panel-content">
+                                    <div class="table-header">
+                                        <h3>Análisis por Dimensiones NOM-035</h3>
+                                        <div class="table-controls">
+                                            <button id="dimensiones2-search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                                <i class="far fa-search"></i>
+                                            </button>
+                                            <button id="dimensiones2-filters-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                                <i class="far fa-filter"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <table class="results-table" id="dimensiones2-results-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Dimensión</th>
+                                                <th>Dominio</th>
+                                                <th>Total Usuarios en Riesgo</th>
+                                                <th>% Colaboradores Afectados</th>
+                                                <th>Nivel de Riesgo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dimensiones2-results-tbody">
+                                            <!-- Las dimensiones se cargarán dinámicamente -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                     </div>
 
                 </div>
@@ -2952,6 +2987,9 @@
                         if (targetTab === 'dimension') {
                             console.log('Cargando dimensiones desde initializeTabs...');
                             loadDimensionResults();
+                        } else if (targetTab === 'dimensiones2') {
+                            console.log('Cargando dimensiones 2 desde initializeTabs...');
+                            loadDimensiones2Results();
                         }
                     }
                 });
@@ -3533,6 +3571,89 @@
                 'muy-alto': 'Muy Alto'
             };
             return riskLevels[riskLevel] || 'Nulo';
+        }
+
+        // Función simple para cargar dimensiones en el nuevo tab
+        function loadDimensiones2Results() {
+            console.log('Cargando dimensiones 2...');
+            const tbody = document.getElementById('dimensiones2-results-tbody');
+            
+            if (!tbody) {
+                console.error('No se encontró dimensiones2-results-tbody');
+                return;
+            }
+            
+            const dimensionsData = [
+                {
+                    dimension: "Condiciones físicas, seguridad y comodidad",
+                    domain: "Condiciones en el ambiente de trabajo",
+                    riskCount: 12,
+                    percentage: 8.0,
+                    riskLevel: "bajo"
+                },
+                {
+                    dimension: "Exigencias cuantitativas, mentales y emocionales",
+                    domain: "Carga de trabajo",
+                    riskCount: 43,
+                    percentage: 28.7,
+                    riskLevel: "medio"
+                },
+                {
+                    dimension: "Duración, distribución y pausas",
+                    domain: "Jornada de trabajo",
+                    riskCount: 22,
+                    percentage: 14.7,
+                    riskLevel: "medio"
+                },
+                {
+                    dimension: "Estilo de liderazgo, comunicación, apoyo y relaciones",
+                    domain: "Liderazgo y Relaciones interpersonales",
+                    riskCount: 26,
+                    percentage: 17.3,
+                    riskLevel: "bajo"
+                },
+                {
+                    dimension: "Acoso, hostigamiento y violencia",
+                    domain: "Violencia laboral",
+                    riskCount: 5,
+                    percentage: 3.3,
+                    riskLevel: "nulo"
+                },
+                {
+                    dimension: "Cultura organizacional y políticas",
+                    domain: "Entorno organizacional",
+                    riskCount: 77,
+                    percentage: 51.3,
+                    riskLevel: "alto"
+                }
+            ];
+            
+            let html = '';
+            dimensionsData.forEach((dim, index) => {
+                html += `
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <div style="background: #6b7280; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">
+                                    ${index + 1}
+                                </div>
+                                <span style="font-weight: 600;">${dim.dimension}</span>
+                            </div>
+                        </td>
+                        <td style="color: #6b7280; font-weight: 500;">${dim.domain}</td>
+                        <td style="text-align: center; font-weight: 600;">${dim.riskCount}</td>
+                        <td style="text-align: center; font-weight: 600;">${dim.percentage}%</td>
+                        <td style="text-align: center;">
+                            <span class="risk-badge ${dim.riskLevel}" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase;">
+                                ${getRiskLevelText(dim.riskLevel)}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+            console.log('Dimensiones 2 cargadas exitosamente');
         }
 
         // Función para actualizar números de dominio basados en filtros demográficos
