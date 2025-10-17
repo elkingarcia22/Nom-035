@@ -3444,7 +3444,9 @@
                 return;
             }
             
-            // Datos de dimensiones (basados en las categorías de NOM-035)
+            console.log('Elemento tbody encontrado:', dimensionResultsTbody);
+            
+            // Datos de dimensiones simplificados para prueba
             const dimensionsData = [
                 {
                     dimension: "Condiciones físicas, seguridad y comodidad",
@@ -3490,26 +3492,35 @@
                 }
             ];
             
-            dimensionResultsTbody.innerHTML = dimensionsData.map((dimension, index) => `
-                <tr class="dimension-row">
-                    <td class="dimension-cell">
-                        <div class="dimension-header-row">
-                            <div class="dimension-number">${index + 1}</div>
-                            <span>${dimension.dimension}</span>
-                        </div>
-                    </td>
-                    <td class="dimension-domain-info">${dimension.domain}</td>
-                    <td class="risk-count">${dimension.riskCount}</td>
-                    <td class="percentage">${dimension.percentage}%</td>
-                    <td>
-                        <div class="dimension-risk-info">
-                            <span class="risk-badge ${dimension.riskLevel}">${getRiskLevelText(dimension.riskLevel)}</span>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
+            // Crear HTML simplificado para debug
+            let htmlContent = '';
+            dimensionsData.forEach((dimension, index) => {
+                htmlContent += `
+                    <tr class="dimension-row">
+                        <td class="dimension-cell">
+                            <div class="dimension-header-row">
+                                <div class="dimension-number">${index + 1}</div>
+                                <span>${dimension.dimension}</span>
+                            </div>
+                        </td>
+                        <td class="dimension-domain-info">${dimension.domain}</td>
+                        <td class="risk-count">${dimension.riskCount}</td>
+                        <td class="percentage">${dimension.percentage}%</td>
+                        <td>
+                            <div class="dimension-risk-info">
+                                <span class="risk-badge ${dimension.riskLevel}">${getRiskLevelText(dimension.riskLevel)}</span>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            console.log('HTML generado:', htmlContent.substring(0, 200) + '...');
+            
+            dimensionResultsTbody.innerHTML = htmlContent;
             
             console.log('Dimensiones cargadas exitosamente. Filas creadas:', dimensionsData.length);
+            console.log('Contenido del tbody después de cargar:', dimensionResultsTbody.innerHTML.substring(0, 200) + '...');
         }
 
         // Función para obtener el texto del nivel de riesgo
