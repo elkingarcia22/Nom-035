@@ -2597,6 +2597,7 @@
 
         // Aplicar filtros
         function applyFilters() {
+            console.log('🔍 Aplicando filtros...');
             const riskFilters = getSelectedValues('risk-select');
             const departmentFilters = getSelectedValues('department-select');
             const positionFilters = getSelectedValues('position-select');
@@ -2606,6 +2607,7 @@
             const countryFilters = getSelectedValues('country-select');
             const cityFilters = getSelectedValues('city-select');
             const searchTerm = document.getElementById('participant-search').value.toLowerCase();
+            console.log('🔍 Término de búsqueda:', searchTerm);
 
             console.log('Aplicando filtros:', {
                 riskFilters,
@@ -2784,10 +2786,19 @@
 
         // Actualizar función de búsqueda para incluir filtros
         function setupSearch() {
+            console.log('🔍 Configurando buscador...');
             const searchInput = document.getElementById('participant-search');
-            searchInput.addEventListener('input', () => {
-                applyFilters();
-            });
+            console.log('🔍 Elemento de búsqueda encontrado:', searchInput);
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    console.log('🔍 Búsqueda activada:', e.target.value);
+                    applyFilters();
+                });
+                console.log('🔍 Event listener agregado correctamente');
+            } else {
+                console.error('🔍 ERROR: No se encontró el elemento participant-search');
+            }
         }
     </script>
 </body>
