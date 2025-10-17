@@ -2995,7 +2995,7 @@
             }
         });
 
-        // Funciones para los tabs
+        // Funciones para los tabs - Versión simplificada y robusta
         function initializeTabs() {
             console.log('Inicializando tabs...');
             const tabButtons = document.querySelectorAll('.tab-button');
@@ -3004,36 +3004,63 @@
             console.log('Botones de tab encontrados:', tabButtons.length);
             console.log('Paneles de tab encontrados:', tabPanels.length);
 
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const targetTab = button.getAttribute('data-tab');
+            // Función para cambiar de tab
+            function switchTab(targetTab) {
+                console.log('Cambiando a tab:', targetTab);
+                
+                // Remover clase active de todos los botones
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    console.log('Removiendo active de botón:', btn.getAttribute('data-tab'));
+                });
+                
+                // Remover clase active de todos los paneles
+                tabPanels.forEach(panel => {
+                    panel.classList.remove('active');
+                    console.log('Removiendo active de panel:', panel.id);
+                });
+                
+                // Activar el botón correspondiente
+                const targetButton = document.querySelector(`[data-tab="${targetTab}"]`);
+                if (targetButton) {
+                    targetButton.classList.add('active');
+                    console.log('Activando botón:', targetTab);
+                }
+                
+                // Activar el panel correspondiente
+                const targetPanel = document.getElementById(`${targetTab}-panel`);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                    console.log('Activando panel:', targetPanel.id);
                     
-                    // Remover clase active de todos los botones
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    
-                    // Remover clase active de todos los paneles
-                    tabPanels.forEach(panel => panel.classList.remove('active'));
-                    
-                    // Agregar clase active al botón clickeado
-                    button.classList.add('active');
-                    
-                    // Mostrar el panel correspondiente
-                    const targetPanel = document.getElementById(`${targetTab}-panel`);
-                    if (targetPanel) {
-                        targetPanel.classList.add('active');
-                        
-                        // Cargar contenido específico según el tab
-                        console.log('Tab activado:', targetTab);
-                        if (targetTab === 'dimension') {
-                            console.log('Cargando dimensiones desde initializeTabs...');
-                            loadDimensionResults();
-                        } else if (targetTab === 'dimensiones2') {
-                            console.log('Cargando dimensiones 2 desde initializeTabs...');
-                            loadDimensiones2Results();
-                        }
+                    // Cargar contenido específico según el tab
+                    if (targetTab === 'dimension') {
+                        console.log('Cargando dimensiones...');
+                        setTimeout(() => loadDimensionResults(), 100);
+                    } else if (targetTab === 'dimensiones2') {
+                        console.log('Cargando dimensiones 2...');
+                        setTimeout(() => loadDimensiones2Results(), 100);
                     }
+                } else {
+                    console.error('No se encontró el panel:', `${targetTab}-panel`);
+                }
+            }
+
+            // Agregar event listeners a todos los botones
+            tabButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetTab = button.getAttribute('data-tab');
+                    console.log('Click en tab:', targetTab);
+                    switchTab(targetTab);
                 });
             });
+            
+            // Verificar estado inicial
+            const activeButton = document.querySelector('.tab-button.active');
+            const activePanel = document.querySelector('.tab-panel.active');
+            console.log('Botón activo inicial:', activeButton ? activeButton.getAttribute('data-tab') : 'ninguno');
+            console.log('Panel activo inicial:', activePanel ? activePanel.id : 'ninguno');
         }
 
         // Funciones para búsqueda y filtros de la tabla
@@ -4003,6 +4030,21 @@
                         loadDimensiones2Results();
                     });
                 }
+                
+                // Prueba inmediata de tabs
+                console.log('=== PRUEBA DE TABS ===');
+                const allTabs = ['general', 'dimension', 'individual', 'dimensiones2'];
+                allTabs.forEach(tab => {
+                    const button = document.querySelector(`[data-tab="${tab}"]`);
+                    const panel = document.getElementById(`${tab}-panel`);
+                    console.log(`Tab ${tab}:`, {
+                        button: button ? 'encontrado' : 'NO ENCONTRADO',
+                        panel: panel ? 'encontrado' : 'NO ENCONTRADO',
+                        buttonActive: button ? button.classList.contains('active') : false,
+                        panelActive: panel ? panel.classList.contains('active') : false
+                    });
+                });
+                console.log('=== FIN PRUEBA ===');
                 
                 // Abrir la primera categoría por defecto
                 const firstCategoryRow = document.querySelector('.category-summary');
