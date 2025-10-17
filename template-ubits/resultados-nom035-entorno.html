@@ -1088,7 +1088,7 @@
 
         .category-cell {
             font-weight: 600;
-            background-color: white;
+            background: inherit !important;
             border-right: 1px solid #e5e7eb;
             min-width: 200px;
         }
@@ -1275,6 +1275,17 @@
         /* Forzar fondo gris para hover */
         tr.category-summary:hover td:nth-child(2),
         tr.category-summary:hover td:nth-child(3) {
+            background: #e5e7eb !important;
+        }
+
+        /* Estilo de máxima especificidad para asegurar que funcione */
+        table.results-table tbody tr.category-summary.open td.category-domain-info,
+        table.results-table tbody tr.category-summary.open td.category-dimension-info {
+            background: #dbeafe !important;
+        }
+
+        table.results-table tbody tr.category-summary:hover td.category-domain-info,
+        table.results-table tbody tr.category-summary:hover td.category-dimension-info {
             background: #e5e7eb !important;
         }
 
