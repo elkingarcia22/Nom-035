@@ -1208,14 +1208,6 @@
             color: #374151;
             font-weight: 500;
             padding: 8px 16px;
-            min-width: 200px;
-            width: 200px;
-            max-width: 200px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            background: inherit !important;
         }
 
         .category-dimension-info {
@@ -1223,70 +1215,11 @@
             color: #6b7280;
             font-weight: 400;
             padding: 8px 16px;
-            min-width: 250px;
-            width: 250px;
-            max-width: 250px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            background: inherit !important;
-        }
-
-        /* Asegurar que las celdas de dominio y dimensión mantengan el fondo consistente */
-        .category-summary.open .category-domain-info,
-        .category-summary.open .category-dimension-info {
-            background: #dbeafe !important;
-        }
-
-        .category-summary:hover .category-domain-info,
-        .category-summary:hover .category-dimension-info {
-            background: #e5e7eb !important;
-        }
-
-        /* Estilos más específicos para asegurar que se apliquen */
-        .category-summary.open td.category-domain-info,
-        .category-summary.open td.category-dimension-info {
-            background: #dbeafe !important;
-        }
-
-        .category-summary:hover td.category-domain-info,
-        .category-summary:hover td.category-dimension-info {
-            background: #e5e7eb !important;
-        }
-
-        /* Forzar el fondo en todos los estados */
-        .category-summary td.category-domain-info,
-        .category-summary td.category-dimension-info {
-            background: inherit !important;
         }
 
         /* Eliminar borde inferior de las filas de categoría cuando están expandidas */
         .category-summary.open td {
             border-bottom: none !important;
-        }
-
-        /* Forzar fondo azul específicamente para celdas de dominio y dimensión en filas expandidas */
-        tr.category-summary.open td:nth-child(2),
-        tr.category-summary.open td:nth-child(3) {
-            background: #dbeafe !important;
-        }
-
-        /* Forzar fondo gris para hover */
-        tr.category-summary:hover td:nth-child(2),
-        tr.category-summary:hover td:nth-child(3) {
-            background: #e5e7eb !important;
-        }
-
-        /* Estilo de máxima especificidad para asegurar que funcione */
-        table.results-table tbody tr.category-summary.open td.category-domain-info,
-        table.results-table tbody tr.category-summary.open td.category-dimension-info {
-            background: #dbeafe !important;
-        }
-
-        table.results-table tbody tr.category-summary:hover td.category-domain-info,
-        table.results-table tbody tr.category-summary:hover td.category-dimension-info {
-            background: #e5e7eb !important;
         }
 
         .category-cell {
@@ -2838,23 +2771,23 @@
             if (isOpen) {
                 // Cerrar: mostrar información de dominio y dimensión en el encabezado
                 if (domainCell) {
+                    domainCell.style.display = '';
                     domainCell.style.visibility = 'visible';
                     domainCell.style.opacity = '1';
                 }
                 if (dimensionCell) {
+                    dimensionCell.style.display = '';
                     dimensionCell.style.visibility = 'visible';
                     dimensionCell.style.opacity = '1';
                 }
                 row.classList.remove('open');
             } else {
-                // Abrir: ocultar solo el texto pero mantener el espacio de las celdas
+                // Abrir: ocultar completamente las celdas de dominio y dimensión
                 if (domainCell) {
-                    domainCell.style.visibility = 'hidden';
-                    domainCell.style.opacity = '0';
+                    domainCell.style.display = 'none';
                 }
                 if (dimensionCell) {
-                    dimensionCell.style.visibility = 'hidden';
-                    dimensionCell.style.opacity = '0';
+                    dimensionCell.style.display = 'none';
                 }
                 row.classList.add('open');
             }
