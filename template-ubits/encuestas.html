@@ -20,6 +20,111 @@
     <style>
         /* ¡A LA MIERDA LAS REGLAS PENDEJAS! */
 
+        /* Custom Select Styles - Exactamente iguales a la página emocional */
+        .filter-group {
+            margin-bottom: 24px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--ubits-fg-1-medium);
+            font-size: 14px;
+        }
+
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-trigger {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: #fff;
+            color: #374151;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .select-trigger:hover {
+            border-color: #9ca3af;
+        }
+
+        .select-trigger.active {
+            border-color: var(--ubits-accent-brand);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .select-trigger .select-text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .select-trigger .select-arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .select-trigger.active .select-arrow {
+            transform: rotate(180deg);
+        }
+
+        .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .select-dropdown.show {
+            display: block;
+        }
+
+        .select-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .select-option:hover {
+            background: #f3f4f6;
+        }
+
+        .select-option.selected {
+            background: #eff6ff;
+            color: var(--ubits-accent-brand);
+        }
+
+        .select-option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .select-option .option-text {
+            flex: 1;
+        }
+
+        /* Badge de filtros */
+        #filter-badge {
+            color: white !important;
+        }
+
         /* Estilos específicos para content-sections - idéntico a left-wrapper */
         .content-sections {
             display: flex;
@@ -343,8 +448,9 @@
                                     <button id="search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
                                         <i class="far fa-search"></i>
                                     </button>
-                                    <button id="filter-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                    <button id="filter-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px; position: relative;">
                                         <i class="far fa-filter"></i>
+                                        <span id="filter-badge" style="position: absolute; top: -8px; right: -8px; background: #3b82f6; color: white !important; border-radius: 50%; width: 20px; height: 20px; display: none; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">0</span>
                                     </button>
                                 </div>
                             </div>
@@ -665,7 +771,7 @@
     </div>
 
     <!-- Side Panel de Filtros -->
-    <div id="filter-side-panel" style="position: fixed; top: 0; right: -400px; width: 400px; height: 100vh; background: var(--ubits-bg-1); border-left: 1px solid var(--ubits-border-1); box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1); z-index: 1000; transition: right 0.3s ease; overflow-y: auto;">
+    <div id="filter-side-panel" style="position: fixed; top: 0; right: -400px; width: 400px; height: 100vh; background: var(--ubits-bg-1); border-left: 1px solid var(--ubits-border-1); box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1); z-index: 1000; transition: right 0.3s ease; display: flex; flex-direction: column;">
         <!-- Header del side panel -->
         <div style="padding: 20px; border-bottom: 1px solid var(--ubits-border-1); display: flex; justify-content: space-between; align-items: center;">
             <h2 class="ubits-heading-h2" style="margin: 0; color: var(--ubits-fg-1-high);">Filtros</h2>
@@ -675,58 +781,134 @@
         </div>
         
         <!-- Contenido del side panel -->
-        <div style="padding: 20px;">
+        <div style="flex: 1; padding: 20px; overflow-y: auto; padding-bottom: 100px;">
             <!-- Filtro por Estado -->
-            <div style="margin-bottom: 24px;">
-                <label class="ubits-body-sm-semibold" style="color: var(--ubits-fg-1-medium); margin-bottom: 8px; display: block;">Estado</label>
-                <select id="estado-filter" style="width: 100%; padding: 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); font-size: 14px;">
-                    <option value="">Todos los estados</option>
-                    <option value="Completado">Completado</option>
-                    <option value="En progreso">En progreso</option>
-                    <option value="Borrador">Borrador</option>
-                    <option value="Por iniciar">Por iniciar</option>
-                </select>
+            <div class="filter-group">
+                <label class="filter-label">Estado</label>
+                <div class="custom-select" id="estado-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Seleccionar estados</span>
+                        <i class="fas fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="estado-todos" checked>
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="Completado">
+                            <input type="checkbox" id="estado-completado">
+                            <span class="option-text">Completado</span>
+                        </div>
+                        <div class="select-option" data-value="En progreso">
+                            <input type="checkbox" id="estado-progreso">
+                            <span class="option-text">En progreso</span>
+                        </div>
+                        <div class="select-option" data-value="Borrador">
+                            <input type="checkbox" id="estado-borrador">
+                            <span class="option-text">Borrador</span>
+                        </div>
+                        <div class="select-option" data-value="Por iniciar">
+                            <input type="checkbox" id="estado-iniciar">
+                            <span class="option-text">Por iniciar</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <!-- Filtro por Tipo -->
-            <div style="margin-bottom: 24px;">
-                <label class="ubits-body-sm-semibold" style="color: var(--ubits-fg-1-medium); margin-bottom: 8px; display: block;">Tipo</label>
-                <select id="tipo-filter" style="width: 100%; padding: 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); font-size: 14px;">
-                    <option value="">Todos los tipos</option>
-                    <option value="NOM 035">NOM 035</option>
-                    <option value="Cultura">Cultura</option>
-                    <option value="Clima">Clima</option>
-                    <option value="eNPS">eNPS</option>
-                    <option value="Satisfacción">Satisfacción</option>
-                    <option value="Bienestar">Bienestar</option>
-                    <option value="Liderazgo">Liderazgo</option>
-                </select>
+            <div class="filter-group">
+                <label class="filter-label">Tipo</label>
+                <div class="custom-select" id="tipo-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Seleccionar tipos</span>
+                        <i class="fas fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="tipo-todos" checked>
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="NOM 035">
+                            <input type="checkbox" id="tipo-nom035">
+                            <span class="option-text">NOM 035</span>
+                        </div>
+                        <div class="select-option" data-value="Cultura">
+                            <input type="checkbox" id="tipo-cultura">
+                            <span class="option-text">Cultura</span>
+                        </div>
+                        <div class="select-option" data-value="Clima">
+                            <input type="checkbox" id="tipo-clima">
+                            <span class="option-text">Clima</span>
+                        </div>
+                        <div class="select-option" data-value="eNPS">
+                            <input type="checkbox" id="tipo-enps">
+                            <span class="option-text">eNPS</span>
+                        </div>
+                        <div class="select-option" data-value="Satisfacción">
+                            <input type="checkbox" id="tipo-satisfaccion">
+                            <span class="option-text">Satisfacción</span>
+                        </div>
+                        <div class="select-option" data-value="Bienestar">
+                            <input type="checkbox" id="tipo-bienestar">
+                            <span class="option-text">Bienestar</span>
+                        </div>
+                        <div class="select-option" data-value="Liderazgo">
+                            <input type="checkbox" id="tipo-liderazgo">
+                            <span class="option-text">Liderazgo</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <!-- Filtro por Año -->
-            <div style="margin-bottom: 24px;">
-                <label class="ubits-body-sm-semibold" style="color: var(--ubits-fg-1-medium); margin-bottom: 8px; display: block;">Año</label>
-                <select id="año-filter" style="width: 100%; padding: 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); font-size: 14px;">
-                    <option value="">Todos los años</option>
-                    <option value="2025">2025</option>
-                    <option value="2024">2024</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                    <option value="2021">2021</option>
-                </select>
+            <div class="filter-group">
+                <label class="filter-label">Año</label>
+                <div class="custom-select" id="año-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Seleccionar años</span>
+                        <i class="fas fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="año-todos" checked>
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="2025">
+                            <input type="checkbox" id="año-2025">
+                            <span class="option-text">2025</span>
+                        </div>
+                        <div class="select-option" data-value="2024">
+                            <input type="checkbox" id="año-2024">
+                            <span class="option-text">2024</span>
+                        </div>
+                        <div class="select-option" data-value="2023">
+                            <input type="checkbox" id="año-2023">
+                            <span class="option-text">2023</span>
+                        </div>
+                        <div class="select-option" data-value="2022">
+                            <input type="checkbox" id="año-2022">
+                            <span class="option-text">2022</span>
+                        </div>
+                        <div class="select-option" data-value="2021">
+                            <input type="checkbox" id="año-2021">
+                            <span class="option-text">2021</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <!-- Botones de acción -->
-            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 32px;">
-                <button id="apply-filters" class="ubits-button ubits-button--primary ubits-button--md" style="width: 100%;">
-                    <i class="far fa-check"></i>
-                    <span>Aplicar filtros</span>
-                </button>
-                <button id="clear-filters" class="ubits-button ubits-button--secondary ubits-button--md" style="width: 100%;">
-                    <i class="far fa-times"></i>
-                    <span>Limpiar filtros</span>
-                </button>
-            </div>
+        </div>
+        
+        <!-- Botones de acción fijos en la parte inferior -->
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; gap: 12px; padding: 20px; background: var(--ubits-bg-1); border-top: 1px solid var(--ubits-border-1); box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);">
+            <button id="apply-filters" class="ubits-button ubits-button--primary ubits-button--md" style="flex: 1;">
+                <i class="far fa-check"></i>
+                <span>Aplicar filtros</span>
+            </button>
+            <button id="clear-filters" class="ubits-button ubits-button--secondary ubits-button--md" style="flex: 1;">
+                <i class="far fa-times"></i>
+                <span>Limpiar filtros</span>
+            </button>
         </div>
     </div>
 
@@ -887,9 +1069,21 @@
             
             // Limpiar filtros
             clearFilters.addEventListener('click', function() {
-                document.getElementById('estado-filter').value = '';
-                document.getElementById('tipo-filter').value = '';
-                document.getElementById('año-filter').value = '';
+                // Limpiar custom selects
+                const selectIds = ['estado-select', 'tipo-select', 'año-select'];
+                selectIds.forEach(selectId => {
+                    const select = document.getElementById(selectId);
+                    const checkboxes = select.querySelectorAll('input[type="checkbox"]');
+                    checkboxes.forEach(cb => cb.checked = false);
+                    // Marcar "todos" como seleccionado
+                    const todosOption = select.querySelector('.select-option[data-value="todos"]');
+                    if (todosOption) {
+                        const todosCheckbox = todosOption.querySelector('input[type="checkbox"]');
+                        if (todosCheckbox) todosCheckbox.checked = true;
+                    }
+                    updateSelectText(selectId);
+                });
+                
                 searchInput.value = '';
                 searchContainer.style.display = 'none';
                 filterTable();
@@ -899,9 +1093,9 @@
             // Función principal de filtrado
             function filterTable() {
                 const searchTerm = searchInput.value.toLowerCase();
-                const estadoFilter = document.getElementById('estado-filter').value;
-                const tipoFilter = document.getElementById('tipo-filter').value;
-                const añoFilter = document.getElementById('año-filter').value;
+                const estadoFilters = getSelectedValues('estado-select');
+                const tipoFilters = getSelectedValues('tipo-select');
+                const añoFilters = getSelectedValues('año-select');
                 
                 // Ocultar todas las filas
                 originalData.forEach(item => {
@@ -917,13 +1111,13 @@
                         item.estado.toLowerCase().includes(searchTerm);
                     
                     // Filtro de estado
-                    const matchesEstado = !estadoFilter || item.estado === estadoFilter;
+                    const matchesEstado = estadoFilters.length === 0 || estadoFilters.includes('todos') || estadoFilters.includes(item.estado);
                     
                     // Filtro de tipo
-                    const matchesTipo = !tipoFilter || item.tipo === tipoFilter;
+                    const matchesTipo = tipoFilters.length === 0 || tipoFilters.includes('todos') || tipoFilters.includes(item.tipo);
                     
                     // Filtro de año
-                    const matchesAño = !añoFilter || item.nombre.includes(añoFilter);
+                    const matchesAño = añoFilters.length === 0 || añoFilters.includes('todos') || añoFilters.includes(item.año);
                     
                     return matchesSearch && matchesEstado && matchesTipo && matchesAño;
                 });
@@ -936,11 +1130,173 @@
                 // Actualizar contador
                 const count = filteredData.length;
                 resultadosCount.textContent = `${count} resultado${count !== 1 ? 's' : ''}`;
+                
+                // Actualizar badge de filtros
+                updateFilterBadge();
+            }
+
+            // Función para obtener valores seleccionados de un custom select
+            function getSelectedValues(selectId) {
+                const select = document.getElementById(selectId);
+                const checkboxes = select.querySelectorAll('input[type="checkbox"]:checked');
+                return Array.from(checkboxes).map(cb => cb.closest('.select-option').dataset.value);
+            }
+
+            // Función para actualizar el badge de filtros
+            function updateFilterBadge() {
+                const badge = document.getElementById('filter-badge');
+                const estadoFilters = getSelectedValues('estado-select');
+                const tipoFilters = getSelectedValues('tipo-select');
+                const añoFilters = getSelectedValues('año-select');
+                const searchTerm = searchInput.value;
+
+                let activeFiltersCount = 0;
+
+                // Contar filtros activos (excluyendo "todos")
+                if (estadoFilters.length > 0 && !estadoFilters.includes('todos')) {
+                    activeFiltersCount += estadoFilters.length;
+                }
+                if (tipoFilters.length > 0 && !tipoFilters.includes('todos')) {
+                    activeFiltersCount += tipoFilters.length;
+                }
+                if (añoFilters.length > 0 && !añoFilters.includes('todos')) {
+                    activeFiltersCount += añoFilters.length;
+                }
+                if (searchTerm) {
+                    activeFiltersCount += 1;
+                }
+
+                // Mostrar/ocultar badge
+                if (activeFiltersCount > 0) {
+                    badge.textContent = activeFiltersCount;
+                    badge.style.display = 'flex';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+
+            // Función para configurar custom selects
+            function setupCustomSelects() {
+                const customSelects = document.querySelectorAll('.custom-select');
+                
+                customSelects.forEach(select => {
+                    const trigger = select.querySelector('.select-trigger');
+                    const dropdown = select.querySelector('.select-dropdown');
+                    const options = select.querySelectorAll('.select-option');
+                    
+                    // Toggle dropdown
+                    trigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const isActive = trigger.classList.contains('active');
+                        
+                        // Cerrar otros selects
+                        customSelects.forEach(otherSelect => {
+                            if (otherSelect !== select) {
+                                otherSelect.querySelector('.select-trigger').classList.remove('active');
+                                otherSelect.querySelector('.select-dropdown').classList.remove('show');
+                            }
+                        });
+                        
+                        // Toggle current select
+                        if (isActive) {
+                            trigger.classList.remove('active');
+                            dropdown.classList.remove('show');
+                        } else {
+                            trigger.classList.add('active');
+                            dropdown.classList.add('show');
+                        }
+                    });
+
+                    // Manejar cambios en checkboxes
+                    options.forEach(option => {
+                        const checkbox = option.querySelector('input[type="checkbox"]');
+                        const optionValue = option.dataset.value;
+                        
+                        // Prevenir que el click en la opción cierre el dropdown
+                        option.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            // Solo toggle si el click no es directamente en el checkbox
+                            if (e.target !== checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                handleCheckboxChange(select.id, optionValue, checkbox.checked);
+                            }
+                        });
+                        
+                        checkbox.addEventListener('change', (e) => {
+                            e.stopPropagation();
+                            handleCheckboxChange(select.id, optionValue, checkbox.checked);
+                        });
+                    });
+                });
+
+                // Cerrar al hacer click fuera
+                document.addEventListener('click', (e) => {
+                    // Solo cerrar si el click no es dentro de ningún custom select
+                    if (!e.target.closest('.custom-select')) {
+                        customSelects.forEach(select => {
+                            select.querySelector('.select-trigger').classList.remove('active');
+                            select.querySelector('.select-dropdown').classList.remove('show');
+                        });
+                    }
+                });
+            }
+
+            // Función para manejar cambios en checkboxes
+            function handleCheckboxChange(selectId, optionValue, isChecked) {
+                const select = document.getElementById(selectId);
+                const todosOption = select.querySelector('.select-option[data-value="todos"]');
+                const todosCheckbox = todosOption ? todosOption.querySelector('input[type="checkbox"]') : null;
+                const otherOptions = select.querySelectorAll('.select-option:not([data-value="todos"])');
+                
+                if (optionValue === 'todos') {
+                    // Si se selecciona "Todos", deseleccionar todo lo demás
+                    if (isChecked) {
+                        otherOptions.forEach(option => {
+                            const checkbox = option.querySelector('input[type="checkbox"]');
+                            checkbox.checked = false;
+                        });
+                    }
+                } else {
+                    // Si se selecciona cualquier otra opción, deseleccionar "Todos"
+                    if (todosCheckbox) {
+                        todosCheckbox.checked = false;
+                    }
+                }
+                
+                updateSelectText(selectId);
+                updateFilterBadge();
+            }
+
+            // Función para actualizar el texto del select
+            function updateSelectText(selectId) {
+                const select = document.getElementById(selectId);
+                const selectedValues = getSelectedValues(selectId);
+                const selectText = select.querySelector('.select-text');
+                
+                if (selectedValues.length === 0) {
+                    selectText.textContent = 'Seleccionar';
+                } else if (selectedValues.includes('todos')) {
+                    selectText.textContent = 'Todos';
+                } else if (selectedValues.length === 1) {
+                    selectText.textContent = selectedValues[0];
+                } else {
+                    selectText.textContent = selectedValues.length + ' seleccionados';
+                }
             }
             
+            // Función para inicializar los selects
+            function initializeSelects() {
+                const selectIds = ['estado-select', 'tipo-select', 'año-select'];
+                selectIds.forEach(selectId => {
+                    updateSelectText(selectId);
+                });
+            }
+
             // Inicializar cuando se carga la página
             setTimeout(() => {
                 initializeData();
+                setupCustomSelects();
+                initializeSelects();
             }, 500);
         });
     </script>

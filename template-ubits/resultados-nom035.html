@@ -623,6 +623,7 @@
         }
 
         .clear-filters-btn {
+            flex: 1;
             background: #f3f4f6;
             color: #6b7280;
             border: 1px solid #d1d5db;
@@ -786,6 +787,8 @@
         .participant-age,
         .participant-gender,
         .participant-status,
+        .participant-country,
+        .participant-city,
         .participant-experience {
             color: #6b7280;
             font-size: 13px;
@@ -1669,6 +1672,8 @@
                     position: "Analista",
                     gender: "Femenino",
                     maritalStatus: "Divorciada",
+                    country: "Argentina",
+                    city: "Buenos Aires",
                     experience: "6 años",
                     email: "ana.martinez@empresa.com"
                 },
@@ -1716,6 +1721,8 @@
                     position: "Contador",
                     gender: "Masculino",
                     maritalStatus: "Casado",
+                    country: "Chile",
+                    city: "Santiago",
                     experience: "12 años",
                     email: "luis.fernandez@empresa.com"
                 },
@@ -1763,6 +1770,8 @@
                     position: "Asistente",
                     gender: "Femenino",
                     maritalStatus: "Soltera",
+                    country: "Perú",
+                    city: "Lima",
                     experience: "3 años",
                     email: "sofia.herrera@empresa.com"
                 },
@@ -1810,6 +1819,8 @@
                     position: "Director",
                     gender: "Masculino",
                     maritalStatus: "Casado",
+                    country: "España",
+                    city: "Madrid",
                     experience: "12 años",
                     email: "roberto.silva@empresa.com"
                 },
@@ -1857,6 +1868,8 @@
                     position: "Diseñadora",
                     gender: "Femenino",
                     maritalStatus: "Soltera",
+                    country: "Uruguay",
+                    city: "Montevideo",
                     experience: "4 años",
                     email: "carmen.lopez@empresa.com"
                 },
@@ -1904,6 +1917,8 @@
                     position: "Analista",
                     gender: "Masculino",
                     maritalStatus: "Casado",
+                    country: "Ecuador",
+                    city: "Quito",
                     experience: "7 años",
                     email: "diego.morales@empresa.com"
                 },
@@ -1951,6 +1966,8 @@
                     position: "Coordinadora",
                     gender: "Femenino",
                     maritalStatus: "Divorciada",
+                    country: "Venezuela",
+                    city: "Caracas",
                     experience: "10 años",
                     email: "patricia.vega@empresa.com"
                 },
@@ -2354,6 +2371,10 @@
                                 <span class="participant-separator">•</span>
                                 <span class="participant-status">${participant.details.maritalStatus}</span>
                                 <span class="participant-separator">•</span>
+                                <span class="participant-country">${participant.details.country}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-city">${participant.details.city}</span>
+                                <span class="participant-separator">•</span>
                                 <span class="participant-experience">${participant.details.experience} de experiencia</span>
                             </div>
                         </div>
@@ -2408,6 +2429,7 @@
             const totalQuestions = questions.length;
             return Math.round((yesCount / totalQuestions) * 100);
         }
+
 
         // Toggle de secciones (acordeones)
         function toggleSection(header) {
