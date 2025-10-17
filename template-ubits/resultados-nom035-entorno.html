@@ -2942,6 +2942,11 @@
                     const targetPanel = document.getElementById(`${targetTab}-panel`);
                     if (targetPanel) {
                         targetPanel.classList.add('active');
+                        
+                        // Cargar contenido específico según el tab
+                        if (targetTab === 'dimension') {
+                            loadDimensionResults();
+                        }
                     }
                 });
             });
@@ -3425,7 +3430,13 @@
 
         // Función para cargar dimensiones en la tabla de dimensiones
         function loadDimensionResults() {
+            console.log('Cargando dimensiones...');
             const dimensionResultsTbody = document.getElementById('dimension-results-tbody');
+            
+            if (!dimensionResultsTbody) {
+                console.error('No se encontró el elemento dimension-results-tbody');
+                return;
+            }
             
             // Datos de dimensiones (basados en las categorías de NOM-035)
             const dimensionsData = [
@@ -3802,7 +3813,6 @@
                 loadFloatingMenu('floating-menu-container');
                 initializeTabs();
                 initializeTableFilters();
-                loadDimensionResults();
                 initializeDimensionFilters();
                 
                 // Abrir la primera categoría por defecto
