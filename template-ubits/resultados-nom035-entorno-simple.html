@@ -17,6 +17,77 @@
     <link rel="stylesheet" href="components-sidebar.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="profile.css">
+    
+    <!-- Estilos para Tabs -->
+    <style>
+        .tabs-container {
+            background: var(--ubits-bg-1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 24px;
+        }
+        
+        .tabs-header {
+            display: flex;
+            background: var(--ubits-bg-2);
+            border-bottom: 1px solid var(--ubits-border-1);
+        }
+        
+        .tab-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            color: var(--ubits-fg-1-medium);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab-button:hover {
+            background: var(--ubits-bg-3);
+            color: var(--ubits-fg-1-high);
+        }
+        
+        .tab-button.active {
+            background: var(--ubits-bg-1);
+            color: var(--ubits-fg-1-high);
+            border-bottom-color: var(--ubits-accent-primary);
+        }
+        
+        .tab-button i {
+            font-size: 16px;
+        }
+        
+        .tab-panel {
+            display: none;
+            padding: 0;
+        }
+        
+        .tab-panel.active {
+            display: block;
+        }
+        
+        .panel-content {
+            padding: 24px;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs-header {
+                flex-wrap: wrap;
+            }
+            
+            .tab-button {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- SubNav -->
