@@ -953,67 +953,73 @@
             text-align: center;
         }
 
-        /* Tabs Styles */
+        /* Tabs Styles - Versión que funciona */
         .tabs-container {
-            margin-top: 16px;
+            background: #ffffff !important;
+            border: 3px solid #ff0000 !important;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 24px;
+            min-height: 200px !important;
         }
-
+        
         .tabs-header {
-            display: flex;
-            gap: 0;
-            border-bottom: 1px solid #e5e7eb;
-            margin-bottom: 16px;
+            display: flex !important;
+            background: #f0f0f0 !important;
+            border-bottom: 2px solid #000000 !important;
+            padding: 10px !important;
         }
-
+        
         .tab-button {
-            background: transparent;
-            border: none;
-            padding: 12px 24px;
-            cursor: pointer;
-            display: flex;
+            display: flex !important;
             align-items: center;
             gap: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #6b7280;
+            padding: 15px 25px !important;
+            background: #e0e0e0 !important;
+            border: 2px solid #000000 !important;
+            color: #000000 !important;
+            font-size: 16px !important;
+            font-weight: bold !important;
+            cursor: pointer;
             transition: all 0.2s ease;
-            border-bottom: 2px solid transparent;
-            position: relative;
+            margin-right: 10px !important;
         }
-
+        
         .tab-button:hover {
-            color: #374151;
-            background-color: #f9fafb;
+            background: #cccccc !important;
+            color: #000000 !important;
         }
-
+        
         .tab-button.active {
-            background: white;
-            color: #3b82f6;
-            font-weight: 700;
-            border-bottom-color: transparent;
+            background: #007bff !important;
+            color: #ffffff !important;
+            border-color: #0056b3 !important;
         }
-
+        
         .tab-button i {
-            font-size: 16px;
+            font-size: 18px !important;
         }
-
-        .tab-content {
-            min-height: 200px;
-        }
-
+        
         .tab-panel {
-            display: none;
+            display: none !important;
+            padding: 20px !important;
+            background: #f9f9f9 !important;
+            border: 2px solid #00ff00 !important;
+            min-height: 300px !important;
         }
-
+        
         .tab-panel.active {
-            display: block;
+            display: block !important;
         }
-
+        
         .panel-content {
-            padding: 24px;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
+            padding: 24px !important;
+            background: #ffffff !important;
+        }
+        
+        /* Debug: Hacer todo muy visible */
+        .tabs-container * {
+            box-sizing: border-box !important;
         }
 
         .panel-content h3 {
@@ -1797,6 +1803,9 @@
 
                     <!-- Tabs Container -->
                     <div class="tabs-container">
+                        <div style="background: #ffff00; color: #000000; padding: 10px; font-weight: bold; text-align: center;">
+                            🚨 DEBUG: ESTE ES EL CONTENEDOR DE TABS - SI VES ESTO, EL HTML ESTÁ FUNCIONANDO
+                        </div>
                         <div class="tabs-header">
                             <button class="tab-button active" data-tab="general">
                                 <i class="far fa-chart-bar"></i>
@@ -1810,18 +1819,11 @@
                                 <i class="far fa-user"></i>
                                 <span>Individual</span>
                             </button>
-                            <button class="tab-button" data-tab="dimensiones2">
-                                <i class="far fa-chart-line"></i>
-                                <span>Dimensiones 2</span>
-                            </button>
-                            <button class="tab-button" data-tab="test">
-                                <i class="far fa-bug"></i>
-                                <span>Test</span>
-                            </button>
                         </div>
                         
                         <!-- Tab Content -->
                         <div class="tab-panel active" id="general-panel">
+                        <div class="panel-content">
                                 <div class="panel-content">
                                     <div class="table-header">
                                         <h3>Vista General de Resultados NOM-035</h3>
@@ -2527,8 +2529,7 @@
                                     <!-- Filters Overlay -->
                                     <div class="filters-overlay" id="table-filters-overlay"></div>
                                 </div>
-                            
-                            <div class="tab-panel" id="dimension-panel">
+                    </div>
                                 <div class="panel-content">
                                     <div class="table-header">
                                         <h3>Análisis por Dimensiones NOM-035</h3>
