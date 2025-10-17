@@ -100,8 +100,25 @@
                 </div>
             </div>
 
-            <!-- Contenido General (sin tabs por ahora) -->
-            <div class="general-content">
+            <!-- Tabs Container -->
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-button active" data-tab="general">
+                        <i class="far fa-chart-bar"></i>
+                        <span>General</span>
+                    </button>
+                    <button class="tab-button" data-tab="dimension">
+                        <i class="far fa-layer-group"></i>
+                        <span>Dimensión</span>
+                    </button>
+                    <button class="tab-button" data-tab="individual">
+                        <i class="far fa-user"></i>
+                        <span>Individual</span>
+                    </button>
+                </div>
+                
+                <!-- Tab Content -->
+                <div class="tab-panel active" id="general-panel">
                 <div class="panel-content">
                     <div class="table-header">
                         <h3>Vista General de Resultados NOM-035</h3>
@@ -407,6 +424,111 @@
                     <!-- Filters Overlay -->
                     <div class="filters-overlay" id="table-filters-overlay"></div>
                 </div>
+                </div>
+                
+                <!-- Tab Dimensión -->
+                <div class="tab-panel" id="dimension-panel">
+                    <div class="panel-content">
+                        <div class="table-header">
+                            <h3>Análisis por Dimensiones NOM-035</h3>
+                            <div class="table-controls">
+                                <button id="load-dimension-btn" class="ubits-button ubits-button--primary ubits-button--sm" style="margin-right: 8px;">
+                                    <i class="far fa-refresh"></i>
+                                    <span>Cargar Dimensiones</span>
+                                </button>
+                                <button id="dimension-search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                    <i class="far fa-search"></i>
+                                </button>
+                                <button id="dimension-filters-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                    <i class="far fa-filter"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <table class="results-table" id="dimension-results-table">
+                            <thead>
+                                <tr>
+                                    <th>Dimensión</th>
+                                    <th>Dominio</th>
+                                    <th>Total Usuarios en Riesgo</th>
+                                    <th>% Colaboradores Afectados</th>
+                                    <th>Nivel de Riesgo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dimension-results-tbody">
+                                <!-- Contenido estático para prueba -->
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="background: #6b7280; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">
+                                                1
+                                            </div>
+                                            <span style="font-weight: 600;">Condiciones físicas, seguridad y comodidad</span>
+                                        </div>
+                                    </td>
+                                    <td style="color: #6b7280; font-weight: 500;">Condiciones en el ambiente de trabajo</td>
+                                    <td style="text-align: center; font-weight: 600;">12</td>
+                                    <td style="text-align: center; font-weight: 600;">8.0%</td>
+                                    <td style="text-align: center;">
+                                        <span class="risk-badge bajo" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; background: #10b981; color: white;">
+                                            Bajo
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="background: #6b7280; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">
+                                                2
+                                            </div>
+                                            <span style="font-weight: 600;">Exigencias cuantitativas, mentales y emocionales</span>
+                                        </div>
+                                    </td>
+                                    <td style="color: #6b7280; font-weight: 500;">Carga de trabajo</td>
+                                    <td style="text-align: center; font-weight: 600;">43</td>
+                                    <td style="text-align: center; font-weight: 600;">28.7%</td>
+                                    <td style="text-align: center;">
+                                        <span class="risk-badge medio" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; background: #f59e0b; color: white;">
+                                            Medio
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="background: #6b7280; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">
+                                                3
+                                            </div>
+                                            <span style="font-weight: 600;">Duración, distribución y pausas</span>
+                                        </div>
+                                    </td>
+                                    <td style="color: #6b7280; font-weight: 500;">Jornada de trabajo</td>
+                                    <td style="text-align: center; font-weight: 600;">22</td>
+                                    <td style="text-align: center; font-weight: 600;">14.7%</td>
+                                    <td style="text-align: center;">
+                                        <span class="risk-badge medio" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; background: #f59e0b; color: white;">
+                                            Medio
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Tab Individual -->
+                <div class="tab-panel" id="individual-panel">
+                    <div class="panel-content">
+                        <div style="padding: 40px; text-align: center;">
+                            <h3 style="color: #1f2937; margin-bottom: 16px;">Análisis Individual</h3>
+                            <p style="color: #6b7280; margin-bottom: 24px;">Aquí va el contenido del tab Individual con análisis individual de participantes.</p>
+                            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; display: inline-block;">
+                                <i class="far fa-user" style="font-size: 48px; color: #9ca3af; margin-bottom: 16px;"></i>
+                                <p style="color: #6b7280; margin: 0;">Contenido individual en desarrollo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -632,9 +754,66 @@
             resultsTbody.innerHTML = htmlContent;
         }
 
+        // Función para inicializar los tabs
+        function initializeTabs() {
+            console.log('Inicializando tabs...');
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            
+            console.log('Botones de tab encontrados:', tabButtons.length);
+            console.log('Paneles de tab encontrados:', tabPanels.length);
+
+            // Función para cambiar de tab
+            function switchTab(targetTab) {
+                console.log('Cambiando a tab:', targetTab);
+                
+                // Remover clase active de todos los botones
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Remover clase active de todos los paneles
+                tabPanels.forEach(panel => {
+                    panel.classList.remove('active');
+                });
+                
+                // Activar el botón correspondiente
+                const targetButton = document.querySelector(`[data-tab="${targetTab}"]`);
+                if (targetButton) {
+                    targetButton.classList.add('active');
+                    console.log('Activando botón:', targetTab);
+                }
+                
+                // Activar el panel correspondiente
+                const targetPanel = document.getElementById(`${targetTab}-panel`);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                    console.log('Activando panel:', targetPanel.id);
+                } else {
+                    console.error('No se encontró el panel:', `${targetTab}-panel`);
+                }
+            }
+
+            // Agregar event listeners a todos los botones
+            tabButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetTab = button.getAttribute('data-tab');
+                    console.log('Click en tab:', targetTab);
+                    switchTab(targetTab);
+                });
+            });
+            
+            // Verificar estado inicial
+            const activeButton = document.querySelector('.tab-button.active');
+            const activePanel = document.querySelector('.tab-panel.active');
+            console.log('Botón activo inicial:', activeButton ? activeButton.getAttribute('data-tab') : 'ninguno');
+            console.log('Panel activo inicial:', activePanel ? activePanel.id : 'ninguno');
+        }
+
         // Inicialización cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Inicializando página sin tabs...');
+            console.log('Inicializando página con tabs...');
             
             // Cargar componentes
             loadSidebar('ninguno');
@@ -642,6 +821,9 @@
             loadTabBar('tab-bar-container');
             loadProfileMenu('profile-menu-container');
             loadFloatingMenu('floating-menu-container');
+            
+            // Inicializar tabs
+            initializeTabs();
             
             // Cargar contenido de la tabla
             loadTableResults();
@@ -652,7 +834,7 @@
                 toggleCategoryRow(firstCategoryRow);
             }
             
-            console.log('Página inicializada correctamente sin tabs');
+            console.log('Página inicializada correctamente con tabs');
         });
     </script>
 </body>
