@@ -2922,8 +2922,12 @@
 
         // Funciones para los tabs
         function initializeTabs() {
+            console.log('Inicializando tabs...');
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabPanels = document.querySelectorAll('.tab-panel');
+            
+            console.log('Botones de tab encontrados:', tabButtons.length);
+            console.log('Paneles de tab encontrados:', tabPanels.length);
 
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
@@ -2944,7 +2948,9 @@
                         targetPanel.classList.add('active');
                         
                         // Cargar contenido específico según el tab
+                        console.log('Tab activado:', targetTab);
                         if (targetTab === 'dimension') {
+                            console.log('Cargando dimensiones desde initializeTabs...');
                             loadDimensionResults();
                         }
                     }
@@ -3502,6 +3508,8 @@
                     </td>
                 </tr>
             `).join('');
+            
+            console.log('Dimensiones cargadas exitosamente. Filas creadas:', dimensionsData.length);
         }
 
         // Función para obtener el texto del nivel de riesgo
