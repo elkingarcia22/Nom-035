@@ -1209,6 +1209,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             transition: opacity 0.3s ease, visibility 0.3s ease;
+            background: inherit !important;
         }
 
         .category-dimension-info {
@@ -1223,6 +1224,23 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             transition: opacity 0.3s ease, visibility 0.3s ease;
+            background: inherit !important;
+        }
+
+        /* Asegurar que las celdas de dominio y dimensión mantengan el fondo consistente */
+        .category-summary.open .category-domain-info,
+        .category-summary.open .category-dimension-info {
+            background: #dbeafe !important;
+        }
+
+        .category-summary:hover .category-domain-info,
+        .category-summary:hover .category-dimension-info {
+            background: #e5e7eb !important;
+        }
+
+        /* Eliminar borde inferior de las filas de categoría cuando están expandidas */
+        .category-summary.open td {
+            border-bottom: none !important;
         }
 
         .category-cell {
