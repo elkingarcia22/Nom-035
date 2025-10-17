@@ -1080,6 +1080,12 @@
             background-color: #fafbfc;
         }
 
+        /* Asegurar que las celdas de dominio y dimensión no se vean afectadas por otros estilos */
+        .results-table .category-summary td.category-domain-info,
+        .results-table .category-summary td.category-dimension-info {
+            background: inherit !important;
+        }
+
         .category-cell {
             font-weight: 600;
             background-color: white;
@@ -1238,9 +1244,38 @@
             background: #e5e7eb !important;
         }
 
+        /* Estilos más específicos para asegurar que se apliquen */
+        .category-summary.open td.category-domain-info,
+        .category-summary.open td.category-dimension-info {
+            background: #dbeafe !important;
+        }
+
+        .category-summary:hover td.category-domain-info,
+        .category-summary:hover td.category-dimension-info {
+            background: #e5e7eb !important;
+        }
+
+        /* Forzar el fondo en todos los estados */
+        .category-summary td.category-domain-info,
+        .category-summary td.category-dimension-info {
+            background: inherit !important;
+        }
+
         /* Eliminar borde inferior de las filas de categoría cuando están expandidas */
         .category-summary.open td {
             border-bottom: none !important;
+        }
+
+        /* Forzar fondo azul específicamente para celdas de dominio y dimensión en filas expandidas */
+        tr.category-summary.open td:nth-child(2),
+        tr.category-summary.open td:nth-child(3) {
+            background: #dbeafe !important;
+        }
+
+        /* Forzar fondo gris para hover */
+        tr.category-summary:hover td:nth-child(2),
+        tr.category-summary:hover td:nth-child(3) {
+            background: #e5e7eb !important;
         }
 
         .category-cell {
