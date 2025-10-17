@@ -2299,7 +2299,15 @@
 
         // Renderizar lista de participantes
         function renderParticipantsList(participants = participantsData) {
+            console.log('🔍 Renderizando lista de participantes:', participants.length);
             const participantsList = document.getElementById('participants-list');
+            console.log('🔍 Elemento participants-list encontrado:', participantsList);
+            
+            if (!participantsList) {
+                console.error('🔍 ERROR: No se encontró el elemento participants-list');
+                return;
+            }
+            
             participantsList.innerHTML = '';
 
             participants.forEach(participant => {
@@ -2449,10 +2457,48 @@
 
         // Inicializar panel emocional cuando se carga la página
         document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
+            console.log('🔍 DOM cargado, iniciando configuración...');
+            
+            // Función para verificar que todos los elementos estén disponibles
+            function checkElementsReady() {
+                const searchInput = document.getElementById('participant-search');
+                const participantsList = document.getElementById('participants-list');
+                const filtersBtn = document.getElementById('filters-btn');
+                
+                console.log('🔍 Verificando elementos:');
+                console.log('  - participant-search:', !!searchInput);
+                console.log('  - participants-list:', !!participantsList);
+                console.log('  - filters-btn:', !!filtersBtn);
+                
+                return searchInput && participantsList && filtersBtn;
+            }
+            
+            // Intentar inicializar inmediatamente
+            if (checkElementsReady()) {
+                console.log('🔍 Todos los elementos están listos, inicializando...');
                 initializeEmotionalPanel();
                 setupFilters();
-            }, 500);
+            } else {
+                console.log('🔍 Elementos no listos, esperando...');
+                // Si no están listos, intentar cada 100ms hasta 10 segundos
+                let attempts = 0;
+                const maxAttempts = 100;
+                const interval = setInterval(() => {
+                    attempts++;
+                    console.log(`🔍 Intento ${attempts} de verificar elementos...`);
+                    
+                    if (checkElementsReady() || attempts >= maxAttempts) {
+                        clearInterval(interval);
+                        if (attempts >= maxAttempts) {
+                            console.error('🔍 ERROR: No se pudieron encontrar todos los elementos después de 10 segundos');
+                        } else {
+                            console.log('🔍 Elementos listos, inicializando...');
+                            initializeEmotionalPanel();
+                            setupFilters();
+                        }
+                    }
+                }, 100);
+            }
         });
 
         // Función para actualizar el texto del select
@@ -2787,17 +2833,46 @@
         // Actualizar función de búsqueda para incluir filtros
         function setupSearch() {
             console.log('🔍 Configurando buscador...');
-            const searchInput = document.getElementById('participant-search');
-            console.log('🔍 Elemento de búsqueda encontrado:', searchInput);
             
-            if (searchInput) {
-                searchInput.addEventListener('input', (e) => {
-                    console.log('🔍 Búsqueda activada:', e.target.value);
-                    applyFilters();
-                });
-                console.log('🔍 Event listener agregado correctamente');
-            } else {
-                console.error('🔍 ERROR: No se encontró el elemento participant-search');
+            // Función para configurar el buscador cuando esté disponible
+            function configureSearch() {
+                const searchInput = document.getElementById('participant-search');
+                console.log('🔍 Elemento de búsqueda encontrado:', searchInput);
+                
+                if (searchInput) {
+                    // Remover event listeners existentes para evitar duplicados
+                    searchInput.removeEventListener('input', handleSearch);
+                    searchInput.addEventListener('input', handleSearch);
+                    console.log('🔍 Event listener agregado correctamente');
+                    return true;
+                } else {
+                    console.error('🔍 ERROR: No se encontró el elemento participant-search');
+                    return false;
+                }
+            }
+            
+            // Función para manejar la búsqueda
+            function handleSearch(e) {
+                console.log('🔍 Búsqueda activada:', e.target.value);
+                applyFilters();
+            }
+            
+            // Intentar configurar inmediatamente
+            if (!configureSearch()) {
+                // Si no se encuentra, intentar cada 100ms hasta 5 segundos
+                let attempts = 0;
+                const maxAttempts = 50;
+                const interval = setInterval(() => {
+                    attempts++;
+                    console.log(`🔍 Intento ${attempts} de encontrar el buscador...`);
+                    
+                    if (configureSearch() || attempts >= maxAttempts) {
+                        clearInterval(interval);
+                        if (attempts >= maxAttempts) {
+                            console.error('🔍 ERROR: No se pudo encontrar el buscador después de 5 segundos');
+                        }
+                    }
+                }, 100);
             }
         }
     </script>
