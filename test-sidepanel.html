@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Side Panel - Diagnóstico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .test-header {
+            background: #3b82f6;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .test-content {
+            padding: 20px;
+        }
+
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        .test-section h3 {
+            color: #374151;
+            margin-bottom: 15px;
+        }
+
+        /* CSS EXACTO DE EMOCIONAL */
+        .custom-select {
+            position: relative;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .select-trigger {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: #fff;
+            color: #374151;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .select-trigger:hover {
+            border-color: #9ca3af;
+        }
+
+        .select-trigger.active {
+            border-color: #3b82f6;
+        }
+
+        .select-arrow {
+            color: #6b7280;
+            transition: transform 0.2s ease;
+        }
+
+        .select-trigger.active .select-arrow {
+            transform: rotate(180deg);
+        }
+
+        .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .select-dropdown.show {
+            display: block;
+        }
+
+        .select-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            color: #374151;
+            font-size: 14px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .select-option:last-child {
+            border-bottom: none;
+        }
+
+        .select-option:hover {
+            background: #f3f4f6;
+        }
+
+        .select-option.selected {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        /* CSS ESPECÍFICO PARA INDIVIDUAL FILTERS */
+        #individual-filters-side-panel .custom-select {
+            position: relative !important;
+            width: 100% !important;
+            margin-bottom: 16px !important;
+        }
+
+        #individual-filters-side-panel .select-trigger {
+            width: 100% !important;
+            padding: 8px 12px !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 6px !important;
+            background: #fff !important;
+            color: #374151 !important;
+            font-size: 14px !important;
+            cursor: pointer !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+        }
+
+        #individual-filters-side-panel .select-trigger:hover {
+            border-color: #9ca3af !important;
+        }
+
+        #individual-filters-side-panel .select-trigger.active {
+            border-color: #3b82f6 !important;
+        }
+
+        #individual-filters-side-panel .select-arrow {
+            color: #6b7280 !important;
+            transition: transform 0.2s ease !important;
+        }
+
+        #individual-filters-side-panel .select-trigger.active .select-arrow {
+            transform: rotate(180deg) !important;
+        }
+
+        #individual-filters-side-panel .select-dropdown {
+            position: absolute !important;
+            top: 100% !important;
+            left: 0 !important;
+            right: 0 !important;
+            background: #fff !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 6px !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+            z-index: 1000 !important;
+            max-height: 200px !important;
+            overflow-y: auto !important;
+            display: none !important;
+        }
+
+        #individual-filters-side-panel .select-dropdown.show {
+            display: block !important;
+        }
+
+        #individual-filters-side-panel .select-option {
+            padding: 8px 12px !important;
+            cursor: pointer !important;
+            color: #374151 !important;
+            font-size: 14px !important;
+            border-bottom: 1px solid #f3f4f6 !important;
+        }
+
+        #individual-filters-side-panel .select-option:last-child {
+            border-bottom: none !important;
+        }
+
+        #individual-filters-side-panel .select-option:hover {
+            background: #f3f4f6 !important;
+        }
+
+        #individual-filters-side-panel .select-option.selected {
+            background: #dbeafe !important;
+            color: #1d4ed8 !important;
+        }
+
+        /* SIDE PANEL STYLES */
+        .filters-side-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .filters-side-panel.show {
+            right: 0;
+        }
+
+        .filters-header {
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filters-content {
+            padding: 20px;
+        }
+
+        .filters-actions {
+            padding: 20px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .test-button {
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+
+        .test-button:hover {
+            background: #059669;
+        }
+
+        .log-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 2px 0;
+        }
+
+        .log-info {
+            color: #3b82f6;
+        }
+
+        .log-success {
+            color: #10b981;
+        }
+
+        .log-error {
+            color: #ef4444;
+        }
+
+        .log-warning {
+            color: #f59e0b;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>🔧 Test Side Panel - Diagnóstico</h1>
+            <p>Página de prueba para aislar el problema del side panel con custom selects</p>
+        </div>
+
+        <div class="test-content">
+            <div class="test-section">
+                <h3>🎯 Test 1: Custom Select Básico (Sin Side Panel)</h3>
+                <p>Este es un custom select básico para verificar que el CSS funciona:</p>
+                
+                <div class="custom-select" id="test-basic-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Selecciona una opción</span>
+                        <span class="select-arrow">▼</span>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="opcion1">Opción 1</div>
+                        <div class="select-option" data-value="opcion2">Opción 2</div>
+                        <div class="select-option" data-value="opcion3">Opción 3</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>🎯 Test 2: Custom Select Dentro de Side Panel</h3>
+                <p>Este es el mismo custom select pero dentro del side panel para verificar si hay conflictos:</p>
+                
+                <button class="test-button" onclick="openTestSidePanel()">Abrir Side Panel de Prueba</button>
+                
+                <div class="filters-side-panel" id="test-side-panel">
+                    <div class="filters-header">
+                        <h3>Filtros de Prueba</h3>
+                        <button class="btn-close" onclick="closeTestSidePanel()">×</button>
+                    </div>
+                    
+                    <div class="filters-content">
+                        <div class="custom-select" id="test-panel-select">
+                            <div class="select-trigger">
+                                <span class="select-text">Selecciona una opción</span>
+                                <span class="select-arrow">▼</span>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-option" data-value="opcion1">Opción 1</div>
+                                <div class="select-option" data-value="opcion2">Opción 2</div>
+                                <div class="select-option" data-value="opcion3">Opción 3</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filters-actions">
+                        <button class="btn btn-primary">Aplicar</button>
+                        <button class="btn btn-secondary">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>🎯 Test 3: Custom Select con ID Específico (Como Individual)</h3>
+                <p>Este test usa el ID específico como en el individual filters:</p>
+                
+                <button class="test-button" onclick="openIndividualTestPanel()">Abrir Panel Individual de Prueba</button>
+                
+                <div class="filters-side-panel" id="individual-filters-side-panel">
+                    <div class="filters-header">
+                        <h3>Filtros Individuales de Prueba</h3>
+                        <button class="btn-close" onclick="closeIndividualTestPanel()">×</button>
+                    </div>
+                    
+                    <div class="filters-content">
+                        <div class="custom-select" id="individual-gender-select">
+                            <div class="select-trigger">
+                                <span class="select-text">Género</span>
+                                <span class="select-arrow">▼</span>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-option" data-value="todos">Todos</div>
+                                <div class="select-option" data-value="masculino">Masculino</div>
+                                <div class="select-option" data-value="femenino">Femenino</div>
+                            </div>
+                        </div>
+                        
+                        <div class="custom-select" id="individual-status-select">
+                            <div class="select-trigger">
+                                <span class="select-text">Estado Civil</span>
+                                <span class="select-arrow">▼</span>
+                            </div>
+                            <div class="select-dropdown">
+                                <div class="select-option" data-value="todos">Todos</div>
+                                <div class="select-option" data-value="soltero">Soltero</div>
+                                <div class="select-option" data-value="casado">Casado</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filters-actions">
+                        <button class="btn btn-primary">Aplicar</button>
+                        <button class="btn btn-secondary">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>📊 Logs de Diagnóstico</h3>
+                <div class="log-container" id="log-container">
+                    <div class="log-entry log-info">🚀 Test Side Panel iniciado</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para agregar logs
+        function addLog(message, type = 'info') {
+            const logContainer = document.getElementById('log-container');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry log-${type}`;
+            logEntry.textContent = message;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        // Función para abrir side panel de prueba
+        function openTestSidePanel() {
+            addLog('🔧 Abriendo side panel de prueba', 'info');
+            const panel = document.getElementById('test-side-panel');
+            panel.classList.add('show');
+            addLog('✅ Side panel abierto', 'success');
+        }
+
+        // Función para cerrar side panel de prueba
+        function closeTestSidePanel() {
+            addLog('🔧 Cerrando side panel de prueba', 'info');
+            const panel = document.getElementById('test-side-panel');
+            panel.classList.remove('show');
+            addLog('✅ Side panel cerrado', 'success');
+        }
+
+        // Función para abrir panel individual de prueba
+        function openIndividualTestPanel() {
+            addLog('🔧 Abriendo panel individual de prueba', 'info');
+            const panel = document.getElementById('individual-filters-side-panel');
+            panel.classList.add('show');
+            addLog('✅ Panel individual abierto', 'success');
+        }
+
+        // Función para cerrar panel individual de prueba
+        function closeIndividualTestPanel() {
+            addLog('🔧 Cerrando panel individual de prueba', 'info');
+            const panel = document.getElementById('individual-filters-side-panel');
+            panel.classList.remove('show');
+            addLog('✅ Panel individual cerrado', 'success');
+        }
+
+        // Función para configurar custom selects
+        function setupCustomSelects() {
+            addLog('🔧 Configurando custom selects...', 'info');
+            
+            // Configurar select básico
+            const basicSelect = document.getElementById('test-basic-select');
+            if (basicSelect) {
+                setupSelect(basicSelect, 'test-basic');
+                addLog('✅ Select básico configurado', 'success');
+            }
+
+            // Configurar select del side panel
+            const panelSelect = document.getElementById('test-panel-select');
+            if (panelSelect) {
+                setupSelect(panelSelect, 'test-panel');
+                addLog('✅ Select del side panel configurado', 'success');
+            }
+
+            // Configurar selects individuales
+            const genderSelect = document.getElementById('individual-gender-select');
+            const statusSelect = document.getElementById('individual-status-select');
+            
+            if (genderSelect) {
+                setupSelect(genderSelect, 'individual-gender');
+                addLog('✅ Select de género configurado', 'success');
+            }
+            
+            if (statusSelect) {
+                setupSelect(statusSelect, 'individual-status');
+                addLog('✅ Select de estado civil configurado', 'success');
+            }
+        }
+
+        // Función para configurar un select individual
+        function setupSelect(selectElement, selectId) {
+            const trigger = selectElement.querySelector('.select-trigger');
+            const dropdown = selectElement.querySelector('.select-dropdown');
+            const options = selectElement.querySelectorAll('.select-option');
+            const textElement = selectElement.querySelector('.select-text');
+
+            if (!trigger || !dropdown || !textElement) {
+                addLog(`❌ Elementos no encontrados para ${selectId}`, 'error');
+                return;
+            }
+
+            addLog(`🔧 Configurando select: ${selectId}`, 'info');
+
+            // Click en trigger
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                addLog(`🔧 Click en trigger del select ${selectId}`, 'info');
+                
+                const isActive = trigger.classList.contains('active');
+                const dropdownShow = dropdown.classList.contains('show');
+                
+                addLog(`🔧 Select ${selectId} toggle: {wasActive: ${isActive}, dropdownShow: ${dropdownShow}}`, 'info');
+                
+                // Cerrar otros dropdowns
+                document.querySelectorAll('.select-dropdown.show').forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('show');
+                        otherDropdown.closest('.custom-select').querySelector('.select-trigger').classList.remove('active');
+                    }
+                });
+
+                // Toggle este dropdown
+                trigger.classList.toggle('active');
+                dropdown.classList.toggle('show');
+                
+                const newState = dropdown.classList.contains('show');
+                addLog(`🔧 Select ${selectId} nuevo estado: {active: ${trigger.classList.contains('active')}, dropdownShow: ${newState}}`, 'info');
+            });
+
+            // Click en opciones
+            options.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const value = option.dataset.value;
+                    const text = option.textContent;
+                    
+                    addLog(`🔧 Opción seleccionada en ${selectId}: ${text} (${value})`, 'info');
+                    
+                    // Actualizar texto
+                    textElement.textContent = text;
+                    
+                    // Marcar como seleccionada
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    
+                    // Cerrar dropdown
+                    trigger.classList.remove('active');
+                    dropdown.classList.remove('show');
+                    
+                    addLog(`✅ Select ${selectId} actualizado: ${text}`, 'success');
+                });
+            });
+        }
+
+        // Cerrar dropdowns al hacer click fuera
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.custom-select')) {
+                document.querySelectorAll('.select-dropdown.show').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                    dropdown.closest('.custom-select').querySelector('.select-trigger').classList.remove('active');
+                });
+            }
+        });
+
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            addLog('🚀 DOM cargado, iniciando configuración...', 'info');
+            setupCustomSelects();
+            addLog('✅ Configuración completada', 'success');
+        });
+    </script>
+</body>
+</html>
