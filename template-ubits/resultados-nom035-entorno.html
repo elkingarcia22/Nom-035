@@ -4582,9 +4582,18 @@
             if (filtersBtn && filtersPanel) {
                 filtersBtn.addEventListener('click', function() {
                     console.log('🔍 Click en botón de filtros (nuevos tabs)');
+                    console.log('📋 filtersPanel:', filtersPanel);
+                    console.log('📋 filtersBackdrop:', filtersBackdrop);
+                    
                     filtersPanel.classList.toggle('show');
+                    console.log('📋 Panel show class toggled');
+                    
                     if (filtersBackdrop) {
                         filtersBackdrop.classList.toggle('show');
+                        console.log('📋 Backdrop show class toggled');
+                        console.log('📋 Backdrop classes:', filtersBackdrop.className);
+                    } else {
+                        console.log('❌ filtersBackdrop not found!');
                     }
                 });
             }
