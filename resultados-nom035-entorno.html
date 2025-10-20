@@ -5740,6 +5740,13 @@
             
             console.log('✅ Side panel y backdrop cerrados después de aplicar filtros');
             
+            // Cerrar todos los dropdowns nuevos que puedan estar abiertos
+            const newCustomSelects = document.querySelectorAll('#new-table-filters-side-panel .custom-select');
+            newCustomSelects.forEach(select => {
+                closeNewDropdown(select.id);
+            });
+            console.log('✅ Todos los dropdowns nuevos cerrados después de aplicar filtros');
+            
             // Actualizar badge de filtros
             updateFilterBadge();
         }
