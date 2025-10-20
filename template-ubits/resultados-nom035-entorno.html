@@ -6281,7 +6281,9 @@
             
             // Cerrar todos los dropdowns de dimensiones que puedan estar abiertos
             const dimensionsCustomSelects = document.querySelectorAll('#dimensions-table-filters-side-panel .custom-select');
-            dimensionsCustomSelects.forEach(select => {
+            console.log('🔧 CERRANDO DROPDOWNS DIMENSIONES:', dimensionsCustomSelects.length);
+            dimensionsCustomSelects.forEach((select, index) => {
+                console.log(`🔧 Cerrando dropdown dimensiones ${index + 1}:`, select.id);
                 closeNewDropdown(select.id);
             });
             console.log('✅ Todos los dropdowns de dimensiones cerrados después de aplicar filtros');
