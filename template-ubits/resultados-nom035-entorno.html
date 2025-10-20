@@ -6892,6 +6892,28 @@
             return riskTexts[riskLevel] || 'BAJO';
         }
 
+        function getIndividualSectionRiskLevel(score) {
+            if (score >= 90) return 'nulo';
+            if (score >= 70) return 'bajo';
+            if (score >= 50) return 'medio';
+            if (score >= 30) return 'alto';
+            return 'muy-alto';
+        }
+
+        function toggleIndividualSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (!section) return;
+            
+            const isExpanded = section.classList.contains('expanded');
+            if (isExpanded) {
+                section.classList.remove('expanded');
+                section.style.maxHeight = '60px';
+            } else {
+                section.classList.add('expanded');
+                section.style.maxHeight = 'none';
+            }
+        }
+
         // Inicializar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 ===== INICIANDO CARGA DE PÁGINA =====');
