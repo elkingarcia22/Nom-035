@@ -365,6 +365,10 @@
             const panel = document.getElementById('individual-filters-side-panel');
             panel.classList.add('show');
             addLog('✅ Side panel real abierto', 'success');
+            
+            // Configurar custom selects DESPUÉS de abrir el panel
+            addLog('🔧 Configurando custom selects después de abrir panel...', 'info');
+            setupIndividualCustomSelects();
         }
 
         // Función para cerrar side panel real
@@ -457,7 +461,6 @@
         // Inicializar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             addLog('🚀 DOM cargado, iniciando configuración...', 'info');
-            setupIndividualCustomSelects();
             setupCloseButton();
             addLog('✅ Configuración completada', 'success');
         });
