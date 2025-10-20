@@ -6057,6 +6057,68 @@
                         { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
                         { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
                     ]
+                },
+                dimensionsResults: {
+                    "Condiciones en el ambiente de trabajo": {
+                        score: 25,
+                        percentage: 25,
+                        riskLevel: "Bajo",
+                        domain: "Ambiente de trabajo"
+                    },
+                    "Carga de trabajo": {
+                        score: 35,
+                        percentage: 35,
+                        riskLevel: "Bajo",
+                        domain: "Organización del tiempo"
+                    },
+                    "Falta de control sobre el trabajo": {
+                        score: 20,
+                        percentage: 20,
+                        riskLevel: "Bajo",
+                        domain: "Autonomía"
+                    },
+                    "Jornadas de trabajo excesivas": {
+                        score: 30,
+                        percentage: 30,
+                        riskLevel: "Bajo",
+                        domain: "Organización del tiempo"
+                    },
+                    "Trabajo que exige alto nivel de atención": {
+                        score: 40,
+                        percentage: 40,
+                        riskLevel: "Bajo",
+                        domain: "Carga mental"
+                    },
+                    "Actividades laborales que implican riesgo": {
+                        score: 15,
+                        percentage: 15,
+                        riskLevel: "Bajo",
+                        domain: "Ambiente de trabajo"
+                    },
+                    "Falta de capacitación e información sobre el trabajo": {
+                        score: 20,
+                        percentage: 20,
+                        riskLevel: "Bajo",
+                        domain: "Desarrollo"
+                    },
+                    "Supervisión inadecuada": {
+                        score: 25,
+                        percentage: 25,
+                        riskLevel: "Bajo",
+                        domain: "Liderazgo"
+                    },
+                    "Violencia laboral": {
+                        score: 10,
+                        percentage: 10,
+                        riskLevel: "Bajo",
+                        domain: "Ambiente de trabajo"
+                    },
+                    "Acoso laboral": {
+                        score: 5,
+                        percentage: 5,
+                        riskLevel: "Bajo",
+                        domain: "Ambiente de trabajo"
+                    }
                 }
             },
             {
@@ -6107,6 +6169,68 @@
                         { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "No" },
                         { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "No" }
                     ]
+                },
+                dimensionsResults: {
+                    "Condiciones en el ambiente de trabajo": {
+                        score: 15,
+                        percentage: 15,
+                        riskLevel: "Bajo",
+                        domain: "Ambiente de trabajo"
+                    },
+                    "Carga de trabajo": {
+                        score: 25,
+                        percentage: 25,
+                        riskLevel: "Bajo",
+                        domain: "Organización del tiempo"
+                    },
+                    "Falta de control sobre el trabajo": {
+                        score: 30,
+                        percentage: 30,
+                        riskLevel: "Bajo",
+                        domain: "Autonomía"
+                    },
+                    "Jornadas de trabajo excesivas": {
+                        score: 20,
+                        percentage: 20,
+                        riskLevel: "Bajo",
+                        domain: "Organización del tiempo"
+                    },
+                    "Trabajo que exige alto nivel de atención": {
+                        score: 35,
+                        percentage: 35,
+                        riskLevel: "Bajo",
+                        domain: "Carga mental"
+                    },
+                    "Actividades laborales que implican riesgo": {
+                        score: 10,
+                        percentage: 10,
+                        riskLevel: "Bajo",
+                        domain: "Ambiente de trabajo"
+                    },
+                    "Falta de capacitación e información sobre el trabajo": {
+                        score: 25,
+                        percentage: 25,
+                        riskLevel: "Bajo",
+                        domain: "Desarrollo"
+                    },
+                    "Supervisión inadecuada": {
+                        score: 20,
+                        percentage: 20,
+                        riskLevel: "Bajo",
+                        domain: "Liderazgo"
+                    },
+                    "Violencia laboral": {
+                        score: 5,
+                        percentage: 5,
+                        riskLevel: "Bajo",
+                        domain: "Ambiente de trabajo"
+                    },
+                    "Acoso laboral": {
+                        score: 5,
+                        percentage: 5,
+                        riskLevel: "Bajo",
+                        domain: "Ambiente de trabajo"
+                    }
                 }
             },
             {
@@ -6800,59 +6924,6 @@
                 
                 <div class="participant-details">
                     <div class="detail-section">
-                        <h4>Información Personal</h4>
-                        <div class="detail-grid">
-                            <div class="detail-item">
-                                <span class="detail-label">Edad:</span>
-                                <span class="detail-value">${participant.details.age} años</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Género:</span>
-                                <span class="detail-value">${participant.details.gender}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Estado Civil:</span>
-                                <span class="detail-value">${participant.details.maritalStatus}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">País:</span>
-                                <span class="detail-value">${participant.details.country}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Ciudad:</span>
-                                <span class="detail-value">${participant.details.city}</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="detail-section">
-                        <h4>Información Laboral</h4>
-                        <div class="detail-grid">
-                            <div class="detail-item">
-                                <span class="detail-label">Área:</span>
-                                <span class="detail-value">${participant.details.department}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Cargo:</span>
-                                <span class="detail-value">${participant.details.position}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Experiencia:</span>
-                                <span class="detail-value">${participant.details.experience}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Líder:</span>
-                                <span class="detail-value">${participant.details.leader}</span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Email:</span>
-                                <span class="detail-value">${participant.details.email}</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="detail-section">
-                        <h4>Evaluación por Dimensiones NOM-035</h4>
                         <div class="dimensions-table-container">
                             <table class="dimensions-table">
                                 <thead>
