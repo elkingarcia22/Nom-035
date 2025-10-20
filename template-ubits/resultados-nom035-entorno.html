@@ -4022,6 +4022,7 @@
 
         // Funciones para búsqueda y filtros de la tabla
         function initializeTableFilters() {
+            console.log('🔧 ===== INICIANDO FILTROS DE TABLA =====');
             const searchBtn = document.getElementById('table-search-btn');
             const searchContainer = document.getElementById('table-search-container');
             const searchInput = document.getElementById('table-search');
@@ -4032,43 +4033,82 @@
             const closeFiltersBtn = document.getElementById('close-table-filters-btn');
             const applyFiltersBtn = document.getElementById('apply-table-filters-btn');
             const clearFiltersBtn = document.getElementById('clear-table-filters-btn');
+            
+            console.log('🔧 Elementos encontrados:', {
+                searchBtn: !!searchBtn,
+                searchContainer: !!searchContainer,
+                searchInput: !!searchInput,
+                closeSearch: !!closeSearch,
+                filtersBtn: !!filtersBtn,
+                filtersSidePanel: !!filtersSidePanel,
+                filtersOverlay: !!filtersOverlay,
+                closeFiltersBtn: !!closeFiltersBtn,
+                applyFiltersBtn: !!applyFiltersBtn,
+                clearFiltersBtn: !!clearFiltersBtn
+            });
 
             // Funcionalidad de búsqueda desplegable
-            searchBtn.addEventListener('click', () => {
-                searchContainer.style.display = 'block';
-                searchInput.focus();
-            });
+            if (searchBtn && searchContainer && searchInput) {
+                searchBtn.addEventListener('click', () => {
+                    searchContainer.style.display = 'block';
+                    searchInput.focus();
+                });
+            }
 
-            closeSearch.addEventListener('click', () => {
-                searchContainer.style.display = 'none';
-                searchInput.value = '';
-                applyTableFilters();
-            });
+            if (closeSearch && searchContainer && searchInput) {
+                closeSearch.addEventListener('click', () => {
+                    searchContainer.style.display = 'none';
+                    searchInput.value = '';
+                    if (typeof applyTableFilters === 'function') {
+                        applyTableFilters();
+                    }
+                });
+            }
 
             // Abrir panel de filtros
-            filtersBtn.addEventListener('click', () => {
-                filtersSidePanel.classList.add('show');
-                filtersOverlay.classList.add('show');
-            });
+            if (filtersBtn && filtersSidePanel && filtersOverlay) {
+                filtersBtn.addEventListener('click', () => {
+                    filtersSidePanel.classList.add('show');
+                    filtersOverlay.classList.add('show');
+                });
+            }
 
             // Cerrar panel de filtros
-            closeFiltersBtn.addEventListener('click', closeTableFiltersPanel);
-            filtersOverlay.addEventListener('click', closeTableFiltersPanel);
+            if (closeFiltersBtn) {
+                closeFiltersBtn.addEventListener('click', closeTableFiltersPanel);
+            }
+            if (filtersOverlay) {
+                filtersOverlay.addEventListener('click', closeTableFiltersPanel);
+            }
 
             // Aplicar filtros
-            applyFiltersBtn.addEventListener('click', () => {
-                applyTableFilters();
-                closeTableFiltersPanel();
-            });
+            if (applyFiltersBtn) {
+                applyFiltersBtn.addEventListener('click', () => {
+                    if (typeof applyTableFilters === 'function') {
+                        applyTableFilters();
+                    }
+                    if (typeof closeTableFiltersPanel === 'function') {
+                        closeTableFiltersPanel();
+                    }
+                });
+            }
 
             // Limpiar filtros
-            clearFiltersBtn.addEventListener('click', clearTableFilters);
+            if (clearFiltersBtn) {
+                clearFiltersBtn.addEventListener('click', clearTableFilters);
+            }
 
             // Búsqueda en tiempo real
-            searchInput.addEventListener('input', applyTableFilters);
+            if (searchInput) {
+                searchInput.addEventListener('input', applyTableFilters);
+            }
 
             // Configurar selects personalizados
-            setupTableCustomSelects();
+            if (typeof setupTableCustomSelects === 'function') {
+                setupTableCustomSelects();
+            }
+            
+            console.log('✅ ===== FILTROS DE TABLA INICIALIZADOS =====');
         }
 
         // Funciones para búsqueda y filtros de la tabla de dimensiones
