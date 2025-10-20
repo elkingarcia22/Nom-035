@@ -2734,8 +2734,8 @@
                                 
                                 <!-- Sección Dimensiones -->
                                 <div class="segment-content" id="dimensions-content">
-                                    <div class="table-header">
-                                        <h3>Análisis por Dimensiones NOM-035</h3>
+                                <div class="table-header">
+                                    <h3>Análisis por Dimensiones NOM-035</h3>
                                     <div class="table-controls">
                                         <!-- Campo de búsqueda desplegable -->
                                         <div id="dimensions-table-search-container" style="display: none; position: relative;">
@@ -5889,9 +5889,9 @@
         function clearDimensionsFilters() {
             console.log('🧹 ===== LIMPIANDO FILTROS EN TABLA DIMENSIONES =====');
             
-            // Limpiar todos los checkboxes
+                    // Limpiar todos los checkboxes
             const checkboxes = document.querySelectorAll('#dimensions-table-filters-side-panel input[type="checkbox"]');
-            checkboxes.forEach(cb => cb.checked = false);
+                    checkboxes.forEach(cb => cb.checked = false);
             
             // Seleccionar "Todos" en cada filtro
             const todosCheckboxes = document.querySelectorAll('#dimensions-table-filters-side-panel input[type="checkbox"][id$="-todos"]');
@@ -6151,7 +6151,7 @@
                 closeSearchBtn.addEventListener('click', function() {
                     console.log('❌ Cerrando búsqueda (dimensiones)');
                     searchContainer.style.display = 'none';
-                    searchInput.value = '';
+                        searchInput.value = '';
                 });
             }
             
@@ -6807,11 +6807,16 @@
                 console.log('Setting up select:', select.id, 'Trigger:', selectTrigger, 'Dropdown:', selectDropdown);
                 
                 if (selectTrigger && selectDropdown) {
-                    selectTrigger.addEventListener('click', function(e) {
+                    // Remover listeners existentes
+                    const newTrigger = selectTrigger.cloneNode(true);
+                    selectTrigger.parentNode.replaceChild(newTrigger, selectTrigger);
+                    
+                    newTrigger.addEventListener('click', function(e) {
                         e.stopPropagation();
                         console.log('Individual select clicked:', select.id);
+                        
                         // Cerrar otros dropdowns primero
-                        customSelects.forEach(otherSelect => {
+                        document.querySelectorAll('.custom-select').forEach(otherSelect => {
                             if (otherSelect !== select) {
                                 const otherDropdown = otherSelect.querySelector('.select-dropdown');
                                 const otherTrigger = otherSelect.querySelector('.select-trigger');
@@ -6823,12 +6828,13 @@
                                 }
                             }
                         });
+                        
                         // Toggle el dropdown actual
                         selectDropdown.classList.toggle('show');
-                        selectTrigger.classList.toggle('active');
+                        newTrigger.classList.toggle('active');
                         console.log('Dropdown classes after toggle:', selectDropdown.classList.toString());
                     });
-                    
+
                     selectOptions.forEach(option => {
                         option.addEventListener('click', function(e) {
                             e.stopPropagation();
@@ -6841,14 +6847,18 @@
                     });
                 }
             });
-            
+
             // Cerrar dropdowns al hacer clic fuera
             document.addEventListener('click', function(e) {
-                if (!e.target.closest('#individual-filters-side-panel .custom-select')) {
-                    customSelects.forEach(select => {
+                if (!e.target.closest('.custom-select')) {
+                    document.querySelectorAll('.custom-select').forEach(select => {
                         const selectDropdown = select.querySelector('.select-dropdown');
+                        const selectTrigger = select.querySelector('.select-trigger');
                         if (selectDropdown) {
                             selectDropdown.classList.remove('show');
+                        }
+                        if (selectTrigger) {
+                            selectTrigger.classList.remove('active');
                         }
                     });
                 }
