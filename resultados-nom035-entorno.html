@@ -2090,6 +2090,97 @@
             align-items: center;
             justify-content: center;
         }
+
+        /* Estilos para tabla de dimensiones individuales */
+        .dimensions-table-container {
+            margin-top: 16px;
+            overflow-x: auto;
+        }
+
+        .dimensions-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .dimensions-table thead {
+            background: #f8fafc;
+        }
+
+        .dimensions-table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            color: #374151;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .dimensions-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 14px;
+        }
+
+        .dimensions-table tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .dimension-name {
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .dimension-domain {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .dimension-score {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .dimension-percentage {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .dimension-risk {
+            text-align: center;
+        }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .risk-bajo {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .risk-medio {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .risk-alto {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .risk-muy-alto {
+            background: #fecaca;
+            color: #991b1b;
+        }
     </style>
 </head>
 <body>
@@ -5609,6 +5700,68 @@
                         { question: "¿Sientes que estás siempre en alerta o en tensión?", answer: "Sí" },
                         { question: "¿Te sobresaltas fácilmente ante ruidos o movimientos repentinos?", answer: "Sí" }
                     ]
+                },
+                dimensionsResults: {
+                    "Condiciones en el ambiente de trabajo": {
+                        score: 85,
+                        percentage: 85,
+                        riskLevel: "Alto",
+                        domain: "Ambiente de trabajo"
+                    },
+                    "Carga de trabajo": {
+                        score: 78,
+                        percentage: 78,
+                        riskLevel: "Alto",
+                        domain: "Organización del tiempo"
+                    },
+                    "Falta de control sobre el trabajo": {
+                        score: 65,
+                        percentage: 65,
+                        riskLevel: "Medio",
+                        domain: "Autonomía"
+                    },
+                    "Jornadas de trabajo excesivas": {
+                        score: 72,
+                        percentage: 72,
+                        riskLevel: "Alto",
+                        domain: "Organización del tiempo"
+                    },
+                    "Trabajo que exige alto nivel de atención": {
+                        score: 88,
+                        percentage: 88,
+                        riskLevel: "Alto",
+                        domain: "Carga mental"
+                    },
+                    "Actividades laborales que implican riesgo": {
+                        score: 92,
+                        percentage: 92,
+                        riskLevel: "Muy Alto",
+                        domain: "Ambiente de trabajo"
+                    },
+                    "Falta de capacitación e información sobre el trabajo": {
+                        score: 45,
+                        percentage: 45,
+                        riskLevel: "Bajo",
+                        domain: "Desarrollo"
+                    },
+                    "Supervisión inadecuada": {
+                        score: 68,
+                        percentage: 68,
+                        riskLevel: "Medio",
+                        domain: "Liderazgo"
+                    },
+                    "Violencia laboral": {
+                        score: 95,
+                        percentage: 95,
+                        riskLevel: "Muy Alto",
+                        domain: "Ambiente de trabajo"
+                    },
+                    "Acoso laboral": {
+                        score: 90,
+                        percentage: 90,
+                        riskLevel: "Muy Alto",
+                        domain: "Ambiente de trabajo"
+                    }
                 }
             },
             {
@@ -6550,6 +6703,36 @@
                                 <span class="detail-label">Email:</span>
                                 <span class="detail-value">${participant.details.email}</span>
                             </div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h4>Evaluación por Dimensiones NOM-035</h4>
+                        <div class="dimensions-table-container">
+                            <table class="dimensions-table">
+                                <thead>
+                                    <tr>
+                                        <th>Dimensión</th>
+                                        <th>Dominio</th>
+                                        <th>Puntuación</th>
+                                        <th>Porcentaje</th>
+                                        <th>Nivel de Riesgo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${Object.entries(participant.dimensionsResults || {}).map(([dimension, data]) => `
+                                        <tr>
+                                            <td class="dimension-name">${dimension}</td>
+                                            <td class="dimension-domain">${data.domain}</td>
+                                            <td class="dimension-score">${data.score}</td>
+                                            <td class="dimension-percentage">${data.percentage}%</td>
+                                            <td class="dimension-risk">
+                                                <span class="risk-badge risk-${data.riskLevel.toLowerCase()}">${data.riskLevel}</span>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
