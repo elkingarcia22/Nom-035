@@ -632,6 +632,51 @@
             font-size: 12px;
         }
 
+        /* Estilos para detalle del participante - Idénticos a emocional */
+        .participant-details {
+            display: none;
+        }
+
+        .participant-details.show {
+            display: block;
+        }
+
+        .participant-details-content {
+            flex: 1;
+        }
+
+        .participant-info-line {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 14px;
+        }
+
+        .participant-separator {
+            color: #9ca3af;
+            font-weight: 300;
+        }
+
+        .participant-role,
+        .participant-department,
+        .participant-age,
+        .participant-gender,
+        .participant-status,
+        .participant-country,
+        .participant-city,
+        .participant-experience {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
         .participant-info {
             padding: 12px 16px;
         }
@@ -6945,18 +6990,34 @@
                 return;
             }
             
-            const riskBadgeClass = getRiskBadgeClass(participant.riskLevel);
-            const riskBadgeText = getRiskBadgeText(participant.riskLevel);
-            
+            // Mostrar información del participante con estructura idéntica a emocional
             participantDetails.innerHTML = `
-                <div class="participant-header">
-                    <div class="participant-avatar-large" style="background-color: ${participant.avatarColor}">
-                        ${participant.avatar}
-                    </div>
-                    <div class="participant-info-large">
-                        <h3>${participant.name}</h3>
-                        <p>${participant.role}</p>
-                        <span class="risk-badge ${riskBadgeClass}">${riskBadgeText}</span>
+                <div class="participant-details show">
+                    <div class="participant-header">
+                        <div class="participant-avatar-large" style="background-color: ${participant.avatarColor}">
+                            ${participant.avatar}
+                        </div>
+                        <div class="participant-details-content">
+                            <div class="participant-info-line">
+                                <span class="participant-name">${participant.name}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-role">${participant.role}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-department">${participant.details.department}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-age">${participant.details.age} años</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-gender">${participant.details.gender}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-status">${participant.details.maritalStatus}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-country">${participant.details.country}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-city">${participant.details.city}</span>
+                                <span class="participant-separator">•</span>
+                                <span class="participant-experience">${participant.details.experience} de experiencia</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
