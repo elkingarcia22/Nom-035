@@ -5453,12 +5453,14 @@
                 });
             });
             
-            // Cerrar dropdowns al hacer click fuera
-            document.addEventListener('click', () => {
-                newCustomSelects.forEach(select => {
-                    select.querySelector('.select-trigger').classList.remove('active');
-                    select.querySelector('.select-dropdown').classList.remove('show');
-                });
+            // Cerrar dropdowns al hacer click fuera - USAR NUEVO SISTEMA
+            document.addEventListener('click', function(event) {
+                // Solo cerrar si no se hizo click en un trigger de dropdown
+                if (!event.target.closest('.select-trigger')) {
+                    newCustomSelects.forEach(select => {
+                        closeNewDropdown(select.id);
+                    });
+                }
             });
         }
 

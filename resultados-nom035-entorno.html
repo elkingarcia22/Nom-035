@@ -4178,63 +4178,63 @@
 
             // Funcionalidad de búsqueda desplegable
             if (searchBtn && searchContainer && searchInput) {
-                searchBtn.addEventListener('click', () => {
-                    searchContainer.style.display = 'block';
-                    searchInput.focus();
-                });
+            searchBtn.addEventListener('click', () => {
+                searchContainer.style.display = 'block';
+                searchInput.focus();
+            });
             }
 
             if (closeSearch && searchContainer && searchInput) {
-                closeSearch.addEventListener('click', () => {
-                    searchContainer.style.display = 'none';
-                    searchInput.value = '';
+            closeSearch.addEventListener('click', () => {
+                searchContainer.style.display = 'none';
+                searchInput.value = '';
                     if (typeof applyTableFilters === 'function') {
-                        applyTableFilters();
+                applyTableFilters();
                     }
-                });
+            });
             }
 
             // Abrir panel de filtros
             if (filtersBtn && filtersSidePanel && filtersOverlay) {
-                filtersBtn.addEventListener('click', () => {
-                    filtersSidePanel.classList.add('show');
-                    filtersOverlay.classList.add('show');
-                });
+            filtersBtn.addEventListener('click', () => {
+                filtersSidePanel.classList.add('show');
+                filtersOverlay.classList.add('show');
+            });
             }
 
             // Cerrar panel de filtros
             if (closeFiltersBtn) {
-                closeFiltersBtn.addEventListener('click', closeTableFiltersPanel);
+            closeFiltersBtn.addEventListener('click', closeTableFiltersPanel);
             }
             if (filtersOverlay) {
-                filtersOverlay.addEventListener('click', closeTableFiltersPanel);
+            filtersOverlay.addEventListener('click', closeTableFiltersPanel);
             }
 
             // Aplicar filtros
             if (applyFiltersBtn) {
-                applyFiltersBtn.addEventListener('click', () => {
+            applyFiltersBtn.addEventListener('click', () => {
                     if (typeof applyTableFilters === 'function') {
-                        applyTableFilters();
+                applyTableFilters();
                     }
                     if (typeof closeTableFiltersPanel === 'function') {
-                        closeTableFiltersPanel();
+                closeTableFiltersPanel();
                     }
-                });
+            });
             }
 
             // Limpiar filtros
             if (clearFiltersBtn) {
-                clearFiltersBtn.addEventListener('click', clearTableFilters);
+            clearFiltersBtn.addEventListener('click', clearTableFilters);
             }
 
             // Búsqueda en tiempo real
             if (searchInput) {
-                searchInput.addEventListener('input', applyTableFilters);
+            searchInput.addEventListener('input', applyTableFilters);
             }
 
             // Configurar selects personalizados
             if (typeof setupTableCustomSelects === 'function') {
-                setupTableCustomSelects();
+            setupTableCustomSelects();
             }
             
             console.log('✅ ===== FILTROS DE TABLA INICIALIZADOS =====');
@@ -5439,12 +5439,14 @@
                 });
             });
             
-            // Cerrar dropdowns al hacer click fuera
-            document.addEventListener('click', () => {
-                newCustomSelects.forEach(select => {
-                    select.querySelector('.select-trigger').classList.remove('active');
-                    select.querySelector('.select-dropdown').classList.remove('show');
-                });
+            // Cerrar dropdowns al hacer click fuera - USAR NUEVO SISTEMA
+            document.addEventListener('click', function(event) {
+                // Solo cerrar si no se hizo click en un trigger de dropdown
+                if (!event.target.closest('.select-trigger')) {
+                    newCustomSelects.forEach(select => {
+                        closeNewDropdown(select.id);
+                    });
+                }
             });
         }
 
