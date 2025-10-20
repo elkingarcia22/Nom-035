@@ -1854,13 +1854,8 @@
         #individual-filters-side-panel .custom-select {
             position: relative;
             width: 100%;
-            margin-bottom: 24px !important;
+            margin-bottom: 16px !important;
             z-index: 1;
-        }
-        
-        /* Cuando un dropdown está abierto, dar más espacio al siguiente elemento */
-        #individual-filters-side-panel .custom-select.dropdown-open {
-            margin-bottom: 220px !important;
         }
 
         #individual-filters-side-panel .select-dropdown.show {
@@ -7310,20 +7305,12 @@
                             if (otherSelect !== select) {
                                 otherSelect.querySelector('.select-trigger').classList.remove('active');
                                 otherSelect.querySelector('.select-dropdown').classList.remove('show');
-                                otherSelect.classList.remove('dropdown-open');
                             }
                         });
                         
                         // Toggle current select
                         trigger.classList.toggle('active');
                         dropdown.classList.toggle('show');
-                        
-                        // Agregar/quitar clase para espaciado
-                        if (dropdown.classList.contains('show')) {
-                            select.classList.add('dropdown-open');
-                        } else {
-                            select.classList.remove('dropdown-open');
-                        }
                         
                         console.log('Dropdown classes after toggle:', dropdown.classList.toString());
                     });
