@@ -7208,6 +7208,16 @@
                 if (selectTrigger && selectDropdown) {
                     selectTrigger.addEventListener('click', function(e) {
                         e.stopPropagation();
+                        // Cerrar otros dropdowns primero
+                        customSelects.forEach(otherSelect => {
+                            if (otherSelect !== select) {
+                                const otherDropdown = otherSelect.querySelector('.select-dropdown');
+                                if (otherDropdown) {
+                                    otherDropdown.classList.remove('show');
+                                }
+                            }
+                        });
+                        // Toggle el dropdown actual
                         selectDropdown.classList.toggle('show');
                     });
                     
@@ -7225,13 +7235,15 @@
             });
             
             // Cerrar dropdowns al hacer clic fuera
-            document.addEventListener('click', function() {
-                customSelects.forEach(select => {
-                    const selectDropdown = select.querySelector('.select-dropdown');
-                    if (selectDropdown) {
-                        selectDropdown.classList.remove('show');
-                    }
-                });
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#individual-filters-side-panel .custom-select')) {
+                    customSelects.forEach(select => {
+                        const selectDropdown = select.querySelector('.select-dropdown');
+                        if (selectDropdown) {
+                            selectDropdown.classList.remove('show');
+                        }
+                    });
+                }
             });
         }
 
