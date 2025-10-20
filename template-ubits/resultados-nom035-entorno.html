@@ -1839,22 +1839,23 @@
         }
 
         #individual-filters-side-panel .select-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            max-height: 200px;
-            overflow-y: auto;
-            display: none;
+            position: absolute !important;
+            top: 100% !important;
+            left: 0 !important;
+            right: 0 !important;
+            background: white !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 6px !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+            z-index: 1000 !important;
+            max-height: 200px !important;
+            overflow-y: auto !important;
+            display: none !important;
+            width: 100% !important;
         }
 
         #individual-filters-side-panel .select-dropdown.show {
-            display: block;
+            display: block !important;
         }
 
         #individual-filters-side-panel .select-option {
@@ -6796,15 +6797,19 @@
 
         function setupIndividualCustomSelects() {
             const customSelects = document.querySelectorAll('#individual-filters-side-panel .custom-select');
+            console.log('Individual custom selects found:', customSelects.length);
             
             customSelects.forEach(select => {
                 const selectTrigger = select.querySelector('.select-trigger');
                 const selectDropdown = select.querySelector('.select-dropdown');
                 const selectOptions = select.querySelectorAll('.select-option');
                 
+                console.log('Setting up select:', select.id, 'Trigger:', selectTrigger, 'Dropdown:', selectDropdown);
+                
                 if (selectTrigger && selectDropdown) {
                     selectTrigger.addEventListener('click', function(e) {
                         e.stopPropagation();
+                        console.log('Individual select clicked:', select.id);
                         // Cerrar otros dropdowns primero
                         customSelects.forEach(otherSelect => {
                             if (otherSelect !== select) {
@@ -6821,6 +6826,7 @@
                         // Toggle el dropdown actual
                         selectDropdown.classList.toggle('show');
                         selectTrigger.classList.toggle('active');
+                        console.log('Dropdown classes after toggle:', selectDropdown.classList.toString());
                     });
                     
                     selectOptions.forEach(option => {
