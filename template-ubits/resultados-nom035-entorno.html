@@ -1797,6 +1797,87 @@
             margin: 0;
         }
 
+        /* CSS específico para filtros individuales */
+        #individual-filters-side-panel .custom-select {
+            position: relative;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        #individual-filters-side-panel .select-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+
+        #individual-filters-side-panel .select-trigger:hover {
+            border-color: #9ca3af;
+        }
+
+        #individual-filters-side-panel .select-trigger.active {
+            border-color: #3b82f6;
+        }
+
+        #individual-filters-side-panel .select-text {
+            color: #374151;
+            font-size: 14px;
+        }
+
+        #individual-filters-side-panel .select-arrow {
+            color: #6b7280;
+            transition: transform 0.2s ease;
+        }
+
+        #individual-filters-side-panel .select-trigger.active .select-arrow {
+            transform: rotate(180deg);
+        }
+
+        #individual-filters-side-panel .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        #individual-filters-side-panel .select-dropdown.show {
+            display: block;
+        }
+
+        #individual-filters-side-panel .select-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        #individual-filters-side-panel .select-option:hover {
+            background-color: #f3f4f6;
+        }
+
+        #individual-filters-side-panel .select-option input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        #individual-filters-side-panel .option-text {
+            color: #374151;
+            font-size: 14px;
+        }
+
         .filters-overlay {
             position: fixed;
             top: 0;
@@ -6728,13 +6809,18 @@
                         customSelects.forEach(otherSelect => {
                             if (otherSelect !== select) {
                                 const otherDropdown = otherSelect.querySelector('.select-dropdown');
+                                const otherTrigger = otherSelect.querySelector('.select-trigger');
                                 if (otherDropdown) {
                                     otherDropdown.classList.remove('show');
+                                }
+                                if (otherTrigger) {
+                                    otherTrigger.classList.remove('active');
                                 }
                             }
                         });
                         // Toggle el dropdown actual
                         selectDropdown.classList.toggle('show');
+                        selectTrigger.classList.toggle('active');
                     });
                     
                     selectOptions.forEach(option => {
