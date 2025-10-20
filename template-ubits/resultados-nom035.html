@@ -988,13 +988,13 @@
         }
 
         .answer-yes {
-            background: #dcfce7;
-            color: #166534;
+            background: #fecaca;
+            color: #dc2626;
         }
 
         .answer-no {
-            background: #fecaca;
-            color: #dc2626;
+            background: #dcfce7;
+            color: #166534;
         }
 
         /* Responsive */
@@ -1050,7 +1050,7 @@
                         <div style="margin-left: auto;">
                             <button class="ubits-button ubits-button--primary ubits-button--md" type="button" id="download-csv-btn">
                                 <i class="far fa-download"></i>
-                                <span>Descargar CSV respuestas</span>
+                                <span>Descargar respuestas</span>
                             </button>
                         </div>
                     </div>
@@ -1081,23 +1081,7 @@
 
                     <!-- Métricas clave - FUERA DEL CONTENEDOR SUPERIOR -->
                     <div class="metrics-grid">
-                        <!-- Métrica 1: Total de casos de riesgo -->
-                        <div class="metric-card">
-                            <div class="metric-header">
-                                <div class="metric-title-section">
-                                    <div class="metric-icon">
-                                        <i class="far fa-chart-bar"></i>
-                                    </div>
-                                    <h3 class="metric-title">Total de casos en riesgo alto y muy alto</h3>
-                                </div>
-                            </div>
-                            <div class="metric-value-section">
-                                <div class="metric-main-number">5</div>
-                                <div class="metric-unit-text">Casos</div>
-                            </div>
-                        </div>
-
-                        <!-- Métrica 2: Total canalizados -->
+                        <!-- Métrica 1: Total canalizados -->
                         <div class="metric-card">
                             <div class="metric-header">
                                 <div class="metric-title-section">
@@ -1113,6 +1097,22 @@
                             </div>
                         </div>
 
+                        <!-- Métrica 2: Total de casos de riesgo -->
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <div class="metric-title-section">
+                                    <div class="metric-icon">
+                                        <i class="far fa-chart-bar"></i>
+                                    </div>
+                                    <h3 class="metric-title">Total de casos en riesgo alto</h3>
+                                </div>
+                            </div>
+                            <div class="metric-value-section">
+                                <div class="metric-main-number">5</div>
+                                <div class="metric-unit-text">Casos</div>
+                            </div>
+                        </div>
+
                         <!-- Métrica 3: % de participación -->
                         <div class="metric-card">
                             <div class="metric-header">
@@ -1120,7 +1120,7 @@
                                     <div class="metric-icon">
                                         <i class="far fa-check-circle"></i>
                                     </div>
-                                    <h3 class="metric-title">% de participación</h3>
+                                    <h3 class="metric-title">90% de participación</h3>
                                 </div>
                             </div>
                             <div class="metric-value-section">
@@ -1432,6 +1432,38 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="filter-group">
+                                                <label class="filter-label">Líder</label>
+                                                <div class="custom-select" id="leader-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar líderes</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos">
+                                                            <input type="checkbox" id="leader-todos">
+                                                            <span class="option-text">Todos</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Ana Martínez">
+                                                            <input type="checkbox" id="leader-ana-martinez">
+                                                            <span class="option-text">Ana Martínez</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Luis Fernández">
+                                                            <input type="checkbox" id="leader-luis-fernandez">
+                                                            <span class="option-text">Luis Fernández</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="María González">
+                                                            <input type="checkbox" id="leader-maria-gonzalez">
+                                                            <span class="option-text">María González</span>
+                                                        </div>
+                                                        <div class="select-option" data-value="Carlos Rodríguez">
+                                                            <input type="checkbox" id="leader-carlos-rodriguez">
+                                                            <span class="option-text">Carlos Rodríguez</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="filter-actions">
                                                 <button class="apply-filters-btn" id="apply-filters-btn">
                                                     <i class="far fa-check"></i>
@@ -1577,7 +1609,8 @@
                     country: "Colombia",
                     city: "Bogotá",
                     experience: "8 años",
-                    email: "maria.gonzalez@empresa.com"
+                    email: "maria.gonzalez@empresa.com",
+                    leader: "Ana Martínez"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -1626,7 +1659,8 @@
                     country: "México",
                     city: "Ciudad de México",
                     experience: "5 años",
-                    email: "carlos.rodriguez@empresa.com"
+                    email: "carlos.rodriguez@empresa.com",
+                    leader: "Luis Fernández"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -1675,7 +1709,8 @@
                     country: "Argentina",
                     city: "Buenos Aires",
                     experience: "6 años",
-                    email: "ana.martinez@empresa.com"
+                    email: "ana.martinez@empresa.com",
+                    leader: "María González"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -1724,7 +1759,8 @@
                     country: "Chile",
                     city: "Santiago",
                     experience: "12 años",
-                    email: "luis.fernandez@empresa.com"
+                    email: "luis.fernandez@empresa.com",
+                    leader: "Carlos Rodríguez"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -1773,7 +1809,8 @@
                     country: "Perú",
                     city: "Lima",
                     experience: "3 años",
-                    email: "sofia.herrera@empresa.com"
+                    email: "sofia.herrera@empresa.com",
+                    leader: "Ana Martínez"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -1822,7 +1859,8 @@
                     country: "España",
                     city: "Madrid",
                     experience: "12 años",
-                    email: "roberto.silva@empresa.com"
+                    email: "roberto.silva@empresa.com",
+                    leader: "Luis Fernández"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -1871,7 +1909,8 @@
                     country: "Uruguay",
                     city: "Montevideo",
                     experience: "4 años",
-                    email: "carmen.lopez@empresa.com"
+                    email: "carmen.lopez@empresa.com",
+                    leader: "María González"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -1920,7 +1959,8 @@
                     country: "Ecuador",
                     city: "Quito",
                     experience: "7 años",
-                    email: "diego.morales@empresa.com"
+                    email: "diego.morales@empresa.com",
+                    leader: "Ana Martínez"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -1969,7 +2009,8 @@
                     country: "Venezuela",
                     city: "Caracas",
                     experience: "10 años",
-                    email: "patricia.vega@empresa.com"
+                    email: "patricia.vega@empresa.com",
+                    leader: "Luis Fernández"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -2016,7 +2057,8 @@
                     gender: "Masculino",
                     maritalStatus: "Casado",
                     experience: "15 años",
-                    email: "fernando.ruiz@empresa.com"
+                    email: "fernando.ruiz@empresa.com",
+                    leader: "María González"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -2063,7 +2105,8 @@
                     gender: "Femenino",
                     maritalStatus: "Casada",
                     experience: "9 años",
-                    email: "isabel.torres@empresa.com"
+                    email: "isabel.torres@empresa.com",
+                    leader: "Ana Martínez"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -2110,7 +2153,8 @@
                     gender: "Masculino",
                     maritalStatus: "Casado",
                     experience: "11 años",
-                    email: "miguel.castro@empresa.com"
+                    email: "miguel.castro@empresa.com",
+                    leader: "Luis Fernández"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -2157,7 +2201,8 @@
                     gender: "Femenino",
                     maritalStatus: "Soltera",
                     experience: "8 años",
-                    email: "laura.jimenez@empresa.com"
+                    email: "laura.jimenez@empresa.com",
+                    leader: "María González"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -2204,7 +2249,8 @@
                     gender: "Masculino",
                     maritalStatus: "Casado",
                     experience: "13 años",
-                    email: "andres.mendoza@empresa.com"
+                    email: "andres.mendoza@empresa.com",
+                    leader: "Ana Martínez"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -2251,7 +2297,8 @@
                     gender: "Femenino",
                     maritalStatus: "Soltera",
                     experience: "3 años",
-                    email: "valentina.herrera@empresa.com"
+                    email: "valentina.herrera@empresa.com",
+                    leader: "Luis Fernández"
                 },
                 surveyResults: {
                     "Sección I. Acontecimiento traumático severo": [
@@ -2299,18 +2346,26 @@
 
         // Renderizar lista de participantes
         function renderParticipantsList(participants = participantsData) {
-            console.log('🔍 Renderizando lista de participantes:', participants.length);
+            console.log('🔍 ===== INICIANDO RENDERIZADO =====');
+            console.log('🔍 Participantes recibidos:', participants.length);
+            console.log('🔍 Nombres de participantes:', participants.map(p => p.name));
+            
             const participantsList = document.getElementById('participants-list');
-            console.log('🔍 Elemento participants-list encontrado:', participantsList);
+            console.log('🔍 Elemento participants-list encontrado:', !!participantsList);
+            console.log('🔍 Elemento participants-list:', participantsList);
             
             if (!participantsList) {
                 console.error('🔍 ERROR: No se encontró el elemento participants-list');
                 return;
             }
             
+            console.log('🔍 Limpiando contenido anterior...');
             participantsList.innerHTML = '';
+            console.log('🔍 Contenido limpiado, iniciando renderizado...');
 
-            participants.forEach(participant => {
+            participants.forEach((participant, index) => {
+                console.log(`🔍 Renderizando participante ${index + 1}: ${participant.name}`);
+                
                 const participantItem = document.createElement('div');
                 participantItem.className = 'participant-item';
                 participantItem.dataset.participantId = participant.id;
@@ -2333,7 +2388,11 @@
                 });
 
                 participantsList.appendChild(participantItem);
+                console.log(`🔍 Participante ${participant.name} agregado al DOM`);
             });
+            
+            console.log('🔍 ===== RENDERIZADO COMPLETADO =====');
+            console.log('🔍 Total de elementos en participantsList:', participantsList.children.length);
         }
 
         // Seleccionar participante
@@ -2643,7 +2702,10 @@
 
         // Aplicar filtros
         function applyFilters() {
-            console.log('🔍 Aplicando filtros...');
+            console.log('🔍 ===== INICIANDO APLICACIÓN DE FILTROS =====');
+            console.log('🔍 participantsData existe:', !!participantsData);
+            console.log('🔍 participantsData.length:', participantsData ? participantsData.length : 'undefined');
+            
             const riskFilters = getSelectedValues('risk-select');
             const departmentFilters = getSelectedValues('department-select');
             const positionFilters = getSelectedValues('position-select');
@@ -2652,8 +2714,14 @@
             const ageFilters = getSelectedValues('age-select');
             const countryFilters = getSelectedValues('country-select');
             const cityFilters = getSelectedValues('city-select');
-            const searchTerm = document.getElementById('participant-search').value.toLowerCase();
-            console.log('🔍 Término de búsqueda:', searchTerm);
+            const leaderFilters = getSelectedValues('leader-select');
+            
+            const searchInput = document.getElementById('participant-search');
+            console.log('🔍 searchInput existe:', !!searchInput);
+            console.log('🔍 searchInput.value:', searchInput ? searchInput.value : 'undefined');
+            
+            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+            console.log('🔍 Término de búsqueda procesado:', searchTerm);
 
             console.log('Aplicando filtros:', {
                 riskFilters,
@@ -2668,14 +2736,20 @@
             let filteredParticipants = participantsData.filter(participant => {
                 // Filtro por búsqueda
                 const matchesSearch = !searchTerm || 
-                    participant.name.toLowerCase().includes(searchTerm) ||
-                    participant.role.toLowerCase().includes(searchTerm) ||
-                    participant.details.department.toLowerCase().includes(searchTerm) ||
-                    participant.details.position.toLowerCase().includes(searchTerm) ||
-                    participant.details.gender.toLowerCase().includes(searchTerm) ||
-                    participant.details.maritalStatus.toLowerCase().includes(searchTerm) ||
-                    participant.details.country.toLowerCase().includes(searchTerm) ||
-                    participant.details.city.toLowerCase().includes(searchTerm);
+                    (participant.name && participant.name.toLowerCase().includes(searchTerm)) ||
+                    (participant.role && participant.role.toLowerCase().includes(searchTerm)) ||
+                    (participant.details && participant.details.department && participant.details.department.toLowerCase().includes(searchTerm)) ||
+                    (participant.details && participant.details.position && participant.details.position.toLowerCase().includes(searchTerm)) ||
+                    (participant.details && participant.details.gender && participant.details.gender.toLowerCase().includes(searchTerm)) ||
+                    (participant.details && participant.details.maritalStatus && participant.details.maritalStatus.toLowerCase().includes(searchTerm)) ||
+                    (participant.details && participant.details.country && participant.details.country.toLowerCase().includes(searchTerm)) ||
+                    (participant.details && participant.details.city && participant.details.city.toLowerCase().includes(searchTerm)) ||
+                    (participant.details && participant.details.leader && participant.details.leader.toLowerCase().includes(searchTerm));
+                
+                // Debug para búsqueda
+                if (searchTerm && searchTerm.trim() !== '') {
+                    console.log(`🔍 Verificando participante ${participant.name}: matchesSearch = ${matchesSearch}`);
+                }
 
                 // Filtro por nivel de riesgo
                 const matchesRisk = riskFilters.length === 0 || riskFilters.includes('todos') || riskFilters.includes(participant.riskLevel);
@@ -2700,8 +2774,11 @@
                 
                 // Filtro por ciudad
                 const matchesCity = cityFilters.length === 0 || cityFilters.includes('todos') || cityFilters.includes(participant.details.city);
+                
+                // Filtro por líder
+                const matchesLeader = leaderFilters.length === 0 || leaderFilters.includes('todos') || leaderFilters.includes(participant.details.leader);
 
-                const matches = matchesSearch && matchesRisk && matchesDepartment && matchesPosition && matchesGender && matchesMaritalStatus && matchesAge && matchesCountry && matchesCity;
+                const matches = matchesSearch && matchesRisk && matchesDepartment && matchesPosition && matchesGender && matchesMaritalStatus && matchesAge && matchesCountry && matchesCity && matchesLeader;
                 
                 if (departmentFilters.length > 0 && !departmentFilters.includes('todos')) {
                     console.log(`Participante ${participant.name} (${participant.details.department}): matchesDepartment = ${matchesDepartment}, departmentFilters = ${departmentFilters}`);
@@ -2710,15 +2787,19 @@
                 return matches;
             });
 
-            console.log(`Filtrados ${filteredParticipants.length} de ${participantsData.length} participantes`);
+            console.log(`🔍 RESULTADO: Filtrados ${filteredParticipants.length} de ${participantsData.length} participantes`);
+            console.log('🔍 Lista de participantes filtrados:', filteredParticipants.map(p => p.name));
+            
+            console.log('🔍 Llamando a renderParticipantsList...');
             renderParticipantsList(filteredParticipants);
+            console.log('🔍 renderParticipantsList completado');
             
             // Actualizar badge de filtros
-            updateFilterBadge(riskFilters, departmentFilters, positionFilters, genderFilters, maritalStatusFilters, ageFilters, countryFilters, cityFilters, searchTerm);
+            updateFilterBadge(riskFilters, departmentFilters, positionFilters, genderFilters, maritalStatusFilters, ageFilters, countryFilters, cityFilters, leaderFilters, searchTerm);
         }
 
         // Actualizar badge de filtros
-        function updateFilterBadge(riskFilters, departmentFilters, positionFilters, genderFilters, maritalStatusFilters, ageFilters, countryFilters, cityFilters, searchTerm) {
+        function updateFilterBadge(riskFilters, departmentFilters, positionFilters, genderFilters, maritalStatusFilters, ageFilters, countryFilters, cityFilters, leaderFilters, searchTerm) {
             const badge = document.getElementById('filter-badge');
             let activeFiltersCount = 0;
 
@@ -2732,6 +2813,7 @@
                 ageFilters,
                 countryFilters,
                 cityFilters,
+                leaderFilters,
                 searchTerm
             });
 
@@ -2770,10 +2852,13 @@
                 activeFiltersCount++;
                 console.log('Badge: +1 por cityFilters');
             }
-            if (searchTerm && searchTerm.trim() !== '') {
+            
+            if (leaderFilters.length > 0 && !leaderFilters.includes('todos')) {
                 activeFiltersCount++;
-                console.log('Badge: +1 por searchTerm');
+                console.log('Badge: +1 por leaderFilters');
             }
+            // El término de búsqueda no se cuenta como filtro activo
+            // ya que es una funcionalidad independiente de los filtros
 
             console.log('Badge: Total de filtros activos:', activeFiltersCount);
 
@@ -2834,6 +2919,21 @@
         function setupSearch() {
             console.log('🔍 Configurando buscador...');
             
+            // Función para manejar la búsqueda
+            function handleSearch(e) {
+                const searchValue = e.target.value;
+                console.log('🔍 ===== EVENTO DE BÚSQUEDA DETECTADO =====');
+                console.log('🔍 Valor de búsqueda:', searchValue);
+                console.log('🔍 Tipo de evento:', e.type);
+                console.log('🔍 participantsData disponible:', participantsData ? participantsData.length : 'undefined');
+                console.log('🔍 Elemento que disparó el evento:', e.target);
+                
+                // Aplicar filtros inmediatamente
+                console.log('🔍 Llamando a applyFilters...');
+                applyFilters();
+                console.log('🔍 applyFilters completado');
+            }
+            
             // Función para configurar el buscador cuando esté disponible
             function configureSearch() {
                 const searchInput = document.getElementById('participant-search');
@@ -2842,19 +2942,21 @@
                 if (searchInput) {
                     // Remover event listeners existentes para evitar duplicados
                     searchInput.removeEventListener('input', handleSearch);
+                    searchInput.removeEventListener('keyup', handleSearch);
+                    
+                    // Agregar múltiples event listeners para mayor compatibilidad
                     searchInput.addEventListener('input', handleSearch);
-                    console.log('🔍 Event listener agregado correctamente');
+                    searchInput.addEventListener('keyup', handleSearch);
+                    
+                    console.log('🔍 Event listeners agregados correctamente');
+                    
+                    // Probar que funciona
+                    console.log('🔍 Probando búsqueda...');
                     return true;
                 } else {
                     console.error('🔍 ERROR: No se encontró el elemento participant-search');
                     return false;
                 }
-            }
-            
-            // Función para manejar la búsqueda
-            function handleSearch(e) {
-                console.log('🔍 Búsqueda activada:', e.target.value);
-                applyFilters();
             }
             
             // Intentar configurar inmediatamente
