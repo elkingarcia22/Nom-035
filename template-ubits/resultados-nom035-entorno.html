@@ -463,20 +463,20 @@
             box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .apply-filters-btn, .clear-filters-btn {
-            flex: 1;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
         .apply-filters-btn {
+            flex: 1;
             background: var(--ubits-accent-brand);
             color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
         }
 
         .apply-filters-btn:hover {
@@ -484,13 +484,24 @@
         }
 
         .clear-filters-btn {
+            flex: 1;
             background: #f3f4f6;
-            color: #374151;
+            color: #6b7280;
             border: 1px solid #d1d5db;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
         }
 
         .clear-filters-btn:hover {
             background: #e5e7eb;
+            color: #374151;
         }
 
         /* Participants List */
@@ -2511,13 +2522,13 @@
                                         </div>
                                         
                                         <div class="filter-actions">
-                                            <button id="new-apply-filters-btn" class="ubits-button ubits-button--primary ubits-button--sm">
+                                            <button id="new-apply-filters-btn" class="apply-filters-btn">
                                                 <i class="far fa-check"></i>
-                                                <span>Aplicar Filtros</span>
+                                                Aplicar Filtros
                                             </button>
-                                            <button id="new-clear-filters-btn" class="ubits-button ubits-button--secondary ubits-button--sm">
+                                            <button id="new-clear-filters-btn" class="clear-filters-btn">
                                                 <i class="far fa-times"></i>
-                                                <span>Limpiar</span>
+                                                Limpiar
                                             </button>
                                         </div>
                                     </div>
