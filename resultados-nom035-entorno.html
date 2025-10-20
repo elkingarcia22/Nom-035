@@ -5256,10 +5256,21 @@
         // Función para obtener valores seleccionados
         function getSelectedValues(selectId) {
             const select = document.getElementById(selectId);
-            if (!select) return [];
+            if (!select) {
+                console.log(`❌ Select ${selectId} no encontrado`);
+                return [];
+            }
             
             const checkboxes = select.querySelectorAll('input[type="checkbox"]:checked');
-            return Array.from(checkboxes).map(cb => cb.closest('.select-option').dataset.value);
+            const values = Array.from(checkboxes).map(cb => {
+                const option = cb.closest('.select-option');
+                const value = option ? option.dataset.value : cb.value;
+                console.log(`🔍 Checkbox seleccionado: ${cb.value} -> ${value}`);
+                return value;
+            });
+            
+            console.log(`🔍 getSelectedValues(${selectId}):`, values);
+            return values;
         }
 
         // Función para manejar la opción "Todos"
