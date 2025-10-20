@@ -1,0 +1,16 @@
+{
+  "name": "nom-035-results",
+  "version": "1.0.0",
+  "description": "NOM-035 Results Dashboard - Static HTML Site",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo 'Static site - no server needed'",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": ["nom-035", "dashboard", "static", "html"],
+  "author": "UBITS",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
