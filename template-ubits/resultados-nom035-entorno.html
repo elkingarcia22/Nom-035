@@ -5720,6 +5720,16 @@
             console.log('🔍 Dimensions content encontrado:', dimensionsContent ? 'SÍ' : 'NO');
             console.log('🔍 Individual content encontrado:', individualContent ? 'SÍ' : 'NO');
             
+            // Asegurar que el contenido de dimensiones esté visible por defecto
+            if (dimensionsContent) {
+                dimensionsContent.style.display = 'block';
+                console.log('✅ Contenido de dimensiones mostrado por defecto');
+            }
+            if (individualContent) {
+                individualContent.style.display = 'none';
+                console.log('✅ Contenido individual oculto por defecto');
+            }
+            
             segmentOptions.forEach(option => {
                 option.addEventListener('click', function() {
                     const segment = this.getAttribute('data-segment');
