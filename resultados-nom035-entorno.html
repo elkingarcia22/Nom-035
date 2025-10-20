@@ -4227,6 +4227,156 @@
             });
         }
 
+        // Función para aplicar filtros en la tabla general
+        function applyNewFilters() {
+            console.log('🔍 ===== APLICANDO FILTROS EN TABLA GENERAL =====');
+            
+            // Obtener valores de todos los filtros
+            const riskFilters = getSelectedValues('new-risk-select');
+            const departmentFilters = getSelectedValues('new-department-select');
+            const positionFilters = getSelectedValues('new-position-select');
+            const genderFilters = getSelectedValues('new-gender-select');
+            const maritalStatusFilters = getSelectedValues('new-marital-status-select');
+            const ageFilters = getSelectedValues('new-age-select');
+            const countryFilters = getSelectedValues('new-country-select');
+            const cityFilters = getSelectedValues('new-city-select');
+            const leaderFilters = getSelectedValues('new-leader-select');
+            const categoryFilters = getSelectedValues('new-category-nom035-select');
+            const domainFilters = getSelectedValues('new-domain-select');
+            const dimensionFilters = getSelectedValues('new-dimension-select');
+            
+            console.log('🔍 Filtros seleccionados:', {
+                risk: riskFilters,
+                department: departmentFilters,
+                position: positionFilters,
+                gender: genderFilters,
+                maritalStatus: maritalStatusFilters,
+                age: ageFilters,
+                country: countryFilters,
+                city: cityFilters,
+                leader: leaderFilters,
+                category: categoryFilters,
+                domain: domainFilters,
+                dimension: dimensionFilters
+            });
+            
+            // Obtener todas las filas de la tabla
+            const tableRows = document.querySelectorAll('#new-overview-table tbody tr');
+            let visibleCount = 0;
+            
+            tableRows.forEach(row => {
+                let shouldShow = true;
+                
+                // Filtrar por nivel de riesgo
+                if (riskFilters.length > 0 && !riskFilters.includes('todos')) {
+                    const riskBadge = row.querySelector('.risk-badge');
+                    if (riskBadge) {
+                        const riskLevel = riskBadge.textContent.trim().toLowerCase();
+                        const riskMapping = {
+                            'nulo': 'nulo',
+                            'bajo': 'bajo',
+                            'medio': 'medio',
+                            'alto': 'alto',
+                            'muy alto': 'muy-alto'
+                        };
+                        const mappedRisk = riskMapping[riskLevel];
+                        if (!riskFilters.includes(mappedRisk)) {
+                            shouldShow = false;
+                        }
+                    }
+                }
+                
+                // Filtrar por categoría NOM-035
+                if (categoryFilters.length > 0 && !categoryFilters.includes('todos')) {
+                    const categoryCell = row.querySelector('.category-domain-info');
+                    if (categoryCell) {
+                        const categoryText = categoryCell.textContent.trim();
+                        let categoryMatch = false;
+                        
+                        categoryFilters.forEach(filter => {
+                            if (filter === 'ambiente' && categoryText.includes('Ambiente de trabajo')) categoryMatch = true;
+                            if (filter === 'factores' && categoryText.includes('Factores propios')) categoryMatch = true;
+                            if (filter === 'tiempo' && categoryText.includes('Organización del tiempo')) categoryMatch = true;
+                            if (filter === 'liderazgo' && categoryText.includes('Liderazgo y relaciones')) categoryMatch = true;
+                            if (filter === 'entorno' && categoryText.includes('Entorno organizacional')) categoryMatch = true;
+                        });
+                        
+                        if (!categoryMatch) {
+                            shouldShow = false;
+                        }
+                    }
+                }
+                
+                // Filtrar por dominio
+                if (domainFilters.length > 0 && !domainFilters.includes('todos')) {
+                    const domainCell = row.querySelector('.category-dimension-info');
+                    if (domainCell) {
+                        const domainText = domainCell.textContent.trim();
+                        let domainMatch = false;
+                        
+                        domainFilters.forEach(filter => {
+                            if (filter === 'condiciones-fisicas' && domainText.includes('Condiciones físicas')) domainMatch = true;
+                            if (filter === 'carga-trabajo' && domainText.includes('Carga de trabajo')) domainMatch = true;
+                            if (filter === 'jornada-trabajo' && domainText.includes('Jornada de trabajo')) domainMatch = true;
+                            if (filter === 'liderazgo-supervision' && domainText.includes('Liderazgo y supervisión')) domainMatch = true;
+                            if (filter === 'relaciones-trabajo' && domainText.includes('Relaciones en el trabajo')) domainMatch = true;
+                            if (filter === 'entorno-organizacional' && domainText.includes('Entorno organizacional')) domainMatch = true;
+                        });
+                        
+                        if (!domainMatch) {
+                            shouldShow = false;
+                        }
+                    }
+                }
+                
+                // Mostrar u ocultar la fila
+                if (shouldShow) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+            console.log(`✅ Filtros aplicados. ${visibleCount} filas visibles de ${tableRows.length} totales`);
+            
+            // Actualizar contador de resultados si existe
+            const resultCount = document.querySelector('#new-overview-table .table-info .result-count');
+            if (resultCount) {
+                resultCount.textContent = `${visibleCount} resultados`;
+            }
+        }
+
+        // Función para limpiar filtros en la tabla general
+        function clearNewFilters() {
+            console.log('🧹 ===== LIMPIANDO FILTROS EN TABLA GENERAL =====');
+            
+            // Limpiar todos los checkboxes
+            const checkboxes = document.querySelectorAll('#new-table-filters-side-panel input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = false);
+            
+            // Seleccionar "Todos" en cada filtro
+            const todosCheckboxes = document.querySelectorAll('#new-table-filters-side-panel input[type="checkbox"][id$="-todos"]');
+            todosCheckboxes.forEach(cb => cb.checked = true);
+            
+            // Actualizar textos de los selects
+            updateAllSelectTexts();
+            
+            // Mostrar todas las filas
+            const tableRows = document.querySelectorAll('#new-overview-table tbody tr');
+            tableRows.forEach(row => {
+                row.style.display = '';
+            });
+            
+            console.log(`✅ Filtros limpiados. ${tableRows.length} filas visibles`);
+            
+            // Actualizar contador de resultados si existe
+            const resultCount = document.querySelector('#new-overview-table .table-info .result-count');
+            if (resultCount) {
+                resultCount.textContent = `${tableRows.length} resultados`;
+            }
+        }
+
         // FUNCIÓN PARA INICIALIZAR CONTROLES DE LA TABLA EN NUEVOS TABS
         function initializeNewTableControls() {
             console.log('🚀 ===== INICIANDO CONTROLES DE TABLA NUEVOS TABS =====');
@@ -4283,18 +4433,16 @@
             if (applyFiltersBtn) {
                 applyFiltersBtn.addEventListener('click', function() {
                     console.log('✅ Aplicando filtros (nuevos tabs)');
-                    // Aquí se puede agregar la lógica de filtrado
+                    applyNewFilters();
+                    // Cerrar el panel de filtros
+                    filtersPanel.classList.remove('show');
                 });
             }
             
             if (clearFiltersBtn) {
                 clearFiltersBtn.addEventListener('click', function() {
                     console.log('🧹 Limpiando filtros (nuevos tabs)');
-                    // Limpiar todos los checkboxes
-                    const checkboxes = document.querySelectorAll('#new-table-filters-side-panel input[type="checkbox"]');
-                    checkboxes.forEach(cb => cb.checked = false);
-                    // Actualizar textos de los selects
-                    updateAllSelectTexts();
+                    clearNewFilters();
                 });
             }
 
