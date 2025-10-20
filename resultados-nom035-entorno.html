@@ -1440,6 +1440,29 @@
             color: white !important;
         }
 
+        /* Badge para botón de filtros */
+        .filter-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--ubits-accent-brand);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            z-index: 10;
+        }
+
+        .filter-badge.hidden {
+            display: none !important;
+        }
+
         /* Filters Side Panel Styles */
         .filters-side-panel {
             position: fixed;
@@ -1881,9 +1904,9 @@
                                         <button id="new-table-search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
                                             <i class="far fa-search"></i>
                                         </button>
-                                        <button id="new-table-filters-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                        <button id="new-table-filters-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px; position: relative;">
                                             <i class="far fa-filter"></i>
-                                            <span class="filter-badge" id="new-table-filter-badge" style="display: none;">0</span>
+                                            <span class="filter-badge hidden" id="new-table-filter-badge">0</span>
                                         </button>
                                     </div>
                                 </div>
@@ -4425,6 +4448,88 @@
             }
             
             console.log('✅ Side panel y backdrop cerrados después de aplicar filtros');
+            
+            // Actualizar badge de filtros
+            updateFilterBadge();
+        }
+
+        // Función para contar filtros activos y actualizar badge
+        function updateFilterBadge() {
+            const badge = document.getElementById('new-table-filter-badge');
+            if (!badge) return;
+            
+            let activeFiltersCount = 0;
+            
+            // Contar filtros activos (excluyendo "todos")
+            const riskFilters = getSelectedValues('new-risk-select');
+            if (riskFilters.length > 0 && !riskFilters.includes('todos')) {
+                activeFiltersCount += riskFilters.length;
+            }
+            
+            const departmentFilters = getSelectedValues('new-department-select');
+            if (departmentFilters.length > 0 && !departmentFilters.includes('todos')) {
+                activeFiltersCount += departmentFilters.length;
+            }
+            
+            const positionFilters = getSelectedValues('new-position-select');
+            if (positionFilters.length > 0 && !positionFilters.includes('todos')) {
+                activeFiltersCount += positionFilters.length;
+            }
+            
+            const genderFilters = getSelectedValues('new-gender-select');
+            if (genderFilters.length > 0 && !genderFilters.includes('todos')) {
+                activeFiltersCount += genderFilters.length;
+            }
+            
+            const maritalStatusFilters = getSelectedValues('new-marital-status-select');
+            if (maritalStatusFilters.length > 0 && !maritalStatusFilters.includes('todos')) {
+                activeFiltersCount += maritalStatusFilters.length;
+            }
+            
+            const ageFilters = getSelectedValues('new-age-select');
+            if (ageFilters.length > 0 && !ageFilters.includes('todos')) {
+                activeFiltersCount += ageFilters.length;
+            }
+            
+            const countryFilters = getSelectedValues('new-country-select');
+            if (countryFilters.length > 0 && !countryFilters.includes('todos')) {
+                activeFiltersCount += countryFilters.length;
+            }
+            
+            const cityFilters = getSelectedValues('new-city-select');
+            if (cityFilters.length > 0 && !cityFilters.includes('todos')) {
+                activeFiltersCount += cityFilters.length;
+            }
+            
+            const leaderFilters = getSelectedValues('new-leader-select');
+            if (leaderFilters.length > 0 && !leaderFilters.includes('todos')) {
+                activeFiltersCount += leaderFilters.length;
+            }
+            
+            const categoryFilters = getSelectedValues('new-category-select');
+            if (categoryFilters.length > 0 && !categoryFilters.includes('todos')) {
+                activeFiltersCount += categoryFilters.length;
+            }
+            
+            const domainFilters = getSelectedValues('new-domain-select');
+            if (domainFilters.length > 0 && !domainFilters.includes('todos')) {
+                activeFiltersCount += domainFilters.length;
+            }
+            
+            const dimensionFilters = getSelectedValues('new-dimension-select');
+            if (dimensionFilters.length > 0 && !dimensionFilters.includes('todos')) {
+                activeFiltersCount += dimensionFilters.length;
+            }
+            
+            // Actualizar badge
+            if (activeFiltersCount > 0) {
+                badge.textContent = activeFiltersCount.toString();
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+            
+            console.log(`🏷️ Badge actualizado: ${activeFiltersCount} filtros activos`);
         }
 
         // Función para limpiar filtros en la tabla general
@@ -4535,6 +4640,9 @@
             });
             
             console.log(`✅ Filtros limpiados. ${tableRows.length} filas visibles`);
+            
+            // Actualizar badge de filtros
+            updateFilterBadge();
             
             // Actualizar contador de resultados si existe
             const resultCount = document.querySelector('#new-overview-panel .table-info .result-count');
