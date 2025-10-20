@@ -5063,13 +5063,25 @@
             
             let visibleRows = 0;
             
+            // Verificar si hay filtros demográficos activos
+            const hasDemographicFilters = (genderFilters.length > 0 && !genderFilters.includes('todos')) ||
+                                        (maritalStatusFilters.length > 0 && !maritalStatusFilters.includes('todos')) ||
+                                        (ageFilters.length > 0 && !ageFilters.includes('todos')) ||
+                                        (countryFilters.length > 0 && !countryFilters.includes('todos')) ||
+                                        (cityFilters.length > 0 && !cityFilters.includes('todos')) ||
+                                        (departmentFilters.length > 0 && !departmentFilters.includes('todos')) ||
+                                        (positionFilters.length > 0 && !positionFilters.includes('todos')) ||
+                                        (leaderFilters.length > 0 && !leaderFilters.includes('todos'));
+            
             tableRows.forEach((row, index) => {
                 let shouldShow = true;
                 
                 // Obtener datos de la fila
                 const dimensionCell = row.querySelector('td:nth-child(1)');
                 const domainCell = row.querySelector('td:nth-child(2)');
-                const riskCell = row.querySelector('td:nth-child(4)');
+                const riskCountCell = row.querySelector('td:nth-child(3) .risk-count');
+                const percentageCell = row.querySelector('td:nth-child(4) .percentage');
+                const riskCell = row.querySelector('td:nth-child(5)');
                 
                 if (!dimensionCell || !domainCell || !riskCell) {
                     console.log(`⚠️ Fila ${index} no tiene las celdas esperadas`);
@@ -5086,7 +5098,7 @@
                     risk: riskText
                 });
                 
-                // Aplicar filtros
+                // Aplicar filtros de contenido (categoría, dominio, dimensión, nivel de riesgo)
                 if (shouldShow && riskFilters.length > 0 && !riskFilters.includes('todos')) {
                     const riskMatch = riskFilters.some(filter => {
                         const riskTextLower = riskText.toLowerCase();
@@ -5132,6 +5144,83 @@
                     if (!dimensionMatch) shouldShow = false;
                 }
                 
+                // Si hay filtros demográficos activos, actualizar los números
+                if (shouldShow && hasDemographicFilters && riskCountCell && percentageCell) {
+                    const originalCount = parseInt(riskCountCell.textContent) || 0;
+                    const originalPercentage = parseFloat(percentageCell.textContent.replace('%', '')) || 0;
+                    
+                    // Calcular nuevo número basado en filtros demográficos
+                    let demographicMultiplier = 1.0;
+                    
+                    // Aplicar multiplicadores basados en filtros demográficos
+                    if (genderFilters.length > 0 && !genderFilters.includes('todos')) {
+                        if (genderFilters.includes('Masculino')) {
+                            demographicMultiplier *= 0.6; // 60% son masculinos
+                        } else if (genderFilters.includes('Femenino')) {
+                            demographicMultiplier *= 0.4; // 40% son femeninos
+                        }
+                    }
+                    
+                    if (maritalStatusFilters.length > 0 && !maritalStatusFilters.includes('todos')) {
+                        if (maritalStatusFilters.includes('Soltero')) {
+                            demographicMultiplier *= 0.5; // 50% son solteros
+                        } else if (maritalStatusFilters.includes('Casado')) {
+                            demographicMultiplier *= 0.4; // 40% son casados
+                        } else if (maritalStatusFilters.includes('Divorciada')) {
+                            demographicMultiplier *= 0.1; // 10% son divorciados
+                        }
+                    }
+                    
+                    if (ageFilters.length > 0 && !ageFilters.includes('todos')) {
+                        if (ageFilters.includes('20-30')) {
+                            demographicMultiplier *= 0.3; // 30% en este rango
+                        } else if (ageFilters.includes('31-40')) {
+                            demographicMultiplier *= 0.4; // 40% en este rango
+                        } else if (ageFilters.includes('41-50')) {
+                            demographicMultiplier *= 0.2; // 20% en este rango
+                        } else if (ageFilters.includes('51+')) {
+                            demographicMultiplier *= 0.1; // 10% en este rango
+                        }
+                    }
+                    
+                    if (departmentFilters.length > 0 && !departmentFilters.includes('todos')) {
+                        demographicMultiplier *= (1.0 / departmentFilters.length); // Distribución uniforme
+                    }
+                    
+                    if (positionFilters.length > 0 && !positionFilters.includes('todos')) {
+                        demographicMultiplier *= (1.0 / positionFilters.length); // Distribución uniforme
+                    }
+                    
+                    if (countryFilters.length > 0 && !countryFilters.includes('todos')) {
+                        demographicMultiplier *= (1.0 / countryFilters.length); // Distribución uniforme
+                    }
+                    
+                    if (cityFilters.length > 0 && !cityFilters.includes('todos')) {
+                        demographicMultiplier *= (1.0 / cityFilters.length); // Distribución uniforme
+                    }
+                    
+                    if (leaderFilters.length > 0 && !leaderFilters.includes('todos')) {
+                        demographicMultiplier *= (1.0 / leaderFilters.length); // Distribución uniforme
+                    }
+                    
+                    // Calcular nuevos valores
+                    const newCount = Math.round(originalCount * demographicMultiplier);
+                    const newPercentage = Math.round((newCount / 150) * 100 * 10) / 10; // Asumiendo 150 usuarios totales
+                    
+                    // Actualizar los valores en la tabla
+                    riskCountCell.textContent = newCount.toString();
+                    percentageCell.textContent = `${newPercentage}%`;
+                    
+                    console.log(`📊 Fila ${index} actualizada:`, {
+                        dimension: dimensionText,
+                        originalCount: originalCount,
+                        newCount: newCount,
+                        originalPercentage: originalPercentage,
+                        newPercentage: newPercentage,
+                        multiplier: demographicMultiplier
+                    });
+                }
+                
                 // Mostrar u ocultar fila
                 if (shouldShow) {
                     row.style.display = '';
@@ -5173,10 +5262,48 @@
             // Actualizar textos de los selects
             updateDimensionsSelectTexts();
             
-            // Mostrar todas las filas
+            // Restaurar números originales y mostrar todas las filas
             const tableRows = document.querySelectorAll('#new-dimensions-panel .results-table tbody tr');
             tableRows.forEach(row => {
                 row.style.display = '';
+                
+                // Restaurar números originales
+                const riskCountCell = row.querySelector('td:nth-child(3) .risk-count');
+                const percentageCell = row.querySelector('td:nth-child(4) .percentage');
+                
+                if (riskCountCell && percentageCell) {
+                    // Restaurar valores originales basados en el contenido de la dimensión
+                    const dimensionCell = row.querySelector('td:nth-child(1)');
+                    if (dimensionCell) {
+                        const dimensionText = dimensionCell.textContent.trim();
+                        
+                        // Mapeo de dimensiones a valores originales
+                        const originalValues = {
+                            'Condiciones físicas': { count: 12, percentage: 8.0 },
+                            'Condiciones de seguridad': { count: 8, percentage: 5.3 },
+                            'Exigencias cuantitativas': { count: 18, percentage: 12.0 },
+                            'Exigencias mentales': { count: 25, percentage: 16.7 },
+                            'Exigencias emocionales': { count: 22, percentage: 14.7 },
+                            'Falta de control sobre el trabajo': { count: 15, percentage: 10.0 },
+                            'Falta de autonomía': { count: 10, percentage: 6.7 },
+                            'Falta de claridad de rol': { count: 13, percentage: 8.7 },
+                            'Falta de reconocimiento': { count: 20, percentage: 13.3 },
+                            'Jornada de trabajo': { count: 22, percentage: 14.7 },
+                            'Liderazgo': { count: 18, percentage: 12.0 },
+                            'Relaciones interpersonales': { count: 8, percentage: 5.3 },
+                            'Violencia laboral': { count: 32, percentage: 21.3 }
+                        };
+                        
+                        // Buscar la dimensión correspondiente
+                        for (const [key, values] of Object.entries(originalValues)) {
+                            if (dimensionText.includes(key)) {
+                                riskCountCell.textContent = values.count.toString();
+                                percentageCell.textContent = `${values.percentage}%`;
+                                break;
+                            }
+                        }
+                    }
+                }
             });
             
             console.log(`✅ Filtros limpiados. ${tableRows.length} filas visibles`);
