@@ -4354,6 +4354,46 @@
                     }
                 }
                 
+                // Filtrar por sexo
+                if (genderFilters.length > 0 && !genderFilters.includes('todos')) {
+                    const categoryText = row.querySelector('.category-cell span')?.textContent.trim() || '';
+                    const domainText = row.querySelector('.category-domain-info')?.textContent.trim() || '';
+                    
+                    // Obtener datos demográficos simulados para esta fila
+                    const simulatedGender = getSimulatedGender(categoryText, domainText);
+                    
+                    let genderMatch = false;
+                    genderFilters.forEach(filter => {
+                        if (filter === 'Masculino' && simulatedGender === 'Masculino') genderMatch = true;
+                        if (filter === 'Femenino' && simulatedGender === 'Femenino') genderMatch = true;
+                    });
+                    
+                    if (!genderMatch) {
+                        shouldShow = false;
+                    }
+                }
+                
+                // Filtrar por estado civil
+                if (maritalStatusFilters.length > 0 && !maritalStatusFilters.includes('todos')) {
+                    const categoryText = row.querySelector('.category-cell span')?.textContent.trim() || '';
+                    const domainText = row.querySelector('.category-domain-info')?.textContent.trim() || '';
+                    
+                    // Obtener datos demográficos simulados para esta fila
+                    const simulatedMaritalStatus = getSimulatedMaritalStatus(categoryText, domainText);
+                    
+                    let maritalMatch = false;
+                    maritalStatusFilters.forEach(filter => {
+                        if (filter === 'Soltero' && simulatedMaritalStatus === 'Soltero') maritalMatch = true;
+                        if (filter === 'Casado' && simulatedMaritalStatus === 'Casado') maritalMatch = true;
+                        if (filter === 'Divorciado' && simulatedMaritalStatus === 'Divorciado') maritalMatch = true;
+                        if (filter === 'Viudo' && simulatedMaritalStatus === 'Viudo') maritalMatch = true;
+                    });
+                    
+                    if (!maritalMatch) {
+                        shouldShow = false;
+                    }
+                }
+                
                 // Mostrar u ocultar la fila
                 if (shouldShow) {
                     row.style.display = '';
