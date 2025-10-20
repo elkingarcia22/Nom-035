@@ -6279,6 +6279,13 @@
             if (filtersPanel) filtersPanel.classList.remove('show');
             if (filtersBackdrop) filtersBackdrop.classList.remove('show');
             
+            // Cerrar todos los dropdowns de dimensiones que puedan estar abiertos
+            const dimensionsCustomSelects = document.querySelectorAll('#dimensions-table-filters-side-panel .custom-select');
+            dimensionsCustomSelects.forEach(select => {
+                closeNewDropdown(select.id);
+            });
+            console.log('✅ Todos los dropdowns de dimensiones cerrados después de aplicar filtros');
+            
             // Actualizar badge de filtros
             updateDimensionsFilterBadge();
             
