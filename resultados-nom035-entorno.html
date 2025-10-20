@@ -1547,6 +1547,8 @@
             transition: right 0.3s ease;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
         .filters-side-panel.show {
@@ -1758,6 +1760,12 @@
 
         .clear-filters-btn:hover {
             background: #e5e7eb;
+        }
+
+        .filters-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
         }
 
         .filters-overlay {
@@ -7155,6 +7163,65 @@
                     clearIndividualFilters();
                 });
             }
+            
+            // Configurar custom selects
+            setupIndividualCustomSelects();
+        }
+
+        function setupIndividualCustomSelects() {
+            const customSelects = document.querySelectorAll('#individual-filters-side-panel .custom-select');
+            
+            customSelects.forEach(select => {
+                const selectTrigger = select.querySelector('.select-trigger');
+                const selectDropdown = select.querySelector('.select-dropdown');
+                const selectOptions = select.querySelectorAll('.select-option');
+                
+                if (selectTrigger && selectDropdown) {
+                    selectTrigger.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        selectDropdown.classList.toggle('show');
+                    });
+                    
+                    selectOptions.forEach(option => {
+                        option.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            const checkbox = option.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                updateIndividualSelectTexts();
+                            }
+                        });
+                    });
+                }
+            });
+            
+            // Cerrar dropdowns al hacer clic fuera
+            document.addEventListener('click', function() {
+                customSelects.forEach(select => {
+                    const selectDropdown = select.querySelector('.select-dropdown');
+                    if (selectDropdown) {
+                        selectDropdown.classList.remove('show');
+                    }
+                });
+            });
+        }
+
+        function updateIndividualSelectTexts() {
+            const customSelects = document.querySelectorAll('#individual-filters-side-panel .custom-select');
+            
+            customSelects.forEach(select => {
+                const selectText = select.querySelector('.select-text');
+                const checkboxes = select.querySelectorAll('input[type="checkbox"]:checked');
+                
+                if (checkboxes.length === 0) {
+                    selectText.textContent = selectText.dataset.placeholder || 'Seleccionar...';
+                } else if (checkboxes.length === 1) {
+                    const option = checkboxes[0].closest('.select-option');
+                    selectText.textContent = option.querySelector('span').textContent;
+                } else {
+                    selectText.textContent = `${checkboxes.length} seleccionados`;
+                }
+            });
         }
 
         function applyIndividualFilters() {
