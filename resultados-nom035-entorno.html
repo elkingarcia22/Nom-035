@@ -3812,6 +3812,12 @@
             return cities[hash % cities.length];
         }
 
+        function getSimulatedLeader(categoryText, domainText) {
+            const leaders = ['Juan Pérez', 'María García', 'Carlos López', 'Ana Martínez', 'Luis Rodríguez'];
+            const hash = (categoryText + domainText).length + 7;
+            return leaders[hash % leaders.length];
+        }
+
         function clearTableFilters() {
             const selectIds = ['table-risk-select', 'table-category-select', 'table-area-select', 'table-position-select', 'table-gender-select', 'table-marital-select', 'table-age-select', 'table-country-select', 'table-city-select', 'table-domain-select', 'table-dimension-select'];
             
@@ -4354,44 +4360,18 @@
                     }
                 }
                 
-                // Filtrar por sexo
-                if (genderFilters.length > 0 && !genderFilters.includes('todos')) {
-                    const categoryText = row.querySelector('.category-cell span')?.textContent.trim() || '';
-                    const domainText = row.querySelector('.category-domain-info')?.textContent.trim() || '';
-                    
-                    // Obtener datos demográficos simulados para esta fila
-                    const simulatedGender = getSimulatedGender(categoryText, domainText);
-                    
-                    let genderMatch = false;
-                    genderFilters.forEach(filter => {
-                        if (filter === 'Masculino' && simulatedGender === 'Masculino') genderMatch = true;
-                        if (filter === 'Femenino' && simulatedGender === 'Femenino') genderMatch = true;
-                    });
-                    
-                    if (!genderMatch) {
-                        shouldShow = false;
-                    }
-                }
+                // Verificar si hay filtros demográficos activos
+                const hasDemographicFilters = genderFilters.length > 0 || maritalStatusFilters.length > 0 || 
+                    ageFilters.length > 0 || countryFilters.length > 0 || cityFilters.length > 0 || 
+                    departmentFilters.length > 0 || positionFilters.length > 0 || leaderFilters.length > 0;
                 
-                // Filtrar por estado civil
-                if (maritalStatusFilters.length > 0 && !maritalStatusFilters.includes('todos')) {
-                    const categoryText = row.querySelector('.category-cell span')?.textContent.trim() || '';
-                    const domainText = row.querySelector('.category-domain-info')?.textContent.trim() || '';
-                    
-                    // Obtener datos demográficos simulados para esta fila
-                    const simulatedMaritalStatus = getSimulatedMaritalStatus(categoryText, domainText);
-                    
-                    let maritalMatch = false;
-                    maritalStatusFilters.forEach(filter => {
-                        if (filter === 'Soltero' && simulatedMaritalStatus === 'Soltero') maritalMatch = true;
-                        if (filter === 'Casado' && simulatedMaritalStatus === 'Casado') maritalMatch = true;
-                        if (filter === 'Divorciado' && simulatedMaritalStatus === 'Divorciado') maritalMatch = true;
-                        if (filter === 'Viudo' && simulatedMaritalStatus === 'Viudo') maritalMatch = true;
-                    });
-                    
-                    if (!maritalMatch) {
-                        shouldShow = false;
-                    }
+                if (hasDemographicFilters) {
+                    // Actualizar números basados en filtros demográficos
+                    updateNewRowNumbers(row, departmentFilters, positionFilters, genderFilters, maritalStatusFilters, 
+                        ageFilters, countryFilters, cityFilters, leaderFilters);
+                } else {
+                    // Restaurar números originales si no hay filtros demográficos
+                    restoreNewOriginalNumbers(row);
                 }
                 
                 // Mostrar u ocultar la fila
@@ -4413,6 +4393,91 @@
         }
 
         // Función para limpiar filtros en la tabla general
+        // Función para actualizar números de fila basados en filtros demográficos
+        function updateNewRowNumbers(row, departmentFilters, positionFilters, genderFilters, maritalStatusFilters, ageFilters, countryFilters, cityFilters, leaderFilters) {
+            const categoryText = row.querySelector('.category-cell span')?.textContent.trim() || '';
+            const domainText = row.querySelector('.category-domain-info')?.textContent.trim() || '';
+            
+            // Obtener datos demográficos simulados para esta fila
+            const simulatedDepartment = getSimulatedArea(categoryText, domainText);
+            const simulatedPosition = getSimulatedPosition(categoryText, domainText);
+            const simulatedGender = getSimulatedGender(categoryText, domainText);
+            const simulatedMaritalStatus = getSimulatedMaritalStatus(categoryText, domainText);
+            const simulatedAge = getSimulatedAge(categoryText, domainText);
+            const simulatedCountry = getSimulatedCountry(categoryText, domainText);
+            const simulatedCity = getSimulatedCity(categoryText, domainText);
+            const simulatedLeader = getSimulatedLeader(categoryText, domainText);
+            
+            // Verificar si esta fila coincide con los filtros demográficos
+            const matchesDepartment = departmentFilters.length === 0 || departmentFilters.includes('todos') || departmentFilters.includes(simulatedDepartment);
+            const matchesPosition = positionFilters.length === 0 || positionFilters.includes('todos') || positionFilters.includes(simulatedPosition);
+            const matchesGender = genderFilters.length === 0 || genderFilters.includes('todos') || genderFilters.includes(simulatedGender);
+            const matchesMaritalStatus = maritalStatusFilters.length === 0 || maritalStatusFilters.includes('todos') || maritalStatusFilters.includes(simulatedMaritalStatus);
+            const matchesAge = ageFilters.length === 0 || ageFilters.includes('todos') || ageFilters.includes(simulatedAge);
+            const matchesCountry = countryFilters.length === 0 || countryFilters.includes('todos') || countryFilters.includes(simulatedCountry);
+            const matchesCity = cityFilters.length === 0 || cityFilters.includes('todos') || cityFilters.includes(simulatedCity);
+            const matchesLeader = leaderFilters.length === 0 || leaderFilters.includes('todos') || leaderFilters.includes(simulatedLeader);
+            
+            const matchesAllDemographic = matchesDepartment && matchesPosition && matchesGender && matchesMaritalStatus && matchesAge && matchesCountry && matchesCity && matchesLeader;
+            
+            // Actualizar números basados en si coincide con los filtros
+            const riskCountCell = row.querySelector('.risk-count');
+            const percentageCell = row.querySelector('.percentage');
+            
+            if (riskCountCell && percentageCell) {
+                // Guardar valores originales si no están guardados
+                if (!riskCountCell.dataset.originalValue) {
+                    riskCountCell.dataset.originalValue = riskCountCell.textContent;
+                }
+                if (!percentageCell.dataset.originalValue) {
+                    percentageCell.dataset.originalValue = percentageCell.textContent;
+                }
+                
+                if (matchesAllDemographic) {
+                    // Si coincide con todos los filtros, mantener números originales
+                    riskCountCell.textContent = riskCountCell.dataset.originalValue;
+                    percentageCell.textContent = percentageCell.dataset.originalValue;
+                } else {
+                    // Si no coincide, reducir números proporcionalmente
+                    const originalCount = parseInt(riskCountCell.dataset.originalValue) || 0;
+                    const originalPercentage = parseFloat(percentageCell.dataset.originalValue) || 0;
+                    
+                    // Calcular factor de reducción basado en cuántos filtros coinciden
+                    let matchCount = 0;
+                    let totalFilters = 0;
+                    
+                    if (departmentFilters.length > 0 && !departmentFilters.includes('todos')) { totalFilters++; if (matchesDepartment) matchCount++; }
+                    if (positionFilters.length > 0 && !positionFilters.includes('todos')) { totalFilters++; if (matchesPosition) matchCount++; }
+                    if (genderFilters.length > 0 && !genderFilters.includes('todos')) { totalFilters++; if (matchesGender) matchCount++; }
+                    if (maritalStatusFilters.length > 0 && !maritalStatusFilters.includes('todos')) { totalFilters++; if (matchesMaritalStatus) matchCount++; }
+                    if (ageFilters.length > 0 && !ageFilters.includes('todos')) { totalFilters++; if (matchesAge) matchCount++; }
+                    if (countryFilters.length > 0 && !countryFilters.includes('todos')) { totalFilters++; if (matchesCountry) matchCount++; }
+                    if (cityFilters.length > 0 && !cityFilters.includes('todos')) { totalFilters++; if (matchesCity) matchCount++; }
+                    if (leaderFilters.length > 0 && !leaderFilters.includes('todos')) { totalFilters++; if (matchesLeader) matchCount++; }
+                    
+                    const reductionFactor = totalFilters > 0 ? matchCount / totalFilters : 1;
+                    const newCount = Math.round(originalCount * reductionFactor);
+                    const newPercentage = Math.round(originalPercentage * reductionFactor * 100) / 100;
+                    
+                    riskCountCell.textContent = newCount;
+                    percentageCell.textContent = newPercentage.toFixed(1) + '%';
+                }
+            }
+        }
+        
+        // Función para restaurar números originales
+        function restoreNewOriginalNumbers(row) {
+            const riskCountCell = row.querySelector('.risk-count');
+            const percentageCell = row.querySelector('.percentage');
+            
+            if (riskCountCell && riskCountCell.dataset.originalValue) {
+                riskCountCell.textContent = riskCountCell.dataset.originalValue;
+            }
+            if (percentageCell && percentageCell.dataset.originalValue) {
+                percentageCell.textContent = percentageCell.dataset.originalValue;
+            }
+        }
+        
         function clearNewFilters() {
             console.log('🧹 ===== LIMPIANDO FILTROS EN TABLA GENERAL =====');
             
@@ -4427,10 +4492,11 @@
             // Actualizar textos de los selects
             updateAllSelectTexts();
             
-            // Mostrar todas las filas
+            // Mostrar todas las filas y restaurar números originales
             const tableRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
             tableRows.forEach(row => {
                 row.style.display = '';
+                restoreNewOriginalNumbers(row);
             });
             
             console.log(`✅ Filtros limpiados. ${tableRows.length} filas visibles`);
