@@ -4261,7 +4261,7 @@
             });
             
             // Obtener todas las filas de la tabla
-            const tableRows = document.querySelectorAll('#new-overview-table tbody tr');
+            const tableRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
             let visibleCount = 0;
             
             tableRows.forEach(row => {
@@ -4288,7 +4288,7 @@
                 
                 // Filtrar por categoría NOM-035
                 if (categoryFilters.length > 0 && !categoryFilters.includes('todos')) {
-                    const categoryCell = row.querySelector('.category-domain-info');
+                    const categoryCell = row.querySelector('.category-cell span');
                     if (categoryCell) {
                         const categoryText = categoryCell.textContent.trim();
                         let categoryMatch = false;
@@ -4309,13 +4309,13 @@
                 
                 // Filtrar por dominio
                 if (domainFilters.length > 0 && !domainFilters.includes('todos')) {
-                    const domainCell = row.querySelector('.category-dimension-info');
+                    const domainCell = row.querySelector('.category-domain-info');
                     if (domainCell) {
                         const domainText = domainCell.textContent.trim();
                         let domainMatch = false;
                         
                         domainFilters.forEach(filter => {
-                            if (filter === 'condiciones-fisicas' && domainText.includes('Condiciones físicas')) domainMatch = true;
+                            if (filter === 'condiciones-fisicas' && domainText.includes('Condiciones en el ambiente')) domainMatch = true;
                             if (filter === 'carga-trabajo' && domainText.includes('Carga de trabajo')) domainMatch = true;
                             if (filter === 'jornada-trabajo' && domainText.includes('Jornada de trabajo')) domainMatch = true;
                             if (filter === 'liderazgo-supervision' && domainText.includes('Liderazgo y supervisión')) domainMatch = true;
@@ -4324,6 +4324,31 @@
                         });
                         
                         if (!domainMatch) {
+                            shouldShow = false;
+                        }
+                    }
+                }
+                
+                // Filtrar por dimensión
+                if (dimensionFilters.length > 0 && !dimensionFilters.includes('todos')) {
+                    const dimensionCell = row.querySelector('.category-dimension-info');
+                    if (dimensionCell) {
+                        const dimensionText = dimensionCell.textContent.trim();
+                        let dimensionMatch = false;
+                        
+                        dimensionFilters.forEach(filter => {
+                            if (filter === 'condiciones-fisicas' && dimensionText.includes('Condiciones físicas')) dimensionMatch = true;
+                            if (filter === 'condiciones-seguridad' && dimensionText.includes('Condiciones de seguridad')) dimensionMatch = true;
+                            if (filter === 'exigencias-cuantitativas' && dimensionText.includes('Exigencias cuantitativas')) dimensionMatch = true;
+                            if (filter === 'exigencias-mentales' && dimensionText.includes('Exigencias mentales')) dimensionMatch = true;
+                            if (filter === 'exigencias-emocionales' && dimensionText.includes('Exigencias emocionales')) dimensionMatch = true;
+                            if (filter === 'jornada-trabajo' && dimensionText.includes('Jornada de trabajo')) dimensionMatch = true;
+                            if (filter === 'liderazgo' && dimensionText.includes('Liderazgo')) dimensionMatch = true;
+                            if (filter === 'relaciones-trabajo' && dimensionText.includes('Relaciones en el trabajo')) dimensionMatch = true;
+                            if (filter === 'entorno-organizacional' && dimensionText.includes('Entorno organizacional')) dimensionMatch = true;
+                        });
+                        
+                        if (!dimensionMatch) {
                             shouldShow = false;
                         }
                     }
@@ -4341,7 +4366,7 @@
             console.log(`✅ Filtros aplicados. ${visibleCount} filas visibles de ${tableRows.length} totales`);
             
             // Actualizar contador de resultados si existe
-            const resultCount = document.querySelector('#new-overview-table .table-info .result-count');
+            const resultCount = document.querySelector('#new-overview-panel .table-info .result-count');
             if (resultCount) {
                 resultCount.textContent = `${visibleCount} resultados`;
             }
@@ -4363,7 +4388,7 @@
             updateAllSelectTexts();
             
             // Mostrar todas las filas
-            const tableRows = document.querySelectorAll('#new-overview-table tbody tr');
+            const tableRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
             tableRows.forEach(row => {
                 row.style.display = '';
             });
@@ -4371,7 +4396,7 @@
             console.log(`✅ Filtros limpiados. ${tableRows.length} filas visibles`);
             
             // Actualizar contador de resultados si existe
-            const resultCount = document.querySelector('#new-overview-table .table-info .result-count');
+            const resultCount = document.querySelector('#new-overview-panel .table-info .result-count');
             if (resultCount) {
                 resultCount.textContent = `${tableRows.length} resultados`;
             }
