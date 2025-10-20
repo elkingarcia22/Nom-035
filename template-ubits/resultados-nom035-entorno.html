@@ -3768,14 +3768,14 @@
             if (filtersBtn && filtersPanel) {
                 filtersBtn.addEventListener('click', function() {
                     console.log('🔍 Click en botón de filtros (nuevos tabs)');
-                    filtersPanel.style.display = filtersPanel.style.display === 'none' ? 'block' : 'none';
+                    filtersPanel.classList.toggle('show');
                 });
             }
             
             if (closeFiltersBtn && filtersPanel) {
                 closeFiltersBtn.addEventListener('click', function() {
                     console.log('❌ Cerrando filtros (nuevos tabs)');
-                    filtersPanel.style.display = 'none';
+                    filtersPanel.classList.remove('show');
                 });
             }
             
