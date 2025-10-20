@@ -5393,8 +5393,12 @@
                         
                         // Actualizar checkbox original
                         const originalCheckbox = select.querySelector(`input[value="${value}"]`);
+                        console.log(`🔧 Checkbox original encontrado:`, !!originalCheckbox, originalCheckbox);
                         if (originalCheckbox) {
                             originalCheckbox.checked = checked;
+                            console.log(`🔧 Checkbox actualizado: ${originalCheckbox.value} = ${originalCheckbox.checked}`);
+                        } else {
+                            console.log(`❌ No se encontró checkbox con value="${value}"`);
                         }
                         
                         // Manejar lógica de "Todos"
