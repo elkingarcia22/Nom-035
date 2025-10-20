@@ -1797,102 +1797,80 @@
             margin: 0;
         }
 
-        /* CSS específico para filtros individuales */
-        #individual-filters-side-panel .custom-select {
+        /* CSS específico para filtros individuales - COPIADO EXACTAMENTE DE EMOCIONAL */
+        .custom-select {
             position: relative;
             width: 100%;
-            margin-bottom: 16px;
         }
 
-        #individual-filters-side-panel .select-trigger {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 12px;
+        .select-trigger {
+            width: 100%;
+            padding: 8px 12px;
             border: 1px solid #d1d5db;
             border-radius: 6px;
-            background: white;
+            background: #fff;
+            color: #374151;
+            font-size: 14px;
             cursor: pointer;
-            transition: border-color 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        #individual-filters-side-panel .select-trigger:hover {
+        .select-trigger:hover {
             border-color: #9ca3af;
         }
 
-        #individual-filters-side-panel .select-trigger.active {
+        .select-trigger.active {
             border-color: #3b82f6;
         }
 
-        #individual-filters-side-panel .select-text {
-            color: #374151;
-            font-size: 14px;
-        }
-
-        #individual-filters-side-panel .select-arrow {
+        .select-arrow {
             color: #6b7280;
             transition: transform 0.2s ease;
         }
 
-        #individual-filters-side-panel .select-trigger.active .select-arrow {
+        .select-trigger.active .select-arrow {
             transform: rotate(180deg);
         }
 
-        #individual-filters-side-panel .select-dropdown {
-            position: absolute !important;
-            top: 100% !important;
-            left: 0 !important;
-            right: 0 !important;
-            background: white !important;
-            border: 1px solid #d1d5db !important;
-            border-radius: 6px !important;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
-            z-index: 1001 !important;
-            max-height: 200px !important;
-            overflow-y: auto !important;
-            display: none !important;
-            width: 100% !important;
-            margin-top: 4px !important;
-        }
-        
-        /* Permitir que los dropdowns se muestren fuera del contenedor */
-        #individual-filters-side-panel {
-            overflow: visible !important;
-        }
-        
-        #individual-filters-side-panel .filters-content {
-            overflow: visible !important;
-        }
-        
-        /* Asegurar que los custom-select tengan suficiente espacio */
-        #individual-filters-side-panel .custom-select {
-            position: relative;
-            width: 100%;
-            margin-bottom: 16px !important;
-            z-index: 1;
+        .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
         }
 
-        #individual-filters-side-panel .select-dropdown.show {
-            display: block !important;
+        .select-dropdown.show {
+            display: block;
         }
 
-        #individual-filters-side-panel .select-option {
-            display: flex;
-            align-items: center;
+        .select-option {
             padding: 8px 12px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             transition: background-color 0.2s ease;
         }
 
-        #individual-filters-side-panel .select-option:hover {
-            background-color: #f3f4f6;
+        .select-option:hover {
+            background: #f3f4f6;
         }
 
-        #individual-filters-side-panel .select-option input[type="checkbox"] {
+        .select-option input[type="checkbox"] {
             margin-right: 8px;
         }
 
-        #individual-filters-side-panel .option-text {
+        .option-text {
             color: #374151;
             font-size: 14px;
         }
