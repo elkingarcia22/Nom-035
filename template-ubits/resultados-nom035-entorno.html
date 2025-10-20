@@ -5176,21 +5176,21 @@
             tableRows.forEach((row, index) => {
                 let shouldShow = true;
                 
-                // Obtener datos de la fila
-                const dimensionCell = row.querySelector('td:nth-child(1)');
-                const domainCell = row.querySelector('td:nth-child(2)');
-                const riskCountCell = row.querySelector('td:nth-child(3) .risk-count');
-                const percentageCell = row.querySelector('td:nth-child(4) .percentage');
-                const riskCell = row.querySelector('td:nth-child(5)');
+                // Obtener datos de la fila usando los selectores correctos
+                const dimensionCell = row.querySelector('.dimension-cell span');
+                const domainCell = row.querySelector('.dimension-domain-info');
+                const riskCountCell = row.querySelector('.risk-count');
+                const percentageCell = row.querySelector('.percentage');
+                const riskBadge = row.querySelector('.risk-badge');
                 
-                if (!dimensionCell || !domainCell || !riskCell) {
+                if (!dimensionCell || !domainCell || !riskBadge) {
                     console.log(`⚠️ Fila ${index} no tiene las celdas esperadas`);
                     return;
                 }
                 
                 const dimensionText = dimensionCell.textContent.trim();
                 const domainText = domainCell.textContent.trim();
-                const riskText = riskCell.textContent.trim();
+                const riskText = riskBadge.textContent.trim();
                 
                 console.log(`🔍 Fila ${index}:`, {
                     dimension: dimensionText,
@@ -5212,10 +5212,10 @@
                 if (shouldShow && categoryFilters.length > 0 && !categoryFilters.includes('todos')) {
                     // Mapear categorías a dominios
                     const categoryToDomainMap = {
-                        'ambiente': 'Condiciones físicas, seguridad y comodidad',
+                        'ambiente': 'Condiciones en el ambiente de trabajo',
                         'factores': 'Carga de trabajo',
                         'tiempo': 'Jornada de trabajo',
-                        'liderazgo': 'Liderazgo y supervisión',
+                        'liderazgo': 'Liderazgo y Relaciones interpersonales',
                         'entorno': 'Entorno organizacional'
                     };
                     
@@ -5367,13 +5367,13 @@
             tableRows.forEach(row => {
                 row.style.display = '';
                 
-                // Restaurar números originales
-                const riskCountCell = row.querySelector('td:nth-child(3) .risk-count');
-                const percentageCell = row.querySelector('td:nth-child(4) .percentage');
+                // Restaurar números originales usando los selectores correctos
+                const riskCountCell = row.querySelector('.risk-count');
+                const percentageCell = row.querySelector('.percentage');
                 
                 if (riskCountCell && percentageCell) {
                     // Restaurar valores originales basados en el contenido de la dimensión
-                    const dimensionCell = row.querySelector('td:nth-child(1)');
+                    const dimensionCell = row.querySelector('.dimension-cell span');
                     if (dimensionCell) {
                         const dimensionText = dimensionCell.textContent.trim();
                         
@@ -5389,9 +5389,15 @@
                             'Falta de claridad de rol': { count: 13, percentage: 8.7 },
                             'Falta de reconocimiento': { count: 20, percentage: 13.3 },
                             'Jornada de trabajo': { count: 22, percentage: 14.7 },
+                            'Distribución de la jornada': { count: 15, percentage: 10.0 },
+                            'Pausas': { count: 8, percentage: 5.3 },
                             'Liderazgo': { count: 18, percentage: 12.0 },
+                            'Comunicación': { count: 12, percentage: 8.0 },
+                            'Apoyo social': { count: 10, percentage: 6.7 },
                             'Relaciones interpersonales': { count: 8, percentage: 5.3 },
-                            'Violencia laboral': { count: 32, percentage: 21.3 }
+                            'Violencia laboral': { count: 32, percentage: 21.3 },
+                            'Equidad': { count: 15, percentage: 10.0 },
+                            'Respeto': { count: 12, percentage: 8.0 }
                         };
                         
                         // Buscar la dimensión correspondiente
