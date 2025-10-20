@@ -5250,6 +5250,40 @@
                     e.stopPropagation();
                     console.log(`🔧 Click en trigger del select ${select.id}`);
                     
+                    // DIAGNÓSTICO DETALLADO DE POSICIONAMIENTO
+                    const selectRect = select.getBoundingClientRect();
+                    const triggerRect = selectTrigger.getBoundingClientRect();
+                    const dropdownRect = selectDropdown.getBoundingClientRect();
+                    
+                    console.log(`🔧 DIAGNÓSTICO POSICIONAMIENTO ${select.id}:`, {
+                        selectPosition: {
+                            top: selectRect.top,
+                            left: selectRect.left,
+                            width: selectRect.width,
+                            height: selectRect.height
+                        },
+                        triggerPosition: {
+                            top: triggerRect.top,
+                            left: triggerRect.left,
+                            width: triggerRect.width,
+                            height: triggerRect.height
+                        },
+                        dropdownPosition: {
+                            top: dropdownRect.top,
+                            left: dropdownRect.left,
+                            width: dropdownRect.width,
+                            height: dropdownRect.height
+                        },
+                        computedStyles: {
+                            position: window.getComputedStyle(selectDropdown).position,
+                            zIndex: window.getComputedStyle(selectDropdown).zIndex,
+                            display: window.getComputedStyle(selectDropdown).display,
+                            overflow: window.getComputedStyle(select).overflow,
+                            overflowX: window.getComputedStyle(select).overflowX,
+                            overflowY: window.getComputedStyle(select).overflowY
+                        }
+                    });
+                    
                     // Cerrar otros dropdowns
                     newCustomSelects.forEach(otherSelect => {
                         if (otherSelect !== select) {
@@ -5270,6 +5304,55 @@
                         isActive: selectTrigger.classList.contains('active'),
                         dropdownShow: selectDropdown.classList.contains('show')
                     });
+                    
+                    // DIAGNÓSTICO DESPUÉS DEL TOGGLE
+                    setTimeout(() => {
+                        const newDropdownRect = selectDropdown.getBoundingClientRect();
+                        const newComputedStyles = window.getComputedStyle(selectDropdown);
+                        const panel = document.getElementById('new-table-filters-side-panel');
+                        const content = document.querySelector('#new-table-filters-side-panel .filters-content');
+                        
+                        console.log(`🔧 DIAGNÓSTICO DESPUÉS DEL TOGGLE ${select.id}:`, {
+                            dropdownPosition: {
+                                top: newDropdownRect.top,
+                                left: newDropdownRect.left,
+                                width: newDropdownRect.width,
+                                height: newDropdownRect.height,
+                                bottom: newDropdownRect.bottom,
+                                right: newDropdownRect.right
+                            },
+                            computedStyles: {
+                                position: newComputedStyles.position,
+                                zIndex: newComputedStyles.zIndex,
+                                display: newComputedStyles.display,
+                                visibility: newComputedStyles.visibility,
+                                opacity: newComputedStyles.opacity,
+                                transform: newComputedStyles.transform
+                            },
+                            parentOverflow: {
+                                select: window.getComputedStyle(select).overflow,
+                                panel: panel ? window.getComputedStyle(panel).overflow : 'N/A',
+                                content: content ? window.getComputedStyle(content).overflow : 'N/A'
+                            },
+                            parentDimensions: {
+                                select: {
+                                    width: select.offsetWidth,
+                                    height: select.offsetHeight,
+                                    scrollHeight: select.scrollHeight
+                                },
+                                panel: panel ? {
+                                    width: panel.offsetWidth,
+                                    height: panel.offsetHeight,
+                                    scrollHeight: panel.scrollHeight
+                                } : 'N/A',
+                                content: content ? {
+                                    width: content.offsetWidth,
+                                    height: content.offsetHeight,
+                                    scrollHeight: content.scrollHeight
+                                } : 'N/A'
+                            }
+                        });
+                    }, 100);
                 });
                 
                 // Manejar clicks en opciones
