@@ -4412,6 +4412,19 @@
             if (resultCount) {
                 resultCount.textContent = `${visibleCount} resultados`;
             }
+            
+            // Cerrar el side panel y backdrop después de aplicar filtros
+            const filtersPanel = document.getElementById('new-table-filters-side-panel');
+            const filtersBackdrop = document.getElementById('new-filters-backdrop');
+            
+            if (filtersPanel) {
+                filtersPanel.classList.remove('show');
+            }
+            if (filtersBackdrop) {
+                filtersBackdrop.classList.remove('show');
+            }
+            
+            console.log('✅ Side panel y backdrop cerrados después de aplicar filtros');
         }
 
         // Función para limpiar filtros en la tabla general
