@@ -1861,6 +1861,85 @@
             font-size: 14px;
         }
 
+        /* FORZAR ESTILOS PARA INDIVIDUAL FILTERS - ESPECIFICIDAD ALTA */
+        #individual-filters-side-panel .custom-select {
+            position: relative !important;
+            width: 100% !important;
+            margin-bottom: 16px !important;
+        }
+
+        #individual-filters-side-panel .select-trigger {
+            width: 100% !important;
+            padding: 8px 12px !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 6px !important;
+            background: #fff !important;
+            color: #374151 !important;
+            font-size: 14px !important;
+            cursor: pointer !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+        }
+
+        #individual-filters-side-panel .select-trigger:hover {
+            border-color: #9ca3af !important;
+        }
+
+        #individual-filters-side-panel .select-trigger.active {
+            border-color: #3b82f6 !important;
+        }
+
+        #individual-filters-side-panel .select-arrow {
+            color: #6b7280 !important;
+            transition: transform 0.2s ease !important;
+        }
+
+        #individual-filters-side-panel .select-trigger.active .select-arrow {
+            transform: rotate(180deg) !important;
+        }
+
+        #individual-filters-side-panel .select-dropdown {
+            position: absolute !important;
+            top: 100% !important;
+            left: 0 !important;
+            right: 0 !important;
+            background: #fff !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 6px !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+            z-index: 1000 !important;
+            max-height: 200px !important;
+            overflow-y: auto !important;
+            display: none !important;
+        }
+
+        #individual-filters-side-panel .select-dropdown.show {
+            display: block !important;
+        }
+
+        #individual-filters-side-panel .select-option {
+            padding: 8px 12px !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            transition: background-color 0.2s ease !important;
+        }
+
+        #individual-filters-side-panel .select-option:hover {
+            background: #f3f4f6 !important;
+        }
+
+        #individual-filters-side-panel .select-option input[type="checkbox"] {
+            margin-right: 8px !important;
+        }
+
+        #individual-filters-side-panel .option-text {
+            color: #374151 !important;
+            font-size: 14px !important;
+        }
+
         .filters-overlay {
             position: fixed;
             top: 0;
