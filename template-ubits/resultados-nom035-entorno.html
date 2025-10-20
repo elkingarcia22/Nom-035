@@ -1922,7 +1922,7 @@
             border: 1px solid #d1d5db !important;
             border-radius: 6px !important;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
-            z-index: 1000 !important;
+            z-index: 1001 !important;
             max-height: 200px !important;
             overflow-y: auto !important;
             display: none !important;
@@ -1930,6 +1930,19 @@
 
         #individual-filters-side-panel .select-dropdown.show {
             display: block !important;
+        }
+
+        /* FORZAR POSICIONAMIENTO CORRECTO */
+        #individual-filters-side-panel {
+            overflow: visible !important;
+        }
+
+        #individual-filters-side-panel .filters-content {
+            overflow: visible !important;
+        }
+
+        #individual-filters-side-panel .custom-select {
+            overflow: visible !important;
         }
 
         #individual-filters-side-panel .select-option {
