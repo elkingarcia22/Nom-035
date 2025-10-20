@@ -562,12 +562,13 @@
         }
 
         .risk-level {
-            padding: 2px 8px;
+            padding: 4px 8px;
             border-radius: 12px;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            flex-shrink: 0;
         }
 
         .risk-level.nulo { background: #f3f4f6; color: #6b7280; }
@@ -6404,12 +6405,12 @@
                     <div class="participant-avatar" style="background-color: ${participant.avatarColor}">
                         ${participant.avatar}
                     </div>
-                    <div class="participant-info">
+                    <div class="participant-info-content">
                         <div class="participant-name">${participant.name}</div>
                         <div class="participant-role">${participant.role}</div>
                     </div>
-                    <div class="participant-risk">
-                        <span class="risk-badge ${riskBadgeClass}">${riskBadgeText}</span>
+                    <div class="risk-level risk-${participant.riskLevel}">
+                        ${participant.riskLevel.replace('-', ' ')}
                     </div>
                 `;
                 
