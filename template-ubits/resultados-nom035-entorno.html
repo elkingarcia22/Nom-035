@@ -2541,8 +2541,22 @@
                         
                         <div class="tab-panel" id="new-dimensions-panel">
                             <div class="panel-content">
-                                <div class="table-header">
-                                    <h3>Análisis por Dimensiones NOM-035</h3>
+                                <!-- Segment Control -->
+                                <div class="segment-control-container" style="margin-bottom: 24px;">
+                                    <div class="segment-control" style="display: flex; background: var(--ubits-bg-2); border-radius: 8px; padding: 4px; width: fit-content;">
+                                        <button class="segment-option active" data-segment="dimensions" style="padding: 8px 16px; border: none; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                                            Dimensiones
+                                        </button>
+                                        <button class="segment-option" data-segment="individual" style="padding: 8px 16px; border: none; background: transparent; color: var(--ubits-fg-1-medium); border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">
+                                            Individual
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Sección Dimensiones -->
+                                <div class="segment-content" id="dimensions-content">
+                                    <div class="table-header">
+                                        <h3>Análisis por Dimensiones NOM-035</h3>
                                     <div class="table-controls">
                                         <!-- Campo de búsqueda desplegable -->
                                         <div id="dimensions-table-search-container" style="display: none; position: relative;">
@@ -3280,6 +3294,21 @@
                                 
                                 <!-- Backdrop para el side panel -->
                                 <div class="filters-backdrop" id="dimensions-filters-backdrop"></div>
+                                </div> <!-- Cierre de dimensions-content -->
+                                
+                                <!-- Sección Individual -->
+                                <div class="segment-content" id="individual-content" style="display: none;">
+                                    <div class="table-header">
+                                        <h3>Análisis Individual por Colaborador</h3>
+                                    </div>
+                                    
+                                    <!-- Contenido vacío por ahora -->
+                                    <div style="padding: 40px; text-align: center; color: var(--ubits-fg-1-medium);">
+                                        <i class="far fa-user" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                                        <p style="margin: 0; font-size: 16px;">Contenido individual por colaborador</p>
+                                        <p style="margin: 8px 0 0 0; font-size: 14px; opacity: 0.7;">Esta sección estará disponible próximamente</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
@@ -5679,11 +5708,69 @@
             console.log('✅ ===== CONTROLES DE TABLA DIMENSIONES INICIALIZADOS =====');
         }
 
+        // Función para inicializar el Segment Control
+        function initializeSegmentControl() {
+            console.log('🎛️ ===== INICIALIZANDO SEGMENT CONTROL =====');
+            
+            const segmentOptions = document.querySelectorAll('.segment-option');
+            const dimensionsContent = document.getElementById('dimensions-content');
+            const individualContent = document.getElementById('individual-content');
+            
+            console.log('🔍 Segment options encontrados:', segmentOptions.length);
+            console.log('🔍 Dimensions content encontrado:', dimensionsContent ? 'SÍ' : 'NO');
+            console.log('🔍 Individual content encontrado:', individualContent ? 'SÍ' : 'NO');
+            
+            segmentOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const segment = this.getAttribute('data-segment');
+                    console.log('🔄 Cambiando a segmento:', segment);
+                    
+                    // Remover clase active de todos los botones
+                    segmentOptions.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.style.background = 'transparent';
+                        btn.style.color = 'var(--ubits-fg-1-medium)';
+                        btn.style.boxShadow = 'none';
+                    });
+                    
+                    // Activar el botón seleccionado
+                    this.classList.add('active');
+                    this.style.background = 'var(--ubits-bg-1)';
+                    this.style.color = 'var(--ubits-fg-1-high)';
+                    this.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+                    
+                    // Mostrar/ocultar contenido según el segmento
+                    if (segment === 'dimensions') {
+                        if (dimensionsContent) {
+                            dimensionsContent.style.display = 'block';
+                        }
+                        if (individualContent) {
+                            individualContent.style.display = 'none';
+                        }
+                        console.log('✅ Mostrando contenido de dimensiones');
+                    } else if (segment === 'individual') {
+                        if (dimensionsContent) {
+                            dimensionsContent.style.display = 'none';
+                        }
+                        if (individualContent) {
+                            individualContent.style.display = 'block';
+                        }
+                        console.log('✅ Mostrando contenido individual');
+                    }
+                });
+            });
+            
+            console.log('✅ ===== SEGMENT CONTROL INICIALIZADO =====');
+        }
+
         // Inicializar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 ===== INICIANDO CARGA DE PÁGINA =====');
             console.log('📅 DOM cargado completamente');
             console.log('🔍 Verificando elementos críticos...');
+            
+            // Inicializar Segment Control
+            initializeSegmentControl();
             
             // Verificar que el panel de dimensiones existe desde el inicio
             const dimensionPanel = document.getElementById('dimension-panel');
