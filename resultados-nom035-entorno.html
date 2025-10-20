@@ -5325,18 +5325,38 @@
                         console.log(`  📋 Opción ${index + 1}:`, {
                             element: option,
                             innerHTML: option.innerHTML,
-                            textContent: option.textContent
+                            textContent: option.textContent,
+                            tagName: option.tagName,
+                            className: option.className
                         });
                         
-                        const checkbox = option.querySelector('input[type="checkbox"]');
-                        const label = option.querySelector('label');
+                        // Buscar checkbox de diferentes formas
+                        const checkbox = option.querySelector('input[type="checkbox"]') || 
+                                       option.querySelector('input') ||
+                                       option.querySelector('checkbox');
+                        
+                        // Buscar label de diferentes formas  
+                        const label = option.querySelector('label') ||
+                                    option.querySelector('span') ||
+                                    option.querySelector('div');
                         
                         console.log(`  📋 Opción ${index + 1} elementos:`, {
                             checkbox: !!checkbox,
                             label: !!label,
                             checkboxValue: checkbox ? checkbox.value : 'N/A',
-                            labelText: label ? label.textContent : 'N/A'
+                            labelText: label ? label.textContent : 'N/A',
+                            checkboxType: checkbox ? checkbox.type : 'N/A',
+                            labelTagName: label ? label.tagName : 'N/A'
                         });
+                        
+                        // Mostrar todos los elementos hijos
+                        const allChildren = option.querySelectorAll('*');
+                        console.log(`  📋 Opción ${index + 1} todos los hijos:`, Array.from(allChildren).map(child => ({
+                            tagName: child.tagName,
+                            className: child.className,
+                            textContent: child.textContent,
+                            type: child.type || 'N/A'
+                        })));
                         
                         if (checkbox && label) {
                             options.push({
