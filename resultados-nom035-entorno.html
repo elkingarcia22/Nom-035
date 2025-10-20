@@ -6369,19 +6369,109 @@
                     options: selectOptions.length
                 });
                 
-                // Toggle dropdown
-                if (selectTrigger && selectDropdown) {
-                    selectTrigger.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        console.log(`🔧 Click en trigger del select dimensiones ${select.id}`);
-                        const wasShow = selectDropdown.classList.contains('show');
-                        selectDropdown.classList.toggle('show');
-                        console.log(`🔧 Select dimensiones ${select.id} toggle:`, {
-                            wasShow: wasShow,
-                            isShow: selectDropdown.classList.contains('show')
-                        });
+                // Toggle dropdown - USAR NUEVO SISTEMA
+                selectTrigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    console.log(`🔧 Click en trigger del select dimensiones ${select.id}`);
+                    
+                    // Cerrar otros dropdowns de dimensiones
+                    dimensionsCustomSelects.forEach(otherSelect => {
+                        if (otherSelect !== select) {
+                            closeNewDropdown(otherSelect.id);
+                        }
                     });
-                }
+                    
+                    // Crear opciones para el nuevo dropdown
+                    const options = [];
+                    console.log(`🔧 DIAGNÓSTICO OPCIONES DIMENSIONES ${select.id}:`);
+                    console.log('  📋 SelectOptions encontrados:', selectOptions.length);
+                    
+                    selectOptions.forEach((option, index) => {
+                        console.log(`  📋 Opción ${index + 1}:`, {
+                            element: option,
+                            innerHTML: option.innerHTML,
+                            textContent: option.textContent,
+                            tagName: option.tagName,
+                            className: option.className
+                        });
+                        
+                        // Buscar checkbox de diferentes formas
+                        const checkbox = option.querySelector('input[type="checkbox"]') || 
+                                       option.querySelector('input') ||
+                                       option.querySelector('checkbox');
+                        
+                        // Buscar label de diferentes formas  
+                        const label = option.querySelector('label') ||
+                                    option.querySelector('span') ||
+                                    option.querySelector('div');
+                        
+                        console.log(`  📋 Opción ${index + 1} elementos:`, {
+                            checkbox: !!checkbox,
+                            label: !!label,
+                            checkboxValue: checkbox ? checkbox.value : 'N/A',
+                            labelText: label ? label.textContent : 'N/A',
+                            checkboxType: checkbox ? checkbox.type : 'N/A',
+                            labelTagName: label ? label.tagName : 'N/A'
+                        });
+                        
+                        // Mostrar todos los elementos hijos
+                        const allChildren = option.querySelectorAll('*');
+                        console.log(`  📋 Opción ${index + 1} todos los hijos:`, Array.from(allChildren).map(child => ({
+                            tagName: child.tagName,
+                            className: child.className,
+                            textContent: child.textContent,
+                            type: child.type || 'N/A'
+                        })));
+                        
+                        if (checkbox && label) {
+                            options.push({
+                                value: checkbox.value,
+                                text: label.textContent,
+                                checked: checkbox.checked
+                            });
+                            console.log(`  ✅ Opción ${index + 1} agregada:`, {
+                                value: checkbox.value,
+                                text: label.textContent,
+                                checked: checkbox.checked
+                            });
+                        } else {
+                            console.log(`  ❌ Opción ${index + 1} NO agregada - elementos faltantes`);
+                        }
+                    });
+                    
+                    console.log(`🔧 OPCIONES FINALES DIMENSIONES ${select.id}:`, options);
+                    
+                    // Crear nuevo dropdown
+                    createNewDropdown(select.id, options, (value, checked) => {
+                        console.log(`🔧 Opción seleccionada dimensiones: ${value} = ${checked}`);
+                        
+                        // Actualizar checkbox original
+                        const originalCheckbox = select.querySelector(`input[value="${value}"]`);
+                        if (originalCheckbox) {
+                            originalCheckbox.checked = checked;
+                        }
+                        
+                        // Manejar lógica de "Todos"
+                        const todosCheckbox = select.querySelector('input[type="checkbox"][id$="-todos"]');
+                        if (value === 'todos') {
+                            handleTodosOption(select.id, todosCheckbox);
+                        } else {
+                            // Si se selecciona una opción específica, deseleccionar "Todos"
+                            if (checked && todosCheckbox) {
+                                todosCheckbox.checked = false;
+                            }
+                            
+                            // Si no hay opciones seleccionadas, seleccionar "Todos"
+                            const allCheckboxes = select.querySelectorAll('input[type="checkbox"]');
+                            const hasSelected = Array.from(allCheckboxes).some(cb => cb.checked);
+                            if (!hasSelected && todosCheckbox) {
+                                todosCheckbox.checked = true;
+                            }
+                        }
+                        
+                        updateDimensionsSelectTexts();
+                    });
+                });
                 
                 // Manejar opciones
                 selectOptions.forEach(option => {
