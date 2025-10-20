@@ -6761,16 +6761,11 @@
                 return;
             }
             
-            console.log('✅ Participante encontrado:', participant.name);
-            
             const participantDetails = document.getElementById('individual-participant-details');
             if (!participantDetails) {
                 console.error('❌ No se encontró el elemento individual-participant-details');
                 return;
             }
-            
-            console.log('✅ Elemento participantDetails encontrado:', participantDetails);
-            console.log('🔍 Contenido actual del elemento:', participantDetails.innerHTML.substring(0, 100) + '...');
             
             // Mostrar información del participante con estructura idéntica a emocional
             participantDetails.innerHTML = `
@@ -6857,13 +6852,6 @@
                     </div>
                     
                     <div class="detail-section">
-                        <h4>🧪 PRUEBA SIMPLE</h4>
-                        <p style="background: #ffeb3b; padding: 16px; border-radius: 8px; font-weight: bold; color: #000;">
-                            ✅ ESTE TEXTO DEBE APARECER - Si ves esto, la inserción funciona correctamente
-                        </p>
-                    </div>
-                    
-                    <div class="detail-section">
                         <h4>Evaluación por Dimensiones NOM-035</h4>
                         <div class="dimensions-table-container">
                             <table class="dimensions-table">
@@ -6894,16 +6882,6 @@
                     </div>
                 </div>
             `;
-            
-            console.log('✅ ===== HTML INSERTADO =====');
-            console.log('🔍 Contenido después de inserción:', participantDetails.innerHTML.substring(0, 200) + '...');
-            console.log('🔍 Elemento visible:', participantDetails.offsetHeight > 0 ? 'SÍ' : 'NO');
-            console.log('🔍 Estilos del elemento:', {
-                display: window.getComputedStyle(participantDetails).display,
-                visibility: window.getComputedStyle(participantDetails).visibility,
-                opacity: window.getComputedStyle(participantDetails).opacity
-            });
-            console.log('✅ ===== DETALLES INDIVIDUAL MOSTRADOS =====');
         }
 
         // Configurar búsqueda
