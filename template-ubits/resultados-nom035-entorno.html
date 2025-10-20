@@ -5332,17 +5332,43 @@
                     
                     // Crear opciones para el nuevo dropdown
                     const options = [];
-                    selectOptions.forEach(option => {
+                    console.log(`🔧 DIAGNÓSTICO OPCIONES ${select.id}:`);
+                    console.log('  📋 SelectOptions encontrados:', selectOptions.length);
+                    
+                    selectOptions.forEach((option, index) => {
+                        console.log(`  📋 Opción ${index + 1}:`, {
+                            element: option,
+                            innerHTML: option.innerHTML,
+                            textContent: option.textContent
+                        });
+                        
                         const checkbox = option.querySelector('input[type="checkbox"]');
                         const label = option.querySelector('label');
+                        
+                        console.log(`  📋 Opción ${index + 1} elementos:`, {
+                            checkbox: !!checkbox,
+                            label: !!label,
+                            checkboxValue: checkbox ? checkbox.value : 'N/A',
+                            labelText: label ? label.textContent : 'N/A'
+                        });
+                        
                         if (checkbox && label) {
                             options.push({
                                 value: checkbox.value,
                                 text: label.textContent,
                                 checked: checkbox.checked
                             });
+                            console.log(`  ✅ Opción ${index + 1} agregada:`, {
+                                value: checkbox.value,
+                                text: label.textContent,
+                                checked: checkbox.checked
+                            });
+                        } else {
+                            console.log(`  ❌ Opción ${index + 1} NO agregada - elementos faltantes`);
                         }
                     });
+                    
+                    console.log(`🔧 OPCIONES FINALES ${select.id}:`, options);
                     
                     // Crear nuevo dropdown
                     createNewDropdown(select.id, options, (value, checked) => {
@@ -5457,8 +5483,20 @@
             
             // Posicionar el dropdown
             const selectElement = document.getElementById(selectId);
+            console.log(`🔧 DIAGNÓSTICO POSICIONAMIENTO ${selectId}:`);
+            console.log('  📍 SelectElement encontrado:', !!selectElement);
+            
             if (selectElement) {
                 const rect = selectElement.getBoundingClientRect();
+                console.log('  📍 Rect del select:', {
+                    top: rect.top,
+                    left: rect.left,
+                    bottom: rect.bottom,
+                    right: rect.right,
+                    width: rect.width,
+                    height: rect.height
+                });
+                
                 container.style.top = `${rect.bottom + 5}px`;
                 container.style.left = `${rect.left}px`;
                 container.style.width = `${rect.width}px`;
@@ -5467,8 +5505,23 @@
                 console.log('🔧 Dropdown posicionado:', {
                     top: container.style.top,
                     left: container.style.left,
-                    width: container.style.width
+                    width: container.style.width,
+                    showClass: container.classList.contains('show')
                 });
+                
+                // Verificar posicionamiento después de un momento
+                setTimeout(() => {
+                    const containerRect = container.getBoundingClientRect();
+                    console.log('🔧 Dropdown posicionamiento final:', {
+                        top: containerRect.top,
+                        left: containerRect.left,
+                        width: containerRect.width,
+                        height: containerRect.height,
+                        visible: containerRect.width > 0 && containerRect.height > 0
+                    });
+                }, 100);
+            } else {
+                console.log('❌ SelectElement NO encontrado para:', selectId);
             }
             
             // Cerrar al hacer click en overlay
