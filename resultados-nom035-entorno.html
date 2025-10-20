@@ -1963,6 +1963,47 @@
             pointer-events: auto !important;
         }
 
+        /* SOLUCIÓN ALTERNATIVA: DROPDOWN COMPLETAMENTE NUEVO */
+        .ubits-dropdown-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            z-index: 10000 !important;
+            pointer-events: none !important;
+        }
+
+        .ubits-dropdown-container {
+            position: fixed !important;
+            z-index: 10001 !important;
+            background: white !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 6px !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+            max-height: 200px !important;
+            overflow-y: auto !important;
+            pointer-events: auto !important;
+            display: none !important;
+        }
+
+        .ubits-dropdown-container.show {
+            display: block !important;
+        }
+
+        .ubits-dropdown-option {
+            padding: 8px 12px !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            transition: background-color 0.2s ease !important;
+        }
+
+        .ubits-dropdown-option:hover {
+            background: #f3f4f6 !important;
+        }
+
         #individual-filters-side-panel .select-option {
             padding: 8px 12px !important;
             cursor: pointer !important;
@@ -5263,112 +5304,62 @@
                     options: selectOptions.length
                 });
                 
-                // Toggle dropdown
+                // Toggle dropdown - USAR NUEVO SISTEMA
                 selectTrigger.addEventListener('click', (e) => {
                     e.stopPropagation();
                     console.log(`🔧 Click en trigger del select ${select.id}`);
                     
-                    // DIAGNÓSTICO DETALLADO DE POSICIONAMIENTO
-                    const selectRect = select.getBoundingClientRect();
-                    const triggerRect = selectTrigger.getBoundingClientRect();
-                    const dropdownRect = selectDropdown.getBoundingClientRect();
-                    
-                    console.log(`🔧 DIAGNÓSTICO POSICIONAMIENTO ${select.id}:`);
-                    console.log('  📍 Select Position:', {
-                        top: selectRect.top,
-                        left: selectRect.left,
-                        width: selectRect.width,
-                        height: selectRect.height
-                    });
-                    console.log('  📍 Trigger Position:', {
-                        top: triggerRect.top,
-                        left: triggerRect.left,
-                        width: triggerRect.width,
-                        height: triggerRect.height
-                    });
-                    console.log('  📍 Dropdown Position:', {
-                        top: dropdownRect.top,
-                        left: dropdownRect.left,
-                        width: dropdownRect.width,
-                        height: dropdownRect.height
-                    });
-                    console.log('  🎨 Computed Styles:', {
-                        position: window.getComputedStyle(selectDropdown).position,
-                        zIndex: window.getComputedStyle(selectDropdown).zIndex,
-                        display: window.getComputedStyle(selectDropdown).display,
-                        overflow: window.getComputedStyle(select).overflow,
-                        overflowX: window.getComputedStyle(select).overflowX,
-                        overflowY: window.getComputedStyle(select).overflowY
-                    });
-                    
-                    // Cerrar otros dropdowns
+                    // Cerrar otros dropdowns nuevos
                     newCustomSelects.forEach(otherSelect => {
                         if (otherSelect !== select) {
-                            const otherTrigger = otherSelect.querySelector('.select-trigger');
-                            const otherDropdown = otherSelect.querySelector('.select-dropdown');
-                            otherTrigger.classList.remove('active');
-                            otherDropdown.classList.remove('show');
-                            console.log(`🔧 Cerrando select: ${otherSelect.id}`);
+                            closeNewDropdown(otherSelect.id);
                         }
                     });
                     
-                    // Toggle current dropdown
-                    const wasActive = selectTrigger.classList.contains('active');
-                    selectTrigger.classList.toggle('active');
-                    selectDropdown.classList.toggle('show');
-                    console.log(`🔧 Select ${select.id} toggle:`, {
-                        wasActive: wasActive,
-                        isActive: selectTrigger.classList.contains('active'),
-                        dropdownShow: selectDropdown.classList.contains('show')
+                    // Crear opciones para el nuevo dropdown
+                    const options = [];
+                    selectOptions.forEach(option => {
+                        const checkbox = option.querySelector('input[type="checkbox"]');
+                        const label = option.querySelector('label');
+                        if (checkbox && label) {
+                            options.push({
+                                value: checkbox.value,
+                                text: label.textContent,
+                                checked: checkbox.checked
+                            });
+                        }
                     });
                     
-                    // DIAGNÓSTICO DESPUÉS DEL TOGGLE
-                    setTimeout(() => {
-                        const newDropdownRect = selectDropdown.getBoundingClientRect();
-                        const newComputedStyles = window.getComputedStyle(selectDropdown);
-                        const panel = document.getElementById('new-table-filters-side-panel');
-                        const content = document.querySelector('#new-table-filters-side-panel .filters-content');
+                    // Crear nuevo dropdown
+                    createNewDropdown(select.id, options, (value, checked) => {
+                        console.log(`🔧 Opción seleccionada: ${value} = ${checked}`);
                         
-                        console.log(`🔧 DIAGNÓSTICO DESPUÉS DEL TOGGLE ${select.id}:`);
-                        console.log('  📍 Dropdown Position:', {
-                            top: newDropdownRect.top,
-                            left: newDropdownRect.left,
-                            width: newDropdownRect.width,
-                            height: newDropdownRect.height,
-                            bottom: newDropdownRect.bottom,
-                            right: newDropdownRect.right
-                        });
-                        console.log('  🎨 Computed Styles:', {
-                            position: newComputedStyles.position,
-                            zIndex: newComputedStyles.zIndex,
-                            display: newComputedStyles.display,
-                            visibility: newComputedStyles.visibility,
-                            opacity: newComputedStyles.opacity,
-                            transform: newComputedStyles.transform
-                        });
-                        console.log('  🌊 Parent Overflow:', {
-                            select: window.getComputedStyle(select).overflow,
-                            panel: panel ? window.getComputedStyle(panel).overflow : 'N/A',
-                            content: content ? window.getComputedStyle(content).overflow : 'N/A'
-                        });
-                        console.log('  📏 Parent Dimensions:', {
-                            select: {
-                                width: select.offsetWidth,
-                                height: select.offsetHeight,
-                                scrollHeight: select.scrollHeight
-                            },
-                            panel: panel ? {
-                                width: panel.offsetWidth,
-                                height: panel.offsetHeight,
-                                scrollHeight: panel.scrollHeight
-                            } : 'N/A',
-                            content: content ? {
-                                width: content.offsetWidth,
-                                height: content.offsetHeight,
-                                scrollHeight: content.scrollHeight
-                            } : 'N/A'
-                        });
-                    }, 100);
+                        // Actualizar checkbox original
+                        const originalCheckbox = select.querySelector(`input[value="${value}"]`);
+                        if (originalCheckbox) {
+                            originalCheckbox.checked = checked;
+                        }
+                        
+                        // Manejar lógica de "Todos"
+                        const todosCheckbox = select.querySelector('input[type="checkbox"][id$="-todos"]');
+                        if (value === 'todos') {
+                            handleTodosOption(select.id, todosCheckbox);
+                        } else {
+                            // Si se selecciona una opción específica, deseleccionar "Todos"
+                            if (checked && todosCheckbox) {
+                                todosCheckbox.checked = false;
+                            }
+                            
+                            // Si no hay opciones seleccionadas, seleccionar "Todos"
+                            const allCheckboxes = select.querySelectorAll('input[type="checkbox"]');
+                            const hasSelected = Array.from(allCheckboxes).some(cb => cb.checked);
+                            if (!hasSelected && todosCheckbox) {
+                                todosCheckbox.checked = true;
+                            }
+                        }
+                        
+                        updateSelectText(select.id);
+                    });
                 });
                 
                 // Manejar clicks en opciones
@@ -5409,6 +5400,78 @@
                     select.querySelector('.select-dropdown').classList.remove('show');
                 });
             });
+        }
+
+        // NUEVA FUNCIÓN: DROPDOWN COMPLETAMENTE NUEVO
+        function createNewDropdown(selectId, options, onSelect) {
+            console.log('🚀 ===== CREANDO NUEVO DROPDOWN =====');
+            console.log('🔧 Select ID:', selectId);
+            console.log('🔧 Options:', options);
+            
+            // Crear overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'ubits-dropdown-overlay';
+            overlay.id = `${selectId}-overlay`;
+            
+            // Crear contenedor del dropdown
+            const container = document.createElement('div');
+            container.className = 'ubits-dropdown-container';
+            container.id = `${selectId}-container`;
+            
+            // Crear opciones
+            options.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'ubits-dropdown-option';
+                optionElement.innerHTML = `
+                    <input type="checkbox" id="${option.value}" value="${option.value}">
+                    <label for="${option.value}">${option.text}</label>
+                `;
+                
+                optionElement.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const checkbox = optionElement.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                    onSelect(option.value, checkbox.checked);
+                });
+                
+                container.appendChild(optionElement);
+            });
+            
+            // Agregar al body
+            document.body.appendChild(overlay);
+            document.body.appendChild(container);
+            
+            // Posicionar el dropdown
+            const selectElement = document.getElementById(selectId);
+            if (selectElement) {
+                const rect = selectElement.getBoundingClientRect();
+                container.style.top = `${rect.bottom + 5}px`;
+                container.style.left = `${rect.left}px`;
+                container.style.width = `${rect.width}px`;
+                container.classList.add('show');
+                
+                console.log('🔧 Dropdown posicionado:', {
+                    top: container.style.top,
+                    left: container.style.left,
+                    width: container.style.width
+                });
+            }
+            
+            // Cerrar al hacer click en overlay
+            overlay.addEventListener('click', () => {
+                closeNewDropdown(selectId);
+            });
+            
+            return { overlay, container };
+        }
+
+        function closeNewDropdown(selectId) {
+            console.log('🔧 Cerrando nuevo dropdown:', selectId);
+            const overlay = document.getElementById(`${selectId}-overlay`);
+            const container = document.getElementById(`${selectId}-container`);
+            
+            if (overlay) overlay.remove();
+            if (container) container.remove();
         }
 
         // Función para actualizar todos los textos de los selects
