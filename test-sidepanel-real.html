@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Side Panel - Estructura Real</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .test-header {
+            background: #3b82f6;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .test-content {
+            padding: 20px;
+        }
+
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        .test-section h3 {
+            color: #374151;
+            margin-bottom: 15px;
+        }
+
+        /* CSS EXACTO DEL ARCHIVO PRINCIPAL */
+        .filters-side-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .filters-side-panel.show {
+            right: 0;
+        }
+
+        .filters-header {
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filters-content {
+            padding: 20px;
+        }
+
+        .filters-actions {
+            padding: 20px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .test-button {
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+
+        .test-button:hover {
+            background: #059669;
+        }
+
+        .log-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 2px 0;
+        }
+
+        .log-info {
+            color: #3b82f6;
+        }
+
+        .log-success {
+            color: #10b981;
+        }
+
+        .log-error {
+            color: #ef4444;
+        }
+
+        .log-warning {
+            color: #f59e0b;
+        }
+
+        /* CSS ESPECÍFICO PARA INDIVIDUAL FILTERS - EXACTO DEL ARCHIVO PRINCIPAL */
+        #individual-filters-side-panel .custom-select {
+            position: relative !important;
+            width: 100% !important;
+            margin-bottom: 16px !important;
+        }
+
+        #individual-filters-side-panel .select-trigger {
+            width: 100% !important;
+            padding: 8px 12px !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 6px !important;
+            background: #fff !important;
+            color: #374151 !important;
+            font-size: 14px !important;
+            cursor: pointer !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+        }
+
+        #individual-filters-side-panel .select-trigger:hover {
+            border-color: #9ca3af !important;
+        }
+
+        #individual-filters-side-panel .select-trigger.active {
+            border-color: #3b82f6 !important;
+        }
+
+        #individual-filters-side-panel .select-arrow {
+            color: #6b7280 !important;
+            transition: transform 0.2s ease !important;
+        }
+
+        #individual-filters-side-panel .select-trigger.active .select-arrow {
+            transform: rotate(180deg) !important;
+        }
+
+        #individual-filters-side-panel .select-dropdown {
+            position: absolute !important;
+            top: 100% !important;
+            left: 0 !important;
+            right: 0 !important;
+            background: #fff !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 6px !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+            z-index: 1000 !important;
+            max-height: 200px !important;
+            overflow-y: auto !important;
+            display: none !important;
+        }
+
+        #individual-filters-side-panel .select-dropdown.show {
+            display: block !important;
+        }
+
+        #individual-filters-side-panel .select-option {
+            padding: 8px 12px !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            transition: background-color 0.2s ease !important;
+        }
+
+        #individual-filters-side-panel .select-option:hover {
+            background: #f3f4f6 !important;
+        }
+
+        #individual-filters-side-panel .select-option input[type="checkbox"] {
+            margin-right: 8px !important;
+        }
+
+        #individual-filters-side-panel .option-text {
+            color: #374151 !important;
+            font-size: 14px !important;
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>🔧 Test Side Panel - Estructura Real</h1>
+            <p>Página de prueba con la estructura EXACTA del archivo principal</p>
+        </div>
+
+        <div class="test-content">
+            <div class="test-section">
+                <h3>🎯 Test: Side Panel con Estructura Real del Archivo Principal</h3>
+                <p>Este test usa la estructura HTML EXACTA del archivo principal:</p>
+                
+                <button class="test-button" onclick="openRealSidePanel()">Abrir Side Panel Real</button>
+                
+                <!-- ESTRUCTURA EXACTA DEL ARCHIVO PRINCIPAL -->
+                <div class="filters-side-panel" id="individual-filters-side-panel">
+                    <div class="filters-header">
+                        <h3>Filtros</h3>
+                        <button class="close-filters-btn" id="individual-close-filters-btn">
+                            <i class="far fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="filters-content">
+                        <div class="filter-group">
+                            <label class="filter-label">Nivel de Riesgo</label>
+                            <div class="custom-select" id="individual-risk-select">
+                                <div class="select-trigger">
+                                    <span class="select-text">Seleccionar niveles</span>
+                                    <i class="fas fa-chevron-down select-arrow"></i>
+                                </div>
+                                <div class="select-dropdown">
+                                    <div class="select-option" data-value="todos">
+                                        <input type="checkbox" id="individual-risk-todos">
+                                        <span class="option-text">Todos</span>
+                                    </div>
+                                    <div class="select-option" data-value="nulo">
+                                        <input type="checkbox" id="individual-risk-nulo">
+                                        <span class="option-text">Nulo</span>
+                                    </div>
+                                    <div class="select-option" data-value="bajo">
+                                        <input type="checkbox" id="individual-risk-bajo">
+                                        <span class="option-text">Bajo</span>
+                                    </div>
+                                    <div class="select-option" data-value="medio">
+                                        <input type="checkbox" id="individual-risk-medio">
+                                        <span class="option-text">Medio</span>
+                                    </div>
+                                    <div class="select-option" data-value="alto">
+                                        <input type="checkbox" id="individual-risk-alto">
+                                        <span class="option-text">Alto</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Género</label>
+                            <div class="custom-select" id="individual-gender-select">
+                                <div class="select-trigger">
+                                    <span class="select-text">Seleccionar género</span>
+                                    <i class="fas fa-chevron-down select-arrow"></i>
+                                </div>
+                                <div class="select-dropdown">
+                                    <div class="select-option" data-value="todos">
+                                        <input type="checkbox" id="individual-gender-todos">
+                                        <span class="option-text">Todos</span>
+                                    </div>
+                                    <div class="select-option" data-value="masculino">
+                                        <input type="checkbox" id="individual-gender-masculino">
+                                        <span class="option-text">Masculino</span>
+                                    </div>
+                                    <div class="select-option" data-value="femenino">
+                                        <input type="checkbox" id="individual-gender-femenino">
+                                        <span class="option-text">Femenino</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filters-actions">
+                        <button class="btn btn-primary" id="individual-apply-filters-btn">Aplicar</button>
+                        <button class="btn btn-secondary" id="individual-clear-filters-btn">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-section">
+                <h3>📊 Logs de Diagnóstico</h3>
+                <div class="log-container" id="log-container">
+                    <div class="log-entry log-info">🚀 Test Side Panel Real iniciado</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para agregar logs
+        function addLog(message, type = 'info') {
+            const logContainer = document.getElementById('log-container');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry log-${type}`;
+            logEntry.textContent = message;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        // Función para abrir side panel real
+        function openRealSidePanel() {
+            addLog('🔧 Abriendo side panel real', 'info');
+            const panel = document.getElementById('individual-filters-side-panel');
+            panel.classList.add('show');
+            addLog('✅ Side panel real abierto', 'success');
+        }
+
+        // Función para cerrar side panel real
+        function closeRealSidePanel() {
+            addLog('🔧 Cerrando side panel real', 'info');
+            const panel = document.getElementById('individual-filters-side-panel');
+            panel.classList.remove('show');
+            addLog('✅ Side panel real cerrado', 'success');
+        }
+
+        // Función para configurar custom selects - EXACTA DEL ARCHIVO PRINCIPAL
+        function setupIndividualCustomSelects() {
+            console.log('🔧 ===== INICIANDO SETUP DE CUSTOM SELECTS INDIVIDUALES =====');
+            const customSelects = document.querySelectorAll('#individual-filters-side-panel .custom-select');
+            console.log('🔧 Selects individuales encontrados:', customSelects.length);
+            
+            customSelects.forEach((select, index) => {
+                console.log(`🔧 Configurando select individual ${index + 1}:`, select.id);
+                const trigger = select.querySelector('.select-trigger');
+                const dropdown = select.querySelector('.select-dropdown');
+                const options = select.querySelectorAll('.select-option');
+                
+                console.log(`🔧 Select individual ${index + 1} elementos:`, {
+                    trigger: !!trigger,
+                    dropdown: !!dropdown,
+                    options: options.length
+                });
+                
+                if (trigger && dropdown) {
+                    // Toggle dropdown
+                    trigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        console.log(`🔧 Click en trigger del select individual ${select.id}`);
+                        
+                        const isActive = trigger.classList.contains('active');
+                        const dropdownShow = dropdown.classList.contains('show');
+                        
+                        console.log(`🔧 Select individual ${select.id} toggle: {wasActive: ${isActive}, dropdownShow: ${dropdownShow}}`);
+                        
+                        // Cerrar otros dropdowns
+                        document.querySelectorAll('#individual-filters-side-panel .select-dropdown.show').forEach(otherDropdown => {
+                            if (otherDropdown !== dropdown) {
+                                otherDropdown.classList.remove('show');
+                                otherDropdown.closest('.custom-select').querySelector('.select-trigger').classList.remove('active');
+                            }
+                        });
+
+                        // Toggle este dropdown
+                        trigger.classList.toggle('active');
+                        dropdown.classList.toggle('show');
+                        
+                        const newState = dropdown.classList.contains('show');
+                        console.log(`🔧 Select individual ${select.id} nuevo estado: {active: ${trigger.classList.contains('active')}, dropdownShow: ${newState}}`);
+                    });
+
+                    // Click en opciones
+                    options.forEach(option => {
+                        option.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            const checkbox = option.querySelector('input[type="checkbox"]');
+                            if (checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                console.log(`🔧 Checkbox toggled en ${select.id}: ${checkbox.id} = ${checkbox.checked}`);
+                            }
+                        });
+                    });
+                }
+            });
+        }
+
+        // Cerrar dropdowns al hacer click fuera
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#individual-filters-side-panel .custom-select')) {
+                document.querySelectorAll('#individual-filters-side-panel .select-dropdown.show').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                    dropdown.closest('.custom-select').querySelector('.select-trigger').classList.remove('active');
+                });
+            }
+        });
+
+        // Configurar botón de cerrar
+        function setupCloseButton() {
+            const closeBtn = document.getElementById('individual-close-filters-btn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeRealSidePanel);
+                addLog('✅ Botón de cerrar configurado', 'success');
+            }
+        }
+
+        // Inicializar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            addLog('🚀 DOM cargado, iniciando configuración...', 'info');
+            setupIndividualCustomSelects();
+            setupCloseButton();
+            addLog('✅ Configuración completada', 'success');
+        });
+    </script>
+</body>
+</html>
