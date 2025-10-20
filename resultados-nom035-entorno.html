@@ -372,31 +372,38 @@
         }
 
         .filters-button {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            color: #6b7280;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: #f3f4f6;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            color: #6b7280;
-            cursor: pointer;
             transition: all 0.2s ease;
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
             position: relative;
         }
 
         .filters-button:hover {
             background: #e5e7eb;
             color: #374151;
+            border-color: #9ca3af;
+        }
+
+        .filters-button:active {
+            background: #d1d5db;
         }
 
         .filter-badge {
             position: absolute;
-            top: -4px;
-            right: -4px;
-            background: #ef4444;
-            color: white !important;
+            top: -6px;
+            right: -6px;
+            background: var(--ubits-accent-brand);
+            color: white;
             border-radius: 50%;
             width: 18px;
             height: 18px;
@@ -7111,6 +7118,8 @@
             const filtersPanel = document.getElementById('individual-filters-side-panel');
             const closeBtn = document.getElementById('individual-close-filters-btn');
             const backdrop = document.getElementById('individual-filters-backdrop');
+            const applyBtn = document.getElementById('individual-apply-filters-btn');
+            const clearBtn = document.getElementById('individual-clear-filters-btn');
             
             if (filtersBtn && filtersPanel) {
                 filtersBtn.addEventListener('click', function() {
@@ -7131,6 +7140,216 @@
                     filtersPanel.classList.remove('show');
                     backdrop.classList.remove('show');
                 });
+            }
+            
+            if (applyBtn) {
+                applyBtn.addEventListener('click', function() {
+                    applyIndividualFilters();
+                    filtersPanel.classList.remove('show');
+                    if (backdrop) backdrop.classList.remove('show');
+                });
+            }
+            
+            if (clearBtn) {
+                clearBtn.addEventListener('click', function() {
+                    clearIndividualFilters();
+                });
+            }
+        }
+
+        function applyIndividualFilters() {
+            console.log('🔍 ===== APLICANDO FILTROS INDIVIDUALES =====');
+            
+            const riskFilters = getSelectedValues('individual-risk-select');
+            const departmentFilters = getSelectedValues('individual-department-select');
+            const positionFilters = getSelectedValues('individual-position-select');
+            const genderFilters = getSelectedValues('individual-gender-select');
+            const maritalStatusFilters = getSelectedValues('individual-marital-status-select');
+            const ageFilters = getSelectedValues('individual-age-select');
+            const countryFilters = getSelectedValues('individual-country-select');
+            const cityFilters = getSelectedValues('individual-city-select');
+            const leaderFilters = getSelectedValues('individual-leader-select');
+            
+            const searchInput = document.getElementById('individual-participant-search');
+            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+            
+            const filteredParticipants = individualParticipantsData.filter(participant => {
+                // Filtro por búsqueda
+                if (searchTerm && !participant.name.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
+                
+                // Filtro por nivel de riesgo
+                if (riskFilters.length > 0 && !riskFilters.includes('todos') && !riskFilters.includes(participant.riskLevel)) {
+                    return false;
+                }
+                
+                // Filtro por departamento
+                if (departmentFilters.length > 0 && !departmentFilters.includes('todos') && !departmentFilters.includes(participant.department)) {
+                    return false;
+                }
+                
+                // Filtro por posición
+                if (positionFilters.length > 0 && !positionFilters.includes('todos') && !positionFilters.includes(participant.position)) {
+                    return false;
+                }
+                
+                // Filtro por género
+                if (genderFilters.length > 0 && !genderFilters.includes('todos') && !genderFilters.includes(participant.gender)) {
+                    return false;
+                }
+                
+                // Filtro por estado civil
+                if (maritalStatusFilters.length > 0 && !maritalStatusFilters.includes('todos') && !maritalStatusFilters.includes(participant.maritalStatus)) {
+                    return false;
+                }
+                
+                // Filtro por edad
+                if (ageFilters.length > 0 && !ageFilters.includes('todos') && !ageFilters.includes(participant.ageGroup)) {
+                    return false;
+                }
+                
+                // Filtro por país
+                if (countryFilters.length > 0 && !countryFilters.includes('todos') && !countryFilters.includes(participant.country)) {
+                    return false;
+                }
+                
+                // Filtro por ciudad
+                if (cityFilters.length > 0 && !cityFilters.includes('todos') && !cityFilters.includes(participant.city)) {
+                    return false;
+                }
+                
+                // Filtro por líder
+                if (leaderFilters.length > 0 && !leaderFilters.includes('todos') && !leaderFilters.includes(participant.leader)) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            console.log('🔍 Participantes filtrados:', filteredParticipants.length);
+            renderIndividualParticipantsList(filteredParticipants);
+            updateIndividualFilterBadge();
+        }
+
+        function clearIndividualFilters() {
+            console.log('🔍 ===== LIMPIANDO FILTROS INDIVIDUALES =====');
+            
+            // Limpiar búsqueda
+            const searchInput = document.getElementById('individual-participant-search');
+            if (searchInput) {
+                searchInput.value = '';
+            }
+            
+            // Limpiar todos los selects
+            const selectIds = [
+                'individual-risk-select',
+                'individual-department-select',
+                'individual-position-select',
+                'individual-gender-select',
+                'individual-marital-status-select',
+                'individual-age-select',
+                'individual-country-select',
+                'individual-city-select',
+                'individual-leader-select'
+            ];
+            
+            selectIds.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                if (select) {
+                    const todosOption = select.querySelector('option[value="todos"]');
+                    if (todosOption) {
+                        todosOption.checked = true;
+                    }
+                }
+            });
+            
+            // Actualizar textos de los selects
+            updateIndividualSelectTexts();
+            
+            // Renderizar lista completa
+            renderIndividualParticipantsList(individualParticipantsData);
+            updateIndividualFilterBadge();
+        }
+
+        function updateIndividualSelectTexts() {
+            const selectIds = [
+                'individual-risk-select',
+                'individual-department-select',
+                'individual-position-select',
+                'individual-gender-select',
+                'individual-marital-status-select',
+                'individual-age-select',
+                'individual-country-select',
+                'individual-city-select',
+                'individual-leader-select'
+            ];
+            
+            selectIds.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                if (select) {
+                    const selectedOptions = Array.from(select.querySelectorAll('input:checked'));
+                    const selectedValues = selectedOptions.map(option => option.value);
+                    
+                    const selectText = select.querySelector('.select-text');
+                    if (selectText) {
+                        if (selectedValues.includes('todos') || selectedValues.length === 0) {
+                            selectText.textContent = 'Todos';
+                        } else if (selectedValues.length === 1) {
+                            const option = select.querySelector(`input[value="${selectedValues[0]}"]`);
+                            if (option) {
+                                selectText.textContent = option.nextElementSibling.textContent;
+                            }
+                        } else {
+                            selectText.textContent = `${selectedValues.length} seleccionados`;
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateIndividualFilterBadge() {
+            const badge = document.getElementById('individual-filter-badge');
+            if (!badge) return;
+            
+            let activeFilters = 0;
+            
+            // Contar filtros activos
+            const selectIds = [
+                'individual-risk-select',
+                'individual-department-select',
+                'individual-position-select',
+                'individual-gender-select',
+                'individual-marital-status-select',
+                'individual-age-select',
+                'individual-country-select',
+                'individual-city-select',
+                'individual-leader-select'
+            ];
+            
+            selectIds.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                if (select) {
+                    const selectedOptions = Array.from(select.querySelectorAll('input:checked'));
+                    const selectedValues = selectedOptions.map(option => option.value);
+                    
+                    if (!selectedValues.includes('todos') && selectedValues.length > 0) {
+                        activeFilters++;
+                    }
+                }
+            });
+            
+            // Verificar búsqueda
+            const searchInput = document.getElementById('individual-participant-search');
+            if (searchInput && searchInput.value.trim() !== '') {
+                activeFilters++;
+            }
+            
+            if (activeFilters > 0) {
+                badge.textContent = activeFilters;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
             }
         }
 
