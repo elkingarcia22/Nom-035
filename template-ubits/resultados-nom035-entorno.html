@@ -6800,66 +6800,43 @@
             console.log('Individual custom selects found:', customSelects.length);
             
             customSelects.forEach(select => {
-                const selectTrigger = select.querySelector('.select-trigger');
-                const selectDropdown = select.querySelector('.select-dropdown');
-                const selectOptions = select.querySelectorAll('.select-option');
+                const trigger = select.querySelector('.select-trigger');
+                const dropdown = select.querySelector('.select-dropdown');
+                const options = select.querySelectorAll('.select-option');
                 
-                console.log('Setting up select:', select.id, 'Trigger:', selectTrigger, 'Dropdown:', selectDropdown);
+                console.log('Setting up select:', select.id, 'Trigger:', trigger, 'Dropdown:', dropdown);
                 
-                if (selectTrigger && selectDropdown) {
-                    // Remover listeners existentes
-                    const newTrigger = selectTrigger.cloneNode(true);
-                    selectTrigger.parentNode.replaceChild(newTrigger, selectTrigger);
-                    
-                    newTrigger.addEventListener('click', function(e) {
+                if (trigger && dropdown) {
+                    // Toggle dropdown
+                    trigger.addEventListener('click', (e) => {
                         e.stopPropagation();
                         console.log('Individual select clicked:', select.id);
                         
-                        // Cerrar otros dropdowns primero
-                        document.querySelectorAll('.custom-select').forEach(otherSelect => {
+                        // Cerrar otros selects
+                        customSelects.forEach(otherSelect => {
                             if (otherSelect !== select) {
-                                const otherDropdown = otherSelect.querySelector('.select-dropdown');
-                                const otherTrigger = otherSelect.querySelector('.select-trigger');
-                                if (otherDropdown) {
-                                    otherDropdown.classList.remove('show');
-                                }
-                                if (otherTrigger) {
-                                    otherTrigger.classList.remove('active');
-                                }
+                                otherSelect.querySelector('.select-trigger').classList.remove('active');
+                                otherSelect.querySelector('.select-dropdown').classList.remove('show');
                             }
                         });
                         
-                        // Toggle el dropdown actual
-                        selectDropdown.classList.toggle('show');
-                        newTrigger.classList.toggle('active');
-                        console.log('Dropdown classes after toggle:', selectDropdown.classList.toString());
+                        // Toggle current select
+                        trigger.classList.toggle('active');
+                        dropdown.classList.toggle('show');
+                        console.log('Dropdown classes after toggle:', dropdown.classList.toString());
                     });
-
-                    selectOptions.forEach(option => {
-                        option.addEventListener('click', function(e) {
+                    
+                    // Manejar clics en opciones
+                    options.forEach(option => {
+                        const checkbox = option.querySelector('input[type="checkbox"]');
+                        
+                        option.addEventListener('click', (e) => {
                             e.stopPropagation();
-                            const checkbox = option.querySelector('input[type="checkbox"]');
                             if (checkbox) {
                                 checkbox.checked = !checkbox.checked;
                                 updateIndividualSelectTexts();
                             }
                         });
-                    });
-                }
-            });
-
-            // Cerrar dropdowns al hacer clic fuera
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.custom-select')) {
-                    document.querySelectorAll('.custom-select').forEach(select => {
-                        const selectDropdown = select.querySelector('.select-dropdown');
-                        const selectTrigger = select.querySelector('.select-trigger');
-                        if (selectDropdown) {
-                            selectDropdown.classList.remove('show');
-                        }
-                        if (selectTrigger) {
-                            selectTrigger.classList.remove('active');
-                        }
                     });
                 }
             });
