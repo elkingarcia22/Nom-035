@@ -1459,6 +1459,25 @@
             right: 0;
         }
 
+        /* Backdrop para el side panel */
+        .filters-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .filters-backdrop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .filters-header {
             display: flex;
             justify-content: space-between;
@@ -2480,6 +2499,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <!-- Backdrop para el side panel -->
+                                <div class="filters-backdrop" id="new-filters-backdrop"></div>
                             </div>
                         </div>
                         
@@ -4542,11 +4564,15 @@
             const filtersBtn = document.getElementById('new-table-filters-btn');
             const filtersPanel = document.getElementById('new-table-filters-side-panel');
             const closeFiltersBtn = document.getElementById('new-close-filters-btn');
+            const filtersBackdrop = document.getElementById('new-filters-backdrop');
             
             if (filtersBtn && filtersPanel) {
                 filtersBtn.addEventListener('click', function() {
                     console.log('🔍 Click en botón de filtros (nuevos tabs)');
                     filtersPanel.classList.toggle('show');
+                    if (filtersBackdrop) {
+                        filtersBackdrop.classList.toggle('show');
+                    }
                 });
             }
             
@@ -4554,6 +4580,18 @@
                 closeFiltersBtn.addEventListener('click', function() {
                     console.log('❌ Cerrando filtros (nuevos tabs)');
                     filtersPanel.classList.remove('show');
+                    if (filtersBackdrop) {
+                        filtersBackdrop.classList.remove('show');
+                    }
+                });
+            }
+            
+            // Cerrar panel al hacer click en el backdrop
+            if (filtersBackdrop) {
+                filtersBackdrop.addEventListener('click', function() {
+                    console.log('❌ Click en backdrop - cerrando filtros');
+                    filtersPanel.classList.remove('show');
+                    filtersBackdrop.classList.remove('show');
                 });
             }
             
