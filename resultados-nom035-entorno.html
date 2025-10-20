@@ -5714,8 +5714,10 @@
                 if (shouldShow) {
                     row.style.display = '';
                     visibleCount++;
+                    console.log(`✅ Fila visible:`, row.querySelector('.dimension-cell span')?.textContent || 'Sin texto');
                 } else {
                     row.style.display = 'none';
+                    console.log(`❌ Fila oculta:`, row.querySelector('.dimension-cell span')?.textContent || 'Sin texto');
                 }
             });
             
