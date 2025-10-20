@@ -5631,6 +5631,22 @@
             
             // Obtener todas las filas de la tabla
             const tableRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
+            console.log(`🔍 Total de filas encontradas en Vista General: ${tableRows.length}`);
+            
+            // Log de la estructura de las primeras filas
+            tableRows.forEach((row, index) => {
+                if (index < 3) { // Solo las primeras 3 filas
+                    console.log(`🔍 Fila ${index + 1}:`, {
+                        classes: row.className,
+                        hasRiskBadge: !!row.querySelector('.risk-badge'),
+                        hasCategoryCell: !!row.querySelector('.category-cell'),
+                        hasDomainCell: !!row.querySelector('.category-domain-info'),
+                        hasDimensionCell: !!row.querySelector('.category-dimension-info'),
+                        textContent: row.textContent.substring(0, 100) + '...'
+                    });
+                }
+            });
+            
             let visibleCount = 0;
             
             tableRows.forEach(row => {
