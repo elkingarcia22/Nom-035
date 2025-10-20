@@ -5119,28 +5119,47 @@
 
         // Configurar componente select personalizado para los nuevos filtros
         function setupNewCustomSelects() {
+            console.log('🔧 ===== INICIANDO SETUP DE CUSTOM SELECTS NUEVOS =====');
             const newCustomSelects = document.querySelectorAll('#new-table-filters-side-panel .custom-select');
+            console.log('🔧 Selects encontrados:', newCustomSelects.length);
             
-            newCustomSelects.forEach(select => {
+            newCustomSelects.forEach((select, index) => {
+                console.log(`🔧 Configurando select ${index + 1}:`, select.id);
                 const selectTrigger = select.querySelector('.select-trigger');
                 const selectDropdown = select.querySelector('.select-dropdown');
                 const selectOptions = select.querySelectorAll('.select-option');
                 
+                console.log(`🔧 Select ${index + 1} elementos:`, {
+                    trigger: !!selectTrigger,
+                    dropdown: !!selectDropdown,
+                    options: selectOptions.length
+                });
+                
                 // Toggle dropdown
                 selectTrigger.addEventListener('click', (e) => {
                     e.stopPropagation();
+                    console.log(`🔧 Click en trigger del select ${select.id}`);
                     
                     // Cerrar otros dropdowns
                     newCustomSelects.forEach(otherSelect => {
                         if (otherSelect !== select) {
-                            otherSelect.querySelector('.select-trigger').classList.remove('active');
-                            otherSelect.querySelector('.select-dropdown').classList.remove('show');
+                            const otherTrigger = otherSelect.querySelector('.select-trigger');
+                            const otherDropdown = otherSelect.querySelector('.select-dropdown');
+                            otherTrigger.classList.remove('active');
+                            otherDropdown.classList.remove('show');
+                            console.log(`🔧 Cerrando select: ${otherSelect.id}`);
                         }
                     });
                     
                     // Toggle current dropdown
+                    const wasActive = selectTrigger.classList.contains('active');
                     selectTrigger.classList.toggle('active');
                     selectDropdown.classList.toggle('show');
+                    console.log(`🔧 Select ${select.id} toggle:`, {
+                        wasActive: wasActive,
+                        isActive: selectTrigger.classList.contains('active'),
+                        dropdownShow: selectDropdown.classList.contains('show')
+                    });
                 });
                 
                 // Manejar clicks en opciones
@@ -6775,9 +6794,17 @@
             const clearBtn = document.getElementById('individual-clear-filters-btn');
             
             if (filtersBtn && filtersPanel) {
+                console.log('🔧 Configurando botón de filtros individuales');
                 filtersBtn.addEventListener('click', function() {
+                    console.log('🔧 Click en botón de filtros individuales');
+                    console.log('🔧 Panel antes:', filtersPanel.classList.toString());
+                    console.log('🔧 Backdrop antes:', backdrop ? backdrop.classList.toString() : 'No encontrado');
+                    
                     filtersPanel.classList.add('show');
                     if (backdrop) backdrop.classList.add('show');
+                    
+                    console.log('🔧 Panel después:', filtersPanel.classList.toString());
+                    console.log('🔧 Backdrop después:', backdrop ? backdrop.classList.toString() : 'No encontrado');
                 });
             }
             
