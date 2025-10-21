@@ -9398,38 +9398,8 @@
                         shouldShow = false;
                     }
                     
-                    // Aplicar filtros demográficos
-                    if (selectedArea && simulatedData.area !== selectedArea) {
-                        shouldShow = false;
-                    }
-                    
-                    if (selectedPosition && simulatedData.position !== selectedPosition) {
-                        shouldShow = false;
-                    }
-                    
-                    if (selectedGender && simulatedData.gender !== selectedGender) {
-                        shouldShow = false;
-                    }
-                    
-                    if (selectedMarital && simulatedData.maritalStatus !== selectedMarital) {
-                        shouldShow = false;
-                    }
-                    
-                    if (selectedAge && !matchesAgeRange(simulatedData.age, selectedAge)) {
-                        shouldShow = false;
-                    }
-                    
-                    if (selectedCountry && simulatedData.country !== selectedCountry) {
-                        shouldShow = false;
-                    }
-                    
-                    if (selectedCity && simulatedData.city !== selectedCity) {
-                        shouldShow = false;
-                    }
-                    
-                    if (selectedLeader && simulatedData.leader !== selectedLeader) {
-                        shouldShow = false;
-                    }
+                    // Los filtros demográficos NO ocultan categorías, solo afectan los datos mostrados
+                    // Se aplicarán después para actualizar los números y datos
                     
                     console.log(`🔧 Fila ${index} - Mostrar:`, shouldShow);
                     
@@ -9459,6 +9429,9 @@
                 });
                 
                 console.log('🔧 Resultado:', `${visibleCount} de ${categoryRows.length} filas visibles`);
+                
+                // Actualizar datos demográficos en las categorías visibles
+                updateDemographicData(selectedArea, selectedPosition, selectedGender, selectedMarital, selectedAge, selectedCountry, selectedCity, selectedLeader);
             }
             
             // Función para limpiar filtros
@@ -9519,6 +9492,63 @@
                     case '56+': return age >= 56;
                     default: return true;
                 }
+            }
+            
+            // Función para actualizar datos demográficos en las categorías
+            function updateDemographicData(area, position, gender, marital, age, country, city, leader) {
+                console.log('📊 Actualizando datos demográficos...');
+                
+                const categoryRows = document.querySelectorAll('.results-table tbody tr.category-summary');
+                
+                categoryRows.forEach((row, index) => {
+                    if (row.style.display !== 'none') {
+                        const categoryText = row.querySelector('.category-cell')?.textContent || '';
+                        const simulatedData = getSimulatedDemographicData(categoryText, index);
+                        
+                        // Verificar si esta categoría coincide con los filtros demográficos
+                        let matchesDemographics = true;
+                        
+                        if (area && simulatedData.area !== area) matchesDemographics = false;
+                        if (position && simulatedData.position !== position) matchesDemographics = false;
+                        if (gender && simulatedData.gender !== gender) matchesDemographics = false;
+                        if (marital && simulatedData.maritalStatus !== marital) matchesDemographics = false;
+                        if (age && !matchesAgeRange(simulatedData.age, age)) matchesDemographics = false;
+                        if (country && simulatedData.country !== country) matchesDemographics = false;
+                        if (city && simulatedData.city !== city) matchesDemographics = false;
+                        if (leader && simulatedData.leader !== leader) matchesDemographics = false;
+                        
+                        // Actualizar números basándose en filtros demográficos
+                        const riskCountCell = row.querySelector('.risk-count');
+                        const percentageCell = row.querySelector('.percentage');
+                        
+                        if (riskCountCell && percentageCell) {
+                            if (matchesDemographics) {
+                                // Si coincide con filtros demográficos, mostrar números normales
+                                riskCountCell.textContent = '12';
+                                percentageCell.textContent = '80%';
+                                riskCountCell.style.color = '';
+                                percentageCell.style.color = '';
+                            } else {
+                                // Si no coincide, mostrar números filtrados (menores)
+                                const filteredCount = Math.floor(Math.random() * 5) + 1; // 1-5 usuarios
+                                const filteredPercentage = Math.floor(Math.random() * 30) + 20; // 20-50%
+                                
+                                riskCountCell.textContent = filteredCount.toString();
+                                percentageCell.textContent = filteredPercentage + '%';
+                                riskCountCell.style.color = '#6b7280'; // Gris para indicar datos filtrados
+                                percentageCell.style.color = '#6b7280';
+                            }
+                        }
+                        
+                        console.log(`📊 Categoría ${index}:`, {
+                            category: categoryText,
+                            matches: matchesDemographics,
+                            data: simulatedData
+                        });
+                    }
+                });
+                
+                console.log('✅ Datos demográficos actualizados');
             }
             
             // ===== FIN SISTEMA DE FILTROS =====
