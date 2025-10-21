@@ -9223,8 +9223,10 @@
             });
         }
 
-        // Configurar filtros
+        // Configurar filtros para sección Individual en Dimensiones
         function setupIndividualFilters() {
+            console.log('🔧 ===== CONFIGURANDO FILTROS INDIVIDUALES EN DIMENSIONES =====');
+            
             const filtersBtn = document.getElementById('individual-filters-btn');
             const filtersPanel = document.getElementById('individual-filters-side-panel');
             const closeBtn = document.getElementById('individual-close-filters-btn');
@@ -9232,19 +9234,69 @@
             const applyBtn = document.getElementById('individual-apply-filters-btn');
             const clearBtn = document.getElementById('individual-clear-filters-btn');
             
+            console.log('🔧 Elementos encontrados:');
+            console.log('🔧 Botón filtros:', !!filtersBtn, filtersBtn);
+            console.log('🔧 Panel filtros:', !!filtersPanel, filtersPanel);
+            console.log('🔧 Botón cerrar:', !!closeBtn, closeBtn);
+            console.log('🔧 Backdrop:', !!backdrop, backdrop);
+            console.log('🔧 Botón aplicar:', !!applyBtn, applyBtn);
+            console.log('🔧 Botón limpiar:', !!clearBtn, clearBtn);
+            
+            // Verificar si los elementos existen
+            if (!filtersBtn) {
+                console.error('❌ ERROR: No se encontró el botón de filtros individual-filters-btn');
+                return;
+            }
+            if (!filtersPanel) {
+                console.error('❌ ERROR: No se encontró el panel de filtros individual-filters-side-panel');
+                return;
+            }
+            
+            // Configurar botón de filtros
             if (filtersBtn && filtersPanel) {
                 console.log('🔧 Configurando botón de filtros individuales');
-                filtersBtn.addEventListener('click', function() {
-                    console.log('🔧 Click en botón de filtros individuales');
-                    console.log('🔧 Panel antes:', filtersPanel.classList.toString());
-                    console.log('🔧 Backdrop antes:', backdrop ? backdrop.classList.toString() : 'No encontrado');
+                console.log('🔧 Botón antes del evento:', filtersBtn);
+                console.log('🔧 Panel antes del evento:', filtersPanel);
+                console.log('🔧 Clases del panel antes:', filtersPanel.classList.toString());
+                
+                filtersBtn.addEventListener('click', function(e) {
+                    console.log('🔧 ===== CLICK EN BOTÓN DE FILTROS INDIVIDUALES DETECTADO =====');
+                    console.log('🔧 Evento:', e);
+                    console.log('🔧 Target:', e.target);
+                    console.log('🔧 CurrentTarget:', e.currentTarget);
+                    
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    console.log('🔧 Panel antes de agregar show:', filtersPanel);
+                    console.log('🔧 Clases del panel antes:', filtersPanel.classList.toString());
+                    console.log('🔧 Estilo del panel antes:', filtersPanel.style.display);
                     
                     filtersPanel.classList.add('show');
-                    if (backdrop) backdrop.classList.add('show');
                     
-                    console.log('🔧 Panel después:', filtersPanel.classList.toString());
-                    console.log('🔧 Backdrop después:', backdrop ? backdrop.classList.toString() : 'No encontrado');
+                    console.log('🔧 Panel después de agregar show:', filtersPanel);
+                    console.log('🔧 Clases del panel después:', filtersPanel.classList.toString());
+                    console.log('🔧 Estilo del panel después:', filtersPanel.style.display);
+                    
+                    if (backdrop) {
+                        console.log('🔧 Backdrop antes:', backdrop);
+                        console.log('🔧 Clases del backdrop antes:', backdrop.classList.toString());
+                        backdrop.classList.add('show');
+                        console.log('🔧 Backdrop después:', backdrop);
+                        console.log('🔧 Clases del backdrop después:', backdrop.classList.toString());
+                    }
+                    
+                    document.body.style.overflow = 'hidden';
+                    console.log('🔧 Body overflow configurado a hidden');
+                    
+                    console.log('🔧 ===== FIN DEL CLICK EN BOTÓN DE FILTROS INDIVIDUALES =====');
                 });
+                
+                console.log('🔧 Event listener agregado al botón de filtros individuales');
+            } else {
+                console.error('❌ ERROR: No se pudo configurar el botón de filtros individuales');
+                console.error('❌ filtersBtn:', filtersBtn);
+                console.error('❌ filtersPanel:', filtersPanel);
             }
             
             if (closeBtn && filtersPanel) {
@@ -9298,8 +9350,7 @@
                 });
             }
             
-            // Configurar custom selects
-            setupIndividualCustomSelects();
+            console.log('✅ ===== FILTROS INDIVIDUALES EN DIMENSIONES CONFIGURADOS =====');
         }
 
         function setupIndividualCustomSelects() {
