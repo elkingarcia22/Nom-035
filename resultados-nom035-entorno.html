@@ -6627,25 +6627,42 @@
             // Función para buscar categorías
             function searchCategories() {
                 const searchTerm = searchInput.value.toLowerCase().trim();
+                console.log('🔍 Buscando término:', searchTerm);
                 
                 if (searchTerm === '') {
                     // Mostrar todas las filas
                     const allRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
+                    console.log('🔍 Mostrando todas las filas:', allRows.length);
                     allRows.forEach(row => {
                         row.style.display = '';
                     });
                 } else {
                     // Filtrar filas
                     const allRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
-                    allRows.forEach(row => {
+                    console.log('🔍 Total de filas encontradas:', allRows.length);
+                    
+                    allRows.forEach((row, index) => {
                         const categoryCell = row.querySelector('.category-cell');
+                        console.log(`🔍 Fila ${index + 1}:`, {
+                            hasCategoryCell: !!categoryCell,
+                            categoryText: categoryCell ? categoryCell.textContent : 'No encontrado',
+                            rowClasses: row.className
+                        });
+                        
                         if (categoryCell) {
                             const categoryText = categoryCell.textContent.toLowerCase();
+                            console.log(`🔍 Comparando "${categoryText}" con "${searchTerm}"`);
+                            
                             if (categoryText.includes(searchTerm)) {
+                                console.log('✅ Coincidencia encontrada, mostrando fila');
                                 row.style.display = '';
                             } else {
+                                console.log('❌ No coincide, ocultando fila');
                                 row.style.display = 'none';
                             }
+                        } else {
+                            console.log('❌ No se encontró category-cell, ocultando fila');
+                            row.style.display = 'none';
                         }
                     });
                 }
