@@ -10645,24 +10645,68 @@
             const clearBtn = document.getElementById('individual-clear-filters-btn');
             
             console.log('🔧 Elementos encontrados:');
-            console.log('🔧 Botón filtros:', !!filtersBtn);
-            console.log('🔧 Panel filtros:', !!filtersPanel);
-            console.log('🔧 Botón cerrar:', !!closeBtn);
-            console.log('🔧 Backdrop:', !!backdrop);
-            console.log('🔧 Botón aplicar:', !!applyBtn);
-            console.log('🔧 Botón limpiar:', !!clearBtn);
+            console.log('🔧 Botón filtros:', !!filtersBtn, filtersBtn);
+            console.log('🔧 Panel filtros:', !!filtersPanel, filtersPanel);
+            console.log('🔧 Botón cerrar:', !!closeBtn, closeBtn);
+            console.log('🔧 Backdrop:', !!backdrop, backdrop);
+            console.log('🔧 Botón aplicar:', !!applyBtn, applyBtn);
+            console.log('🔧 Botón limpiar:', !!clearBtn, clearBtn);
+            
+            // Verificar si los elementos existen
+            if (!filtersBtn) {
+                console.error('❌ ERROR: No se encontró el botón de filtros individual-filters-btn');
+                return;
+            }
+            if (!filtersPanel) {
+                console.error('❌ ERROR: No se encontró el panel de filtros individual-filters-side-panel');
+                return;
+            }
             
             // Configurar botón de filtros
             if (filtersBtn && filtersPanel) {
                 console.log('🔧 Configurando botón de filtros principales');
+                console.log('🔧 Botón antes del evento:', filtersBtn);
+                console.log('🔧 Panel antes del evento:', filtersPanel);
+                console.log('🔧 Clases del panel antes:', filtersPanel.classList.toString());
+                
                 filtersBtn.addEventListener('click', function(e) {
+                    console.log('🔧 ===== CLICK EN BOTÓN DE FILTROS DETECTADO =====');
+                    console.log('🔧 Evento:', e);
+                    console.log('🔧 Target:', e.target);
+                    console.log('🔧 CurrentTarget:', e.currentTarget);
+                    
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('🔧 Click en botón de filtros principales');
+                    
+                    console.log('🔧 Panel antes de agregar show:', filtersPanel);
+                    console.log('🔧 Clases del panel antes:', filtersPanel.classList.toString());
+                    console.log('🔧 Estilo del panel antes:', filtersPanel.style.display);
+                    
                     filtersPanel.classList.add('show');
-                    if (backdrop) backdrop.classList.add('show');
+                    
+                    console.log('🔧 Panel después de agregar show:', filtersPanel);
+                    console.log('🔧 Clases del panel después:', filtersPanel.classList.toString());
+                    console.log('🔧 Estilo del panel después:', filtersPanel.style.display);
+                    
+                    if (backdrop) {
+                        console.log('🔧 Backdrop antes:', backdrop);
+                        console.log('🔧 Clases del backdrop antes:', backdrop.classList.toString());
+                        backdrop.classList.add('show');
+                        console.log('🔧 Backdrop después:', backdrop);
+                        console.log('🔧 Clases del backdrop después:', backdrop.classList.toString());
+                    }
+                    
                     document.body.style.overflow = 'hidden';
+                    console.log('🔧 Body overflow configurado a hidden');
+                    
+                    console.log('🔧 ===== FIN DEL CLICK EN BOTÓN DE FILTROS =====');
                 });
+                
+                console.log('🔧 Event listener agregado al botón de filtros');
+            } else {
+                console.error('❌ ERROR: No se pudo configurar el botón de filtros');
+                console.error('❌ filtersBtn:', filtersBtn);
+                console.error('❌ filtersPanel:', filtersPanel);
             }
             
             // Configurar botón de cerrar
@@ -10723,7 +10767,9 @@
                 updateTableWithAllParticipants();
                 
                 // Configurar filtros para la tabla principal
+                console.log('🔧 ===== LLAMANDO setupMainIndividualFilters =====');
                 setupMainIndividualFilters();
+                console.log('🔧 ===== FIN DE setupMainIndividualFilters =====');
                 
                 // Configurar eventos del buscador
                 const searchBtn = document.getElementById('individual-search-btn');
@@ -10733,6 +10779,20 @@
                 if (searchBtn) {
                     searchBtn.addEventListener('click', toggleIndividualSearch);
                 }
+                
+                // Verificar si el botón de filtros existe después de la configuración
+                setTimeout(() => {
+                    const testBtn = document.getElementById('individual-filters-btn');
+                    console.log('🔧 ===== VERIFICACIÓN POST-CONFIGURACIÓN =====');
+                    console.log('🔧 Botón de filtros encontrado:', !!testBtn);
+                    console.log('🔧 Botón de filtros:', testBtn);
+                    if (testBtn) {
+                        console.log('🔧 Clases del botón:', testBtn.classList.toString());
+                        console.log('🔧 Estilo del botón:', testBtn.style.display);
+                        console.log('🔧 Botón visible:', testBtn.offsetWidth > 0 && testBtn.offsetHeight > 0);
+                    }
+                    console.log('🔧 ===== FIN VERIFICACIÓN POST-CONFIGURACIÓN =====');
+                }, 2000);
                 
                 if (searchInput) {
                     searchInput.addEventListener('input', searchParticipants);
