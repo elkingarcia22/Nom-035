@@ -2095,15 +2095,19 @@
         .dimensions-table-container {
             margin-top: 16px;
             overflow-x: auto;
+            max-width: 100%;
+            width: 100%;
         }
 
         .dimensions-table {
             width: 100%;
+            max-width: 100%;
             border-collapse: collapse;
             background: white;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            table-layout: fixed;
         }
 
         .dimensions-table thead {
@@ -2117,12 +2121,18 @@
             font-size: 14px;
             color: #374151;
             border-bottom: 1px solid #e5e7eb;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .dimensions-table td {
             padding: 12px 16px;
             border-bottom: 1px solid #f3f4f6;
             font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .dimensions-table tbody tr:hover {
@@ -2137,6 +2147,37 @@
         .dimension-domain {
             color: #6b7280;
             font-size: 13px;
+        }
+
+        /* Anchos específicos para columnas de la tabla de dimensiones */
+        .dimensions-table th:nth-child(1),
+        .dimensions-table td:nth-child(1) {
+            width: 40%;
+            max-width: 200px;
+        }
+
+        .dimensions-table th:nth-child(2),
+        .dimensions-table td:nth-child(2) {
+            width: 15%;
+            max-width: 80px;
+        }
+
+        .dimensions-table th:nth-child(3),
+        .dimensions-table td:nth-child(3) {
+            width: 15%;
+            max-width: 80px;
+        }
+
+        .dimensions-table th:nth-child(4),
+        .dimensions-table td:nth-child(4) {
+            width: 15%;
+            max-width: 80px;
+        }
+
+        .dimensions-table th:nth-child(5),
+        .dimensions-table td:nth-child(5) {
+            width: 15%;
+            max-width: 80px;
         }
 
         .dimension-score {
