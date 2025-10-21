@@ -5770,6 +5770,29 @@
             const tableRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
             console.log(`🔍 Total de filas encontradas: ${tableRows.length}`);
             
+            // Verificar si la tabla existe y tiene contenido
+            const tableContainer = document.querySelector('#new-overview-panel .results-table');
+            console.log('🔍 Tabla encontrada:', !!tableContainer);
+            
+            if (tableRows.length === 0) {
+                console.log('❌ No se encontraron filas en la tabla. Verificando estructura...');
+                const panel = document.querySelector('#new-overview-panel');
+                console.log('🔍 Panel encontrado:', !!panel);
+                if (panel) {
+                    const table = panel.querySelector('.results-table');
+                    console.log('🔍 Tabla dentro del panel:', !!table);
+                    if (table) {
+                        const tbody = table.querySelector('tbody');
+                        console.log('🔍 Tbody encontrado:', !!tbody);
+                        if (tbody) {
+                            const rows = tbody.querySelectorAll('tr');
+                            console.log('🔍 Filas en tbody:', rows.length);
+                        }
+                    }
+                }
+                return;
+            }
+            
             let visibleCount = 0;
             
             tableRows.forEach((row, index) => {
