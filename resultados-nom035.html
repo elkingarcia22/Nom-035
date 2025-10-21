@@ -988,13 +988,37 @@
         }
 
         .answer-yes {
-            background: #fecaca;
-            color: #dc2626;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .answer-yes::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #ef4444;
+            flex-shrink: 0;
         }
 
         .answer-no {
-            background: #dcfce7;
-            color: #166534;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .answer-no::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #22c55e;
+            flex-shrink: 0;
         }
 
         /* Responsive */
