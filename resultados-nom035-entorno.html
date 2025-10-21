@@ -663,16 +663,22 @@
             max-height: calc(600px - 80px);
         }
 
-        /* Hacer fijo el contenido del participante */
-        .participant-details {
+        /* Hacer fijo el header del participante */
+        .participant-header {
             position: sticky;
             top: 0;
             background: white;
             z-index: 100;
             border-bottom: 1px solid #e5e7eb;
+            padding: 16px;
         }
 
-        /* Asegurar que la tabla esté por debajo del contenido fijo */
+        /* Asegurar que la tabla esté por debajo del header fijo */
+        .detail-section {
+            position: relative;
+            z-index: 1;
+        }
+
         .dimensions-table-container {
             position: relative;
             z-index: 1;
@@ -681,12 +687,6 @@
         .dimensions-table {
             position: relative;
             z-index: 1;
-        }
-
-        /* Asegurar que el contenedor de detalles tenga z-index apropiado */
-        .participant-details-content {
-            position: relative;
-            z-index: 10;
         }
 
         .participant-info-line {
@@ -7583,7 +7583,7 @@
                 return;
             }
             
-            // Mostrar información del participante con estructura idéntica a emocional
+            // Mostrar información del participante con estructura corregida
             participantDetails.innerHTML = `
                 <div class="participant-details show">
                     <div class="participant-header">
@@ -7612,9 +7612,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="participant-details">
+                    
                     <div class="detail-section">
                         <div class="dimensions-table-container">
                             <table class="dimensions-table">
