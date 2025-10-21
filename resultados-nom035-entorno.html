@@ -8506,8 +8506,8 @@
                         <div class="participant-name">${participant.name}</div>
                         <div class="participant-role">${participant.role}</div>
                     </div>
-                    <div class="risk-level risk-${participant.riskLevel}">
-                        ${participant.riskLevel.replace('-', ' ')}
+                    <div class="risk-level">
+                        <span class="risk-badge ${participant.riskLevel}">${participant.riskLevel.replace('-', ' ').toUpperCase()}</span>
                     </div>
                 `;
                 
