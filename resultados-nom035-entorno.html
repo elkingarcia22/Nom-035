@@ -1388,6 +1388,46 @@
             background-color: #374151;
         }
 
+        /* Estilos para badges de riesgo en dominios (dimensiones) con puntos */
+        .dimension-cell + td .risk-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            background: transparent !important;
+            color: inherit !important;
+            padding: 0;
+        }
+
+        .dimension-cell + td .risk-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .dimension-cell + td .risk-badge.nulo::before {
+            background-color: #6b7280;
+        }
+
+        .dimension-cell + td .risk-badge.bajo::before {
+            background-color: #22c55e;
+        }
+
+        .dimension-cell + td .risk-badge.medio::before {
+            background-color: #f59e0b;
+        }
+
+        .dimension-cell + td .risk-badge.alto::before {
+            background-color: #ef4444;
+        }
+
+        .dimension-cell + td .risk-badge.muy-alto::before {
+            background-color: #dc2626;
+        }
+
         /* Estilos para las filas de categoría con dropdown - Estilo emocional */
         .category-summary {
             cursor: pointer;
