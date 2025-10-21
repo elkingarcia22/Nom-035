@@ -4569,6 +4569,27 @@
                     e.stopPropagation();
                     const checkbox = optionElement.querySelector('input[type="checkbox"]');
                     checkbox.checked = !checkbox.checked;
+                    
+                    // FORZAR: Si se selecciona una opción específica, desmarcar "todos"
+                    if (checkbox.checked && option.value !== 'todos') {
+                        console.log('🔧 FORZANDO: Desmarcando "todos" porque se seleccionó opción específica');
+                        const todosCheckbox = document.querySelector('input[id="risk-todos"]');
+                        if (todosCheckbox) {
+                            todosCheckbox.checked = false;
+                        }
+                    }
+                    
+                    // FORZAR: Si se selecciona "todos", desmarcar todas las demás
+                    if (checkbox.checked && option.value === 'todos') {
+                        console.log('🔧 FORZANDO: Desmarcando todas las opciones porque se seleccionó "todos"');
+                        const allCheckboxes = document.querySelectorAll('#new-risk-select input[type="checkbox"]');
+                        allCheckboxes.forEach(cb => {
+                            if (cb.id !== 'risk-todos') {
+                                cb.checked = false;
+                            }
+                        });
+                    }
+                    
                     onSelect(option.value, checkbox.checked);
                 });
                 
