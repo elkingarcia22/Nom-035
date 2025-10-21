@@ -5851,6 +5851,23 @@
                     }
                 });
             }
+            
+            // DIAGNÓSTICO ADICIONAL: Verificar si hay checkboxes marcados que no sean "todos"
+            console.log('🔍 PASO 6.1.1.5: DIAGNÓSTICO ADICIONAL - Verificando todos los checkboxes...');
+            const allRiskCheckboxes = riskSelect.querySelectorAll('input[type="checkbox"]');
+            allRiskCheckboxes.forEach((checkbox, index) => {
+                console.log(`🔍 PASO 6.1.1.5.${index + 1}: Checkbox ${index + 1} ID: ${checkbox.id}, Checked: ${checkbox.checked}`);
+                if (checkbox.checked && checkbox.id !== 'risk-todos') {
+                    console.log(`🔍 PASO 6.1.1.5.${index + 1}: ¡ENCONTRADO! Checkbox específico marcado: ${checkbox.id}`);
+                    const option = checkbox.closest('.select-option');
+                    const value = option ? option.getAttribute('data-value') : null;
+                    console.log(`🔍 PASO 6.1.1.5.${index + 1}: Valor del checkbox específico: ${value}`);
+                    if (value && value !== 'todos') {
+                        selectedRisks.push(value);
+                        console.log(`🔍 PASO 6.1.1.5.${index + 1}: Agregado a selectedRisks: ${value}`);
+                    }
+                }
+            });
             console.log('🔍 PASO 6.1.5: selectedRisks final:', selectedRisks);
         } else {
             console.log('❌ PASO 6.1: Risk select no encontrado');
