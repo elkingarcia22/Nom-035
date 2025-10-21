@@ -1308,7 +1308,11 @@
         .risk-count {
             font-weight: 600;
             text-align: center;
-            color: #374151;
+            background: none !important;
+            border: none !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            color: #374151 !important;
         }
 
         .percentage {
@@ -2923,6 +2927,71 @@
                                                         <div class="response-with-dot">
                                                             <div class="response-dot alto"></div>
                                                             <span>Alto</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <!-- Categoría 4: Organización del tiempo de trabajo -->
+                                                <tr class="category-summary">
+                                                    <td class="category-cell">4. Organización del tiempo de trabajo</td>
+                                                    <td class="category-domain-info">-</td>
+                                                    <td class="category-dimension-info">-</td>
+                                                    <td class="risk-count">18</td>
+                                                    <td class="percentage">12.0%</td>
+                                                    <td><span class="risk-badge bajo">Bajo</span></td>
+                                                </tr>
+                                                
+                                                <!-- Dominio: Jornada de trabajo -->
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Jornada de trabajo</td>
+                                                    <td>Duración, distribución y pausas</td>
+                                                    <td class="risk-count">18</td>
+                                                    <td class="percentage">12.0%</td>
+                                                    <td>
+                                                        <div class="response-with-dot">
+                                                            <div class="response-dot bajo"></div>
+                                                            <span>Bajo</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <!-- Categoría 5: Liderazgo y relaciones en el trabajo -->
+                                                <tr class="category-summary">
+                                                    <td class="category-cell">5. Liderazgo y relaciones en el trabajo</td>
+                                                    <td class="category-domain-info">-</td>
+                                                    <td class="category-dimension-info">-</td>
+                                                    <td class="risk-count">28</td>
+                                                    <td class="percentage">18.7%</td>
+                                                    <td><span class="risk-badge medio">Medio</span></td>
+                                                </tr>
+                                                
+                                                <!-- Dominio: Liderazgo -->
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Liderazgo</td>
+                                                    <td>Estilo de liderazgo, comunicación, apoyo</td>
+                                                    <td class="risk-count">15</td>
+                                                    <td class="percentage">10.0%</td>
+                                                    <td>
+                                                        <div class="response-with-dot">
+                                                            <div class="response-dot medio"></div>
+                                                            <span>Medio</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <!-- Dominio: Relaciones en el trabajo -->
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Relaciones en el trabajo</td>
+                                                    <td>Comunicación, colaboración, confianza, respeto</td>
+                                                    <td class="risk-count">13</td>
+                                                    <td class="percentage">8.7%</td>
+                                                    <td>
+                                                        <div class="response-with-dot">
+                                                            <div class="response-dot medio"></div>
+                                                            <span>Medio</span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -9411,8 +9480,8 @@
                 if (firstCell && !firstCell.querySelector('.accordion-icon')) {
                     const accordionIcon = document.createElement('i');
                     accordionIcon.className = 'far fa-chevron-right accordion-icon';
-                    accordionIcon.style.cssText = 'margin-right: 8px; transition: transform 0.2s ease; cursor: pointer;';
-                    firstCell.insertBefore(accordionIcon, firstCell.firstChild);
+                    accordionIcon.style.cssText = 'margin-left: 8px; transition: transform 0.2s ease; cursor: pointer; float: right;';
+                    firstCell.appendChild(accordionIcon);
                     
                     // Hacer la fila clickeable
                     row.style.cursor = 'pointer';
