@@ -7036,21 +7036,23 @@
                     console.log('🔍 Total de filas de dimensiones encontradas:', allRows.length);
                     
                     allRows.forEach((row, index) => {
-                        const dimensionCell = row.querySelector('.dimension-name');
-                        const domainCell = row.querySelector('.dimension-domain');
+                        // Buscar en el span dentro de dimension-header-row (nombre de dimensión)
+                        const dimensionSpan = row.querySelector('.dimension-header-row span');
+                        // Buscar en dimension-domain-info (nombre de dominio)
+                        const domainCell = row.querySelector('.dimension-domain-info');
                         
                         console.log(`🔍 Fila ${index + 1}:`, {
-                            hasDimensionCell: !!dimensionCell,
+                            hasDimensionSpan: !!dimensionSpan,
                             hasDomainCell: !!domainCell,
-                            dimensionText: dimensionCell ? dimensionCell.textContent : 'No encontrado',
+                            dimensionText: dimensionSpan ? dimensionSpan.textContent : 'No encontrado',
                             domainText: domainCell ? domainCell.textContent : 'No encontrado'
                         });
                         
                         let matches = false;
                         
                         // Buscar en nombre de dimensión
-                        if (dimensionCell) {
-                            const dimensionText = dimensionCell.textContent.toLowerCase();
+                        if (dimensionSpan) {
+                            const dimensionText = dimensionSpan.textContent.toLowerCase();
                             if (dimensionText.includes(searchTerm)) {
                                 matches = true;
                                 console.log('✅ Coincidencia en dimensión:', dimensionText);
