@@ -5772,7 +5772,7 @@
             
             let visibleCount = 0;
             
-            tableRows.forEach(row => {
+            tableRows.forEach((row, index) => {
                 let shouldShow = true;
                 
                 // Filtrar por nivel de riesgo
@@ -5780,14 +5780,10 @@
                     const riskBadge = row.querySelector('.risk-badge');
                     if (riskBadge) {
                         const riskLevel = riskBadge.textContent.trim();
-                        const riskMapping = {
-                            'alto': 'Alto',
-                            'medio': 'Medio', 
-                            'bajo': 'Bajo'
-                        };
-                        const mappedRisk = riskMapping[riskLevel.toLowerCase()] || riskLevel;
-                        if (!riskFilters.includes(mappedRisk)) {
+                        console.log(`🔍 Fila ${index + 1} - Nivel de riesgo: "${riskLevel}"`);
+                        if (!riskFilters.includes(riskLevel)) {
                             shouldShow = false;
+                            console.log(`❌ Fila ${index + 1} oculta por nivel de riesgo`);
                         }
                     }
                 }
@@ -5797,16 +5793,10 @@
                     const categoryCell = row.querySelector('.category-cell span');
                     if (categoryCell) {
                         const categoryText = categoryCell.textContent.trim();
-                        const categoryMapping = {
-                            'condiciones': 'Condiciones en el ambiente de trabajo',
-                            'carga': 'Carga de trabajo',
-                            'jornada': 'Jornada de trabajo',
-                            'liderazgo': 'Liderazgo y relaciones en el trabajo',
-                            'entorno': 'Entorno organizacional'
-                        };
-                        const mappedCategory = categoryMapping[categoryFilters[0]] || categoryFilters[0];
-                        if (!categoryFilters.includes(mappedCategory)) {
+                        console.log(`🔍 Fila ${index + 1} - Categoría: "${categoryText}"`);
+                        if (!categoryFilters.includes(categoryText)) {
                             shouldShow = false;
+                            console.log(`❌ Fila ${index + 1} oculta por categoría`);
                         }
                     }
                 }
@@ -5816,16 +5806,10 @@
                     const domainCell = row.querySelector('.category-domain-info');
                     if (domainCell) {
                         const domainText = domainCell.textContent.trim();
-                        const domainMapping = {
-                            'ambiente': 'Ambiente de trabajo',
-                            'organizacion': 'Organización del trabajo',
-                            'autonomia': 'Autonomía',
-                            'liderazgo': 'Liderazgo y Relaciones interpersonales',
-                            'violencia': 'Violencia laboral'
-                        };
-                        const mappedDomain = domainMapping[domainFilters[0]] || domainFilters[0];
-                        if (!domainFilters.includes(mappedDomain)) {
+                        console.log(`🔍 Fila ${index + 1} - Dominio: "${domainText}"`);
+                        if (!domainFilters.includes(domainText)) {
                             shouldShow = false;
+                            console.log(`❌ Fila ${index + 1} oculta por dominio`);
                         }
                     }
                 }
@@ -5835,18 +5819,10 @@
                     const dimensionCell = row.querySelector('.category-dimension-info');
                     if (dimensionCell) {
                         const dimensionText = dimensionCell.textContent.trim();
-                        const dimensionMapping = {
-                            'condiciones': 'Condiciones en el ambiente de trabajo',
-                            'carga': 'Carga de trabajo',
-                            'control': 'Falta de control sobre el trabajo',
-                            'jornada': 'Jornada de trabajo',
-                            'liderazgo': 'Liderazgo',
-                            'relaciones': 'Relaciones interpersonales',
-                            'violencia': 'Violencia laboral'
-                        };
-                        const mappedDimension = dimensionMapping[dimensionFilters[0]] || dimensionFilters[0];
-                        if (!dimensionFilters.includes(mappedDimension)) {
+                        console.log(`🔍 Fila ${index + 1} - Dimensión: "${dimensionText}"`);
+                        if (!dimensionFilters.includes(dimensionText)) {
                             shouldShow = false;
+                            console.log(`❌ Fila ${index + 1} oculta por dimensión`);
                         }
                     }
                 }
@@ -5855,8 +5831,10 @@
                 if (shouldShow) {
                     row.style.display = '';
                     visibleCount++;
+                    console.log(`✅ Fila ${index + 1} visible`);
                 } else {
                     row.style.display = 'none';
+                    console.log(`❌ Fila ${index + 1} oculta`);
                 }
             });
             
@@ -5907,13 +5885,25 @@
         function getSelectedCheckboxValues(filterType) {
             const selectId = `new-${filterType}-select`;
             const select = document.getElementById(selectId);
-            if (!select) return [];
+            if (!select) {
+                console.log(`❌ Select no encontrado: ${selectId}`);
+                return [];
+            }
             
             const checkboxes = select.querySelectorAll('input[type="checkbox"]:checked');
-            const values = Array.from(checkboxes).map(checkbox => checkbox.id.split('-').pop());
+            console.log(`🔍 Checkboxes seleccionados en ${selectId}:`, checkboxes.length);
+            
+            const values = Array.from(checkboxes).map(checkbox => {
+                const option = checkbox.closest('.select-option');
+                return option ? option.getAttribute('data-value') : null;
+            }).filter(value => value && value !== 'todos');
+            
+            console.log(`🔍 Valores obtenidos para ${filterType}:`, values);
             
             // Si "todos" está seleccionado, devolver array vacío (significa todos)
-            if (values.includes('todos')) {
+            const todosCheckbox = select.querySelector('input[id$="-todos"]:checked');
+            if (todosCheckbox) {
+                console.log(`🔍 "Todos" seleccionado para ${filterType}, devolviendo array vacío`);
                 return [];
             }
             
