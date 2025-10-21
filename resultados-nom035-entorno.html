@@ -4076,11 +4076,16 @@
 
         // Funciones auxiliares para filtros de dimensiones
         function openDimensionsFiltersPanel() {
+            console.log('🔧 Abriendo panel de filtros de dimensiones...');
             const panel = document.getElementById('filters-panel-dimensions');
             const backdrop = document.getElementById('filters-backdrop-dimensions');
+            console.log('🔧 Elementos encontrados:', { panel: !!panel, backdrop: !!backdrop });
             if (panel && backdrop) {
                 panel.classList.add('show');
                 backdrop.classList.add('show');
+                console.log('✅ Panel de filtros abierto');
+            } else {
+                console.log('❌ No se pudieron encontrar los elementos del panel');
             }
         }
 
