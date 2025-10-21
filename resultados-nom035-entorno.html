@@ -9585,11 +9585,23 @@
                 }
             });
             
-            // Inicializar con todas las categorías cerradas
+            // Inicializar con todas las categorías cerradas excepto la primera
             const detailRows = document.querySelectorAll('.category-detail');
-            detailRows.forEach(row => {
-                row.style.display = 'none';
+            detailRows.forEach((row, index) => {
+                // Abrir solo las filas de detalle de la primera categoría
+                const isFirstCategory = index < 2; // Las primeras 2 filas de detalle pertenecen a la primera categoría
+                row.style.display = isFirstCategory ? 'table-row' : 'none';
             });
+            
+            // Marcar la primera categoría como activa
+            const firstCategoryRow = document.querySelector('.category-summary');
+            if (firstCategoryRow) {
+                firstCategoryRow.classList.add('active');
+                const accordionIcon = firstCategoryRow.querySelector('.accordion-icon');
+                if (accordionIcon) {
+                    accordionIcon.style.transform = 'rotate(90deg)';
+                }
+            }
         });
     </script>
 </body>
