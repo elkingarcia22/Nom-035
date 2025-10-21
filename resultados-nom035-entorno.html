@@ -3972,15 +3972,26 @@
             });
 
             // Funcionalidad de búsqueda desplegable
+            console.log('🔧 ===== INICIANDO BÚSQUEDA EN initializeTableFilters =====');
+            console.log('🔧 Elementos encontrados en initializeTableFilters:', {
+                searchBtn: !!searchBtn,
+                searchContainer: !!searchContainer,
+                searchInput: !!searchInput,
+                closeSearch: !!closeSearch
+            });
+
             if (searchBtn && searchContainer && searchInput) {
-                console.log('✅ Elementos de búsqueda encontrados, agregando event listeners');
+                console.log('✅ Elementos de búsqueda encontrados en initializeTableFilters, agregando event listeners');
                 searchBtn.addEventListener('click', () => {
-                    console.log('🔍 Click en botón de búsqueda (vista general)');
+                    console.log('🔍 Click en botón de búsqueda (initializeTableFilters)');
+                    console.log('🔍 Estado actual del contenedor:', searchContainer.style.display);
                     searchContainer.style.display = 'block';
+                    console.log('🔍 Nuevo estado del contenedor:', searchContainer.style.display);
                     searchInput.focus();
+                    console.log('🔍 Input enfocado');
                 });
             } else {
-                console.log('❌ Elementos de búsqueda no encontrados:', {
+                console.log('❌ Elementos de búsqueda no encontrados en initializeTableFilters:', {
                     searchBtn: !!searchBtn,
                     searchContainer: !!searchContainer,
                     searchInput: !!searchInput
@@ -6462,6 +6473,7 @@
         // FUNCIÓN PARA INICIALIZAR CONTROLES DE LA TABLA EN NUEVOS TABS
         function initializeNewTableControls() {
             console.log('🚀 ===== INICIANDO CONTROLES DE TABLA NUEVOS TABS =====');
+            console.log('🚀 Esta función se está ejecutando para inicializar controles de búsqueda');
             
             // Botón de búsqueda
             const searchBtn = document.getElementById('table-search-btn');
@@ -6469,14 +6481,27 @@
             const searchInput = document.getElementById('table-search');
             const closeSearchBtn = document.getElementById('close-table-search');
             
+            console.log('🔧 Elementos de búsqueda encontrados:', {
+                searchBtn: !!searchBtn,
+                searchContainer: !!searchContainer,
+                searchInput: !!searchInput,
+                closeSearchBtn: !!closeSearchBtn
+            });
+
             if (searchBtn && searchContainer) {
+                console.log('✅ Agregando event listener al botón de búsqueda');
                 searchBtn.addEventListener('click', function() {
                     console.log('🔍 Click en botón de búsqueda (nuevos tabs)');
+                    console.log('🔍 Estado actual del contenedor:', searchContainer.style.display);
                     searchContainer.style.display = searchContainer.style.display === 'none' ? 'block' : 'none';
+                    console.log('🔍 Nuevo estado del contenedor:', searchContainer.style.display);
                     if (searchContainer.style.display === 'block' && searchInput) {
+                        console.log('🔍 Enfocando input de búsqueda');
                         searchInput.focus();
                     }
                 });
+            } else {
+                console.log('❌ No se pudieron encontrar los elementos de búsqueda');
             }
             
             if (closeSearchBtn && searchContainer) {
