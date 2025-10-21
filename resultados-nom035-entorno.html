@@ -2742,17 +2742,23 @@
                                         <span style="font-size: 14px; color: #6b7280;">5 categorías</span>
                                     </div>
                                     <div class="table-controls">
-                                        <!-- Campo de búsqueda desplegable -->
-                                        <div id="table-search-container" style="display: none; position: relative;">
-                                            <input type="text" id="table-search" placeholder="Buscar categorías..." 
-                                                   style="padding: 8px 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); width: 250px; font-size: 14px;">
-                                            <button id="close-table-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer;">
-                                                <i class="far fa-times"></i>
+                                        <!-- Controles de búsqueda -->
+                                        <div style="position: relative;">
+                                            <!-- Botón de búsqueda (icono) -->
+                                            <button id="table-search-btn" style="background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; padding: 8px; cursor: pointer; color: #6b7280; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" title="Buscar categorías">
+                                                <i class="far fa-search"></i>
                                             </button>
+                                            
+                                            <!-- Input de búsqueda (oculto por defecto) -->
+                                            <div id="table-search-container" style="position: absolute; top: 0; right: 0; display: none; background: white; border: 1px solid #d1d5db; border-radius: 6px; z-index: 1000;">
+                                                <div style="display: flex; align-items: center; gap: 8px; padding: 8px;">
+                                                    <input type="text" id="table-search" placeholder="Buscar categorías..." style="padding: 8px 12px; border: none; outline: none; font-size: 14px; width: 250px; background: transparent;" />
+                                                    <button id="close-table-search" style="background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 4px; padding: 6px; cursor: pointer; color: #6b7280; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;" title="Limpiar búsqueda">
+                                                        <i class="far fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <button id="table-search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
-                                            <i class="far fa-search"></i>
-                                        </button>
                                         <button class="filters-button" id="table-filters-btn" title="Filtros">
                                             <i class="far fa-filter"></i>
                                             <span class="filter-badge" id="filter-badge" style="display: none;">0</span>
@@ -6583,11 +6589,23 @@
                 searchBtn.addEventListener('click', function() {
                     console.log('🔍 Click en botón de búsqueda (nuevos tabs)');
                     console.log('🔍 Estado actual del contenedor:', searchContainer.style.display);
-                    searchContainer.style.display = searchContainer.style.display === 'none' ? 'block' : 'none';
-                    console.log('🔍 Nuevo estado del contenedor:', searchContainer.style.display);
-                    if (searchContainer.style.display === 'block' && searchInput) {
-                        console.log('🔍 Enfocando input de búsqueda');
-                        searchInput.focus();
+                    
+                    if (searchContainer.style.display === 'none' || searchContainer.style.display === '') {
+                        // Mostrar buscador
+                        searchContainer.style.display = 'block';
+                        searchBtn.style.background = '#e5e7eb';
+                        searchBtn.style.color = '#374151';
+                        setTimeout(() => {
+                            searchInput.focus();
+                        }, 100);
+                    } else {
+                        // Ocultar buscador
+                        searchContainer.style.display = 'none';
+                        searchBtn.style.background = '#f3f4f6';
+                        searchBtn.style.color = '#6b7280';
+                        if (searchInput) {
+                            searchInput.value = '';
+                        }
                     }
                 });
             } else {
@@ -6598,11 +6616,72 @@
                 closeSearchBtn.addEventListener('click', function() {
                     console.log('❌ Cerrando búsqueda (nuevos tabs)');
                     searchContainer.style.display = 'none';
+                    searchBtn.style.background = '#f3f4f6';
+                    searchBtn.style.color = '#6b7280';
                     if (searchInput) {
                         searchInput.value = '';
                     }
                 });
             }
+            
+            // Función para buscar categorías
+            function searchCategories() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                
+                if (searchTerm === '') {
+                    // Mostrar todas las filas
+                    const allRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
+                    allRows.forEach(row => {
+                        row.style.display = '';
+                    });
+                } else {
+                    // Filtrar filas
+                    const allRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
+                    allRows.forEach(row => {
+                        const categoryCell = row.querySelector('.category-cell');
+                        if (categoryCell) {
+                            const categoryText = categoryCell.textContent.toLowerCase();
+                            if (categoryText.includes(searchTerm)) {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        }
+                    });
+                }
+            }
+            
+            // Función para limpiar búsqueda
+            function clearTableSearch() {
+                searchInput.value = '';
+                searchCategories();
+            }
+            
+            // Event listeners para búsqueda
+            if (searchInput) {
+                searchInput.addEventListener('input', searchCategories);
+                searchInput.addEventListener('keyup', function(e) {
+                    if (e.key === 'Escape') {
+                        searchContainer.style.display = 'none';
+                        searchBtn.style.background = '#f3f4f6';
+                        searchBtn.style.color = '#6b7280';
+                        clearTableSearch();
+                    }
+                });
+            }
+            
+            // Cerrar buscador al hacer clic fuera
+            document.addEventListener('click', function(e) {
+                if (searchContainer && searchBtn && 
+                    !searchContainer.contains(e.target) && 
+                    !searchBtn.contains(e.target) && 
+                    searchContainer.style.display === 'block') {
+                    searchContainer.style.display = 'none';
+                    searchBtn.style.background = '#f3f4f6';
+                    searchBtn.style.color = '#6b7280';
+                    clearTableSearch();
+                }
+            });
             
             // Botón de filtros
             const filtersBtn = document.getElementById('new-table-filters-btn');
