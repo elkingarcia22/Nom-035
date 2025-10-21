@@ -1389,7 +1389,7 @@
         }
 
         /* Estilos para badges de riesgo en dominios (dimensiones) con puntos */
-        .dimension-cell + td .risk-badge {
+        .dimension-row .risk-badge {
             display: flex;
             align-items: center;
             gap: 6px;
@@ -1400,7 +1400,7 @@
             padding: 0;
         }
 
-        .dimension-cell + td .risk-badge::before {
+        .dimension-row .risk-badge::before {
             content: '';
             width: 8px;
             height: 8px;
@@ -1408,23 +1408,23 @@
             flex-shrink: 0;
         }
 
-        .dimension-cell + td .risk-badge.nulo::before {
+        .dimension-row .risk-badge.nulo::before {
             background-color: #6b7280;
         }
 
-        .dimension-cell + td .risk-badge.bajo::before {
+        .dimension-row .risk-badge.bajo::before {
             background-color: #22c55e;
         }
 
-        .dimension-cell + td .risk-badge.medio::before {
+        .dimension-row .risk-badge.medio::before {
             background-color: #f59e0b;
         }
 
-        .dimension-cell + td .risk-badge.alto::before {
+        .dimension-row .risk-badge.alto::before {
             background-color: #ef4444;
         }
 
-        .dimension-cell + td .risk-badge.muy-alto::before {
+        .dimension-row .risk-badge.muy-alto::before {
             background-color: #dc2626;
         }
 
@@ -2836,7 +2836,7 @@
                                     </thead>
                                     <tbody>
                                         <!-- Dimensión 1: Condiciones físicas -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Condiciones físicas</span>
@@ -2849,7 +2849,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 2: Condiciones de seguridad -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Condiciones de seguridad</span>
@@ -2862,7 +2862,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 3: Exigencias cuantitativas -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Exigencias cuantitativas</span>
@@ -2875,7 +2875,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 4: Exigencias mentales -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Exigencias mentales</span>
@@ -2888,7 +2888,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 5: Exigencias emocionales -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Exigencias emocionales</span>
@@ -2901,7 +2901,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 6: Falta de control sobre el trabajo -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Falta de control sobre el trabajo</span>
@@ -2914,7 +2914,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 7: Falta de claridad de rol -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Falta de claridad de rol</span>
@@ -2927,7 +2927,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 8: Falta de autonomía -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Falta de autonomía</span>
@@ -2940,7 +2940,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 9: Falta de reconocimiento -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Falta de reconocimiento</span>
@@ -2953,7 +2953,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 10: Jornada de trabajo -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Jornada de trabajo</span>
@@ -2966,7 +2966,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 11: Distribución de la jornada -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Distribución de la jornada</span>
@@ -2979,7 +2979,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 12: Pausas -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Pausas</span>
@@ -2992,7 +2992,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 13: Liderazgo -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Liderazgo</span>
@@ -3005,7 +3005,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 14: Comunicación -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Comunicación</span>
@@ -3018,7 +3018,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 15: Apoyo social -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Apoyo social</span>
@@ -3031,7 +3031,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 16: Relaciones interpersonales -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Relaciones interpersonales</span>
@@ -3044,7 +3044,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 17: Violencia laboral -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Violencia laboral</span>
@@ -3057,7 +3057,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 18: Equidad -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Equidad</span>
@@ -3070,7 +3070,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 19: Respeto -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Respeto</span>
@@ -3083,7 +3083,7 @@
                                         </tr>
                                         
                                         <!-- Dimensión 20: Seguridad laboral -->
-                                        <tr>
+                                        <tr class="dimension-row">
                                             <td class="dimension-cell">
                                                 <div class="dimension-header-row">
                                                     <span>Seguridad laboral</span>
