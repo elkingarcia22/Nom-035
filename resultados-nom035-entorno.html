@@ -5872,6 +5872,28 @@
             });
             
             console.log(`✅ Filtros aplicados. ${visibleCount} filas visibles de ${tableRows.length} totales`);
+            
+            // Función de prueba para verificar que los filtros funcionan
+            if (tableRows.length > 0) {
+                console.log('🧪 PRUEBA: Ocultando todas las filas para verificar que el filtrado funciona');
+                tableRows.forEach((row, index) => {
+                    if (index < 3) { // Solo las primeras 3 filas
+                        row.style.display = 'none';
+                        console.log(`🧪 Fila ${index + 1} oculta para prueba`);
+                    }
+                });
+                
+                // Restaurar después de 2 segundos
+                setTimeout(() => {
+                    console.log('🧪 PRUEBA: Restaurando filas después de prueba');
+                    tableRows.forEach((row, index) => {
+                        if (index < 3) {
+                            row.style.display = '';
+                            console.log(`🧪 Fila ${index + 1} restaurada`);
+                        }
+                    });
+                }, 2000);
+            }
         }
 
         // Función para limpiar filtros de la tabla general
