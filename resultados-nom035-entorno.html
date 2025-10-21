@@ -3545,17 +3545,17 @@
 
         function applyTableFilters() {
             const searchTerm = document.getElementById('table-search').value.toLowerCase();
-            const riskFilters = getTableSelectedValues('table-risk-select');
-            const categoryFilters = getTableSelectedValues('table-category-select');
-            const areaFilters = getTableSelectedValues('table-area-select');
-            const positionFilters = getTableSelectedValues('table-position-select');
-            const genderFilters = getTableSelectedValues('table-gender-select');
-            const maritalFilters = getTableSelectedValues('table-marital-select');
-            const ageFilters = getTableSelectedValues('table-age-select');
-            const countryFilters = getTableSelectedValues('table-country-select');
-            const cityFilters = getTableSelectedValues('table-city-select');
-            const domainFilters = getTableSelectedValues('table-domain-select');
-            const dimensionFilters = getTableSelectedValues('table-dimension-select');
+            const riskFilters = getTableSelectedValues('new-risk-select');
+            const categoryFilters = getTableSelectedValues('new-category-select');
+            const areaFilters = getTableSelectedValues('new-department-select');
+            const positionFilters = getTableSelectedValues('new-position-select');
+            const genderFilters = getTableSelectedValues('new-gender-select');
+            const maritalFilters = getTableSelectedValues('new-marital-status-select');
+            const ageFilters = getTableSelectedValues('new-age-select');
+            const countryFilters = getTableSelectedValues('new-country-select');
+            const cityFilters = getTableSelectedValues('new-city-select');
+            const domainFilters = getTableSelectedValues('new-domain-select');
+            const dimensionFilters = getTableSelectedValues('new-dimension-select');
 
             const tableRows = document.querySelectorAll('.results-table tbody tr');
             
@@ -4033,7 +4033,7 @@
         }
 
         function clearTableFilters() {
-            const selectIds = ['table-risk-select', 'table-category-select', 'table-area-select', 'table-position-select', 'table-gender-select', 'table-marital-select', 'table-age-select', 'table-country-select', 'table-city-select', 'table-domain-select', 'table-dimension-select'];
+            const selectIds = ['new-risk-select', 'new-category-select', 'new-department-select', 'new-position-select', 'new-gender-select', 'new-marital-status-select', 'new-age-select', 'new-country-select', 'new-city-select', 'new-domain-select', 'new-dimension-select'];
             
             selectIds.forEach(selectId => {
                 const checkboxes = document.querySelectorAll(`#${selectId} input[type="checkbox"]`);
@@ -4064,10 +4064,10 @@
         }
 
         function updateTableFilterBadge() {
-            const badge = document.getElementById('table-filter-badge');
+            const badge = document.getElementById('new-table-filter-badge');
             let activeFilters = 0;
 
-            const selectIds = ['table-risk-select', 'table-category-select', 'table-area-select', 'table-position-select', 'table-gender-select', 'table-marital-select', 'table-age-select', 'table-country-select', 'table-city-select', 'table-domain-select', 'table-dimension-select'];
+            const selectIds = ['new-risk-select', 'new-category-select', 'new-department-select', 'new-position-select', 'new-gender-select', 'new-marital-status-select', 'new-age-select', 'new-country-select', 'new-city-select', 'new-domain-select', 'new-dimension-select'];
             
             selectIds.forEach(selectId => {
                 const selectedValues = getTableSelectedValues(selectId);
@@ -4090,7 +4090,7 @@
         }
 
         function setupTableCustomSelects() {
-            const selectIds = ['table-risk-select', 'table-category-select', 'table-area-select', 'table-position-select', 'table-gender-select', 'table-marital-select', 'table-age-select', 'table-country-select', 'table-city-select', 'table-domain-select', 'table-dimension-select'];
+            const selectIds = ['new-risk-select', 'new-category-select', 'new-department-select', 'new-position-select', 'new-gender-select', 'new-marital-status-select', 'new-age-select', 'new-country-select', 'new-city-select', 'new-domain-select', 'new-dimension-select'];
             
             selectIds.forEach(selectId => {
                 const select = document.getElementById(selectId);
@@ -4186,8 +4186,21 @@
 
         function getTableSelectedValues(selectId) {
             const select = document.getElementById(selectId);
+            if (!select) {
+                console.log(`❌ Select no encontrado: ${selectId}`);
+                return [];
+            }
             const checkedBoxes = select.querySelectorAll('input[type="checkbox"]:checked');
-            return Array.from(checkedBoxes).map(cb => cb.id.replace(selectId.replace('-select', '-'), '').replace('-todos', 'todos'));
+            return Array.from(checkedBoxes).map(cb => {
+                // Extraer el valor del ID del checkbox
+                const id = cb.id;
+                if (id.includes('-todos')) {
+                    return 'todos';
+                }
+                // Remover el prefijo del select ID y el sufijo del checkbox
+                const prefix = selectId.replace('-select', '-');
+                return id.replace(prefix, '').replace('-todos', 'todos');
+            });
         }
 
         // FUNCIÓN PARA TOGGLE DE CATEGORÍAS EN NUEVOS TABS
@@ -5751,7 +5764,7 @@
                 applyFiltersBtn.addEventListener('click', function() {
                     console.log('✅ Aplicando filtros (nuevos tabs)');
                     console.log('🔍 Botón de aplicar filtros clickeado');
-                    applyNewTableFilters();
+                    applyNewFilters();
                     // Cerrar el panel de filtros
                     filtersPanel.classList.remove('show');
                     if (filtersBackdrop) {
@@ -5765,7 +5778,7 @@
             if (clearFiltersBtn) {
                 clearFiltersBtn.addEventListener('click', function() {
                     console.log('🧹 Limpiando filtros (nuevos tabs)');
-                    clearNewTableFilters();
+                    clearNewFilters();
                 });
             }
 
