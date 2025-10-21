@@ -5040,6 +5040,26 @@
             
             // Inicializar controles del tab Dimensiones
             initializeDimensionsTableControls();
+            
+            // Inicializar la nueva tabla con la primera categoría abierta
+            setTimeout(() => {
+                const newTableDetailRows = document.querySelectorAll('#new-overview-panel .category-detail');
+                newTableDetailRows.forEach((row, index) => {
+                    // Abrir solo las filas de detalle de la primera categoría
+                    const isFirstCategory = index < 2; // Las primeras 2 filas de detalle pertenecen a la primera categoría
+                    row.style.display = isFirstCategory ? 'table-row' : 'none';
+                });
+                
+                // Marcar la primera categoría como activa en la nueva tabla
+                const firstNewCategoryRow = document.querySelector('#new-overview-panel .category-summary');
+                if (firstNewCategoryRow) {
+                    firstNewCategoryRow.classList.add('active');
+                    const accordionIcon = firstNewCategoryRow.querySelector('.accordion-icon');
+                    if (accordionIcon) {
+                        accordionIcon.style.transform = 'rotate(90deg)';
+                    }
+                }
+            }, 100);
         }
 
         // Función para actualizar el texto del select
