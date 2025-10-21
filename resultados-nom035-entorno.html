@@ -2738,6 +2738,17 @@
                             <div class="panel-content">
                                 <div class="table-header">
                                     <div class="table-controls">
+                                        <!-- Campo de búsqueda desplegable -->
+                                        <div id="table-search-container" style="display: none; position: relative;">
+                                            <input type="text" id="table-search" placeholder="Buscar categorías..." 
+                                                   style="padding: 8px 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); width: 250px; font-size: 14px;">
+                                            <button id="close-table-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer;">
+                                                <i class="far fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <button id="table-search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                            <i class="far fa-search"></i>
+                                        </button>
                                         <button class="filters-button" id="table-filters-btn" title="Filtros">
                                             <i class="far fa-filter"></i>
                                             <span class="filter-badge" id="filter-badge" style="display: none;">0</span>
