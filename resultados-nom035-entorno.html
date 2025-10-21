@@ -691,6 +691,82 @@
             z-index: 1;
         }
 
+        /* Estilos para filtros del side modal */
+        .filter-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+        .filter-option:hover {
+            background-color: #f3f4f6;
+        }
+
+        .filter-option input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkmark {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .filter-option input[type="checkbox"]:checked + .checkmark {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .filter-option input[type="checkbox"]:checked + .checkmark::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .filter-text {
+            color: #374151;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .filters-actions {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            gap: 12px;
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
         .participant-info-line {
             display: flex;
             align-items: center;
@@ -2958,6 +3034,158 @@
                                     </div>
 
                                     <!-- Side Panel de Filtros -->
+                                    <div class="filters-side-panel" id="new-table-filters-side-panel">
+                                        <div class="filters-header">
+                                            <h3>Filtros</h3>
+                                            <button class="close-filters-btn" id="new-close-table-filters">
+                                                <i class="far fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <div class="filters-content">
+                                            <!-- Filtro por Nivel de Riesgo -->
+                                            <div class="filter-group">
+                                                <label class="filter-label">Nivel de Riesgo</label>
+                                                <div class="filter-options">
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Alto" data-filter="risk">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Alto</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Medio" data-filter="risk">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Medio</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Bajo" data-filter="risk">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Bajo</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Filtro por Categoría -->
+                                            <div class="filter-group">
+                                                <label class="filter-label">Categoría</label>
+                                                <div class="filter-options">
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Condiciones en el ambiente de trabajo" data-filter="category">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Condiciones en el ambiente de trabajo</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Carga de trabajo" data-filter="category">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Carga de trabajo</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Jornada de trabajo" data-filter="category">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Jornada de trabajo</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Liderazgo y relaciones en el trabajo" data-filter="category">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Liderazgo y relaciones en el trabajo</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Entorno organizacional" data-filter="category">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Entorno organizacional</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Filtro por Dominio -->
+                                            <div class="filter-group">
+                                                <label class="filter-label">Dominio</label>
+                                                <div class="filter-options">
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Ambiente de trabajo" data-filter="domain">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Ambiente de trabajo</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Organización del trabajo" data-filter="domain">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Organización del trabajo</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Autonomía" data-filter="domain">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Autonomía</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Liderazgo y Relaciones interpersonales" data-filter="domain">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Liderazgo y Relaciones interpersonales</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Violencia laboral" data-filter="domain">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Violencia laboral</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Filtro por Dimensión -->
+                                            <div class="filter-group">
+                                                <label class="filter-label">Dimensión</label>
+                                                <div class="filter-options">
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Condiciones en el ambiente de trabajo" data-filter="dimension">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Condiciones en el ambiente de trabajo</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Carga de trabajo" data-filter="dimension">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Carga de trabajo</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Falta de control sobre el trabajo" data-filter="dimension">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Falta de control sobre el trabajo</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Jornada de trabajo" data-filter="dimension">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Jornada de trabajo</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Liderazgo" data-filter="dimension">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Liderazgo</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Relaciones interpersonales" data-filter="dimension">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Relaciones interpersonales</span>
+                                                    </label>
+                                                    <label class="filter-option">
+                                                        <input type="checkbox" value="Violencia laboral" data-filter="dimension">
+                                                        <span class="checkmark"></span>
+                                                        <span class="filter-text">Violencia laboral</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Botones de acción fijos en la parte inferior -->
+                                        <div class="filters-actions">
+                                            <button id="new-apply-table-filters" class="ubits-button ubits-button--primary ubits-button--md" style="flex: 1;">
+                                                <i class="far fa-check"></i>
+                                                <span>Aplicar filtros</span>
+                                            </button>
+                                            <button id="new-clear-table-filters" class="ubits-button ubits-button--secondary ubits-button--md" style="flex: 1;">
+                                                <i class="far fa-times"></i>
+                                                <span>Limpiar filtros</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Backdrop para el side panel -->
+                                    <div class="filters-backdrop" id="new-filters-backdrop"></div>
                                 </div>
                             </div>
                         </div>
@@ -5586,7 +5814,7 @@
             // Botón de filtros
             const filtersBtn = document.getElementById('new-table-filters-btn');
             const filtersPanel = document.getElementById('new-table-filters-side-panel');
-            const closeFiltersBtn = document.getElementById('new-close-filters-btn');
+            const closeFiltersBtn = document.getElementById('new-close-table-filters');
             const filtersBackdrop = document.getElementById('new-filters-backdrop');
             
             if (filtersBtn && filtersPanel) {
@@ -5628,22 +5856,25 @@
             }
             
             // Botones de filtros
-            const applyFiltersBtn = document.getElementById('new-apply-filters-btn');
-            const clearFiltersBtn = document.getElementById('new-clear-filters-btn');
+            const applyFiltersBtn = document.getElementById('new-apply-table-filters');
+            const clearFiltersBtn = document.getElementById('new-clear-table-filters');
             
             if (applyFiltersBtn) {
                 applyFiltersBtn.addEventListener('click', function() {
                     console.log('✅ Aplicando filtros (nuevos tabs)');
-                    applyNewFilters();
+                    applyNewTableFilters();
                     // Cerrar el panel de filtros
                     filtersPanel.classList.remove('show');
+                    if (filtersBackdrop) {
+                        filtersBackdrop.classList.remove('show');
+                    }
                 });
             }
             
             if (clearFiltersBtn) {
                 clearFiltersBtn.addEventListener('click', function() {
                     console.log('🧹 Limpiando filtros (nuevos tabs)');
-                    clearNewFilters();
+                    clearNewTableFilters();
                 });
             }
 
@@ -5651,6 +5882,113 @@
             setupNewCustomSelects();
             
             console.log('✅ ===== CONTROLES DE TABLA NUEVOS TABS INICIALIZADOS =====');
+        }
+
+        // Función para aplicar filtros de la tabla general
+        function applyNewTableFilters() {
+            console.log('🔍 ===== APLICANDO FILTROS DE TABLA GENERAL =====');
+            
+            // Obtener filtros seleccionados
+            const riskFilters = getSelectedCheckboxValues('risk');
+            const categoryFilters = getSelectedCheckboxValues('category');
+            const domainFilters = getSelectedCheckboxValues('domain');
+            const dimensionFilters = getSelectedCheckboxValues('dimension');
+            
+            console.log('🔍 Filtros seleccionados:', {
+                risk: riskFilters,
+                category: categoryFilters,
+                domain: domainFilters,
+                dimension: dimensionFilters
+            });
+            
+            // Obtener todas las filas de la tabla
+            const tableRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
+            console.log(`🔍 Total de filas encontradas: ${tableRows.length}`);
+            
+            let visibleCount = 0;
+            
+            tableRows.forEach(row => {
+                let shouldShow = true;
+                
+                // Filtrar por nivel de riesgo
+                if (riskFilters.length > 0) {
+                    const riskBadge = row.querySelector('.risk-badge');
+                    if (riskBadge) {
+                        const riskLevel = riskBadge.textContent.trim();
+                        if (!riskFilters.includes(riskLevel)) {
+                            shouldShow = false;
+                        }
+                    }
+                }
+                
+                // Filtrar por categoría
+                if (categoryFilters.length > 0) {
+                    const categoryCell = row.querySelector('.category-cell span');
+                    if (categoryCell) {
+                        const categoryText = categoryCell.textContent.trim();
+                        if (!categoryFilters.includes(categoryText)) {
+                            shouldShow = false;
+                        }
+                    }
+                }
+                
+                // Filtrar por dominio
+                if (domainFilters.length > 0) {
+                    const domainCell = row.querySelector('.category-domain-info');
+                    if (domainCell) {
+                        const domainText = domainCell.textContent.trim();
+                        if (!domainFilters.includes(domainText)) {
+                            shouldShow = false;
+                        }
+                    }
+                }
+                
+                // Filtrar por dimensión
+                if (dimensionFilters.length > 0) {
+                    const dimensionCell = row.querySelector('.category-dimension-info');
+                    if (dimensionCell) {
+                        const dimensionText = dimensionCell.textContent.trim();
+                        if (!dimensionFilters.includes(dimensionText)) {
+                            shouldShow = false;
+                        }
+                    }
+                }
+                
+                // Mostrar/ocultar fila
+                if (shouldShow) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+            console.log(`✅ Filtros aplicados. ${visibleCount} filas visibles de ${tableRows.length} totales`);
+        }
+
+        // Función para limpiar filtros de la tabla general
+        function clearNewTableFilters() {
+            console.log('🧹 ===== LIMPIANDO FILTROS DE TABLA GENERAL =====');
+            
+            // Desmarcar todos los checkboxes
+            const checkboxes = document.querySelectorAll('#new-table-filters-side-panel input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Mostrar todas las filas
+            const tableRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
+            tableRows.forEach(row => {
+                row.style.display = '';
+            });
+            
+            console.log(`✅ Filtros limpiados. ${tableRows.length} filas visibles`);
+        }
+
+        // Función para obtener valores de checkboxes seleccionados
+        function getSelectedCheckboxValues(filterType) {
+            const checkboxes = document.querySelectorAll(`#new-table-filters-side-panel input[data-filter="${filterType}"]:checked`);
+            return Array.from(checkboxes).map(checkbox => checkbox.value);
         }
 
         // FUNCIÓN PARA INICIALIZAR CONTROLES DEL TAB DIMENSIONES
