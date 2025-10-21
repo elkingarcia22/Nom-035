@@ -1668,7 +1668,10 @@
         }
 
         .filters-side-panel.show {
-            right: 0;
+            right: 0 !important;
+            display: flex !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
 
         /* Backdrop para el side panel */
@@ -1686,8 +1689,9 @@
         }
 
         .filters-backdrop.show {
-            opacity: 1;
-            visibility: visible;
+            opacity: 1 !important;
+            visibility: visible !important;
+            display: block !important;
         }
 
         .filters-header {
@@ -5818,13 +5822,22 @@
             const filtersBackdrop = document.getElementById('new-filters-backdrop');
             
             if (filtersBtn && filtersPanel) {
-                filtersBtn.addEventListener('click', function() {
+                console.log('✅ Botón de filtros encontrado:', filtersBtn);
+                console.log('✅ Panel de filtros encontrado:', filtersPanel);
+                
+                filtersBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     console.log('🔍 Click en botón de filtros (nuevos tabs)');
                     console.log('📋 filtersPanel:', filtersPanel);
                     console.log('📋 filtersBackdrop:', filtersBackdrop);
                     
+                    // Verificar clases antes del toggle
+                    console.log('📋 Clases del panel antes:', filtersPanel.className);
+                    
                     filtersPanel.classList.toggle('show');
                     console.log('📋 Panel show class toggled');
+                    console.log('📋 Clases del panel después:', filtersPanel.className);
                     
                     if (filtersBackdrop) {
                         filtersBackdrop.classList.toggle('show');
@@ -5833,6 +5846,11 @@
                     } else {
                         console.log('❌ filtersBackdrop not found!');
                     }
+                });
+            } else {
+                console.log('❌ Elementos no encontrados:', {
+                    filtersBtn: !!filtersBtn,
+                    filtersPanel: !!filtersPanel
                 });
             }
             
