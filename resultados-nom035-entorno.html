@@ -5780,7 +5780,13 @@
                     const riskBadge = row.querySelector('.risk-badge');
                     if (riskBadge) {
                         const riskLevel = riskBadge.textContent.trim();
-                        if (!riskFilters.includes(riskLevel)) {
+                        const riskMapping = {
+                            'alto': 'Alto',
+                            'medio': 'Medio', 
+                            'bajo': 'Bajo'
+                        };
+                        const mappedRisk = riskMapping[riskLevel.toLowerCase()] || riskLevel;
+                        if (!riskFilters.includes(mappedRisk)) {
                             shouldShow = false;
                         }
                     }
@@ -5791,7 +5797,15 @@
                     const categoryCell = row.querySelector('.category-cell span');
                     if (categoryCell) {
                         const categoryText = categoryCell.textContent.trim();
-                        if (!categoryFilters.includes(categoryText)) {
+                        const categoryMapping = {
+                            'condiciones': 'Condiciones en el ambiente de trabajo',
+                            'carga': 'Carga de trabajo',
+                            'jornada': 'Jornada de trabajo',
+                            'liderazgo': 'Liderazgo y relaciones en el trabajo',
+                            'entorno': 'Entorno organizacional'
+                        };
+                        const mappedCategory = categoryMapping[categoryFilters[0]] || categoryFilters[0];
+                        if (!categoryFilters.includes(mappedCategory)) {
                             shouldShow = false;
                         }
                     }
@@ -5802,7 +5816,15 @@
                     const domainCell = row.querySelector('.category-domain-info');
                     if (domainCell) {
                         const domainText = domainCell.textContent.trim();
-                        if (!domainFilters.includes(domainText)) {
+                        const domainMapping = {
+                            'ambiente': 'Ambiente de trabajo',
+                            'organizacion': 'Organización del trabajo',
+                            'autonomia': 'Autonomía',
+                            'liderazgo': 'Liderazgo y Relaciones interpersonales',
+                            'violencia': 'Violencia laboral'
+                        };
+                        const mappedDomain = domainMapping[domainFilters[0]] || domainFilters[0];
+                        if (!domainFilters.includes(mappedDomain)) {
                             shouldShow = false;
                         }
                     }
@@ -5813,7 +5835,17 @@
                     const dimensionCell = row.querySelector('.category-dimension-info');
                     if (dimensionCell) {
                         const dimensionText = dimensionCell.textContent.trim();
-                        if (!dimensionFilters.includes(dimensionText)) {
+                        const dimensionMapping = {
+                            'condiciones': 'Condiciones en el ambiente de trabajo',
+                            'carga': 'Carga de trabajo',
+                            'control': 'Falta de control sobre el trabajo',
+                            'jornada': 'Jornada de trabajo',
+                            'liderazgo': 'Liderazgo',
+                            'relaciones': 'Relaciones interpersonales',
+                            'violencia': 'Violencia laboral'
+                        };
+                        const mappedDimension = dimensionMapping[dimensionFilters[0]] || dimensionFilters[0];
+                        if (!dimensionFilters.includes(mappedDimension)) {
                             shouldShow = false;
                         }
                     }
@@ -5835,10 +5867,31 @@
         function clearNewTableFilters() {
             console.log('🧹 ===== LIMPIANDO FILTROS DE TABLA GENERAL =====');
             
-            // Desmarcar todos los checkboxes
-            const checkboxes = document.querySelectorAll('#new-table-filters-side-panel input[type="checkbox"]');
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = false;
+            // Limpiar todos los selects
+            const selectIds = ['new-risk-select', 'new-category-select', 'new-domain-select', 'new-dimension-select'];
+            
+            selectIds.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                if (select) {
+                    // Desmarcar todos los checkboxes
+                    const checkboxes = select.querySelectorAll('input[type="checkbox"]');
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
+                    
+                    // Marcar solo "todos" como seleccionado
+                    const todosCheckbox = select.querySelector('input[id$="-todos"]');
+                    if (todosCheckbox) {
+                        todosCheckbox.checked = true;
+                    }
+                    
+                    // Actualizar el texto del trigger
+                    const trigger = select.querySelector('.select-trigger .select-text');
+                    if (trigger) {
+                        const label = trigger.textContent.split(' ')[0]; // Obtener la primera palabra
+                        trigger.textContent = `Seleccionar ${label.toLowerCase()}`;
+                    }
+                }
             });
             
             // Mostrar todas las filas
@@ -5852,8 +5905,19 @@
 
         // Función para obtener valores de checkboxes seleccionados
         function getSelectedCheckboxValues(filterType) {
-            const checkboxes = document.querySelectorAll(`#new-table-filters-side-panel input[data-filter="${filterType}"]:checked`);
-            return Array.from(checkboxes).map(checkbox => checkbox.value);
+            const selectId = `new-${filterType}-select`;
+            const select = document.getElementById(selectId);
+            if (!select) return [];
+            
+            const checkboxes = select.querySelectorAll('input[type="checkbox"]:checked');
+            const values = Array.from(checkboxes).map(checkbox => checkbox.id.split('-').pop());
+            
+            // Si "todos" está seleccionado, devolver array vacío (significa todos)
+            if (values.includes('todos')) {
+                return [];
+            }
+            
+            return values;
         }
 
         // FUNCIÓN PARA INICIALIZAR CONTROLES DEL TAB DIMENSIONES
@@ -8393,128 +8457,148 @@
             <!-- Filtro por Nivel de Riesgo -->
             <div class="filter-group">
                 <label class="filter-label">Nivel de Riesgo</label>
-                <div class="filter-options">
-                    <label class="filter-option">
-                        <input type="checkbox" value="Alto" data-filter="risk">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Alto</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Medio" data-filter="risk">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Medio</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Bajo" data-filter="risk">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Bajo</span>
-                    </label>
+                <div class="custom-select" id="new-risk-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Seleccionar niveles de riesgo</span>
+                        <i class="far fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="risk-todos" checked>
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="Alto">
+                            <input type="checkbox" id="risk-alto">
+                            <span class="option-text">Alto</span>
+                        </div>
+                        <div class="select-option" data-value="Medio">
+                            <input type="checkbox" id="risk-medio">
+                            <span class="option-text">Medio</span>
+                        </div>
+                        <div class="select-option" data-value="Bajo">
+                            <input type="checkbox" id="risk-bajo">
+                            <span class="option-text">Bajo</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Filtro por Categoría -->
             <div class="filter-group">
                 <label class="filter-label">Categoría</label>
-                <div class="filter-options">
-                    <label class="filter-option">
-                        <input type="checkbox" value="Condiciones en el ambiente de trabajo" data-filter="category">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Condiciones en el ambiente de trabajo</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Carga de trabajo" data-filter="category">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Carga de trabajo</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Jornada de trabajo" data-filter="category">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Jornada de trabajo</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Liderazgo y relaciones en el trabajo" data-filter="category">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Liderazgo y relaciones en el trabajo</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Entorno organizacional" data-filter="category">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Entorno organizacional</span>
-                    </label>
+                <div class="custom-select" id="new-category-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Seleccionar categorías</span>
+                        <i class="far fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="category-todos" checked>
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="Condiciones en el ambiente de trabajo">
+                            <input type="checkbox" id="category-condiciones">
+                            <span class="option-text">Condiciones en el ambiente de trabajo</span>
+                        </div>
+                        <div class="select-option" data-value="Carga de trabajo">
+                            <input type="checkbox" id="category-carga">
+                            <span class="option-text">Carga de trabajo</span>
+                        </div>
+                        <div class="select-option" data-value="Jornada de trabajo">
+                            <input type="checkbox" id="category-jornada">
+                            <span class="option-text">Jornada de trabajo</span>
+                        </div>
+                        <div class="select-option" data-value="Liderazgo y relaciones en el trabajo">
+                            <input type="checkbox" id="category-liderazgo">
+                            <span class="option-text">Liderazgo y relaciones en el trabajo</span>
+                        </div>
+                        <div class="select-option" data-value="Entorno organizacional">
+                            <input type="checkbox" id="category-entorno">
+                            <span class="option-text">Entorno organizacional</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Filtro por Dominio -->
             <div class="filter-group">
                 <label class="filter-label">Dominio</label>
-                <div class="filter-options">
-                    <label class="filter-option">
-                        <input type="checkbox" value="Ambiente de trabajo" data-filter="domain">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Ambiente de trabajo</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Organización del trabajo" data-filter="domain">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Organización del trabajo</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Autonomía" data-filter="domain">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Autonomía</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Liderazgo y Relaciones interpersonales" data-filter="domain">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Liderazgo y Relaciones interpersonales</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Violencia laboral" data-filter="domain">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Violencia laboral</span>
-                    </label>
+                <div class="custom-select" id="new-domain-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Seleccionar dominios</span>
+                        <i class="far fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="domain-todos" checked>
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="Ambiente de trabajo">
+                            <input type="checkbox" id="domain-ambiente">
+                            <span class="option-text">Ambiente de trabajo</span>
+                        </div>
+                        <div class="select-option" data-value="Organización del trabajo">
+                            <input type="checkbox" id="domain-organizacion">
+                            <span class="option-text">Organización del trabajo</span>
+                        </div>
+                        <div class="select-option" data-value="Autonomía">
+                            <input type="checkbox" id="domain-autonomia">
+                            <span class="option-text">Autonomía</span>
+                        </div>
+                        <div class="select-option" data-value="Liderazgo y Relaciones interpersonales">
+                            <input type="checkbox" id="domain-liderazgo">
+                            <span class="option-text">Liderazgo y Relaciones interpersonales</span>
+                        </div>
+                        <div class="select-option" data-value="Violencia laboral">
+                            <input type="checkbox" id="domain-violencia">
+                            <span class="option-text">Violencia laboral</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Filtro por Dimensión -->
             <div class="filter-group">
                 <label class="filter-label">Dimensión</label>
-                <div class="filter-options">
-                    <label class="filter-option">
-                        <input type="checkbox" value="Condiciones en el ambiente de trabajo" data-filter="dimension">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Condiciones en el ambiente de trabajo</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Carga de trabajo" data-filter="dimension">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Carga de trabajo</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Falta de control sobre el trabajo" data-filter="dimension">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Falta de control sobre el trabajo</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Jornada de trabajo" data-filter="dimension">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Jornada de trabajo</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Liderazgo" data-filter="dimension">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Liderazgo</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Relaciones interpersonales" data-filter="dimension">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Relaciones interpersonales</span>
-                    </label>
-                    <label class="filter-option">
-                        <input type="checkbox" value="Violencia laboral" data-filter="dimension">
-                        <span class="checkmark"></span>
-                        <span class="filter-text">Violencia laboral</span>
-                    </label>
+                <div class="custom-select" id="new-dimension-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Seleccionar dimensiones</span>
+                        <i class="far fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="dimension-todos" checked>
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="Condiciones en el ambiente de trabajo">
+                            <input type="checkbox" id="dimension-condiciones">
+                            <span class="option-text">Condiciones en el ambiente de trabajo</span>
+                        </div>
+                        <div class="select-option" data-value="Carga de trabajo">
+                            <input type="checkbox" id="dimension-carga">
+                            <span class="option-text">Carga de trabajo</span>
+                        </div>
+                        <div class="select-option" data-value="Falta de control sobre el trabajo">
+                            <input type="checkbox" id="dimension-control">
+                            <span class="option-text">Falta de control sobre el trabajo</span>
+                        </div>
+                        <div class="select-option" data-value="Jornada de trabajo">
+                            <input type="checkbox" id="dimension-jornada">
+                            <span class="option-text">Jornada de trabajo</span>
+                        </div>
+                        <div class="select-option" data-value="Liderazgo">
+                            <input type="checkbox" id="dimension-liderazgo">
+                            <span class="option-text">Liderazgo</span>
+                        </div>
+                        <div class="select-option" data-value="Relaciones interpersonales">
+                            <input type="checkbox" id="dimension-relaciones">
+                            <span class="option-text">Relaciones interpersonales</span>
+                        </div>
+                        <div class="select-option" data-value="Violencia laboral">
+                            <input type="checkbox" id="dimension-violencia">
+                            <span class="option-text">Violencia laboral</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
