@@ -5918,6 +5918,8 @@
         function getSelectedCheckboxValues(filterType) {
             const selectId = `new-${filterType}-select`;
             const select = document.getElementById(selectId);
+            console.log(`🔍 Buscando select: ${selectId}`, !!select);
+            
             if (!select) {
                 console.log(`❌ Select no encontrado: ${selectId}`);
                 return [];
@@ -5926,20 +5928,21 @@
             const checkboxes = select.querySelectorAll('input[type="checkbox"]:checked');
             console.log(`🔍 Checkboxes seleccionados en ${selectId}:`, checkboxes.length);
             
-            const values = Array.from(checkboxes).map(checkbox => {
-                const option = checkbox.closest('.select-option');
-                return option ? option.getAttribute('data-value') : null;
-            }).filter(value => value && value !== 'todos');
-            
-            console.log(`🔍 Valores obtenidos para ${filterType}:`, values);
-            
-            // Si "todos" está seleccionado, devolver array vacío (significa todos)
+            // Verificar si "todos" está seleccionado
             const todosCheckbox = select.querySelector('input[id$="-todos"]:checked');
             if (todosCheckbox) {
                 console.log(`🔍 "Todos" seleccionado para ${filterType}, devolviendo array vacío`);
                 return [];
             }
             
+            const values = Array.from(checkboxes).map(checkbox => {
+                const option = checkbox.closest('.select-option');
+                const value = option ? option.getAttribute('data-value') : null;
+                console.log(`🔍 Checkbox: ${checkbox.id}, Value: ${value}`);
+                return value;
+            }).filter(value => value && value !== 'todos');
+            
+            console.log(`🔍 Valores finales para ${filterType}:`, values);
             return values;
         }
 
