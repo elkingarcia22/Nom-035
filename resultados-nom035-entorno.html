@@ -3973,10 +3973,18 @@
 
             // Funcionalidad de búsqueda desplegable
             if (searchBtn && searchContainer && searchInput) {
-            searchBtn.addEventListener('click', () => {
-                searchContainer.style.display = 'block';
-                searchInput.focus();
-            });
+                console.log('✅ Elementos de búsqueda encontrados, agregando event listeners');
+                searchBtn.addEventListener('click', () => {
+                    console.log('🔍 Click en botón de búsqueda (vista general)');
+                    searchContainer.style.display = 'block';
+                    searchInput.focus();
+                });
+            } else {
+                console.log('❌ Elementos de búsqueda no encontrados:', {
+                    searchBtn: !!searchBtn,
+                    searchContainer: !!searchContainer,
+                    searchInput: !!searchInput
+                });
             }
 
             if (closeSearch && searchContainer && searchInput) {
