@@ -10134,10 +10134,119 @@
             });
         }
 
+        // Datos de todos los participantes (copiados del archivo emocional)
+        const allParticipants = [
+            {
+                id: 1,
+                name: "María González",
+                role: "Gerente de Ventas",
+                riskLevel: "muy-alto",
+                avatar: "MG",
+                avatarColor: "#dc2626"
+            },
+            {
+                id: 2,
+                name: "Carlos Rodríguez",
+                role: "Desarrollador Senior",
+                riskLevel: "alto",
+                avatar: "CR",
+                avatarColor: "#c2410c"
+            },
+            {
+                id: 3,
+                name: "Ana Martínez",
+                role: "Analista de Recursos Humanos",
+                riskLevel: "medio",
+                avatar: "AM",
+                avatarColor: "#92400e"
+            },
+            {
+                id: 4,
+                name: "Luis Fernández",
+                role: "Contador",
+                riskLevel: "bajo",
+                avatar: "LF",
+                avatarColor: "#166534"
+            },
+            {
+                id: 5,
+                name: "Sofia Herrera",
+                role: "Asistente Administrativa",
+                riskLevel: "nulo",
+                avatar: "SH",
+                avatarColor: "#6b7280"
+            },
+            {
+                id: 6,
+                name: "Roberto Silva",
+                role: "Director de Marketing",
+                riskLevel: "bajo",
+                avatar: "RS",
+                avatarColor: "#166534"
+            },
+            {
+                id: 7,
+                name: "Carmen López",
+                role: "Diseñadora UX",
+                riskLevel: "medio",
+                avatar: "CL",
+                avatarColor: "#92400e"
+            }
+        ];
+
+        // Función para generar el HTML de una fila de participante
+        function generateParticipantRow(participant) {
+            const riskLevelText = participant.riskLevel.replace('-', ' ').toUpperCase();
+            const percentage = Math.floor(Math.random() * 100) + 1; // Porcentaje aleatorio
+            
+            return `
+                <tr style="background: ${participant.id % 2 === 0 ? '#f8f9fa' : 'white'};">
+                    <td style="position: sticky; left: 0; background: ${participant.id % 2 === 0 ? '#f8f9fa' : 'white'}; border: 1px solid #e5e7eb; padding: 12px; font-weight: 600; color: #374151; z-index: 1;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="participant-avatar" style="background: ${participant.avatarColor};">
+                                ${participant.avatar}
+                            </div>
+                            <div class="participant-info-content">
+                                <div class="participant-name">${participant.name}</div>
+                                <div class="participant-role">${participant.role}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                        <span class="risk-badge ${participant.riskLevel}">${riskLevelText}</span>
+                    </td>
+                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">${percentage}%</td>
+                    ${generateParticipantResponses()}
+                </tr>
+            `;
+        }
+
+        // Función para actualizar la tabla con todos los participantes
+        function updateTableWithAllParticipants() {
+            const tbody = document.querySelector('#new-individual-panel tbody');
+            if (!tbody) {
+                console.log('No se encontró el tbody de la tabla individual');
+                return;
+            }
+
+            // Limpiar el tbody
+            tbody.innerHTML = '';
+
+            // Agregar todas las filas de participantes
+            allParticipants.forEach(participant => {
+                const rowHTML = generateParticipantRow(participant);
+                tbody.insertAdjacentHTML('beforeend', rowHTML);
+            });
+
+            console.log(`✅ Tabla actualizada con ${allParticipants.length} participantes`);
+        }
+
         // Ejecutar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             // Esperar un poco para asegurar que la tabla esté cargada
-            setTimeout(updateAllParticipantRows, 1000);
+            setTimeout(() => {
+                updateTableWithAllParticipants();
+            }, 1000);
         });
     </script>
 </body>
