@@ -5727,6 +5727,7 @@
             if (applyFiltersBtn) {
                 applyFiltersBtn.addEventListener('click', function() {
                     console.log('✅ Aplicando filtros (nuevos tabs)');
+                    console.log('🔍 Botón de aplicar filtros clickeado');
                     applyNewTableFilters();
                     // Cerrar el panel de filtros
                     filtersPanel.classList.remove('show');
@@ -5734,6 +5735,8 @@
                         filtersBackdrop.classList.remove('show');
                     }
                 });
+            } else {
+                console.log('❌ Botón de aplicar filtros no encontrado');
             }
             
             if (clearFiltersBtn) {
@@ -5752,6 +5755,7 @@
         // Función para aplicar filtros de la tabla general
         function applyNewTableFilters() {
             console.log('🔍 ===== APLICANDO FILTROS DE TABLA GENERAL =====');
+            console.log('🔍 Función applyNewTableFilters ejecutándose...');
             
             // Obtener filtros seleccionados
             const riskFilters = getSelectedCheckboxValues('risk');
@@ -5769,6 +5773,12 @@
             // Obtener todas las filas de la tabla
             const tableRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
             console.log(`🔍 Total de filas encontradas: ${tableRows.length}`);
+            
+            // Verificar si estamos en el tab correcto
+            const overviewPanel = document.getElementById('new-overview-panel');
+            console.log('🔍 Panel overview encontrado:', !!overviewPanel);
+            console.log('🔍 Panel overview visible:', overviewPanel ? overviewPanel.style.display : 'N/A');
+            console.log('🔍 Panel overview clases:', overviewPanel ? overviewPanel.className : 'N/A');
             
             // Verificar si la tabla existe y tiene contenido
             const tableContainer = document.querySelector('#new-overview-panel .results-table');
