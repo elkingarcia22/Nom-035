@@ -1347,6 +1347,41 @@
             font-size: 14px !important;
             line-height: normal !important;
         }
+        
+        /* Estado activo para filas de categoría */
+        .results-table-container .results-table .category-summary {
+            background: #f0f9ff !important;
+            border-left: 4px solid #1e40af !important;
+            transition: all 0.2s ease;
+        }
+        
+        .results-table-container .results-table .category-summary:hover {
+            background: #dbeafe !important;
+        }
+        
+        /* Estilo para la celda de categoría con número en círculo */
+        .results-table-container .results-table .category-cell {
+            position: relative;
+            padding-left: 40px !important;
+        }
+        
+        .results-table-container .results-table .category-cell::before {
+            content: attr(data-number);
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background: #e5e7eb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+        }
 
         .percentage {
             font-weight: 600;
@@ -2846,7 +2881,7 @@
                                             <tbody>
                                                 <!-- Categoría 1: Ambiente de trabajo -->
                                                 <tr class="category-summary">
-                                                    <td class="category-cell">1. Ambiente de trabajo</td>
+                                                    <td class="category-cell" data-number="1">Ambiente de trabajo</td>
                                                     <td class="category-domain-info">-</td>
                                                     <td class="category-dimension-info">-</td>
                                                     <td class="risk-count">12</td>
@@ -2886,7 +2921,7 @@
                                                 
                                                 <!-- Categoría 2: Factores propios de la actividad -->
                                                 <tr class="category-summary">
-                                                    <td class="category-cell">2. Factores propios de la actividad</td>
+                                                    <td class="category-cell" data-number="2">Factores propios de la actividad</td>
                                                     <td class="category-domain-info">-</td>
                                                     <td class="category-dimension-info">-</td>
                                                     <td class="risk-count">43</td>
@@ -2941,7 +2976,7 @@
                                                 
                                                 <!-- Categoría 3: Violencia laboral -->
                                                 <tr class="category-summary">
-                                                    <td class="category-cell">3. Violencia laboral</td>
+                                                    <td class="category-cell" data-number="3">Violencia laboral</td>
                                                     <td class="category-domain-info">-</td>
                                                     <td class="category-dimension-info">-</td>
                                                     <td class="risk-count">32</td>
@@ -2966,7 +3001,7 @@
                                                 
                                                 <!-- Categoría 4: Organización del tiempo de trabajo -->
                                                 <tr class="category-summary">
-                                                    <td class="category-cell">4. Organización del tiempo de trabajo</td>
+                                                    <td class="category-cell" data-number="4">Organización del tiempo de trabajo</td>
                                                     <td class="category-domain-info">-</td>
                                                     <td class="category-dimension-info">-</td>
                                                     <td class="risk-count">18</td>
@@ -2991,7 +3026,7 @@
                                                 
                                                 <!-- Categoría 5: Liderazgo y relaciones en el trabajo -->
                                                 <tr class="category-summary">
-                                                    <td class="category-cell">5. Liderazgo y relaciones en el trabajo</td>
+                                                    <td class="category-cell" data-number="5">Liderazgo y relaciones en el trabajo</td>
                                                     <td class="category-domain-info">-</td>
                                                     <td class="category-dimension-info">-</td>
                                                     <td class="risk-count">28</td>
