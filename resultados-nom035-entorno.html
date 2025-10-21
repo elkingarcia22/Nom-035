@@ -3459,6 +3459,16 @@
                                 
                                 <!-- Tabla de resultados individuales -->
                                 <div style="padding: 24px 0;">
+                                    <!-- Controles de búsqueda -->
+                                    <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+                                        <div style="position: relative; display: flex; align-items: center; gap: 8px;">
+                                            <input type="text" id="individual-search" placeholder="Buscar participantes..." style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; width: 250px; outline: none; transition: border-color 0.2s ease;" />
+                                            <button id="clear-individual-search" style="display: none; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; padding: 8px; cursor: pointer; color: #6b7280; transition: all 0.2s ease;" title="Limpiar búsqueda">
+                                                <i class="far fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
                                     <div style="background: white; border-bottom: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
                                         
                                         <!-- Tabla con scroll horizontal y vertical -->
@@ -10305,11 +10315,78 @@
             console.log(`✅ Tabla actualizada con ${allParticipants.length} participantes`);
         }
 
+        // Función para buscar participantes
+        function searchParticipants() {
+            const searchInput = document.getElementById('individual-search');
+            const clearButton = document.getElementById('clear-individual-search');
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                // Mostrar todos los participantes
+                const allRows = document.querySelectorAll('#new-individual-panel tbody tr');
+                allRows.forEach(row => {
+                    row.style.display = '';
+                });
+                clearButton.style.display = 'none';
+            } else {
+                // Filtrar participantes
+                const allRows = document.querySelectorAll('#new-individual-panel tbody tr');
+                let visibleCount = 0;
+                
+                allRows.forEach(row => {
+                    const participantName = row.querySelector('.participant-name');
+                    const participantRole = row.querySelector('.participant-role');
+                    
+                    if (participantName && participantRole) {
+                        const name = participantName.textContent.toLowerCase();
+                        const role = participantRole.textContent.toLowerCase();
+                        
+                        if (name.includes(searchTerm) || role.includes(searchTerm)) {
+                            row.style.display = '';
+                            visibleCount++;
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+                });
+                
+                // Mostrar/ocultar botón de limpiar
+                clearButton.style.display = searchTerm ? 'flex' : 'none';
+            }
+        }
+
+        // Función para limpiar búsqueda
+        function clearIndividualSearch() {
+            const searchInput = document.getElementById('individual-search');
+            const clearButton = document.getElementById('clear-individual-search');
+            
+            searchInput.value = '';
+            clearButton.style.display = 'none';
+            searchParticipants();
+        }
+
         // Ejecutar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             // Esperar un poco para asegurar que la tabla esté cargada
             setTimeout(() => {
                 updateTableWithAllParticipants();
+                
+                // Configurar eventos del buscador
+                const searchInput = document.getElementById('individual-search');
+                const clearButton = document.getElementById('clear-individual-search');
+                
+                if (searchInput) {
+                    searchInput.addEventListener('input', searchParticipants);
+                    searchInput.addEventListener('keyup', function(e) {
+                        if (e.key === 'Escape') {
+                            clearIndividualSearch();
+                        }
+                    });
+                }
+                
+                if (clearButton) {
+                    clearButton.addEventListener('click', clearIndividualSearch);
+                }
             }, 1000);
         });
     </script>
