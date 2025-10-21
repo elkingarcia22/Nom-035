@@ -2964,9 +2964,9 @@
                                         <button id="dimensions-table-search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
                                             <i class="far fa-search"></i>
                                         </button>
-                                        <button id="dimensions-table-filters-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px; position: relative;">
+                                        <button class="filters-button" id="dimensions-table-filters-btn" title="Filtros">
                                             <i class="far fa-filter"></i>
-                                            <span class="filter-badge hidden" id="dimensions-table-filter-badge">0</span>
+                                            <span class="filter-badge" id="dimensions-table-filter-badge" style="display: none;">0</span>
                                         </button>
                                     </div>
                                 </div>
@@ -3248,7 +3248,158 @@
                                     </tbody>
                                 </table>
                                 
-                                <!-- Filters Side Panel -->
+                                <!-- Panel de Filtros para Dimensiones -->
+                                <div id="filters-panel-dimensions" class="filters-panel">
+                                    <div class="filters-header">
+                                        <h3>Filtros</h3>
+                                        <button class="close-filters-btn" id="close-filters-dimensions">
+                                            <i class="far fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="filters-content">
+                                        <!-- Filtros Básicos -->
+                                        <div class="filter-group">
+                                            <label class="filter-label">Nivel de Riesgo</label>
+                                            <select class="filter-select" id="risk-filter-dimensions">
+                                                <option value="todos">Todos</option>
+                                                <option value="bajo">Bajo</option>
+                                                <option value="medio">Medio</option>
+                                                <option value="alto">Alto</option>
+                                                <option value="muy-alto">Muy Alto</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="filter-group">
+                                            <label class="filter-label">Dominio</label>
+                                            <select class="filter-select" id="domain-filter-dimensions">
+                                                <option value="todos">Todos</option>
+                                                <option value="condiciones">Condiciones en el ambiente de trabajo</option>
+                                                <option value="carga">Carga de trabajo</option>
+                                                <option value="control">Falta de control sobre el trabajo</option>
+                                                <option value="jornada">Jornada de trabajo</option>
+                                                <option value="liderazgo">Liderazgo</option>
+                                                <option value="relaciones">Relaciones en el trabajo</option>
+                                                <option value="violencia">Violencia laboral</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- Filtros Demográficos -->
+                                        <div class="filter-group">
+                                            <label class="filter-label">Área</label>
+                                            <select class="filter-select" id="area-filter-dimensions">
+                                                <option value="todos">Todos</option>
+                                                <option value="ventas">Ventas</option>
+                                                <option value="desarrollo">Desarrollo</option>
+                                                <option value="rrhh">Recursos Humanos</option>
+                                                <option value="proyectos">Proyectos</option>
+                                                <option value="marketing">Marketing</option>
+                                                <option value="finanzas">Finanzas</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="filter-group">
+                                            <label class="filter-label">Cargo</label>
+                                            <select class="filter-select" id="position-filter-dimensions">
+                                                <option value="todos">Todos</option>
+                                                <option value="gerente">Gerente</option>
+                                                <option value="desarrollador">Desarrollador</option>
+                                                <option value="analista">Analista</option>
+                                                <option value="coordinador">Coordinador</option>
+                                                <option value="director">Director</option>
+                                                <option value="supervisor">Supervisor</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="filter-group">
+                                            <label class="filter-label">Sexo</label>
+                                            <select class="filter-select" id="gender-filter-dimensions">
+                                                <option value="todos">Todos</option>
+                                                <option value="masculino">Masculino</option>
+                                                <option value="femenino">Femenino</option>
+                                                <option value="otro">Otro</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="filter-group">
+                                            <label class="filter-label">Estado Civil</label>
+                                            <select class="filter-select" id="marital-filter-dimensions">
+                                                <option value="todos">Todos</option>
+                                                <option value="soltero">Soltero</option>
+                                                <option value="casado">Casado</option>
+                                                <option value="divorciado">Divorciado</option>
+                                                <option value="viudo">Viudo</option>
+                                                <option value="union-libre">Unión Libre</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="filter-group">
+                                            <label class="filter-label">Edad</label>
+                                            <select class="filter-select" id="age-filter-dimensions">
+                                                <option value="todos">Todos</option>
+                                                <option value="18-25">18-25 años</option>
+                                                <option value="26-35">26-35 años</option>
+                                                <option value="36-45">36-45 años</option>
+                                                <option value="46-55">46-55 años</option>
+                                                <option value="56-65">56-65 años</option>
+                                                <option value="65+">65+ años</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="filter-group">
+                                            <label class="filter-label">País</label>
+                                            <select class="filter-select" id="country-filter-dimensions">
+                                                <option value="todos">Todos</option>
+                                                <option value="colombia">Colombia</option>
+                                                <option value="mexico">México</option>
+                                                <option value="argentina">Argentina</option>
+                                                <option value="chile">Chile</option>
+                                                <option value="peru">Perú</option>
+                                                <option value="ecuador">Ecuador</option>
+                                                <option value="venezuela">Venezuela</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="filter-group">
+                                            <label class="filter-label">Ciudad</label>
+                                            <select class="filter-select" id="city-filter-dimensions">
+                                                <option value="todos">Todos</option>
+                                                <option value="bogota">Bogotá</option>
+                                                <option value="medellin">Medellín</option>
+                                                <option value="cali">Cali</option>
+                                                <option value="barranquilla">Barranquilla</option>
+                                                <option value="cartagena">Cartagena</option>
+                                                <option value="mexico-df">Ciudad de México</option>
+                                                <option value="buenos-aires">Buenos Aires</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="filter-group">
+                                            <label class="filter-label">Líder</label>
+                                            <select class="filter-select" id="leader-filter-dimensions">
+                                                <option value="todos">Todos</option>
+                                                <option value="maria-gonzalez">María González</option>
+                                                <option value="carlos-rodriguez">Carlos Rodríguez</option>
+                                                <option value="ana-lopez">Ana López</option>
+                                                <option value="jose-martinez">José Martínez</option>
+                                                <option value="laura-garcia">Laura García</option>
+                                                <option value="pedro-hernandez">Pedro Hernández</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="filters-actions">
+                                        <button class="ubits-button ubits-button--secondary ubits-button--sm" id="apply-filters-dimensions">
+                                            <span>Aplicar</span>
+                                        </button>
+                                        <button class="ubits-button ubits-button--tertiary ubits-button--sm" id="clear-filters-dimensions">
+                                            <span>Limpiar</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Backdrop para filtros -->
+                                <div id="filters-backdrop-dimensions" class="filters-backdrop"></div>
+                                
                                 </div> <!-- Cierre de dimensions-content -->
                                 
                                 
@@ -3874,230 +4025,349 @@
             console.log('✅ ===== FILTROS DE TABLA INICIALIZADOS =====');
         }
 
-        // Funciones para búsqueda y filtros de la tabla de dimensiones
-        function initializeDimensionFilters() {
-            const searchBtn = document.getElementById('dimension-search-btn');
-            const searchContainer = document.getElementById('dimension-search-container');
-            const searchInput = document.getElementById('dimension-search');
-            const closeSearch = document.getElementById('close-dimension-search');
-            const filtersBtn = document.getElementById('dimension-filters-btn');
-            const filtersSidePanel = document.getElementById('dimension-filters-side-panel');
-            const filtersOverlay = document.getElementById('dimension-filters-overlay');
-            const closeFiltersBtn = document.getElementById('close-dimension-filters-btn');
-            const applyFiltersBtn = document.getElementById('dimension-apply-filters-btn');
-            const clearFiltersBtn = document.getElementById('dimension-clear-filters-btn');
-
-            // Funcionalidad de búsqueda desplegable
-            searchBtn.addEventListener('click', () => {
-                searchContainer.style.display = 'block';
-                searchInput.focus();
-            });
-
-            closeSearch.addEventListener('click', () => {
-                searchContainer.style.display = 'none';
-                searchInput.value = '';
-                applyDimensionFilters();
+        // Funciones para filtros de dimensiones - Nueva implementación
+        function initializeDimensionsFilters() {
+            console.log('🔧 Inicializando filtros de dimensiones...');
+            
+            const filtersBtn = document.getElementById('dimensions-table-filters-btn');
+            const filtersPanel = document.getElementById('filters-panel-dimensions');
+            const filtersBackdrop = document.getElementById('filters-backdrop-dimensions');
+            const closeFiltersBtn = document.getElementById('close-filters-dimensions');
+            const applyFiltersBtn = document.getElementById('apply-filters-dimensions');
+            const clearFiltersBtn = document.getElementById('clear-filters-dimensions');
+            
+            console.log('🔧 Elementos encontrados:', {
+                filtersBtn: !!filtersBtn,
+                filtersPanel: !!filtersPanel,
+                filtersBackdrop: !!filtersBackdrop,
+                closeFiltersBtn: !!closeFiltersBtn,
+                applyFiltersBtn: !!applyFiltersBtn,
+                clearFiltersBtn: !!clearFiltersBtn
             });
 
             // Abrir panel de filtros
-            filtersBtn.addEventListener('click', () => {
-                filtersSidePanel.classList.add('show');
-                filtersOverlay.classList.add('show');
-            });
+            if (filtersBtn && filtersPanel && filtersBackdrop) {
+                filtersBtn.addEventListener('click', openDimensionsFiltersPanel);
+            }
 
             // Cerrar panel de filtros
-            closeFiltersBtn.addEventListener('click', closeDimensionFiltersPanel);
-            filtersOverlay.addEventListener('click', closeDimensionFiltersPanel);
+            if (closeFiltersBtn) {
+                closeFiltersBtn.addEventListener('click', closeDimensionsFiltersPanel);
+            }
+            if (filtersBackdrop) {
+                filtersBackdrop.addEventListener('click', closeDimensionsFiltersPanel);
+            }
 
             // Aplicar filtros
-            applyFiltersBtn.addEventListener('click', () => {
-                applyDimensionFilters();
-                closeDimensionFiltersPanel();
-            });
+            if (applyFiltersBtn) {
+                applyFiltersBtn.addEventListener('click', () => {
+                    applyDimensionsFilters();
+                    closeDimensionsFiltersPanel();
+                });
+            }
 
             // Limpiar filtros
-            clearFiltersBtn.addEventListener('click', clearDimensionFilters);
-
-            // Búsqueda en tiempo real
-            searchInput.addEventListener('input', applyDimensionFilters);
-
-            // Configurar selects personalizados
-            setupDimensionCustomSelects();
+            if (clearFiltersBtn) {
+                clearFiltersBtn.addEventListener('click', clearDimensionsFilters);
+            }
+            
+            console.log('✅ Filtros de dimensiones inicializados');
         }
 
-        function closeDimensionFiltersPanel() {
-            document.getElementById('dimension-filters-side-panel').classList.remove('show');
-            document.getElementById('dimension-filters-overlay').classList.remove('show');
+        // Funciones auxiliares para filtros de dimensiones
+        function openDimensionsFiltersPanel() {
+            const panel = document.getElementById('filters-panel-dimensions');
+            const backdrop = document.getElementById('filters-backdrop-dimensions');
+            if (panel && backdrop) {
+                panel.classList.add('show');
+                backdrop.classList.add('show');
+            }
         }
 
-        function applyDimensionFilters() {
-            const searchTerm = document.getElementById('dimension-search').value.toLowerCase();
-            const riskFilters = getDimensionSelectedValues('dimension-risk-select');
-            const areaFilters = getDimensionSelectedValues('dimension-area-select');
-            const positionFilters = getDimensionSelectedValues('dimension-position-select');
-            const genderFilters = getDimensionSelectedValues('dimension-gender-select');
-            const maritalFilters = getDimensionSelectedValues('dimension-marital-select');
-            const ageFilters = getDimensionSelectedValues('dimension-age-select');
-            const countryFilters = getDimensionSelectedValues('dimension-country-select');
-            const cityFilters = getDimensionSelectedValues('dimension-city-select');
+        function closeDimensionsFiltersPanel() {
+            const panel = document.getElementById('filters-panel-dimensions');
+            const backdrop = document.getElementById('filters-backdrop-dimensions');
+            if (panel && backdrop) {
+                panel.classList.remove('show');
+                backdrop.classList.remove('show');
+            }
+        }
 
-            const tableRows = document.querySelectorAll('#dimension-results-table tbody tr');
+        function applyDimensionsFilters() {
+            console.log('🔍 Aplicando filtros de dimensiones...');
+            
+            // Obtener valores de los filtros
+            const riskFilter = document.getElementById('risk-filter-dimensions').value;
+            const domainFilter = document.getElementById('domain-filter-dimensions').value;
+            const areaFilter = document.getElementById('area-filter-dimensions').value;
+            const positionFilter = document.getElementById('position-filter-dimensions').value;
+            const genderFilter = document.getElementById('gender-filter-dimensions').value;
+            const maritalFilter = document.getElementById('marital-filter-dimensions').value;
+            const ageFilter = document.getElementById('age-filter-dimensions').value;
+            const countryFilter = document.getElementById('country-filter-dimensions').value;
+            const cityFilter = document.getElementById('city-filter-dimensions').value;
+            const leaderFilter = document.getElementById('leader-filter-dimensions').value;
+            
+            console.log('🔍 Filtros seleccionados:', {
+                risk: riskFilter,
+                domain: domainFilter,
+                area: areaFilter,
+                position: positionFilter,
+                gender: genderFilter,
+                marital: maritalFilter,
+                age: ageFilter,
+                country: countryFilter,
+                city: cityFilter,
+                leader: leaderFilter
+            });
+            
+            // Aplicar filtros básicos (ocultar/mostrar filas)
+            const tableRows = document.querySelectorAll('#dimensions-content .results-table tbody tr');
             
             tableRows.forEach(row => {
-                const dimensionText = row.querySelector('.dimension-cell')?.textContent.toLowerCase() || '';
-                const domainText = row.querySelector('.dimension-domain-info')?.textContent.toLowerCase() || '';
                 const riskBadge = row.querySelector('.risk-badge');
-                const riskLevel = riskBadge ? riskBadge.textContent.toLowerCase().trim() : '';
-
-                // Filtro de búsqueda
-                const matchesSearch = searchTerm === '' || 
-                    dimensionText.includes(searchTerm) ||
-                    domainText.includes(searchTerm);
-
+                const domainText = row.querySelector('.dimension-domain-info')?.textContent.toLowerCase() || '';
+                
+                let shouldShow = true;
+                
                 // Filtro de nivel de riesgo
-                const matchesRisk = riskFilters.length === 0 || riskFilters.includes('todos') || riskFilters.includes(riskLevel);
-
-                // Mostrar/ocultar fila basado en filtros
-                const shouldShow = matchesSearch && matchesRisk;
+                if (riskFilter !== 'todos' && riskBadge) {
+                    const riskLevel = riskBadge.textContent.toLowerCase().trim();
+                    if (riskLevel !== riskFilter) {
+                        shouldShow = false;
+                    }
+                }
+                
+                // Filtro de dominio
+                if (domainFilter !== 'todos') {
+                    const domainKeywords = {
+                        'condiciones': 'condiciones',
+                        'carga': 'carga',
+                        'control': 'control',
+                        'jornada': 'jornada',
+                        'liderazgo': 'liderazgo',
+                        'relaciones': 'relaciones',
+                        'violencia': 'violencia'
+                    };
+                    
+                    const keyword = domainKeywords[domainFilter];
+                    if (keyword && !domainText.includes(keyword)) {
+                        shouldShow = false;
+                    }
+                }
+                
+                // Mostrar/ocultar fila
                 row.style.display = shouldShow ? '' : 'none';
             });
-
-            // Actualizar contador de filtros activos
-            updateDimensionFilterBadge();
+            
+            // Aplicar filtros demográficos (cambiar datos)
+            updateDimensionsDemographicData(areaFilter, positionFilter, genderFilter, maritalFilter, ageFilter, countryFilter, cityFilter, leaderFilter);
+            
+            // Actualizar badge
+            updateDimensionsFilterBadge();
+            
+            console.log('✅ Filtros de dimensiones aplicados');
         }
 
-        function clearDimensionFilters() {
-            // Limpiar búsqueda
-            document.getElementById('dimension-search').value = '';
-            document.getElementById('dimension-search-container').style.display = 'none';
-
-            // Resetear todos los selects a "Todos"
-            const selects = ['dimension-risk-select', 'dimension-area-select', 'dimension-position-select', 
-                           'dimension-gender-select', 'dimension-marital-select', 'dimension-age-select', 
-                           'dimension-country-select', 'dimension-city-select'];
+        function clearDimensionsFilters() {
+            console.log('🧹 Limpiando filtros de dimensiones...');
             
-            selects.forEach(selectId => {
+            // Resetear todos los selects a "Todos"
+            const selectIds = [
+                'risk-filter-dimensions',
+                'domain-filter-dimensions', 
+                'area-filter-dimensions',
+                'position-filter-dimensions',
+                'gender-filter-dimensions',
+                'marital-filter-dimensions',
+                'age-filter-dimensions',
+                'country-filter-dimensions',
+                'city-filter-dimensions',
+                'leader-filter-dimensions'
+            ];
+            
+            selectIds.forEach(selectId => {
                 const select = document.getElementById(selectId);
-                const todosOption = select.querySelector('[data-value="todos"] input');
-                if (todosOption) {
-                    todosOption.checked = true;
-                }
-                // Desmarcar todas las otras opciones
-                select.querySelectorAll('.select-option:not([data-value="todos"]) input').forEach(input => {
-                    input.checked = false;
-                });
-                // Actualizar texto del trigger
-                const trigger = select.querySelector('.select-trigger .select-text');
-                if (trigger) {
-                    trigger.textContent = 'Seleccionar ' + selectId.replace('dimension-', '').replace('-select', 's');
+                if (select) {
+                    select.value = 'todos';
                 }
             });
-
-            // Aplicar filtros (que ahora están limpios)
-            applyDimensionFilters();
-        }
-
-        function getDimensionSelectedValues(selectId) {
-            const select = document.getElementById(selectId);
-            const checkedInputs = select.querySelectorAll('input:checked');
-            return Array.from(checkedInputs).map(input => input.closest('.select-option').dataset.value);
-        }
-
-        function updateDimensionFilterBadge() {
-            const badge = document.getElementById('dimension-filter-badge');
-            let activeFilters = 0;
-
-            // Contar filtros activos (excluyendo "Todos")
-            const selects = ['dimension-risk-select', 'dimension-area-select', 'dimension-position-select', 
-                           'dimension-gender-select', 'dimension-marital-select', 'dimension-age-select', 
-                           'dimension-country-select', 'dimension-city-select'];
             
-            selects.forEach(selectId => {
+            // Mostrar todas las filas
+            const tableRows = document.querySelectorAll('#dimensions-content .results-table tbody tr');
+            tableRows.forEach(row => {
+                row.style.display = '';
+            });
+            
+            // Restaurar datos originales
+            restoreDimensionsOriginalData();
+            
+            // Ocultar badge
+            hideDimensionsFilterBadge();
+            
+            console.log('✅ Filtros de dimensiones limpiados');
+        }
+
+        function updateDimensionsFilterBadge() {
+            const badge = document.getElementById('dimensions-table-filter-badge');
+            if (!badge) return;
+            
+            let activeFilters = 0;
+            
+            // Contar filtros activos
+            const selectIds = [
+                'risk-filter-dimensions',
+                'domain-filter-dimensions',
+                'area-filter-dimensions', 
+                'position-filter-dimensions',
+                'gender-filter-dimensions',
+                'marital-filter-dimensions',
+                'age-filter-dimensions',
+                'country-filter-dimensions',
+                'city-filter-dimensions',
+                'leader-filter-dimensions'
+            ];
+            
+            selectIds.forEach(selectId => {
                 const select = document.getElementById(selectId);
-                const checkedInputs = select.querySelectorAll('input:checked:not([id$="-todos"])');
-                if (checkedInputs.length > 0) {
+                if (select && select.value !== 'todos') {
                     activeFilters++;
                 }
             });
-
-            // Contar búsqueda activa
-            const searchTerm = document.getElementById('dimension-search').value.trim();
-            if (searchTerm !== '') {
-                activeFilters++;
-            }
-
+            
             if (activeFilters > 0) {
                 badge.textContent = activeFilters;
-                badge.style.display = 'inline';
+                badge.style.display = 'flex';
             } else {
                 badge.style.display = 'none';
             }
         }
 
-        function setupDimensionCustomSelects() {
-            const selects = ['dimension-risk-select', 'dimension-area-select', 'dimension-position-select', 
-                           'dimension-gender-select', 'dimension-marital-select', 'dimension-age-select', 
-                           'dimension-country-select', 'dimension-city-select'];
+        function hideDimensionsFilterBadge() {
+            const badge = document.getElementById('dimensions-table-filter-badge');
+            if (badge) {
+                badge.style.display = 'none';
+            }
+        }
+
+        function updateDimensionsDemographicData(areaFilter, positionFilter, genderFilter, maritalFilter, ageFilter, countryFilter, cityFilter, leaderFilter) {
+            console.log('📊 Actualizando datos demográficos de dimensiones...');
             
-            selects.forEach(selectId => {
-                const select = document.getElementById(selectId);
-                const trigger = select.querySelector('.select-trigger');
-                const dropdown = select.querySelector('.select-dropdown');
-                const options = select.querySelectorAll('.select-option');
-
-                trigger.addEventListener('click', () => {
-                    select.classList.toggle('open');
-                });
-
-                options.forEach(option => {
-                    const input = option.querySelector('input');
-                    input.addEventListener('change', () => {
-                        if (input.checked) {
-                            // Si se selecciona "Todos", desmarcar los demás
-                            if (option.dataset.value === 'todos') {
-                                options.forEach(opt => {
-                                    if (opt !== option) {
-                                        opt.querySelector('input').checked = false;
-                                    }
-                                });
-                            } else {
-                                // Si se selecciona una opción específica, desmarcar "Todos"
-                                const todosOption = select.querySelector('[data-value="todos"] input');
-                                if (todosOption) {
-                                    todosOption.checked = false;
-                                }
-                            }
-                        }
-                        
-                        // Actualizar texto del trigger
-                        updateDimensionSelectTrigger(select);
-                        applyDimensionFilters();
-                    });
-                });
-
-                // Cerrar dropdown al hacer clic fuera
-                document.addEventListener('click', (e) => {
-                    if (!select.contains(e.target)) {
-                        select.classList.remove('open');
+            const tableRows = document.querySelectorAll('#dimensions-content .results-table tbody tr');
+            
+            tableRows.forEach((row, index) => {
+                const riskCountCell = row.querySelector('.risk-count');
+                const percentageCell = row.querySelector('.percentage');
+                
+                if (riskCountCell && percentageCell) {
+                    // Simular datos demográficos
+                    const demographicData = getSimulatedDemographicDataForDimensions(index);
+                    
+                    // Verificar si coincide con los filtros
+                    const matchesFilters = checkDimensionsDemographicMatch(demographicData, areaFilter, positionFilter, genderFilter, maritalFilter, ageFilter, countryFilter, cityFilter, leaderFilter);
+                    
+                    if (matchesFilters) {
+                        // Mostrar datos normales
+                        riskCountCell.textContent = demographicData.riskCount;
+                        percentageCell.textContent = demographicData.percentage + '%';
+                        riskCountCell.style.color = '#374151';
+                        percentageCell.style.color = '#374151';
+                    } else {
+                        // Mostrar datos filtrados (en gris)
+                        const filteredData = getFilteredDimensionsData(index);
+                        riskCountCell.textContent = filteredData.riskCount;
+                        percentageCell.textContent = filteredData.percentage + '%';
+                        riskCountCell.style.color = '#6b7280';
+                        percentageCell.style.color = '#6b7280';
                     }
-                });
+                }
             });
         }
 
-        function updateDimensionSelectTrigger(select) {
-            const trigger = select.querySelector('.select-trigger .select-text');
-            const checkedInputs = select.querySelectorAll('input:checked:not([id$="-todos"])');
+        function getSimulatedDemographicDataForDimensions(index) {
+            const areas = ['ventas', 'desarrollo', 'rrhh', 'proyectos', 'marketing', 'finanzas'];
+            const positions = ['gerente', 'desarrollador', 'analista', 'coordinador', 'director', 'supervisor'];
+            const genders = ['masculino', 'femenino', 'otro'];
+            const maritalStatuses = ['soltero', 'casado', 'divorciado', 'viudo', 'union-libre'];
+            const ages = [25, 30, 35, 40, 45, 50, 55, 60];
+            const countries = ['colombia', 'mexico', 'argentina', 'chile', 'peru', 'ecuador', 'venezuela'];
+            const cities = ['bogota', 'medellin', 'cali', 'barranquilla', 'cartagena', 'mexico-df', 'buenos-aires'];
+            const leaders = ['maria-gonzalez', 'carlos-rodriguez', 'ana-lopez', 'jose-martinez', 'laura-garcia', 'pedro-hernandez'];
             
-            if (checkedInputs.length === 0) {
-                const selectId = select.id;
-                const label = selectId.replace('dimension-', '').replace('-select', 's');
-                trigger.textContent = 'Seleccionar ' + label;
-            } else if (checkedInputs.length === 1) {
-                trigger.textContent = checkedInputs[0].closest('.select-option').querySelector('.option-text').textContent;
-            } else {
-                trigger.textContent = `${checkedInputs.length} seleccionados`;
+            // Usar índice para generar datos consistentes
+            const seed = index * 7 + 13;
+            
+            return {
+                area: areas[seed % areas.length],
+                position: positions[seed % positions.length],
+                gender: genders[seed % genders.length],
+                marital: maritalStatuses[seed % maritalStatuses.length],
+                age: ages[seed % ages.length],
+                country: countries[seed % countries.length],
+                city: cities[seed % cities.length],
+                leader: leaders[seed % leaders.length],
+                riskCount: 8 + (seed % 15),
+                percentage: 5 + (seed % 20)
+            };
+        }
+
+        function checkDimensionsDemographicMatch(data, areaFilter, positionFilter, genderFilter, maritalFilter, ageFilter, countryFilter, cityFilter, leaderFilter) {
+            if (areaFilter !== 'todos' && data.area !== areaFilter) return false;
+            if (positionFilter !== 'todos' && data.position !== positionFilter) return false;
+            if (genderFilter !== 'todos' && data.gender !== genderFilter) return false;
+            if (maritalFilter !== 'todos' && data.marital !== maritalFilter) return false;
+            if (ageFilter !== 'todos' && !matchesAgeRangeForDimensions(data.age, ageFilter)) return false;
+            if (countryFilter !== 'todos' && data.country !== countryFilter) return false;
+            if (cityFilter !== 'todos' && data.city !== cityFilter) return false;
+            if (leaderFilter !== 'todos' && data.leader !== leaderFilter) return false;
+            
+            return true;
+        }
+
+        function matchesAgeRangeForDimensions(age, ageRange) {
+            switch (ageRange) {
+                case '18-25': return age >= 18 && age <= 25;
+                case '26-35': return age >= 26 && age <= 35;
+                case '36-45': return age >= 36 && age <= 45;
+                case '46-55': return age >= 46 && age <= 55;
+                case '56-65': return age >= 56 && age <= 65;
+                case '65+': return age > 65;
+                default: return true;
             }
         }
+
+        function getFilteredDimensionsData(index) {
+            // Datos filtrados (menores)
+            const seed = index * 3 + 5;
+            return {
+                riskCount: 2 + (seed % 8),
+                percentage: 1 + (seed % 10)
+            };
+        }
+
+        function restoreDimensionsOriginalData() {
+            const tableRows = document.querySelectorAll('#dimensions-content .results-table tbody tr');
+            
+            tableRows.forEach((row, index) => {
+                const riskCountCell = row.querySelector('.risk-count');
+                const percentageCell = row.querySelector('.percentage');
+                
+                if (riskCountCell && percentageCell) {
+                    // Restaurar datos originales
+                    const originalData = getSimulatedDemographicDataForDimensions(index);
+                    riskCountCell.textContent = originalData.riskCount;
+                    percentageCell.textContent = originalData.percentage + '%';
+                    riskCountCell.style.color = '#374151';
+                    percentageCell.style.color = '#374151';
+                }
+            });
+        }
+
+
+
+
+
+
 
         function closeTableFiltersPanel() {
             document.getElementById('table-filters-side-panel').classList.remove('show');
@@ -9075,10 +9345,10 @@
                     if (typeof initializeTableFilters === 'function') {
                 initializeTableFilters();
                     }
-                    // Comentado temporalmente porque el tab de dimensiones ahora usa contenido simple
-                    // if (typeof initializeDimensionFilters === 'function') {
-                    //     initializeDimensionFilters();
-                    // }
+                    // Inicializar filtros de dimensiones
+                    if (typeof initializeDimensionsFilters === 'function') {
+                        initializeDimensionsFilters();
+                    }
                 }, 100);
                 
                 // Event listener directo para cargar dimensiones
