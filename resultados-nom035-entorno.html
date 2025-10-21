@@ -1328,6 +1328,41 @@
             color: #991b1b;
         }
 
+        /* Estilos para badges de respuestas */
+        .response-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .response-badge.siempre {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .response-badge.casi-siempre {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .response-badge.algunas-veces {
+            background-color: #fed7d7;
+            color: #c53030;
+        }
+
+        .response-badge.casi-nunca {
+            background-color: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .response-badge.nunca {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+
         /* Estilos para las filas de categoría con dropdown - Estilo emocional */
         .category-summary {
             cursor: pointer;
@@ -3095,38 +3130,38 @@
                                                             </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">BAJO</span>
+                                                            <span class="risk-badge bajo">Bajo</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">85%</td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Casi siempre</span>
+                                                            <span class="response-badge casi-siempre">Casi siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Algunas veces</span>
+                                                            <span class="response-badge algunas-veces">Algunas veces</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                     </tr>
                                                     
@@ -3144,38 +3179,38 @@
                                                             </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #f59e0b; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">MEDIO</span>
+                                                            <span class="risk-badge medio">Medio</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">65%</td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Casi siempre</span>
+                                                            <span class="response-badge casi-siempre">Casi siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Algunas veces</span>
+                                                            <span class="response-badge algunas-veces">Algunas veces</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Casi siempre</span>
+                                                            <span class="response-badge casi-siempre">Casi siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Casi siempre</span>
+                                                            <span class="response-badge casi-siempre">Casi siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Casi siempre</span>
+                                                            <span class="response-badge casi-siempre">Casi siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Casi siempre</span>
+                                                            <span class="response-badge casi-siempre">Casi siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Casi siempre</span>
+                                                            <span class="response-badge casi-siempre">Casi siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Casi siempre</span>
+                                                            <span class="response-badge casi-siempre">Casi siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Casi siempre</span>
+                                                            <span class="response-badge casi-siempre">Casi siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Casi siempre</span>
+                                                            <span class="response-badge casi-siempre">Casi siempre</span>
                                                         </td>
                                                     </tr>
                                                     
@@ -3193,38 +3228,38 @@
                                                             </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">ALTO</span>
+                                                            <span class="risk-badge alto">Alto</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">45%</td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Algunas veces</span>
+                                                            <span class="response-badge algunas-veces">Algunas veces</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Algunas veces</span>
+                                                            <span class="response-badge algunas-veces">Algunas veces</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Algunas veces</span>
+                                                            <span class="response-badge algunas-veces">Algunas veces</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Algunas veces</span>
+                                                            <span class="response-badge algunas-veces">Algunas veces</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Algunas veces</span>
+                                                            <span class="response-badge algunas-veces">Algunas veces</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Algunas veces</span>
+                                                            <span class="response-badge algunas-veces">Algunas veces</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Algunas veces</span>
+                                                            <span class="response-badge algunas-veces">Algunas veces</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Algunas veces</span>
+                                                            <span class="response-badge algunas-veces">Algunas veces</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Algunas veces</span>
+                                                            <span class="response-badge algunas-veces">Algunas veces</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Algunas veces</span>
+                                                            <span class="response-badge algunas-veces">Algunas veces</span>
                                                         </td>
                                                     </tr>
                                                     
@@ -3242,38 +3277,38 @@
                                                             </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">BAJO</span>
+                                                            <span class="risk-badge bajo">Bajo</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">78%</td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">Siempre</span>
+                                                            <span class="response-badge siempre">Siempre</span>
                                                         </td>
                                                     </tr>
                                                 </tbody>
