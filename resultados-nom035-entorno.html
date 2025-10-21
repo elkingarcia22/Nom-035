@@ -10633,6 +10633,89 @@
             }
         }
 
+        // Configurar filtros para la tabla principal individual
+        function setupMainIndividualFilters() {
+            console.log('🔧 ===== CONFIGURANDO FILTROS PRINCIPALES INDIVIDUALES =====');
+            
+            const filtersBtn = document.getElementById('individual-filters-btn');
+            const filtersPanel = document.getElementById('individual-filters-side-panel');
+            const closeBtn = document.getElementById('individual-close-filters-btn');
+            const backdrop = document.getElementById('individual-filters-backdrop');
+            const applyBtn = document.getElementById('individual-apply-filters-btn');
+            const clearBtn = document.getElementById('individual-clear-filters-btn');
+            
+            console.log('🔧 Elementos encontrados:');
+            console.log('🔧 Botón filtros:', !!filtersBtn);
+            console.log('🔧 Panel filtros:', !!filtersPanel);
+            console.log('🔧 Botón cerrar:', !!closeBtn);
+            console.log('🔧 Backdrop:', !!backdrop);
+            console.log('🔧 Botón aplicar:', !!applyBtn);
+            console.log('🔧 Botón limpiar:', !!clearBtn);
+            
+            // Configurar botón de filtros
+            if (filtersBtn && filtersPanel) {
+                console.log('🔧 Configurando botón de filtros principales');
+                filtersBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔧 Click en botón de filtros principales');
+                    filtersPanel.classList.add('show');
+                    if (backdrop) backdrop.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            // Configurar botón de cerrar
+            if (closeBtn && filtersPanel) {
+                console.log('🔧 Configurando botón de cerrar filtros principales');
+                closeBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔧 Click en botón de cerrar filtros principales');
+                    filtersPanel.classList.remove('show');
+                    if (backdrop) backdrop.classList.remove('show');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            // Configurar backdrop
+            if (backdrop && filtersPanel) {
+                console.log('🔧 Configurando backdrop de filtros principales');
+                backdrop.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔧 Click en backdrop de filtros principales');
+                    filtersPanel.classList.remove('show');
+                    backdrop.classList.remove('show');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            // Configurar botón aplicar
+            if (applyBtn) {
+                console.log('🔧 Configurando botón aplicar filtros principales');
+                applyBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔧 Click en botón aplicar filtros principales');
+                    applyIndividualFilters();
+                });
+            }
+            
+            // Configurar botón limpiar
+            if (clearBtn) {
+                console.log('🔧 Configurando botón limpiar filtros principales');
+                clearBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔧 Click en botón limpiar filtros principales');
+                    clearIndividualFilters();
+                });
+            }
+            
+            console.log('✅ ===== FILTROS PRINCIPALES INDIVIDUALES CONFIGURADOS =====');
+        }
+
         // Ejecutar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             // Esperar un poco para asegurar que la tabla esté cargada
@@ -10640,7 +10723,7 @@
                 updateTableWithAllParticipants();
                 
                 // Configurar filtros para la tabla principal
-                setupIndividualFilters();
+                setupMainIndividualFilters();
                 
                 // Configurar eventos del buscador
                 const searchBtn = document.getElementById('individual-search-btn');
