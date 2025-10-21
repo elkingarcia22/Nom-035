@@ -4894,7 +4894,11 @@
             });
 
             // Cerrar dropdowns al hacer clic fuera
-            document.addEventListener('click', () => {
+            document.addEventListener('click', (event) => {
+                // No cerrar si se hizo clic en el botón de regresar
+                if (event.target.closest('.back-button')) {
+                    return;
+                }
                 selectIds.forEach(selectId => {
                     const select = document.getElementById(selectId);
                     select.querySelector('.select-trigger').classList.remove('active');
@@ -5311,6 +5315,10 @@
             
             // Cerrar dropdowns al hacer click fuera - USAR NUEVO SISTEMA
             document.addEventListener('click', function(event) {
+                // No cerrar si se hizo clic en el botón de regresar
+                if (event.target.closest('.back-button')) {
+                    return;
+                }
                 // Solo cerrar si no se hizo click en un trigger de dropdown
                 if (!event.target.closest('.select-trigger')) {
                     newCustomSelects.forEach(select => {
