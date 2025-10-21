@@ -5822,11 +5822,24 @@
             const todosSelected = todosCheckbox && todosCheckbox.checked;
             console.log('🔍 PASO 6.1.1.1: Todos seleccionado:', todosSelected);
             
-            if (todosSelected && riskCheckboxes.length === 1) {
-                console.log('🔍 PASO 6.1.1.2: Solo "todos" está seleccionado, no aplicar filtro');
+            // FORZAR: Si hay más de 1 checkbox seleccionado, ignorar "todos"
+            if (riskCheckboxes.length > 1) {
+                console.log('🔍 PASO 6.1.1.2: Múltiples opciones seleccionadas, ignorando "todos"');
+                riskCheckboxes.forEach((checkbox, index) => {
+                    console.log(`🔍 PASO 6.1.2: Checkbox ${index + 1} ID:`, checkbox.id);
+                    const option = checkbox.closest('.select-option');
+                    const value = option ? option.getAttribute('data-value') : null;
+                    console.log(`🔍 PASO 6.1.3: Checkbox ${index + 1} value:`, value);
+                    if (value && value !== 'todos') {
+                        selectedRisks.push(value);
+                        console.log(`🔍 PASO 6.1.4: Agregado a selectedRisks:`, value);
+                    }
+                });
+            } else if (todosSelected && riskCheckboxes.length === 1) {
+                console.log('🔍 PASO 6.1.1.3: Solo "todos" está seleccionado, no aplicar filtro');
                 // No agregar nada a selectedRisks, significa mostrar todos
             } else {
-                console.log('🔍 PASO 6.1.1.3: Aplicando filtros específicos');
+                console.log('🔍 PASO 6.1.1.4: Aplicando filtros específicos');
                 riskCheckboxes.forEach((checkbox, index) => {
                     console.log(`🔍 PASO 6.1.2: Checkbox ${index + 1} ID:`, checkbox.id);
                     const option = checkbox.closest('.select-option');
