@@ -5755,53 +5755,78 @@
         // Función para aplicar filtros de la tabla general
         function applyNewTableFilters() {
             console.log('🔍 ===== APLICANDO FILTROS DE TABLA GENERAL =====');
-            console.log('🔍 Función applyNewTableFilters ejecutándose...');
-            
-            // Obtener filtros seleccionados
-            const riskFilters = getSelectedCheckboxValues('risk');
-            const categoryFilters = getSelectedCheckboxValues('category');
-            const domainFilters = getSelectedCheckboxValues('domain');
-            const dimensionFilters = getSelectedCheckboxValues('dimension');
-            
-            console.log('🔍 Filtros seleccionados:', {
-                risk: riskFilters,
-                category: categoryFilters,
-                domain: domainFilters,
-                dimension: dimensionFilters
-            });
             
             // Obtener todas las filas de la tabla
             const tableRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
             console.log(`🔍 Total de filas encontradas: ${tableRows.length}`);
             
-            // Verificar si estamos en el tab correcto
-            const overviewPanel = document.getElementById('new-overview-panel');
-            console.log('🔍 Panel overview encontrado:', !!overviewPanel);
-            console.log('🔍 Panel overview visible:', overviewPanel ? overviewPanel.style.display : 'N/A');
-            console.log('🔍 Panel overview clases:', overviewPanel ? overviewPanel.className : 'N/A');
-            
-            // Verificar si la tabla existe y tiene contenido
-            const tableContainer = document.querySelector('#new-overview-panel .results-table');
-            console.log('🔍 Tabla encontrada:', !!tableContainer);
-            
             if (tableRows.length === 0) {
-                console.log('❌ No se encontraron filas en la tabla. Verificando estructura...');
-                const panel = document.querySelector('#new-overview-panel');
-                console.log('🔍 Panel encontrado:', !!panel);
-                if (panel) {
-                    const table = panel.querySelector('.results-table');
-                    console.log('🔍 Tabla dentro del panel:', !!table);
-                    if (table) {
-                        const tbody = table.querySelector('tbody');
-                        console.log('🔍 Tbody encontrado:', !!tbody);
-                        if (tbody) {
-                            const rows = tbody.querySelectorAll('tr');
-                            console.log('🔍 Filas en tbody:', rows.length);
-                        }
-                    }
-                }
+                console.log('❌ No se encontraron filas en la tabla');
                 return;
             }
+            
+            // Obtener filtros seleccionados de manera simple
+            const riskSelect = document.getElementById('new-risk-select');
+            const categorySelect = document.getElementById('new-category-select');
+            const domainSelect = document.getElementById('new-domain-select');
+            const dimensionSelect = document.getElementById('new-dimension-select');
+            
+            // Obtener valores seleccionados
+            const selectedRisks = [];
+            const selectedCategories = [];
+            const selectedDomains = [];
+            const selectedDimensions = [];
+            
+            if (riskSelect) {
+                const riskCheckboxes = riskSelect.querySelectorAll('input[type="checkbox"]:checked');
+                riskCheckboxes.forEach(checkbox => {
+                    const option = checkbox.closest('.select-option');
+                    const value = option ? option.getAttribute('data-value') : null;
+                    if (value && value !== 'todos') {
+                        selectedRisks.push(value);
+                    }
+                });
+            }
+            
+            if (categorySelect) {
+                const categoryCheckboxes = categorySelect.querySelectorAll('input[type="checkbox"]:checked');
+                categoryCheckboxes.forEach(checkbox => {
+                    const option = checkbox.closest('.select-option');
+                    const value = option ? option.getAttribute('data-value') : null;
+                    if (value && value !== 'todos') {
+                        selectedCategories.push(value);
+                    }
+                });
+            }
+            
+            if (domainSelect) {
+                const domainCheckboxes = domainSelect.querySelectorAll('input[type="checkbox"]:checked');
+                domainCheckboxes.forEach(checkbox => {
+                    const option = checkbox.closest('.select-option');
+                    const value = option ? option.getAttribute('data-value') : null;
+                    if (value && value !== 'todos') {
+                        selectedDomains.push(value);
+                    }
+                });
+            }
+            
+            if (dimensionSelect) {
+                const dimensionCheckboxes = dimensionSelect.querySelectorAll('input[type="checkbox"]:checked');
+                dimensionCheckboxes.forEach(checkbox => {
+                    const option = checkbox.closest('.select-option');
+                    const value = option ? option.getAttribute('data-value') : null;
+                    if (value && value !== 'todos') {
+                        selectedDimensions.push(value);
+                    }
+                });
+            }
+            
+            console.log('🔍 Filtros seleccionados:', {
+                risk: selectedRisks,
+                category: selectedCategories,
+                domain: selectedDomains,
+                dimension: selectedDimensions
+            });
             
             let visibleCount = 0;
             
@@ -5809,25 +5834,25 @@
                 let shouldShow = true;
                 
                 // Filtrar por nivel de riesgo
-                if (riskFilters.length > 0) {
+                if (selectedRisks.length > 0) {
                     const riskBadge = row.querySelector('.risk-badge');
                     if (riskBadge) {
                         const riskLevel = riskBadge.textContent.trim();
-                        console.log(`🔍 Fila ${index + 1} - Nivel de riesgo: "${riskLevel}"`);
-                        if (!riskFilters.includes(riskLevel)) {
+                        console.log(`🔍 Fila ${index + 1} - Riesgo: "${riskLevel}"`);
+                        if (!selectedRisks.includes(riskLevel)) {
                             shouldShow = false;
-                            console.log(`❌ Fila ${index + 1} oculta por nivel de riesgo`);
+                            console.log(`❌ Fila ${index + 1} oculta por riesgo`);
                         }
                     }
                 }
                 
                 // Filtrar por categoría
-                if (categoryFilters.length > 0) {
+                if (selectedCategories.length > 0) {
                     const categoryCell = row.querySelector('.category-cell span');
                     if (categoryCell) {
                         const categoryText = categoryCell.textContent.trim();
                         console.log(`🔍 Fila ${index + 1} - Categoría: "${categoryText}"`);
-                        if (!categoryFilters.includes(categoryText)) {
+                        if (!selectedCategories.includes(categoryText)) {
                             shouldShow = false;
                             console.log(`❌ Fila ${index + 1} oculta por categoría`);
                         }
@@ -5835,12 +5860,12 @@
                 }
                 
                 // Filtrar por dominio
-                if (domainFilters.length > 0) {
+                if (selectedDomains.length > 0) {
                     const domainCell = row.querySelector('.category-domain-info');
                     if (domainCell) {
                         const domainText = domainCell.textContent.trim();
                         console.log(`🔍 Fila ${index + 1} - Dominio: "${domainText}"`);
-                        if (!domainFilters.includes(domainText)) {
+                        if (!selectedDomains.includes(domainText)) {
                             shouldShow = false;
                             console.log(`❌ Fila ${index + 1} oculta por dominio`);
                         }
@@ -5848,12 +5873,12 @@
                 }
                 
                 // Filtrar por dimensión
-                if (dimensionFilters.length > 0) {
+                if (selectedDimensions.length > 0) {
                     const dimensionCell = row.querySelector('.category-dimension-info');
                     if (dimensionCell) {
                         const dimensionText = dimensionCell.textContent.trim();
                         console.log(`🔍 Fila ${index + 1} - Dimensión: "${dimensionText}"`);
-                        if (!dimensionFilters.includes(dimensionText)) {
+                        if (!selectedDimensions.includes(dimensionText)) {
                             shouldShow = false;
                             console.log(`❌ Fila ${index + 1} oculta por dimensión`);
                         }
@@ -5872,28 +5897,6 @@
             });
             
             console.log(`✅ Filtros aplicados. ${visibleCount} filas visibles de ${tableRows.length} totales`);
-            
-            // Función de prueba para verificar que los filtros funcionan
-            if (tableRows.length > 0) {
-                console.log('🧪 PRUEBA: Ocultando todas las filas para verificar que el filtrado funciona');
-                tableRows.forEach((row, index) => {
-                    if (index < 3) { // Solo las primeras 3 filas
-                        row.style.display = 'none';
-                        console.log(`🧪 Fila ${index + 1} oculta para prueba`);
-                    }
-                });
-                
-                // Restaurar después de 2 segundos
-                setTimeout(() => {
-                    console.log('🧪 PRUEBA: Restaurando filas después de prueba');
-                    tableRows.forEach((row, index) => {
-                        if (index < 3) {
-                            row.style.display = '';
-                            console.log(`🧪 Fila ${index + 1} restaurada`);
-                        }
-                    });
-                }, 2000);
-            }
         }
 
         // Función para limpiar filtros de la tabla general
