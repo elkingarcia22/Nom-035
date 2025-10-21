@@ -3047,48 +3047,287 @@
                                     <h3>Análisis Individual por Colaborador</h3>
                                 </div>
                                 
-                                <!-- Contenido del tab Individual -->
+                                <!-- Tabla de resultados individuales -->
                                 <div style="padding: 24px 0;">
-                                    <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 24px; margin-bottom: 16px;">
-                                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
-                                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
-                                                👤
-                                            </div>
-                                            <div>
-                                                <h3 style="margin: 0 0 4px 0; color: #374151; font-size: 18px; font-weight: 600;">María González</h3>
-                                                <p style="margin: 0; color: #6b7280; font-size: 14px;">Gerente de Ventas</p>
-                                            </div>
+                                    <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+                                        <div style="padding: 20px; border-bottom: 1px solid #e5e7eb; background: #f8f9fa;">
+                                            <h3 style="margin: 0; color: #374151; font-size: 18px; font-weight: 600;">Resultados Individuales - Entorno Laboral</h3>
+                                            <p style="margin: 8px 0 0 0; color: #6b7280; font-size: 14px;">Análisis detallado por participante con todas las respuestas</p>
                                         </div>
-                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px;">
-                                            <div style="text-align: center; padding: 16px; background: #f8f9fa; border-radius: 6px;">
-                                                <p style="margin: 0 0 4px 0; color: #6b7280; font-size: 12px; font-weight: 500;">PUNTAJE TOTAL</p>
-                                                <p style="margin: 0; color: #374151; font-size: 20px; font-weight: 700;">85/100</p>
-                                            </div>
-                                            <div style="text-align: center; padding: 16px; background: #f8f9fa; border-radius: 6px;">
-                                                <p style="margin: 0 0 4px 0; color: #6b7280; font-size: 12px; font-weight: 500;">NIVEL DE RIESGO</p>
-                                                <p style="margin: 0; color: #10b981; font-size: 20px; font-weight: 700;">BAJO</p>
-                                            </div>
-                                            <div style="text-align: center; padding: 16px; background: #f8f9fa; border-radius: 6px;">
-                                                <p style="margin: 0 0 4px 0; color: #6b7280; font-size: 12px; font-weight: 500;">COMPLETADO</p>
-                                                <p style="margin: 0; color: #374151; font-size: 20px; font-weight: 700;">100%</p>
-                                            </div>
+                                        
+                                        <!-- Tabla con scroll horizontal -->
+                                        <div style="overflow-x: auto; max-width: 100%;">
+                                            <table style="width: 100%; border-collapse: collapse; min-width: 2000px;">
+                                                <thead style="background: #f8f9fa; position: sticky; top: 0; z-index: 10;">
+                                                    <tr>
+                                                        <!-- Columna fija del participante -->
+                                                        <th style="position: sticky; left: 0; background: #f8f9fa; border: 1px solid #e5e7eb; padding: 12px; text-align: left; font-weight: 600; color: #374151; min-width: 200px; z-index: 11;">
+                                                            Participante
+                                                        </th>
+                                                        <!-- Columnas de métricas principales -->
+                                                        <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px; background: #f0f9ff;">
+                                                            Nivel de Riesgo
+                                                        </th>
+                                                        <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 100px; background: #f0f9ff;">
+                                                            Porcentaje
+                                                        </th>
+                                                        <!-- Columnas de respuestas por categoría -->
+                                                        <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px; background: #fef3c7;">
+                                                            Condiciones Físicas
+                                                        </th>
+                                                        <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px; background: #fef3c7;">
+                                                            Carga de Trabajo
+                                                        </th>
+                                                        <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px; background: #fef3c7;">
+                                                            Control del Trabajo
+                                                        </th>
+                                                        <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px; background: #fef3c7;">
+                                                            Jornada de Trabajo
+                                                        </th>
+                                                        <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px; background: #fef3c7;">
+                                                            Liderazgo
+                                                        </th>
+                                                        <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px; background: #fef3c7;">
+                                                            Relaciones
+                                                        </th>
+                                                        <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px; background: #fef3c7;">
+                                                            Violencia Laboral
+                                                        </th>
+                                                        <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px; background: #fef3c7;">
+                                                            Reconocimiento
+                                                        </th>
+                                                        <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px; background: #fef3c7;">
+                                                            Pertenencia
+                                                        </th>
+                                                        <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px; background: #fef3c7;">
+                                                            Estabilidad
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Participante 1 -->
+                                                    <tr style="background: white;">
+                                                        <td style="position: sticky; left: 0; background: white; border: 1px solid #e5e7eb; padding: 12px; font-weight: 600; color: #374151; z-index: 1;">
+                                                            <div style="display: flex; align-items: center; gap: 12px;">
+                                                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px;">
+                                                                    MG
+                                                                </div>
+                                                                <div>
+                                                                    <div style="font-weight: 600; color: #374151;">María González</div>
+                                                                    <div style="font-size: 12px; color: #6b7280;">Gerente de Ventas</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">BAJO</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">85%</td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">3</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">2</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <!-- Participante 2 -->
+                                                    <tr style="background: #f8f9fa;">
+                                                        <td style="position: sticky; left: 0; background: #f8f9fa; border: 1px solid #e5e7eb; padding: 12px; font-weight: 600; color: #374151; z-index: 1;">
+                                                            <div style="display: flex; align-items: center; gap: 12px;">
+                                                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px;">
+                                                                    CR
+                                                                </div>
+                                                                <div>
+                                                                    <div style="font-weight: 600; color: #374151;">Carlos Rodríguez</div>
+                                                                    <div style="font-size: 12px; color: #6b7280;">Desarrollador Senior</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #f59e0b; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">MEDIO</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">65%</td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">3</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">2</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">3</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">3</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">3</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">3</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">3</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">3</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">3</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">3</span>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <!-- Participante 3 -->
+                                                    <tr style="background: white;">
+                                                        <td style="position: sticky; left: 0; background: white; border: 1px solid #e5e7eb; padding: 12px; font-weight: 600; color: #374151; z-index: 1;">
+                                                            <div style="display: flex; align-items: center; gap: 12px;">
+                                                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px;">
+                                                                    AL
+                                                                </div>
+                                                                <div>
+                                                                    <div style="font-weight: 600; color: #374151;">Ana López</div>
+                                                                    <div style="font-size: 12px; color: #6b7280;">Analista de Recursos Humanos</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #ef4444; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">ALTO</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">45%</td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">2</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">2</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">2</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">2</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">2</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">2</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">2</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">2</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">2</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">2</span>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <!-- Participante 4 -->
+                                                    <tr style="background: #f8f9fa;">
+                                                        <td style="position: sticky; left: 0; background: #f8f9fa; border: 1px solid #e5e7eb; padding: 12px; font-weight: 600; color: #374151; z-index: 1;">
+                                                            <div style="display: flex; align-items: center; gap: 12px;">
+                                                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px;">
+                                                                    JM
+                                                                </div>
+                                                                <div>
+                                                                    <div style="font-weight: 600; color: #374151;">José Martínez</div>
+                                                                    <div style="font-size: 12px; color: #6b7280;">Coordinador de Proyectos</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">BAJO</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">78%</td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                    </div>
-                                    
-                                    <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 24px;">
-                                        <h3 style="margin: 0 0 16px 0; color: #374151; font-size: 16px; font-weight: 600;">Evaluación por Dimensiones</h3>
-                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
-                                            <div style="padding: 12px; background: #f0fdf4; border-radius: 6px; border-left: 3px solid #22c55e;">
-                                                <p style="margin: 0 0 4px 0; color: #15803d; font-size: 14px; font-weight: 600;">Condiciones Físicas</p>
-                                                <p style="margin: 0; color: #166534; font-size: 12px;">Excelente</p>
-                                            </div>
-                                            <div style="padding: 12px; background: #fef3c7; border-radius: 6px; border-left: 3px solid #f59e0b;">
-                                                <p style="margin: 0 0 4px 0; color: #d97706; font-size: 14px; font-weight: 600;">Carga de Trabajo</p>
-                                                <p style="margin: 0; color: #92400e; font-size: 12px;">Regular</p>
-                                            </div>
-                                            <div style="padding: 12px; background: #fef2f2; border-radius: 6px; border-left: 3px solid #ef4444;">
-                                                <p style="margin: 0 0 4px 0; color: #dc2626; font-size: 14px; font-weight: 600;">Liderazgo</p>
-                                                <p style="margin: 0; color: #991b1b; font-size: 12px;">Necesita Mejora</p>
+                                        
+                                        <!-- Leyenda de la tabla -->
+                                        <div style="padding: 20px; border-top: 1px solid #e5e7eb; background: #f8f9fa;">
+                                            <h4 style="margin: 0 0 12px 0; color: #374151; font-size: 14px; font-weight: 600;">Leyenda de Respuestas</h4>
+                                            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <span style="background: #10b981; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">4</span>
+                                                    <span style="font-size: 12px; color: #6b7280;">Siempre</span>
+                                                </div>
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <span style="background: #f59e0b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">3</span>
+                                                    <span style="font-size: 12px; color: #6b7280;">Casi siempre</span>
+                                                </div>
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <span style="background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">2</span>
+                                                    <span style="font-size: 12px; color: #6b7280;">Algunas veces</span>
+                                                </div>
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <span style="background: #6b7280; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">1</span>
+                                                    <span style="font-size: 12px; color: #6b7280;">Casi nunca</span>
+                                                </div>
+                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                    <span style="background: #374151; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px;">0</span>
+                                                    <span style="font-size: 12px; color: #6b7280;">Nunca</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
