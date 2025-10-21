@@ -1390,42 +1390,45 @@
 
         /* Estilos para badges de riesgo en dominios (dimensiones) con puntos */
         .dimension-row .risk-badge {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            font-weight: 500;
+            display: flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            font-size: 12px !important;
+            font-weight: 500 !important;
             background: transparent !important;
             color: inherit !important;
-            padding: 0;
+            padding: 0 !important;
+            border: none !important;
+            border-radius: 0 !important;
         }
 
         .dimension-row .risk-badge::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
+            content: '' !important;
+            width: 8px !important;
+            height: 8px !important;
+            border-radius: 50% !important;
+            flex-shrink: 0 !important;
+            display: block !important;
         }
 
         .dimension-row .risk-badge.nulo::before {
-            background-color: #6b7280;
+            background-color: #6b7280 !important;
         }
 
         .dimension-row .risk-badge.bajo::before {
-            background-color: #22c55e;
+            background-color: #22c55e !important;
         }
 
         .dimension-row .risk-badge.medio::before {
-            background-color: #f59e0b;
+            background-color: #f59e0b !important;
         }
 
         .dimension-row .risk-badge.alto::before {
-            background-color: #ef4444;
+            background-color: #ef4444 !important;
         }
 
         .dimension-row .risk-badge.muy-alto::before {
-            background-color: #dc2626;
+            background-color: #dc2626 !important;
         }
 
         /* Estilos para las filas de categoría con dropdown - Estilo emocional */
@@ -2845,7 +2848,12 @@
                                             <td class="dimension-domain-info">Condiciones en el ambiente de trabajo</td>
                                             <td class="risk-count">12</td>
                                             <td class="percentage">8.0%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td>
+                                                <div class="response-with-dot">
+                                                    <div class="response-dot bajo"></div>
+                                                    <span>Bajo</span>
+                                                </div>
+                                            </td>
                                         </tr>
                                         
                                         <!-- Dimensión 2: Condiciones de seguridad -->
@@ -2858,7 +2866,12 @@
                                             <td class="dimension-domain-info">Condiciones en el ambiente de trabajo</td>
                                             <td class="risk-count">8</td>
                                             <td class="percentage">5.3%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td>
+                                                <div class="response-with-dot">
+                                                    <div class="response-dot bajo"></div>
+                                                    <span>Bajo</span>
+                                                </div>
+                                            </td>
                                         </tr>
                                         
                                         <!-- Dimensión 3: Exigencias cuantitativas -->
