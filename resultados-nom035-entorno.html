@@ -4049,265 +4049,124 @@
             document.getElementById('table-filters-overlay').classList.remove('show');
         }
 
+        // NUEVA FUNCIÓN DE FILTROS SIMPLE Y FUNCIONAL
         function applyTableFilters() {
-            console.log('🔧 ===== APLICANDO FILTROS DE TABLA =====');
+            console.log('🔧 ===== APLICANDO NUEVOS FILTROS =====');
             
-            const searchInput = document.getElementById('table-search');
-            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
-            console.log('🔧 Término de búsqueda:', searchTerm);
+            // Obtener filtros seleccionados
+            const riskFilter = getSelectedFilterValue('new-risk-select');
+            const categoryFilter = getSelectedFilterValue('new-category-select');
+            const domainFilter = getSelectedFilterValue('new-domain-select');
+            const dimensionFilter = getSelectedFilterValue('new-dimension-select');
             
-            const riskFilters = getTableSelectedValues('new-risk-select');
-            const categoryFilters = getTableSelectedValues('new-category-select');
-            const areaFilters = getTableSelectedValues('new-department-select');
-            const positionFilters = getTableSelectedValues('new-position-select');
-            const genderFilters = getTableSelectedValues('new-gender-select');
-            const maritalFilters = getTableSelectedValues('new-marital-status-select');
-            const ageFilters = getTableSelectedValues('new-age-select');
-            const countryFilters = getTableSelectedValues('new-country-select');
-            const cityFilters = getTableSelectedValues('new-city-select');
-            const domainFilters = getTableSelectedValues('new-domain-select');
-            const dimensionFilters = getTableSelectedValues('new-dimension-select');
-            
-            console.log('🔧 Filtros obtenidos:', {
-                risk: riskFilters,
-                category: categoryFilters,
-                domain: domainFilters,
-                dimension: dimensionFilters
+            console.log('🔧 Filtros seleccionados:', {
+                risk: riskFilter,
+                category: categoryFilter,
+                domain: domainFilter,
+                dimension: dimensionFilter
             });
-
-            const tableRows = document.querySelectorAll('.results-table tbody tr.category-summary');
-            console.log('🔧 Filas de categoría encontradas:', tableRows.length);
             
-            let visibleRows = 0;
-            let hiddenRows = 0;
+            // Obtener todas las filas de categoría
+            const categoryRows = document.querySelectorAll('.results-table tbody tr.category-summary');
+            console.log('🔧 Filas de categoría encontradas:', categoryRows.length);
             
-            tableRows.forEach((row, index) => {
+            let visibleCount = 0;
+            
+            categoryRows.forEach((row, index) => {
                 const categoryText = row.querySelector('.category-cell')?.textContent.toLowerCase() || '';
-                const domainText = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
-                const dimensionText = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+                const domainText = row.querySelector('.category-domain-info')?.textContent.toLowerCase() || '';
+                const dimensionText = row.querySelector('.category-dimension-info')?.textContent.toLowerCase() || '';
                 const riskBadge = row.querySelector('.risk-badge');
                 const riskLevel = riskBadge ? riskBadge.textContent.toLowerCase().trim() : '';
                 
-                console.log(`🔧 Fila ${index}:`, {
-                    category: categoryText,
-                    domain: domainText,
-                    dimension: dimensionText,
-                    risk: riskLevel
-                });
-
-                // Filtro de búsqueda
-                const matchesSearch = searchTerm === '' || 
-                    categoryText.includes(searchTerm) ||
-                    domainText.includes(searchTerm) ||
-                    dimensionText.includes(searchTerm);
-
-                // Filtro de nivel de riesgo
-                const matchesRisk = riskFilters.length === 0 || riskFilters.includes('todos') || riskFilters.includes(riskLevel);
-
-                // Filtro de categoría
-                const matchesCategory = categoryFilters.length === 0 || categoryFilters.includes('todos') || 
-                    (categoryText.includes('ambiente') && categoryFilters.includes('ambiente')) ||
-                    (categoryText.includes('factores') && categoryFilters.includes('factores')) ||
-                    (categoryText.includes('organización') && categoryFilters.includes('organizacion')) ||
-                    (categoryText.includes('liderazgo') && categoryFilters.includes('liderazgo')) ||
-                    (categoryText.includes('violencia') && categoryFilters.includes('violencia')) ||
-                    (categoryText.includes('entorno') && categoryFilters.includes('entorno'));
-
-                // Filtro de dominio
-                const matchesDomain = domainFilters.length === 0 || domainFilters.includes('todos') || 
-                    domainFilters.some(filter => domainText.includes(filter.toLowerCase()));
-
-                // Filtro de dimensión
-                const matchesDimension = dimensionFilters.length === 0 || dimensionFilters.includes('todos') || 
-                    dimensionFilters.some(filter => dimensionText.includes(filter.toLowerCase()));
-
-                // Para filtros demográficos, no ocultamos filas, sino que actualizamos los números
-                const hasDemographicFilters = areaFilters.length > 0 || positionFilters.length > 0 || 
-                    genderFilters.length > 0 || maritalFilters.length > 0 || ageFilters.length > 0 || 
-                    countryFilters.length > 0 || cityFilters.length > 0;
-
-                if (hasDemographicFilters) {
-                    // Actualizar números basados en filtros demográficos
-                    updateRowNumbers(row, areaFilters, positionFilters, genderFilters, maritalFilters, 
-                        ageFilters, countryFilters, cityFilters);
-                } else {
-                    // Restaurar números originales si no hay filtros demográficos
-                    restoreOriginalNumbers(row);
-                }
-
-                // Solo ocultar filas para filtros no demográficos
-                const shouldShow = matchesSearch && matchesRisk && matchesCategory && matchesDomain && matchesDimension;
+                // Aplicar filtros
+                let shouldShow = true;
                 
-                console.log(`🔧 Fila ${index} - Mostrar:`, shouldShow, {
-                    search: matchesSearch,
-                    risk: matchesRisk,
-                    category: matchesCategory,
-                    domain: matchesDomain,
-                    dimension: matchesDimension
-                });
+                if (riskFilter && riskFilter !== 'todos') {
+                    shouldShow = shouldShow && riskLevel === riskFilter.toLowerCase();
+                }
+                
+                if (categoryFilter && categoryFilter !== 'todos') {
+                    shouldShow = shouldShow && categoryText.includes(categoryFilter.toLowerCase());
+                }
+                
+                if (domainFilter && domainFilter !== 'todos') {
+                    shouldShow = shouldShow && domainText.includes(domainFilter.toLowerCase());
+                }
+                
+                if (dimensionFilter && dimensionFilter !== 'todos') {
+                    shouldShow = shouldShow && dimensionText.includes(dimensionFilter.toLowerCase());
+                }
+                
+                console.log(`🔧 Fila ${index} (${categoryText}):`, shouldShow);
                 
                 if (shouldShow) {
                     row.style.display = '';
-                    visibleRows++;
-                    
-                    // Mostrar filas de detalle si la categoría está abierta
-                    const isOpen = row.classList.contains('open');
-                    if (isOpen) {
-                        let nextRow = row.nextElementSibling;
-                        while (nextRow && nextRow.classList.contains('category-detail')) {
-                            nextRow.style.display = '';
-                            nextRow = nextRow.nextElementSibling;
-                        }
-                    }
+                    visibleCount++;
                 } else {
                     row.style.display = 'none';
-                    hiddenRows++;
-                    
-                    // Ocultar todas las filas de detalle de esta categoría
-                    let nextRow = row.nextElementSibling;
-                    while (nextRow && nextRow.classList.contains('category-detail')) {
-                        nextRow.style.display = 'none';
-                        nextRow = nextRow.nextElementSibling;
-                    }
                 }
             });
-
-            console.log('🔧 Resultado final:', {
-                visible: visibleRows,
-                hidden: hiddenRows,
-                total: tableRows.length
-            });
-
-            updateTableFilterBadge();
-        }
-
-        // Función auxiliar para verificar filtros demográficos
-        function checkDemographicFilter(filters, value) {
-            return filters.includes(value);
-        }
-
-        // Función para actualizar números de fila basados en filtros demográficos
-        function updateRowNumbers(row, areaFilters, positionFilters, genderFilters, maritalFilters, ageFilters, countryFilters, cityFilters) {
-            const categoryText = row.querySelector('.category-cell')?.textContent.toLowerCase() || '';
-            const domainText = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
             
-            // Obtener datos demográficos simulados para esta fila
-            const simulatedArea = getSimulatedArea(categoryText, domainText);
-            const simulatedPosition = getSimulatedPosition(categoryText, domainText);
-            const simulatedGender = getSimulatedGender(categoryText, domainText);
-            const simulatedMarital = getSimulatedMaritalStatus(categoryText, domainText);
-            const simulatedAge = getSimulatedAge(categoryText, domainText);
-            const simulatedCountry = getSimulatedCountry(categoryText, domainText);
-            const simulatedCity = getSimulatedCity(categoryText, domainText);
-
-            // Verificar si esta fila coincide con los filtros demográficos
-            const matchesArea = areaFilters.length === 0 || areaFilters.includes('todos') || areaFilters.includes(simulatedArea);
-            const matchesPosition = positionFilters.length === 0 || positionFilters.includes('todos') || positionFilters.includes(simulatedPosition);
-            const matchesGender = genderFilters.length === 0 || genderFilters.includes('todos') || genderFilters.includes(simulatedGender);
-            const matchesMarital = maritalFilters.length === 0 || maritalFilters.includes('todos') || maritalFilters.includes(simulatedMarital);
-            const matchesAge = ageFilters.length === 0 || ageFilters.includes('todos') || ageFilters.includes(simulatedAge);
-            const matchesCountry = countryFilters.length === 0 || countryFilters.includes('todos') || countryFilters.includes(simulatedCountry);
-            const matchesCity = cityFilters.length === 0 || cityFilters.includes('todos') || cityFilters.includes(simulatedCity);
-
-            const matchesAllDemographic = matchesArea && matchesPosition && matchesGender && matchesMarital && matchesAge && matchesCountry && matchesCity;
-
-            // Actualizar números basados en si coincide con los filtros
-            const riskCountCell = row.querySelector('.risk-count');
-            const percentageCell = row.querySelector('.percentage');
+            console.log('🔧 Resultado:', `${visibleCount} de ${categoryRows.length} filas visibles`);
+        }
+        
+        // Función auxiliar para obtener valor seleccionado de un filtro
+        function getSelectedFilterValue(selectId) {
+            const select = document.getElementById(selectId);
+            if (!select) return null;
             
-            if (riskCountCell && percentageCell) {
-                if (matchesAllDemographic) {
-                    // Si coincide con los filtros, mantener números originales
-                    if (!riskCountCell.dataset.originalValue) {
-                        riskCountCell.dataset.originalValue = riskCountCell.textContent;
-                        percentageCell.dataset.originalValue = percentageCell.textContent;
-                    }
-                } else {
-                    // Si no coincide, reducir números (simular que hay menos usuarios en riesgo)
-                    if (!riskCountCell.dataset.originalValue) {
-                        riskCountCell.dataset.originalValue = riskCountCell.textContent;
-                        percentageCell.dataset.originalValue = percentageCell.textContent;
-                    }
-                    
-                    const originalCount = parseInt(riskCountCell.dataset.originalValue);
-                    const originalPercentage = parseFloat(percentageCell.dataset.originalValue);
-                    
-                    // Reducir a aproximadamente 30-70% del original para simular filtrado
-                    const reductionFactor = 0.3 + Math.random() * 0.4; // Entre 30% y 70%
-                    const newCount = Math.max(0, Math.floor(originalCount * reductionFactor));
-                    const newPercentage = Math.max(0, (originalPercentage * reductionFactor).toFixed(1));
-                    
-                    riskCountCell.textContent = newCount;
-                    percentageCell.textContent = newPercentage + '%';
-                }
-            }
+            const checkedBox = select.querySelector('input[type="checkbox"]:checked');
+            if (!checkedBox) return null;
+            
+            const value = checkedBox.value || checkedBox.id.replace(selectId.replace('-select', '-'), '');
+            return value === 'todos' ? 'todos' : value;
         }
 
 
-        // Función para toggle de filas de categoría
+
+
+        // Función simplificada para toggle de filas de categoría
         function toggleCategoryRow(row) {
-            console.log('🔧 toggleCategoryRow llamado con:', row);
-            const chevron = row.querySelector('.category-chevron');
-            const categoryName = row.querySelector('.category-header-row span').textContent;
-            console.log('🔧 Categoría:', categoryName);
+            console.log('🔧 toggleCategoryRow llamado');
             
-            // Obtener las celdas de dominio y dimensión del encabezado
             const domainCell = row.querySelector('.category-domain-info');
             const dimensionCell = row.querySelector('.category-dimension-info');
+            const chevron = row.querySelector('.accordion-icon');
             
-            // Encontrar todas las filas de detalle de esta categoría
+            // Encontrar filas de detalle
             const allRows = Array.from(document.querySelectorAll('.results-table tbody tr'));
-            console.log('🔧 Total de filas encontradas:', allRows.length);
             const currentIndex = allRows.indexOf(row);
-            console.log('🔧 Índice de la fila actual:', currentIndex);
             const detailRows = [];
             
-            // Buscar filas de detalle que siguen a esta fila de resumen
             for (let i = currentIndex + 1; i < allRows.length; i++) {
                 const nextRow = allRows[i];
-                console.log(`🔧 Revisando fila ${i}:`, nextRow, 'clases:', nextRow.className);
                 if (nextRow.classList.contains('category-detail')) {
                     detailRows.push(nextRow);
-                    console.log('🔧 Filas de detalle encontrada:', nextRow);
                 } else if (nextRow.classList.contains('category-summary')) {
-                    // Si encontramos otra fila de resumen, paramos
-                    console.log('🔧 Encontrada otra fila de resumen, parando búsqueda');
                     break;
                 }
             }
             
-            console.log('🔧 Total de filas de detalle encontradas:', detailRows.length);
-            
-            // Toggle de las filas de detalle
+            // Toggle de filas de detalle
             const isOpen = detailRows.length > 0 && detailRows[0].style.display !== 'none';
-            console.log('🔧 Estado actual (isOpen):', isOpen);
             
             detailRows.forEach(detailRow => {
                 detailRow.style.display = isOpen ? 'none' : '';
             });
             
-            // Toggle de la información en el encabezado
+            // Toggle de información en encabezado
             if (isOpen) {
-                // Cerrar: mostrar información de dominio y dimensión en el encabezado
-                if (domainCell) {
-                    domainCell.style.color = '#374151';
-                    domainCell.style.textShadow = 'none';
-                }
-                if (dimensionCell) {
-                    dimensionCell.style.color = '#6b7280';
-                    dimensionCell.style.textShadow = 'none';
-                }
+                // Cerrar: mostrar info
+                if (domainCell) domainCell.style.color = '#374151';
+                if (dimensionCell) dimensionCell.style.color = '#6b7280';
+                if (chevron) chevron.style.transform = 'rotate(0deg)';
                 row.classList.remove('open');
             } else {
-                // Abrir: hacer texto transparente pero mantener el espacio
-                if (domainCell) {
-                    domainCell.style.color = 'transparent';
-                    domainCell.style.textShadow = 'none';
-                }
-                if (dimensionCell) {
-                    dimensionCell.style.color = 'transparent';
-                    dimensionCell.style.textShadow = 'none';
-                }
+                // Abrir: ocultar info
+                if (domainCell) domainCell.style.color = 'transparent';
+                if (dimensionCell) dimensionCell.style.color = 'transparent';
+                if (chevron) chevron.style.transform = 'rotate(180deg)';
                 row.classList.add('open');
             }
         }
