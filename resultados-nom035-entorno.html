@@ -4166,10 +4166,14 @@
 
             // Aplicar filtros
             if (applyFiltersBtn) {
+                console.log('🔧 Configurando event listener para botón aplicar filtros');
                 applyFiltersBtn.addEventListener('click', () => {
+                    console.log('🔧 ===== CLICK EN BOTÓN APLICAR FILTROS =====');
                     applyDimensionsFilters();
                     closeDimensionsFiltersPanel();
                 });
+            } else {
+                console.log('❌ ERROR: No se encontró el botón apply-filters-dimensions');
             }
 
             // Limpiar filtros
@@ -4205,19 +4209,53 @@
         }
 
         function applyDimensionsFilters() {
+            console.log('🔍 ===== INICIANDO APLICACIÓN DE FILTROS DIMENSIONES =====');
             console.log('🔍 Aplicando filtros de dimensiones...');
             
             // Obtener valores de los filtros
-            const riskFilter = document.getElementById('risk-filter-dimensions').value;
-            const domainFilter = document.getElementById('domain-filter-dimensions').value;
-            const areaFilter = document.getElementById('area-filter-dimensions').value;
-            const positionFilter = document.getElementById('position-filter-dimensions').value;
-            const genderFilter = document.getElementById('gender-filter-dimensions').value;
-            const maritalFilter = document.getElementById('marital-filter-dimensions').value;
-            const ageFilter = document.getElementById('age-filter-dimensions').value;
-            const countryFilter = document.getElementById('country-filter-dimensions').value;
-            const cityFilter = document.getElementById('city-filter-dimensions').value;
-            const leaderFilter = document.getElementById('leader-filter-dimensions').value;
+            const riskFilterElement = document.getElementById('risk-filter-dimensions');
+            console.log('🔍 Elemento risk-filter encontrado:', !!riskFilterElement);
+            
+            if (!riskFilterElement) {
+                console.log('❌ ERROR: No se encontró el elemento risk-filter-dimensions');
+                return;
+            }
+            
+            const riskFilter = riskFilterElement.value;
+            
+            // Verificar todos los elementos de filtros
+            const domainFilterElement = document.getElementById('domain-filter-dimensions');
+            const areaFilterElement = document.getElementById('area-filter-dimensions');
+            const positionFilterElement = document.getElementById('position-filter-dimensions');
+            const genderFilterElement = document.getElementById('gender-filter-dimensions');
+            const maritalFilterElement = document.getElementById('marital-filter-dimensions');
+            const ageFilterElement = document.getElementById('age-filter-dimensions');
+            const countryFilterElement = document.getElementById('country-filter-dimensions');
+            const cityFilterElement = document.getElementById('city-filter-dimensions');
+            const leaderFilterElement = document.getElementById('leader-filter-dimensions');
+            
+            console.log('🔍 Elementos de filtros encontrados:', {
+                risk: !!riskFilterElement,
+                domain: !!domainFilterElement,
+                area: !!areaFilterElement,
+                position: !!positionFilterElement,
+                gender: !!genderFilterElement,
+                marital: !!maritalFilterElement,
+                age: !!ageFilterElement,
+                country: !!countryFilterElement,
+                city: !!cityFilterElement,
+                leader: !!leaderFilterElement
+            });
+            
+            const domainFilter = domainFilterElement ? domainFilterElement.value : 'todos';
+            const areaFilter = areaFilterElement ? areaFilterElement.value : 'todos';
+            const positionFilter = positionFilterElement ? positionFilterElement.value : 'todos';
+            const genderFilter = genderFilterElement ? genderFilterElement.value : 'todos';
+            const maritalFilter = maritalFilterElement ? maritalFilterElement.value : 'todos';
+            const ageFilter = ageFilterElement ? ageFilterElement.value : 'todos';
+            const countryFilter = countryFilterElement ? countryFilterElement.value : 'todos';
+            const cityFilter = cityFilterElement ? cityFilterElement.value : 'todos';
+            const leaderFilter = leaderFilterElement ? leaderFilterElement.value : 'todos';
             
             console.log('🔍 Filtros seleccionados:', {
                 risk: riskFilter,
@@ -4292,7 +4330,7 @@
             // Actualizar badge
             updateDimensionsFilterBadge();
             
-            console.log('✅ Filtros de dimensiones aplicados');
+            console.log('✅ ===== FILTROS DE DIMENSIONES APLICADOS COMPLETAMENTE =====');
         }
 
         function clearDimensionsFilters() {
