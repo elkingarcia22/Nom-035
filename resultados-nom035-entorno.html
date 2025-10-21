@@ -2794,39 +2794,37 @@
                                         <h3>Tabla de Prueba - Puntos de Colores</h3>
                                     </div>
                                     
-                                    <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
-                                        <table style="width: 100%; border-collapse: collapse;">
-                                            <thead style="background: #f8f9fa; position: sticky; top: 0; z-index: 10;">
+                                    <div class="results-table-container">
+                                        <table class="results-table">
+                                            <thead>
                                                 <tr>
-                                                    <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: left; font-weight: 600; color: #374151; min-width: 200px;">Categoría</th>
-                                                    <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: left; font-weight: 600; color: #374151; min-width: 200px;">Dominio</th>
-                                                    <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: left; font-weight: 600; color: #374151; min-width: 200px;">Dimensión</th>
-                                                    <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px;">Total Usuarios</th>
-                                                    <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 100px;">% Afectados</th>
-                                                    <th style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px;">Nivel de Riesgo</th>
+                                                    <th>Categoría</th>
+                                                    <th>Dominio</th>
+                                                    <th>Dimensión</th>
+                                                    <th>Total Usuarios en Riesgo</th>
+                                                    <th>% Colaboradores Afectados</th>
+                                                    <th>Nivel de Riesgo</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <!-- Categoría 1: Ambiente de trabajo -->
-                                                <tr class="category-summary" style="background: #f0f9ff;">
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; font-weight: 600; color: #1e40af;">1. Ambiente de trabajo</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;"></td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;"></td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">12</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">8.0%</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                        <span class="risk-badge bajo">Bajo</span>
-                                                    </td>
+                                                <tr class="category-summary">
+                                                    <td class="category-cell">1. Ambiente de trabajo</td>
+                                                    <td class="category-domain-info">-</td>
+                                                    <td class="category-dimension-info">-</td>
+                                                    <td class="risk-count">12</td>
+                                                    <td class="percentage">8.0%</td>
+                                                    <td><span class="risk-badge bajo">Bajo</span></td>
                                                 </tr>
                                                 
                                                 <!-- Dominio: Condiciones físicas -->
-                                                <tr class="category-detail" style="display: table-row;">
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;"></td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;">Condiciones en el ambiente de trabajo</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;">Condiciones físicas, seguridad y comodidad</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">12</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">8.0%</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Condiciones en el ambiente de trabajo</td>
+                                                    <td>Condiciones físicas, seguridad y comodidad</td>
+                                                    <td class="risk-count">12</td>
+                                                    <td class="percentage">8.0%</td>
+                                                    <td>
                                                         <div class="response-with-dot">
                                                             <div class="response-dot bajo"></div>
                                                             <span>Bajo</span>
@@ -2835,13 +2833,13 @@
                                                 </tr>
                                                 
                                                 <!-- Dominio: Condiciones de seguridad -->
-                                                <tr class="category-detail" style="display: table-row;">
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;"></td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;">Condiciones en el ambiente de trabajo</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;">Condiciones de seguridad</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">8</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">5.3%</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Condiciones en el ambiente de trabajo</td>
+                                                    <td>Condiciones de seguridad</td>
+                                                    <td class="risk-count">8</td>
+                                                    <td class="percentage">5.3%</td>
+                                                    <td>
                                                         <div class="response-with-dot">
                                                             <div class="response-dot bajo"></div>
                                                             <span>Bajo</span>
@@ -2850,25 +2848,23 @@
                                                 </tr>
                                                 
                                                 <!-- Categoría 2: Factores propios de la actividad -->
-                                                <tr class="category-summary" style="background: #f0f9ff;">
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; font-weight: 600; color: #1e40af;">2. Factores propios de la actividad</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;"></td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;"></td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">43</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">28.7%</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                        <span class="risk-badge medio">Medio</span>
-                                                    </td>
+                                                <tr class="category-summary">
+                                                    <td class="category-cell">2. Factores propios de la actividad</td>
+                                                    <td class="category-domain-info">-</td>
+                                                    <td class="category-dimension-info">-</td>
+                                                    <td class="risk-count">43</td>
+                                                    <td class="percentage">28.7%</td>
+                                                    <td><span class="risk-badge medio">Medio</span></td>
                                                 </tr>
                                                 
                                                 <!-- Dominio: Exigencias cuantitativas -->
-                                                <tr class="category-detail" style="display: table-row;">
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;"></td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;">Carga de trabajo</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;">Exigencias cuantitativas, mentales y emocionales</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">43</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">28.7%</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Carga de trabajo</td>
+                                                    <td>Exigencias cuantitativas, mentales y emocionales</td>
+                                                    <td class="risk-count">43</td>
+                                                    <td class="percentage">28.7%</td>
+                                                    <td>
                                                         <div class="response-with-dot">
                                                             <div class="response-dot medio"></div>
                                                             <span>Medio</span>
@@ -2877,13 +2873,13 @@
                                                 </tr>
                                                 
                                                 <!-- Dominio: Exigencias mentales -->
-                                                <tr class="category-detail" style="display: table-row;">
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;"></td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;">Carga de trabajo</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;">Exigencias mentales</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">25</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">16.7%</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Carga de trabajo</td>
+                                                    <td>Exigencias mentales</td>
+                                                    <td class="risk-count">25</td>
+                                                    <td class="percentage">16.7%</td>
+                                                    <td>
                                                         <div class="response-with-dot">
                                                             <div class="response-dot medio"></div>
                                                             <span>Medio</span>
@@ -2892,13 +2888,13 @@
                                                 </tr>
                                                 
                                                 <!-- Dominio: Exigencias emocionales -->
-                                                <tr class="category-detail" style="display: table-row;">
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;"></td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;">Carga de trabajo</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;">Exigencias emocionales</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">22</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">14.7%</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Carga de trabajo</td>
+                                                    <td>Exigencias emocionales</td>
+                                                    <td class="risk-count">22</td>
+                                                    <td class="percentage">14.7%</td>
+                                                    <td>
                                                         <div class="response-with-dot">
                                                             <div class="response-dot medio"></div>
                                                             <span>Medio</span>
@@ -2907,25 +2903,23 @@
                                                 </tr>
                                                 
                                                 <!-- Categoría 3: Violencia laboral -->
-                                                <tr class="category-summary" style="background: #f0f9ff;">
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; font-weight: 600; color: #1e40af;">3. Violencia laboral</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;"></td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;"></td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">32</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">21.3%</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                        <span class="risk-badge alto">Alto</span>
-                                                    </td>
+                                                <tr class="category-summary">
+                                                    <td class="category-cell">3. Violencia laboral</td>
+                                                    <td class="category-domain-info">-</td>
+                                                    <td class="category-dimension-info">-</td>
+                                                    <td class="risk-count">32</td>
+                                                    <td class="percentage">21.3%</td>
+                                                    <td><span class="risk-badge alto">Alto</span></td>
                                                 </tr>
                                                 
                                                 <!-- Dominio: Violencia laboral -->
-                                                <tr class="category-detail" style="display: table-row;">
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;"></td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;">Violencia laboral</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px;">Violencia laboral</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">32</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">21.3%</td>
-                                                    <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Violencia laboral</td>
+                                                    <td>Violencia laboral</td>
+                                                    <td class="risk-count">32</td>
+                                                    <td class="percentage">21.3%</td>
+                                                    <td>
                                                         <div class="response-with-dot">
                                                             <div class="response-dot alto"></div>
                                                             <span>Alto</span>
