@@ -4075,8 +4075,8 @@
                 dimension: dimensionFilters
             });
 
-            const tableRows = document.querySelectorAll('.results-table tbody tr');
-            console.log('🔧 Filas encontradas:', tableRows.length);
+            const tableRows = document.querySelectorAll('.results-table tbody tr.category-summary');
+            console.log('🔧 Filas de categoría encontradas:', tableRows.length);
             
             let visibleRows = 0;
             let hiddenRows = 0;
@@ -4149,9 +4149,26 @@
                 if (shouldShow) {
                     row.style.display = '';
                     visibleRows++;
+                    
+                    // Mostrar filas de detalle si la categoría está abierta
+                    const isOpen = row.classList.contains('open');
+                    if (isOpen) {
+                        let nextRow = row.nextElementSibling;
+                        while (nextRow && nextRow.classList.contains('category-detail')) {
+                            nextRow.style.display = '';
+                            nextRow = nextRow.nextElementSibling;
+                        }
+                    }
                 } else {
                     row.style.display = 'none';
                     hiddenRows++;
+                    
+                    // Ocultar todas las filas de detalle de esta categoría
+                    let nextRow = row.nextElementSibling;
+                    while (nextRow && nextRow.classList.contains('category-detail')) {
+                        nextRow.style.display = 'none';
+                        nextRow = nextRow.nextElementSibling;
+                    }
                 }
             });
 
