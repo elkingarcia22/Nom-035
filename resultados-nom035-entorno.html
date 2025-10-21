@@ -9224,7 +9224,7 @@
                 
                 // Obtener todas las filas de categoría
                 const categoryRows = document.querySelectorAll('.results-table tbody tr.category-summary');
-                console.log('🔧 Filas encontradas:', categoryRows.length);
+                console.log('🔧 Filas de categoría encontradas:', categoryRows.length);
                 
                 let visibleCount = 0;
                 
@@ -9260,8 +9260,25 @@
                     if (shouldShow) {
                         row.style.display = '';
                         visibleCount++;
+                        
+                        // Si la categoría está abierta, también mostrar sus filas de detalle
+                        const isOpen = row.classList.contains('open');
+                        if (isOpen) {
+                            let nextRow = row.nextElementSibling;
+                            while (nextRow && nextRow.classList.contains('category-detail')) {
+                                nextRow.style.display = '';
+                                nextRow = nextRow.nextElementSibling;
+                            }
+                        }
                     } else {
                         row.style.display = 'none';
+                        
+                        // Ocultar todas las filas de detalle de esta categoría
+                        let nextRow = row.nextElementSibling;
+                        while (nextRow && nextRow.classList.contains('category-detail')) {
+                            nextRow.style.display = 'none';
+                            nextRow = nextRow.nextElementSibling;
+                        }
                     }
                 });
                 
