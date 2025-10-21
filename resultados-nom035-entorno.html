@@ -3971,42 +3971,7 @@
                 clearFiltersBtn: !!clearFiltersBtn
             });
 
-            // Funcionalidad de búsqueda desplegable
-            console.log('🔧 ===== INICIANDO BÚSQUEDA EN initializeTableFilters =====');
-            console.log('🔧 Elementos encontrados en initializeTableFilters:', {
-                searchBtn: !!searchBtn,
-                searchContainer: !!searchContainer,
-                searchInput: !!searchInput,
-                closeSearch: !!closeSearch
-            });
-
-            if (searchBtn && searchContainer && searchInput) {
-                console.log('✅ Elementos de búsqueda encontrados en initializeTableFilters, agregando event listeners');
-                searchBtn.addEventListener('click', () => {
-                    console.log('🔍 Click en botón de búsqueda (initializeTableFilters)');
-                    console.log('🔍 Estado actual del contenedor:', searchContainer.style.display);
-                    searchContainer.style.display = 'block';
-                    console.log('🔍 Nuevo estado del contenedor:', searchContainer.style.display);
-                    searchInput.focus();
-                    console.log('🔍 Input enfocado');
-                });
-            } else {
-                console.log('❌ Elementos de búsqueda no encontrados en initializeTableFilters:', {
-                    searchBtn: !!searchBtn,
-                    searchContainer: !!searchContainer,
-                    searchInput: !!searchInput
-                });
-            }
-
-            if (closeSearch && searchContainer && searchInput) {
-            closeSearch.addEventListener('click', () => {
-                searchContainer.style.display = 'none';
-                searchInput.value = '';
-                    if (typeof applyTableFilters === 'function') {
-                applyTableFilters();
-                    }
-            });
-            }
+            // BÚSQUEDA MANEJADA POR initializeNewTableControls() - ELIMINADA PARA EVITAR DUPLICACIÓN
 
             // Abrir panel de filtros
             if (filtersBtn && filtersSidePanel && filtersOverlay) {
