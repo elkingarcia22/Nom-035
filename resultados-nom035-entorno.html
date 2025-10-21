@@ -1348,15 +1348,20 @@
             line-height: normal !important;
         }
         
-        /* Estado activo solo cuando el acordeón está abierto */
-        .results-table-container .results-table .category-summary.active {
-            background: #f0f9ff !important;
-            border-left: 4px solid #1e40af !important;
+        /* Estado activo solo cuando el acordeón está abierto - usando colores de tabla original */
+        .results-table-container .results-table .category-summary {
+            background: #f9fafb;
+            border-left: 4px solid #e5e7eb;
             transition: all 0.2s ease;
         }
         
         .results-table-container .results-table .category-summary:hover {
-            background: #f8fafc !important;
+            background: #e5e7eb !important;
+        }
+        
+        .results-table-container .results-table .category-summary.active {
+            background: #dbeafe !important;
+            border-left: 4px solid var(--ubits-accent-brand) !important;
         }
         
         /* Estilo para la celda de categoría con número en círculo */
@@ -1381,6 +1386,19 @@
             font-size: 12px;
             font-weight: 600;
             color: #374151;
+        }
+        
+        /* Asegurar que todas las celdas de la fila tengan el mismo comportamiento */
+        .results-table-container .results-table .category-summary td {
+            background: inherit !important;
+        }
+        
+        .results-table-container .results-table .category-summary:hover td {
+            background: #e5e7eb !important;
+        }
+        
+        .results-table-container .results-table .category-summary.active td {
+            background: #dbeafe !important;
         }
 
         .percentage {
