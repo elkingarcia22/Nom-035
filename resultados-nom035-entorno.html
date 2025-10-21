@@ -9476,12 +9476,12 @@
             // Agregar iconos de acordeón a las filas de categoría
             const categoryRows = document.querySelectorAll('.category-summary');
             categoryRows.forEach(row => {
-                const firstCell = row.querySelector('td:first-child');
-                if (firstCell && !firstCell.querySelector('.accordion-icon')) {
+                const lastCell = row.querySelector('td:last-child');
+                if (lastCell && !lastCell.querySelector('.accordion-icon')) {
                     const accordionIcon = document.createElement('i');
                     accordionIcon.className = 'far fa-chevron-right accordion-icon';
-                    accordionIcon.style.cssText = 'margin-left: 8px; transition: transform 0.2s ease; cursor: pointer; float: right;';
-                    firstCell.appendChild(accordionIcon);
+                    accordionIcon.style.cssText = 'margin-left: 8px; transition: transform 0.2s ease; cursor: pointer;';
+                    lastCell.appendChild(accordionIcon);
                     
                     // Hacer la fila clickeable
                     row.style.cursor = 'pointer';
