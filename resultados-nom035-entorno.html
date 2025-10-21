@@ -2082,6 +2082,51 @@
             margin: 0;
         }
 
+        /* Filters Button - Tamaño fijo y bien alineado */
+        .filters-button {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            color: #6b7280;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            position: relative;
+            width: 40px;
+            height: 40px;
+        }
+
+        .filters-button:hover {
+            background: #e5e7eb;
+            color: #374151;
+            border-color: #9ca3af;
+        }
+
+        .filters-button:active {
+            background: #d1d5db;
+        }
+
+        .filter-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--ubits-accent-brand);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            min-width: 18px;
+        }
+
         /* CSS específico para filtros individuales - COPIADO EXACTAMENTE DE EMOCIONAL */
         .custom-select {
             position: relative;
@@ -2693,9 +2738,9 @@
                                 <div class="table-header">
                                     <h3>Vista General de Resultados NOM-035</h3>
                                     <div class="table-controls">
-                                        <button id="table-filters-btn" class="ubits-button ubits-button--secondary ubits-button--sm">
+                                        <button class="filters-button" id="table-filters-btn" title="Filtros">
                                             <i class="far fa-filter"></i>
-                                            <span>Filtros</span>
+                                            <span class="filter-badge" id="filter-badge" style="display: none;">0</span>
                                         </button>
                                     </div>
                                 </div>
@@ -9432,6 +9477,9 @@
                 
                 // Actualizar datos demográficos en las categorías visibles
                 updateDemographicData(selectedArea, selectedPosition, selectedGender, selectedMarital, selectedAge, selectedCountry, selectedCity, selectedLeader);
+                
+                // Actualizar badge de filtros
+                updateFilterBadge();
             }
             
             // Función para limpiar filtros
@@ -9454,6 +9502,49 @@
                 if (leaderFilter) leaderFilter.value = '';
                 
                 console.log('✅ Filtros limpiados');
+                
+                // Ocultar badge de filtros
+                hideFilterBadge();
+            }
+            
+            // Función para actualizar badge de filtros
+            function updateFilterBadge() {
+                const badge = document.getElementById('filter-badge');
+                if (!badge) return;
+                
+                let activeFiltersCount = 0;
+                
+                // Contar filtros básicos activos
+                if (riskFilter && riskFilter.value) activeFiltersCount++;
+                if (categoryFilter && categoryFilter.value) activeFiltersCount++;
+                if (domainFilter && domainFilter.value) activeFiltersCount++;
+                
+                // Contar filtros demográficos activos
+                if (areaFilter && areaFilter.value) activeFiltersCount++;
+                if (positionFilter && positionFilter.value) activeFiltersCount++;
+                if (genderFilter && genderFilter.value) activeFiltersCount++;
+                if (maritalFilter && maritalFilter.value) activeFiltersCount++;
+                if (ageFilter && ageFilter.value) activeFiltersCount++;
+                if (countryFilter && countryFilter.value) activeFiltersCount++;
+                if (cityFilter && cityFilter.value) activeFiltersCount++;
+                if (leaderFilter && leaderFilter.value) activeFiltersCount++;
+                
+                console.log('🔢 Filtros activos:', activeFiltersCount);
+                
+                if (activeFiltersCount > 0) {
+                    badge.textContent = activeFiltersCount.toString();
+                    badge.style.display = 'flex';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+            
+            // Función para ocultar badge de filtros
+            function hideFilterBadge() {
+                const badge = document.getElementById('filter-badge');
+                if (badge) {
+                    badge.style.display = 'none';
+                }
             }
             
             // Función para simular datos demográficos
