@@ -3498,9 +3498,9 @@
                                             </div>
                                             
                                             <!-- Botón de filtros -->
-                                            <button class="filters-button" id="individual-filters-btn" title="Filtros">
+                                            <button class="filters-button" id="main-individual-filters-btn" title="Filtros">
                                                 <i class="far fa-filter"></i>
-                                                <span class="filter-badge" id="individual-filter-badge" style="display: none;">0</span>
+                                                <span class="filter-badge" id="main-individual-filter-badge" style="display: none;">0</span>
                                             </button>
                                         </div>
                                     </div>
@@ -10637,7 +10637,7 @@
         function setupMainIndividualFilters() {
             console.log('🔧 ===== CONFIGURANDO FILTROS PRINCIPALES INDIVIDUALES =====');
             
-            const filtersBtn = document.getElementById('individual-filters-btn');
+            const filtersBtn = document.getElementById('main-individual-filters-btn');
             const filtersPanel = document.getElementById('individual-filters-side-panel');
             const closeBtn = document.getElementById('individual-close-filters-btn');
             const backdrop = document.getElementById('individual-filters-backdrop');
@@ -10782,7 +10782,7 @@
                 
                 // Verificar si el botón de filtros existe después de la configuración
                 setTimeout(() => {
-                    const testBtn = document.getElementById('individual-filters-btn');
+                    const testBtn = document.getElementById('main-individual-filters-btn');
                     console.log('🔧 ===== VERIFICACIÓN POST-CONFIGURACIÓN =====');
                     console.log('🔧 Botón de filtros encontrado:', !!testBtn);
                     console.log('🔧 Botón de filtros:', testBtn);
