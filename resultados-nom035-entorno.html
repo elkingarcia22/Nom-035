@@ -668,8 +668,14 @@
             position: sticky;
             top: 0;
             background: white;
-            z-index: 10;
+            z-index: 100;
             border-bottom: 1px solid #e5e7eb;
+        }
+
+        /* Asegurar que la tabla esté por debajo del contenido fijo */
+        .dimensions-table-container {
+            position: relative;
+            z-index: 1;
         }
 
         .participant-info-line {
