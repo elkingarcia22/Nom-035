@@ -3461,11 +3461,21 @@
                                 <div style="padding: 24px 0;">
                                     <!-- Controles de búsqueda -->
                                     <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
-                                        <div style="position: relative; display: flex; align-items: center; gap: 8px;">
-                                            <input type="text" id="individual-search" placeholder="Buscar participantes..." style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; width: 250px; outline: none; transition: border-color 0.2s ease;" />
-                                            <button id="clear-individual-search" style="display: none; background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; padding: 8px; cursor: pointer; color: #6b7280; transition: all 0.2s ease;" title="Limpiar búsqueda">
-                                                <i class="far fa-times"></i>
+                                        <div style="position: relative;">
+                                            <!-- Botón de búsqueda (icono) -->
+                                            <button id="individual-search-btn" style="background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; padding: 8px; cursor: pointer; color: #6b7280; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" title="Buscar participantes">
+                                                <i class="far fa-search"></i>
                                             </button>
+                                            
+                                            <!-- Input de búsqueda (oculto por defecto) -->
+                                            <div id="individual-search-container" style="position: absolute; top: 0; right: 0; display: none; background: white; border: 1px solid #d1d5db; border-radius: 6px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); z-index: 1000;">
+                                                <div style="display: flex; align-items: center; gap: 8px; padding: 8px;">
+                                                    <input type="text" id="individual-search" placeholder="Buscar participantes..." style="padding: 8px 12px; border: none; outline: none; font-size: 14px; width: 250px; background: transparent;" />
+                                                    <button id="clear-individual-search" style="background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 4px; padding: 6px; cursor: pointer; color: #6b7280; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;" title="Limpiar búsqueda">
+                                                        <i class="far fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     
@@ -10365,6 +10375,29 @@
             searchParticipants();
         }
 
+        // Función para mostrar/ocultar buscador
+        function toggleIndividualSearch() {
+            const searchBtn = document.getElementById('individual-search-btn');
+            const searchContainer = document.getElementById('individual-search-container');
+            const searchInput = document.getElementById('individual-search');
+            
+            if (searchContainer.style.display === 'none' || searchContainer.style.display === '') {
+                // Mostrar buscador
+                searchContainer.style.display = 'block';
+                searchBtn.style.background = '#e5e7eb';
+                searchBtn.style.color = '#374151';
+                setTimeout(() => {
+                    searchInput.focus();
+                }, 100);
+            } else {
+                // Ocultar buscador
+                searchContainer.style.display = 'none';
+                searchBtn.style.background = '#f3f4f6';
+                searchBtn.style.color = '#6b7280';
+                clearIndividualSearch();
+            }
+        }
+
         // Ejecutar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             // Esperar un poco para asegurar que la tabla esté cargada
@@ -10372,14 +10405,19 @@
                 updateTableWithAllParticipants();
                 
                 // Configurar eventos del buscador
+                const searchBtn = document.getElementById('individual-search-btn');
                 const searchInput = document.getElementById('individual-search');
                 const clearButton = document.getElementById('clear-individual-search');
+                
+                if (searchBtn) {
+                    searchBtn.addEventListener('click', toggleIndividualSearch);
+                }
                 
                 if (searchInput) {
                     searchInput.addEventListener('input', searchParticipants);
                     searchInput.addEventListener('keyup', function(e) {
                         if (e.key === 'Escape') {
-                            clearIndividualSearch();
+                            toggleIndividualSearch();
                         }
                     });
                 }
@@ -10387,6 +10425,19 @@
                 if (clearButton) {
                     clearButton.addEventListener('click', clearIndividualSearch);
                 }
+                
+                // Cerrar buscador al hacer clic fuera
+                document.addEventListener('click', function(e) {
+                    const searchContainer = document.getElementById('individual-search-container');
+                    const searchBtn = document.getElementById('individual-search-btn');
+                    
+                    if (searchContainer && searchBtn && 
+                        !searchContainer.contains(e.target) && 
+                        !searchBtn.contains(e.target) && 
+                        searchContainer.style.display === 'block') {
+                        toggleIndividualSearch();
+                    }
+                });
             }, 1000);
         });
     </script>
