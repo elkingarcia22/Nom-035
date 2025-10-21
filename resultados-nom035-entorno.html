@@ -1328,39 +1328,40 @@
             color: #991b1b;
         }
 
-        /* Estilos para badges de respuestas */
-        .response-badge {
-            display: inline-block;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 11px;
-            font-weight: 600;
-            text-align: center;
+        /* Estilos para respuestas con puntos de colores */
+        .response-with-dot {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 500;
         }
 
-        .response-badge.siempre {
-            background-color: #dcfce7;
-            color: #166534;
+        .response-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
         }
 
-        .response-badge.casi-siempre {
-            background-color: #fef3c7;
-            color: #92400e;
+        .response-dot.siempre {
+            background-color: #22c55e;
         }
 
-        .response-badge.algunas-veces {
-            background-color: #fed7d7;
-            color: #c53030;
+        .response-dot.casi-siempre {
+            background-color: #f59e0b;
         }
 
-        .response-badge.casi-nunca {
-            background-color: #f3f4f6;
-            color: #6b7280;
+        .response-dot.algunas-veces {
+            background-color: #ef4444;
         }
 
-        .response-badge.nunca {
-            background-color: #f3f4f6;
-            color: #374151;
+        .response-dot.casi-nunca {
+            background-color: #6b7280;
+        }
+
+        .response-dot.nunca {
+            background-color: #374151;
         }
 
         /* Estilos para las filas de categoría con dropdown - Estilo emocional */
@@ -3134,34 +3135,64 @@
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">85%</td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge casi-siempre">Casi siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge algunas-veces">Algunas veces</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                     
@@ -3183,34 +3214,64 @@
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">65%</td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge casi-siempre">Casi siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge algunas-veces">Algunas veces</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge casi-siempre">Casi siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge casi-siempre">Casi siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge casi-siempre">Casi siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge casi-siempre">Casi siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge casi-siempre">Casi siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge casi-siempre">Casi siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge casi-siempre">Casi siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge casi-siempre">Casi siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                     
@@ -3232,34 +3293,64 @@
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">45%</td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge algunas-veces">Algunas veces</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge algunas-veces">Algunas veces</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge algunas-veces">Algunas veces</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge algunas-veces">Algunas veces</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge algunas-veces">Algunas veces</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge algunas-veces">Algunas veces</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge algunas-veces">Algunas veces</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge algunas-veces">Algunas veces</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge algunas-veces">Algunas veces</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge algunas-veces">Algunas veces</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                     
@@ -3281,34 +3372,64 @@
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">78%</td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                         <td style="border: 1px solid #e5e7eb; padding: 12px; text-align: center;">
-                                                            <span class="response-badge siempre">Siempre</span>
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 </tbody>
