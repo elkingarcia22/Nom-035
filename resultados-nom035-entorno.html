@@ -5075,8 +5075,12 @@
                 }
                 selectIds.forEach(selectId => {
                     const select = document.getElementById(selectId);
-                    select.querySelector('.select-trigger').classList.remove('active');
-                    select.querySelector('.select-dropdown').classList.remove('show');
+                    if (select) {
+                        const trigger = select.querySelector('.select-trigger');
+                        const dropdown = select.querySelector('.select-dropdown');
+                        if (trigger) trigger.classList.remove('active');
+                        if (dropdown) dropdown.classList.remove('show');
+                    }
                 });
             });
         }
@@ -6049,32 +6053,28 @@
             console.log('🔍 ===== APLICANDO FILTROS EN TABLA DIMENSIONES =====');
             
             // Obtener valores de todos los filtros
-            const riskFilters = getSelectedValues('dimensions-risk-select');
-            const departmentFilters = getSelectedValues('dimensions-department-select');
-            const positionFilters = getSelectedValues('dimensions-position-select');
-            const genderFilters = getSelectedValues('dimensions-gender-select');
-            const maritalStatusFilters = getSelectedValues('dimensions-marital-status-select');
-            const ageFilters = getSelectedValues('dimensions-age-select');
-            const countryFilters = getSelectedValues('dimensions-country-select');
-            const cityFilters = getSelectedValues('dimensions-city-select');
-            const leaderFilters = getSelectedValues('dimensions-leader-select');
-            const categoryFilters = getSelectedValues('dimensions-category-select');
-            const domainFilters = getSelectedValues('dimensions-domain-select');
-            const dimensionFilters = getSelectedValues('dimensions-dimension-select');
+            const riskFilter = document.getElementById('risk-filter-dimensions')?.value || 'todos';
+            const domainFilter = document.getElementById('domain-filter-dimensions')?.value || 'todos';
+            const areaFilter = document.getElementById('area-filter-dimensions')?.value || 'todos';
+            const positionFilter = document.getElementById('position-filter-dimensions')?.value || 'todos';
+            const genderFilter = document.getElementById('gender-filter-dimensions')?.value || 'todos';
+            const maritalFilter = document.getElementById('marital-filter-dimensions')?.value || 'todos';
+            const ageFilter = document.getElementById('age-filter-dimensions')?.value || 'todos';
+            const countryFilter = document.getElementById('country-filter-dimensions')?.value || 'todos';
+            const cityFilter = document.getElementById('city-filter-dimensions')?.value || 'todos';
+            const leaderFilter = document.getElementById('leader-filter-dimensions')?.value || 'todos';
             
             console.log('🔍 Filtros seleccionados:', {
-                risk: riskFilters,
-                department: departmentFilters,
-                position: positionFilters,
-                gender: genderFilters,
-                maritalStatus: maritalStatusFilters,
-                age: ageFilters,
-                country: countryFilters,
-                city: cityFilters,
-                leader: leaderFilters,
-                category: categoryFilters,
-                domain: domainFilters,
-                dimension: dimensionFilters
+                risk: riskFilter,
+                domain: domainFilter,
+                area: areaFilter,
+                position: positionFilter,
+                gender: genderFilter,
+                marital: maritalFilter,
+                age: ageFilter,
+                country: countryFilter,
+                city: cityFilter,
+                leader: leaderFilter
             });
             
             // Obtener todas las filas de la tabla de dimensiones
@@ -6084,14 +6084,14 @@
             let visibleRows = 0;
             
             // Verificar si hay filtros demográficos activos
-            const hasDemographicFilters = (genderFilters.length > 0 && !genderFilters.includes('todos')) ||
-                                        (maritalStatusFilters.length > 0 && !maritalStatusFilters.includes('todos')) ||
-                                        (ageFilters.length > 0 && !ageFilters.includes('todos')) ||
-                                        (countryFilters.length > 0 && !countryFilters.includes('todos')) ||
-                                        (cityFilters.length > 0 && !cityFilters.includes('todos')) ||
-                                        (departmentFilters.length > 0 && !departmentFilters.includes('todos')) ||
-                                        (positionFilters.length > 0 && !positionFilters.includes('todos')) ||
-                                        (leaderFilters.length > 0 && !leaderFilters.includes('todos'));
+            const hasDemographicFilters = (genderFilter !== 'todos') ||
+                                        (maritalFilter !== 'todos') ||
+                                        (ageFilter !== 'todos') ||
+                                        (countryFilter !== 'todos') ||
+                                        (cityFilter !== 'todos') ||
+                                        (areaFilter !== 'todos') ||
+                                        (positionFilter !== 'todos') ||
+                                        (leaderFilter !== 'todos');
             
             tableRows.forEach((row, index) => {
                 let shouldShow = true;
@@ -6118,50 +6118,31 @@
                     risk: riskText
                 });
                 
-                // Aplicar filtros de contenido (categoría, dominio, dimensión, nivel de riesgo)
-                if (shouldShow && riskFilters.length > 0 && !riskFilters.includes('todos')) {
-                    const riskMatch = riskFilters.some(filter => {
-                        const riskTextLower = riskText.toLowerCase();
-                        const filterLower = filter.toLowerCase();
-                        return riskTextLower.includes(filterLower) || 
-                               (filterLower === 'muy-alto' && riskTextLower.includes('muy alto'));
-                    });
+                // Aplicar filtros de contenido (nivel de riesgo)
+                if (shouldShow && riskFilter !== 'todos') {
+                    const riskTextLower = riskText.toLowerCase();
+                    const filterLower = riskFilter.toLowerCase();
+                    const riskMatch = riskTextLower.includes(filterLower) || 
+                                     (filterLower === 'muy-alto' && riskTextLower.includes('muy alto'));
                     if (!riskMatch) shouldShow = false;
                 }
                 
-                if (shouldShow && categoryFilters.length > 0 && !categoryFilters.includes('todos')) {
-                    // Mapear categorías a dominios
-                    const categoryToDomainMap = {
-                        'ambiente': 'Condiciones en el ambiente de trabajo',
-                        'factores': 'Carga de trabajo',
-                        'tiempo': 'Jornada de trabajo',
-                        'liderazgo': 'Liderazgo y Relaciones interpersonales',
-                        'entorno': 'Entorno organizacional'
+                // Aplicar filtro de dominio
+                if (shouldShow && domainFilter !== 'todos') {
+                    const domainKeywords = {
+                        'condiciones': 'condiciones',
+                        'carga': 'carga',
+                        'control': 'control',
+                        'jornada': 'jornada',
+                        'liderazgo': 'liderazgo',
+                        'relaciones': 'relaciones',
+                        'violencia': 'violencia'
                     };
                     
-                    const categoryMatch = categoryFilters.some(filter => {
-                        const mappedDomain = categoryToDomainMap[filter];
-                        return mappedDomain && domainText.includes(mappedDomain);
-                    });
-                    if (!categoryMatch) shouldShow = false;
-                }
-                
-                if (shouldShow && domainFilters.length > 0 && !domainFilters.includes('todos')) {
-                    const domainMatch = domainFilters.some(filter => {
-                        const domainTextLower = domainText.toLowerCase();
-                        const filterLower = filter.toLowerCase();
-                        return domainTextLower.includes(filterLower.replace('-', ' '));
-                    });
-                    if (!domainMatch) shouldShow = false;
-                }
-                
-                if (shouldShow && dimensionFilters.length > 0 && !dimensionFilters.includes('todos')) {
-                    const dimensionMatch = dimensionFilters.some(filter => {
-                        const dimensionTextLower = dimensionText.toLowerCase();
-                        const filterLower = filter.toLowerCase();
-                        return dimensionTextLower.includes(filterLower.replace('-', ' '));
-                    });
-                    if (!dimensionMatch) shouldShow = false;
+                    const keyword = domainKeywords[domainFilter];
+                    if (keyword && !domainText.toLowerCase().includes(keyword)) {
+                        shouldShow = false;
+                    }
                 }
                 
                 // Si hay filtros demográficos activos, actualizar los números
@@ -6173,54 +6154,54 @@
                     let demographicMultiplier = 1.0;
                     
                     // Aplicar multiplicadores basados en filtros demográficos
-                    if (genderFilters.length > 0 && !genderFilters.includes('todos')) {
-                        if (genderFilters.includes('Masculino')) {
+                    if (genderFilter !== 'todos') {
+                        if (genderFilter === 'Masculino') {
                             demographicMultiplier *= 0.6; // 60% son masculinos
-                        } else if (genderFilters.includes('Femenino')) {
+                        } else if (genderFilter === 'Femenino') {
                             demographicMultiplier *= 0.4; // 40% son femeninos
                         }
                     }
                     
-                    if (maritalStatusFilters.length > 0 && !maritalStatusFilters.includes('todos')) {
-                        if (maritalStatusFilters.includes('Soltero')) {
+                    if (maritalFilter !== 'todos') {
+                        if (maritalFilter === 'Soltero') {
                             demographicMultiplier *= 0.5; // 50% son solteros
-                        } else if (maritalStatusFilters.includes('Casado')) {
+                        } else if (maritalFilter === 'Casado') {
                             demographicMultiplier *= 0.4; // 40% son casados
-                        } else if (maritalStatusFilters.includes('Divorciada')) {
+                        } else if (maritalFilter === 'Divorciada') {
                             demographicMultiplier *= 0.1; // 10% son divorciados
                         }
                     }
                     
-                    if (ageFilters.length > 0 && !ageFilters.includes('todos')) {
-                        if (ageFilters.includes('20-30')) {
+                    if (ageFilter !== 'todos') {
+                        if (ageFilter === '20-30') {
                             demographicMultiplier *= 0.3; // 30% en este rango
-                        } else if (ageFilters.includes('31-40')) {
+                        } else if (ageFilter === '31-40') {
                             demographicMultiplier *= 0.4; // 40% en este rango
-                        } else if (ageFilters.includes('41-50')) {
+                        } else if (ageFilter === '41-50') {
                             demographicMultiplier *= 0.2; // 20% en este rango
-                        } else if (ageFilters.includes('51+')) {
+                        } else if (ageFilter === '51+') {
                             demographicMultiplier *= 0.1; // 10% en este rango
                         }
                     }
                     
-                    if (departmentFilters.length > 0 && !departmentFilters.includes('todos')) {
-                        demographicMultiplier *= (1.0 / departmentFilters.length); // Distribución uniforme
+                    if (areaFilter !== 'todos') {
+                        demographicMultiplier *= 0.5; // Distribución uniforme
                     }
                     
-                    if (positionFilters.length > 0 && !positionFilters.includes('todos')) {
-                        demographicMultiplier *= (1.0 / positionFilters.length); // Distribución uniforme
+                    if (positionFilter !== 'todos') {
+                        demographicMultiplier *= 0.5; // Distribución uniforme
                     }
                     
-                    if (countryFilters.length > 0 && !countryFilters.includes('todos')) {
-                        demographicMultiplier *= (1.0 / countryFilters.length); // Distribución uniforme
+                    if (countryFilter !== 'todos') {
+                        demographicMultiplier *= 0.5; // Distribución uniforme
                     }
                     
-                    if (cityFilters.length > 0 && !cityFilters.includes('todos')) {
-                        demographicMultiplier *= (1.0 / cityFilters.length); // Distribución uniforme
+                    if (cityFilter !== 'todos') {
+                        demographicMultiplier *= 0.5; // Distribución uniforme
                     }
                     
-                    if (leaderFilters.length > 0 && !leaderFilters.includes('todos')) {
-                        demographicMultiplier *= (1.0 / leaderFilters.length); // Distribución uniforme
+                    if (leaderFilter !== 'todos') {
+                        demographicMultiplier *= 0.5; // Distribución uniforme
                     }
                     
                     // Calcular nuevos valores
