@@ -3927,6 +3927,159 @@
                                             </table>
                                         </div>
                                         
+                                        <!-- Panel de Filtros para Individual -->
+                                        <div id="individual-filters-side-panel" class="filters-panel">
+                                            <div class="filters-header">
+                                                <h3>Filtros</h3>
+                                                <button class="close-filters-btn" id="individual-close-filters-btn">
+                                                    <i class="far fa-times"></i>
+                                                </button>
+                                            </div>
+                                            <div class="filters-content">
+                                                <!-- Filtros Básicos -->
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Nivel de Riesgo</label>
+                                                    <select class="filter-select" id="individual-risk-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="bajo">Bajo</option>
+                                                        <option value="medio">Medio</option>
+                                                        <option value="alto">Alto</option>
+                                                        <option value="muy-alto">Muy Alto</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <!-- Filtros Demográficos -->
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Área</label>
+                                                    <select class="filter-select" id="individual-area-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Tecnología">Tecnología</option>
+                                                        <option value="Recursos Humanos">Recursos Humanos</option>
+                                                        <option value="Ventas">Ventas</option>
+                                                        <option value="Marketing">Marketing</option>
+                                                        <option value="Finanzas">Finanzas</option>
+                                                        <option value="Operaciones">Operaciones</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Cargo</label>
+                                                    <select class="filter-select" id="individual-position-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Gerente">Gerente</option>
+                                                        <option value="Desarrollador">Desarrollador</option>
+                                                        <option value="Analista">Analista</option>
+                                                        <option value="Contador">Contador</option>
+                                                        <option value="Asistente">Asistente</option>
+                                                        <option value="Director">Director</option>
+                                                        <option value="Diseñador">Diseñador</option>
+                                                        <option value="Coordinador">Coordinador</option>
+                                                        <option value="Especialista">Especialista</option>
+                                                        <option value="Supervisor">Supervisor</option>
+                                                        <option value="Técnico">Técnico</option>
+                                                        <option value="Psicólogo">Psicólogo</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Sexo</label>
+                                                    <select class="filter-select" id="individual-gender-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Masculino">Masculino</option>
+                                                        <option value="Femenino">Femenino</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Estado Civil</label>
+                                                    <select class="filter-select" id="individual-marital-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Soltero">Soltero</option>
+                                                        <option value="Casado">Casado</option>
+                                                        <option value="Divorciado">Divorciado</option>
+                                                        <option value="Viudo">Viudo</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Edad</label>
+                                                    <select class="filter-select" id="individual-age-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="18-25">18-25 años</option>
+                                                        <option value="26-35">26-35 años</option>
+                                                        <option value="36-45">36-45 años</option>
+                                                        <option value="46-55">46-55 años</option>
+                                                        <option value="56-65">56-65 años</option>
+                                                        <option value="65+">65+ años</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">País</label>
+                                                    <select class="filter-select" id="individual-country-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Colombia">Colombia</option>
+                                                        <option value="México">México</option>
+                                                        <option value="Argentina">Argentina</option>
+                                                        <option value="Chile">Chile</option>
+                                                        <option value="Perú">Perú</option>
+                                                        <option value="España">España</option>
+                                                        <option value="Estados Unidos">Estados Unidos</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Ciudad</label>
+                                                    <select class="filter-select" id="individual-city-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Bogotá">Bogotá</option>
+                                                        <option value="Medellín">Medellín</option>
+                                                        <option value="Cali">Cali</option>
+                                                        <option value="Barranquilla">Barranquilla</option>
+                                                        <option value="Cartagena">Cartagena</option>
+                                                        <option value="Ciudad de México">Ciudad de México</option>
+                                                        <option value="Buenos Aires">Buenos Aires</option>
+                                                        <option value="Santiago">Santiago</option>
+                                                        <option value="Lima">Lima</option>
+                                                        <option value="Madrid">Madrid</option>
+                                                        <option value="Nueva York">Nueva York</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Líder</label>
+                                                    <select class="filter-select" id="individual-leader-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Ana García">Ana García</option>
+                                                        <option value="Carlos López">Carlos López</option>
+                                                        <option value="María Rodríguez">María Rodríguez</option>
+                                                        <option value="Juan Pérez">Juan Pérez</option>
+                                                        <option value="Laura Martínez">Laura Martínez</option>
+                                                        <option value="Pedro González">Pedro González</option>
+                                                        <option value="Sofia Hernández">Sofia Hernández</option>
+                                                        <option value="Diego Torres">Diego Torres</option>
+                                                        <option value="Carmen Silva">Carmen Silva</option>
+                                                        <option value="Roberto Díaz">Roberto Díaz</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <!-- Botones de Acción -->
+                                                <div class="filters-actions">
+                                                    <button class="ubits-button ubits-button--primary ubits-button--md" id="individual-apply-filters-btn" style="flex: 1;">
+                                                        <i class="far fa-check"></i>
+                                                        <span>Aplicar</span>
+                                                    </button>
+                                                    <button class="ubits-button ubits-button--secondary ubits-button--md" id="individual-clear-filters-btn" style="flex: 1;">
+                                                        <i class="far fa-times"></i>
+                                                        <span>Limpiar</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Backdrop para cerrar filtros -->
+                                        <div id="individual-filters-backdrop" class="filters-backdrop"></div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -9225,76 +9378,119 @@
         function applyIndividualFilters() {
             console.log('🔍 ===== APLICANDO FILTROS INDIVIDUALES =====');
             
-            const riskFilters = getSelectedValues('individual-risk-select');
-            const departmentFilters = getSelectedValues('individual-department-select');
-            const positionFilters = getSelectedValues('individual-position-select');
-            const genderFilters = getSelectedValues('individual-gender-select');
-            const maritalStatusFilters = getSelectedValues('individual-marital-status-select');
-            const ageFilters = getSelectedValues('individual-age-select');
-            const countryFilters = getSelectedValues('individual-country-select');
-            const cityFilters = getSelectedValues('individual-city-select');
-            const leaderFilters = getSelectedValues('individual-leader-select');
+            // Obtener valores de los selects simples
+            const riskFilter = document.getElementById('individual-risk-select');
+            const areaFilter = document.getElementById('individual-area-select');
+            const positionFilter = document.getElementById('individual-position-select');
+            const genderFilter = document.getElementById('individual-gender-select');
+            const maritalFilter = document.getElementById('individual-marital-select');
+            const ageFilter = document.getElementById('individual-age-select');
+            const countryFilter = document.getElementById('individual-country-select');
+            const cityFilter = document.getElementById('individual-city-select');
+            const leaderFilter = document.getElementById('individual-leader-select');
             
             const searchInput = document.getElementById('individual-participant-search');
             const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
             
-            const filteredParticipants = individualParticipantsData.filter(participant => {
+            // Obtener todos los participantes de la tabla
+            const allRows = document.querySelectorAll('#new-individual-panel tbody tr');
+            let visibleCount = 0;
+            
+            allRows.forEach(row => {
+                const participantName = row.querySelector('.participant-name');
+                const participantRole = row.querySelector('.participant-role');
+                const riskBadge = row.querySelector('.risk-badge');
+                
+                if (!participantName || !participantRole || !riskBadge) return;
+                
+                let shouldShow = true;
+                
                 // Filtro por búsqueda
-                if (searchTerm && !participant.name.toLowerCase().includes(searchTerm)) {
-                    return false;
+                if (searchTerm) {
+                    const name = participantName.textContent.toLowerCase();
+                    const role = participantRole.textContent.toLowerCase();
+                    if (!name.includes(searchTerm) && !role.includes(searchTerm)) {
+                        shouldShow = false;
+                    }
                 }
                 
                 // Filtro por nivel de riesgo
-                if (riskFilters.length > 0 && !riskFilters.includes('todos') && !riskFilters.includes(participant.riskLevel)) {
-                    return false;
+                if (riskFilter && riskFilter.value !== 'todos') {
+                    const riskLevel = riskBadge.textContent.toLowerCase().replace(' ', '-');
+                    if (riskLevel !== riskFilter.value) {
+                        shouldShow = false;
+                    }
                 }
                 
-                // Filtro por departamento
-                if (departmentFilters.length > 0 && !departmentFilters.includes('todos') && !departmentFilters.includes(participant.department)) {
-                    return false;
+                // Filtros demográficos (simulados)
+                if (shouldShow && (areaFilter || positionFilter || genderFilter || maritalFilter || ageFilter || countryFilter || cityFilter || leaderFilter)) {
+                    // Simular datos demográficos para el participante
+                    const participantIndex = Array.from(allRows).indexOf(row);
+                    const simulatedData = getSimulatedDemographicDataForIndividual(participantName.textContent, participantIndex);
+                    
+                    if (areaFilter && areaFilter.value !== 'todos' && simulatedData.area !== areaFilter.value) {
+                        shouldShow = false;
+                    }
+                    if (positionFilter && positionFilter.value !== 'todos' && simulatedData.position !== positionFilter.value) {
+                        shouldShow = false;
+                    }
+                    if (genderFilter && genderFilter.value !== 'todos' && simulatedData.gender !== genderFilter.value) {
+                        shouldShow = false;
+                    }
+                    if (maritalFilter && maritalFilter.value !== 'todos' && simulatedData.maritalStatus !== maritalFilter.value) {
+                        shouldShow = false;
+                    }
+                    if (ageFilter && ageFilter.value !== 'todos' && simulatedData.ageRange !== ageFilter.value) {
+                        shouldShow = false;
+                    }
+                    if (countryFilter && countryFilter.value !== 'todos' && simulatedData.country !== countryFilter.value) {
+                        shouldShow = false;
+                    }
+                    if (cityFilter && cityFilter.value !== 'todos' && simulatedData.city !== cityFilter.value) {
+                        shouldShow = false;
+                    }
+                    if (leaderFilter && leaderFilter.value !== 'todos' && simulatedData.leader !== leaderFilter.value) {
+                        shouldShow = false;
+                    }
                 }
                 
-                // Filtro por posición
-                if (positionFilters.length > 0 && !positionFilters.includes('todos') && !positionFilters.includes(participant.position)) {
-                    return false;
+                if (shouldShow) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
                 }
-                
-                // Filtro por género
-                if (genderFilters.length > 0 && !genderFilters.includes('todos') && !genderFilters.includes(participant.gender)) {
-                    return false;
-                }
-                
-                // Filtro por estado civil
-                if (maritalStatusFilters.length > 0 && !maritalStatusFilters.includes('todos') && !maritalStatusFilters.includes(participant.maritalStatus)) {
-                    return false;
-                }
-                
-                // Filtro por edad
-                if (ageFilters.length > 0 && !ageFilters.includes('todos') && !ageFilters.includes(participant.ageGroup)) {
-                    return false;
-                }
-                
-                // Filtro por país
-                if (countryFilters.length > 0 && !countryFilters.includes('todos') && !countryFilters.includes(participant.country)) {
-                    return false;
-                }
-                
-                // Filtro por ciudad
-                if (cityFilters.length > 0 && !cityFilters.includes('todos') && !cityFilters.includes(participant.city)) {
-                    return false;
-                }
-                
-                // Filtro por líder
-                if (leaderFilters.length > 0 && !leaderFilters.includes('todos') && !leaderFilters.includes(participant.leader)) {
-                    return false;
-                }
-                
-                return true;
             });
             
-            console.log('🔍 Participantes filtrados:', filteredParticipants.length);
-            renderIndividualParticipantsList(filteredParticipants);
+            console.log('🔍 Participantes visibles:', visibleCount);
             updateIndividualFilterBadge();
+        }
+
+        // Función para simular datos demográficos para filtros individuales
+        function getSimulatedDemographicDataForIndividual(participantName, index) {
+            const areas = ['Tecnología', 'Recursos Humanos', 'Ventas', 'Marketing', 'Finanzas', 'Operaciones'];
+            const positions = ['Gerente', 'Desarrollador', 'Analista', 'Contador', 'Asistente', 'Director', 'Diseñador', 'Coordinador', 'Especialista', 'Supervisor', 'Técnico', 'Psicólogo'];
+            const genders = ['Masculino', 'Femenino'];
+            const maritalStatuses = ['Soltero', 'Casado', 'Divorciado', 'Viudo'];
+            const countries = ['Colombia', 'México', 'Argentina', 'Chile', 'Perú', 'España', 'Estados Unidos'];
+            const cities = ['Bogotá', 'Medellín', 'Cali', 'Barranquilla', 'Cartagena', 'Ciudad de México', 'Buenos Aires', 'Santiago', 'Lima', 'Madrid', 'Nueva York'];
+            const leaders = ['Ana García', 'Carlos López', 'María Rodríguez', 'Juan Pérez', 'Laura Martínez', 'Pedro González', 'Sofia Hernández', 'Diego Torres', 'Carmen Silva', 'Roberto Díaz'];
+            const ageRanges = ['18-25', '26-35', '36-45', '46-55', '56-65', '65+'];
+            
+            // Usar el nombre y el índice para generar datos consistentes
+            const seed = participantName.length + index;
+            const random = (seed * 9301 + 49297) % 233280;
+            
+            return {
+                area: areas[random % areas.length],
+                position: positions[random % positions.length],
+                gender: genders[random % genders.length],
+                maritalStatus: maritalStatuses[random % maritalStatuses.length],
+                ageRange: ageRanges[random % ageRanges.length],
+                country: countries[random % countries.length],
+                city: cities[random % cities.length],
+                leader: leaders[random % leaders.length]
+            };
         }
 
         function clearIndividualFilters() {
@@ -9309,10 +9505,10 @@
             // Limpiar todos los selects
             const selectIds = [
                 'individual-risk-select',
-                'individual-department-select',
+                'individual-area-select',
                 'individual-position-select',
                 'individual-gender-select',
-                'individual-marital-status-select',
+                'individual-marital-select',
                 'individual-age-select',
                 'individual-country-select',
                 'individual-city-select',
@@ -9322,10 +9518,7 @@
             selectIds.forEach(selectId => {
                 const select = document.getElementById(selectId);
                 if (select) {
-                    const todosOption = select.querySelector('option[value="todos"]');
-                    if (todosOption) {
-                        todosOption.checked = true;
-                    }
+                    select.value = 'todos';
                 }
             });
             
@@ -9340,10 +9533,10 @@
         function updateIndividualSelectTexts() {
             const selectIds = [
                 'individual-risk-select',
-                'individual-department-select',
+                'individual-area-select',
                 'individual-position-select',
                 'individual-gender-select',
-                'individual-marital-status-select',
+                'individual-marital-select',
                 'individual-age-select',
                 'individual-country-select',
                 'individual-city-select',
@@ -9353,22 +9546,8 @@
             selectIds.forEach(selectId => {
                 const select = document.getElementById(selectId);
                 if (select) {
-                    const selectedOptions = Array.from(select.querySelectorAll('input:checked'));
-                    const selectedValues = selectedOptions.map(option => option.value);
-                    
-                    const selectText = select.querySelector('.select-text');
-                    if (selectText) {
-                        if (selectedValues.includes('todos') || selectedValues.length === 0) {
-                            selectText.textContent = 'Todos';
-                        } else if (selectedValues.length === 1) {
-                            const option = select.querySelector(`input[value="${selectedValues[0]}"]`);
-                            if (option) {
-                                selectText.textContent = option.nextElementSibling.textContent;
-                            }
-                        } else {
-                            selectText.textContent = `${selectedValues.length} seleccionados`;
-                        }
-                    }
+                    // Para selects simples, no necesitamos actualizar texto
+                    // El texto se actualiza automáticamente con el valor seleccionado
                 }
             });
         }
@@ -9382,10 +9561,10 @@
             // Contar filtros activos
             const selectIds = [
                 'individual-risk-select',
-                'individual-department-select',
+                'individual-area-select',
                 'individual-position-select',
                 'individual-gender-select',
-                'individual-marital-status-select',
+                'individual-marital-select',
                 'individual-age-select',
                 'individual-country-select',
                 'individual-city-select',
@@ -9394,13 +9573,8 @@
             
             selectIds.forEach(selectId => {
                 const select = document.getElementById(selectId);
-                if (select) {
-                    const selectedOptions = Array.from(select.querySelectorAll('input:checked'));
-                    const selectedValues = selectedOptions.map(option => option.value);
-                    
-                    if (!selectedValues.includes('todos') && selectedValues.length > 0) {
-                        activeFilters++;
-                    }
+                if (select && select.value !== 'todos') {
+                    activeFilters++;
                 }
             });
             
