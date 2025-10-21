@@ -1492,48 +1492,6 @@
             background-color: #ef4444; /* Rojo para alto */
         }
 
-        /* Estilos para badges de riesgo en dominios (dimensiones) con puntos */
-        .dimension-row .risk-badge {
-            display: flex !important;
-            align-items: center !important;
-            gap: 6px !important;
-            font-size: 12px !important;
-            font-weight: 500 !important;
-            background: transparent !important;
-            color: inherit !important;
-            padding: 0 !important;
-            border: none !important;
-            border-radius: 0 !important;
-        }
-
-        .dimension-row .risk-badge::before {
-            content: '' !important;
-            width: 8px !important;
-            height: 8px !important;
-            border-radius: 50% !important;
-            flex-shrink: 0 !important;
-            display: block !important;
-        }
-
-        .dimension-row .risk-badge.nulo::before {
-            background-color: #6b7280 !important;
-        }
-
-        .dimension-row .risk-badge.bajo::before {
-            background-color: #22c55e !important;
-        }
-
-        .dimension-row .risk-badge.medio::before {
-            background-color: #f59e0b !important;
-        }
-
-        .dimension-row .risk-badge.alto::before {
-            background-color: #ef4444 !important;
-        }
-
-        .dimension-row .risk-badge.muy-alto::before {
-            background-color: #dc2626 !important;
-        }
 
         /* Estilos para las filas de categoría con dropdown - Estilo emocional */
         .category-summary {
@@ -8674,7 +8632,7 @@
                                             <td class="dimension-score">${data.score}</td>
                                             <td class="dimension-percentage">${data.percentage}%</td>
                                             <td class="dimension-risk">
-                                                <span class="risk-badge risk-${data.riskLevel.toLowerCase()}">${data.riskLevel}</span>
+                                                <span class="risk-badge ${data.riskLevel.toLowerCase()}">${data.riskLevel}</span>
                                             </td>
                                         </tr>
                                     `).join('')}
