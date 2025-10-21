@@ -4877,7 +4877,7 @@
             const riskCountCell = row.querySelector('.risk-count');
             const percentageCell = row.querySelector('.percentage');
             
-            if (riskCountCell) {
+            if (riskCountCell && percentageCell) {
                 if (riskCountCell.dataset.originalValue) {
                     riskCountCell.textContent = riskCountCell.dataset.originalValue;
                 } else {
@@ -5006,9 +5006,13 @@
             
             selectIds.forEach(selectId => {
                 const select = document.getElementById(selectId);
+                if (!select) return; // Si el select no existe, continuar con el siguiente
+                
                 const trigger = select.querySelector('.select-trigger');
                 const dropdown = select.querySelector('.select-dropdown');
                 const options = select.querySelectorAll('.select-option');
+                
+                if (!trigger || !dropdown) return; // Si no existen los elementos necesarios, continuar
 
                 // Toggle dropdown
                 trigger.addEventListener('click', (e) => {
@@ -5018,8 +5022,13 @@
                     // Cerrar otros selects
                     selectIds.forEach(id => {
                         if (id !== selectId) {
-                            document.getElementById(id).querySelector('.select-trigger').classList.remove('active');
-                            document.getElementById(id).querySelector('.select-dropdown').classList.remove('show');
+                            const otherSelect = document.getElementById(id);
+                            if (otherSelect) {
+                                const otherTrigger = otherSelect.querySelector('.select-trigger');
+                                const otherDropdown = otherSelect.querySelector('.select-dropdown');
+                                if (otherTrigger) otherTrigger.classList.remove('active');
+                                if (otherDropdown) otherDropdown.classList.remove('show');
+                            }
                         }
                     });
                     
