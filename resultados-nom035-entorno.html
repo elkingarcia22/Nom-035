@@ -5755,21 +5755,52 @@
         // Función para aplicar filtros de la tabla general
         function applyNewTableFilters() {
             console.log('🔍 ===== APLICANDO FILTROS DE TABLA GENERAL =====');
+            console.log('🔍 PASO 1: Verificando si la función se ejecuta');
+            
+            // Verificar si estamos en el tab correcto
+            const overviewPanel = document.getElementById('new-overview-panel');
+            console.log('🔍 PASO 2: Panel overview encontrado:', !!overviewPanel);
+            if (overviewPanel) {
+                console.log('🔍 PASO 2.1: Panel overview visible:', overviewPanel.style.display);
+                console.log('🔍 PASO 2.2: Panel overview clases:', overviewPanel.className);
+            }
             
             // Obtener todas las filas de la tabla
             const tableRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr');
-            console.log(`🔍 Total de filas encontradas: ${tableRows.length}`);
+            console.log(`🔍 PASO 3: Total de filas encontradas: ${tableRows.length}`);
             
             if (tableRows.length === 0) {
-                console.log('❌ No se encontraron filas en la tabla');
+                console.log('❌ PASO 3.1: No se encontraron filas en la tabla');
+                console.log('🔍 PASO 3.2: Verificando estructura de la tabla...');
+                const table = document.querySelector('#new-overview-panel .results-table');
+                console.log('🔍 PASO 3.3: Tabla encontrada:', !!table);
+                if (table) {
+                    const tbody = table.querySelector('tbody');
+                    console.log('🔍 PASO 3.4: Tbody encontrado:', !!tbody);
+                    if (tbody) {
+                        const allRows = tbody.querySelectorAll('tr');
+                        console.log('🔍 PASO 3.5: Filas en tbody:', allRows.length);
+                        allRows.forEach((row, index) => {
+                            console.log(`🔍 PASO 3.6: Fila ${index + 1}:`, row.className, row.textContent.substring(0, 50));
+                        });
+                    }
+                }
                 return;
             }
             
+            console.log('🔍 PASO 4: Filas encontradas, continuando con filtros...');
+            
             // Obtener filtros seleccionados de manera simple
+            console.log('🔍 PASO 5: Obteniendo elementos de filtros...');
             const riskSelect = document.getElementById('new-risk-select');
             const categorySelect = document.getElementById('new-category-select');
             const domainSelect = document.getElementById('new-domain-select');
             const dimensionSelect = document.getElementById('new-dimension-select');
+            
+            console.log('🔍 PASO 5.1: Risk select encontrado:', !!riskSelect);
+            console.log('🔍 PASO 5.2: Category select encontrado:', !!categorySelect);
+            console.log('🔍 PASO 5.3: Domain select encontrado:', !!domainSelect);
+            console.log('🔍 PASO 5.4: Dimension select encontrado:', !!dimensionSelect);
             
             // Obtener valores seleccionados
             const selectedRisks = [];
@@ -5777,15 +5808,25 @@
             const selectedDomains = [];
             const selectedDimensions = [];
             
+            console.log('🔍 PASO 6: Obteniendo valores seleccionados...');
+            
             if (riskSelect) {
+                console.log('🔍 PASO 6.1: Procesando filtros de riesgo...');
                 const riskCheckboxes = riskSelect.querySelectorAll('input[type="checkbox"]:checked');
-                riskCheckboxes.forEach(checkbox => {
+                console.log('🔍 PASO 6.1.1: Checkboxes de riesgo seleccionados:', riskCheckboxes.length);
+                riskCheckboxes.forEach((checkbox, index) => {
+                    console.log(`🔍 PASO 6.1.2: Checkbox ${index + 1} ID:`, checkbox.id);
                     const option = checkbox.closest('.select-option');
                     const value = option ? option.getAttribute('data-value') : null;
+                    console.log(`🔍 PASO 6.1.3: Checkbox ${index + 1} value:`, value);
                     if (value && value !== 'todos') {
                         selectedRisks.push(value);
+                        console.log(`🔍 PASO 6.1.4: Agregado a selectedRisks:`, value);
                     }
                 });
+                console.log('🔍 PASO 6.1.5: selectedRisks final:', selectedRisks);
+            } else {
+                console.log('❌ PASO 6.1: Risk select no encontrado');
             }
             
             if (categorySelect) {
@@ -5821,29 +5862,44 @@
                 });
             }
             
-            console.log('🔍 Filtros seleccionados:', {
+            console.log('🔍 PASO 7: Filtros seleccionados finales:', {
                 risk: selectedRisks,
                 category: selectedCategories,
                 domain: selectedDomains,
                 dimension: selectedDimensions
             });
             
+            console.log('🔍 PASO 8: Iniciando procesamiento de filas...');
             let visibleCount = 0;
             
             tableRows.forEach((row, index) => {
+                console.log(`🔍 PASO 8.${index + 1}: Procesando fila ${index + 1}`);
+                console.log(`🔍 PASO 8.${index + 1}.1: Clases de la fila:`, row.className);
+                console.log(`🔍 PASO 8.${index + 1}.2: Contenido de la fila:`, row.textContent.substring(0, 100));
+                
                 let shouldShow = true;
                 
                 // Filtrar por nivel de riesgo
                 if (selectedRisks.length > 0) {
+                    console.log(`🔍 PASO 8.${index + 1}.3: Aplicando filtro de riesgo...`);
                     const riskBadge = row.querySelector('.risk-badge');
+                    console.log(`🔍 PASO 8.${index + 1}.3.1: Risk badge encontrado:`, !!riskBadge);
                     if (riskBadge) {
                         const riskLevel = riskBadge.textContent.trim();
-                        console.log(`🔍 Fila ${index + 1} - Riesgo: "${riskLevel}"`);
+                        console.log(`🔍 PASO 8.${index + 1}.3.2: Nivel de riesgo de la fila: "${riskLevel}"`);
+                        console.log(`🔍 PASO 8.${index + 1}.3.3: Riesgos seleccionados:`, selectedRisks);
+                        console.log(`🔍 PASO 8.${index + 1}.3.4: ¿Incluye el riesgo?`, selectedRisks.includes(riskLevel));
                         if (!selectedRisks.includes(riskLevel)) {
                             shouldShow = false;
-                            console.log(`❌ Fila ${index + 1} oculta por riesgo`);
+                            console.log(`❌ PASO 8.${index + 1}.3.5: Fila ${index + 1} oculta por riesgo`);
+                        } else {
+                            console.log(`✅ PASO 8.${index + 1}.3.5: Fila ${index + 1} pasa filtro de riesgo`);
                         }
+                    } else {
+                        console.log(`❌ PASO 8.${index + 1}.3.1: No se encontró risk-badge en la fila`);
                     }
+                } else {
+                    console.log(`🔍 PASO 8.${index + 1}.3: No hay filtros de riesgo aplicados`);
                 }
                 
                 // Filtrar por categoría
@@ -5886,17 +5942,23 @@
                 }
                 
                 // Mostrar/ocultar fila
+                console.log(`🔍 PASO 8.${index + 1}.FINAL: shouldShow = ${shouldShow}`);
                 if (shouldShow) {
                     row.style.display = '';
                     visibleCount++;
-                    console.log(`✅ Fila ${index + 1} visible`);
+                    console.log(`✅ PASO 8.${index + 1}.FINAL: Fila ${index + 1} VISIBLE`);
                 } else {
                     row.style.display = 'none';
-                    console.log(`❌ Fila ${index + 1} oculta`);
+                    console.log(`❌ PASO 8.${index + 1}.FINAL: Fila ${index + 1} OCULTA`);
                 }
             });
             
-            console.log(`✅ Filtros aplicados. ${visibleCount} filas visibles de ${tableRows.length} totales`);
+            console.log(`🔍 PASO 9: RESULTADO FINAL - ${visibleCount} filas visibles de ${tableRows.length} totales`);
+            console.log('🔍 PASO 9.1: Verificando filas visibles...');
+            tableRows.forEach((row, index) => {
+                const isVisible = row.style.display !== 'none';
+                console.log(`🔍 PASO 9.2: Fila ${index + 1} visible: ${isVisible}`);
+            });
         }
 
         // Función para limpiar filtros de la tabla general
