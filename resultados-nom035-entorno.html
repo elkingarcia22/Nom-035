@@ -9136,6 +9136,116 @@
                     <option value="Violencia laboral">Violencia laboral</option>
                 </select>
             </div>
+
+            <!-- Filtros Demográficos -->
+            <div class="filter-group">
+                <label class="filter-label">Área</label>
+                <select class="filter-select" id="area-filter">
+                    <option value="">Todas</option>
+                    <option value="Tecnología">Tecnología</option>
+                    <option value="Recursos Humanos">Recursos Humanos</option>
+                    <option value="Ventas">Ventas</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Finanzas">Finanzas</option>
+                    <option value="Operaciones">Operaciones</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Cargo</label>
+                <select class="filter-select" id="position-filter">
+                    <option value="">Todos</option>
+                    <option value="Gerente">Gerente</option>
+                    <option value="Desarrollador">Desarrollador</option>
+                    <option value="Analista">Analista</option>
+                    <option value="Contador">Contador</option>
+                    <option value="Asistente">Asistente</option>
+                    <option value="Director">Director</option>
+                    <option value="Diseñador">Diseñador</option>
+                    <option value="Coordinador">Coordinador</option>
+                    <option value="Especialista">Especialista</option>
+                    <option value="Supervisor">Supervisor</option>
+                    <option value="Técnico">Técnico</option>
+                    <option value="Psicólogo">Psicólogo</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Sexo</label>
+                <select class="filter-select" id="gender-filter">
+                    <option value="">Todos</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Estado Civil</label>
+                <select class="filter-select" id="marital-filter">
+                    <option value="">Todos</option>
+                    <option value="Soltero">Soltero</option>
+                    <option value="Soltera">Soltera</option>
+                    <option value="Casado">Casado</option>
+                    <option value="Casada">Casada</option>
+                    <option value="Divorciado">Divorciado</option>
+                    <option value="Divorciada">Divorciada</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Edad</label>
+                <select class="filter-select" id="age-filter">
+                    <option value="">Todas</option>
+                    <option value="18-25">18-25 años</option>
+                    <option value="26-35">26-35 años</option>
+                    <option value="36-45">36-45 años</option>
+                    <option value="46-55">46-55 años</option>
+                    <option value="56+">56+ años</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">País</label>
+                <select class="filter-select" id="country-filter">
+                    <option value="">Todos</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="México">México</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Perú">Perú</option>
+                    <option value="España">España</option>
+                    <option value="Uruguay">Uruguay</option>
+                    <option value="Ecuador">Ecuador</option>
+                    <option value="Venezuela">Venezuela</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Ciudad</label>
+                <select class="filter-select" id="city-filter">
+                    <option value="">Todas</option>
+                    <option value="Bogotá">Bogotá</option>
+                    <option value="Ciudad de México">Ciudad de México</option>
+                    <option value="Buenos Aires">Buenos Aires</option>
+                    <option value="Santiago">Santiago</option>
+                    <option value="Lima">Lima</option>
+                    <option value="Madrid">Madrid</option>
+                    <option value="Montevideo">Montevideo</option>
+                    <option value="Quito">Quito</option>
+                    <option value="Caracas">Caracas</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Líder</label>
+                <select class="filter-select" id="leader-filter">
+                    <option value="">Todos</option>
+                    <option value="Ana Martínez">Ana Martínez</option>
+                    <option value="Luis Fernández">Luis Fernández</option>
+                    <option value="María González">María González</option>
+                    <option value="Carlos Rodríguez">Carlos Rodríguez</option>
+                </select>
+            </div>
         </div>
         <div class="filters-actions">
             <button id="apply-filters-btn" class="ubits-button ubits-button--primary ubits-button--md" style="flex: 1;">
@@ -9165,10 +9275,20 @@
             const applyFiltersBtn = document.getElementById('apply-filters-btn');
             const clearFiltersBtn = document.getElementById('clear-filters-btn');
             
-            // Filtros
+            // Filtros básicos
             const riskFilter = document.getElementById('risk-filter');
             const categoryFilter = document.getElementById('category-filter');
             const domainFilter = document.getElementById('domain-filter');
+            
+            // Filtros demográficos
+            const areaFilter = document.getElementById('area-filter');
+            const positionFilter = document.getElementById('position-filter');
+            const genderFilter = document.getElementById('gender-filter');
+            const maritalFilter = document.getElementById('marital-filter');
+            const ageFilter = document.getElementById('age-filter');
+            const countryFilter = document.getElementById('country-filter');
+            const cityFilter = document.getElementById('city-filter');
+            const leaderFilter = document.getElementById('leader-filter');
             
             // Abrir panel de filtros
             if (filtersBtn && filtersPanel && filtersBackdrop) {
@@ -9212,14 +9332,33 @@
             function applyFilters() {
                 console.log('🔧 Aplicando filtros...');
                 
+                // Filtros básicos
                 const selectedRisk = riskFilter ? riskFilter.value : '';
                 const selectedCategory = categoryFilter ? categoryFilter.value : '';
                 const selectedDomain = domainFilter ? domainFilter.value : '';
                 
+                // Filtros demográficos
+                const selectedArea = areaFilter ? areaFilter.value : '';
+                const selectedPosition = positionFilter ? positionFilter.value : '';
+                const selectedGender = genderFilter ? genderFilter.value : '';
+                const selectedMarital = maritalFilter ? maritalFilter.value : '';
+                const selectedAge = ageFilter ? ageFilter.value : '';
+                const selectedCountry = countryFilter ? countryFilter.value : '';
+                const selectedCity = cityFilter ? cityFilter.value : '';
+                const selectedLeader = leaderFilter ? leaderFilter.value : '';
+                
                 console.log('🔧 Filtros seleccionados:', {
                     risk: selectedRisk,
                     category: selectedCategory,
-                    domain: selectedDomain
+                    domain: selectedDomain,
+                    area: selectedArea,
+                    position: selectedPosition,
+                    gender: selectedGender,
+                    marital: selectedMarital,
+                    age: selectedAge,
+                    country: selectedCountry,
+                    city: selectedCity,
+                    leader: selectedLeader
                 });
                 
                 // Obtener todas las filas de categoría
@@ -9234,13 +9373,17 @@
                     const riskBadge = row.querySelector('.risk-badge');
                     const riskLevel = riskBadge ? riskBadge.textContent.trim() : '';
                     
+                    // Simular datos demográficos para esta categoría
+                    const simulatedData = getSimulatedDemographicData(categoryText, index);
+                    
                     console.log(`🔧 Fila ${index}:`, {
                         category: categoryText,
                         domain: domainText,
-                        risk: riskLevel
+                        risk: riskLevel,
+                        demographic: simulatedData
                     });
                     
-                    // Aplicar filtros
+                    // Aplicar filtros básicos
                     let shouldShow = true;
                     
                     if (selectedRisk && riskLevel !== selectedRisk) {
@@ -9252,6 +9395,39 @@
                     }
                     
                     if (selectedDomain && !domainText.includes(selectedDomain)) {
+                        shouldShow = false;
+                    }
+                    
+                    // Aplicar filtros demográficos
+                    if (selectedArea && simulatedData.area !== selectedArea) {
+                        shouldShow = false;
+                    }
+                    
+                    if (selectedPosition && simulatedData.position !== selectedPosition) {
+                        shouldShow = false;
+                    }
+                    
+                    if (selectedGender && simulatedData.gender !== selectedGender) {
+                        shouldShow = false;
+                    }
+                    
+                    if (selectedMarital && simulatedData.maritalStatus !== selectedMarital) {
+                        shouldShow = false;
+                    }
+                    
+                    if (selectedAge && !matchesAgeRange(simulatedData.age, selectedAge)) {
+                        shouldShow = false;
+                    }
+                    
+                    if (selectedCountry && simulatedData.country !== selectedCountry) {
+                        shouldShow = false;
+                    }
+                    
+                    if (selectedCity && simulatedData.city !== selectedCity) {
+                        shouldShow = false;
+                    }
+                    
+                    if (selectedLeader && simulatedData.leader !== selectedLeader) {
                         shouldShow = false;
                     }
                     
@@ -9289,11 +9465,60 @@
             function clearFilters() {
                 console.log('🧹 Limpiando filtros...');
                 
+                // Limpiar filtros básicos
                 if (riskFilter) riskFilter.value = '';
                 if (categoryFilter) categoryFilter.value = '';
                 if (domainFilter) domainFilter.value = '';
                 
+                // Limpiar filtros demográficos
+                if (areaFilter) areaFilter.value = '';
+                if (positionFilter) positionFilter.value = '';
+                if (genderFilter) genderFilter.value = '';
+                if (maritalFilter) maritalFilter.value = '';
+                if (ageFilter) ageFilter.value = '';
+                if (countryFilter) countryFilter.value = '';
+                if (cityFilter) cityFilter.value = '';
+                if (leaderFilter) leaderFilter.value = '';
+                
                 console.log('✅ Filtros limpiados');
+            }
+            
+            // Función para simular datos demográficos
+            function getSimulatedDemographicData(categoryText, index) {
+                const areas = ['Tecnología', 'Recursos Humanos', 'Ventas', 'Marketing', 'Finanzas', 'Operaciones'];
+                const positions = ['Gerente', 'Desarrollador', 'Analista', 'Contador', 'Asistente', 'Director', 'Diseñador', 'Coordinador', 'Especialista', 'Supervisor', 'Técnico', 'Psicólogo'];
+                const genders = ['Masculino', 'Femenino'];
+                const maritalStatuses = ['Soltero', 'Soltera', 'Casado', 'Casada', 'Divorciado', 'Divorciada'];
+                const countries = ['Colombia', 'México', 'Argentina', 'Chile', 'Perú', 'España', 'Uruguay', 'Ecuador', 'Venezuela'];
+                const cities = ['Bogotá', 'Ciudad de México', 'Buenos Aires', 'Santiago', 'Lima', 'Madrid', 'Montevideo', 'Quito', 'Caracas'];
+                const leaders = ['Ana Martínez', 'Luis Fernández', 'María González', 'Carlos Rodríguez'];
+                const ages = [25, 30, 35, 40, 45, 50, 55, 60];
+                
+                // Usar el índice para generar datos consistentes
+                const seed = index * 7 + categoryText.length;
+                
+                return {
+                    area: areas[seed % areas.length],
+                    position: positions[seed % positions.length],
+                    gender: genders[seed % genders.length],
+                    maritalStatus: maritalStatuses[seed % maritalStatuses.length],
+                    age: ages[seed % ages.length],
+                    country: countries[seed % countries.length],
+                    city: cities[seed % cities.length],
+                    leader: leaders[seed % leaders.length]
+                };
+            }
+            
+            // Función para verificar rango de edad
+            function matchesAgeRange(age, ageRange) {
+                switch (ageRange) {
+                    case '18-25': return age >= 18 && age <= 25;
+                    case '26-35': return age >= 26 && age <= 35;
+                    case '36-45': return age >= 36 && age <= 45;
+                    case '46-55': return age >= 46 && age <= 55;
+                    case '56+': return age >= 56;
+                    default: return true;
+                }
             }
             
             // ===== FIN SISTEMA DE FILTROS =====
