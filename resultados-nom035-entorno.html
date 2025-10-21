@@ -4050,7 +4050,12 @@
         }
 
         function applyTableFilters() {
-            const searchTerm = document.getElementById('table-search').value.toLowerCase();
+            console.log('🔧 ===== APLICANDO FILTROS DE TABLA =====');
+            
+            const searchInput = document.getElementById('table-search');
+            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+            console.log('🔧 Término de búsqueda:', searchTerm);
+            
             const riskFilters = getTableSelectedValues('new-risk-select');
             const categoryFilters = getTableSelectedValues('new-category-select');
             const areaFilters = getTableSelectedValues('new-department-select');
@@ -4062,15 +4067,33 @@
             const cityFilters = getTableSelectedValues('new-city-select');
             const domainFilters = getTableSelectedValues('new-domain-select');
             const dimensionFilters = getTableSelectedValues('new-dimension-select');
+            
+            console.log('🔧 Filtros obtenidos:', {
+                risk: riskFilters,
+                category: categoryFilters,
+                domain: domainFilters,
+                dimension: dimensionFilters
+            });
 
             const tableRows = document.querySelectorAll('.results-table tbody tr');
+            console.log('🔧 Filas encontradas:', tableRows.length);
             
-            tableRows.forEach(row => {
+            let visibleRows = 0;
+            let hiddenRows = 0;
+            
+            tableRows.forEach((row, index) => {
                 const categoryText = row.querySelector('.category-cell')?.textContent.toLowerCase() || '';
                 const domainText = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
                 const dimensionText = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
                 const riskBadge = row.querySelector('.risk-badge');
                 const riskLevel = riskBadge ? riskBadge.textContent.toLowerCase().trim() : '';
+                
+                console.log(`🔧 Fila ${index}:`, {
+                    category: categoryText,
+                    domain: domainText,
+                    dimension: dimensionText,
+                    risk: riskLevel
+                });
 
                 // Filtro de búsqueda
                 const matchesSearch = searchTerm === '' || 
@@ -4113,11 +4136,29 @@
                 }
 
                 // Solo ocultar filas para filtros no demográficos
-                if (matchesSearch && matchesRisk && matchesCategory && matchesDomain && matchesDimension) {
+                const shouldShow = matchesSearch && matchesRisk && matchesCategory && matchesDomain && matchesDimension;
+                
+                console.log(`🔧 Fila ${index} - Mostrar:`, shouldShow, {
+                    search: matchesSearch,
+                    risk: matchesRisk,
+                    category: matchesCategory,
+                    domain: matchesDomain,
+                    dimension: matchesDimension
+                });
+                
+                if (shouldShow) {
                     row.style.display = '';
+                    visibleRows++;
                 } else {
                     row.style.display = 'none';
+                    hiddenRows++;
                 }
+            });
+
+            console.log('🔧 Resultado final:', {
+                visible: visibleRows,
+                hidden: hiddenRows,
+                total: tableRows.length
             });
 
             updateTableFilterBadge();
