@@ -1638,11 +1638,8 @@
         
         // ===== SISTEMA DE FEEDBACK COMPLETO =====
         
-        // SISTEMA DE FEEDBACK ALTERNATIVO (SIN GOOGLE APPS SCRIPT)
-        // Debido a problemas CORS, usamos sistema local
-        
-        // Modo de desarrollo - simular envío exitoso
-        const DEVELOPMENT_MODE = true;
+        // SISTEMA DE FEEDBACK LOCAL (SIN GOOGLE APPS SCRIPT)
+        // Sistema que guarda feedback en localStorage del navegador
         
         // Función para guardar feedback localmente
         function saveFeedbackLocally(feedbackData) {
@@ -1769,43 +1766,7 @@
                 showLoading(false);
             }, 1000);
             
-            return;
-            
-            try {
-                const response = await fetch(FEEDBACK_WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(feedbackData)
-                });
-                
-                console.log('✅ Respuesta del servidor recibida:', response.status);
-                
-                // Para httpbin.org, siempre mostrar éxito
-                if (response.ok) {
-                    showMessage('¡Feedback enviado correctamente! Gracias por tu comentario.', 'success');
-                    setTimeout(() => {
-                        closeFeedbackModal();
-                    }, 2000);
-                } else {
-                    throw new Error(`Error del servidor: ${response.status}`);
-                }
-                
-            } catch (error) {
-                console.error('❌ Error al enviar feedback:', error);
-                
-                // Mostrar mensaje más específico según el tipo de error
-                if (error.message.includes('CORS')) {
-                    showMessage('Error de configuración del servidor. Contacta al administrador.', 'error');
-                } else if (error.message.includes('Failed to fetch')) {
-                    showMessage('Error de conexión. Verifica tu internet e inténtalo de nuevo.', 'error');
-                } else {
-                    showMessage('Error al enviar el feedback. Por favor, inténtalo de nuevo.', 'error');
-                }
-            } finally {
-                showLoading(false);
-            }
+            // Sistema local completado - no más código de Google Apps Script
         }
         
         // Mostrar/ocultar estado de carga
