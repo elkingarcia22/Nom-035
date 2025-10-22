@@ -3059,6 +3059,8 @@
             
             console.log('🔍 Headers creados:', headers.length);
             console.log('🔍 Total de preguntas:', allQuestions.length);
+            console.log('🔍 Headers demográficos:', headers.length - allQuestions.length);
+            console.log('🔍 Últimas 3 preguntas:', allQuestions.slice(-3));
             
             // Crear datos del CSV
             const csvData = [];
@@ -3090,8 +3092,12 @@
                     Object.keys(participant.surveyResults).forEach(sectionName => {
                         const section = participant.surveyResults[sectionName];
                         if (Array.isArray(section)) {
-                            section.forEach(q => {
-                                allAnswers.push(q.answer);
+                            section.forEach((q, qIndex) => {
+                                const answer = q.answer || 'Sin respuesta';
+                                allAnswers.push(answer);
+                                if (index === 0 && qIndex >= section.length - 2) { // Log las últimas 2 preguntas del primer participante
+                                    console.log(`🔍 Última pregunta ${qIndex + 1} de ${sectionName}: "${q.question}" = "${answer}"`);
+                                }
                             });
                         }
                     });
@@ -3103,6 +3109,12 @@
                 csvData.push(row);
                 
                 console.log(`🔍 Participante ${participant.name} procesado: ${row.length} columnas`);
+                console.log(`🔍 Respuestas del participante: ${allAnswers.length}`);
+                
+                // Verificar que el número de respuestas coincida con el número de preguntas
+                if (allAnswers.length !== allQuestions.length) {
+                    console.log(`⚠️ DESBALANCE: ${participant.name} tiene ${allAnswers.length} respuestas pero hay ${allQuestions.length} preguntas`);
+                }
             });
             
             console.log('🔍 Datos CSV creados:', csvData.length, 'filas');
