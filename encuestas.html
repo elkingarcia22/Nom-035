@@ -18,7 +18,109 @@
     <link rel="stylesheet" href="components/button.css">
     <link rel="stylesheet" href="profile.css">
     <style>
-        /* ===== SISTEMA DE ONBOARDING ELIMINADO ===== */
+        /* ===== SISTEMA DE ONBOARDING ===== */
+        
+        /* Overlay principal del onboarding */
+        .onboarding-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            display: none;
+        }
+        
+        /* Spotlight para destacar elementos */
+        .onboarding-spotlight {
+            position: absolute;
+            border: 3px solid #667eea;
+            border-radius: 8px;
+            background: rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            transition: all 0.3s ease;
+        }
+        
+        /* Tooltip del onboarding */
+        .onboarding-tooltip {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 10001;
+            max-width: 350px;
+            font-family: 'Noto Sans', sans-serif;
+        }
+        
+        .onboarding-tooltip h3 {
+            margin: 0 0 12px 0;
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .onboarding-tooltip p {
+            margin: 0 0 16px 0;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .onboarding-tooltip .tooltip-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        
+        .onboarding-tooltip .btn-skip {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #dee2e6;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .onboarding-tooltip .btn-skip:hover {
+            background: #e9ecef;
+        }
+        
+        .onboarding-tooltip .btn-next {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .onboarding-tooltip .btn-next:hover {
+            background: #5a6fd8;
+        }
+        
+        /* Animación de entrada */
+        @keyframes slideInTooltip {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .onboarding-tooltip {
+            animation: slideInTooltip 0.3s ease-out;
+        }
         
         /* ===== BOTÓN DE FEEDBACK FLOTANTE ===== */
         .feedback-trigger {
@@ -651,6 +753,18 @@
         💬
     </div>
     
+    <!-- ===== SISTEMA DE ONBOARDING ===== -->
+    <div class="onboarding-overlay" id="onboardingOverlay">
+        <div class="onboarding-spotlight" id="onboardingSpotlight"></div>
+        <div class="onboarding-tooltip" id="onboardingTooltip">
+            <h3 id="tooltipTitle">¡Bienvenido al Prototipo!</h3>
+            <p id="tooltipContent">Te vamos a guiar paso a paso por las funcionalidades principales.</p>
+            <div class="tooltip-actions">
+                <button class="btn-skip" onclick="skipOnboarding()">Omitir</button>
+                <button class="btn-next" onclick="nextOnboardingStep()">Siguiente</button>
+            </div>
+        </div>
+    </div>
 
     <!-- ===== MODAL DE FEEDBACK ===== -->
     <div class="feedback-modal" id="feedbackModal">
@@ -1954,6 +2068,144 @@
             
             console.log('🚀 ===== SISTEMA DE ONBOARDING ELIMINADO =====');
             setupRowClickListeners();
+        });
+        
+        // ===== SISTEMA DE ONBOARDING =====
+        
+        // Estado del onboarding
+        let currentOnboardingStep = 0;
+        let onboardingSteps = [
+            {
+                title: "¡Bienvenido al Prototipo!",
+                content: "Te vamos a guiar paso a paso por las funcionalidades principales.",
+                target: null,
+                action: "welcome"
+            },
+            {
+                title: "Resultados Emocionales",
+                content: "Primero vamos a explorar los resultados emocionales. Haz clic en esta fila para ver el análisis detallado.",
+                target: "tr.clickable-row:first-of-type",
+                action: "highlight"
+            }
+        ];
+        
+        // Iniciar onboarding
+        function startOnboarding() {
+            console.log('🚀 Iniciando onboarding...');
+            currentOnboardingStep = 0;
+            showOnboardingStep();
+        }
+        
+        // Mostrar paso actual del onboarding
+        function showOnboardingStep() {
+            const step = onboardingSteps[currentOnboardingStep];
+            if (!step) return;
+            
+            console.log('📍 Mostrando paso:', currentOnboardingStep, step);
+            
+            // Mostrar overlay
+            const overlay = document.getElementById('onboardingOverlay');
+            overlay.style.display = 'block';
+            
+            // Actualizar contenido del tooltip
+            document.getElementById('tooltipTitle').textContent = step.title;
+            document.getElementById('tooltipContent').textContent = step.content;
+            
+            // Si hay target, destacarlo
+            if (step.target) {
+                highlightElement(step.target);
+            } else {
+                // Si no hay target, centrar el tooltip
+                centerTooltip();
+            }
+        }
+        
+        // Destacar elemento específico
+        function highlightElement(selector) {
+            const element = document.querySelector(selector);
+            if (!element) {
+                console.error('❌ Elemento no encontrado:', selector);
+                return;
+            }
+            
+            console.log('🎯 Destacando elemento:', element);
+            
+            const rect = element.getBoundingClientRect();
+            const spotlight = document.getElementById('onboardingSpotlight');
+            
+            // Posicionar spotlight
+            spotlight.style.left = (rect.left - 3) + 'px';
+            spotlight.style.top = (rect.top - 3) + 'px';
+            spotlight.style.width = (rect.width + 6) + 'px';
+            spotlight.style.height = (rect.height + 6) + 'px';
+            spotlight.style.display = 'block';
+            
+            // Posicionar tooltip
+            positionTooltip(rect);
+        }
+        
+        // Posicionar tooltip
+        function positionTooltip(rect) {
+            const tooltip = document.getElementById('onboardingTooltip');
+            const tooltipRect = tooltip.getBoundingClientRect();
+            
+            // Posición por defecto: abajo del elemento
+            let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+            let top = rect.bottom + 20;
+            
+            // Ajustar si se sale de la pantalla
+            if (left < 20) left = 20;
+            if (left + tooltipRect.width > window.innerWidth - 20) {
+                left = window.innerWidth - tooltipRect.width - 20;
+            }
+            if (top + tooltipRect.height > window.innerHeight - 20) {
+                top = rect.top - tooltipRect.height - 20;
+            }
+            
+            tooltip.style.left = left + 'px';
+            tooltip.style.top = top + 'px';
+        }
+        
+        // Centrar tooltip
+        function centerTooltip() {
+            const tooltip = document.getElementById('onboardingTooltip');
+            const tooltipRect = tooltip.getBoundingClientRect();
+            
+            tooltip.style.left = (window.innerWidth / 2) - (tooltipRect.width / 2) + 'px';
+            tooltip.style.top = (window.innerHeight / 2) - (tooltipRect.height / 2) + 'px';
+        }
+        
+        // Siguiente paso
+        function nextOnboardingStep() {
+            console.log('➡️ Siguiente paso del onboarding');
+            currentOnboardingStep++;
+            
+            if (currentOnboardingStep >= onboardingSteps.length) {
+                finishOnboarding();
+            } else {
+                showOnboardingStep();
+            }
+        }
+        
+        // Omitir onboarding
+        function skipOnboarding() {
+            console.log('⏭️ Onboarding omitido');
+            finishOnboarding();
+        }
+        
+        // Finalizar onboarding
+        function finishOnboarding() {
+            console.log('✅ Onboarding finalizado');
+            document.getElementById('onboardingOverlay').style.display = 'none';
+            document.getElementById('onboardingSpotlight').style.display = 'none';
+        }
+        
+        // Iniciar onboarding automáticamente al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📄 DOM cargado, iniciando onboarding...');
+            setTimeout(() => {
+                startOnboarding();
+            }, 1000);
         });
         
     </script>
