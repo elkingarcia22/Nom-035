@@ -3004,42 +3004,98 @@
 
         // Función para descargar respuestas emocionales
         function downloadEmotionalResponses() {
+            console.log('🔍 INICIANDO downloadEmotionalResponses()');
+            
+            // Buscar todas las tablas para debugging
+            const allTables = document.querySelectorAll('table');
+            console.log('🔍 Todas las tablas encontradas:', allTables.length);
+            
+            allTables.forEach((t, index) => {
+                console.log(`🔍 Tabla ${index}:`, t);
+                console.log(`🔍 Tabla ${index} style:`, t.getAttribute('style'));
+            });
+            
             // Extraer datos de la tabla principal de respuestas emocionales
             const table = document.querySelector('table[style*="min-width: 12000px"]');
+            console.log('🔍 Tabla con min-width encontrada:', table);
+            
             if (!table) {
+                // Intentar otros selectores
+                const table2 = document.querySelector('table');
+                console.log('🔍 Primera tabla encontrada:', table2);
+                
+                if (table2) {
+                    console.log('🔍 Usando primera tabla encontrada');
+                    const tbody = table2.querySelector('tbody');
+                    if (tbody) {
+                        const rows = tbody.querySelectorAll('tr');
+                        console.log('🔍 Filas en primera tabla:', rows.length);
+                        if (rows.length > 0) {
+                            console.log('🔍 Usando primera tabla como tabla principal');
+                            processTableData(table2);
+                            return;
+                        }
+                    }
+                }
+                
+                console.log('❌ No se encontró la tabla de respuestas emocionales');
                 alert('No se encontró la tabla de respuestas emocionales');
                 return;
             }
+            
+            processTableData(table);
+        }
+        
+        function processTableData(table) {
+            console.log('🔍 Procesando tabla:', table);
 
             const tbody = table.querySelector('tbody');
+            console.log('🔍 Tbody encontrado:', tbody);
+            
             if (!tbody) {
+                console.log('❌ No se encontró el cuerpo de la tabla');
                 alert('No se encontró el cuerpo de la tabla de respuestas emocionales');
                 return;
             }
 
             const rows = tbody.querySelectorAll('tr');
+            console.log('🔍 Filas encontradas:', rows.length);
+            
             if (rows.length === 0) {
+                console.log('❌ No hay datos en la tabla');
                 alert('No hay datos en la tabla de respuestas emocionales');
                 return;
             }
 
             // Obtener headers de la tabla
             const headerRow = table.querySelector('thead tr');
+            console.log('🔍 Header row encontrado:', headerRow);
+            
             const headerCells = headerRow.querySelectorAll('th');
+            console.log('🔍 Header cells encontrados:', headerCells.length);
+            
             const headers = [];
             
-            headerCells.forEach(cell => {
+            headerCells.forEach((cell, index) => {
                 const text = cell.textContent.trim();
+                console.log(`🔍 Header ${index}:`, text);
                 if (text && text !== '') {
                     headers.push(text);
                 }
             });
+            
+            console.log('🔍 Headers finales:', headers);
 
             const data = [];
 
-            rows.forEach(row => {
+            rows.forEach((row, rowIndex) => {
                 const cells = row.querySelectorAll('td');
-                if (cells.length < 3) return;
+                console.log(`🔍 Fila ${rowIndex}: ${cells.length} celdas`);
+                
+                if (cells.length < 3) {
+                    console.log(`⚠️ Fila ${rowIndex} tiene menos de 3 celdas, saltando`);
+                    return;
+                }
 
                 const rowData = [];
                 
@@ -3051,28 +3107,41 @@
                             const participantRole = cell.querySelector('.participant-role');
                             const name = participantName ? participantName.textContent.trim() : '';
                             const role = participantRole ? participantRole.textContent.trim() : '';
-                            rowData.push(`${name} - ${role}`);
+                            const participantData = `${name} - ${role}`;
+                            console.log(`🔍 Participante ${rowIndex}:`, participantData);
+                            rowData.push(participantData);
                         }
                         // Para la segunda celda (nivel de riesgo), extraer el badge
                         else if (index === 1) {
                             const riskBadge = cell.querySelector('.risk-badge');
                             const riskLevel = riskBadge ? riskBadge.textContent.trim() : '';
+                            console.log(`🔍 Nivel de riesgo ${rowIndex}:`, riskLevel);
                             rowData.push(riskLevel);
                         }
                         // Para las demás celdas, extraer el texto de respuesta
                         else {
                             const responseSpan = cell.querySelector('span');
                             const response = responseSpan ? responseSpan.textContent.trim() : cell.textContent.trim();
+                            if (index < 10) { // Solo logear las primeras 10 respuestas
+                                console.log(`🔍 Respuesta ${rowIndex}-${index}:`, response);
+                            }
                             rowData.push(response);
                         }
                     }
                 });
                 
+                console.log(`🔍 Fila ${rowIndex} procesada:`, rowData.length, 'columnas');
                 data.push(rowData);
             });
 
+            console.log('🔍 Datos finales:', data.length, 'filas');
+            console.log('🔍 Primera fila de datos:', data[0]);
+
             const csvContent = convertToCSV(data, headers);
+            console.log('🔍 CSV generado, longitud:', csvContent.length);
+            
             downloadCSVFile(csvContent, 'respuestas_emocionales_nom035.csv');
+            console.log('✅ Descarga completada');
         }
 
         // Funciones auxiliares para CSV
