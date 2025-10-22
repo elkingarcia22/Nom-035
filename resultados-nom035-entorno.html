@@ -2044,70 +2044,80 @@
         .heatmap-table {
             border-collapse: collapse;
             width: 100%;
-            min-width: 2000px;
+            min-width: 1200px;
+            font-size: 12px;
         }
 
         .heatmap-cell {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border: 1px solid #e5e7eb;
             position: relative;
             cursor: pointer;
             transition: all 0.2s ease;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: #374151;
         }
 
         .heatmap-cell:hover {
-            transform: scale(1.2);
+            transform: scale(1.3);
             z-index: 10;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border: 2px solid #3b82f6;
         }
 
         .heatmap-cell.bajo {
             background-color: #dcfce7; /* Verde claro */
+            color: #166534;
         }
 
         .heatmap-cell.medio {
             background-color: #fef3c7; /* Amarillo claro */
+            color: #92400e;
         }
 
         .heatmap-cell.alto {
             background-color: #fed7aa; /* Naranja claro */
+            color: #c2410c;
         }
 
         .heatmap-cell.muy-alto {
             background-color: #fecaca; /* Rojo claro */
+            color: #dc2626;
         }
 
         .heatmap-participant-name {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: #374151;
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            padding: 8px 4px;
+            padding: 8px 12px;
             background: #f8f9fa;
             border-right: 2px solid #e5e7eb;
-            min-width: 40px;
-            text-align: center;
+            min-width: 120px;
+            text-align: left;
+            white-space: nowrap;
         }
 
         .heatmap-question-number {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 500;
             color: #6b7280;
             text-align: center;
             padding: 4px 2px;
             background: #f8f9fa;
-            border-bottom: 2px solid #e5e7eb;
-            min-width: 20px;
+            border-bottom: 1px solid #e5e7eb;
+            min-width: 24px;
+            height: 24px;
         }
 
         .heatmap-tooltip {
             position: absolute;
             background: #1f2937;
             color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 12px 16px;
+            border-radius: 8px;
             font-size: 12px;
             font-weight: 500;
             z-index: 1000;
@@ -2115,10 +2125,26 @@
             opacity: 0;
             transition: opacity 0.2s ease;
             white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .heatmap-tooltip.show {
             opacity: 1;
+        }
+
+        /* Estilos para encabezados de dimensión */
+        .heatmap-dimension-header {
+            background: #e5e7eb;
+            text-align: center;
+            font-weight: 600;
+            padding: 8px;
+            border: 1px solid #d1d5db;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .heatmap-dimension-header:hover {
+            background: #d1d5db;
         }
 
 
@@ -4191,23 +4217,66 @@
                                 
                                 <!-- Contenedor del Heatmap -->
                                 <div style="background: white; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
+                                    <!-- Controles del Heatmap -->
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 16px;">
+                                        <!-- Filtros -->
+                                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                            <select id="heatmap-dimension-filter" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; font-size: 14px;">
+                                                <option value="">Todas las dimensiones</option>
+                                                <option value="ambiente">Ambiente de trabajo</option>
+                                                <option value="factores">Factores de riesgo</option>
+                                                <option value="organizacion">Organización del tiempo</option>
+                                                <option value="liderazgo">Liderazgo</option>
+                                            </select>
+                                            
+                                            <select id="heatmap-area-filter" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; font-size: 14px;">
+                                                <option value="">Todas las áreas</option>
+                                                <option value="Ventas">Ventas</option>
+                                                <option value="Marketing">Marketing</option>
+                                                <option value="RRHH">RRHH</option>
+                                                <option value="Tecnología">Tecnología</option>
+                                                <option value="Finanzas">Finanzas</option>
+                                            </select>
+                                            
+                                            <select id="heatmap-gender-filter" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; font-size: 14px;">
+                                                <option value="">Todos los géneros</option>
+                                                <option value="Femenino">Femenino</option>
+                                                <option value="Masculino">Masculino</option>
+                                                <option value="Otro">Otro</option>
+                                            </select>
+                                            
+                                            <select id="heatmap-risk-filter" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; font-size: 14px;">
+                                                <option value="">Todos los niveles</option>
+                                                <option value="bajo">Bajo riesgo</option>
+                                                <option value="medio">Medio riesgo</option>
+                                                <option value="alto">Alto riesgo</option>
+                                                <option value="muy-alto">Muy alto riesgo</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- Botón de aplicar filtros -->
+                                        <button id="apply-heatmap-filters" style="padding: 8px 16px; background: #3b82f6; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer;">
+                                            <i class="far fa-filter"></i> Aplicar Filtros
+                                        </button>
+                                    </div>
+                                    
                                     <!-- Leyenda del Heatmap -->
                                     <div style="display: flex; justify-content: center; gap: 24px; margin-bottom: 20px; padding: 16px; background: #f8f9fa; border-radius: 8px;">
                                         <div style="display: flex; align-items: center; gap: 8px;">
                                             <div class="heatmap-cell bajo" style="width: 16px; height: 16px;"></div>
-                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Bajo Riesgo</span>
+                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Bajo Riesgo (1-3)</span>
                                         </div>
                                         <div style="display: flex; align-items: center; gap: 8px;">
                                             <div class="heatmap-cell medio" style="width: 16px; height: 16px;"></div>
-                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Medio Riesgo</span>
+                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Medio Riesgo (4-5)</span>
                                         </div>
                                         <div style="display: flex; align-items: center; gap: 8px;">
                                             <div class="heatmap-cell alto" style="width: 16px; height: 16px;"></div>
-                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Alto Riesgo</span>
+                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Alto Riesgo (6-7)</span>
                                         </div>
                                         <div style="display: flex; align-items: center; gap: 8px;">
                                             <div class="heatmap-cell muy-alto" style="width: 16px; height: 16px;"></div>
-                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Muy Alto Riesgo</span>
+                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Muy Alto Riesgo (8)</span>
                                         </div>
                                     </div>
                                     
@@ -11138,28 +11207,62 @@
             return { participants, questions, responses };
         }
 
-        // Crear el heatmap
+        // Crear el heatmap robusto
         function createHeatmap() {
             const container = document.getElementById('heatmap-container');
             if (!container) return;
 
             const { participants, questions, responses } = generateHeatmapData();
             
-            let html = '<table class="heatmap-table">';
+            // Agrupar preguntas por dimensión
+            const dimensions = {
+                'ambiente': questions.slice(0, 18),
+                'factores': questions.slice(18, 36),
+                'organizacion': questions.slice(36, 54),
+                'liderazgo': questions.slice(54, 72)
+            };
             
-            // Fila de encabezados con números de pregunta
-            html += '<thead><tr>';
-            html += '<td class="heatmap-participant-name" style="background: #f1f5f9; font-weight: 700;">Participante</td>';
+            let html = '<div style="overflow-x: auto;">';
+            html += '<table class="heatmap-table" style="min-width: 1200px;">';
+            
+            // Encabezado con dimensiones desplegables
+            html += '<thead>';
+            html += '<tr>';
+            html += '<td class="heatmap-participant-name" style="background: #f1f5f9; font-weight: 700; min-width: 120px;">Participante</td>';
+            
+            // Crear encabezados por dimensión
+            Object.keys(dimensions).forEach(dimKey => {
+                const dimQuestions = dimensions[dimKey];
+                const dimName = {
+                    'ambiente': 'Ambiente de trabajo',
+                    'factores': 'Factores de riesgo', 
+                    'organizacion': 'Organización del tiempo',
+                    'liderazgo': 'Liderazgo'
+                }[dimKey];
+                
+                html += `<td colspan="${dimQuestions.length}" style="background: #e5e7eb; text-align: center; font-weight: 600; padding: 8px; border: 1px solid #d1d5db;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="far fa-chevron-down" style="font-size: 12px;"></i>
+                        <span>${dimName}</span>
+                    </div>
+                </td>`;
+            });
+            html += '</tr>';
+            
+            // Fila de números de pregunta
+            html += '<tr>';
+            html += '<td class="heatmap-participant-name" style="background: #f8f9fa; font-weight: 600; color: #6b7280;">Pregunta</td>';
             questions.forEach(question => {
                 html += `<td class="heatmap-question-number">${question.number}</td>`;
             });
-            html += '</tr></thead>';
+            html += '</tr>';
+            html += '</thead>';
             
-            // Filas de datos
+            // Filas de participantes
             html += '<tbody>';
             participants.forEach((participant, pIndex) => {
                 html += '<tr>';
-                html += `<td class="heatmap-participant-name">${participant.name}</td>`;
+                html += `<td class="heatmap-participant-name" style="font-weight: 500;">${participant.name}</td>`;
                 
                 questions.forEach((question, qIndex) => {
                     const response = responses[pIndex][qIndex];
@@ -11168,27 +11271,30 @@
                                 data-question="${question.number}" 
                                 data-risk="${response.riskLevel}" 
                                 data-value="${response.value}"
-                                title="${participant.name} - Pregunta ${question.number}: ${response.riskLevel}"></td>`;
+                                data-dimension="${question.category}"
+                                title="${participant.name} - Pregunta ${question.number}: ${response.riskLevel} (${response.value})"></td>`;
                 });
                 
                 html += '</tr>';
             });
             html += '</tbody>';
             html += '</table>';
+            html += '</div>';
             
             container.innerHTML = html;
             
-            // Agregar tooltips
+            // Agregar tooltips mejorados
             const cells = container.querySelectorAll('.heatmap-cell');
             cells.forEach(cell => {
                 cell.addEventListener('mouseenter', function(e) {
                     const tooltip = document.createElement('div');
                     tooltip.className = 'heatmap-tooltip';
                     tooltip.innerHTML = `
-                        <div><strong>${this.dataset.participant}</strong></div>
-                        <div>Pregunta ${this.dataset.question}</div>
-                        <div>Nivel: ${this.dataset.risk}</div>
-                        <div>Valor: ${this.dataset.value}</div>
+                        <div style="font-weight: 600; margin-bottom: 4px;">${this.dataset.participant}</div>
+                        <div style="font-size: 11px; color: #9ca3af; margin-bottom: 2px;">Pregunta ${this.dataset.question}</div>
+                        <div style="font-size: 11px; color: #9ca3af; margin-bottom: 2px;">Dimensión: ${this.dataset.dimension}</div>
+                        <div style="font-weight: 500; color: #fbbf24;">Nivel: ${this.dataset.risk}</div>
+                        <div style="font-size: 11px; color: #9ca3af;">Valor: ${this.dataset.value}</div>
                     `;
                     document.body.appendChild(tooltip);
                     
@@ -11204,6 +11310,89 @@
                     const tooltip = document.querySelector('.heatmap-tooltip');
                     if (tooltip) {
                         tooltip.remove();
+                    }
+                });
+            });
+            
+            // Configurar filtros
+            setupHeatmapFilters();
+        }
+        
+        // Configurar filtros del heatmap
+        function setupHeatmapFilters() {
+            const applyBtn = document.getElementById('apply-heatmap-filters');
+            if (!applyBtn) return;
+            
+            applyBtn.addEventListener('click', function() {
+                const dimensionFilter = document.getElementById('heatmap-dimension-filter').value;
+                const areaFilter = document.getElementById('heatmap-area-filter').value;
+                const genderFilter = document.getElementById('heatmap-gender-filter').value;
+                const riskFilter = document.getElementById('heatmap-risk-filter').value;
+                
+                const cells = document.querySelectorAll('.heatmap-cell');
+                const rows = document.querySelectorAll('#heatmap-container tbody tr');
+                
+                rows.forEach(row => {
+                    const participantName = row.querySelector('.heatmap-participant-name').textContent;
+                    let showRow = true;
+                    
+                    // Filtro por área (simulado)
+                    if (areaFilter) {
+                        // Simular filtro por área basado en el nombre
+                        const areaMap = {
+                            'Ventas': ['Ana García', 'Juan Pérez', 'Elena Morales'],
+                            'Marketing': ['Carlos López', 'Sofia Castro', 'Andrés Ruiz'],
+                            'RRHH': ['María Rodríguez', 'Diego Herrera', 'Patricia Díaz'],
+                            'Tecnología': ['Pedro Martínez', 'Carmen Vega', 'Fernando Torres'],
+                            'Finanzas': ['Laura Sánchez', 'Roberto Silva', 'Isabel Moreno']
+                        };
+                        
+                        if (!areaMap[areaFilter]?.includes(participantName)) {
+                            showRow = false;
+                        }
+                    }
+                    
+                    // Filtro por género (simulado)
+                    if (genderFilter) {
+                        const genderMap = {
+                            'Femenino': ['Ana García', 'María Rodríguez', 'Laura Sánchez', 'Sofia Castro', 'Carmen Vega', 'Elena Morales', 'Patricia Díaz', 'Isabel Moreno'],
+                            'Masculino': ['Carlos López', 'Pedro Martínez', 'Juan Pérez', 'Diego Herrera', 'Roberto Silva', 'Andrés Ruiz', 'Fernando Torres']
+                        };
+                        
+                        if (!genderMap[genderFilter]?.includes(participantName)) {
+                            showRow = false;
+                        }
+                    }
+                    
+                    row.style.display = showRow ? '' : 'none';
+                    
+                    if (showRow) {
+                        const cells = row.querySelectorAll('.heatmap-cell');
+                        cells.forEach(cell => {
+                            let showCell = true;
+                            
+                            // Filtro por dimensión
+                            if (dimensionFilter) {
+                                const dimensionMap = {
+                                    'ambiente': 'Ambiente de trabajo',
+                                    'factores': 'Factores de riesgo',
+                                    'organizacion': 'Organización del tiempo',
+                                    'liderazgo': 'Liderazgo'
+                                };
+                                
+                                if (cell.dataset.dimension !== dimensionMap[dimensionFilter]) {
+                                    showCell = false;
+                                }
+                            }
+                            
+                            // Filtro por nivel de riesgo
+                            if (riskFilter && cell.dataset.risk !== riskFilter) {
+                                showCell = false;
+                            }
+                            
+                            cell.style.display = showCell ? '' : 'none';
+                            cell.style.opacity = showCell ? '1' : '0.3';
+                        });
                     }
                 });
             });
