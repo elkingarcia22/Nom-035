@@ -709,8 +709,28 @@
             document.getElementById('feedbackTrigger').style.display = 'flex';
             document.getElementById('sectionIndicator').style.display = 'block';
             
-            // Iniciar el sistema de onboarding
-            startOnboarding();
+            // Navegar automáticamente a la sección de encuestas
+            setTimeout(() => {
+                // Buscar y hacer clic en la pestaña de encuestas
+                const encuestasTab = document.querySelector('.nav-tab[data-tab="encuestas"], .nav-tab:contains("Encuestas")');
+                if (encuestasTab) {
+                    encuestasTab.click();
+                } else {
+                    // Si no encuentra la pestaña, buscar por texto
+                    const allTabs = document.querySelectorAll('.nav-tab');
+                    for (let tab of allTabs) {
+                        if (tab.textContent.includes('Encuestas') || tab.textContent.includes('encuestas')) {
+                            tab.click();
+                            break;
+                        }
+                    }
+                }
+                
+                // Iniciar el sistema de onboarding después de navegar
+                setTimeout(() => {
+                    startOnboarding();
+                }, 500);
+            }, 100);
         }
         
         // Función para abrir el modal de feedback
@@ -845,33 +865,49 @@
                     position: "center"
                 },
                 {
-                    target: ".nav-tab:contains('Encuestas')",
-                    title: "📊 Dashboard Principal",
-                    content: "Aquí tienes el dashboard principal. Verás dos opciones principales que vamos a explorar: <strong>Emocional</strong> y <strong>Entorno Laboral</strong>.",
+                    target: ".results-container, .encuestas-content, .main-content",
+                    title: "📊 Home de Encuestas",
+                    content: "Aquí tienes el home de encuestas. Verás una tabla con las dos opciones principales de NOM-035 que vamos a explorar: <strong>Emocional</strong> y <strong>Entorno Laboral</strong>.",
                     icon: "📊",
                     position: "bottom"
                 },
                 {
-                    target: ".nav-tab:contains('Emocional')",
+                    target: "a[href*='emocional'], .btn-emocional, [data-section='emocional']",
                     title: "💖 Resultados Emocionales",
-                    content: "Haz clic aquí para ver los <strong>Resultados Emocionales</strong>. Esta sección analiza acontecimientos traumáticos y su afectación en los empleados.",
+                    content: "Haz clic aquí para ver los <strong>Resultados Emocionales</strong>. Esta sección analiza acontecimientos traumáticos y su afectación en los empleados. <br><br><strong>💡 Tip:</strong> Después de explorar, puedes volver aquí y probar Entorno Laboral.",
                     icon: "💖",
                     position: "bottom"
                 },
                 {
-                    target: ".nav-tab:contains('Entorno Laboral')",
+                    target: "a[href*='entorno'], .btn-entorno, [data-section='entorno']",
                     title: "💼 Resultados Entorno Laboral", 
-                    content: "Después de ver Emocional, podrás hacer clic aquí para explorar los <strong>Resultados de Entorno Laboral</strong> que evalúan las condiciones de trabajo.",
+                    content: "Haz clic aquí para explorar los <strong>Resultados de Entorno Laboral</strong> que evalúan las condiciones de trabajo. <br><br><strong>💡 Tip:</strong> Puedes navegar entre ambas opciones libremente.",
                     icon: "💼",
                     position: "bottom"
+                },
+                {
+                    target: ".feedback-trigger",
+                    title: "💬 Sistema de Feedback",
+                    content: "Usa este botón para dejar feedback en cada pantalla. Puedes comentar sobre lo que funciona bien, qué se puede mejorar, o qué necesita tu empresa para Emocional y Entorno Laboral.",
+                    icon: "💬",
+                    position: "left"
                 }
             ];
         }
         
         // Iniciar onboarding
         function startOnboarding() {
+            console.log('🚀 Iniciando onboarding...');
             initializeOnboardingSteps();
             onboardingStep = 0;
+            
+            // Debug: verificar elementos disponibles
+            console.log('🔍 Elementos disponibles:');
+            console.log('- Nav tabs:', document.querySelectorAll('.nav-tab'));
+            console.log('- Links emocional:', document.querySelectorAll('a[href*="emocional"], .btn-emocional, [data-section="emocional"]'));
+            console.log('- Links entorno:', document.querySelectorAll('a[href*="entorno"], .btn-entorno, [data-section="entorno"]'));
+            console.log('- Feedback trigger:', document.querySelector('.feedback-trigger'));
+            
             showOnboardingStep();
         }
         
@@ -920,7 +956,29 @@
                     }
                 }
             }
-            return document.querySelector(selector);
+            
+            // Buscar por múltiples selectores
+            const selectors = selector.split(', ');
+            for (let sel of selectors) {
+                const element = document.querySelector(sel.trim());
+                if (element) return element;
+            }
+            
+            // Buscar por texto en todos los elementos
+            if (selector.includes('emocional') || selector.includes('entorno')) {
+                const allElements = document.querySelectorAll('a, button, .btn, .nav-tab, [data-section]');
+                for (let element of allElements) {
+                    const text = element.textContent.toLowerCase();
+                    if (selector.includes('emocional') && (text.includes('emocional') || text.includes('emotional'))) {
+                        return element;
+                    }
+                    if (selector.includes('entorno') && (text.includes('entorno') || text.includes('laboral') || text.includes('work'))) {
+                        return element;
+                    }
+                }
+            }
+            
+            return null;
         }
         
         // Destacar elemento
