@@ -52,6 +52,215 @@
             100% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3); }
         }
         
+        /* ===== MODAL DE FEEDBACK ===== */
+        .feedback-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feedback-modal.show {
+            display: flex;
+        }
+        
+        .feedback-modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            animation: slideInModal 0.3s ease-out;
+        }
+        
+        @keyframes slideInModal {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .feedback-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .feedback-modal-header h3 {
+            margin: 0;
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .feedback-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+        
+        .feedback-close:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .feedback-modal-body {
+            padding: 20px;
+        }
+        
+        .feedback-form-group {
+            margin-bottom: 20px;
+        }
+        
+        .feedback-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .feedback-form-group input,
+        .feedback-form-group select,
+        .feedback-form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+            box-sizing: border-box;
+        }
+        
+        .feedback-form-group input:focus,
+        .feedback-form-group select:focus,
+        .feedback-form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .feedback-form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .feedback-form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+        
+        .feedback-cancel,
+        .feedback-submit {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .feedback-cancel {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .feedback-cancel:hover {
+            background: #e5e7eb;
+        }
+        
+        .feedback-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .feedback-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .feedback-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* ===== ESTADOS DE CARGA ===== */
+        .feedback-loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #6b7280;
+        }
+        
+        .feedback-loading.show {
+            display: flex;
+        }
+        
+        .feedback-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e7eb;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* ===== MENSAJES DE ESTADO ===== */
+        .feedback-message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .feedback-message.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        
+        .feedback-message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+        
         /* ¡A LA MIERDA LAS REGLAS PENDEJAS! */
 
         /* Custom Select Styles - Exactamente iguales a la página emocional */
@@ -433,6 +642,44 @@
     <!-- ===== BOTÓN DE FEEDBACK FLOTANTE ===== -->
     <div class="feedback-trigger" id="feedbackTrigger" onclick="openFeedbackModal()">
         💬
+    </div>
+
+    <!-- ===== MODAL DE FEEDBACK ===== -->
+    <div class="feedback-modal" id="feedbackModal">
+        <div class="feedback-modal-content">
+            <div class="feedback-modal-header">
+                <h3>💬 Deja tu Feedback</h3>
+                <button class="feedback-close" onclick="closeFeedbackModal()">&times;</button>
+            </div>
+            <div class="feedback-modal-body">
+                <form id="feedbackForm">
+                    <div class="feedback-form-group">
+                        <label for="feedbackUser">Tu nombre o identificador:</label>
+                        <input type="text" id="feedbackUser" name="user" placeholder="Ej: Juan Pérez, Usuario 1, etc." required>
+                    </div>
+                    <div class="feedback-form-group">
+                        <label for="feedbackSection">Sección actual:</label>
+                        <select id="feedbackSection" name="section" required>
+                            <option value="">Selecciona una sección</option>
+                            <option value="Home - Encuestas">Home - Encuestas</option>
+                            <option value="Resultados Emocionales">Resultados Emocionales</option>
+                            <option value="Resultados Entorno Laboral">Resultados Entorno Laboral</option>
+                            <option value="Vista General">Vista General</option>
+                            <option value="Descarga de Reportes">Descarga de Reportes</option>
+                            <option value="Otra">Otra</option>
+                        </select>
+                    </div>
+                    <div class="feedback-form-group">
+                        <label for="feedbackComment">Tu comentario:</label>
+                        <textarea id="feedbackComment" name="comment" placeholder="¿Qué funciona bien? ¿Qué falta? ¿Qué mejorarías? ¿Qué necesita tu empresa?" required></textarea>
+                    </div>
+                    <div class="feedback-form-actions">
+                        <button type="button" class="feedback-cancel" onclick="closeFeedbackModal()">Cancelar</button>
+                        <button type="submit" class="feedback-submit">Enviar Feedback</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="dashboard-container">
@@ -1357,15 +1604,161 @@
         
         // ===== SISTEMA DE FEEDBACK =====
         
+        // ===== SISTEMA DE FEEDBACK COMPLETO =====
+        
+        // URL del webhook de Google Apps Script (REEMPLAZAR CON LA URL REAL)
+        const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+        
         // Función para abrir el modal de feedback
         function openFeedbackModal() {
             console.log('💬 Abriendo modal de feedback...');
-            alert('Sistema de feedback activado. En una implementación completa, aquí se abriría un modal para dejar comentarios.');
+            const modal = document.getElementById('feedbackModal');
+            modal.classList.add('show');
+            
+            // Detectar sección actual automáticamente
+            detectCurrentSection();
         }
         
-        // Variables de seguimiento del onboarding
-        let hasClickedEmocional = false;
-        let hasClickedEntorno = false;
+        // Función para cerrar el modal de feedback
+        function closeFeedbackModal() {
+            console.log('💬 Cerrando modal de feedback...');
+            const modal = document.getElementById('feedbackModal');
+            modal.classList.remove('show');
+            
+            // Limpiar formulario
+            document.getElementById('feedbackForm').reset();
+            hideMessage();
+        }
+        
+        // Detectar sección actual automáticamente
+        function detectCurrentSection() {
+            const currentPath = window.location.pathname;
+            const sectionSelect = document.getElementById('feedbackSection');
+            
+            if (currentPath.includes('emocional')) {
+                sectionSelect.value = 'Resultados Emocionales';
+            } else if (currentPath.includes('entorno')) {
+                sectionSelect.value = 'Resultados Entorno Laboral';
+            } else if (currentPath.includes('encuestas')) {
+                sectionSelect.value = 'Home - Encuestas';
+            } else {
+                sectionSelect.value = 'Otra';
+            }
+        }
+        
+        // Manejar envío del formulario de feedback
+        document.addEventListener('DOMContentLoaded', function() {
+            const feedbackForm = document.getElementById('feedbackForm');
+            if (feedbackForm) {
+                feedbackForm.addEventListener('submit', handleFeedbackSubmit);
+            }
+        });
+        
+        // Función para manejar el envío del feedback
+        async function handleFeedbackSubmit(e) {
+            e.preventDefault();
+            console.log('📤 Enviando feedback...');
+            
+            const formData = new FormData(e.target);
+            const feedbackData = {
+                user: formData.get('user'),
+                section: formData.get('section'),
+                comment: formData.get('comment'),
+                timestamp: new Date().toISOString(),
+                url: window.location.href
+            };
+            
+            console.log('📋 Datos del feedback:', feedbackData);
+            
+            // Mostrar estado de carga
+            showLoading(true);
+            hideMessage();
+            
+            try {
+                const response = await fetch(FEEDBACK_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(feedbackData)
+                });
+                
+                const result = await response.json();
+                console.log('✅ Respuesta del servidor:', result);
+                
+                if (result.success) {
+                    showMessage('¡Feedback enviado correctamente! Gracias por tu comentario.', 'success');
+                    setTimeout(() => {
+                        closeFeedbackModal();
+                    }, 2000);
+                } else {
+                    throw new Error(result.error || 'Error desconocido');
+                }
+                
+            } catch (error) {
+                console.error('❌ Error al enviar feedback:', error);
+                showMessage('Error al enviar el feedback. Por favor, inténtalo de nuevo.', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Mostrar/ocultar estado de carga
+        function showLoading(show) {
+            const submitBtn = document.querySelector('.feedback-submit');
+            const loadingDiv = document.querySelector('.feedback-loading');
+            
+            if (show) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Enviando...';
+                if (loadingDiv) loadingDiv.classList.add('show');
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Enviar Feedback';
+                if (loadingDiv) loadingDiv.classList.remove('show');
+            }
+        }
+        
+        // Mostrar mensaje de estado
+        function showMessage(message, type) {
+            // Crear o actualizar mensaje
+            let messageDiv = document.querySelector('.feedback-message');
+            if (!messageDiv) {
+                messageDiv = document.createElement('div');
+                messageDiv.className = 'feedback-message';
+                document.querySelector('.feedback-modal-body').insertBefore(messageDiv, document.querySelector('#feedbackForm'));
+            }
+            
+            messageDiv.textContent = message;
+            messageDiv.className = `feedback-message ${type}`;
+            messageDiv.style.display = 'block';
+        }
+        
+        // Ocultar mensaje
+        function hideMessage() {
+            const messageDiv = document.querySelector('.feedback-message');
+            if (messageDiv) {
+                messageDiv.style.display = 'none';
+            }
+        }
+        
+        // Cerrar modal al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('feedbackModal');
+            if (e.target === modal) {
+                closeFeedbackModal();
+            }
+        });
+        
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('feedbackModal');
+                if (modal.classList.contains('show')) {
+                    closeFeedbackModal();
+                }
+            }
+        });
         
         // Función para detectar clics en filas NOM-035
         function setupRowClickListeners() {
