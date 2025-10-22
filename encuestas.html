@@ -1593,7 +1593,12 @@
             
             // Mostrar overlay
             console.log('📍 Mostrando overlay...');
+            console.log('📍 Clases del overlay antes:', overlay.className);
             overlay.classList.add('show');
+            console.log('📍 Clases del overlay después:', overlay.className);
+            console.log('📍 Estilo display del overlay:', overlay.style.display);
+            console.log('📍 Estilo visibility del overlay:', window.getComputedStyle(overlay).visibility);
+            console.log('📍 Estilo opacity del overlay:', window.getComputedStyle(overlay).opacity);
             console.log('✅ Overlay mostrado');
             
             if (step.target && step.target !== 'center') {
@@ -1785,6 +1790,9 @@
             });
         }
         
+        // Variable para evitar múltiples inicializaciones
+        let onboardingInitialized = false;
+        
         // Iniciar onboarding automáticamente al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
             console.log('📄 ===== DOM CONTENT LOADED =====');
@@ -1803,12 +1811,17 @@
             console.log('- Tooltip:', tooltip ? '✅ Encontrado' : '❌ No encontrado');
             
             // Esperar a que se cargue el contenido
-            console.log('📍 Esperando 1.5 segundos para que se cargue el contenido...');
+            console.log('📍 Esperando 2 segundos para que se cargue el contenido...');
             setTimeout(() => {
-                console.log('🚀 ===== INICIANDO ONBOARDING AUTOMÁTICAMENTE =====');
-                startOnboarding();
-                setupRowClickListeners();
-            }, 1500);
+                if (!onboardingInitialized) {
+                    console.log('🚀 ===== INICIANDO ONBOARDING AUTOMÁTICAMENTE =====');
+                    onboardingInitialized = true;
+                    startOnboarding();
+                    setupRowClickListeners();
+                } else {
+                    console.log('⚠️ Onboarding ya fue inicializado, omitiendo...');
+                }
+            }, 2000);
         });
         
         // También intentar iniciar cuando la ventana se carga completamente
@@ -1822,13 +1835,17 @@
             
             console.log('🔍 Estado del onboarding:');
             console.log('- Overlay visible:', isShowing);
+            console.log('- Onboarding inicializado:', onboardingInitialized);
             
-            if (!isShowing) {
+            if (!isShowing && !onboardingInitialized) {
                 console.log('🚀 ===== INICIANDO ONBOARDING DESDE WINDOW.LOAD =====');
+                onboardingInitialized = true;
                 startOnboarding();
                 setupRowClickListeners();
-            } else {
+            } else if (isShowing) {
                 console.log('✅ Onboarding ya está activo');
+            } else {
+                console.log('⚠️ Onboarding ya fue inicializado');
             }
         });
         
