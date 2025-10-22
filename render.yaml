@@ -1,11 +1,15 @@
 services:
   - type: web
-    name: nom-035-dashboard
+    name: nom-035-prototype
     env: static
-    buildCommand: echo "Static site - no build needed"
-    startCommand: echo "Static site - no server needed"
+    buildCommand: echo "No build needed for static site"
     staticPublishPath: .
     routes:
       - type: rewrite
         source: /*
-        destination: /index.html
+        destination: /resultados-nom035.html
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: FEEDBACK_ENABLED
+        value: true

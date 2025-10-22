@@ -1,19 +1,22 @@
 {
-  "name": "nom-035-results",
+  "name": "nom-035-prototype",
   "version": "1.0.0",
-  "description": "NOM-035 Results Dashboard - Static HTML Site",
-  "main": "server.js",
+  "description": "Prototipo funcional del sistema NOM-035 con sistema de feedback integrado",
+  "main": "resultados-nom035.html",
   "scripts": {
-    "start": "node server.js",
-    "build": "echo 'Static site - no build needed'"
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000"
   },
-  "keywords": ["nom-035", "dashboard", "static", "html"],
+  "keywords": [
+    "nom-035",
+    "prototype",
+    "feedback",
+    "ubits",
+    "hr"
+  ],
   "author": "UBITS",
   "license": "MIT",
   "engines": {
-    "node": ">=18.0.0"
-  },
-  "dependencies": {
-    "express": "^4.18.2"
+    "node": ">=14.0.0"
   }
 }
