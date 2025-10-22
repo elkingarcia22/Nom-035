@@ -1609,7 +1609,19 @@
         // ===== SISTEMA DE FEEDBACK COMPLETO =====
         
         // URL del webhook de Google Apps Script (REEMPLAZAR CON LA URL REAL)
-        const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+        // Para testing, usar un servicio que permita CORS
+        const FEEDBACK_WEBHOOK_URL = 'https://httpbin.org/post';
+        
+        // Modo de desarrollo - simular envío exitoso
+        const DEVELOPMENT_MODE = true;
+        
+        // INSTRUCCIONES PARA CONFIGURAR GOOGLE APPS SCRIPT:
+        // 1. Ve a https://script.google.com/
+        // 2. Crea un nuevo proyecto
+        // 3. Copia el código de google-apps-script.js
+        // 4. Reemplaza YOUR_SHEET_ID con el ID real de tu Google Sheet
+        // 5. Despliega como aplicación web con permisos "Cualquiera"
+        // 6. Reemplaza la URL de arriba con la URL real del webhook
         
         // Función para abrir el modal de feedback
         function openFeedbackModal() {
@@ -1676,6 +1688,23 @@
             showLoading(true);
             hideMessage();
             
+            // Modo de desarrollo - simular envío exitoso
+            if (DEVELOPMENT_MODE) {
+                console.log('🔧 MODO DESARROLLO: Simulando envío exitoso');
+                console.log('📋 Datos que se enviarían:', feedbackData);
+                
+                // Simular delay de red
+                setTimeout(() => {
+                    showMessage('¡Feedback enviado correctamente! (Modo desarrollo)', 'success');
+                    setTimeout(() => {
+                        closeFeedbackModal();
+                    }, 2000);
+                    showLoading(false);
+                }, 1000);
+                
+                return;
+            }
+            
             try {
                 const response = await fetch(FEEDBACK_WEBHOOK_URL, {
                     method: 'POST',
@@ -1685,21 +1714,29 @@
                     body: JSON.stringify(feedbackData)
                 });
                 
-                const result = await response.json();
-                console.log('✅ Respuesta del servidor:', result);
+                console.log('✅ Respuesta del servidor recibida:', response.status);
                 
-                if (result.success) {
+                // Para httpbin.org, siempre mostrar éxito
+                if (response.ok) {
                     showMessage('¡Feedback enviado correctamente! Gracias por tu comentario.', 'success');
                     setTimeout(() => {
                         closeFeedbackModal();
                     }, 2000);
                 } else {
-                    throw new Error(result.error || 'Error desconocido');
+                    throw new Error(`Error del servidor: ${response.status}`);
                 }
                 
             } catch (error) {
                 console.error('❌ Error al enviar feedback:', error);
-                showMessage('Error al enviar el feedback. Por favor, inténtalo de nuevo.', 'error');
+                
+                // Mostrar mensaje más específico según el tipo de error
+                if (error.message.includes('CORS')) {
+                    showMessage('Error de configuración del servidor. Contacta al administrador.', 'error');
+                } else if (error.message.includes('Failed to fetch')) {
+                    showMessage('Error de conexión. Verifica tu internet e inténtalo de nuevo.', 'error');
+                } else {
+                    showMessage('Error al enviar el feedback. Por favor, inténtalo de nuevo.', 'error');
+                }
             } finally {
                 showLoading(false);
             }
@@ -1826,7 +1863,7 @@
             console.log('📍 Verificando estado del onboarding...');
             
             const overlay = document.getElementById('onboardingOverlay');
-            const isShowing = overlay.classList.contains('show');
+            const isShowing = overlay ? overlay.classList.contains('show') : false;
             
             console.log('🔍 Estado del sistema:');
             console.log('- Overlay visible:', isShowing);
