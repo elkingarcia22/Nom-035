@@ -47,25 +47,25 @@ function loadSidebar(activeButton = null) {
                 
                 <!-- Body -->
                 <div class="sidebar-body">
-                    <button class="nav-button" data-section="aprendizaje" data-tooltip="Aprendizaje" onclick="window.location.href='home-learn.html'" style="cursor: pointer;">
+                    <button class="nav-button disabled" data-section="aprendizaje" data-tooltip="Aprendizaje" style="cursor: not-allowed; opacity: 0.5;" disabled>
                         <i class="far fa-graduation-cap"></i>
                     </button>
-                    <button class="nav-button" data-section="diagnóstico" data-tooltip="Diagnóstico" onclick="window.location.href='diagnostico.html'" style="cursor: pointer;">
+                    <button class="nav-button disabled" data-section="diagnóstico" data-tooltip="Diagnóstico" style="cursor: not-allowed; opacity: 0.5;" disabled>
                         <i class="far fa-chart-mixed"></i>
                     </button>
-                    <button class="nav-button" data-section="desempeño" data-tooltip="Desempeño" onclick="window.location.href='evaluaciones-360.html'" style="cursor: pointer;">
+                    <button class="nav-button disabled" data-section="desempeño" data-tooltip="Desempeño" style="cursor: not-allowed; opacity: 0.5;" disabled>
                         <i class="far fa-bars-progress"></i>
                     </button>
                     <button class="nav-button" data-section="encuestas" data-tooltip="Encuestas" onclick="window.location.href='encuestas.html'" style="cursor: pointer;">
                         <i class="far fa-clipboard"></i>
                     </button>
-                    <button class="nav-button" data-section="reclutamiento" data-tooltip="Reclutamiento" onclick="window.location.href='reclutamiento.html'" style="cursor: pointer;">
+                    <button class="nav-button disabled" data-section="reclutamiento" data-tooltip="Reclutamiento" style="cursor: not-allowed; opacity: 0.5;" disabled>
                         <i class="far fa-users"></i>
                     </button>
-                    <button class="nav-button" data-section="tareas" data-tooltip="Tareas" onclick="window.location.href='planes.html'" style="cursor: pointer;">
+                    <button class="nav-button disabled" data-section="tareas" data-tooltip="Tareas" style="cursor: not-allowed; opacity: 0.5;" disabled>
                         <i class="far fa-layer-group"></i>
                     </button>
-                    <button class="nav-button" data-section="ubits-ai" data-tooltip="UBITS AI" onclick="window.location.href='ubits-ai.html'" style="cursor: pointer;">
+                    <button class="nav-button disabled" data-section="ubits-ai" data-tooltip="UBITS AI" style="cursor: not-allowed; opacity: 0.5;" disabled>
                         <i class="far fa-sparkles"></i>
                     </button>
                 </div>
