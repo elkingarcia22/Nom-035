@@ -46,6 +46,31 @@
             box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
         }
         
+        .feedback-export {
+            position: fixed;
+            bottom: 20px;
+            right: 90px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+            z-index: 1000;
+            font-size: 20px;
+            color: white;
+            transition: all 0.3s ease;
+            animation: slideInFloating 0.5s ease-out 0.2s both;
+        }
+        
+        .feedback-export:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+        
         @keyframes pulse {
             0% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3); }
             50% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.6), 0 0 0 10px rgba(102, 126, 234, 0.1); }
@@ -648,6 +673,11 @@
     <!-- ===== BOTÓN DE FEEDBACK FLOTANTE ===== -->
     <div class="feedback-trigger" id="feedbackTrigger" onclick="openFeedbackModal()">
         💬
+    </div>
+    
+    <!-- ===== BOTÓN DE EXPORTAR FEEDBACK ===== -->
+    <div class="feedback-export" id="feedbackExport" onclick="exportFeedback()" title="Exportar feedback guardado">
+        📁
     </div>
 
     <!-- ===== MODAL DE FEEDBACK ===== -->
@@ -1608,11 +1638,47 @@
         
         // ===== SISTEMA DE FEEDBACK COMPLETO =====
         
-        // URL del webhook de Google Apps Script (ACTUALIZADA CON CORS)
-        const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzKqCwZj410D4PYv88TSZPeMmTODz-aUaLj3lW4BmUWGHxBTnTd0ZzI06XE37F73FEl/exec';
+        // SISTEMA DE FEEDBACK ALTERNATIVO (SIN GOOGLE APPS SCRIPT)
+        // Debido a problemas CORS, usamos sistema local
         
         // Modo de desarrollo - simular envío exitoso
-        const DEVELOPMENT_MODE = false;
+        const DEVELOPMENT_MODE = true;
+        
+        // Función para guardar feedback localmente
+        function saveFeedbackLocally(feedbackData) {
+            // Guardar en localStorage para persistencia
+            const existingFeedback = JSON.parse(localStorage.getItem('nom035_feedback') || '[]');
+            existingFeedback.push({
+                ...feedbackData,
+                id: Date.now(),
+                savedAt: new Date().toISOString()
+            });
+            localStorage.setItem('nom035_feedback', JSON.stringify(existingFeedback));
+            
+            console.log('💾 Feedback guardado localmente:', feedbackData);
+            console.log('📊 Total de feedback guardado:', existingFeedback.length);
+            
+            return existingFeedback;
+        }
+        
+        // Función para obtener todos los feedback guardados
+        function getAllFeedback() {
+            return JSON.parse(localStorage.getItem('nom035_feedback') || '[]');
+        }
+        
+        // Función para exportar feedback como JSON
+        function exportFeedback() {
+            const feedback = getAllFeedback();
+            const dataStr = JSON.stringify(feedback, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `nom035_feedback_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            console.log('📁 Feedback exportado como JSON');
+        }
         
         // INSTRUCCIONES PARA CONFIGURAR GOOGLE APPS SCRIPT:
         // 1. Ve a https://script.google.com/
@@ -1687,22 +1753,23 @@
             showLoading(true);
             hideMessage();
             
-            // Modo de desarrollo - simular envío exitoso
-            if (DEVELOPMENT_MODE) {
-                console.log('🔧 MODO DESARROLLO: Simulando envío exitoso');
-                console.log('📋 Datos que se enviarían:', feedbackData);
-                
-                // Simular delay de red
+            // Sistema de feedback local (sin Google Apps Script)
+            console.log('💾 GUARDANDO FEEDBACK LOCALMENTE');
+            console.log('📋 Datos del feedback:', feedbackData);
+            
+            // Guardar localmente
+            const savedFeedback = saveFeedbackLocally(feedbackData);
+            
+            // Simular delay de red
+            setTimeout(() => {
+                showMessage(`¡Feedback guardado! (${savedFeedback.length} comentarios guardados)`, 'success');
                 setTimeout(() => {
-                    showMessage('¡Feedback enviado correctamente! (Modo desarrollo)', 'success');
-                    setTimeout(() => {
-                        closeFeedbackModal();
-                    }, 2000);
-                    showLoading(false);
-                }, 1000);
-                
-                return;
-            }
+                    closeFeedbackModal();
+                }, 2000);
+                showLoading(false);
+            }, 1000);
+            
+            return;
             
             try {
                 const response = await fetch(FEEDBACK_WEBHOOK_URL, {
