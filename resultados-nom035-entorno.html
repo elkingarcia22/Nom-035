@@ -4140,40 +4140,56 @@
         }
 
         function downloadIndividualResponses() {
-            // Datos simulados de respuestas individuales
-            const participants = [
-                'Ana García', 'Carlos López', 'María Rodríguez', 'Pedro Martínez', 'Laura Sánchez',
-                'Juan Pérez', 'Sofia Castro', 'Diego Herrera', 'Carmen Vega', 'Roberto Silva',
-                'Elena Morales', 'Andrés Ruiz', 'Patricia Díaz', 'Fernando Torres', 'Isabel Moreno'
-            ];
+            // Extraer datos reales de la tabla de individual
+            const tbody = document.querySelector('#new-individual-panel tbody');
+            if (!tbody) {
+                alert('No se encontró la tabla de respuestas individuales');
+                return;
+            }
 
-            const questions = [
-                '¿Mi organización es un lugar muy familiar?',
-                '¿La gente comparte mucho de sí misma?',
-                '¿Existe un ambiente de confianza?',
-                '¿Se fomenta la comunicación abierta?',
-                '¿Se identifican factores de riesgo?',
-                '¿Se implementan medidas preventivas?',
-                '¿Se respetan los horarios de trabajo?',
-                '¿Se evita el trabajo excesivo?',
-                '¿Los líderes son accesibles?',
-                '¿Se reconoce el trabajo de los empleados?'
-            ];
+            const rows = tbody.querySelectorAll('tr');
+            if (rows.length === 0) {
+                alert('No hay datos en la tabla de respuestas individuales');
+                return;
+            }
 
-            const headers = ['Participante', 'Área', 'Cargo', ...questions];
+            // Generar headers para las 72 preguntas
+            const headers = ['Participante', 'Cargo', 'Nivel de Riesgo', 'Porcentaje'];
+            for (let i = 1; i <= 72; i++) {
+                headers.push(`Pregunta ${i}`);
+            }
+
             const data = [];
 
-            participants.forEach((participant, index) => {
-                const area = ['Ventas', 'Marketing', 'RRHH', 'Tecnología', 'Finanzas'][index % 5];
-                const cargo = ['Gerente', 'Coordinador', 'Analista', 'Asistente'][index % 4];
-                const row = [participant, area, cargo];
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length < 3) return;
+
+                const rowData = [];
                 
-                // Generar respuestas aleatorias (1-5)
-                questions.forEach(() => {
-                    row.push(Math.floor(Math.random() * 5) + 1);
-                });
+                // Extraer nombre del participante
+                const participantName = cells[0].querySelector('.participant-name');
+                const participantRole = cells[0].querySelector('.participant-role');
+                const name = participantName ? participantName.textContent.trim() : '';
+                const role = participantRole ? participantRole.textContent.trim() : '';
                 
-                data.push(row);
+                // Extraer nivel de riesgo
+                const riskBadge = cells[1].querySelector('.risk-badge');
+                const riskLevel = riskBadge ? riskBadge.textContent.trim() : '';
+                
+                // Extraer porcentaje
+                const percentage = cells[2].textContent.trim();
+                
+                rowData.push(name, role, riskLevel, percentage);
+                
+                // Extraer respuestas de las 72 preguntas
+                for (let i = 3; i < cells.length && i < 75; i++) {
+                    const responseSpan = cells[i].querySelector('span');
+                    const response = responseSpan ? responseSpan.textContent.trim() : '';
+                    rowData.push(response);
+                }
+                
+                data.push(rowData);
             });
 
             const csvContent = convertToCSV(data, headers);
@@ -4182,31 +4198,46 @@
         }
 
         function downloadResultsByDimension() {
-            // Datos de resultados por dimensión
-            const dimensions = [
-                'Ambiente de trabajo',
-                'Factores de riesgo',
-                'Organización del tiempo',
-                'Liderazgo'
-            ];
+            // Extraer datos reales de la tabla de dimensiones
+            const tbody = document.querySelector('#new-dimensions-panel tbody');
+            if (!tbody) {
+                alert('No se encontró la tabla de dimensiones');
+                return;
+            }
 
-            const headers = ['Dimensión', 'Pregunta', 'Promedio', 'Desviación Estándar', 'Nivel de Riesgo'];
+            const rows = tbody.querySelectorAll('tr');
+            if (rows.length === 0) {
+                alert('No hay datos en la tabla de dimensiones');
+                return;
+            }
+
+            const headers = ['Dimensión', 'Dominio', 'Promedio', 'Nivel de Riesgo', 'Estado'];
             const data = [];
 
-            dimensions.forEach(dimension => {
-                const questions = [
-                    '¿Mi organización es un lugar muy familiar?',
-                    '¿Existe un ambiente de confianza?',
-                    '¿Se fomenta la comunicación abierta?'
-                ];
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length < 4) return;
 
-                questions.forEach(question => {
-                    const promedio = (Math.random() * 2 + 2).toFixed(2); // 2-4
-                    const desviacion = (Math.random() * 0.8 + 0.2).toFixed(2); // 0.2-1.0
-                    const nivel = promedio < 2.5 ? 'Alto' : promedio < 3.5 ? 'Medio' : 'Bajo';
-                    
-                    data.push([dimension, question, promedio, desviacion, nivel]);
-                });
+                const rowData = [];
+                
+                // Extraer dimensión
+                const dimension = cells[0].textContent.trim();
+                
+                // Extraer dominio
+                const domain = cells[1].textContent.trim();
+                
+                // Extraer promedio
+                const average = cells[2].textContent.trim();
+                
+                // Extraer nivel de riesgo
+                const riskBadge = cells[3].querySelector('.risk-badge');
+                const riskLevel = riskBadge ? riskBadge.textContent.trim() : '';
+                
+                // Extraer estado (si existe)
+                const status = cells[4] ? cells[4].textContent.trim() : '';
+                
+                rowData.push(dimension, domain, average, riskLevel, status);
+                data.push(rowData);
             });
 
             const csvContent = convertToCSV(data, headers);
@@ -4215,20 +4246,47 @@
         }
 
         function downloadGeneralResults() {
-            // Datos de resultados generales
-            const headers = ['Métrica', 'Valor', 'Porcentaje', 'Estado'];
-            const data = [
-                ['Total Participantes', '150', '100%', 'Completado'],
-                ['Tasa de Respuesta', '98.7%', '98.7%', 'Excelente'],
-                ['Promedio General', '3.2', '64%', 'Medio'],
-                ['Nivel de Riesgo Alto', '12', '8%', 'Preocupante'],
-                ['Nivel de Riesgo Medio', '45', '30%', 'Atención'],
-                ['Nivel de Riesgo Bajo', '93', '62%', 'Adecuado'],
-                ['Ambiente de Trabajo', '3.4', '68%', 'Bueno'],
-                ['Factores de Riesgo', '2.8', '56%', 'Regular'],
-                ['Organización del Tiempo', '3.1', '62%', 'Medio'],
-                ['Liderazgo', '3.5', '70%', 'Bueno']
-            ];
+            // Extraer datos reales de la tabla de vista general
+            const tbody = document.querySelector('#new-overview-panel tbody');
+            if (!tbody) {
+                alert('No se encontró la tabla de vista general');
+                return;
+            }
+
+            const rows = tbody.querySelectorAll('tr');
+            if (rows.length === 0) {
+                alert('No hay datos en la tabla de vista general');
+                return;
+            }
+
+            const headers = ['Categoría', 'Dominio', 'Dimensión', 'Promedio', 'Nivel de Riesgo'];
+            const data = [];
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length < 4) return;
+
+                const rowData = [];
+                
+                // Extraer categoría
+                const category = cells[0].textContent.trim();
+                
+                // Extraer dominio
+                const domain = cells[1].textContent.trim();
+                
+                // Extraer dimensión
+                const dimension = cells[2].textContent.trim();
+                
+                // Extraer promedio
+                const average = cells[3].textContent.trim();
+                
+                // Extraer nivel de riesgo
+                const riskBadge = cells[4] ? cells[4].querySelector('.risk-badge') : null;
+                const riskLevel = riskBadge ? riskBadge.textContent.trim() : '';
+                
+                rowData.push(category, domain, dimension, average, riskLevel);
+                data.push(rowData);
+            });
 
             const csvContent = convertToCSV(data, headers);
             downloadCSVFile(csvContent, 'resultados_generales_nom035_entorno.csv');
