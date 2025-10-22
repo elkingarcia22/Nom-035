@@ -705,14 +705,26 @@
         
         // Función para iniciar el prototipo
         function startPrototype() {
+            console.log('🚀 ===== INICIANDO PROTOTIPO =====');
+            console.log('📍 Paso 1: Ocultando overlay de bienvenida');
+            
             document.getElementById('welcomeOverlay').style.display = 'none';
             document.getElementById('feedbackTrigger').style.display = 'flex';
             document.getElementById('sectionIndicator').style.display = 'block';
             
+            console.log('✅ Overlay ocultado correctamente');
+            console.log('📍 Paso 2: Preparando redirección a encuestas.html');
+            
             // Redirigir automáticamente a la página de encuestas
             setTimeout(() => {
-                console.log('🔄 Redirigiendo a encuestas.html...');
+                console.log('🔄 ===== REDIRIGIENDO A ENCUESTAS =====');
+                console.log('📍 URL actual:', window.location.href);
+                console.log('📍 Redirigiendo a: encuestas.html');
+                console.log('📍 Método: window.location.href');
+                
                 window.location.href = 'encuestas.html';
+                
+                console.log('✅ Comando de redirección ejecutado');
             }, 100);
         }
         

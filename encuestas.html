@@ -1520,86 +1520,145 @@
         
         // Iniciar onboarding
         function startOnboarding() {
-            console.log('🚀 Iniciando onboarding en encuestas...');
+            console.log('🎯 ===== INICIANDO ONBOARDING EN ENCUESTAS =====');
+            console.log('📍 Paso 1: Inicializando pasos del onboarding');
+            
             initializeOnboardingSteps();
             onboardingStep = 0;
             
-            // Debug: verificar elementos disponibles
-            console.log('🔍 Elementos disponibles en encuestas:');
-            console.log('- Filas de tabla:', document.querySelectorAll('tbody tr'));
-            console.log('- Filas emocional:', document.querySelectorAll('tr:contains("emocional")'));
-            console.log('- Filas entorno:', document.querySelectorAll('tr:contains("entorno")'));
+            console.log('✅ Pasos inicializados:', onboardingSteps.length);
+            console.log('📍 Paso 2: Verificando elementos de la tabla');
             
+            // Debug: verificar elementos disponibles
+            const allRows = document.querySelectorAll('tbody tr');
+            const emocionalRows = document.querySelectorAll('tr:contains("emocional")');
+            const entornoRows = document.querySelectorAll('tr:contains("entorno")');
+            
+            console.log('🔍 ===== ELEMENTOS DISPONIBLES =====');
+            console.log('📊 Total de filas en tabla:', allRows.length);
+            console.log('💖 Filas emocional encontradas:', emocionalRows.length);
+            console.log('💼 Filas entorno encontradas:', entornoRows.length);
+            
+            // Log detallado de cada fila
+            allRows.forEach((row, index) => {
+                const rowText = row.textContent.toLowerCase();
+                console.log(`📝 Fila ${index + 1}:`, rowText.substring(0, 100) + '...');
+                
+                if (rowText.includes('emocional') && rowText.includes('nom 035')) {
+                    console.log('✅ Fila emocional NOM-035 encontrada:', row);
+                }
+                if (rowText.includes('entorno') && rowText.includes('nom 035')) {
+                    console.log('✅ Fila entorno NOM-035 encontrada:', row);
+                }
+            });
+            
+            console.log('📍 Paso 3: Mostrando primer paso del onboarding');
             showOnboardingStep();
         }
         
         // Mostrar paso actual del onboarding
         function showOnboardingStep() {
+            console.log('🎯 ===== MOSTRANDO PASO DEL ONBOARDING =====');
+            console.log('📍 Paso actual:', onboardingStep + 1, 'de', onboardingSteps.length);
+            
             if (onboardingStep >= onboardingSteps.length) {
+                console.log('✅ Onboarding completado, finalizando...');
                 finishOnboarding();
                 return;
             }
             
             const step = onboardingSteps[onboardingStep];
+            console.log('📋 Paso configurado:', step);
+            
             const overlay = document.getElementById('onboardingOverlay');
             const spotlight = document.getElementById('onboardingSpotlight');
             const tooltip = document.getElementById('onboardingTooltip');
             
+            console.log('🔍 Elementos del DOM:');
+            console.log('- Overlay:', overlay);
+            console.log('- Spotlight:', spotlight);
+            console.log('- Tooltip:', tooltip);
+            
             // Mostrar overlay
+            console.log('📍 Mostrando overlay...');
             overlay.classList.add('show');
+            console.log('✅ Overlay mostrado');
             
             if (step.target && step.target !== 'center') {
+                console.log('📍 Buscando elemento objetivo:', step.target);
                 // Buscar elemento objetivo
                 const targetElement = findTargetElement(step.target);
+                console.log('🎯 Elemento encontrado:', targetElement);
+                
                 if (targetElement) {
+                    console.log('📍 Destacando elemento...');
                     highlightElement(targetElement, spotlight);
+                    console.log('📍 Posicionando tooltip...');
                     positionTooltip(targetElement, tooltip, step.position);
+                    console.log('✅ Elemento destacado y tooltip posicionado');
                 } else {
+                    console.log('⚠️ Elemento no encontrado, mostrando en centro');
                     // Si no encuentra el elemento, mostrar en el centro
                     positionTooltip(null, tooltip, 'center');
                 }
             } else {
+                console.log('📍 Mostrando en centro (sin elemento objetivo)');
                 // Mostrar en el centro
                 positionTooltip(null, tooltip, 'center');
             }
             
+            console.log('📍 Actualizando contenido del tooltip...');
             // Actualizar contenido del tooltip
             updateTooltipContent(step);
+            console.log('✅ Paso del onboarding mostrado correctamente');
         }
         
         // Buscar elemento objetivo
         function findTargetElement(selector) {
+            console.log('🔍 ===== BUSCANDO ELEMENTO OBJETIVO =====');
+            console.log('📍 Selector recibido:', selector);
+            
             if (selector.includes('contains')) {
                 const text = selector.match(/contains\('([^']+)'\)/)[1];
                 const allRows = document.querySelectorAll('tbody tr');
                 
                 console.log(`🔍 Buscando elemento con texto: "${text}"`);
-                console.log(`📋 Filas disponibles:`, allRows.length);
+                console.log(`📋 Total de filas disponibles:`, allRows.length);
                 
-                for (let row of allRows) {
+                for (let i = 0; i < allRows.length; i++) {
+                    const row = allRows[i];
                     const rowText = row.textContent.toLowerCase();
-                    console.log(`📝 Fila: "${rowText}"`);
+                    console.log(`📝 Fila ${i + 1}: "${rowText.substring(0, 50)}..."`);
                     
                     if (text.toLowerCase() === 'emocional') {
                         if (rowText.includes('emocional') && rowText.includes('nom 035')) {
-                            console.log('✅ Encontrada fila emocional:', row);
+                            console.log('✅ ===== FILA EMOCIONAL ENCONTRADA =====');
+                            console.log('📍 Fila completa:', row);
+                            console.log('📍 Texto completo:', rowText);
                             return row;
                         }
                     } else if (text.toLowerCase() === 'entorno laboral') {
                         if (rowText.includes('entorno') && rowText.includes('nom 035')) {
-                            console.log('✅ Encontrada fila entorno laboral:', row);
+                            console.log('✅ ===== FILA ENTORNO LABORAL ENCONTRADA =====');
+                            console.log('📍 Fila completa:', row);
+                            console.log('📍 Texto completo:', rowText);
                             return row;
                         }
                     } else if (rowText.includes(text.toLowerCase())) {
-                        console.log('✅ Encontrada fila genérica:', row);
+                        console.log('✅ Fila genérica encontrada:', row);
                         return row;
                     }
                 }
                 
-                console.log('❌ No se encontró el elemento');
+                console.log('❌ ===== ELEMENTO NO ENCONTRADO =====');
+                console.log('📍 Texto buscado:', text);
+                console.log('📍 Filas revisadas:', allRows.length);
             }
             
-            return document.querySelector(selector);
+            console.log('📍 Intentando selector directo...');
+            const directElement = document.querySelector(selector);
+            console.log('📍 Elemento directo encontrado:', directElement);
+            return directElement;
         }
         
         // Destacar elemento
@@ -1716,11 +1775,25 @@
         
         // Iniciar onboarding automáticamente al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('📄 Página encuestas.html cargada');
+            console.log('📄 ===== DOM CONTENT LOADED =====');
+            console.log('📍 Página encuestas.html cargada');
+            console.log('📍 URL actual:', window.location.href);
+            console.log('📍 Timestamp:', new Date().toISOString());
+            
+            // Verificar elementos críticos
+            const overlay = document.getElementById('onboardingOverlay');
+            const spotlight = document.getElementById('onboardingSpotlight');
+            const tooltip = document.getElementById('onboardingTooltip');
+            
+            console.log('🔍 Elementos críticos del onboarding:');
+            console.log('- Overlay:', overlay ? '✅ Encontrado' : '❌ No encontrado');
+            console.log('- Spotlight:', spotlight ? '✅ Encontrado' : '❌ No encontrado');
+            console.log('- Tooltip:', tooltip ? '✅ Encontrado' : '❌ No encontrado');
             
             // Esperar a que se cargue el contenido
+            console.log('📍 Esperando 1.5 segundos para que se cargue el contenido...');
             setTimeout(() => {
-                console.log('🚀 Iniciando onboarding automáticamente...');
+                console.log('🚀 ===== INICIANDO ONBOARDING AUTOMÁTICAMENTE =====');
                 startOnboarding();
                 setupRowClickListeners();
             }, 1500);
@@ -1728,11 +1801,22 @@
         
         // También intentar iniciar cuando la ventana se carga completamente
         window.addEventListener('load', function() {
-            console.log('🔄 Ventana completamente cargada, verificando onboarding...');
-            if (!document.getElementById('onboardingOverlay').classList.contains('show')) {
-                console.log('🚀 Iniciando onboarding desde window.load...');
+            console.log('🔄 ===== WINDOW LOAD EVENT =====');
+            console.log('📍 Ventana completamente cargada');
+            console.log('📍 Verificando estado del onboarding...');
+            
+            const overlay = document.getElementById('onboardingOverlay');
+            const isShowing = overlay.classList.contains('show');
+            
+            console.log('🔍 Estado del onboarding:');
+            console.log('- Overlay visible:', isShowing);
+            
+            if (!isShowing) {
+                console.log('🚀 ===== INICIANDO ONBOARDING DESDE WINDOW.LOAD =====');
                 startOnboarding();
                 setupRowClickListeners();
+            } else {
+                console.log('✅ Onboarding ya está activo');
             }
         });
         
