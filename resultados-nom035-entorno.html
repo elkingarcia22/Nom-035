@@ -4199,7 +4199,7 @@
 
         function downloadResultsByDimension() {
             // Extraer datos reales de la tabla de dimensiones
-            const tbody = document.querySelector('#new-dimensions-panel tbody');
+            const tbody = document.querySelector('#new-dimensions-panel .results-table tbody');
             if (!tbody) {
                 alert('No se encontró la tabla de dimensiones');
                 return;
@@ -4211,12 +4211,12 @@
                 return;
             }
 
-            const headers = ['Dimensión', 'Dominio', 'Promedio', 'Nivel de Riesgo', 'Estado'];
+            const headers = ['Dimensión', 'Dominio', 'Total Usuarios en Riesgo', '% Colaboradores Afectados', 'Nivel de Riesgo'];
             const data = [];
 
             rows.forEach(row => {
                 const cells = row.querySelectorAll('td');
-                if (cells.length < 4) return;
+                if (cells.length < 5) return;
 
                 const rowData = [];
                 
@@ -4226,17 +4226,17 @@
                 // Extraer dominio
                 const domain = cells[1].textContent.trim();
                 
-                // Extraer promedio
-                const average = cells[2].textContent.trim();
+                // Extraer total usuarios en riesgo
+                const totalUsers = cells[2].textContent.trim();
+                
+                // Extraer porcentaje de colaboradores afectados
+                const percentage = cells[3].textContent.trim();
                 
                 // Extraer nivel de riesgo
-                const riskBadge = cells[3].querySelector('.risk-badge');
+                const riskBadge = cells[4].querySelector('.risk-badge');
                 const riskLevel = riskBadge ? riskBadge.textContent.trim() : '';
                 
-                // Extraer estado (si existe)
-                const status = cells[4] ? cells[4].textContent.trim() : '';
-                
-                rowData.push(dimension, domain, average, riskLevel, status);
+                rowData.push(dimension, domain, totalUsers, percentage, riskLevel);
                 data.push(rowData);
             });
 
