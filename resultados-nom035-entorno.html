@@ -2645,6 +2645,10 @@
                                         <i class="far fa-chart-bar"></i>
                                         Resultados generales
                                     </a>
+                                    <a href="#" onclick="downloadDimensionsByParticipant()">
+                                        <i class="far fa-user-chart"></i>
+                                        Dimensiones por participante
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -4293,6 +4297,66 @@
 
             const csvContent = convertToCSV(data, headers);
             downloadCSVFile(csvContent, 'resultados_generales_nom035_entorno.csv');
+            closeDownloadDropdown();
+        }
+
+        function downloadDimensionsByParticipant() {
+            // Extraer datos de todos los participantes y sus dimensiones
+            const participants = individualParticipantsData;
+            if (!participants || participants.length === 0) {
+                alert('No se encontraron datos de participantes');
+                return;
+            }
+
+            const headers = ['Participante', 'Cargo', 'Departamento', 'Dimensión', 'Dominio', 'Puntuación', 'Porcentaje', 'Nivel de Riesgo'];
+            const csvData = [];
+
+            participants.forEach(participant => {
+                // Verificar si el participante tiene datos de dimensiones
+                if (participant.dimensionsResults) {
+                    Object.entries(participant.dimensionsResults).forEach(([dimension, dimensionData]) => {
+                        const rowData = [
+                            participant.name,
+                            participant.role,
+                            participant.details.department,
+                            dimension,
+                            dimensionData.domain,
+                            dimensionData.score,
+                            dimensionData.percentage,
+                            dimensionData.riskLevel
+                        ];
+                        csvData.push(rowData);
+                    });
+                } else {
+                    // Si no tiene datos de dimensiones, crear filas con datos vacíos
+                    const dimensions = [
+                        'Condiciones físicas', 'Condiciones de seguridad', 'Condiciones de higiene',
+                        'Ambiente de trabajo', 'Carga de trabajo', 'Falta de control sobre el trabajo',
+                        'Jornadas de trabajo', 'Trabajo en turnos', 'Interferencia en la relación trabajo-familia',
+                        'Liderazgo', 'Relaciones en el trabajo', 'Violencia', 'Reconocimiento del desempeño',
+                        'Insuficiente sentido de pertenencia e inestabilidad', 'Condiciones peligrosas e insalubres',
+                        'Carga cuantitativa de trabajo', 'Falta de control y autonomía sobre el trabajo',
+                        'Falta de claridad de funciones', 'Jornadas de trabajo extensas', 'Trabajo en turnos nocturnos'
+                    ];
+                    
+                    dimensions.forEach(dimension => {
+                        const rowData = [
+                            participant.name,
+                            participant.role,
+                            participant.details.department,
+                            dimension,
+                            'N/A',
+                            'N/A',
+                            'N/A',
+                            'N/A'
+                        ];
+                        csvData.push(rowData);
+                    });
+                }
+            });
+
+            const csvContent = convertToCSV(csvData, headers);
+            downloadCSVFile(csvContent, 'dimensiones_por_participante_nom035_entorno.csv');
             closeDownloadDropdown();
         }
 
