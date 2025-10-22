@@ -282,6 +282,165 @@
             backdrop-filter: blur(10px);
         }
         
+        /* ===== SISTEMA DE ONBOARDING TIPO USERPILOT ===== */
+        
+        /* Overlay oscuro para enmascarar elementos */
+        .onboarding-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10001;
+            display: none;
+        }
+        
+        .onboarding-overlay.show {
+            display: block;
+        }
+        
+        /* Spotlight para destacar elemento */
+        .onboarding-spotlight {
+            position: absolute;
+            border: 3px solid #667eea;
+            border-radius: 8px;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
+            z-index: 10002;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 0 0 rgba(102, 126, 234, 0.7); }
+            50% { box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 0 10px rgba(102, 126, 234, 0.3); }
+            100% { box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 0 0 rgba(102, 126, 234, 0.7); }
+        }
+        
+        /* Tooltip de onboarding */
+        .onboarding-tooltip {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            z-index: 10003;
+            max-width: 350px;
+            animation: slideInTooltip 0.3s ease-out;
+        }
+        
+        @keyframes slideInTooltip {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .tooltip-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .tooltip-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            margin-right: 12px;
+        }
+        
+        .tooltip-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0;
+        }
+        
+        .tooltip-content {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .tooltip-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        
+        .tooltip-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tooltip-button.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .tooltip-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .tooltip-button.secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .tooltip-button.secondary:hover {
+            background: #e5e7eb;
+        }
+        
+        /* Flecha del tooltip */
+        .tooltip-arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+        }
+        
+        .tooltip-arrow.top {
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-top-color: white;
+        }
+        
+        .tooltip-arrow.bottom {
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-color: white;
+        }
+        
+        .tooltip-arrow.left {
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-left-color: white;
+        }
+        
+        .tooltip-arrow.right {
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-right-color: white;
+        }
+        
         /* ¡A LA MIERDA LAS REGLAS PENDEJAS! */
 
         /* Estilos específicos para content-sections - idéntico a left-wrapper */
@@ -409,8 +568,9 @@
             <div class="features-list">
                 <h3 style="text-align: center; margin-bottom: 16px; color: #1f2937;">🎯 Lo que vas a probar:</h3>
                 <ul style="list-style: none; padding: 0;">
+                    <li><i class="fas fa-heart"></i> <strong>Resultados Emocionales:</strong> Análisis de acontecimientos traumáticos y afectación</li>
+                    <li><i class="fas fa-briefcase"></i> <strong>Resultados Entorno Laboral:</strong> Evaluación de condiciones de trabajo</li>
                     <li><i class="fas fa-chart-bar"></i> <strong>Vista General:</strong> Dashboard con métricas y gráficos</li>
-                    <li><i class="fas fa-users"></i> <strong>Resultados Individuales:</strong> Análisis detallado por participante</li>
                     <li><i class="fas fa-download"></i> <strong>Descarga de Reportes:</strong> Exportación de datos en CSV</li>
                     <li><i class="fas fa-comment"></i> <strong>Sistema de Feedback:</strong> Comentarios por sección</li>
                 </ul>
@@ -464,6 +624,25 @@
     <!-- ===== INDICADOR DE SECCIÓN ===== -->
     <div class="section-indicator" id="sectionIndicator">
         📊 Dashboard Principal
+    </div>
+
+    <!-- ===== SISTEMA DE ONBOARDING ===== -->
+    <div class="onboarding-overlay" id="onboardingOverlay">
+        <div class="onboarding-spotlight" id="onboardingSpotlight"></div>
+        <div class="onboarding-tooltip" id="onboardingTooltip">
+            <div class="tooltip-header">
+                <div class="tooltip-icon" id="tooltipIcon">🎯</div>
+                <h3 class="tooltip-title" id="tooltipTitle">¡Bienvenido!</h3>
+            </div>
+            <div class="tooltip-content" id="tooltipContent">
+                Te vamos a guiar paso a paso por el prototipo NOM-035.
+            </div>
+            <div class="tooltip-buttons">
+                <button class="tooltip-button secondary" onclick="skipOnboarding()">Omitir</button>
+                <button class="tooltip-button primary" onclick="nextOnboardingStep()" id="tooltipNextBtn">Comenzar</button>
+            </div>
+            <div class="tooltip-arrow" id="tooltipArrow"></div>
+        </div>
     </div>
 
     <div class="dashboard-container">
@@ -530,8 +709,8 @@
             document.getElementById('feedbackTrigger').style.display = 'flex';
             document.getElementById('sectionIndicator').style.display = 'block';
             
-            // Mostrar mensaje de bienvenida
-            showNotification('¡Bienvenido! Usa el botón 💬 para dejar feedback en cada sección.', 'success');
+            // Iniciar el sistema de onboarding
+            startOnboarding();
         }
         
         // Función para abrir el modal de feedback
@@ -648,6 +827,179 @@
                 updateCurrentSection(tabText);
             }
         });
+        
+        // ===== SISTEMA DE ONBOARDING TIPO USERPILOT =====
+        
+        // Variables del onboarding
+        let onboardingStep = 0;
+        let onboardingSteps = [];
+        
+        // Definir pasos del onboarding
+        function initializeOnboardingSteps() {
+            onboardingSteps = [
+                {
+                    target: null,
+                    title: "¡Bienvenido al Prototipo NOM-035!",
+                    content: "Te vamos a guiar paso a paso por las dos opciones principales: <strong>Resultados Emocionales</strong> y <strong>Resultados de Entorno Laboral</strong>.",
+                    icon: "🎯",
+                    position: "center"
+                },
+                {
+                    target: ".nav-tab:contains('Encuestas')",
+                    title: "📊 Dashboard Principal",
+                    content: "Aquí tienes el dashboard principal. Verás dos opciones principales que vamos a explorar: <strong>Emocional</strong> y <strong>Entorno Laboral</strong>.",
+                    icon: "📊",
+                    position: "bottom"
+                },
+                {
+                    target: ".nav-tab:contains('Emocional')",
+                    title: "💖 Resultados Emocionales",
+                    content: "Haz clic aquí para ver los <strong>Resultados Emocionales</strong>. Esta sección analiza acontecimientos traumáticos y su afectación en los empleados.",
+                    icon: "💖",
+                    position: "bottom"
+                },
+                {
+                    target: ".nav-tab:contains('Entorno Laboral')",
+                    title: "💼 Resultados Entorno Laboral", 
+                    content: "Después de ver Emocional, podrás hacer clic aquí para explorar los <strong>Resultados de Entorno Laboral</strong> que evalúan las condiciones de trabajo.",
+                    icon: "💼",
+                    position: "bottom"
+                }
+            ];
+        }
+        
+        // Iniciar onboarding
+        function startOnboarding() {
+            initializeOnboardingSteps();
+            onboardingStep = 0;
+            showOnboardingStep();
+        }
+        
+        // Mostrar paso actual del onboarding
+        function showOnboardingStep() {
+            if (onboardingStep >= onboardingSteps.length) {
+                finishOnboarding();
+                return;
+            }
+            
+            const step = onboardingSteps[onboardingStep];
+            const overlay = document.getElementById('onboardingOverlay');
+            const spotlight = document.getElementById('onboardingSpotlight');
+            const tooltip = document.getElementById('onboardingTooltip');
+            
+            // Mostrar overlay
+            overlay.classList.add('show');
+            
+            if (step.target && step.target !== 'center') {
+                // Buscar elemento objetivo
+                const targetElement = findTargetElement(step.target);
+                if (targetElement) {
+                    highlightElement(targetElement, spotlight);
+                    positionTooltip(targetElement, tooltip, step.position);
+                } else {
+                    // Si no encuentra el elemento, mostrar en el centro
+                    positionTooltip(null, tooltip, 'center');
+                }
+            } else {
+                // Mostrar en el centro
+                positionTooltip(null, tooltip, 'center');
+            }
+            
+            // Actualizar contenido del tooltip
+            updateTooltipContent(step);
+        }
+        
+        // Buscar elemento objetivo
+        function findTargetElement(selector) {
+            if (selector.includes('contains')) {
+                const text = selector.match(/contains\('([^']+)'\)/)[1];
+                const elements = document.querySelectorAll('.nav-tab');
+                for (let element of elements) {
+                    if (element.textContent.includes(text)) {
+                        return element;
+                    }
+                }
+            }
+            return document.querySelector(selector);
+        }
+        
+        // Destacar elemento
+        function highlightElement(element, spotlight) {
+            const rect = element.getBoundingClientRect();
+            spotlight.style.left = (rect.left - 3) + 'px';
+            spotlight.style.top = (rect.top - 3) + 'px';
+            spotlight.style.width = (rect.width + 6) + 'px';
+            spotlight.style.height = (rect.height + 6) + 'px';
+            spotlight.style.display = 'block';
+        }
+        
+        // Posicionar tooltip
+        function positionTooltip(targetElement, tooltip, position) {
+            if (position === 'center') {
+                tooltip.style.left = '50%';
+                tooltip.style.top = '50%';
+                tooltip.style.transform = 'translate(-50%, -50%)';
+                document.getElementById('onboardingSpotlight').style.display = 'none';
+            } else if (targetElement) {
+                const rect = targetElement.getBoundingClientRect();
+                const tooltipRect = tooltip.getBoundingClientRect();
+                
+                switch (position) {
+                    case 'bottom':
+                        tooltip.style.left = (rect.left + rect.width/2 - tooltipRect.width/2) + 'px';
+                        tooltip.style.top = (rect.bottom + 20) + 'px';
+                        tooltip.style.transform = 'none';
+                        break;
+                    case 'top':
+                        tooltip.style.left = (rect.left + rect.width/2 - tooltipRect.width/2) + 'px';
+                        tooltip.style.top = (rect.top - tooltipRect.height - 20) + 'px';
+                        tooltip.style.transform = 'none';
+                        break;
+                    case 'left':
+                        tooltip.style.left = (rect.left - tooltipRect.width - 20) + 'px';
+                        tooltip.style.top = (rect.top + rect.height/2 - tooltipRect.height/2) + 'px';
+                        tooltip.style.transform = 'none';
+                        break;
+                    case 'right':
+                        tooltip.style.left = (rect.right + 20) + 'px';
+                        tooltip.style.top = (rect.top + rect.height/2 - tooltipRect.height/2) + 'px';
+                        tooltip.style.transform = 'none';
+                        break;
+                }
+            }
+        }
+        
+        // Actualizar contenido del tooltip
+        function updateTooltipContent(step) {
+            document.getElementById('tooltipIcon').textContent = step.icon;
+            document.getElementById('tooltipTitle').textContent = step.title;
+            document.getElementById('tooltipContent').innerHTML = step.content;
+            
+            // Actualizar botones
+            const nextBtn = document.getElementById('tooltipNextBtn');
+            if (onboardingStep === onboardingSteps.length - 1) {
+                nextBtn.textContent = 'Finalizar';
+            } else {
+                nextBtn.textContent = 'Siguiente';
+            }
+        }
+        
+        // Siguiente paso del onboarding
+        function nextOnboardingStep() {
+            onboardingStep++;
+            showOnboardingStep();
+        }
+        
+        // Omitir onboarding
+        function skipOnboarding() {
+            finishOnboarding();
+        }
+        
+        // Finalizar onboarding
+        function finishOnboarding() {
+            document.getElementById('onboardingOverlay').classList.remove('show');
+            showNotification('¡Perfecto! Ahora puedes explorar el prototipo. Usa el botón 💬 para dejar feedback.', 'success');
+        }
         
         // Inicializar sistema de feedback
         document.addEventListener('DOMContentLoaded', function() {
