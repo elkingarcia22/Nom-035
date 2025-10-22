@@ -1072,7 +1072,7 @@
                             <span class="status-badge">Completado</span>
                         </div>
                         <div style="margin-left: auto;">
-                            <button class="ubits-button ubits-button--primary ubits-button--md" type="button" id="download-csv-btn" onclick="alert('Esta función estará disponible en la página de resultados detallados')">
+                            <button class="ubits-button ubits-button--primary ubits-button--md" type="button" id="download-csv-btn" onclick="downloadEmotionalResponses()">
                                 <i class="far fa-download"></i>
                                 <span>Descargar respuestas</span>
                             </button>
@@ -3002,8 +3002,149 @@
             }
         }
 
-        // Nota: La función de descarga de respuestas emocionales está en resultados-nom035-entorno.html
-        // donde se encuentran las tablas con los datos de respuestas
+        // Función para descargar respuestas emocionales
+        function downloadEmotionalResponses() {
+            console.log('🔍 INICIANDO downloadEmotionalResponses()');
+            
+            // Verificar que tenemos los datos de participantes
+            if (!participantsData || participantsData.length === 0) {
+                console.log('❌ No se encontraron datos de participantes');
+                alert('No se encontraron datos de participantes');
+                return;
+            }
+            
+            console.log('🔍 Datos de participantes encontrados:', participantsData.length);
+            
+            // Crear headers del CSV
+            const headers = [
+                'Participante',
+                'Cargo',
+                'Nivel de Riesgo',
+                'Edad',
+                'Departamento',
+                'Posición',
+                'Género',
+                'Estado Civil',
+                'País',
+                'Ciudad',
+                'Experiencia',
+                'Email',
+                'Líder'
+            ];
+            
+            // Agregar headers de todas las preguntas
+            const allQuestions = [];
+            participantsData[0].surveyResults['Sección I. Acontecimiento traumático severo'].forEach(q => {
+                allQuestions.push(q.question);
+            });
+            participantsData[0].surveyResults['Sección II. Estresores laborales'].forEach(q => {
+                allQuestions.push(q.question);
+            });
+            participantsData[0].surveyResults['Sección III. Entorno organizacional'].forEach(q => {
+                allQuestions.push(q.question);
+            });
+            participantsData[0].surveyResults['Sección IV. Liderazgo y relaciones en el trabajo'].forEach(q => {
+                allQuestions.push(q.question);
+            });
+            participantsData[0].surveyResults['Sección V. Violencia laboral'].forEach(q => {
+                allQuestions.push(q.question);
+            });
+            
+            // Agregar headers de preguntas
+            headers.push(...allQuestions);
+            
+            console.log('🔍 Headers creados:', headers.length);
+            console.log('🔍 Total de preguntas:', allQuestions.length);
+            
+            // Crear datos del CSV
+            const csvData = [];
+            
+            participantsData.forEach((participant, index) => {
+                console.log(`🔍 Procesando participante ${index + 1}: ${participant.name}`);
+                
+                const row = [
+                    participant.name,
+                    participant.role,
+                    participant.riskLevel,
+                    participant.details.age,
+                    participant.details.department,
+                    participant.details.position,
+                    participant.details.gender,
+                    participant.details.maritalStatus,
+                    participant.details.country,
+                    participant.details.city,
+                    participant.details.experience,
+                    participant.details.email,
+                    participant.details.leader
+                ];
+                
+                // Agregar respuestas de todas las secciones
+                const allAnswers = [];
+                
+                // Sección I
+                participant.surveyResults['Sección I. Acontecimiento traumático severo'].forEach(q => {
+                    allAnswers.push(q.answer);
+                });
+                
+                // Sección II
+                participant.surveyResults['Sección II. Estresores laborales'].forEach(q => {
+                    allAnswers.push(q.answer);
+                });
+                
+                // Sección III
+                participant.surveyResults['Sección III. Entorno organizacional'].forEach(q => {
+                    allAnswers.push(q.answer);
+                });
+                
+                // Sección IV
+                participant.surveyResults['Sección IV. Liderazgo y relaciones en el trabajo'].forEach(q => {
+                    allAnswers.push(q.answer);
+                });
+                
+                // Sección V
+                participant.surveyResults['Sección V. Violencia laboral'].forEach(q => {
+                    allAnswers.push(q.answer);
+                });
+                
+                row.push(...allAnswers);
+                csvData.push(row);
+                
+                console.log(`🔍 Participante ${participant.name} procesado: ${row.length} columnas`);
+            });
+            
+            console.log('🔍 Datos CSV creados:', csvData.length, 'filas');
+            console.log('🔍 Primera fila de datos:', csvData[0]);
+            
+            // Generar CSV
+            const csvContent = convertToCSV(csvData, headers);
+            console.log('🔍 CSV generado, longitud:', csvContent.length);
+            
+            // Descargar archivo
+            downloadCSVFile(csvContent, 'respuestas_emocionales_nom035.csv');
+            console.log('✅ Descarga completada');
+        }
+        
+        // Función auxiliar para convertir datos a CSV
+        function convertToCSV(data, headers) {
+            const csvContent = [
+                headers.join(','),
+                ...data.map(row => row.map(cell => `"${cell}"`).join(','))
+            ].join('\n');
+            return csvContent;
+        }
+        
+        // Función auxiliar para descargar CSV
+        function downloadCSVFile(csvContent, filename) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     </script>
 </body>
 </html>
