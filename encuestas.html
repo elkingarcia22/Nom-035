@@ -27,7 +27,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3);
+            background: transparent;
             z-index: 10001;
             display: none;
             pointer-events: none;
@@ -1759,22 +1759,45 @@
         
         // Actualizar contenido del tooltip
         function updateTooltipContent(step) {
+            console.log('📍 Actualizando contenido del tooltip...');
             document.getElementById('tooltipIcon').textContent = step.icon;
             document.getElementById('tooltipTitle').textContent = step.title;
             document.getElementById('tooltipContent').innerHTML = step.content;
             
             // Actualizar botones
             const nextBtn = document.getElementById('tooltipNextBtn');
+            console.log('📍 Botón siguiente encontrado:', nextBtn);
+            
             if (onboardingStep === onboardingSteps.length - 1) {
                 nextBtn.textContent = 'Finalizar';
+                console.log('📍 Botón configurado como: Finalizar');
             } else {
                 nextBtn.textContent = 'Siguiente';
+                console.log('📍 Botón configurado como: Siguiente');
             }
+            
+            // Agregar event listener adicional para debug
+            nextBtn.onclick = function() {
+                console.log('🖱️ ===== CLICK EN BOTÓN SIGUIENTE =====');
+                console.log('📍 Botón clickeado:', this);
+                console.log('📍 Texto del botón:', this.textContent);
+                nextOnboardingStep();
+            };
+            
+            console.log('✅ Contenido del tooltip actualizado');
         }
         
         // Siguiente paso del onboarding
         function nextOnboardingStep() {
+            console.log('🔄 ===== SIGUIENTE PASO DEL ONBOARDING =====');
+            console.log('📍 Paso actual antes:', onboardingStep);
+            console.log('📍 Total de pasos:', onboardingSteps.length);
+            
             onboardingStep++;
+            
+            console.log('📍 Paso actual después:', onboardingStep);
+            console.log('📍 ¿Es el último paso?', onboardingStep >= onboardingSteps.length);
+            
             showOnboardingStep();
         }
         
