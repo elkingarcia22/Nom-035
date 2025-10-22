@@ -1489,24 +1489,31 @@
             onboardingSteps = [
                 {
                     target: null,
-                    title: "📊 Home de Encuestas NOM-035",
-                    content: "Aquí tienes la tabla con las dos opciones principales de NOM-035 que vamos a explorar: <strong>Emocional</strong> y <strong>Entorno Laboral</strong>.",
-                    icon: "📊",
+                    title: "🎯 ¡Bienvenido al Prototipo NOM-035!",
+                    content: "Te vamos a guiar paso a paso por las <strong>dos experiencias principales</strong> de NOM-035: <strong>Emocional</strong> y <strong>Entorno Laboral</strong>.<br><br>Primero exploraremos <strong>Emocional</strong>, luego volveremos aquí para probar <strong>Entorno Laboral</strong>.",
+                    icon: "🎯",
                     position: "center"
                 },
                 {
                     target: "tr:contains('emocional')",
-                    title: "💖 Resultados Emocionales",
-                    content: "Haz clic en esta fila para ver los <strong>Resultados Emocionales</strong>. Esta sección analiza acontecimientos traumáticos y su afectación en los empleados. <br><br><strong>💡 Tip:</strong> Después de explorar, puedes volver aquí y probar Entorno Laboral.",
+                    title: "💖 PASO 1: Resultados Emocionales",
+                    content: "Haz clic en esta fila para explorar los <strong>Resultados Emocionales</strong>.<br><br>Esta sección analiza acontecimientos traumáticos y su afectación en los empleados.<br><br><strong>📋 Instrucciones:</strong><br>1. Haz clic aquí para entrar a Emocional<br>2. Explora la funcionalidad<br>3. Vuelve al home (encuestas)<br>4. Luego probaremos Entorno Laboral",
                     icon: "💖",
                     position: "bottom"
                 },
                 {
                     target: "tr:contains('entorno laboral')",
-                    title: "💼 Resultados Entorno Laboral", 
-                    content: "Haz clic en esta fila para explorar los <strong>Resultados de Entorno Laboral</strong> que evalúan las condiciones de trabajo. <br><br><strong>💡 Tip:</strong> Puedes navegar entre ambas opciones libremente.",
+                    title: "💼 PASO 2: Resultados Entorno Laboral", 
+                    content: "Después de explorar Emocional, haz clic en esta fila para probar los <strong>Resultados de Entorno Laboral</strong>.<br><br>Esta sección evalúa las condiciones de trabajo y el ambiente laboral.<br><br><strong>📋 Instrucciones:</strong><br>1. Primero explora Emocional (paso anterior)<br>2. Vuelve al home<br>3. Luego haz clic aquí para Entorno Laboral",
                     icon: "💼",
                     position: "bottom"
+                },
+                {
+                    target: null,
+                    title: "✅ ¡Listo para Explorar!",
+                    content: "Perfecto! Ahora puedes navegar libremente entre ambas opciones:<br><br>• <strong>Emocional:</strong> Acontecimientos traumáticos<br>• <strong>Entorno Laboral:</strong> Condiciones de trabajo<br><br><strong>💡 Recuerda:</strong> Usa el botón 💬 para dejar feedback en cada sección.",
+                    icon: "✅",
+                    position: "center"
                 }
             ];
         }
@@ -1565,11 +1572,31 @@
             if (selector.includes('contains')) {
                 const text = selector.match(/contains\('([^']+)'\)/)[1];
                 const allRows = document.querySelectorAll('tbody tr');
+                
+                console.log(`🔍 Buscando elemento con texto: "${text}"`);
+                console.log(`📋 Filas disponibles:`, allRows.length);
+                
                 for (let row of allRows) {
-                    if (row.textContent.toLowerCase().includes(text.toLowerCase())) {
+                    const rowText = row.textContent.toLowerCase();
+                    console.log(`📝 Fila: "${rowText}"`);
+                    
+                    if (text.toLowerCase() === 'emocional') {
+                        if (rowText.includes('emocional') && rowText.includes('nom 035')) {
+                            console.log('✅ Encontrada fila emocional:', row);
+                            return row;
+                        }
+                    } else if (text.toLowerCase() === 'entorno laboral') {
+                        if (rowText.includes('entorno') && rowText.includes('nom 035')) {
+                            console.log('✅ Encontrada fila entorno laboral:', row);
+                            return row;
+                        }
+                    } else if (rowText.includes(text.toLowerCase())) {
+                        console.log('✅ Encontrada fila genérica:', row);
                         return row;
                     }
                 }
+                
+                console.log('❌ No se encontró el elemento');
             }
             
             return document.querySelector(selector);
@@ -1653,11 +1680,46 @@
             console.log('✅ Onboarding completado');
         }
         
+        // Variables de seguimiento del onboarding
+        let hasClickedEmocional = false;
+        let hasClickedEntorno = false;
+        
+        // Función para detectar clics en filas NOM-035
+        function setupRowClickListeners() {
+            const allRows = document.querySelectorAll('tbody tr');
+            
+            allRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    const rowText = this.textContent.toLowerCase();
+                    
+                    if (rowText.includes('emocional') && rowText.includes('nom 035')) {
+                        hasClickedEmocional = true;
+                        console.log('✅ Usuario hizo clic en Emocional');
+                        
+                        // Mostrar mensaje de confirmación
+                        setTimeout(() => {
+                            alert('¡Perfecto! Has entrado a Emocional. Explora la funcionalidad y luego vuelve al home para probar Entorno Laboral.');
+                        }, 500);
+                        
+                    } else if (rowText.includes('entorno') && rowText.includes('nom 035')) {
+                        hasClickedEntorno = true;
+                        console.log('✅ Usuario hizo clic en Entorno Laboral');
+                        
+                        // Mostrar mensaje de confirmación
+                        setTimeout(() => {
+                            alert('¡Excelente! Has probado ambas opciones de NOM-035. Ahora puedes navegar libremente entre ellas.');
+                        }, 500);
+                    }
+                });
+            });
+        }
+        
         // Iniciar onboarding automáticamente al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
             // Esperar a que se cargue el contenido
             setTimeout(() => {
                 startOnboarding();
+                setupRowClickListeners();
             }, 1000);
         });
         
