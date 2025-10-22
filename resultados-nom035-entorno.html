@@ -2649,6 +2649,10 @@
                                         <i class="far fa-user-chart"></i>
                                         Dimensiones por participante
                                     </a>
+                                    <a href="#" onclick="downloadEmotionalResponses()">
+                                        <i class="far fa-heart"></i>
+                                        Respuestas emocionales
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -4357,6 +4361,79 @@
 
             const csvContent = convertToCSV(csvData, headers);
             downloadCSVFile(csvContent, 'dimensiones_por_participante_nom035_entorno.csv');
+            closeDownloadDropdown();
+        }
+
+        function downloadEmotionalResponses() {
+            // Extraer datos de la tabla principal de respuestas emocionales
+            const table = document.querySelector('table[style*="min-width: 12000px"]');
+            if (!table) {
+                alert('No se encontró la tabla de respuestas emocionales');
+                return;
+            }
+
+            const tbody = table.querySelector('tbody');
+            if (!tbody) {
+                alert('No se encontró el cuerpo de la tabla de respuestas emocionales');
+                return;
+            }
+
+            const rows = tbody.querySelectorAll('tr');
+            if (rows.length === 0) {
+                alert('No hay datos en la tabla de respuestas emocionales');
+                return;
+            }
+
+            // Obtener headers de la tabla
+            const headerRow = table.querySelector('thead tr');
+            const headerCells = headerRow.querySelectorAll('th');
+            const headers = [];
+            
+            headerCells.forEach(cell => {
+                const text = cell.textContent.trim();
+                if (text && text !== '') {
+                    headers.push(text);
+                }
+            });
+
+            const data = [];
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length < 3) return;
+
+                const rowData = [];
+                
+                cells.forEach((cell, index) => {
+                    if (index < headers.length) {
+                        // Para la primera celda (participante), extraer nombre y cargo
+                        if (index === 0) {
+                            const participantName = cell.querySelector('.participant-name');
+                            const participantRole = cell.querySelector('.participant-role');
+                            const name = participantName ? participantName.textContent.trim() : '';
+                            const role = participantRole ? participantRole.textContent.trim() : '';
+                            rowData.push(`${name} - ${role}`);
+                        }
+                        // Para la segunda celda (nivel de riesgo), extraer el badge
+                        else if (index === 1) {
+                            const riskBadge = cell.querySelector('.risk-badge');
+                            const riskLevel = riskBadge ? riskBadge.textContent.trim() : '';
+                            rowData.push(riskLevel);
+                        }
+                        // Para las demás celdas, extraer el texto de respuesta
+                        else {
+                            const responseSpan = cell.querySelector('span');
+                            const response = responseSpan ? responseSpan.textContent.trim() : cell.textContent.trim();
+                            rowData.push(response);
+                        }
+                    }
+                });
+                
+                data.push(rowData);
+            });
+
+            const csvContent = convertToCSV(data, headers);
+            downloadCSVFile(csvContent, 'respuestas_emocionales_nom035_entorno.csv');
             closeDownloadDropdown();
         }
 
