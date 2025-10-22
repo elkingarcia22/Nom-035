@@ -7,7 +7,7 @@ services:
     routes:
       - type: rewrite
         source: /*
-        destination: /resultados-nom035.html
+        destination: /index.html
     envVars:
       - key: NODE_ENV
         value: production
