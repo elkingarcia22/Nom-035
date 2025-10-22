@@ -52,33 +52,39 @@
             100% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3); }
         }
         
-        /* ===== MODAL DE FEEDBACK ===== */
+        /* ===== MODAL FLOTANTE DE FEEDBACK ===== */
         .feedback-modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            bottom: 90px;
+            right: 20px;
             z-index: 10000;
             display: none;
-            align-items: center;
-            justify-content: center;
         }
         
         .feedback-modal.show {
-            display: flex;
+            display: block;
         }
         
         .feedback-modal-content {
             background: white;
             border-radius: 12px;
-            width: 90%;
-            max-width: 500px;
-            max-height: 90vh;
+            width: 350px;
+            max-height: 400px;
             overflow-y: auto;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            animation: slideInModal 0.3s ease-out;
+            animation: slideInFloating 0.3s ease-out;
+            border: 1px solid #e5e7eb;
+        }
+        
+        @keyframes slideInFloating {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
         
         @keyframes slideInModal {
@@ -653,10 +659,6 @@
             </div>
             <div class="feedback-modal-body">
                 <form id="feedbackForm">
-                    <div class="feedback-form-group">
-                        <label for="feedbackUser">Tu nombre o identificador:</label>
-                        <input type="text" id="feedbackUser" name="user" placeholder="Ej: Juan Pérez, Usuario 1, etc." required>
-                    </div>
                     <div class="feedback-form-group">
                         <label for="feedbackSection">Sección actual:</label>
                         <select id="feedbackSection" name="section" required>
@@ -1657,11 +1659,11 @@
         // Función para manejar el envío del feedback
         async function handleFeedbackSubmit(e) {
             e.preventDefault();
-            console.log('📤 Enviando feedback...');
+            console.log('📤 Enviando feedback anónimo...');
             
             const formData = new FormData(e.target);
             const feedbackData = {
-                user: formData.get('user'),
+                user: 'Anónimo', // Feedback anónimo
                 section: formData.get('section'),
                 comment: formData.get('comment'),
                 timestamp: new Date().toISOString(),
