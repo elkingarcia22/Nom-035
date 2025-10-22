@@ -1531,8 +1531,20 @@
             
             // Debug: verificar elementos disponibles
             const allRows = document.querySelectorAll('tbody tr');
-            const emocionalRows = document.querySelectorAll('tr:contains("emocional")');
-            const entornoRows = document.querySelectorAll('tr:contains("entorno")');
+            
+            // Buscar filas emocional y entorno manualmente
+            const emocionalRows = [];
+            const entornoRows = [];
+            
+            allRows.forEach(row => {
+                const rowText = row.textContent.toLowerCase();
+                if (rowText.includes('emocional') && rowText.includes('nom 035')) {
+                    emocionalRows.push(row);
+                }
+                if (rowText.includes('entorno') && rowText.includes('nom 035')) {
+                    entornoRows.push(row);
+                }
+            });
             
             console.log('🔍 ===== ELEMENTOS DISPONIBLES =====');
             console.log('📊 Total de filas en tabla:', allRows.length);
