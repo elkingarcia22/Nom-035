@@ -27,9 +27,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.3);
             z-index: 10001;
             display: none;
+            pointer-events: none;
         }
         
         .onboarding-overlay.show {
@@ -1488,13 +1489,6 @@
         function initializeOnboardingSteps() {
             onboardingSteps = [
                 {
-                    target: null,
-                    title: "🎯 ¡Bienvenido al Prototipo NOM-035!",
-                    content: "Te vamos a guiar paso a paso por las <strong>dos experiencias principales</strong> de NOM-035: <strong>Emocional</strong> y <strong>Entorno Laboral</strong>.<br><br>Primero exploraremos <strong>Emocional</strong>, luego volveremos aquí para probar <strong>Entorno Laboral</strong>.",
-                    icon: "🎯",
-                    position: "center"
-                },
-                {
                     target: "tr:contains('emocional')",
                     title: "💖 PASO 1: Resultados Emocionales",
                     content: "Haz clic en esta fila para explorar los <strong>Resultados Emocionales</strong>.<br><br>Esta sección analiza acontecimientos traumáticos y su afectación en los empleados.<br><br><strong>📋 Instrucciones:</strong><br>1. Haz clic aquí para entrar a Emocional<br>2. Explora la funcionalidad<br>3. Vuelve al home (encuestas)<br>4. Luego probaremos Entorno Laboral",
@@ -1507,6 +1501,13 @@
                     content: "Después de explorar Emocional, haz clic en esta fila para probar los <strong>Resultados de Entorno Laboral</strong>.<br><br>Esta sección evalúa las condiciones de trabajo y el ambiente laboral.<br><br><strong>📋 Instrucciones:</strong><br>1. Primero explora Emocional (paso anterior)<br>2. Vuelve al home<br>3. Luego haz clic aquí para Entorno Laboral",
                     icon: "💼",
                     position: "bottom"
+                },
+                {
+                    target: ".feedback-trigger, .feedback-button, [data-feedback]",
+                    title: "💬 PASO 3: Sistema de Feedback",
+                    content: "Usa este botón para dejar feedback en cualquier momento.<br><br><strong>📝 Puedes comentar sobre:</strong><br>• Lo que funciona bien<br>• Cosas que faltan<br>• Cosas que mejorar<br>• Necesidades de tu empresa<br><br><strong>💡 Tip:</strong> Está disponible en todas las pantallas.",
+                    icon: "💬",
+                    position: "left"
                 },
                 {
                     target: null,
@@ -1670,6 +1671,38 @@
                 console.log('❌ ===== ELEMENTO NO ENCONTRADO =====');
                 console.log('📍 Texto buscado:', text);
                 console.log('📍 Filas revisadas:', allRows.length);
+            }
+            
+            // Buscar botón de feedback específicamente
+            if (selector.includes('feedback')) {
+                console.log('🔍 Buscando botón de feedback...');
+                const feedbackSelectors = [
+                    '.feedback-trigger',
+                    '.feedback-button', 
+                    '[data-feedback]',
+                    'button[onclick*="feedback"]',
+                    'button[onclick*="Feedback"]',
+                    '.btn-feedback',
+                    '#feedbackTrigger'
+                ];
+                
+                for (let sel of feedbackSelectors) {
+                    const element = document.querySelector(sel);
+                    if (element) {
+                        console.log('✅ Botón de feedback encontrado con selector:', sel);
+                        return element;
+                    }
+                }
+                
+                // Buscar por texto en todos los botones
+                const allButtons = document.querySelectorAll('button, .btn, [role="button"]');
+                for (let button of allButtons) {
+                    const buttonText = button.textContent.toLowerCase();
+                    if (buttonText.includes('feedback') || buttonText.includes('comentario') || buttonText.includes('💬')) {
+                        console.log('✅ Botón de feedback encontrado por texto:', button);
+                        return button;
+                    }
+                }
             }
             
             console.log('📍 Intentando selector directo...');
