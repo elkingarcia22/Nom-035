@@ -13,7 +13,7 @@
  */
 
 // ID de la hoja de cálculo de Google Sheets
-const SHEET_ID = 'YOUR_SHEET_ID';
+const SHEET_ID = '1a6gkZNbuXDT1aFaKDFgctWDPcZ6KU7dYW-udjlaTGiI';
 
 // Función principal que se ejecuta cuando se recibe una petición POST
 function doPost(e) {
