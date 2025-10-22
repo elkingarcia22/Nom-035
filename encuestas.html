@@ -30,7 +30,7 @@
             background: transparent;
             z-index: 10001;
             display: none;
-            pointer-events: none;
+            pointer-events: auto;
         }
         
         .onboarding-overlay.show {
@@ -1778,13 +1778,33 @@
             
             // Agregar event listener adicional para debug
             nextBtn.onclick = function() {
-                console.log('🖱️ ===== CLICK EN BOTÓN SIGUIENTE =====');
+                console.log('🖱️ ===== CLICK EN BOTÓN SIGUIENTE (onclick) =====');
                 console.log('📍 Botón clickeado:', this);
                 console.log('📍 Texto del botón:', this.textContent);
                 nextOnboardingStep();
             };
             
+            // Agregar event listener adicional con addEventListener
+            nextBtn.addEventListener('click', function(e) {
+                console.log('🖱️ ===== CLICK EN BOTÓN SIGUIENTE (addEventListener) =====');
+                console.log('📍 Evento:', e);
+                console.log('📍 Botón clickeado:', this);
+                console.log('📍 Texto del botón:', this.textContent);
+                e.preventDefault();
+                e.stopPropagation();
+                nextOnboardingStep();
+            });
+            
             console.log('✅ Contenido del tooltip actualizado');
+            
+            // Agregar event listener global para debug
+            const tooltip = document.getElementById('onboardingTooltip');
+            tooltip.addEventListener('click', function(e) {
+                console.log('🖱️ ===== CLICK EN TOOLTIP =====');
+                console.log('📍 Elemento clickeado:', e.target);
+                console.log('📍 Es botón siguiente?', e.target.id === 'tooltipNextBtn');
+                console.log('📍 Es botón omitir?', e.target.textContent === 'Omitir');
+            });
         }
         
         // Siguiente paso del onboarding
