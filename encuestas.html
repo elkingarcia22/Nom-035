@@ -37,7 +37,7 @@
             position: absolute;
             border: 3px solid #667eea;
             border-radius: 8px;
-            background: rgba(102, 126, 234, 0.1);
+            background: transparent;
             box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
             z-index: 10000;
             transition: all 0.3s ease;
@@ -2075,12 +2075,6 @@
         // Estado del onboarding
         let currentOnboardingStep = 0;
         let onboardingSteps = [
-            {
-                title: "¡Bienvenido al Prototipo!",
-                content: "Te vamos a guiar paso a paso por las funcionalidades principales.",
-                target: null,
-                action: "welcome"
-            },
             {
                 title: "Resultados Emocionales",
                 content: "Primero vamos a explorar los resultados emocionales. Haz clic en esta fila para ver el análisis detallado.",
