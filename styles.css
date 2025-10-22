@@ -287,29 +287,6 @@ body {
     color: var(--ubits-sidebar-button-fg-disabled);
 }
 
-/* Disabled State with class */
-.nav-button.disabled {
-    background: var(--ubits-sidebar-button-bg-disabled);
-    cursor: not-allowed;
-    opacity: 0.5;
-    pointer-events: none;
-}
-
-.nav-button.disabled i {
-    color: var(--ubits-sidebar-button-fg-disabled);
-}
-
-.nav-button.disabled:hover {
-    background: var(--ubits-sidebar-button-bg-disabled);
-    transform: none;
-    box-shadow: none;
-}
-
-.nav-button.disabled:hover i {
-    color: var(--ubits-sidebar-button-fg-disabled);
-    transform: none;
-}
-
 /* Tooltip */
 .tooltip {
     position: fixed;
