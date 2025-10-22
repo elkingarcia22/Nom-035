@@ -3034,21 +3034,25 @@
             
             // Agregar headers de todas las preguntas
             const allQuestions = [];
-            participantsData[0].surveyResults['Sección I. Acontecimiento traumático severo'].forEach(q => {
-                allQuestions.push(q.question);
-            });
-            participantsData[0].surveyResults['Sección II. Estresores laborales'].forEach(q => {
-                allQuestions.push(q.question);
-            });
-            participantsData[0].surveyResults['Sección III. Entorno organizacional'].forEach(q => {
-                allQuestions.push(q.question);
-            });
-            participantsData[0].surveyResults['Sección IV. Liderazgo y relaciones en el trabajo'].forEach(q => {
-                allQuestions.push(q.question);
-            });
-            participantsData[0].surveyResults['Sección V. Violencia laboral'].forEach(q => {
-                allQuestions.push(q.question);
-            });
+            
+            // Verificar que el primer participante tenga surveyResults
+            if (participantsData[0] && participantsData[0].surveyResults) {
+                console.log('🔍 Secciones disponibles:', Object.keys(participantsData[0].surveyResults));
+                
+                // Iterar sobre todas las secciones disponibles
+                Object.keys(participantsData[0].surveyResults).forEach(sectionName => {
+                    console.log(`🔍 Procesando sección: ${sectionName}`);
+                    const section = participantsData[0].surveyResults[sectionName];
+                    if (Array.isArray(section)) {
+                        section.forEach(q => {
+                            allQuestions.push(q.question);
+                        });
+                    }
+                });
+            } else {
+                console.log('❌ No se encontraron surveyResults en el primer participante');
+                console.log('🔍 Estructura del primer participante:', participantsData[0]);
+            }
             
             // Agregar headers de preguntas
             headers.push(...allQuestions);
@@ -3081,30 +3085,19 @@
                 // Agregar respuestas de todas las secciones
                 const allAnswers = [];
                 
-                // Sección I
-                participant.surveyResults['Sección I. Acontecimiento traumático severo'].forEach(q => {
-                    allAnswers.push(q.answer);
-                });
-                
-                // Sección II
-                participant.surveyResults['Sección II. Estresores laborales'].forEach(q => {
-                    allAnswers.push(q.answer);
-                });
-                
-                // Sección III
-                participant.surveyResults['Sección III. Entorno organizacional'].forEach(q => {
-                    allAnswers.push(q.answer);
-                });
-                
-                // Sección IV
-                participant.surveyResults['Sección IV. Liderazgo y relaciones en el trabajo'].forEach(q => {
-                    allAnswers.push(q.answer);
-                });
-                
-                // Sección V
-                participant.surveyResults['Sección V. Violencia laboral'].forEach(q => {
-                    allAnswers.push(q.answer);
-                });
+                // Iterar sobre todas las secciones disponibles
+                if (participant.surveyResults) {
+                    Object.keys(participant.surveyResults).forEach(sectionName => {
+                        const section = participant.surveyResults[sectionName];
+                        if (Array.isArray(section)) {
+                            section.forEach(q => {
+                                allAnswers.push(q.answer);
+                            });
+                        }
+                    });
+                } else {
+                    console.log(`⚠️ Participante ${participant.name} no tiene surveyResults`);
+                }
                 
                 row.push(...allAnswers);
                 csvData.push(row);
