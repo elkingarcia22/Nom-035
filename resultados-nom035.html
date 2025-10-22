@@ -3095,9 +3095,7 @@
                             section.forEach((q, qIndex) => {
                                 const answer = q.answer || 'Sin respuesta';
                                 allAnswers.push(answer);
-                                if (index === 0 && qIndex >= section.length - 2) { // Log las últimas 2 preguntas del primer participante
-                                    console.log(`🔍 Última pregunta ${qIndex + 1} de ${sectionName}: "${q.question}" = "${answer}"`);
-                                }
+                                
                             });
                         }
                     });
@@ -3114,6 +3112,15 @@
                 // Verificar que el número de respuestas coincida con el número de preguntas
                 if (allAnswers.length !== allQuestions.length) {
                     console.log(`⚠️ DESBALANCE: ${participant.name} tiene ${allAnswers.length} respuestas pero hay ${allQuestions.length} preguntas`);
+                }
+                
+                // Debug específico para las últimas 2 preguntas
+                if (index === 0) {
+                    console.log(`🔍 DEBUG ÚLTIMAS 2 PREGUNTAS:`);
+                    console.log(`🔍 Total respuestas: ${allAnswers.length}`);
+                    console.log(`🔍 Últimas 2 respuestas: ${allAnswers.slice(-2)}`);
+                    console.log(`🔍 Pregunta 19 (índice 18): "${allQuestions[18]}" = "${allAnswers[18]}"`);
+                    console.log(`🔍 Pregunta 20 (índice 19): "${allQuestions[19]}" = "${allAnswers[19]}"`);
                 }
             });
             
@@ -3132,7 +3139,7 @@
         // Función auxiliar para convertir datos a CSV
         function convertToCSV(data, headers) {
             const csvContent = [
-                headers.join(','),
+                headers.map(header => `"${header}"`).join(','),
                 ...data.map(row => row.map(cell => `"${cell}"`).join(','))
             ].join('\n');
             return csvContent;
