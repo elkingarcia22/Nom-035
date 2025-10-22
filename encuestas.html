@@ -1641,8 +1641,8 @@
         // SISTEMA DE FEEDBACK HÍBRIDO (LOCAL + GOOGLE SHEETS)
         // Sistema que guarda localmente Y envía a Google Sheets
         
-        // URL del webhook de Google Apps Script (URL FINAL FUNCIONANDO)
-        const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzeT1vqT8Ant3DqIu-IkPGt9nQS5BBy76nmeFC2bCyNGP-MIbOQwrBlZiP-xar_9bwQ/exec';
+        // URL del webhook de Google Apps Script (NUEVA URL FUNCIONANDO)
+        const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbw_OaPqqJlh1vvXKroDAcOoSboydh9QE-Lx-WiSmqVxJAqmbHcMCVWjVfBjN9l1gapa/exec';
         
         // Modo híbrido - intentar Google Sheets, respaldo local
         const HYBRID_MODE = true;
@@ -1686,8 +1686,12 @@
         // Función híbrida: intentar Google Sheets, respaldo local
         async function sendFeedbackHybrid(feedbackData) {
             console.log('🔄 SISTEMA HÍBRIDO: Intentando Google Sheets...');
+            console.log('📋 URL del webhook:', FEEDBACK_WEBHOOK_URL);
+            console.log('📋 Datos a enviar:', feedbackData);
             
             try {
+                console.log('🌐 Iniciando petición fetch...');
+                
                 // Intentar enviar a Google Sheets
                 const response = await fetch(FEEDBACK_WEBHOOK_URL, {
                     method: 'POST',
@@ -1696,6 +1700,11 @@
                     },
                     body: JSON.stringify(feedbackData)
                 });
+                
+                console.log('📡 Respuesta recibida:', response);
+                console.log('📊 Status:', response.status);
+                console.log('📊 Status Text:', response.statusText);
+                console.log('📊 Headers:', response.headers);
                 
                 if (response.ok) {
                     console.log('✅ Enviado a Google Sheets exitosamente');
@@ -1711,11 +1720,17 @@
                         message: 'Feedback enviado a Google Sheets y guardado localmente'
                     };
                 } else {
-                    throw new Error(`Error del servidor: ${response.status}`);
+                    console.error('❌ Error del servidor:', response.status, response.statusText);
+                    const errorText = await response.text();
+                    console.error('❌ Contenido del error:', errorText);
+                    throw new Error(`Error del servidor: ${response.status} - ${errorText}`);
                 }
                 
             } catch (error) {
-                console.warn('⚠️ Error con Google Sheets, usando respaldo local:', error);
+                console.error('❌ Error detallado con Google Sheets:', error);
+                console.error('❌ Tipo de error:', error.name);
+                console.error('❌ Mensaje de error:', error.message);
+                console.error('❌ Stack trace:', error.stack);
                 
                 // Respaldo local
                 const savedFeedback = saveFeedbackLocally(feedbackData);
