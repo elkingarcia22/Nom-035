@@ -2633,17 +2633,17 @@
                                     <i class="far fa-chevron-down"></i>
                                 </button>
                                 <div class="download-dropdown-content" id="download-dropdown-content">
-                                    <a href="#" onclick="downloadCSV()">
-                                        <i class="far fa-file-csv"></i>
-                                        Descargar CSV
+                                    <a href="#" onclick="downloadIndividualResponses()">
+                                        <i class="far fa-user"></i>
+                                        Respuestas individuales
                                     </a>
-                                    <a href="#" onclick="downloadPDF()">
-                                        <i class="far fa-file-pdf"></i>
-                                        Descargar PDF
+                                    <a href="#" onclick="downloadResultsByDimension()">
+                                        <i class="far fa-layer-group"></i>
+                                        Resultados por dimensión
                                     </a>
-                                    <a href="#" onclick="downloadExcel()">
-                                        <i class="far fa-file-excel"></i>
-                                        Descargar Excel
+                                    <a href="#" onclick="downloadGeneralResults()">
+                                        <i class="far fa-chart-bar"></i>
+                                        Resultados generales
                                     </a>
                                 </div>
                             </div>
@@ -4117,18 +4117,18 @@
             dropdown.classList.toggle('show');
         }
 
-        function downloadCSV() {
-            alert('Descargando CSV de resultados de entorno laboral...');
+        function downloadIndividualResponses() {
+            alert('Descargando respuestas individuales de entorno laboral...');
             closeDownloadDropdown();
         }
 
-        function downloadPDF() {
-            alert('Descargando PDF de resultados de entorno laboral...');
+        function downloadResultsByDimension() {
+            alert('Descargando resultados por dimensión de entorno laboral...');
             closeDownloadDropdown();
         }
 
-        function downloadExcel() {
-            alert('Descargando Excel de resultados de entorno laboral...');
+        function downloadGeneralResults() {
+            alert('Descargando resultados generales de entorno laboral...');
             closeDownloadDropdown();
         }
 
