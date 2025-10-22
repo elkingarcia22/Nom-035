@@ -1072,7 +1072,7 @@
                             <span class="status-badge">Completado</span>
                         </div>
                         <div style="margin-left: auto;">
-                            <button class="ubits-button ubits-button--primary ubits-button--md" type="button" id="download-csv-btn">
+                            <button class="ubits-button ubits-button--primary ubits-button--md" type="button" id="download-csv-btn" onclick="downloadEmotionalResponses()">
                                 <i class="far fa-download"></i>
                                 <span>Descargar respuestas</span>
                             </button>
@@ -3000,6 +3000,100 @@
                     }
                 }, 100);
             }
+        }
+
+        // Función para descargar respuestas emocionales
+        function downloadEmotionalResponses() {
+            // Extraer datos de la tabla principal de respuestas emocionales
+            const table = document.querySelector('table[style*="min-width: 12000px"]');
+            if (!table) {
+                alert('No se encontró la tabla de respuestas emocionales');
+                return;
+            }
+
+            const tbody = table.querySelector('tbody');
+            if (!tbody) {
+                alert('No se encontró el cuerpo de la tabla de respuestas emocionales');
+                return;
+            }
+
+            const rows = tbody.querySelectorAll('tr');
+            if (rows.length === 0) {
+                alert('No hay datos en la tabla de respuestas emocionales');
+                return;
+            }
+
+            // Obtener headers de la tabla
+            const headerRow = table.querySelector('thead tr');
+            const headerCells = headerRow.querySelectorAll('th');
+            const headers = [];
+            
+            headerCells.forEach(cell => {
+                const text = cell.textContent.trim();
+                if (text && text !== '') {
+                    headers.push(text);
+                }
+            });
+
+            const data = [];
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length < 3) return;
+
+                const rowData = [];
+                
+                cells.forEach((cell, index) => {
+                    if (index < headers.length) {
+                        // Para la primera celda (participante), extraer nombre y cargo
+                        if (index === 0) {
+                            const participantName = cell.querySelector('.participant-name');
+                            const participantRole = cell.querySelector('.participant-role');
+                            const name = participantName ? participantName.textContent.trim() : '';
+                            const role = participantRole ? participantRole.textContent.trim() : '';
+                            rowData.push(`${name} - ${role}`);
+                        }
+                        // Para la segunda celda (nivel de riesgo), extraer el badge
+                        else if (index === 1) {
+                            const riskBadge = cell.querySelector('.risk-badge');
+                            const riskLevel = riskBadge ? riskBadge.textContent.trim() : '';
+                            rowData.push(riskLevel);
+                        }
+                        // Para las demás celdas, extraer el texto de respuesta
+                        else {
+                            const responseSpan = cell.querySelector('span');
+                            const response = responseSpan ? responseSpan.textContent.trim() : cell.textContent.trim();
+                            rowData.push(response);
+                        }
+                    }
+                });
+                
+                data.push(rowData);
+            });
+
+            const csvContent = convertToCSV(data, headers);
+            downloadCSVFile(csvContent, 'respuestas_emocionales_nom035.csv');
+        }
+
+        // Funciones auxiliares para CSV
+        function convertToCSV(data, headers) {
+            const csvContent = [
+                headers.join(','),
+                ...data.map(row => row.map(cell => `"${cell}"`).join(','))
+            ].join('\n');
+            return csvContent;
+        }
+
+        function downloadCSVFile(csvContent, filename) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 </body>
