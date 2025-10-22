@@ -10811,6 +10811,143 @@
             console.log('✅ ===== FILTROS PRINCIPALES INDIVIDUALES CONFIGURADOS =====');
         }
 
+        // Configurar filtros para participantes
+        function setupParticipantsFilters() {
+            const filtersBtn = document.getElementById('individual-filters-btn');
+            const filtersPanel = document.getElementById('participants-filters-panel');
+            const closeBtn = document.getElementById('participants-close-filters-btn');
+            const backdrop = document.getElementById('participants-filters-backdrop');
+            const applyBtn = document.getElementById('participants-apply-filters-btn');
+            const clearBtn = document.getElementById('participants-clear-filters-btn');
+            const filterBadge = document.getElementById('individual-filter-badge');
+            
+            if (!filtersBtn || !filtersPanel) return;
+            
+            // Abrir panel
+            filtersBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                filtersPanel.classList.add('show');
+                if (backdrop) backdrop.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Cerrar panel
+            function closePanel() {
+                filtersPanel.classList.remove('show');
+                if (backdrop) backdrop.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+            
+            if (closeBtn) closeBtn.addEventListener('click', closePanel);
+            if (backdrop) backdrop.addEventListener('click', closePanel);
+            
+            // Aplicar filtros
+            if (applyBtn) {
+                applyBtn.addEventListener('click', function() {
+                    applyParticipantsFilters();
+                    closePanel();
+                });
+            }
+            
+            // Limpiar filtros
+            if (clearBtn) {
+                clearBtn.addEventListener('click', function() {
+                    clearParticipantsFilters();
+                });
+            }
+        }
+        
+        // Aplicar filtros de participantes
+        function applyParticipantsFilters() {
+            const riskFilter = document.getElementById('participants-risk-filter').value;
+            const areaFilter = document.getElementById('participants-area-filter').value;
+            const positionFilter = document.getElementById('participants-position-filter').value;
+            const genderFilter = document.getElementById('participants-gender-filter').value;
+            const maritalFilter = document.getElementById('participants-marital-filter').value;
+            const ageFilter = document.getElementById('participants-age-filter').value;
+            const countryFilter = document.getElementById('participants-country-filter').value;
+            const cityFilter = document.getElementById('participants-city-filter').value;
+            const leaderFilter = document.getElementById('participants-leader-filter').value;
+            
+            const allRows = document.querySelectorAll('#individual-content .participants-list .participant-item');
+            const filterBadge = document.getElementById('individual-filter-badge');
+            
+            let activeFilters = 0;
+            if (riskFilter) activeFilters++;
+            if (areaFilter) activeFilters++;
+            if (positionFilter) activeFilters++;
+            if (genderFilter) activeFilters++;
+            if (maritalFilter) activeFilters++;
+            if (ageFilter) activeFilters++;
+            if (countryFilter) activeFilters++;
+            if (cityFilter) activeFilters++;
+            if (leaderFilter) activeFilters++;
+            
+            if (activeFilters > 0) {
+                filterBadge.textContent = activeFilters;
+                filterBadge.style.display = 'flex';
+            } else {
+                filterBadge.style.display = 'none';
+            }
+            
+            allRows.forEach(row => {
+                let showRow = true;
+                
+                // Filtro por nivel de riesgo
+                if (riskFilter) {
+                    const riskBadge = row.querySelector('.risk-badge');
+                    if (riskBadge) {
+                        const riskLevel = riskBadge.classList.contains('bajo') ? 'bajo' :
+                                        riskBadge.classList.contains('medio') ? 'medio' :
+                                        riskBadge.classList.contains('alto') ? 'alto' :
+                                        riskBadge.classList.contains('muy-alto') ? 'muy-alto' : '';
+                        
+                        if (riskLevel !== riskFilter) {
+                            showRow = false;
+                        }
+                    }
+                }
+                
+                // Aquí se pueden agregar más filtros demográficos
+                // Por ahora solo implementamos el filtro de nivel de riesgo
+                
+                row.style.display = showRow ? '' : 'none';
+            });
+        }
+        
+        // Limpiar filtros de participantes
+        function clearParticipantsFilters() {
+            const riskFilter = document.getElementById('participants-risk-filter');
+            const areaFilter = document.getElementById('participants-area-filter');
+            const positionFilter = document.getElementById('participants-position-filter');
+            const genderFilter = document.getElementById('participants-gender-filter');
+            const maritalFilter = document.getElementById('participants-marital-filter');
+            const ageFilter = document.getElementById('participants-age-filter');
+            const countryFilter = document.getElementById('participants-country-filter');
+            const cityFilter = document.getElementById('participants-city-filter');
+            const leaderFilter = document.getElementById('participants-leader-filter');
+            
+            const allRows = document.querySelectorAll('#individual-content .participants-list .participant-item');
+            const filterBadge = document.getElementById('individual-filter-badge');
+            
+            riskFilter.value = '';
+            areaFilter.value = '';
+            positionFilter.value = '';
+            genderFilter.value = '';
+            maritalFilter.value = '';
+            ageFilter.value = '';
+            countryFilter.value = '';
+            cityFilter.value = '';
+            leaderFilter.value = '';
+            
+            filterBadge.style.display = 'none';
+            
+            allRows.forEach(row => {
+                row.style.display = '';
+            });
+        }
+
         // Ejecutar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             // Esperar un poco para asegurar que la tabla esté cargada
@@ -10821,6 +10958,9 @@
                 console.log('🔧 ===== LLAMANDO setupMainIndividualFilters =====');
                 setupMainIndividualFilters();
                 console.log('🔧 ===== FIN DE setupMainIndividualFilters =====');
+                
+                // Configurar filtros para participantes
+                setupParticipantsFilters();
                 
                 // Configurar eventos del buscador
                 const searchBtn = document.getElementById('individual-search-btn');
@@ -10873,5 +11013,135 @@
             }, 1000);
         });
     </script>
+
+    <!-- Panel de Filtros para Participantes -->
+    <div id="participants-filters-panel" class="filters-panel">
+        <div class="filters-header">
+            <h3>Filtros</h3>
+            <button class="close-filters-btn" id="participants-close-filters-btn">
+                <i class="far fa-times"></i>
+            </button>
+        </div>
+        <div class="filters-content">
+            <!-- Filtro por Nivel de Riesgo -->
+            <div class="filter-group">
+                <label class="filter-label">Nivel de Riesgo</label>
+                <select class="filter-select" id="participants-risk-filter">
+                    <option value="">Todos</option>
+                    <option value="bajo">Bajo</option>
+                    <option value="medio">Medio</option>
+                    <option value="alto">Alto</option>
+                    <option value="muy-alto">Muy Alto</option>
+                </select>
+            </div>
+            
+            <!-- Filtros Demográficos -->
+            <div class="filter-group">
+                <label class="filter-label">Área</label>
+                <select class="filter-select" id="participants-area-filter">
+                    <option value="">Todas</option>
+                    <option value="Ventas">Ventas</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Recursos Humanos">Recursos Humanos</option>
+                    <option value="Tecnología">Tecnología</option>
+                    <option value="Finanzas">Finanzas</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">Posición</label>
+                <select class="filter-select" id="participants-position-filter">
+                    <option value="">Todas</option>
+                    <option value="Gerente">Gerente</option>
+                    <option value="Coordinador">Coordinador</option>
+                    <option value="Analista">Analista</option>
+                    <option value="Asistente">Asistente</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">Género</label>
+                <select class="filter-select" id="participants-gender-filter">
+                    <option value="">Todos</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">Estado Civil</label>
+                <select class="filter-select" id="participants-marital-filter">
+                    <option value="">Todos</option>
+                    <option value="Soltero">Soltero</option>
+                    <option value="Casado">Casado</option>
+                    <option value="Divorciado">Divorciado</option>
+                    <option value="Viudo">Viudo</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">Edad</label>
+                <select class="filter-select" id="participants-age-filter">
+                    <option value="">Todas</option>
+                    <option value="18-25">18-25 años</option>
+                    <option value="26-35">26-35 años</option>
+                    <option value="36-45">36-45 años</option>
+                    <option value="46-55">46-55 años</option>
+                    <option value="56+">56+ años</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">País</label>
+                <select class="filter-select" id="participants-country-filter">
+                    <option value="">Todos</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="México">México</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Perú">Perú</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">Ciudad</label>
+                <select class="filter-select" id="participants-city-filter">
+                    <option value="">Todas</option>
+                    <option value="Bogotá">Bogotá</option>
+                    <option value="Medellín">Medellín</option>
+                    <option value="Cali">Cali</option>
+                    <option value="Ciudad de México">Ciudad de México</option>
+                    <option value="Buenos Aires">Buenos Aires</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label class="filter-label">Líder</label>
+                <select class="filter-select" id="participants-leader-filter">
+                    <option value="">Todos</option>
+                    <option value="Ana Martínez">Ana Martínez</option>
+                    <option value="Carlos Rodríguez">Carlos Rodríguez</option>
+                    <option value="Laura García">Laura García</option>
+                    <option value="Pedro López">Pedro López</option>
+                </select>
+            </div>
+            
+            <!-- Botones de Acción -->
+            <div class="filters-actions">
+                <button class="apply-filters-btn" id="participants-apply-filters-btn">
+                    <i class="far fa-check"></i>
+                    <span>Aplicar</span>
+                </button>
+                <button class="clear-filters-btn" id="participants-clear-filters-btn">
+                    <i class="far fa-times"></i>
+                    <span>Limpiar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Backdrop para cerrar filtros -->
+    <div id="participants-filters-backdrop" class="filters-backdrop"></div>
 </body>
 </html>
