@@ -1727,8 +1727,8 @@
         // SISTEMA DE FEEDBACK HÍBRIDO (LOCAL + GOOGLE SHEETS)
         // Sistema que guarda localmente Y envía a Google Sheets
         
-        // URL del webhook de Google Apps Script (NUEVA URL FUNCIONANDO)
-        const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbw_OaPqqJlh1vvXKroDAcOoSboydh9QE-Lx-WiSmqVxJAqmbHcMCVWjVfBjN9l1gapa/exec';
+        // URL del webhook de n8n (PRODUCCIÓN)
+        const FEEDBACK_WEBHOOK_URL = 'https://egarcia.app.n8n.cloud/webhook/feedback';
         
         // Modo híbrido - intentar Google Sheets, respaldo local
         const HYBRID_MODE = true;
@@ -1769,16 +1769,16 @@
             console.log('📁 Feedback exportado como JSON');
         }
         
-        // Función híbrida: intentar Google Sheets, respaldo local
+        // Función híbrida: intentar n8n, respaldo local
         async function sendFeedbackHybrid(feedbackData) {
-            console.log('🔄 SISTEMA HÍBRIDO: Intentando Google Sheets...');
-            console.log('📋 URL del webhook:', FEEDBACK_WEBHOOK_URL);
+            console.log('🔄 SISTEMA HÍBRIDO: Intentando n8n...');
+            console.log('📋 URL del webhook n8n:', FEEDBACK_WEBHOOK_URL);
             console.log('📋 Datos a enviar:', feedbackData);
             
             try {
                 console.log('🌐 Iniciando petición fetch...');
                 
-                // Intentar enviar a Google Sheets
+                // Intentar enviar a n8n
                 const response = await fetch(FEEDBACK_WEBHOOK_URL, {
                     method: 'POST',
                     headers: {
@@ -1793,17 +1793,17 @@
                 console.log('📊 Headers:', response.headers);
                 
                 if (response.ok) {
-                    console.log('✅ Enviado a Google Sheets exitosamente');
+                    console.log('✅ Enviado a n8n exitosamente');
                     const result = await response.json();
-                    console.log('📊 Respuesta de Google Sheets:', result);
+                    console.log('📊 Respuesta de n8n:', result);
                     
                     // También guardar localmente como respaldo
                     saveFeedbackLocally(feedbackData);
                     
                     return {
                         success: true,
-                        method: 'google-sheets',
-                        message: 'Feedback enviado a Google Sheets y guardado localmente'
+                        method: 'n8n',
+                        message: 'Feedback enviado a n8n y guardado localmente'
                     };
                 } else {
                     console.error('❌ Error del servidor:', response.status, response.statusText);
@@ -1813,7 +1813,7 @@
                 }
                 
             } catch (error) {
-                console.error('❌ Error detallado con Google Sheets:', error);
+                console.error('❌ Error detallado con n8n:', error);
                 console.error('❌ Tipo de error:', error.name);
                 console.error('❌ Mensaje de error:', error.message);
                 console.error('❌ Stack trace:', error.stack);
