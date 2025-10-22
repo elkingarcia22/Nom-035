@@ -1649,7 +1649,15 @@
                     console.log('📍 Destacando elemento...');
                     highlightElement(targetElement, spotlight);
                     console.log('📍 Posicionando tooltip...');
-                    positionTooltip(targetElement, tooltip, step.position);
+                    
+                    // Para el botón de feedback, usar posición 'top' para que aparezca arriba
+                    let position = step.position || 'top';
+                    if (targetElement.classList.contains('feedback-trigger')) {
+                        position = 'top';
+                        console.log('📍 Usando posición TOP para botón de feedback');
+                    }
+                    
+                    positionTooltip(targetElement, tooltip, position);
                     console.log('✅ Elemento destacado y tooltip posicionado');
                 } else {
                     console.log('⚠️ Elemento no encontrado, mostrando en centro');
@@ -1777,8 +1785,16 @@
                         break;
                     case 'top':
                         tooltip.style.left = (rect.left + rect.width/2 - tooltipRect.width/2) + 'px';
-                        tooltip.style.top = (rect.top - tooltipRect.height - 20) + 'px';
+                        tooltip.style.top = (rect.top - tooltipRect.height - 30) + 'px'; // Más espacio arriba
                         tooltip.style.transform = 'none';
+                        
+                        // Ajustar si se sale de la pantalla por arriba
+                        const tooltipTop = rect.top - tooltipRect.height - 30;
+                        if (tooltipTop < 20) {
+                            // Si no cabe arriba, mostrar abajo
+                            tooltip.style.top = (rect.bottom + 20) + 'px';
+                            console.log('📍 Tooltip ajustado para mostrar abajo del elemento');
+                        }
                         break;
                     case 'left':
                         tooltip.style.left = (rect.left - tooltipRect.width - 20) + 'px';
