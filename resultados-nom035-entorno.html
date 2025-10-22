@@ -2068,24 +2068,29 @@
             border: 2px solid #3b82f6;
         }
 
-        .heatmap-cell.bajo {
-            background-color: #dcfce7; /* Verde claro */
-            color: #166534;
+        .heatmap-cell.muy-desfavorable {
+            background-color: #fecaca; /* Rojo claro */
+            color: #dc2626;
         }
 
-        .heatmap-cell.medio {
-            background-color: #fef3c7; /* Amarillo claro */
-            color: #92400e;
-        }
-
-        .heatmap-cell.alto {
+        .heatmap-cell.desfavorable {
             background-color: #fed7aa; /* Naranja claro */
             color: #c2410c;
         }
 
-        .heatmap-cell.muy-alto {
-            background-color: #fecaca; /* Rojo claro */
-            color: #dc2626;
+        .heatmap-cell.neutral {
+            background-color: #fef3c7; /* Amarillo claro */
+            color: #92400e;
+        }
+
+        .heatmap-cell.favorable {
+            background-color: #dcfce7; /* Verde claro */
+            color: #166534;
+        }
+
+        .heatmap-cell.muy-favorable {
+            background-color: #bbf7d0; /* Verde más oscuro */
+            color: #14532d;
         }
 
         .heatmap-participant-name {
@@ -2145,6 +2150,67 @@
 
         .heatmap-dimension-header:hover {
             background: #d1d5db;
+        }
+
+        /* Estilos para acordeón de dimensiones */
+        .dimension-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            background: white;
+        }
+
+        .dimension-header {
+            padding: 12px 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            color: #374151;
+            transition: background-color 0.2s ease;
+        }
+
+        .dimension-header:hover {
+            background: #f8f9fa;
+        }
+
+        .dimension-header.expanded {
+            background: #f1f5f9;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .dimension-arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .dimension-arrow.expanded {
+            transform: rotate(90deg);
+        }
+
+        .dimension-content {
+            display: none;
+            padding: 0 16px 12px 16px;
+        }
+
+        .dimension-content.expanded {
+            display: block;
+        }
+
+        .dimension-subitem {
+            padding: 8px 0;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .dimension-subitem:last-child {
+            border-bottom: none;
+        }
+
+        .dimension-total {
+            font-weight: 600;
+            color: #374151;
         }
 
 
@@ -4219,19 +4285,10 @@
                                 <div style="background: white; border-radius: 8px; padding: 24px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
                                     <!-- Controles del Heatmap -->
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 16px;">
-                                        <!-- Filtros -->
+                                        <!-- Filtros Demográficos -->
                                         <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                                            <select id="heatmap-dimension-filter" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; font-size: 14px;">
-                                                <option value="">Todas las dimensiones</option>
-                                                <option value="ambiente">Ambiente de trabajo</option>
-                                                <option value="factores">Factores de riesgo</option>
-                                                <option value="organizacion">Organización del tiempo</option>
-                                                <option value="liderazgo">Liderazgo</option>
-                                            </select>
-                                            
                                             <select id="heatmap-area-filter" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; font-size: 14px;">
-                                                <option value="">Todas las áreas</option>
-                                                <option value="Ventas">Ventas</option>
+                                                <option value="Ventas" selected>Ventas</option>
                                                 <option value="Marketing">Marketing</option>
                                                 <option value="RRHH">RRHH</option>
                                                 <option value="Tecnología">Tecnología</option>
@@ -4243,6 +4300,14 @@
                                                 <option value="Femenino">Femenino</option>
                                                 <option value="Masculino">Masculino</option>
                                                 <option value="Otro">Otro</option>
+                                            </select>
+                                            
+                                            <select id="heatmap-position-filter" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; font-size: 14px;">
+                                                <option value="">Todas las posiciones</option>
+                                                <option value="Gerente">Gerente</option>
+                                                <option value="Coordinador">Coordinador</option>
+                                                <option value="Analista">Analista</option>
+                                                <option value="Asistente">Asistente</option>
                                             </select>
                                             
                                             <select id="heatmap-risk-filter" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; background: white; font-size: 14px;">
@@ -4260,28 +4325,62 @@
                                         </button>
                                     </div>
                                     
-                                    <!-- Leyenda del Heatmap -->
-                                    <div style="display: flex; justify-content: center; gap: 24px; margin-bottom: 20px; padding: 16px; background: #f8f9fa; border-radius: 8px;">
-                                        <div style="display: flex; align-items: center; gap: 8px;">
-                                            <div class="heatmap-cell bajo" style="width: 16px; height: 16px;"></div>
-                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Bajo Riesgo (1-3)</span>
+                                    <!-- Estructura del Heatmap como la imagen -->
+                                    <div style="display: flex; gap: 20px;">
+                                        <!-- Panel Izquierdo - Categorías Desplegables -->
+                                        <div style="flex: 0 0 300px; background: #f8f9fa; border-radius: 8px; padding: 16px;">
+                                            <h3 style="margin: 0 0 16px 0; font-size: 16px; font-weight: 600; color: #374151;">Dimensiones NOM-035</h3>
+                                            <div id="dimensions-accordion">
+                                                <!-- Se generará dinámicamente -->
+                                            </div>
                                         </div>
-                                        <div style="display: flex; align-items: center; gap: 8px;">
-                                            <div class="heatmap-cell medio" style="width: 16px; height: 16px;"></div>
-                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Medio Riesgo (4-5)</span>
-                                        </div>
-                                        <div style="display: flex; align-items: center; gap: 8px;">
-                                            <div class="heatmap-cell alto" style="width: 16px; height: 16px;"></div>
-                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Alto Riesgo (6-7)</span>
-                                        </div>
-                                        <div style="display: flex; align-items: center; gap: 8px;">
-                                            <div class="heatmap-cell muy-alto" style="width: 16px; height: 16px;"></div>
-                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Muy Alto Riesgo (8)</span>
+                                        
+                                        <!-- Panel Derecho - Heatmap -->
+                                        <div style="flex: 1; background: #f8f9fa; border-radius: 8px; padding: 16px;">
+                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                                <h3 style="margin: 0; font-size: 16px; font-weight: 600; color: #374151;">Favorabilidad por áreas</h3>
+                                                <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #6b7280;">
+                                                    <i class="far fa-info-circle"></i>
+                                                    <span>Total de Favorabilidad</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div id="heatmap-grid" style="overflow-x: auto;">
+                                                <!-- El heatmap se generará dinámicamente -->
+                                            </div>
+                                            
+                                            <!-- Totales por área -->
+                                            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e5e7eb;">
+                                                <div style="font-size: 12px; color: #6b7280; margin-bottom: 8px;">Total favorabilidad por dato demográfico: Áreas</div>
+                                                <div id="area-totals" style="display: flex; gap: 8px;">
+                                                    <!-- Se generará dinámicamente -->
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     
-                                    <div id="heatmap-container" style="overflow-x: auto; overflow-y: auto; max-height: 600px;">
-                                        <!-- El heatmap se generará dinámicamente con JavaScript -->
+                                    <!-- Leyenda del Heatmap -->
+                                    <div style="display: flex; justify-content: center; gap: 24px; margin-top: 20px; padding: 16px; background: #f8f9fa; border-radius: 8px;">
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <div class="heatmap-cell muy-desfavorable" style="width: 16px; height: 16px;"></div>
+                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Muy desfavorable 1% a 1.9%</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <div class="heatmap-cell desfavorable" style="width: 16px; height: 16px;"></div>
+                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Desfavorable 2% a 2.9%</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <div class="heatmap-cell neutral" style="width: 16px; height: 16px;"></div>
+                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Neutrales 3% a 3.9%</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <div class="heatmap-cell favorable" style="width: 16px; height: 16px;"></div>
+                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Favorable 4% a 4.9%</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <div class="heatmap-cell muy-favorable" style="width: 16px; height: 16px;"></div>
+                                            <span style="font-size: 14px; color: #374151; font-weight: 500;">Muy favorable 5%</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -11207,115 +11306,186 @@
             return { participants, questions, responses };
         }
 
-        // Crear el heatmap robusto
+        // Crear el heatmap como la imagen
         function createHeatmap() {
-            const container = document.getElementById('heatmap-container');
-            if (!container) return;
+            const accordionContainer = document.getElementById('dimensions-accordion');
+            const gridContainer = document.getElementById('heatmap-grid');
+            const totalsContainer = document.getElementById('area-totals');
+            
+            if (!accordionContainer || !gridContainer || !totalsContainer) return;
 
-            const { participants, questions, responses } = generateHeatmapData();
-            
-            // Agrupar preguntas por dimensión
-            const dimensions = {
-                'ambiente': questions.slice(0, 18),
-                'factores': questions.slice(18, 36),
-                'organizacion': questions.slice(36, 54),
-                'liderazgo': questions.slice(54, 72)
-            };
-            
-            let html = '<div style="overflow-x: auto;">';
-            html += '<table class="heatmap-table" style="min-width: 1200px;">';
-            
-            // Encabezado con dimensiones desplegables
-            html += '<thead>';
-            html += '<tr>';
-            html += '<td class="heatmap-participant-name" style="background: #f1f5f9; font-weight: 700; min-width: 120px;">Participante</td>';
-            
-            // Crear encabezados por dimensión
-            Object.keys(dimensions).forEach(dimKey => {
-                const dimQuestions = dimensions[dimKey];
-                const dimName = {
-                    'ambiente': 'Ambiente de trabajo',
-                    'factores': 'Factores de riesgo', 
-                    'organizacion': 'Organización del tiempo',
-                    'liderazgo': 'Liderazgo'
-                }[dimKey];
-                
-                html += `<td colspan="${dimQuestions.length}" style="background: #e5e7eb; text-align: center; font-weight: 600; padding: 8px; border: 1px solid #d1d5db;">
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
-                        <i class="far fa-chevron-down" style="font-size: 12px;"></i>
-                        <span>${dimName}</span>
+            // Datos de dimensiones NOM-035
+            const dimensions = [
+                {
+                    name: 'Ambiente de trabajo',
+                    total: 70,
+                    expanded: true,
+                    subitems: [
+                        { text: '¿Mi organización es un lugar muy familiar, como si fuéramos una gran familia?', total: 10 },
+                        { text: '¿La gente parece que comparte mucho de sí misma con los demás?', total: 30 },
+                        { text: '¿Existe un ambiente de confianza y respeto mutuo?', total: 20 },
+                        { text: '¿Se fomenta la comunicación abierta y honesta?', total: 10 }
+                    ]
+                },
+                {
+                    name: 'Factores de riesgo',
+                    total: 70,
+                    expanded: false,
+                    subitems: [
+                        { text: '¿Se identifican y evalúan los factores de riesgo psicosocial?', total: 15 },
+                        { text: '¿Se implementan medidas preventivas adecuadas?', total: 25 },
+                        { text: '¿Se monitorea el bienestar de los trabajadores?', total: 20 },
+                        { text: '¿Se proporciona apoyo psicológico cuando es necesario?', total: 10 }
+                    ]
+                },
+                {
+                    name: 'Organización del tiempo',
+                    total: 70,
+                    expanded: false,
+                    subitems: [
+                        { text: '¿Se respetan los horarios de trabajo establecidos?', total: 20 },
+                        { text: '¿Se evita el trabajo excesivo y las horas extra?', total: 25 },
+                        { text: '¿Se promueve el equilibrio trabajo-vida personal?', total: 15 },
+                        { text: '¿Se respetan los períodos de descanso?', total: 10 }
+                    ]
+                },
+                {
+                    name: 'Liderazgo',
+                    total: 70,
+                    expanded: false,
+                    subitems: [
+                        { text: '¿Los líderes son accesibles y comunicativos?', total: 18 },
+                        { text: '¿Se reconoce y valora el trabajo de los empleados?', total: 22 },
+                        { text: '¿Se proporciona retroalimentación constructiva?', total: 20 },
+                        { text: '¿Se fomenta el desarrollo profesional?', total: 10 }
+                    ]
+                }
+            ];
+
+            // Áreas demográficas
+            const areas = ['Tecnología', 'Producto', 'Finanzas', 'Ventas', 'Customer', 'Marketing'];
+
+            // Crear acordeón de dimensiones
+            let accordionHtml = '';
+            dimensions.forEach((dimension, index) => {
+                accordionHtml += `
+                    <div class="dimension-item">
+                        <div class="dimension-header ${dimension.expanded ? 'expanded' : ''}" data-dimension="${index}">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="far fa-chevron-${dimension.expanded ? 'down' : 'right'} dimension-arrow ${dimension.expanded ? 'expanded' : ''}"></i>
+                                <span>${dimension.name}</span>
+                            </div>
+                            <div class="dimension-total">${dimension.total}%</div>
+                        </div>
+                        <div class="dimension-content ${dimension.expanded ? 'expanded' : ''}">
+                            ${dimension.subitems.map(subitem => `
+                                <div class="dimension-subitem">
+                                    <div style="margin-bottom: 4px;">${subitem.text}</div>
+                                    <div class="dimension-total">${subitem.total}%</div>
+                                </div>
+                            `).join('')}
+                        </div>
                     </div>
-                </td>`;
+                `;
             });
-            html += '</tr>';
+            accordionContainer.innerHTML = accordionHtml;
+
+            // Crear heatmap grid
+            let gridHtml = '<table style="width: 100%; border-collapse: collapse;">';
             
-            // Fila de números de pregunta
-            html += '<tr>';
-            html += '<td class="heatmap-participant-name" style="background: #f8f9fa; font-weight: 600; color: #6b7280;">Pregunta</td>';
-            questions.forEach(question => {
-                html += `<td class="heatmap-question-number">${question.number}</td>`;
-            });
-            html += '</tr>';
-            html += '</thead>';
-            
-            // Filas de participantes
-            html += '<tbody>';
-            participants.forEach((participant, pIndex) => {
-                html += '<tr>';
-                html += `<td class="heatmap-participant-name" style="font-weight: 500;">${participant.name}</td>`;
+            // Filas del heatmap
+            dimensions.forEach((dimension, dimIndex) => {
+                // Fila principal de la dimensión
+                gridHtml += '<tr>';
+                gridHtml += `<td style="padding: 8px; font-weight: 500; color: #374151; border: 1px solid #e5e7eb; background: #f8f9fa;">${dimension.name}</td>`;
                 
-                questions.forEach((question, qIndex) => {
-                    const response = responses[pIndex][qIndex];
-                    html += `<td class="heatmap-cell ${response.riskLevel}" 
-                                data-participant="${participant.name}" 
-                                data-question="${question.number}" 
-                                data-risk="${response.riskLevel}" 
-                                data-value="${response.value}"
-                                data-dimension="${question.category}"
-                                title="${participant.name} - Pregunta ${question.number}: ${response.riskLevel} (${response.value})"></td>`;
-                });
-                
-                html += '</tr>';
-            });
-            html += '</tbody>';
-            html += '</table>';
-            html += '</div>';
-            
-            container.innerHTML = html;
-            
-            // Agregar tooltips mejorados
-            const cells = container.querySelectorAll('.heatmap-cell');
-            cells.forEach(cell => {
-                cell.addEventListener('mouseenter', function(e) {
-                    const tooltip = document.createElement('div');
-                    tooltip.className = 'heatmap-tooltip';
-                    tooltip.innerHTML = `
-                        <div style="font-weight: 600; margin-bottom: 4px;">${this.dataset.participant}</div>
-                        <div style="font-size: 11px; color: #9ca3af; margin-bottom: 2px;">Pregunta ${this.dataset.question}</div>
-                        <div style="font-size: 11px; color: #9ca3af; margin-bottom: 2px;">Dimensión: ${this.dataset.dimension}</div>
-                        <div style="font-weight: 500; color: #fbbf24;">Nivel: ${this.dataset.risk}</div>
-                        <div style="font-size: 11px; color: #9ca3af;">Valor: ${this.dataset.value}</div>
-                    `;
-                    document.body.appendChild(tooltip);
+                areas.forEach(area => {
+                    const value = Math.random() * 5; // 0-5%
+                    const cellClass = value <= 1.9 ? 'muy-desfavorable' :
+                                    value <= 2.9 ? 'desfavorable' :
+                                    value <= 3.9 ? 'neutral' :
+                                    value <= 4.9 ? 'favorable' : 'muy-favorable';
                     
-                    const rect = this.getBoundingClientRect();
-                    tooltip.style.left = (rect.left + rect.width / 2) + 'px';
-                    tooltip.style.top = (rect.top - 10) + 'px';
-                    tooltip.style.transform = 'translateX(-50%)';
-                    
-                    setTimeout(() => tooltip.classList.add('show'), 10);
+                    gridHtml += `<td class="heatmap-cell ${cellClass}" style="text-align: center; font-weight: 600; font-size: 11px;" 
+                                    data-dimension="${dimIndex}" data-area="${area}" data-value="${value.toFixed(1)}">
+                                    ${value.toFixed(1)}%
+                                </td>`;
                 });
+                gridHtml += '</tr>';
                 
-                cell.addEventListener('mouseleave', function() {
-                    const tooltip = document.querySelector('.heatmap-tooltip');
-                    if (tooltip) {
-                        tooltip.remove();
+                // Subitems si la dimensión está expandida
+                if (dimension.expanded) {
+                    dimension.subitems.forEach((subitem, subIndex) => {
+                        gridHtml += '<tr>';
+                        gridHtml += `<td style="padding: 8px; font-size: 11px; color: #6b7280; border: 1px solid #e5e7eb; background: #f8f9fa; padding-left: 24px;">${subitem.text}</td>`;
+                        
+                        areas.forEach(area => {
+                            const value = Math.random() * 5;
+                            const cellClass = value <= 1.9 ? 'muy-desfavorable' :
+                                            value <= 2.9 ? 'desfavorable' :
+                                            value <= 3.9 ? 'neutral' :
+                                            value <= 4.9 ? 'favorable' : 'muy-favorable';
+                            
+                            gridHtml += `<td class="heatmap-cell ${cellClass}" style="text-align: center; font-weight: 600; font-size: 11px;" 
+                                            data-dimension="${dimIndex}" data-subitem="${subIndex}" data-area="${area}" data-value="${value.toFixed(1)}">
+                                            ${value.toFixed(1)}%
+                                        </td>`;
+                        });
+                        gridHtml += '</tr>';
+                    });
+                }
+            });
+            
+            gridHtml += '</table>';
+            gridContainer.innerHTML = gridHtml;
+
+            // Crear totales por área
+            let totalsHtml = '';
+            areas.forEach(area => {
+                const total = (Math.random() * 20 + 40).toFixed(0); // 40-60%
+                totalsHtml += `
+                    <div style="text-align: center; padding: 8px; background: #f1f5f9; border-radius: 4px; font-weight: 600; color: #374151;">
+                        ${total}%
+                    </div>
+                `;
+            });
+            totalsContainer.innerHTML = totalsHtml;
+
+            // Configurar eventos del acordeón
+            const dimensionHeaders = accordionContainer.querySelectorAll('.dimension-header');
+            dimensionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const dimensionIndex = this.dataset.dimension;
+                    const content = this.nextElementSibling;
+                    const arrow = this.querySelector('.dimension-arrow');
+                    
+                    // Toggle expanded state
+                    const isExpanded = this.classList.contains('expanded');
+                    
+                    if (isExpanded) {
+                        this.classList.remove('expanded');
+                        content.classList.remove('expanded');
+                        arrow.classList.remove('expanded');
+                        arrow.className = 'far fa-chevron-right dimension-arrow';
+                    } else {
+                        this.classList.add('expanded');
+                        content.classList.add('expanded');
+                        arrow.classList.add('expanded');
+                        arrow.className = 'far fa-chevron-down dimension-arrow expanded';
                     }
+                    
+                    // Actualizar heatmap
+                    updateHeatmapGrid();
                 });
             });
-            
+
             // Configurar filtros
             setupHeatmapFilters();
+        }
+
+        // Actualizar grid del heatmap
+        function updateHeatmapGrid() {
+            // Esta función se implementará para actualizar el grid cuando se expandan/contraigan dimensiones
         }
         
         // Configurar filtros del heatmap
