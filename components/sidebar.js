@@ -124,24 +124,8 @@ function loadSidebar(activeButton = null) {
         initProfileTooltips();
     }
     
-    // Re-inicializar dark mode toggle
-    if (typeof initDarkModeToggle === 'function') {
-        console.log('Inicializando dark mode...');
-        initDarkModeToggle();
-    } else {
-        console.log('initDarkModeToggle no está disponible, intentando inicializar directamente...');
-        // Fallback: inicializar directamente si la función no está disponible
-        const darkModeButton = document.querySelector('#darkmode-toggle');
-        if (darkModeButton) {
-            darkModeButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (typeof toggleDarkMode === 'function') {
-                    toggleDarkMode();
-                }
-            });
-        }
-    }
+    // Dark mode toggle desactivado - no inicializar funcionalidad
+    console.log('Dark mode toggle desactivado - funcionalidad limitada');
     
     console.log('Sidebar cargado completamente');
     
