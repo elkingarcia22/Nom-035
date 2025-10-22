@@ -709,27 +709,10 @@
             document.getElementById('feedbackTrigger').style.display = 'flex';
             document.getElementById('sectionIndicator').style.display = 'block';
             
-            // Navegar automáticamente a la sección de encuestas
+            // Redirigir automáticamente a la página de encuestas
             setTimeout(() => {
-                // Buscar y hacer clic en la pestaña de encuestas
-                const encuestasTab = document.querySelector('.nav-tab[data-tab="encuestas"], .nav-tab:contains("Encuestas")');
-                if (encuestasTab) {
-                    encuestasTab.click();
-                } else {
-                    // Si no encuentra la pestaña, buscar por texto
-                    const allTabs = document.querySelectorAll('.nav-tab');
-                    for (let tab of allTabs) {
-                        if (tab.textContent.includes('Encuestas') || tab.textContent.includes('encuestas')) {
-                            tab.click();
-                            break;
-                        }
-                    }
-                }
-                
-                // Iniciar el sistema de onboarding después de navegar
-                setTimeout(() => {
-                    startOnboarding();
-                }, 500);
+                console.log('🔄 Redirigiendo a encuestas.html...');
+                window.location.href = 'encuestas.html';
             }, 100);
         }
         
