@@ -4247,7 +4247,7 @@
 
         function downloadGeneralResults() {
             // Extraer datos reales de la tabla de vista general
-            const tbody = document.querySelector('#new-overview-panel tbody');
+            const tbody = document.querySelector('#new-overview-panel .results-table tbody');
             if (!tbody) {
                 alert('No se encontró la tabla de vista general');
                 return;
@@ -4259,12 +4259,12 @@
                 return;
             }
 
-            const headers = ['Categoría', 'Dominio', 'Dimensión', 'Promedio', 'Nivel de Riesgo'];
+            const headers = ['Categoría', 'Dominio', 'Dimensión', 'Total Usuarios en Riesgo', '% Colaboradores Afectados', 'Nivel de Riesgo'];
             const data = [];
 
             rows.forEach(row => {
                 const cells = row.querySelectorAll('td');
-                if (cells.length < 4) return;
+                if (cells.length < 6) return;
 
                 const rowData = [];
                 
@@ -4277,14 +4277,17 @@
                 // Extraer dimensión
                 const dimension = cells[2].textContent.trim();
                 
-                // Extraer promedio
-                const average = cells[3].textContent.trim();
+                // Extraer total usuarios en riesgo
+                const totalUsers = cells[3].textContent.trim();
+                
+                // Extraer porcentaje de colaboradores afectados
+                const percentage = cells[4].textContent.trim();
                 
                 // Extraer nivel de riesgo
-                const riskBadge = cells[4] ? cells[4].querySelector('.risk-badge') : null;
+                const riskBadge = cells[5] ? cells[5].querySelector('.risk-badge') : null;
                 const riskLevel = riskBadge ? riskBadge.textContent.trim() : '';
                 
-                rowData.push(category, domain, dimension, average, riskLevel);
+                rowData.push(category, domain, dimension, totalUsers, percentage, riskLevel);
                 data.push(rowData);
             });
 
