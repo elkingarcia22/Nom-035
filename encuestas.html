@@ -178,6 +178,38 @@
             border-right-color: white;
         }
         
+        /* ===== BOTÓN DE FEEDBACK FLOTANTE ===== */
+        .feedback-trigger {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        
+        .feedback-trigger:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3); }
+            50% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.6), 0 0 0 10px rgba(102, 126, 234, 0.1); }
+            100% { box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3); }
+        }
+        
         /* ¡A LA MIERDA LAS REGLAS PENDEJAS! */
 
         /* Custom Select Styles - Exactamente iguales a la página emocional */
@@ -571,6 +603,11 @@
             </div>
             <div class="tooltip-arrow" id="tooltipArrow"></div>
         </div>
+    </div>
+
+    <!-- ===== BOTÓN DE FEEDBACK FLOTANTE ===== -->
+    <div class="feedback-trigger" id="feedbackTrigger" onclick="openFeedbackModal()">
+        💬
     </div>
 
     <div class="dashboard-container">
@@ -1830,6 +1867,14 @@
         function finishOnboarding() {
             document.getElementById('onboardingOverlay').classList.remove('show');
             console.log('✅ Onboarding completado');
+        }
+        
+        // ===== SISTEMA DE FEEDBACK =====
+        
+        // Función para abrir el modal de feedback
+        function openFeedbackModal() {
+            console.log('💬 Abriendo modal de feedback...');
+            alert('Sistema de feedback activado. En una implementación completa, aquí se abriría un modal para dejar comentarios.');
         }
         
         // Variables de seguimiento del onboarding
