@@ -1315,37 +1315,6 @@
     </style>
 </head>
 <body data-theme="light">
-    <!-- ===== OVERLAY DE BIENVENIDA ===== -->
-    <div class="welcome-overlay" id="welcomeOverlay">
-        <div class="welcome-container">
-            <div class="prototype-badge">
-                🚀 PROTOTIPO FUNCIONAL
-            </div>
-            <h1 class="welcome-title">¡Bienvenido al Prototipo NOM-035!</h1>
-            <p class="welcome-subtitle">
-                Estás a punto de probar un prototipo funcional del sistema de evaluación NOM-035. 
-                <strong>No te enfoques en el diseño</strong> - esto es una versión rápida para validar funcionalidades.
-            </p>
-            
-            <div class="features-list">
-                <h3 style="text-align: center; margin-bottom: 16px; color: #1f2937;">🎯 Lo que vas a probar:</h3>
-                <ul style="list-style: none; padding: 0;">
-                    <li><i class="fas fa-chart-bar"></i> <strong>Vista General:</strong> Dashboard con métricas y gráficos</li>
-                    <li><i class="fas fa-users"></i> <strong>Resultados Individuales:</strong> Análisis detallado por participante</li>
-                    <li><i class="fas fa-download"></i> <strong>Descarga de Reportes:</strong> Exportación de datos en CSV</li>
-                    <li><i class="fas fa-comment"></i> <strong>Sistema de Feedback:</strong> Comentarios por sección</li>
-                </ul>
-            </div>
-            
-            <p style="color: #6b7280; font-size: 14px; margin: 20px 0;">
-                💡 <strong>Tip:</strong> Usa el botón de feedback (💬) en la esquina inferior derecha para dejar tus comentarios sobre cada sección.
-            </p>
-            
-            <button class="start-button" onclick="startPrototype()">
-                <i class="fas fa-rocket"></i> Comenzar Prueba
-            </button>
-        </div>
-    </div>
 
     <!-- ===== MODAL DE FEEDBACK ===== -->
     <div class="feedback-modal" id="feedbackModal">
@@ -3503,14 +3472,6 @@
         let feedbackData = [];
         
         // Función para iniciar el prototipo
-        function startPrototype() {
-            document.getElementById('welcomeOverlay').style.display = 'none';
-            document.getElementById('feedbackTrigger').style.display = 'flex';
-            document.getElementById('sectionIndicator').style.display = 'block';
-            
-            // Mostrar mensaje de bienvenida
-            showNotification('¡Bienvenido! Usa el botón 💬 para dejar feedback en cada sección.', 'success');
-        }
         
         // Función para abrir el modal de feedback
         function openFeedbackModal() {

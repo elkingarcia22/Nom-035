@@ -1716,11 +1716,24 @@
         
         // Iniciar onboarding automáticamente al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('📄 Página encuestas.html cargada');
+            
             // Esperar a que se cargue el contenido
             setTimeout(() => {
+                console.log('🚀 Iniciando onboarding automáticamente...');
                 startOnboarding();
                 setupRowClickListeners();
-            }, 1000);
+            }, 1500);
+        });
+        
+        // También intentar iniciar cuando la ventana se carga completamente
+        window.addEventListener('load', function() {
+            console.log('🔄 Ventana completamente cargada, verificando onboarding...');
+            if (!document.getElementById('onboardingOverlay').classList.contains('show')) {
+                console.log('🚀 Iniciando onboarding desde window.load...');
+                startOnboarding();
+                setupRowClickListeners();
+            }
         });
         
     </script>
