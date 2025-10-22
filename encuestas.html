@@ -1638,8 +1638,14 @@
         
         // ===== SISTEMA DE FEEDBACK COMPLETO =====
         
-        // SISTEMA DE FEEDBACK LOCAL (SIN GOOGLE APPS SCRIPT)
-        // Sistema que guarda feedback en localStorage del navegador
+        // SISTEMA DE FEEDBACK HÍBRIDO (LOCAL + GOOGLE SHEETS)
+        // Sistema que guarda localmente Y envía a Google Sheets
+        
+        // URL del webhook de Google Apps Script (ACTUALIZAR CON TU NUEVA URL)
+        const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/TU_NUEVA_URL_AQUI/exec';
+        
+        // Modo híbrido - intentar Google Sheets, respaldo local
+        const HYBRID_MODE = true;
         
         // Función para guardar feedback localmente
         function saveFeedbackLocally(feedbackData) {
@@ -1675,6 +1681,52 @@
             link.click();
             
             console.log('📁 Feedback exportado como JSON');
+        }
+        
+        // Función híbrida: intentar Google Sheets, respaldo local
+        async function sendFeedbackHybrid(feedbackData) {
+            console.log('🔄 SISTEMA HÍBRIDO: Intentando Google Sheets...');
+            
+            try {
+                // Intentar enviar a Google Sheets
+                const response = await fetch(FEEDBACK_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(feedbackData)
+                });
+                
+                if (response.ok) {
+                    console.log('✅ Enviado a Google Sheets exitosamente');
+                    const result = await response.json();
+                    console.log('📊 Respuesta de Google Sheets:', result);
+                    
+                    // También guardar localmente como respaldo
+                    saveFeedbackLocally(feedbackData);
+                    
+                    return {
+                        success: true,
+                        method: 'google-sheets',
+                        message: 'Feedback enviado a Google Sheets y guardado localmente'
+                    };
+                } else {
+                    throw new Error(`Error del servidor: ${response.status}`);
+                }
+                
+            } catch (error) {
+                console.warn('⚠️ Error con Google Sheets, usando respaldo local:', error);
+                
+                // Respaldo local
+                const savedFeedback = saveFeedbackLocally(feedbackData);
+                
+                return {
+                    success: true,
+                    method: 'local-backup',
+                    message: `Feedback guardado localmente (${savedFeedback.length} comentarios)`,
+                    error: error.message
+                };
+            }
         }
         
         // INSTRUCCIONES PARA CONFIGURAR GOOGLE APPS SCRIPT:
@@ -1750,23 +1802,41 @@
             showLoading(true);
             hideMessage();
             
-            // Sistema de feedback local (sin Google Apps Script)
-            console.log('💾 GUARDANDO FEEDBACK LOCALMENTE');
-            console.log('📋 Datos del feedback:', feedbackData);
-            
-            // Guardar localmente
-            const savedFeedback = saveFeedbackLocally(feedbackData);
-            
-            // Simular delay de red
-            setTimeout(() => {
-                showMessage(`¡Feedback guardado! (${savedFeedback.length} comentarios guardados)`, 'success');
+            // Sistema híbrido: Google Sheets + respaldo local
+            if (HYBRID_MODE) {
+                console.log('🔄 SISTEMA HÍBRIDO: Enviando feedback...');
+                
+                try {
+                    const result = await sendFeedbackHybrid(feedbackData);
+                    console.log('📊 Resultado del sistema híbrido:', result);
+                    
+                    if (result.success) {
+                        showMessage(result.message, 'success');
+                        setTimeout(() => {
+                            closeFeedbackModal();
+                        }, 2000);
+                    } else {
+                        showMessage('Error al enviar feedback. Inténtalo de nuevo.', 'error');
+                    }
+                } catch (error) {
+                    console.error('❌ Error en sistema híbrido:', error);
+                    showMessage('Error inesperado. Inténtalo de nuevo.', 'error');
+                } finally {
+                    showLoading(false);
+                }
+            } else {
+                // Sistema solo local (respaldo)
+                console.log('💾 SISTEMA LOCAL: Guardando feedback...');
+                const savedFeedback = saveFeedbackLocally(feedbackData);
+                
                 setTimeout(() => {
-                    closeFeedbackModal();
-                }, 2000);
-                showLoading(false);
-            }, 1000);
-            
-            // Sistema local completado - no más código de Google Apps Script
+                    showMessage(`¡Feedback guardado! (${savedFeedback.length} comentarios guardados)`, 'success');
+                    setTimeout(() => {
+                        closeFeedbackModal();
+                    }, 2000);
+                    showLoading(false);
+                }, 1000);
+            }
         }
         
         // Mostrar/ocultar estado de carga
