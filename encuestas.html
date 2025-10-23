@@ -65,9 +65,18 @@
         }
         
         .onboarding-tooltip h3 {
+            margin: 0 0 5px 0;
+            color: #667eea;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .onboarding-tooltip h4 {
             margin: 0 0 12px 0;
             color: #333;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
         }
         
@@ -766,7 +775,8 @@
     <div class="onboarding-overlay" id="onboardingOverlay">
         <div class="onboarding-spotlight" id="onboardingSpotlight"></div>
         <div class="onboarding-tooltip" id="onboardingTooltip">
-            <h3 id="tooltipTitle">¡Bienvenido al Prototipo!</h3>
+            <h3 id="tooltipStep">Paso 1</h3>
+            <h4 id="tooltipTitle">¡Bienvenido al Prototipo!</h4>
             <p id="tooltipContent">Te vamos a guiar paso a paso por las funcionalidades principales.</p>
             <div class="tooltip-actions">
                 <button class="btn-skip" onclick="skipOnboarding()">Omitir</button>
@@ -2118,6 +2128,7 @@
             
             // Actualizar contenido del tooltip
             console.log('📝 DEBUG: Actualizando tooltip...');
+            document.getElementById('tooltipStep').textContent = 'Paso 1';
             document.getElementById('tooltipTitle').textContent = step.title;
             document.getElementById('tooltipContent').textContent = step.content;
             console.log('✅ DEBUG: Tooltip actualizado - Título:', step.title);
