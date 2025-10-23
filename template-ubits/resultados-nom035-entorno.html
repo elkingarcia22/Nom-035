@@ -2756,9 +2756,12 @@
                                             <div class="panel-header">
                                                 <h3>Participantes</h3>
                                                 <div class="search-filters-container">
-                                                    <div class="simple-search-container" style="flex: 1;">
+                                                    <div class="simple-search-container" style="flex: 1; position: relative;">
                                                         <i class="far fa-search simple-search-icon"></i>
                                                         <input type="text" id="individual-participant-search" placeholder="Buscar participante..." class="simple-search-input">
+                                                        <button id="clear-individual-participant-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer; display: none; width: 20px; height: 20px; align-items: center; justify-content: center;" title="Limpiar búsqueda">
+                                                            <i class="far fa-times"></i>
+                                                        </button>
                                                     </div>
                                                     <button class="filters-button" id="individual-filters-btn" title="Filtros">
                                                         <i class="far fa-filter"></i>
@@ -6082,11 +6085,19 @@
         // Configurar búsqueda
         function setupIndividualSearch() {
             const searchInput = document.getElementById('individual-participant-search');
+            const clearButton = document.getElementById('clear-individual-participant-search');
+            
             if (!searchInput) return;
             
-            searchInput.addEventListener('input', function(e) {
+            // Función para manejar la búsqueda
+            function handleIndividualSearch(e) {
                 const searchValue = e.target.value.toLowerCase();
                 console.log('🔍 Búsqueda individual:', searchValue);
+                
+                // Mostrar/ocultar botón de limpiar
+                if (clearButton) {
+                    clearButton.style.display = searchValue.length > 0 ? 'flex' : 'none';
+                }
                 
                 const filteredParticipants = individualParticipantsData.filter(participant => 
                     participant.name.toLowerCase().includes(searchValue) ||
@@ -6095,7 +6106,32 @@
                 );
                 
                 renderIndividualParticipantsList(filteredParticipants);
-            });
+            }
+            
+            // Función para limpiar la búsqueda
+            function clearIndividualSearch() {
+                if (searchInput) {
+                    searchInput.value = '';
+                    searchInput.focus();
+                }
+                
+                if (clearButton) {
+                    clearButton.style.display = 'none';
+                }
+                
+                // Mostrar todos los participantes
+                renderIndividualParticipantsList(individualParticipantsData);
+            }
+            
+            // Configurar event listeners
+            searchInput.addEventListener('input', handleIndividualSearch);
+            searchInput.addEventListener('keyup', handleIndividualSearch);
+            
+            // Configurar botón de limpiar
+            if (clearButton) {
+                clearButton.addEventListener('click', clearIndividualSearch);
+                console.log('🔍 Botón de limpiar configurado para búsqueda individual');
+            }
         }
 
         // Configurar filtros
