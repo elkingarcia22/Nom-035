@@ -11447,6 +11447,307 @@
     <!-- Backdrop para cerrar filtros -->
     <div id="participants-filters-backdrop" class="filters-backdrop"></div>
 
+    <!-- ===== BOTÓN DE FEEDBACK FLOTANTE ===== -->
+    <div class="feedback-trigger" id="feedbackTrigger" onclick="openFeedbackModal()">
+        💬
+    </div>
+    
+    <!-- ===== MODAL DE FEEDBACK ===== -->
+    <div class="feedback-modal" id="feedbackModal">
+        <div class="feedback-modal-content">
+            <div class="feedback-modal-header">
+                <h3>💬 Deja tu Feedback</h3>
+                <button class="feedback-close" onclick="closeFeedbackModal()">&times;</button>
+            </div>
+            <div class="feedback-modal-body">
+                <form id="feedbackForm">
+                    <div class="feedback-form-group">
+                        <label for="feedbackSection">Sección actual:</label>
+                        <select id="feedbackSection" name="section" required>
+                            <option value="">Selecciona una sección</option>
+                            <option value="Home - Encuestas">Home - Encuestas</option>
+                            <option value="Resultados Emocionales">Resultados Emocionales</option>
+                            <option value="Resultados Entorno Laboral">Resultados Entorno Laboral</option>
+                            <option value="Vista General">Vista General</option>
+                            <option value="Descarga de Reportes">Descarga de Reportes</option>
+                            <option value="Otra">Otra</option>
+                        </select>
+                    </div>
+                    <div class="feedback-form-group">
+                        <label for="feedbackComment">Tu comentario:</label>
+                        <textarea id="feedbackComment" name="comment" placeholder="¿Qué funciona bien? ¿Qué falta? ¿Qué mejorarías? ¿Qué necesita tu empresa?" required></textarea>
+                    </div>
+                    <div class="feedback-form-actions">
+                        <button type="button" class="feedback-cancel" onclick="closeFeedbackModal()">Cancelar</button>
+                        <button type="submit" class="feedback-submit">Enviar Feedback</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ESTILOS DEL FEEDBACK ===== -->
+    <style>
+        .feedback-trigger {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feedback-trigger:hover {
+            background: #5a6fd8;
+            transform: scale(1.1);
+        }
+
+        .feedback-modal {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 400px;
+            max-width: 90vw;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.3s ease;
+        }
+
+        .feedback-modal.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        .feedback-modal-content {
+            padding: 0;
+        }
+
+        .feedback-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .feedback-modal-header h3 {
+            margin: 0;
+            color: #1f2937;
+            font-size: 18px;
+        }
+
+        .feedback-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .feedback-modal-body {
+            padding: 20px;
+        }
+
+        .feedback-form-group {
+            margin-bottom: 20px;
+        }
+
+        .feedback-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .feedback-form-group select,
+        .feedback-form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .feedback-form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .feedback-form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .feedback-cancel,
+        .feedback-submit {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .feedback-cancel {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .feedback-submit {
+            background: #667eea;
+            color: white;
+        }
+
+        .feedback-submit:hover {
+            background: #5a6fd8;
+        }
+    </style>
+
+    <!-- ===== JAVASCRIPT DEL FEEDBACK ===== -->
+    <script>
+        // URL del webhook de n8n
+        const FEEDBACK_WEBHOOK_URL = 'https://egarcia.app.n8n.cloud/webhook/feedback';
+
+        // Abrir modal de feedback
+        function openFeedbackModal() {
+            console.log('💬 Abriendo modal de feedback...');
+            const modal = document.getElementById('feedbackModal');
+            modal.classList.add('show');
+            
+            // Detectar sección actual
+            const section = detectCurrentSection();
+            document.getElementById('feedbackSection').value = section;
+        }
+
+        // Cerrar modal de feedback
+        function closeFeedbackModal() {
+            console.log('💬 Cerrando modal de feedback...');
+            const modal = document.getElementById('feedbackModal');
+            modal.classList.remove('show');
+            
+            // Limpiar formulario
+            document.getElementById('feedbackForm').reset();
+        }
+
+        // Detectar sección actual
+        function detectCurrentSection() {
+            const url = window.location.pathname;
+            if (url.includes('resultados-nom035-entorno')) {
+                return 'Resultados Entorno Laboral';
+            } else if (url.includes('resultados-nom035')) {
+                return 'Resultados Emocionales';
+            } else if (url.includes('encuestas')) {
+                return 'Home - Encuestas';
+            }
+            return 'Resultados Entorno Laboral';
+        }
+
+        // Manejar envío de feedback
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleFeedbackSubmit();
+        });
+
+        // Función para enviar feedback
+        async function handleFeedbackSubmit() {
+            console.log('📤 Enviando feedback anónimo...');
+            
+            const formData = new FormData(document.getElementById('feedbackForm'));
+            const feedbackData = {
+                user: 'Anónimo',
+                section: formData.get('section'),
+                comment: formData.get('comment'),
+                timestamp: new Date().toISOString(),
+                url: window.location.href
+            };
+
+            console.log('📋 Datos del feedback:', feedbackData);
+
+            try {
+                // Enviar a n8n
+                const response = await fetch(FEEDBACK_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(feedbackData)
+                });
+
+                if (response.ok) {
+                    console.log('✅ Feedback enviado exitosamente');
+                    showMessage('¡Gracias por tu feedback!', 'success');
+                    closeFeedbackModal();
+                } else {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+            } catch (error) {
+                console.error('❌ Error al enviar feedback:', error);
+                showMessage('Error al enviar el feedback. Inténtalo de nuevo.', 'error');
+            }
+        }
+
+        // Mostrar mensaje
+        function showMessage(message, type) {
+            const modal = document.getElementById('feedbackModal');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `feedback-message feedback-${type}`;
+            messageDiv.textContent = message;
+            messageDiv.style.cssText = `
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                padding: 10px;
+                border-radius: 8px;
+                text-align: center;
+                font-weight: 500;
+                z-index: 1002;
+                background: ${type === 'success' ? '#d1fae5' : '#fee2e2'};
+                color: ${type === 'success' ? '#065f46' : '#dc2626'};
+            `;
+            
+            modal.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+
+        // Cerrar modal al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('feedbackModal');
+            
+            if (e.target === modal) {
+                closeFeedbackModal();
+            }
+        });
+
+        // Cerrar modal con Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeFeedbackModal();
+            }
+        });
+    </script>
 
 </body>
 </html>
