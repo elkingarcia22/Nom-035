@@ -41,19 +41,31 @@
             display: none;
         }
         
-        /* Spotlight para destacar elementos */
+        /* Spotlight para destacar elementos - SIN VELO GRIS INTERNO */
         .onboarding-spotlight {
             position: absolute;
             border: 3px solid #667eea;
             border-radius: 8px;
             background: transparent;
-            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
+            /* SIN box-shadow para evitar velo gris */
             z-index: 10000;
             transition: all 0.3s ease;
         }
         
-        /* Eliminar velo gris dentro del área enmascarada */
-        .onboarding-spotlight::before {
+        /* Overlay para oscurecer solo el fondo, NO el área destacada */
+        .onboarding-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9998;
+        }
+        
+        /* Crear "agujero" transparente en el overlay */
+        .onboarding-spotlight::after {
             content: '';
             position: absolute;
             top: -3px;
@@ -62,6 +74,7 @@
             bottom: -3px;
             background: transparent;
             z-index: 10001;
+            border-radius: 8px;
         }
         
         /* Tooltip del onboarding */
@@ -2097,7 +2110,7 @@
         let currentOnboardingStep = 0;
         let onboardingSteps = [
             {
-                title: "Resultados Emocionales",
+                title: "Paso 1",
                 content: "Primero vamos a explorar los resultados emocionales. Haz clic en esta fila para ver el análisis detallado.",
                 target: "tr.clickable-row:first-of-type",
                 action: "highlight"
@@ -2114,22 +2127,32 @@
         // Mostrar paso actual del onboarding
         function showOnboardingStep() {
             const step = onboardingSteps[currentOnboardingStep];
-            if (!step) return;
+            if (!step) {
+                console.error('❌ DEBUG: No hay paso disponible para:', currentOnboardingStep);
+                return;
+            }
             
-            console.log('📍 Mostrando paso:', currentOnboardingStep, step);
+            console.log('📍 DEBUG: Mostrando paso:', currentOnboardingStep);
+            console.log('📋 DEBUG: Datos del paso:', step);
             
             // Mostrar overlay
             const overlay = document.getElementById('onboardingOverlay');
+            console.log('🎭 DEBUG: Mostrando overlay...');
             overlay.style.display = 'block';
+            console.log('✅ DEBUG: Overlay mostrado');
             
             // Actualizar contenido del tooltip
+            console.log('📝 DEBUG: Actualizando tooltip...');
             document.getElementById('tooltipTitle').textContent = step.title;
             document.getElementById('tooltipContent').textContent = step.content;
+            console.log('✅ DEBUG: Tooltip actualizado - Título:', step.title);
             
             // Si hay target, destacarlo
             if (step.target) {
+                console.log('🎯 DEBUG: Destacando elemento:', step.target);
                 highlightElement(step.target);
             } else {
+                console.log('📍 DEBUG: Sin target, centrando tooltip');
                 // Si no hay target, centrar el tooltip
                 centerTooltip();
             }
@@ -2137,16 +2160,23 @@
         
         // Destacar elemento específico
         function highlightElement(selector) {
+            console.log('🔍 DEBUG: Buscando elemento con selector:', selector);
             const element = document.querySelector(selector);
             if (!element) {
                 console.error('❌ Elemento no encontrado:', selector);
+                console.log('🔍 DEBUG: Elementos disponibles:', document.querySelectorAll('tr'));
                 return;
             }
             
-            console.log('🎯 Destacando elemento:', element);
+            console.log('🎯 DEBUG: Elemento encontrado:', element);
+            console.log('📏 DEBUG: Dimensiones del elemento:', element.getBoundingClientRect());
             
             const rect = element.getBoundingClientRect();
             const spotlight = document.getElementById('onboardingSpotlight');
+            
+            console.log('🎨 DEBUG: Configurando spotlight...');
+            console.log('📍 DEBUG: Posición - left:', rect.left - 3, 'top:', rect.top - 3);
+            console.log('📐 DEBUG: Tamaño - width:', rect.width + 6, 'height:', rect.height + 6);
             
             // Posicionar spotlight
             spotlight.style.left = (rect.left - 3) + 'px';
@@ -2154,6 +2184,15 @@
             spotlight.style.width = (rect.width + 6) + 'px';
             spotlight.style.height = (rect.height + 6) + 'px';
             spotlight.style.display = 'block';
+            
+            console.log('✅ DEBUG: Spotlight configurado');
+            console.log('🎨 DEBUG: Estilos aplicados:', {
+                left: spotlight.style.left,
+                top: spotlight.style.top,
+                width: spotlight.style.width,
+                height: spotlight.style.height,
+                display: spotlight.style.display
+            });
             
             // Posicionar tooltip
             positionTooltip(rect);
