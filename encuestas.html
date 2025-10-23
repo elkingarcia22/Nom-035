@@ -1645,6 +1645,15 @@
                 modal.style.pointerEvents = 'none';
                 modal.style.opacity = '0.6';
                 modal.classList.add('disabled');
+                
+                // Deshabilitar todos los elementos interactivos dentro del modal
+                const inputs = modal.querySelectorAll('input, textarea, select, button');
+                inputs.forEach(element => {
+                    element.disabled = true;
+                    element.style.pointerEvents = 'none';
+                });
+                
+                console.log('🔒 Modal completamente deshabilitado');
             }
         }
 
@@ -1656,6 +1665,15 @@
                 modal.style.pointerEvents = 'auto';
                 modal.style.opacity = '1';
                 modal.classList.remove('disabled');
+                
+                // Habilitar todos los elementos interactivos dentro del modal
+                const inputs = modal.querySelectorAll('input, textarea, select, button');
+                inputs.forEach(element => {
+                    element.disabled = false;
+                    element.style.pointerEvents = 'auto';
+                });
+                
+                console.log('🔓 Modal completamente habilitado');
             }
         }
         
@@ -2042,9 +2060,9 @@
                 console.log('🎯 Paso 3: Abriendo modal de feedback y cerrando onboarding');
                 finishOnboarding();
                 setTimeout(() => {
-                    openFeedbackModal();
-                    // Deshabilitar el modal inmediatamente
+                    // Deshabilitar el modal ANTES de abrirlo
                     disableFeedbackModal();
+                    openFeedbackModal();
                     // Cerrar el modal automáticamente después de 500ms
                     setTimeout(() => {
                         closeFeedbackModal();
