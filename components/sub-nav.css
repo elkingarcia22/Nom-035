@@ -16,7 +16,7 @@
     justify-content: space-between;
     width: calc(100% - 24px);
     max-width: calc(100% - 24px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px var(--ubits-bg-dim);
 }
 
 /* Nav Tabs Container */
@@ -82,7 +82,7 @@
     background-color: var(--ubits-bg-1);
     border: 1px solid var(--ubits-border-1);
     border-radius: 0 0 8px 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px var(--ubits-bg-dim);
     z-index: 1000;
     display: none;
     flex-direction: column;
@@ -317,7 +317,7 @@
 
 [data-theme="dark"] .sub-nav {
     background-color: var(--ubits-bg-2);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 3px var(--ubits-bg-dim);
 }
 
 [data-theme="dark"] .nav-tab span {
@@ -356,7 +356,7 @@
 [data-theme="dark"] .hamburger-dropdown {
     background-color: var(--ubits-bg-2);
     border-color: var(--ubits-border-1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px var(--ubits-bg-dim);
 }
 
 [data-theme="dark"] .hamburger-item {

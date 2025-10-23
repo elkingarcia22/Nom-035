@@ -94,7 +94,7 @@ body {
 }
 
 .logo:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--ubits-button-active-bg);
     transform: scale(1.05);
 }
 
@@ -144,7 +144,7 @@ body {
 
 /* Botones de navegación */
 .nav-button {
-    background: rgba(255, 255, 255, 0);
+    background: transparent;
     border: none;
     padding: 8px;
     border-radius: 1000px;
@@ -182,7 +182,7 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, var(--ubits-button-active-bg), transparent);
     transition: left 0.6s ease;
     pointer-events: none;
 }
@@ -195,7 +195,7 @@ body {
 
 /* Default State */
 .nav-button {
-    background: rgba(255, 255, 255, 0);
+    background: transparent;
 }
 
 /* Botón de modo oscuro - NO debe tener estado active */
@@ -204,11 +204,11 @@ body {
 }
 
 #darkmode-toggle:hover {
-    background: rgba(255, 255, 255, 0.1) !important;
+    background: var(--ubits-button-active-bg) !important;
 }
 
 #darkmode-toggle:active {
-    background: rgba(255, 255, 255, 0.2) !important;
+    background: var(--ubits-button-active-bg) !important;
 }
 
 /* El icono del botón modo oscuro SIEMPRE debe ser visible */
@@ -236,9 +236,9 @@ body {
 
 /* Hover State - Solo cuando el mouse está encima */
 .nav-button:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--ubits-button-active-bg);
     transform: scale(1.08);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px var(--ubits-button-active-bg);
 }
 
 .nav-button:hover i {
@@ -268,8 +268,8 @@ body {
 
 /* Focus State - Solo cuando navegas con teclado (Tab) */
 .nav-button:focus-visible {
-    background: rgba(255, 255, 255, 0);
-    box-shadow: 0px 0px 0px 4px rgba(82, 151, 244, 0.3);
+    background: transparent;
+    box-shadow: 0px 0px 0px 4px var(--ubits-button-focus-ring);
     outline: none;
 }
 
@@ -296,7 +296,7 @@ body {
     border-radius: 6px;
     white-space: nowrap;
     z-index: 10000;
-    box-shadow: 0px 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0px 2px 8px var(--ubits-bg-dim);
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s ease;
@@ -437,7 +437,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(12, 91, 239, 0.03);
+    background: var(--ubits-button-active-bg);
     border-radius: 0;
     opacity: 0;
     transition: opacity 0.2s ease;
@@ -472,7 +472,7 @@ body {
 
 /* Hover effects para nav-tab */
 .nav-tab:hover {
-    background: rgba(12, 91, 239, 0.05);
+    background: var(--ubits-button-active-bg);
 }
 
 .nav-tab:hover i {
@@ -714,7 +714,7 @@ body[data-theme="dark"] .content-area.no-background {
 /* Efecto especial para cards clickeables */
 .ai-card[onclick]:hover {
     transform: translateY(-4px);
-    border: 1px solid rgba(12, 91, 239, 0.3);
+    border: 1px solid var(--ubits-button-focus-ring);
 }
 
 .card-header {
@@ -957,7 +957,7 @@ body[data-theme="dark"] .content-placeholder p {
 }
 
 .action-btn:hover {
-    background-color: rgba(156, 163, 175, 0.1);
+    background-color: var(--ubits-button-active-bg);
     color: var(--ubits-fg-2-medium-static-inverted);
 }
 
@@ -979,21 +979,21 @@ body[data-theme="dark"] .content-placeholder p {
 
 /* Estados activos de los botones */
 .action-btn.liked {
-    background-color: rgba(12, 91, 239, 0.15) !important;
+    background-color: var(--ubits-button-active-bg) !important;
     color: var(--ubits-accent-brand) !important;
 }
 
 .action-btn.disliked {
-    background-color: rgba(12, 91, 239, 0.15) !important;
+    background-color: var(--ubits-button-active-bg) !important;
     color: var(--ubits-accent-brand) !important;
 }
 
 .action-btn.liked:hover {
-    background-color: rgba(12, 91, 239, 0.2) !important;
+    background-color: var(--ubits-button-active-bg) !important;
 }
 
 .action-btn.disliked:hover {
-    background-color: rgba(12, 91, 239, 0.2) !important;
+    background-color: var(--ubits-button-active-bg) !important;
 }
 
 
@@ -1088,7 +1088,7 @@ body[data-theme="dark"] .content-placeholder p {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, var(--ubits-button-active-bg), transparent);
     transition: left 0.5s ease;
 }
 
@@ -1110,7 +1110,7 @@ body[data-theme="dark"] .content-placeholder p {
 /* Efecto de pulso sutil en hover */
 #darkmode-toggle:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 20px var(--ubits-button-focus-ring);
 }
 
 /* Transición suave para el cambio de tema */
@@ -1250,7 +1250,7 @@ body {
     position: sticky;
     top: 16px;
     z-index: 100;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px var(--ubits-bg-dim);
 }
 
 .results-search-layout {
@@ -1378,7 +1378,7 @@ body {
 
 .icon-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px var(--ubits-bg-dim);
     border-color: var(--ubits-accent-brand);
 }
 
@@ -1504,7 +1504,7 @@ body {
     max-width: 400px;
     border-radius: 10px;
     padding: 10px 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px var(--ubits-bg-dim);
     animation: slideInDown 0.3s ease-out;
     border: 1px solid;
 }
@@ -1550,7 +1550,7 @@ body {
 }
 
 .toast-close:hover {
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--ubits-button-active-bg);
 }
 
 /* Toast Success */
@@ -1639,7 +1639,7 @@ body {
     background: var(--ubits-bg-1);
     border-radius: 20px;
     padding: 8px 4px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 20px var(--ubits-bg-dim);
     z-index: 1000;
     overflow-y: auto;
     scrollbar-width: thin;
@@ -1807,7 +1807,7 @@ body {
 
 .feature-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px var(--ubits-bg-dim);
     border-color: var(--ubits-accent-brand);
 }
 
@@ -1922,7 +1922,7 @@ body {
 
 .component-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px var(--ubits-bg-dim);
 }
 
 .component-card h3 {
@@ -2068,7 +2068,7 @@ body {
     height: 60px;
     border-radius: 8px;
     border: 1px solid var(--ubits-border-1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px var(--ubits-bg-dim);
 }
 
 .swatch-name {
@@ -2107,7 +2107,7 @@ body {
 
 .icon-category-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px var(--ubits-bg-dim);
 }
 
 .icon-category-item i {
@@ -2236,7 +2236,7 @@ body {
 
 .resource-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px var(--ubits-bg-dim);
     border-color: var(--ubits-accent-brand);
 }
 
@@ -2339,7 +2339,7 @@ body {
     background: var(--ubits-sidebar-bg);
     border: 1px solid var(--ubits-border-1);
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px var(--ubits-bg-dim);
     z-index: 2000;
     padding: 8px 0;
 }

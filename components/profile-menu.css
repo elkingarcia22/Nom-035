@@ -12,7 +12,7 @@
     background: var(--ubits-sidebar-bg);
     border: 1px solid var(--ubits-border-1);
     border-radius: 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px var(--ubits-bg-dim);
     z-index: 2000;
     padding: 8px 0;
 }
