@@ -3531,6 +3531,8 @@
             visibility: hidden;
             transform: translateY(20px) scale(0.95);
             transition: all 0.3s ease;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         .feedback-modal.show {
@@ -3541,6 +3543,8 @@
 
         .feedback-modal-content {
             padding: 0;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         .feedback-modal-header {
@@ -3567,10 +3571,14 @@
 
         .feedback-modal-body {
             padding: 20px;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         .feedback-form-group {
             margin-bottom: 20px;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         .feedback-form-group label {
@@ -3588,11 +3596,16 @@
             border-radius: 8px;
             font-size: 14px;
             font-family: inherit;
+            box-sizing: border-box;
+            max-width: 100%;
         }
 
         .feedback-form-group textarea {
             height: 100px;
             resize: vertical;
+            max-width: 100%;
+            overflow-x: hidden;
+            word-wrap: break-word;
         }
 
         .feedback-form-actions {

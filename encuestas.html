@@ -187,9 +187,11 @@
             width: 350px;
             max-height: 400px;
             overflow-y: auto;
+            overflow-x: hidden;
             box-shadow: 0 20px 40px var(--ubits-bg-dim);
             animation: slideInFloating 0.3s ease-out;
             border: 1px solid var(--ubits-border-1);
+            box-sizing: border-box;
         }
         
         @keyframes slideInFloating {
@@ -252,10 +254,14 @@
         
         .feedback-modal-body {
             padding: 20px;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
         
         .feedback-form-group {
             margin-bottom: 20px;
+            overflow-x: hidden;
+            box-sizing: border-box;
         }
         
         .feedback-form-group label {
@@ -276,6 +282,7 @@
             font-size: 14px;
             transition: border-color 0.2s ease;
             box-sizing: border-box;
+            max-width: 100%;
         }
         
         .feedback-form-group input:focus,
@@ -289,6 +296,9 @@
         .feedback-form-group textarea {
             min-height: 100px;
             resize: vertical;
+            max-width: 100%;
+            overflow-x: hidden;
+            word-wrap: break-word;
         }
         
         .feedback-form-actions {
