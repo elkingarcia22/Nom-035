@@ -92,24 +92,9 @@
         
         .onboarding-tooltip .tooltip-actions {
             display: flex;
-            gap: 12px;
-            justify-content: flex-end;
+            justify-content: center;
         }
         
-        .onboarding-tooltip .btn-skip {
-            background: #f8f9fa;
-            color: #666;
-            border: 1px solid #dee2e6;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s ease;
-        }
-        
-        .onboarding-tooltip .btn-skip:hover {
-            background: #e9ecef;
-        }
         
         .onboarding-tooltip .btn-next {
             background: #667eea;
@@ -782,7 +767,6 @@
             <h4 id="tooltipTitle">¡Bienvenido al Prototipo!</h4>
             <p id="tooltipContent">Te vamos a guiar paso a paso por las funcionalidades principales.</p>
             <div class="tooltip-actions">
-                <button class="btn-skip" onclick="skipOnboarding()">Omitir</button>
                 <button class="btn-next" onclick="nextOnboardingStep()">Siguiente</button>
             </div>
         </div>
@@ -2265,10 +2249,6 @@
         }
         
         // Omitir onboarding
-        function skipOnboarding() {
-            console.log('⏭️ Onboarding omitido');
-            finishOnboarding();
-        }
         
         // Finalizar onboarding
         function finishOnboarding() {
