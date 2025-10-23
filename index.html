@@ -35,7 +35,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--ubits-accent-brand);
             z-index: 10000;
             display: flex;
             align-items: center;
@@ -49,7 +49,7 @@
             padding: 40px;
             max-width: 600px;
             width: 90%;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 25px 50px var(--ubits-bg-dim);
             text-align: center;
             animation: slideInUp 0.6s ease-out;
         }
@@ -68,21 +68,21 @@
         .welcome-title {
             font-size: 28px;
             font-weight: 700;
-            color: #1f2937;
+            color: var(--ubits-fg-1-high);
             margin-bottom: 16px;
         }
         
         .welcome-subtitle {
             font-size: 18px;
-            color: #6b7280;
+            color: var(--ubits-fg-1-medium);
             margin-bottom: 32px;
             line-height: 1.6;
         }
         
         .prototype-badge {
             display: inline-block;
-            background: #fef3c7;
-            color: #92400e;
+            background: var(--ubits-feedback-bg-warning-subtle);
+            color: var(--ubits-feedback-fg-warning-subtle);
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 14px;
@@ -98,18 +98,18 @@
         
         .features-list li {
             margin: 12px 0;
-            color: #374151;
+            color: var(--ubits-fg-1-high);
             font-size: 16px;
         }
         
         .features-list i {
-            color: #10b981;
+            color: var(--ubits-feedback-accent-success);
             margin-right: 12px;
             width: 20px;
         }
         
         .start-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--ubits-accent-brand);
             color: white;
             border: none;
             padding: 16px 32px;
@@ -123,7 +123,7 @@
         
         .start-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 25px var(--ubits-button-focus-ring);
         }
         
         /* Modal de feedback flotante */
@@ -134,7 +134,7 @@
             width: 350px;
             background: white;
             border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 40px var(--ubits-bg-dim);
             z-index: 9999;
             display: none;
             animation: slideInRight 0.3s ease-out;
@@ -156,7 +156,7 @@
         }
         
         .feedback-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--ubits-accent-brand);
             color: white;
             padding: 16px 20px;
             border-radius: 16px 16px 0 0;
@@ -190,7 +190,7 @@
         .feedback-label {
             display: block;
             font-weight: 600;
-            color: #374151;
+            color: var(--ubits-fg-1-high);
             margin-bottom: 8px;
             font-size: 14px;
         }
@@ -198,7 +198,7 @@
         .feedback-input {
             width: 100%;
             padding: 12px;
-            border: 2px solid #e5e7eb;
+            border: 2px solid var(--ubits-border-1);
             border-radius: 8px;
             font-size: 14px;
             transition: border-color 0.3s ease;
@@ -208,7 +208,7 @@
         
         .feedback-input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--ubits-accent-brand);
         }
         
         .feedback-buttons {
@@ -219,7 +219,7 @@
         
         .feedback-submit {
             flex: 1;
-            background: #10b981;
+            background: var(--ubits-feedback-accent-success);
             color: white;
             border: none;
             padding: 12px;
@@ -230,13 +230,13 @@
         }
         
         .feedback-submit:hover {
-            background: #059669;
+            background: var(--ubits-feedback-accent-success-static);
         }
         
         .feedback-cancel {
             flex: 1;
-            background: #f3f4f6;
-            color: #374151;
+            background: var(--ubits-bg-2);
+            color: var(--ubits-fg-1-high);
             border: none;
             padding: 12px;
             border-radius: 8px;
@@ -246,7 +246,7 @@
         }
         
         .feedback-cancel:hover {
-            background: #e5e7eb;
+            background: var(--ubits-bg-3);
         }
         
         /* Botón flotante de feedback */
@@ -256,13 +256,13 @@
             right: 20px;
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--ubits-accent-brand);
             border: none;
             border-radius: 50%;
             color: white;
             font-size: 24px;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 25px var(--ubits-button-focus-ring);
             z-index: 9998;
             transition: all 0.3s ease;
             display: flex;
@@ -272,7 +272,7 @@
         
         .feedback-trigger:hover {
             transform: scale(1.1);
-            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 12px 35px var(--ubits-button-focus-ring);
         }
         
         /* Indicador de sección actual */
@@ -281,7 +281,7 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(102, 126, 234, 0.9);
+            background: var(--ubits-accent-brand);
             color: white;
             padding: 8px 16px;
             border-radius: 20px;
@@ -300,7 +300,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: var(--ubits-bg-dim);
             z-index: 10001;
             display: none;
         }
@@ -312,17 +312,17 @@
         /* Spotlight para destacar elemento */
         .onboarding-spotlight {
             position: absolute;
-            border: 3px solid #667eea;
+            border: 3px solid var(--ubits-accent-brand);
             border-radius: 8px;
-            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 0 9999px var(--ubits-bg-dim);
             z-index: 10002;
             animation: pulse 2s infinite;
         }
         
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 0 0 rgba(102, 126, 234, 0.7); }
-            50% { box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 0 10px rgba(102, 126, 234, 0.3); }
-            100% { box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 0 0 rgba(102, 126, 234, 0.7); }
+            0% { box-shadow: 0 0 0 9999px var(--ubits-bg-dim), 0 0 0 0 var(--ubits-button-focus-ring); }
+            50% { box-shadow: 0 0 0 9999px var(--ubits-bg-dim), 0 0 0 10px var(--ubits-button-active-bg); }
+            100% { box-shadow: 0 0 0 9999px var(--ubits-bg-dim), 0 0 0 0 var(--ubits-button-focus-ring); }
         }
         
         /* Tooltip de onboarding */
@@ -331,7 +331,7 @@
             background: white;
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 40px var(--ubits-bg-dim);
             z-index: 10003;
             max-width: 350px;
             animation: slideInTooltip 0.3s ease-out;
@@ -357,7 +357,7 @@
         .tooltip-icon {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--ubits-accent-brand);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -370,12 +370,12 @@
         .tooltip-title {
             font-size: 18px;
             font-weight: 700;
-            color: #1f2937;
+            color: var(--ubits-fg-1-high);
             margin: 0;
         }
         
         .tooltip-content {
-            color: #6b7280;
+            color: var(--ubits-fg-1-medium);
             line-height: 1.6;
             margin-bottom: 16px;
         }
@@ -396,22 +396,22 @@
         }
         
         .tooltip-button.primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--ubits-accent-brand);
             color: white;
         }
         
         .tooltip-button.primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 25px var(--ubits-button-focus-ring);
         }
         
         .tooltip-button.secondary {
-            background: #f3f4f6;
-            color: #374151;
+            background: var(--ubits-bg-2);
+            color: var(--ubits-fg-1-high);
         }
         
         .tooltip-button.secondary:hover {
-            background: #e5e7eb;
+            background: var(--ubits-bg-3);
         }
         
         /* Flecha del tooltip */
@@ -575,7 +575,7 @@
             </p>
             
             <div class="features-list">
-                <h3 style="text-align: center; margin-bottom: 16px; color: #1f2937;">🎯 Lo que vas a probar:</h3>
+                <h3 style="text-align: center; margin-bottom: 16px; color: var(--ubits-fg-1-high);">🎯 Lo que vas a probar:</h3>
                 <ul style="list-style: none; padding: 0;">
                     <li><i class="fas fa-heart"></i> <strong>Resultados Emocionales:</strong> Análisis de acontecimientos traumáticos y afectación</li>
                     <li><i class="fas fa-briefcase"></i> <strong>Resultados Entorno Laboral:</strong> Evaluación de condiciones de trabajo</li>
@@ -584,8 +584,8 @@
                 </ul>
             </div>
             
-            <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid #0ea5e9; border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center;">
-                <p style="color: #0c4a6e; font-size: 16px; margin: 0; font-weight: 600;">
+            <div style="background: var(--ubits-feedback-bg-info-subtle); border: 2px solid var(--ubits-feedback-accent-info); border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center;">
+                <p style="color: var(--ubits-feedback-fg-info-subtle); font-size: 16px; margin: 0; font-weight: 600;">
                     💡 <strong>¡IMPORTANTE!</strong> Usa el botón de feedback (💬) en la esquina inferior derecha para dejar tus comentarios sobre cada sección.
                 </p>
             </div>
@@ -605,7 +605,7 @@
         <div class="feedback-body">
             <div class="feedback-section">
                 <label class="feedback-label">Sección actual:</label>
-                <input type="text" id="currentSection" class="feedback-input" readonly style="background: #f9fafb;">
+                <input type="text" id="currentSection" class="feedback-input" readonly style="background: var(--ubits-bg-2);">
             </div>
             <div class="feedback-section">
                 <label class="feedback-label">Tu comentario:</label>
@@ -814,11 +814,11 @@
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+                background: ${type === 'success' ? 'var(--ubits-feedback-accent-success)' : type === 'error' ? 'var(--ubits-feedback-accent-error)' : 'var(--ubits-accent-brand)'};
                 color: white;
                 padding: 16px 20px;
                 border-radius: 8px;
-                box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+                box-shadow: 0 10px 25px var(--ubits-bg-dim);
                 z-index: 10001;
                 font-weight: 600;
                 max-width: 300px;
