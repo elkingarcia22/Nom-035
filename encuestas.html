@@ -29,19 +29,19 @@
     <style>
         /* ===== SISTEMA DE ONBOARDING ===== */
         
-        /* Overlay principal del onboarding - CON VELO GRIS COMPLETO */
+        /* Overlay principal del onboarding - SIN VELO GRIS GLOBAL */
         .onboarding-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.7);
+            width: 100%;
+            height: 100%;
+            background: transparent;
             z-index: 9999;
             display: none;
         }
         
-        /* Spotlight para destacar elementos - SOLO BORDE AZUL */
+        /* Spotlight para destacar elementos - CON VELO GRIS ALREDEDOR */
         .onboarding-spotlight {
             position: absolute;
             border: 3px solid #667eea;
@@ -49,21 +49,10 @@
             background: transparent;
             z-index: 10000;
             transition: all 0.3s ease;
-            /* Solo borde azul, el velo viene del overlay */
-        }
-        
-        /* Crear "agujero" transparente en el overlay para el área destacada */
-        .onboarding-spotlight::after {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            background: transparent;
-            z-index: 10001;
-            border-radius: 8px;
-            /* Esto crea un "agujero" transparente en el velo gris */
+            /* Velo gris solo alrededor del elemento */
+            box-shadow: 
+                0 0 0 9999px rgba(0, 0, 0, 0.7),
+                inset 0 0 0 3px transparent;
         }
         
         /* Tooltip del onboarding */
