@@ -1859,6 +1859,11 @@
         // Iniciar onboarding
         function startOnboarding() {
             console.log('🚀 Iniciando onboarding...');
+            console.log('🔍 Verificando elementos del onboarding:');
+            console.log('- Overlay:', document.getElementById('onboardingOverlay'));
+            console.log('- Spotlight:', document.getElementById('onboardingSpotlight'));
+            console.log('- Tooltip:', document.getElementById('onboardingTooltip'));
+            
             currentOnboardingStep = 0;
             showOnboardingStep();
         }
@@ -1876,9 +1881,15 @@
             
             // Mostrar overlay
             const overlay = document.getElementById('onboardingOverlay');
+            console.log('🔍 DEBUG: Overlay encontrado:', overlay);
             console.log('🎭 DEBUG: Mostrando overlay...');
-            overlay.style.display = 'block';
-            console.log('✅ DEBUG: Overlay mostrado');
+            if (overlay) {
+                overlay.style.display = 'block';
+                console.log('✅ DEBUG: Overlay mostrado');
+                console.log('🔍 DEBUG: Display del overlay:', overlay.style.display);
+            } else {
+                console.error('❌ DEBUG: No se encontró el overlay');
+            }
             
             // Actualizar contenido del tooltip
             console.log('📝 DEBUG: Actualizando tooltip...');
