@@ -1317,9 +1317,12 @@
                                         <div class="panel-header">
                                             <h3>Participantes</h3>
                                             <div class="search-filters-container">
-                                            <div class="simple-search-container" style="flex: 1;">
+                                            <div class="simple-search-container" style="flex: 1; position: relative;">
                                                 <i class="far fa-search simple-search-icon"></i>
                                                 <input type="text" id="participant-search" placeholder="Buscar participante..." class="simple-search-input">
+                                                <button id="clear-participant-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer; display: none; width: 20px; height: 20px; align-items: center; justify-content: center;" title="Limpiar búsqueda">
+                                                    <i class="far fa-times"></i>
+                                                </button>
                                             </div>
                                                 <button class="filters-button" id="filters-btn" title="Filtros">
                                                     <i class="far fa-filter"></i>
@@ -3107,16 +3110,42 @@
                 console.log('🔍 participantsData disponible:', participantsData ? participantsData.length : 'undefined');
                 console.log('🔍 Elemento que disparó el evento:', e.target);
                 
+                // Mostrar/ocultar botón de limpiar
+                const clearButton = document.getElementById('clear-participant-search');
+                if (clearButton) {
+                    clearButton.style.display = searchValue.length > 0 ? 'flex' : 'none';
+                }
+                
                 // Aplicar filtros inmediatamente
                 console.log('🔍 Llamando a applyFilters...');
                 applyFilters();
                 console.log('🔍 applyFilters completado');
             }
             
+            // Función para limpiar la búsqueda
+            function clearSearch() {
+                const searchInput = document.getElementById('participant-search');
+                const clearButton = document.getElementById('clear-participant-search');
+                
+                if (searchInput) {
+                    searchInput.value = '';
+                    searchInput.focus();
+                }
+                
+                if (clearButton) {
+                    clearButton.style.display = 'none';
+                }
+                
+                // Aplicar filtros para mostrar todos los participantes
+                applyFilters();
+            }
+            
             // Función para configurar el buscador cuando esté disponible
             function configureSearch() {
                 const searchInput = document.getElementById('participant-search');
+                const clearButton = document.getElementById('clear-participant-search');
                 console.log('🔍 Elemento de búsqueda encontrado:', searchInput);
+                console.log('🔍 Botón de limpiar encontrado:', clearButton);
                 
                 if (searchInput) {
                     // Remover event listeners existentes para evitar duplicados
@@ -3128,6 +3157,12 @@
                     searchInput.addEventListener('keyup', handleSearch);
                     
                     console.log('🔍 Event listeners agregados correctamente');
+                    
+                    // Configurar botón de limpiar
+                    if (clearButton) {
+                        clearButton.addEventListener('click', clearSearch);
+                        console.log('🔍 Botón de limpiar configurado');
+                    }
                     
                     // Probar que funciona
                     console.log('🔍 Probando búsqueda...');
