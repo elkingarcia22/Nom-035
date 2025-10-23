@@ -2102,6 +2102,12 @@
                 content: "Primero vamos a explorar los resultados emocionales. Haz clic en esta fila para ver el análisis detallado.",
                 target: "tr.clickable-row:first-of-type",
                 action: "highlight"
+            },
+            {
+                title: "Resultados Entorno Laboral",
+                content: "Ahora vamos a explorar los resultados del entorno laboral. Haz clic en esta fila para ver el análisis detallado.",
+                target: "tr.clickable-row:nth-of-type(2)",
+                action: "highlight"
             }
         ];
         
@@ -2131,9 +2137,18 @@
             
             // Actualizar contenido del tooltip
             console.log('📝 DEBUG: Actualizando tooltip...');
-            document.getElementById('tooltipStep').textContent = 'Paso 1';
+            document.getElementById('tooltipStep').textContent = `Paso ${currentOnboardingStep + 1}`;
             document.getElementById('tooltipTitle').textContent = step.title;
             document.getElementById('tooltipContent').textContent = step.content;
+            
+            // Actualizar botón "Siguiente" / "Finalizar"
+            const nextButton = document.querySelector('.btn-next');
+            if (currentOnboardingStep === onboardingSteps.length - 1) {
+                nextButton.textContent = 'Finalizar';
+            } else {
+                nextButton.textContent = 'Siguiente';
+            }
+            
             console.log('✅ DEBUG: Tooltip actualizado - Título:', step.title);
             
             // Si hay target, destacarlo
