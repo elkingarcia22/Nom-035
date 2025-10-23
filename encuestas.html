@@ -1967,7 +1967,7 @@
             // Actualizar botón "Siguiente" / "Comenzar"
             const nextButton = document.querySelector('.btn-next');
             if (currentOnboardingStep === onboardingSteps.length - 1) {
-                nextButton.textContent = 'Finalizar';
+                nextButton.textContent = 'Comenzar';
             } else {
                 nextButton.textContent = 'Siguiente';
             }
@@ -2004,6 +2004,8 @@
             if (!element) {
                 console.error('❌ Elemento no encontrado:', selector);
                 console.log('🔍 DEBUG: Elementos disponibles:', document.querySelectorAll('tr'));
+                console.log('🔍 DEBUG: Botones disponibles:', document.querySelectorAll('button'));
+                console.log('🔍 DEBUG: Elementos con clase feedback:', document.querySelectorAll('.feedback-button'));
                 return;
             }
             
@@ -2072,10 +2074,10 @@
         function nextOnboardingStep() {
             console.log('➡️ Siguiente paso del onboarding');
             
-            // Si es el paso 3 (último paso), solo mostrar el botón de feedback
+            // Si es el paso 3 (último paso), finalizar onboarding
             if (currentOnboardingStep === onboardingSteps.length - 1) {
-                console.log('🎯 Paso 3: Mostrando botón de feedback');
-                // No hacer nada especial, solo mostrar el tooltip normal
+                console.log('🎯 Paso 3: Finalizando onboarding');
+                finishOnboarding();
                 return;
             }
             
