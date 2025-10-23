@@ -1641,19 +1641,28 @@
         function disableFeedbackModal() {
             console.log('🔒 Deshabilitando modal de feedback...');
             const modal = document.getElementById('feedbackModal');
+            console.log('🔍 Modal encontrado:', modal);
+            
             if (modal) {
+                // Deshabilitar el modal principal
                 modal.style.pointerEvents = 'none';
                 modal.style.opacity = '0.6';
                 modal.classList.add('disabled');
+                console.log('🔒 Modal principal deshabilitado');
                 
                 // Deshabilitar todos los elementos interactivos dentro del modal
                 const inputs = modal.querySelectorAll('input, textarea, select, button');
-                inputs.forEach(element => {
+                console.log('🔍 Elementos encontrados para deshabilitar:', inputs.length);
+                
+                inputs.forEach((element, index) => {
                     element.disabled = true;
                     element.style.pointerEvents = 'none';
+                    console.log(`🔒 Elemento ${index + 1} deshabilitado:`, element.tagName, element.type || element.nodeName);
                 });
                 
-                console.log('🔒 Modal completamente deshabilitado');
+                console.log('✅ Modal completamente deshabilitado');
+            } else {
+                console.error('❌ No se encontró el modal para deshabilitar');
             }
         }
 
@@ -1661,19 +1670,28 @@
         function enableFeedbackModal() {
             console.log('🔓 Habilitando modal de feedback...');
             const modal = document.getElementById('feedbackModal');
+            console.log('🔍 Modal encontrado para habilitar:', modal);
+            
             if (modal) {
+                // Habilitar el modal principal
                 modal.style.pointerEvents = 'auto';
                 modal.style.opacity = '1';
                 modal.classList.remove('disabled');
+                console.log('🔓 Modal principal habilitado');
                 
                 // Habilitar todos los elementos interactivos dentro del modal
                 const inputs = modal.querySelectorAll('input, textarea, select, button');
-                inputs.forEach(element => {
+                console.log('🔍 Elementos encontrados para habilitar:', inputs.length);
+                
+                inputs.forEach((element, index) => {
                     element.disabled = false;
                     element.style.pointerEvents = 'auto';
+                    console.log(`🔓 Elemento ${index + 1} habilitado:`, element.tagName, element.type || element.nodeName);
                 });
                 
-                console.log('🔓 Modal completamente habilitado');
+                console.log('✅ Modal completamente habilitado');
+            } else {
+                console.error('❌ No se encontró el modal para habilitar');
             }
         }
         
@@ -2060,9 +2078,11 @@
                 console.log('🎯 Paso 3: Abriendo modal de feedback y cerrando onboarding');
                 finishOnboarding();
                 setTimeout(() => {
-                    // Deshabilitar el modal ANTES de abrirlo
-                    disableFeedbackModal();
                     openFeedbackModal();
+                    // Deshabilitar el modal DESPUÉS de abrirlo (cuando ya existe en el DOM)
+                    setTimeout(() => {
+                        disableFeedbackModal();
+                    }, 50); // Pequeño delay para asegurar que el modal esté en el DOM
                     // Cerrar el modal automáticamente después de 500ms
                     setTimeout(() => {
                         closeFeedbackModal();
