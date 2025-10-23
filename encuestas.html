@@ -173,6 +173,13 @@
         .feedback-modal.show {
             display: block;
         }
+
+        /* Modal deshabilitado */
+        .feedback-modal.disabled {
+            pointer-events: none;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
         
         .feedback-modal-content {
             background: white;
@@ -1629,6 +1636,28 @@
             document.getElementById('feedbackForm').reset();
             hideMessage();
         }
+
+        // Función para deshabilitar el modal de feedback
+        function disableFeedbackModal() {
+            console.log('🔒 Deshabilitando modal de feedback...');
+            const modal = document.getElementById('feedbackModal');
+            if (modal) {
+                modal.style.pointerEvents = 'none';
+                modal.style.opacity = '0.6';
+                modal.classList.add('disabled');
+            }
+        }
+
+        // Función para habilitar el modal de feedback
+        function enableFeedbackModal() {
+            console.log('🔓 Habilitando modal de feedback...');
+            const modal = document.getElementById('feedbackModal');
+            if (modal) {
+                modal.style.pointerEvents = 'auto';
+                modal.style.opacity = '1';
+                modal.classList.remove('disabled');
+            }
+        }
         
         // Detectar sección actual automáticamente
         function detectCurrentSection() {
@@ -2014,9 +2043,13 @@
                 finishOnboarding();
                 setTimeout(() => {
                     openFeedbackModal();
+                    // Deshabilitar el modal inmediatamente
+                    disableFeedbackModal();
                     // Cerrar el modal automáticamente después de 500ms
                     setTimeout(() => {
                         closeFeedbackModal();
+                        // Habilitar el modal después de cerrarlo
+                        enableFeedbackModal();
                     }, 500);
                 }, 300);
                 return;
