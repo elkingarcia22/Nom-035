@@ -1919,8 +1919,7 @@
                 title: "Feedback",
                 content: "Tu feedback es invaluable para nosotros. Puedes sugerir elementos que faltan, datos que podrían estar de otra forma, mejoras en la interfaz, o cualquier funcionalidad que te gustaría ver. ¡Haz clic en el botón de feedback para compartir tus ideas!",
                 target: ".feedback-trigger",
-                action: "highlight",
-                openModal: true
+                action: "highlight"
             }
         ];
         
@@ -1978,19 +1977,7 @@
             // Si hay target, destacarlo
             if (step.target) {
                 console.log('🎯 DEBUG: Destacando elemento:', step.target);
-                
-                // Si es el paso 3 y tiene openModal, abrir el modal primero
-                if (step.openModal && currentOnboardingStep === 2) {
-                    console.log('📱 DEBUG: Abriendo modal de feedback...');
-                    openFeedbackModal();
-                    
-                    // Esperar un poco para que el modal se abra y luego destacarlo
-                    setTimeout(() => {
-                        highlightElement('#feedbackModal');
-                    }, 300);
-                } else {
-                    highlightElement(step.target);
-                }
+                highlightElement(step.target);
             } else {
                 console.log('📍 DEBUG: Sin target, centrando tooltip');
                 // Si no hay target, centrar el tooltip
@@ -2102,6 +2089,12 @@
             // Marcar onboarding como completado en localStorage
             localStorage.setItem('onboardingCompleted', 'true');
             console.log('💾 Onboarding marcado como completado en localStorage');
+            
+            // Abrir modal de feedback automáticamente después de finalizar el onboarding
+            console.log('💬 Abriendo modal de feedback automáticamente...');
+            setTimeout(() => {
+                openFeedbackModal();
+            }, 500); // Esperar 500ms para que se cierre completamente el onboarding
         }
         
         // Iniciar onboarding automáticamente al cargar la página
