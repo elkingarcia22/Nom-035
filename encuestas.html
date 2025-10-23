@@ -1916,11 +1916,10 @@
                 action: "highlight"
             },
             {
-                title: "Creemos Juntos",
+                title: "Feedback",
                 content: "Tu feedback es invaluable para nosotros. Puedes sugerir elementos que faltan, datos que podrían estar de otra forma, mejoras en la interfaz, o cualquier funcionalidad que te gustaría ver. ¡Haz clic en el botón de feedback para compartir tus ideas!",
                 target: ".feedback-button",
-                action: "highlight",
-                openModal: true
+                action: "highlight"
             }
         ];
         
@@ -1968,7 +1967,7 @@
             // Actualizar botón "Siguiente" / "Comenzar"
             const nextButton = document.querySelector('.btn-next');
             if (currentOnboardingStep === onboardingSteps.length - 1) {
-                nextButton.textContent = 'Comenzar';
+                nextButton.textContent = 'Finalizar';
             } else {
                 nextButton.textContent = 'Siguiente';
             }
@@ -2073,23 +2072,10 @@
         function nextOnboardingStep() {
             console.log('➡️ Siguiente paso del onboarding');
             
-            // Si es el paso 3 (último paso), abrir modal de feedback y cerrar onboarding
+            // Si es el paso 3 (último paso), solo mostrar el botón de feedback
             if (currentOnboardingStep === onboardingSteps.length - 1) {
-                console.log('🎯 Paso 3: Abriendo modal de feedback y cerrando onboarding');
-                finishOnboarding();
-                setTimeout(() => {
-                    openFeedbackModal();
-                    // Deshabilitar el modal DESPUÉS de abrirlo (cuando ya existe en el DOM)
-                    setTimeout(() => {
-                        disableFeedbackModal();
-                    }, 50); // Pequeño delay para asegurar que el modal esté en el DOM
-                    // Cerrar el modal automáticamente después de 500ms
-                    setTimeout(() => {
-                        closeFeedbackModal();
-                        // Habilitar el modal después de cerrarlo
-                        enableFeedbackModal();
-                    }, 500);
-                }, 300);
+                console.log('🎯 Paso 3: Mostrando botón de feedback');
+                // No hacer nada especial, solo mostrar el tooltip normal
                 return;
             }
             
