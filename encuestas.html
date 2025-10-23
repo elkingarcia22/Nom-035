@@ -2016,11 +2016,26 @@
             console.log('✅ Onboarding finalizado');
             document.getElementById('onboardingOverlay').style.display = 'none';
             document.getElementById('onboardingSpotlight').style.display = 'none';
+            
+            // Marcar onboarding como completado en localStorage
+            localStorage.setItem('onboardingCompleted', 'true');
+            console.log('💾 Onboarding marcado como completado en localStorage');
         }
         
         // Iniciar onboarding automáticamente al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('📄 DOM cargado, iniciando onboarding...');
+            console.log('📄 DOM cargado, verificando onboarding...');
+            
+            // Verificar si el onboarding ya se completó
+            const onboardingCompleted = localStorage.getItem('onboardingCompleted');
+            console.log('🔍 Estado del onboarding:', onboardingCompleted);
+            
+            if (onboardingCompleted === 'true') {
+                console.log('✅ Onboarding ya completado, no se mostrará');
+                return;
+            }
+            
+            console.log('🚀 Iniciando onboarding por primera vez...');
             setTimeout(() => {
                 startOnboarding();
             }, 1000);
