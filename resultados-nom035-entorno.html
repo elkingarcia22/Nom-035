@@ -11447,10 +11447,10 @@
     <!-- Backdrop para cerrar filtros -->
     <div id="participants-filters-backdrop" class="filters-backdrop"></div>
 
-    <!-- ===== BOTÓN DE FEEDBACK ===== -->
-    <button class="feedback-button" onclick="openFeedbackModal()" title="Deja tu feedback">
+    <!-- ===== BOTÓN DE FEEDBACK FLOTANTE ===== -->
+    <div class="feedback-trigger" id="feedbackTrigger" onclick="openFeedbackModal()">
         💬
-    </button>
+    </div>
 
     <!-- ===== MODAL DE FEEDBACK ===== -->
     <div class="feedback-modal" id="feedbackModal">
@@ -11482,7 +11482,7 @@
 
     <!-- ===== ESTILOS DEL FEEDBACK ===== -->
     <style>
-        .feedback-button {
+        .feedback-trigger {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -11497,9 +11497,12 @@
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
             z-index: 1000;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .feedback-button:hover {
+        .feedback-trigger:hover {
             background: #5a6fd8;
             transform: scale(1.1);
         }
@@ -11514,8 +11517,16 @@
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             z-index: 1001;
-            display: none;
-            animation: slideInFloating 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.3s ease;
+        }
+
+        .feedback-modal.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
         }
 
         @keyframes slideInFloating {
@@ -11625,7 +11636,7 @@
         function openFeedbackModal() {
             console.log('💬 Abriendo modal de feedback...');
             const modal = document.getElementById('feedbackModal');
-            modal.style.display = 'block';
+            modal.classList.add('show');
             
             // Detectar sección actual
             const section = detectCurrentSection();
@@ -11636,7 +11647,7 @@
         function closeFeedbackModal() {
             console.log('💬 Cerrando modal de feedback...');
             const modal = document.getElementById('feedbackModal');
-            modal.style.display = 'none';
+            modal.classList.remove('show');
             
             // Limpiar formulario
             document.getElementById('feedbackForm').reset();
