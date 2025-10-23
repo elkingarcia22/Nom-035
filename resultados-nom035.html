@@ -120,128 +120,6 @@
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
         
-        /* Modal de feedback flotante */
-        .feedback-modal {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 350px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            z-index: 9999;
-            display: none;
-            animation: slideInRight 0.3s ease-out;
-        }
-        
-        .feedback-modal.show {
-            display: block;
-        }
-        
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .feedback-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 16px 20px;
-            border-radius: 16px 16px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .feedback-title {
-            font-weight: 600;
-            font-size: 16px;
-        }
-        
-        .feedback-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 4px;
-        }
-        
-        .feedback-body {
-            padding: 20px;
-        }
-        
-        .feedback-section {
-            margin-bottom: 16px;
-        }
-        
-        .feedback-label {
-            display: block;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        
-        .feedback-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: border-color 0.3s ease;
-            resize: vertical;
-            min-height: 80px;
-        }
-        
-        .feedback-input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
-        .feedback-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-        }
-        
-        .feedback-submit {
-            flex: 1;
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        
-        .feedback-submit:hover {
-            background: #059669;
-        }
-        
-        .feedback-cancel {
-            flex: 1;
-            background: #f3f4f6;
-            color: #374151;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        
-        .feedback-cancel:hover {
-            background: #e5e7eb;
-        }
         
         /* Botón flotante de feedback */
         .feedback-trigger {
@@ -1316,40 +1194,11 @@
 </head>
 <body data-theme="light">
 
-    <!-- ===== MODAL DE FEEDBACK ===== -->
-    <div class="feedback-modal" id="feedbackModal">
-        <div class="feedback-header">
-            <span class="feedback-title">💬 Deja tu Feedback</span>
-            <button class="feedback-close" onclick="closeFeedbackModal()">&times;</button>
-        </div>
-        <div class="feedback-body">
-            <div class="feedback-section">
-                <label class="feedback-label">Sección actual:</label>
-                <input type="text" id="currentSection" class="feedback-input" readonly style="background: #f9fafb;">
-            </div>
-            <div class="feedback-section">
-                <label class="feedback-label">Tu comentario:</label>
-                <textarea 
-                    id="feedbackComment" 
-                    class="feedback-input" 
-                    placeholder="¿Qué opinas de esta sección? ¿Qué funciona bien? ¿Qué se puede mejorar?"
-                ></textarea>
-            </div>
-            <div class="feedback-buttons">
-                <button class="feedback-submit" onclick="submitFeedback()">
-                    <i class="fas fa-paper-plane"></i> Enviar
-                </button>
-                <button class="feedback-cancel" onclick="closeFeedbackModal()">
-                    Cancelar
-                </button>
-            </div>
-        </div>
-    </div>
 
-    <!-- ===== BOTÓN FLOTANTE DE FEEDBACK ===== -->
-    <button class="feedback-trigger" id="feedbackTrigger" onclick="openFeedbackModal()" title="Dejar feedback">
+    <!-- ===== BOTÓN DE FEEDBACK FLOTANTE ===== -->
+    <div class="feedback-trigger" id="feedbackTrigger" onclick="openFeedbackModal()">
         💬
-    </button>
+    </div>
 
     <!-- ===== INDICADOR DE SECCIÓN ===== -->
     <div class="section-indicator" id="sectionIndicator">
