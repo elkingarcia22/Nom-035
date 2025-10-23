@@ -1606,10 +1606,17 @@
         function openFeedbackModal() {
             console.log('💬 Abriendo modal de feedback...');
             const modal = document.getElementById('feedbackModal');
-            modal.classList.add('show');
+            console.log('🔍 Modal encontrado:', modal);
             
-            // Detectar sección actual automáticamente
-            detectCurrentSection();
+            if (modal) {
+                modal.classList.add('show');
+                console.log('✅ Modal mostrado con clase "show"');
+                
+                // Detectar sección actual automáticamente
+                detectCurrentSection();
+            } else {
+                console.error('❌ No se encontró el modal de feedback');
+            }
         }
         
         // Función para cerrar el modal de feedback
@@ -2004,8 +2011,10 @@
             // Si es el paso 3 (último paso), abrir modal de feedback y cerrar onboarding
             if (currentOnboardingStep === onboardingSteps.length - 1) {
                 console.log('🎯 Paso 3: Abriendo modal de feedback y cerrando onboarding');
-                openFeedbackModal();
                 finishOnboarding();
+                setTimeout(() => {
+                    openFeedbackModal();
+                }, 300);
                 return;
             }
             
