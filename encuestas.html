@@ -52,6 +52,18 @@
             transition: all 0.3s ease;
         }
         
+        /* Eliminar velo gris dentro del área enmascarada */
+        .onboarding-spotlight::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: transparent;
+            z-index: 10001;
+        }
+        
         /* Tooltip del onboarding */
         .onboarding-tooltip {
             position: absolute;
