@@ -1893,10 +1893,10 @@
             document.getElementById('tooltipTitle').textContent = step.title;
             document.getElementById('tooltipContent').textContent = step.content;
             
-            // Actualizar botón "Siguiente" / "Finalizar"
+            // Actualizar botón "Siguiente" / "Comenzar"
             const nextButton = document.querySelector('.btn-next');
             if (currentOnboardingStep === onboardingSteps.length - 1) {
-                nextButton.textContent = 'Finalizar';
+                nextButton.textContent = 'Comenzar';
             } else {
                 nextButton.textContent = 'Siguiente';
             }
@@ -2000,6 +2000,15 @@
         // Siguiente paso
         function nextOnboardingStep() {
             console.log('➡️ Siguiente paso del onboarding');
+            
+            // Si es el paso 3 (último paso), abrir modal de feedback y cerrar onboarding
+            if (currentOnboardingStep === onboardingSteps.length - 1) {
+                console.log('🎯 Paso 3: Abriendo modal de feedback y cerrando onboarding');
+                openFeedbackModal();
+                finishOnboarding();
+                return;
+            }
+            
             currentOnboardingStep++;
             
             if (currentOnboardingStep >= onboardingSteps.length) {
