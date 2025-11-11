@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UBITS Playground - Resultados NOM 035 Emocional</title>
+    <title>UBITS Playground - Resultados NOM 035 Acontecimientos traumáticos</title>
     
     <!-- Estilos locales -->
     <link rel="stylesheet" href="ubits-colors.css">
@@ -1155,14 +1155,7 @@
             font-weight: 500;
         }
 
-        .answer-no::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #22c55e;
-            flex-shrink: 0;
-        }
+        /* Eliminado el punto verde - solo se muestran puntos rojos para respuestas "Sí" */
 
         /* Responsive */
         @media (max-width: 768px) {
@@ -1223,7 +1216,7 @@
                             <span>Regresar</span>
                         </button>
                         <div class="title-section">
-                            <h1>NOM 035 Emocional</h1>
+                            <h1>NOM 035 Acontecimientos traumáticos</h1>
                             <span class="status-badge">Completado</span>
                         </div>
                         <div style="margin-left: auto;">
@@ -1309,7 +1302,7 @@
                         </div>
                     </div>
 
-                    <!-- Panel emocional ATS -->
+                    <!-- Panel Acontecimientos traumáticos ATS -->
                     <div class="panel-emocional-container">
                                 <div class="panel-container">
                                     <!-- Panel Izquierdo - Lista de Participantes -->
@@ -1356,14 +1349,6 @@
                                                             <input type="checkbox" id="risk-todos">
                                                             <span class="option-text">Todos</span>
                                                         </div>
-                                                        <div class="select-option" data-value="nulo">
-                                                            <input type="checkbox" id="risk-nulo">
-                                                            <span class="option-text">Nulo</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="bajo">
-                                                            <input type="checkbox" id="risk-bajo">
-                                                            <span class="option-text">Bajo</span>
-                                                        </div>
                                                         <div class="select-option" data-value="medio">
                                                             <input type="checkbox" id="risk-medio">
                                                             <span class="option-text">Medio</span>
@@ -1371,10 +1356,6 @@
                                                         <div class="select-option" data-value="alto">
                                                             <input type="checkbox" id="risk-alto">
                                                             <span class="option-text">Alto</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="muy-alto">
-                                                            <input type="checkbox" id="risk-muy-alto">
-                                                            <span class="option-text">Muy Alto</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2515,7 +2496,19 @@
             }
         ];
 
-        // Inicializar panel emocional
+        // Normalizar nivel de riesgo: solo mostrar alto o medio, bajo y nulo quedan sin riesgo
+        function normalizeRiskLevel(riskLevel) {
+            if (riskLevel === 'muy-alto' || riskLevel === 'alto') {
+                return 'alto';
+            }
+            if (riskLevel === 'medio') {
+                return 'medio';
+            }
+            // bajo y nulo no tienen nivel de riesgo (retornan null)
+            return null;
+        }
+
+        // Inicializar panel de acontecimientos traumáticos
         function initializeEmotionalPanel() {
             renderParticipantsList();
             setupSearch();
@@ -2552,6 +2545,14 @@
                 participantItem.className = 'participant-item';
                 participantItem.dataset.participantId = participant.id;
                 
+                // Normalizar nivel de riesgo para mostrar solo alto o medio
+                const normalizedRisk = normalizeRiskLevel(participant.riskLevel);
+                
+                // Solo mostrar badge de riesgo si hay nivel normalizado (alto o medio)
+                const riskBadge = normalizedRisk ? 
+                    `<div class="risk-level risk-${normalizedRisk}">${normalizedRisk}</div>` : 
+                    '';
+                
                 participantItem.innerHTML = `
                     <div class="participant-avatar" style="background-color: ${participant.avatarColor}">
                         ${participant.avatar}
@@ -2560,9 +2561,7 @@
                         <div class="participant-name">${participant.name}</div>
                         <div class="participant-role">${participant.role}</div>
                     </div>
-                    <div class="risk-level risk-${participant.riskLevel}">
-                        ${participant.riskLevel.replace('-', ' ')}
-                    </div>
+                    ${riskBadge}
                 `;
 
                 participantItem.addEventListener('click', () => {
@@ -2659,17 +2658,15 @@
             `;
         }
 
-        // Calcular nivel de riesgo de una sección
+        // Calcular nivel de riesgo de una sección (solo alto y medio)
         function getSectionRiskLevel(questions) {
             const yesCount = questions.filter(q => q.answer === 'Sí').length;
             const totalQuestions = questions.length;
             const percentage = (yesCount / totalQuestions) * 100;
             
-            if (percentage >= 80) return 'muy-alto';
+            // Solo devolver alto o medio
             if (percentage >= 60) return 'alto';
-            if (percentage >= 40) return 'medio';
-            if (percentage >= 20) return 'bajo';
-            return 'nulo';
+            return 'medio';
         }
 
         // Calcular porcentaje de una sección
@@ -2696,7 +2693,7 @@
         }
 
 
-        // Inicializar panel emocional cuando se carga la página
+        // Inicializar panel de acontecimientos traumáticos cuando se carga la página
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🔍 DOM cargado, iniciando configuración...');
             
@@ -2916,6 +2913,9 @@
             });
 
             let filteredParticipants = participantsData.filter(participant => {
+                // Normalizar nivel de riesgo para comparación
+                const normalizedRisk = normalizeRiskLevel(participant.riskLevel);
+                
                 // Filtro por búsqueda
                 const matchesSearch = !searchTerm || 
                     (participant.name && participant.name.toLowerCase().includes(searchTerm)) ||
@@ -2933,8 +2933,11 @@
                     console.log(`🔍 Verificando participante ${participant.name}: matchesSearch = ${matchesSearch}`);
                 }
 
-                // Filtro por nivel de riesgo
-                const matchesRisk = riskFilters.length === 0 || riskFilters.includes('todos') || riskFilters.includes(participant.riskLevel);
+                // Filtro por nivel de riesgo (usar nivel normalizado)
+                // Si no tiene riesgo normalizado (null), solo pasa el filtro si está seleccionado "todos" o no hay filtros
+                const matchesRisk = riskFilters.length === 0 || 
+                    riskFilters.includes('todos') || 
+                    (normalizedRisk !== null && riskFilters.includes(normalizedRisk));
 
                 // Filtro por área (departamento)
                 const matchesDepartment = departmentFilters.length === 0 || departmentFilters.includes('todos') || departmentFilters.includes(participant.details.department);
@@ -3192,7 +3195,7 @@
             }
         }
 
-        // Función para descargar respuestas emocionales
+        // Función para descargar respuestas de acontecimientos traumáticos
         function downloadEmotionalResponses() {
             console.log('🔍 INICIANDO downloadEmotionalResponses()');
             
@@ -3322,7 +3325,7 @@
             console.log('🔍 CSV generado, longitud:', csvContent.length);
             
             // Descargar archivo
-            downloadCSVFile(csvContent, 'respuestas_emocionales_nom035.csv');
+            downloadCSVFile(csvContent, 'respuestas_acontecimientos_traumaticos_nom035.csv');
             console.log('✅ Descarga completada');
         }
         
@@ -3505,8 +3508,8 @@
                         <select id="feedbackSection" name="section" required>
                             <option value="">Selecciona una sección</option>
                             <option value="Home - Encuestas">Home - Encuestas</option>
-                            <option value="Resultados Emocionales">Resultados Emocionales</option>
-                            <option value="Resultados Entorno Laboral">Resultados Entorno Laboral</option>
+                            <option value="Resultados Acontecimientos traumáticos">Resultados Acontecimientos traumáticos</option>
+                            <option value="Resultados Riesgo psicosocial">Resultados Riesgo psicosocial</option>
                             <option value="Vista General">Vista General</option>
                             <option value="Descarga de Reportes">Descarga de Reportes</option>
                             <option value="Otra">Otra</option>
@@ -3704,13 +3707,13 @@
         function detectCurrentSection() {
             const url = window.location.pathname;
             if (url.includes('resultados-nom035-entorno')) {
-                return 'Resultados Entorno Laboral';
+                return 'Resultados Riesgo psicosocial';
             } else if (url.includes('resultados-nom035')) {
-                return 'Resultados Emocionales';
+                return 'Resultados Acontecimientos traumáticos';
             } else if (url.includes('encuestas')) {
                 return 'Home - Encuestas';
             }
-            return 'Resultados Emocionales';
+            return 'Resultados de Acontecimientos traumáticos';
         }
 
         // Manejar envío de feedback
