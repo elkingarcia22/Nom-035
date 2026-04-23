@@ -852,6 +852,7 @@
         .risk-bajo { background: #dcfce7; color: #166534; }
         .risk-medio { background: #fef3c7; color: #92400e; }
         .risk-alto { background: #fed7aa; color: #c2410c; }
+        .risk-canalizado { background: #fecaca; color: #dc2626; }
         .risk-muy-alto { background: #fecaca; color: #dc2626; }
 
         .no-selection {
@@ -1810,7 +1811,7 @@
                 id: 2,
                 name: "Carlos Rodríguez",
                 role: "Desarrollador Senior",
-                riskLevel: "alto",
+                riskLevel: "canalizado",
                 avatar: "CR",
                 avatarColor: "#c2410c",
                 details: {
@@ -1860,7 +1861,7 @@
                 id: 3,
                 name: "Ana Martínez",
                 role: "Analista de Recursos Humanos",
-                riskLevel: "medio",
+                riskLevel: "alto",
                 avatar: "AM",
                 avatarColor: "#92400e",
                 details: {
@@ -1958,10 +1959,10 @@
             },
             {
                 id: 5,
-                name: "Sofia Herrera",
+                name: "Valentina Mendoza",
                 role: "Asistente Administrativa",
                 riskLevel: "nulo",
-                avatar: "SH",
+                avatar: "VM",
                 avatarColor: "#6b7280",
                 details: {
                     age: 26,
@@ -2060,7 +2061,7 @@
                 id: 7,
                 name: "Carmen López",
                 role: "Diseñadora UX",
-                riskLevel: "medio",
+                riskLevel: "alto",
                 avatar: "CL",
                 avatarColor: "#92400e",
                 details: {
@@ -2160,7 +2161,7 @@
                 id: 9,
                 name: "Patricia Vega",
                 role: "Coordinadora de Proyectos",
-                riskLevel: "alto",
+                riskLevel: "canalizado",
                 avatar: "PV",
                 avatarColor: "#c2410c",
                 details: {
@@ -2258,7 +2259,7 @@
                 id: 11,
                 name: "Isabel Torres",
                 role: "Supervisora de Producción",
-                riskLevel: "medio",
+                riskLevel: "alto",
                 avatar: "IT",
                 avatarColor: "#92400e",
                 details: {
@@ -2352,10 +2353,10 @@
             },
             {
                 id: 13,
-                name: "Laura Jiménez",
+                name: "Camila Rodríguez",
                 role: "Psicóloga Organizacional",
                 riskLevel: "nulo",
-                avatar: "LJ",
+                avatar: "CR",
                 avatarColor: "#6b7280",
                 details: {
                     age: 36,
@@ -2402,7 +2403,7 @@
                 id: 14,
                 name: "Andrés Mendoza",
                 role: "Gerente de Ventas",
-                riskLevel: "alto",
+                riskLevel: "canalizado",
                 avatar: "AM",
                 avatarColor: "#c2410c",
                 details: {
@@ -2496,15 +2497,18 @@
             }
         ];
 
-        // Normalizar nivel de riesgo: solo mostrar alto o medio, bajo y nulo quedan sin riesgo
+        // Normalizar nivel de riesgo
         function normalizeRiskLevel(riskLevel) {
-            if (riskLevel === 'muy-alto' || riskLevel === 'alto') {
+            if (riskLevel === 'muy-alto') {
                 return 'alto';
             }
-            if (riskLevel === 'medio') {
-                return 'medio';
+            if (riskLevel === 'alto') {
+                return 'canalizado';
             }
-            // bajo y nulo no tienen nivel de riesgo (retornan null)
+            if (riskLevel === 'medio') {
+                return 'alto';
+            }
+            // canalizado, bajo y nulo no tienen nivel de riesgo (retornan null)
             return null;
         }
 
@@ -2540,18 +2544,21 @@
 
             participants.forEach((participant, index) => {
                 console.log(`🔍 Renderizando participante ${index + 1}: ${participant.name}`);
-                
+                console.log(`🔍 RiskLevel original: ${participant.riskLevel}`);
+
                 const participantItem = document.createElement('div');
                 participantItem.className = 'participant-item';
                 participantItem.dataset.participantId = participant.id;
-                
+
                 // Normalizar nivel de riesgo para mostrar solo alto o medio
                 const normalizedRisk = normalizeRiskLevel(participant.riskLevel);
-                
+                console.log(`🔍 RiskLevel normalizado: ${normalizedRisk}`);
+
                 // Solo mostrar badge de riesgo si hay nivel normalizado (alto o medio)
-                const riskBadge = normalizedRisk ? 
-                    `<div class="risk-level risk-${normalizedRisk}">${normalizedRisk}</div>` : 
+                const riskBadge = normalizedRisk ?
+                    `<div class="risk-level risk-${normalizedRisk}">${normalizedRisk}</div>` :
                     '';
+                console.log(`🔍 RiskBadge: ${riskBadge ? 'Mostrar' : 'No mostrar'}`);
                 
                 participantItem.innerHTML = `
                     <div class="participant-avatar" style="background-color: ${participant.avatarColor}">
@@ -2638,8 +2645,6 @@
                             <div class="section-number">${index + 1}</div>
                             <div class="section-title">${sectionName}</div>
                             <div class="section-risk-info">
-                                <span class="section-risk-level ${getSectionRiskLevel(questions)}">${getSectionRiskLevel(questions)}</span>
-                                <span class="section-percentage">${getSectionPercentage(questions)}%</span>
                             </div>
                             <i class="far fa-chevron-down section-chevron"></i>
                         </div>
