@@ -5158,7 +5158,64 @@
 
             // Inicializar controles del tab Dimensiones
             initializeDimensionsTableControls();
-            
+
+        }
+
+        // Configurar clics en tarjetas de métricas
+        function setupMetricsClickHandlers() {
+            const metricCards = document.querySelectorAll('.metric-card');
+
+            metricCards.forEach((card, index) => {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', function() {
+                    const metricTitle = this.querySelector('.metric-title')?.textContent || '';
+                    console.log('📊 Click en tarjeta de métrica:', metricTitle);
+
+                    // Filtrar según la tarjeta clickeada
+                    if (metricTitle.includes('canalizados')) {
+                        console.log('📊 Filtrando por: Canalizado');
+                        filterByRiskLevelEntorno('canalizado');
+                    } else if (metricTitle.includes('riesgo alto')) {
+                        console.log('📊 Filtrando por: Alto');
+                        filterByRiskLevelEntorno('alto');
+                    }
+                });
+            });
+        }
+
+        // Función para filtrar por nivel de riesgo desde las métricas (para la sección individual)
+        function filterByRiskLevelEntorno(riskLevel) {
+            // Obtener el select de riesgo individual
+            const riskSelect = document.getElementById('individual-risk-select');
+            if (!riskSelect) {
+                console.error('No se encontró el select de riesgo individual');
+                return;
+            }
+
+            // Deseleccionar todos los checkboxes de riesgo
+            const riskCheckboxes = riskSelect.querySelectorAll('input[type="checkbox"]');
+            riskCheckboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Seleccionar solo el checkbox del nivel de riesgo deseado
+            const targetCheckbox = document.getElementById(`individual-risk-${riskLevel}`);
+            if (targetCheckbox) {
+                targetCheckbox.checked = true;
+                console.log(`✅ Seleccionado filtro: ${riskLevel}`);
+            }
+
+            // Aplicar los filtros (si existe la función)
+            if (typeof applyIndividualFilters === 'function') {
+                applyIndividualFilters();
+            }
+
+            // Abrir el panel de filtros para mostrar que se aplicó el filtro
+            const filtersPanel = document.getElementById('individual-filters-side-panel');
+            if (filtersPanel) {
+                filtersPanel.style.display = 'block';
+                filtersPanel.classList.add('show');
+            }
         }
 
         // Función para actualizar el texto del select
@@ -9487,7 +9544,11 @@
                 // Inicializar los nuevos tabs
                 console.log('🔍 Inicializando nuevos tabs...');
                 initializeNewTabs();
-                
+
+                // Inicializar clics en tarjetas de métricas
+                console.log('🔍 Inicializando handlers de métricas...');
+                setupMetricsClickHandlers();
+
                 // Inicializar filtros con delay para asegurar que las funciones estén definidas
                 setTimeout(() => {
                     if (typeof initializeTableFilters === 'function') {
