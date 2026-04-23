@@ -2516,10 +2516,67 @@
         function initializeEmotionalPanel() {
             renderParticipantsList();
             setupSearch();
-            
+
             // Seleccionar automáticamente el primer participante
             if (participantsData.length > 0) {
                 selectParticipant(participantsData[0].id);
+            }
+        }
+
+        // Configurar clics en tarjetas de métricas
+        function setupMetricsClickHandlers() {
+            const metricCards = document.querySelectorAll('.metric-card');
+
+            metricCards.forEach((card, index) => {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', function() {
+                    const metricTitle = this.querySelector('.metric-title')?.textContent || '';
+                    console.log('📊 Click en tarjeta de métrica:', metricTitle);
+
+                    // Filtrar según la tarjeta clickeada
+                    if (metricTitle.includes('canalizados')) {
+                        // Filtrar por Canalizado
+                        console.log('📊 Filtrando por: Canalizado');
+                        filterByRiskLevel('canalizado');
+                    } else if (metricTitle.includes('riesgo alto')) {
+                        // Filtrar por Alto
+                        console.log('📊 Filtrando por: Alto');
+                        filterByRiskLevel('alto');
+                    }
+                });
+            });
+        }
+
+        // Función para filtrar por nivel de riesgo desde las métricas
+        function filterByRiskLevel(riskLevel) {
+            // Obtener el select de riesgo
+            const riskSelect = document.getElementById('risk-select');
+            if (!riskSelect) {
+                console.error('No se encontró el select de riesgo');
+                return;
+            }
+
+            // Deseleccionar todos los checkboxes de riesgo
+            const riskCheckboxes = riskSelect.querySelectorAll('input[type="checkbox"]');
+            riskCheckboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Seleccionar solo el checkbox del nivel de riesgo deseado
+            const targetCheckbox = document.getElementById(`risk-${riskLevel}`);
+            if (targetCheckbox) {
+                targetCheckbox.checked = true;
+                console.log(`✅ Seleccionado filtro: ${riskLevel}`);
+            }
+
+            // Aplicar los filtros
+            applyFilters();
+
+            // Abrir el panel de filtros para mostrar que se aplicó el filtro
+            const filtersPanel = document.getElementById('filters-side-panel');
+            if (filtersPanel) {
+                filtersPanel.style.display = 'block';
+                filtersPanel.classList.add('show');
             }
         }
 
@@ -2701,26 +2758,27 @@
         // Inicializar panel de acontecimientos traumáticos cuando se carga la página
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🔍 DOM cargado, iniciando configuración...');
-            
+
             // Función para verificar que todos los elementos estén disponibles
             function checkElementsReady() {
                 const searchInput = document.getElementById('participant-search');
                 const participantsList = document.getElementById('participants-list');
                 const filtersBtn = document.getElementById('filters-btn');
-                
+
                 console.log('🔍 Verificando elementos:');
                 console.log('  - participant-search:', !!searchInput);
                 console.log('  - participants-list:', !!participantsList);
                 console.log('  - filters-btn:', !!filtersBtn);
-                
+
                 return searchInput && participantsList && filtersBtn;
             }
-            
+
             // Intentar inicializar inmediatamente
             if (checkElementsReady()) {
                 console.log('🔍 Todos los elementos están listos, inicializando...');
                 initializeEmotionalPanel();
                 setupFilters();
+                setupMetricsClickHandlers();
             } else {
                 console.log('🔍 Elementos no listos, esperando...');
                 // Si no están listos, intentar cada 100ms hasta 10 segundos
@@ -2729,7 +2787,7 @@
                 const interval = setInterval(() => {
                     attempts++;
                     console.log(`🔍 Intento ${attempts} de verificar elementos...`);
-                    
+
                     if (checkElementsReady() || attempts >= maxAttempts) {
                         clearInterval(interval);
                         if (attempts >= maxAttempts) {
@@ -2738,6 +2796,7 @@
                             console.log('🔍 Elementos listos, inicializando...');
                             initializeEmotionalPanel();
                             setupFilters();
+                            setupMetricsClickHandlers();
                         }
                     }
                 }, 100);
