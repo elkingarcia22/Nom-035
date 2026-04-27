@@ -12,10 +12,8 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Servir cualquier archivo HTML directamente
-app.get('*.html', (req, res) => {
-    res.sendFile(path.join(__dirname, req.path));
-});
+// express.static already serves all files including .html
+
 
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);

@@ -20,51 +20,6 @@
     <link rel="stylesheet" href="components/input.css">
     <link rel="stylesheet" href="profile.css">
     <style>
-        .sub-tab-panel { display: none; }
-        .sub-tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Sub-view Selector Styles */
-        .sub-view-selector {
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: #f9fafb;
-            padding: 16px 20px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            width: fit-content;
-        }
-        .sub-view-selector label {
-            font-weight: 600;
-            color: #374151;
-            font-size: 14px;
-        }
-        #view-by-select {
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: 1.5px solid #d1d5db;
-            background: white;
-            font-family: inherit;
-            font-size: 14px;
-            color: #1f2937;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            min-width: 180px;
-            outline: none;
-        }
-        #view-by-select:hover {
-            border-color: var(--ubits-accent-brand);
-        }
-        #view-by-select:focus {
-            border-color: var(--ubits-accent-brand);
-            box-shadow: 0 0 0 3px rgba(10, 107, 255, 0.1);
-        }
         /* Estilos específicos para la página de resultados - FIEL AL DISEÑO */
         .results-container {
             display: flex;
@@ -636,7 +591,6 @@
         .risk-level.risk-bajo { background: #dcfce7; color: #166534; }
         .risk-level.risk-medio { background: #f8f9fa; color: #92400e; }
         .risk-level.risk-alto { background: #fed7aa; color: #c2410c; }
-        .risk-level.risk-canalizado { background: #fecaca; color: #dc2626; }
         .risk-level.risk-muy-alto { background: #fecaca; color: #dc2626; }
 
         /* Participant Details */
@@ -2679,6 +2633,10 @@
                                     <i class="far fa-chevron-down"></i>
                                 </button>
                                 <div class="download-dropdown-content" id="download-dropdown-content">
+                                    <a href="#" onclick="downloadIndividualResponses()">
+                                        <i class="far fa-user"></i>
+                                        Respuestas individuales
+                                    </a>
                                     <a href="#" onclick="downloadResultsByDimension()">
                                         <i class="far fa-layer-group"></i>
                                         Resultados por dimensión
@@ -2766,334 +2724,231 @@
                     <!-- NUEVOS TABS CON ESTILO ORIGINAL -->
                     <div class="tabs-container" style="margin-top: 24px;">
                         <div class="tabs-header">
-                            <button class="tab-button active" data-new-tab="general-view">
-                                <i class="far fa-chart-line"></i>
+                            <button class="tab-button active" data-new-tab="overview">
+                                <i class="far fa-chart-bar"></i>
                                 <span>Vista General</span>
                             </button>
-                            <button class="tab-button" data-new-tab="heat-map">
-                                <i class="far fa-map"></i>
-                                <span>Heat Map</span>
+                            <button class="tab-button" data-new-tab="dimensions">
+                                <i class="far fa-layer-group"></i>
+                                <span>Dimensiones</span>
                             </button>
                         </div>
                         
-                        <!-- Tab Content - Vista General -->
-                        <div class="tab-panel active" id="new-general-view-panel">
-                            <!-- Selector de vista -->
-                            <div style="padding: 16px 24px; background: white; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 16px; border-radius: 8px 8px 0 0;">
-                                <span style="font-size: 14px; font-weight: 600; color: #374151;">Ver por:</span>
-                                <select id="view-by-select">
-                                    <option value="categories" selected>Categoría</option>
-                                    <option value="domains">Dominio</option>
-                                    <option value="dimensions">Dimensiones</option>
-                                </select>
-                            </div>
-
-                            <!-- Contenedor de sub-paneles -->
-                            <div class="sub-panels-container">
-                                <!-- Sub-panel Categorías -->
-                                <div id="sub-panel-categories" class="sub-tab-panel active">
+                        <!-- Tab Content -->
+                        <div class="tab-panel active" id="new-overview-panel">
                             <div class="panel-content">
                                 <div class="table-header">
                                     <div style="display: flex; align-items: center; gap: 12px;">
-                                        <h2 style="font-size: 24px; font-weight: 600; color: #1f2937; margin: 0;">Análisis por categoría</h2>
+                                        <h2 style="font-size: 24px; font-weight: 600; color: #1f2937; margin: 0;">Análisis general</h2>
                                         <span style="font-size: 14px; color: #6b7280;">5 categorías</span>
                                     </div>
                                     <div class="table-controls">
-                                        <button class="filters-button" id="categories-filters-btn" title="Filtros">
+                                        <button class="filters-button" id="table-filters-btn" title="Filtros">
                                             <i class="far fa-filter"></i>
-                                            <span class="filter-badge" id="categories-filter-badge" style="display: none;">0</span>
+                                            <span class="filter-badge" id="filter-badge" style="display: none;">0</span>
                                         </button>
                                     </div>
-                                </div>
-
-                                <div class="results-table-container">
-                                <table class="results-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Categoría</th>
-                                            <th>Total Usuarios en Riesgo</th>
-                                            <th>% Colaboradores Afectados</th>
-                                            <th>Nivel de Riesgo</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Ambiente de trabajo</td>
-                                            <td class="risk-count">12</td>
-                                            <td class="percentage">8.0%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Factores propios de la actividad</td>
-                                            <td class="risk-count">43</td>
-                                            <td class="percentage">28.7%</td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Violencia laboral</td>
-                                            <td class="risk-count">32</td>
-                                            <td class="percentage">21.3%</td>
-                                            <td><span class="risk-badge alto">Alto</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Organización del tiempo de trabajo</td>
-                                            <td class="risk-count">18</td>
-                                            <td class="percentage">12.0%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Liderazgo y relaciones en el trabajo</td>
-                                            <td class="risk-count">28</td>
-                                            <td class="percentage">18.7%</td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                </div>
-
-                                <!-- Panel de Filtros para Categorías -->
-                                <div id="categories-filters-side-panel" class="filters-panel">
-                                    <div class="filters-header">
-                                        <h3>Filtros</h3>
-                                        <button class="close-filters-btn" id="categories-close-filters-btn">
-                                            <i class="far fa-times"></i>
-                                        </button>
-                                    </div>
-                                    <div class="filters-content">
-                                        <!-- Filtros Demográficos -->
-                                        <div class="filter-group">
-                                            <label class="filter-label">Área</label>
-                                            <select class="filter-select" id="area-filter-categories">
-                                                <option value="todos">Todos</option>
-                                                <option value="ventas">Ventas</option>
-                                                <option value="desarrollo">Desarrollo</option>
-                                                <option value="rrhh">Recursos Humanos</option>
-                                                <option value="proyectos">Proyectos</option>
-                                                <option value="marketing">Marketing</option>
-                                                <option value="finanzas">Finanzas</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="filter-group">
-                                            <label class="filter-label">Cargo</label>
-                                            <select class="filter-select" id="position-filter-categories">
-                                                <option value="todos">Todos</option>
-                                                <option value="gerente">Gerente</option>
-                                                <option value="desarrollador">Desarrollador</option>
-                                                <option value="analista">Analista</option>
-                                                <option value="coordinador">Coordinador</option>
-                                                <option value="director">Director</option>
-                                                <option value="supervisor">Supervisor</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="filter-group">
-                                            <label class="filter-label">Sexo</label>
-                                            <select class="filter-select" id="gender-filter-categories">
-                                                <option value="todos">Todos</option>
-                                                <option value="masculino">Masculino</option>
-                                                <option value="femenino">Femenino</option>
-                                                <option value="otro">Otro</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="filter-group">
-                                            <label class="filter-label">Edad</label>
-                                            <select class="filter-select" id="age-filter-categories">
-                                                <option value="todos">Todos</option>
-                                                <option value="18-25">18-25 años</option>
-                                                <option value="26-35">26-35 años</option>
-                                                <option value="36-45">36-45 años</option>
-                                                <option value="46-55">46-55 años</option>
-                                                <option value="56-65">56-65 años</option>
-                                                <option value="65+">65+ años</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="filters-actions">
-                                        <button class="ubits-button ubits-button--primary ubits-button--md" id="apply-filters-categories" style="flex: 1;">
-                                            <i class="far fa-check"></i>
-                                            <span>Aplicar</span>
-                                        </button>
-                                        <button class="ubits-button ubits-button--secondary ubits-button--md" id="clear-filters-categories" style="flex: 1;">
-                                            <i class="far fa-times"></i>
-                                            <span>Limpiar</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Backdrop para filtros -->
-                                <div id="categories-filters-backdrop" class="filters-backdrop"></div>
-
-                            </div>
-                        </div>
-
-                        <!-- Tab Content - Dominios -->
                                 </div>
                                 
-                                <!-- Sub-panel Dominios -->
-                                <div id="sub-panel-domains" class="sub-tab-panel">
-                            <div class="panel-content">
-                                <div class="table-header">
-                                    <div style="display: flex; align-items: center; gap: 12px;">
-                                        <h2 style="font-size: 24px; font-weight: 600; color: #1f2937; margin: 0;">Análisis por dominio</h2>
-                                        <span style="font-size: 14px; color: #6b7280;">10 dominios</span>
-                                    </div>
-                                    <div class="table-controls">
-                                        <button class="filters-button" id="domains-filters-btn" title="Filtros">
-                                            <i class="far fa-filter"></i>
-                                            <span class="filter-badge" id="domains-filter-badge" style="display: none;">0</span>
-                                        </button>
-                                    </div>
-                                </div>
-
+                                <!-- Filters Side Panel - ELIMINADO -->
+                                
+                                <!-- Tabla Principal de Resultados -->
                                 <div class="results-table-container">
                                 <table class="results-table">
                                     <thead>
                                         <tr>
-                                            <th>Dominio</th>
                                             <th>Categoría</th>
+                                            <th>Dominio</th>
+                                            <th>Dimensión</th>
                                             <th>Total Usuarios en Riesgo</th>
                                             <th>% Colaboradores Afectados</th>
                                             <th>Nivel de Riesgo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                                <!-- Categoría 1: Ambiente de trabajo -->
+                                                <tr class="category-summary">
+                                                    <td class="category-cell" data-number="1">Ambiente de trabajo</td>
+                                                    <td class="category-domain-info">-</td>
+                                                    <td class="category-dimension-info">-</td>
+                                            <td class="risk-count">12</td>
+                                            <td class="percentage">8.0%</td>
+                                                    <td><span class="risk-badge bajo">Bajo</span></td>
+                                        </tr>
+                                                
+                                                <!-- Dominio: Condiciones físicas -->
+                                                <tr class="category-detail">
+                                                    <td></td>
                                             <td>Condiciones en el ambiente de trabajo</td>
-                                            <td>Ambiente de trabajo</td>
-                                            <td class="risk-count">20</td>
-                                            <td class="percentage">13.3%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td>Condiciones físicas, seguridad y comodidad</td>
+                                            <td class="risk-count">12</td>
+                                            <td class="percentage">8.0%</td>
+                                                    <td>
+                                                        <div class="response-with-dot">
+                                                            <div class="response-dot bajo"></div>
+                                                            <span>Bajo</span>
+                                                        </div>
+                                                    </td>
                                         </tr>
-                                        <tr>
+                                        
+                                                <!-- Dominio: Condiciones de seguridad -->
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Condiciones en el ambiente de trabajo</td>
+                                                    <td>Condiciones de seguridad</td>
+                                                    <td class="risk-count">8</td>
+                                                    <td class="percentage">5.3%</td>
+                                                    <td>
+                                                        <div class="response-with-dot">
+                                                            <div class="response-dot bajo"></div>
+                                                            <span>Bajo</span>
+                                                </div>
+                                            </td>
+                                                </tr>
+                                                
+                                                <!-- Categoría 2: Factores propios de la actividad -->
+                                                <tr class="category-summary">
+                                                    <td class="category-cell" data-number="2">Factores propios de la actividad</td>
+                                                    <td class="category-domain-info">-</td>
+                                                    <td class="category-dimension-info">-</td>
+                                                    <td class="risk-count">43</td>
+                                                    <td class="percentage">28.7%</td>
+                                                    <td><span class="risk-badge medio">Medio</span></td>
+                                                </tr>
+                                                
+                                                <!-- Dominio: Exigencias cuantitativas -->
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Carga de trabajo</td>
+                                                    <td>Exigencias cuantitativas, mentales y emocionales</td>
+                                            <td class="risk-count">43</td>
+                                            <td class="percentage">28.7%</td>
+                                            <td>
+                                                    <span class="risk-badge medio">Medio</span>
+                                            </td>
+                                        </tr>
+                                                
+                                                <!-- Dominio: Exigencias mentales -->
+                                                <tr class="category-detail">
+                                                    <td></td>
                                             <td>Carga de trabajo</td>
-                                            <td>Factores propios de la actividad</td>
-                                            <td class="risk-count">90</td>
-                                            <td class="percentage">60%</td>
-                                            <td><span class="risk-badge alto">Alto</span></td>
+                                                    <td>Exigencias mentales</td>
+                                                    <td class="risk-count">25</td>
+                                                    <td class="percentage">16.7%</td>
+                                                    <td>
+                                                <span class="risk-badge medio">Medio</span>
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td>Violencia laboral</td>
-                                            <td>Violencia laboral</td>
-                                            <td class="risk-count">32</td>
-                                            <td class="percentage">21.3%</td>
-                                            <td><span class="risk-badge alto">Alto</span></td>
+                                        
+                                                <!-- Dominio: Exigencias emocionales -->
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Carga de trabajo</td>
+                                                    <td>Exigencias emocionales</td>
+                                            <td class="risk-count">22</td>
+                                            <td class="percentage">14.7%</td>
+                                            <td>
+                                                    <span class="risk-badge medio">Medio</span>
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td>Jornada de trabajo</td>
-                                            <td>Organización del tiempo de trabajo</td>
+                                                
+                                                <!-- Categoría 3: Violencia laboral -->
+                                                <tr class="category-summary">
+                                                    <td class="category-cell" data-number="3">Violencia laboral</td>
+                                                    <td class="category-domain-info">-</td>
+                                                    <td class="category-dimension-info">-</td>
+                                                    <td class="risk-count">32</td>
+                                                    <td class="percentage">21.3%</td>
+                                                    <td><span class="risk-badge alto">Alto</span></td>
+                                        </tr>
+                                        
+                                                <!-- Dominio: Violencia laboral -->
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Violencia laboral</td>
+                                                    <td>Violencia laboral</td>
+                                                    <td class="risk-count">32</td>
+                                                    <td class="percentage">21.3%</td>
+                                                    <td>
+                                                <span class="risk-badge alto">Alto</span>
+                                            </td>
+                                        </tr>
+                                                
+                                                <!-- Categoría 4: Organización del tiempo de trabajo -->
+                                                <tr class="category-summary">
+                                                    <td class="category-cell" data-number="4">Organización del tiempo de trabajo</td>
+                                                    <td class="category-domain-info">-</td>
+                                                    <td class="category-dimension-info">-</td>
                                             <td class="risk-count">18</td>
                                             <td class="percentage">12.0%</td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
-                                        <tr>
-                                            <td>Liderazgo</td>
-                                            <td>Liderazgo y relaciones en el trabajo</td>
-                                            <td class="risk-count">15</td>
-                                            <td class="percentage">10.0%</td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
+                                                
+                                                <!-- Dominio: Jornada de trabajo -->
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Jornada de trabajo</td>
+                                                    <td>Duración, distribución y pausas</td>
+                                                    <td class="risk-count">18</td>
+                                                    <td class="percentage">12.0%</td>
+                                                    <td>
+                                                        <div class="response-with-dot">
+                                                            <div class="response-dot bajo"></div>
+                                                            <span>Bajo</span>
+                                                </div>
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td>Relaciones en el trabajo</td>
-                                            <td>Liderazgo y relaciones en el trabajo</td>
-                                            <td class="risk-count">13</td>
-                                            <td class="percentage">8.7%</td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
+                                        
+                                                <!-- Categoría 5: Liderazgo y relaciones en el trabajo -->
+                                                <tr class="category-summary">
+                                                    <td class="category-cell" data-number="5">Liderazgo y relaciones en el trabajo</td>
+                                                    <td class="category-domain-info">-</td>
+                                                    <td class="category-dimension-info">-</td>
+                                                    <td class="risk-count">28</td>
+                                                    <td class="percentage">18.7%</td>
+                                                    <td><span class="risk-badge medio">Medio</span></td>
+                                                </tr>
+                                                
+                                                <!-- Dominio: Liderazgo -->
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Liderazgo</td>
+                                                    <td>Estilo de liderazgo, comunicación, apoyo</td>
+                                                    <td class="risk-count">15</td>
+                                                    <td class="percentage">10.0%</td>
+                                                    <td>
+                                                <span class="risk-badge medio">Medio</span>
+                                            </td>
+                                        </tr>
+                                                
+                                                <!-- Dominio: Relaciones en el trabajo -->
+                                                <tr class="category-detail">
+                                                    <td></td>
+                                                    <td>Relaciones en el trabajo</td>
+                                                    <td>Comunicación, colaboración, confianza, respeto</td>
+                                                    <td class="risk-count">13</td>
+                                                    <td class="percentage">8.7%</td>
+                                                    <td>
+                                                <span class="risk-badge medio">Medio</span>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                </div>
-
-                                <!-- Panel de Filtros para Dominios -->
-                                <div id="domains-filters-side-panel" class="filters-panel">
-                                    <div class="filters-header">
-                                        <h3>Filtros</h3>
-                                        <button class="close-filters-btn" id="domains-close-filters-btn">
-                                            <i class="far fa-times"></i>
-                                        </button>
-                                    </div>
-                                    <div class="filters-content">
-                                        <!-- Filtros Demográficos -->
-                                        <div class="filter-group">
-                                            <label class="filter-label">Área</label>
-                                            <select class="filter-select" id="area-filter-domains">
-                                                <option value="todos">Todos</option>
-                                                <option value="ventas">Ventas</option>
-                                                <option value="desarrollo">Desarrollo</option>
-                                                <option value="rrhh">Recursos Humanos</option>
-                                                <option value="proyectos">Proyectos</option>
-                                                <option value="marketing">Marketing</option>
-                                                <option value="finanzas">Finanzas</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="filter-group">
-                                            <label class="filter-label">Cargo</label>
-                                            <select class="filter-select" id="position-filter-domains">
-                                                <option value="todos">Todos</option>
-                                                <option value="gerente">Gerente</option>
-                                                <option value="desarrollador">Desarrollador</option>
-                                                <option value="analista">Analista</option>
-                                                <option value="coordinador">Coordinador</option>
-                                                <option value="director">Director</option>
-                                                <option value="supervisor">Supervisor</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="filter-group">
-                                            <label class="filter-label">Sexo</label>
-                                            <select class="filter-select" id="gender-filter-domains">
-                                                <option value="todos">Todos</option>
-                                                <option value="masculino">Masculino</option>
-                                                <option value="femenino">Femenino</option>
-                                                <option value="otro">Otro</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="filter-group">
-                                            <label class="filter-label">Edad</label>
-                                            <select class="filter-select" id="age-filter-domains">
-                                                <option value="todos">Todos</option>
-                                                <option value="18-25">18-25 años</option>
-                                                <option value="26-35">26-35 años</option>
-                                                <option value="36-45">36-45 años</option>
-                                                <option value="46-55">46-55 años</option>
-                                                <option value="56-65">56-65 años</option>
-                                                <option value="65+">65+ años</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="filters-actions">
-                                        <button class="ubits-button ubits-button--primary ubits-button--md" id="apply-filters-domains" style="flex: 1;">
-                                            <i class="far fa-check"></i>
-                                            <span>Aplicar</span>
-                                        </button>
-                                        <button class="ubits-button ubits-button--secondary ubits-button--md" id="clear-filters-domains" style="flex: 1;">
-                                            <i class="far fa-times"></i>
-                                            <span>Limpiar</span>
-                                        </button>
                                     </div>
                                 </div>
-
-                                <!-- Backdrop para filtros -->
-                                <div id="domains-filters-backdrop" class="filters-backdrop"></div>
-
                             </div>
                         </div>
-
-                                </div>
-
-                                <!-- Sub-panel Dimensiones -->
-                                <div id="sub-panel-dimensions" class="sub-tab-panel">
+                        
+                        <div class="tab-panel" id="new-dimensions-panel">
                             <div class="panel-content">
                                 <!-- Segment Control -->
                                 <div class="segment-control-container" style="margin-bottom: 24px;">
                                     <div class="segment-control" style="display: flex; background: var(--ubits-bg-2); border-radius: 8px; padding: 4px; width: fit-content;">
                                         <button class="segment-option active" data-segment="dimensions" style="padding: 8px 16px; border: none; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                                             Dimensiones
+                                        </button>
+                                        <button class="segment-option" data-segment="individual" style="padding: 8px 16px; border: none; background: transparent; color: var(--ubits-fg-1-medium); border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">
+                                            Participantes
                                         </button>
                                     </div>
                                 </div>
@@ -3421,8 +3276,10 @@
                                             <label class="filter-label">Nivel de Riesgo</label>
                                             <select class="filter-select" id="risk-filter-dimensions">
                                                 <option value="todos">Todos</option>
-                                                <option value="canalizado">Canalizado</option>
+                                                <option value="bajo">Bajo</option>
+                                                <option value="medio">Medio</option>
                                                 <option value="alto">Alto</option>
+                                                <option value="muy-alto">Muy Alto</option>
                                             </select>
                                         </div>
                                         
@@ -3563,17 +3420,673 @@
                                 
                                 
                                 <!-- Sección Individual -->
-                                </div>
-                            </div> <!-- Cierre sub-panels-container -->
-                        </div> <!-- Cierre new-general-view-panel -->
+                                <div class="segment-content" id="individual-content" style="display: none;">
+                                    <!-- Título de la sección -->
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <h2 style="font-size: 24px; font-weight: 600; color: #1f2937; margin: 0;">Análisis de dimensiones por participante</h2>
+                                            <span style="font-size: 14px; color: #6b7280;">15 participantes</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="panel-container">
+                                        <!-- Panel Izquierdo - Lista de Participantes -->
+                                        <div class="participants-panel">
+                                            <div class="panel-header">
+                                                <h3>Participantes</h3>
+                                                <div class="search-filters-container">
+                                                    <div class="simple-search-container" style="flex: 1; position: relative;">
+                                                        <i class="far fa-search simple-search-icon"></i>
+                                                        <input type="text" id="individual-participant-search" placeholder="Buscar participante..." class="simple-search-input">
+                                                        <button id="clear-individual-participant-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer; display: none; width: 20px; height: 20px; align-items: center; justify-content: center;" title="Limpiar búsqueda">
+                                                            <i class="far fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                    <button class="filters-button" id="individual-filters-btn" title="Filtros">
+                                                        <i class="far fa-filter"></i>
+                                                        <span class="filter-badge" id="individual-filter-badge" style="display: none;">0</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="participants-list" id="individual-participants-list">
+                                                <!-- Lista de participantes se generará dinámicamente -->
+                                            </div>
+                                        </div>
 
-                        <!-- Tab Content - Heat Map -->
-                        <div class="tab-panel" id="new-heat-map-panel">
-                            <div class="panel-content">
-                                <div style="padding: 80px 20px; text-align: center; color: #9ca3af;">
-                                    <i class="far fa-map" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
-                                    <h3 style="margin: 0; font-size: 18px; color: #4b5563;">Heat Map</h3>
-                                    <p style="margin-top: 8px;">El mapa de calor estará disponible próximamente.</p>
+                                        <!-- Panel Derecho - Detalles del Participante -->
+                                        <div class="participant-details-panel">
+                                            <div class="panel-header">
+                                                <h3>Detalles del Participante</h3>
+                                            </div>
+                                            <div class="participant-details-content" id="individual-participant-details">
+                                                <div class="no-selection-message">
+                                                    <i class="far fa-user"></i>
+                                                    <p>Selecciona un participante para ver sus detalles</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                                    <!-- Título de la sección -->
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <h2 style="font-size: 24px; font-weight: 600; color: #1f2937; margin: 0;">Respuestas individuales</h2>
+                                            <span style="font-size: 14px; color: #6b7280;">15 usuarios</span>
+                                        </div>
+                                        <!-- Controles de búsqueda y filtros -->
+                                        <div style="display: flex; gap: 8px; align-items: center;">
+                                            <!-- Botón de búsqueda (icono) -->
+                                            <div style="position: relative;">
+                                                <button id="individual-search-btn" style="background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; padding: 8px; cursor: pointer; color: #6b7280; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" title="Buscar participantes">
+                                                    <i class="far fa-search"></i>
+                                                </button>
+                                                
+                                                <!-- Input de búsqueda (oculto por defecto) -->
+                                                <div id="individual-search-container" style="position: absolute; top: 0; right: 0; display: none; background: white; border: 1px solid #d1d5db; border-radius: 6px; z-index: 1000;">
+                                                    <div style="display: flex; align-items: center; gap: 8px; padding: 8px;">
+                                                        <input type="text" id="individual-search" placeholder="Buscar participantes..." style="padding: 8px 12px; border: none; outline: none; font-size: 14px; width: 250px; background: transparent;" />
+                                                        <button id="clear-individual-search" style="background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 4px; padding: 6px; cursor: pointer; color: #6b7280; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;" title="Limpiar búsqueda">
+                                                            <i class="far fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Botón de filtros -->
+                                            <button class="filters-button" id="main-individual-filters-btn" title="Filtros">
+                                                <i class="far fa-filter"></i>
+                                                <span class="filter-badge" id="main-individual-filter-badge" style="display: none;">0</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="background: white; border-bottom: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+                                        
+                                        <!-- Tabla con scroll horizontal y vertical -->
+                                        <div style="overflow-x: auto; overflow-y: auto; max-width: 100%; max-height: 600px;">
+                                            <table style="width: 100%; border-collapse: collapse; min-width: 12000px;">
+                                                <thead style="background: #f8f9fa; position: sticky; top: 0; z-index: 10;">
+                                                    <tr>
+                                                        <!-- Columna fija del participante -->
+                                                        <th style="position: sticky; left: 0; background: #f8f9fa; border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: left; font-weight: 600; color: #374151; min-width: 200px; z-index: 11;">Participante</th>
+                                                        <!-- Columnas de métricas principales -->
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 120px; background: #f8f9fa;">Nivel de Riesgo</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 100px; background: #f8f9fa;">Porcentaje</th>
+                                                        
+                                                        <!-- CATEGORÍA I. AMBIENTE DE TRABAJO -->
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu lugar de trabajo tiene buena iluminación, temperatura y ventilación?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Cuentas con las herramientas y equipos necesarios para realizar bien tus tareas?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu lugar de trabajo es seguro y tiene condiciones adecuadas para evitar accidentes?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Te sientes cómodo y tranquilo en el espacio donde trabajas?</th>
+                                                        
+                                                        <!-- CATEGORÍA II. FACTORES PROPIOS DE LA ACTIVIDAD -->
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu trabajo requiere que trabajes muy rápido o bajo presión constante?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tienes que atender varios asuntos o tareas al mismo tiempo?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu trabajo demanda un alto nivel de concentración o esfuerzo mental?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Debes tomar decisiones importantes que generan presión o preocupación?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes que tu trabajo te exige mucho esfuerzo emocional?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu trabajo requiere manejar situaciones difíciles con otras personas (clientes, usuarios o compañeros)?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tienes claridad sobre lo que se espera de ti y las metas que debes cumplir?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tienes suficiente autonomía para decidir cómo hacer tu trabajo?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Recibes reconocimiento o agradecimiento cuando haces bien tu trabajo?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes que tu trabajo tiene sentido o utilidad para otras personas?</th>
+                                                        
+                                                        <!-- CATEGORÍA III. ORGANIZACIÓN DEL TIEMPO DE TRABAJO -->
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu jornada de trabajo te permite tener tiempo para ti o tu familia?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Puedes tomar descansos suficientes durante tu jornada laboral?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Con qué frecuencia tienes que quedarte más tiempo del establecido para cumplir tus tareas?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu horario de trabajo te permite conciliar tus responsabilidades personales y familiares?</th>
+                                                        
+                                                        <!-- CATEGORÍA IV. LIDERAZGO Y RELACIONES EN EL TRABAJO -->
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu jefe inmediato te escucha y te apoya cuando tienes dificultades?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu jefe te trata con respeto y equidad?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu jefe reconoce tu esfuerzo y te agradece por tu trabajo?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu jefe comunica claramente los objetivos del área o del proyecto?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu jefe te orienta o te da retroalimentación para mejorar tu desempeño?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿En tu equipo de trabajo hay buena comunicación entre compañeros?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes que puedes confiar en las personas con las que trabajas?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Puedes contar con tus compañeros cuando necesitas ayuda laboral o emocional?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes que en tu área hay un ambiente de colaboración y apoyo mutuo?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿En tu lugar de trabajo se fomenta el respeto entre todos?</th>
+                                                        
+                                                        <!-- CATEGORÍA V. VIOLENCIA LABORAL -->
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Has sentido que alguien te ha tratado mal o te ha hecho sentir incómodo en el trabajo?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Has sido objeto de burlas, apodos o comentarios ofensivos?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Has sentido que te excluyen o te ignoran de manera intencional en el trabajo?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Has recibido amenazas o comentarios intimidantes en el trabajo?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Has sentido incomodidad por insinuaciones o comentarios de tipo sexual?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes que te tratan de forma injusta por tu edad, sexo, apariencia o forma de pensar?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes que tus opiniones o aportes son desvalorizados o ignorados?</th>
+                                                        
+                                                        <!-- CATEGORÍA VI. ENTORNO ORGANIZACIONAL -->
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Recibes oportunidades de crecimiento o capacitación para mejorar tu trabajo?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes que tu esfuerzo y desempeño son valorados por la empresa?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tienes retroalimentación sobre los resultados de tu trabajo?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Te sientes motivado por las posibilidades de desarrollo que te ofrece tu puesto?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Te sientes orgulloso de trabajar en esta empresa?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes que tus valores personales se alinean con los de la organización?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Recomendarías a otras personas trabajar aquí?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes que tus ideas o sugerencias son tomadas en cuenta?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes estabilidad en tu empleo o temes perderlo sin razón?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes que las decisiones de ascenso o promoción son justas y transparentes?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes que la carga de trabajo está distribuida equitativamente?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Consideras que en la empresa se respetan las normas y políticas laborales?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes que puedes expresar tus desacuerdos sin temor a represalias?</th>
+                                                        
+                                                        <!-- CATEGORÍA VII. FACTORES EXTRAORGANIZACIONALES -->
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu familia te apoya en tus responsabilidades laborales?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tienes suficiente apoyo económico para cubrir tus necesidades básicas?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Cuentas con una red de apoyo social fuera del trabajo?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu situación económica te permite tomar decisiones laborales sin presión?</th>
+                                                        
+                                                        <!-- CATEGORÍA VIII. CARACTERÍSTICAS DEL TRABAJO -->
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu trabajo te ofrece variedad en las tareas que realizas?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Sientes que tu trabajo tiene un propósito claro y significativo?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Recibes retroalimentación regular sobre tu desempeño?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu trabajo te permite desarrollar nuevas habilidades?</th>
+                                                        
+                                                        <!-- CATEGORÍA IX. CONDICIONES DE TRABAJO -->
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿El nivel de ruido en tu lugar de trabajo es adecuado?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tienes suficiente espacio para realizar tus tareas cómodamente?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Las relaciones con tus compañeros son positivas y constructivas?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Te sientes respetado por tus superiores?</th>
+                                                        
+                                                        <!-- CATEGORÍA X. DESARROLLO PROFESIONAL -->
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tienes oportunidades de capacitación y desarrollo profesional?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Existen posibilidades reales de promoción en tu área?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu trabajo te permite aplicar y desarrollar tus conocimientos?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Recibes reconocimiento por tus logros y contribuciones?</th>
+                                                        
+                                                        <!-- CATEGORÍA XI. BALANCE TRABAJO-VIDA -->
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu trabajo te permite mantener un equilibrio entre vida personal y laboral?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Puedes tomar vacaciones cuando las necesitas?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tu horario de trabajo es flexible cuando lo requieres?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tienes tiempo suficiente para actividades personales y familiares?</th>
+                                                        
+                                                        <!-- CATEGORÍA XII. COMUNICACIÓN ORGANIZACIONAL -->
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿La información importante de la empresa se comunica de manera clara y oportuna?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Tienes la oportunidad de participar en decisiones que te afectan?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Los canales de comunicación en la empresa son efectivos?</th>
+                                                        <th style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151; min-width: 150px; background: #f8f9fa; font-size: 11px;">¿Te sientes informado sobre los cambios y decisiones de la organización?</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Participante 1 -->
+                                                    <tr style="background: white;">
+                                                        <td style="position: sticky; left: 0; background: white; border-bottom: 1px solid #e5e7eb; padding: 12px; font-weight: 600; color: #374151; z-index: 1;">
+                                                            <div style="display: flex; align-items: center; gap: 12px;">
+                                                                <div class="participant-avatar" style="background: #667eea;">
+                                                                    MG
+                                            </div>
+                                                                <div class="participant-info-content">
+                                                                    <div class="participant-name">María González</div>
+                                                                    <div class="participant-role">Gerente de Ventas</div>
+                                            </div>
+                                        </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span class="risk-badge bajo">Bajo</span>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">85%</td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                        </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                    </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <!-- Participante 2 -->
+                                                    <tr style="background: #f8f9fa;">
+                                                        <td style="position: sticky; left: 0; background: #f8f9fa; border-bottom: 1px solid #e5e7eb; padding: 12px; font-weight: 600; color: #374151; z-index: 1;">
+                                                            <div style="display: flex; align-items: center; gap: 12px;">
+                                                                <div class="participant-avatar" style="background: #f093fb;">
+                                                                    CR
+                                            </div>
+                                                                <div class="participant-info-content">
+                                                                    <div class="participant-name">Carlos Rodríguez</div>
+                                                                    <div class="participant-role">Desarrollador Senior</div>
+                                            </div>
+                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span class="risk-badge medio">Medio</span>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">65%</td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                        </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                    </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                        </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                    </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot casi-siempre"></div>
+                                                                <span>Casi siempre</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <!-- Participante 3 -->
+                                                    <tr style="background: white;">
+                                                        <td style="position: sticky; left: 0; background: white; border-bottom: 1px solid #e5e7eb; padding: 12px; font-weight: 600; color: #374151; z-index: 1;">
+                                                            <div style="display: flex; align-items: center; gap: 12px;">
+                                                                <div class="participant-avatar" style="background: #4facfe;">
+                                                                    AL
+                </div>
+                                                                <div class="participant-info-content">
+                                                                    <div class="participant-name">Ana López</div>
+                                                                    <div class="participant-role">Analista de Recursos Humanos</div>
+            </div>
+        </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span class="risk-badge alto">Alto</span>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">45%</td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot algunas-veces"></div>
+                                                                <span>Algunas veces</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <!-- Participante 4 -->
+                                                    <tr style="background: #f8f9fa;">
+                                                        <td style="position: sticky; left: 0; background: #f8f9fa; border-bottom: 1px solid #e5e7eb; padding: 12px; font-weight: 600; color: #374151; z-index: 1;">
+                                                            <div style="display: flex; align-items: center; gap: 12px;">
+                                                                <div class="participant-avatar" style="background: #fa709a;">
+                                                                    JM
+                                                                </div>
+                                                                <div class="participant-info-content">
+                                                                    <div class="participant-name">José Martínez</div>
+                                                                    <div class="participant-role">Coordinador de Proyectos</div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <span class="risk-badge bajo">Bajo</span>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center; font-weight: 600; color: #374151;">78%</td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                        <td style="border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: center;">
+                                                            <div class="response-with-dot">
+                                                                <div class="response-dot siempre"></div>
+                                                                <span>Siempre</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        
+                                        <!-- Panel de Filtros para Individual -->
+                                        <div id="individual-filters-side-panel" class="filters-panel">
+                                            <div class="filters-header">
+                                                <h3>Filtros</h3>
+                                                <button class="close-filters-btn" id="individual-close-filters-btn">
+                                                    <i class="far fa-times"></i>
+                                                </button>
+                                            </div>
+                                            <div class="filters-content">
+                                                <!-- Filtros Básicos -->
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Nivel de Riesgo</label>
+                                                    <select class="filter-select" id="individual-risk-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="bajo">Bajo</option>
+                                                        <option value="medio">Medio</option>
+                                                        <option value="alto">Alto</option>
+                                                        <option value="muy-alto">Muy Alto</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <!-- Filtros Demográficos -->
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Área</label>
+                                                    <select class="filter-select" id="individual-area-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Tecnología">Tecnología</option>
+                                                        <option value="Recursos Humanos">Recursos Humanos</option>
+                                                        <option value="Ventas">Ventas</option>
+                                                        <option value="Marketing">Marketing</option>
+                                                        <option value="Finanzas">Finanzas</option>
+                                                        <option value="Operaciones">Operaciones</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Cargo</label>
+                                                    <select class="filter-select" id="individual-position-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Gerente">Gerente</option>
+                                                        <option value="Desarrollador">Desarrollador</option>
+                                                        <option value="Analista">Analista</option>
+                                                        <option value="Contador">Contador</option>
+                                                        <option value="Asistente">Asistente</option>
+                                                        <option value="Director">Director</option>
+                                                        <option value="Diseñador">Diseñador</option>
+                                                        <option value="Coordinador">Coordinador</option>
+                                                        <option value="Especialista">Especialista</option>
+                                                        <option value="Supervisor">Supervisor</option>
+                                                        <option value="Técnico">Técnico</option>
+                                                        <option value="Psicólogo">Psicólogo</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Sexo</label>
+                                                    <select class="filter-select" id="individual-gender-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Masculino">Masculino</option>
+                                                        <option value="Femenino">Femenino</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Estado Civil</label>
+                                                    <select class="filter-select" id="individual-marital-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Soltero">Soltero</option>
+                                                        <option value="Casado">Casado</option>
+                                                        <option value="Divorciado">Divorciado</option>
+                                                        <option value="Viudo">Viudo</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Edad</label>
+                                                    <select class="filter-select" id="individual-age-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="18-25">18-25 años</option>
+                                                        <option value="26-35">26-35 años</option>
+                                                        <option value="36-45">36-45 años</option>
+                                                        <option value="46-55">46-55 años</option>
+                                                        <option value="56-65">56-65 años</option>
+                                                        <option value="65+">65+ años</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">País</label>
+                                                    <select class="filter-select" id="individual-country-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Colombia">Colombia</option>
+                                                        <option value="México">México</option>
+                                                        <option value="Argentina">Argentina</option>
+                                                        <option value="Chile">Chile</option>
+                                                        <option value="Perú">Perú</option>
+                                                        <option value="España">España</option>
+                                                        <option value="Estados Unidos">Estados Unidos</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Ciudad</label>
+                                                    <select class="filter-select" id="individual-city-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Bogotá">Bogotá</option>
+                                                        <option value="Medellín">Medellín</option>
+                                                        <option value="Cali">Cali</option>
+                                                        <option value="Barranquilla">Barranquilla</option>
+                                                        <option value="Cartagena">Cartagena</option>
+                                                        <option value="Ciudad de México">Ciudad de México</option>
+                                                        <option value="Buenos Aires">Buenos Aires</option>
+                                                        <option value="Santiago">Santiago</option>
+                                                        <option value="Lima">Lima</option>
+                                                        <option value="Madrid">Madrid</option>
+                                                        <option value="Nueva York">Nueva York</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="filter-group">
+                                                    <label class="filter-label">Líder</label>
+                                                    <select class="filter-select" id="individual-leader-select">
+                                                        <option value="todos">Todos</option>
+                                                        <option value="Ana García">Ana García</option>
+                                                        <option value="Carlos López">Carlos López</option>
+                                                        <option value="María Rodríguez">María Rodríguez</option>
+                                                        <option value="Juan Pérez">Juan Pérez</option>
+                                                        <option value="Laura Martínez">Laura Martínez</option>
+                                                        <option value="Pedro González">Pedro González</option>
+                                                        <option value="Sofia Hernández">Sofia Hernández</option>
+                                                        <option value="Diego Torres">Diego Torres</option>
+                                                        <option value="Carmen Silva">Carmen Silva</option>
+                                                        <option value="Roberto Díaz">Roberto Díaz</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <!-- Botones de Acción -->
+                                                <div class="filters-actions">
+                                                    <button class="ubits-button ubits-button--primary ubits-button--md" id="individual-apply-filters-btn" style="flex: 1;">
+                                                        <i class="far fa-check"></i>
+                                                        <span>Aplicar</span>
+                                                    </button>
+                                                    <button class="ubits-button ubits-button--secondary ubits-button--md" id="individual-clear-filters-btn" style="flex: 1;">
+                                                        <i class="far fa-times"></i>
+                                                        <span>Limpiar</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Backdrop para cerrar filtros -->
+                                        <div id="individual-filters-backdrop" class="filters-backdrop"></div>
+                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -3621,6 +4134,64 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
+
+        function downloadIndividualResponses() {
+            // Extraer datos reales de la tabla de individual
+            const tbody = document.querySelector('#new-individual-panel tbody');
+            if (!tbody) {
+                alert('No se encontró la tabla de respuestas individuales');
+                return;
+            }
+
+            const rows = tbody.querySelectorAll('tr');
+            if (rows.length === 0) {
+                alert('No hay datos en la tabla de respuestas individuales');
+                return;
+            }
+
+            // Generar headers para las 72 preguntas
+            const headers = ['Participante', 'Cargo', 'Nivel de Riesgo', 'Porcentaje'];
+            for (let i = 1; i <= 72; i++) {
+                headers.push(`Pregunta ${i}`);
+            }
+
+            const data = [];
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length < 3) return;
+
+                const rowData = [];
+                
+                // Extraer nombre del participante
+                const participantName = cells[0].querySelector('.participant-name');
+                const participantRole = cells[0].querySelector('.participant-role');
+                const name = participantName ? participantName.textContent.trim() : '';
+                const role = participantRole ? participantRole.textContent.trim() : '';
+                
+                // Extraer nivel de riesgo
+                const riskBadge = cells[1].querySelector('.risk-badge');
+                const riskLevel = riskBadge ? riskBadge.textContent.trim() : '';
+                
+                // Extraer porcentaje
+                const percentage = cells[2].textContent.trim();
+                
+                rowData.push(name, role, riskLevel, percentage);
+                
+                // Extraer respuestas de las 72 preguntas
+                for (let i = 3; i < cells.length && i < 75; i++) {
+                    const responseSpan = cells[i].querySelector('span');
+                    const response = responseSpan ? responseSpan.textContent.trim() : '';
+                    rowData.push(response);
+                }
+                
+                data.push(rowData);
+            });
+
+            const csvContent = convertToCSV(data, headers);
+            downloadCSVFile(csvContent, 'respuestas_individuales_nom035_entorno.csv');
+            closeDownloadDropdown();
         }
 
         function downloadResultsByDimension() {
@@ -4069,106 +4640,6 @@
             }
             
             console.log('✅ Filtros de dimensiones inicializados');
-        }
-
-        // Inicializar filtros para Categorías
-        function initializeCategoriesFilters() {
-            console.log('🔧 Inicializando filtros de categorías...');
-
-            const filtersBtn = document.getElementById('categories-filters-btn');
-            const filtersPanel = document.getElementById('categories-filters-side-panel');
-            const filtersBackdrop = document.getElementById('categories-filters-backdrop');
-            const closeFiltersBtn = document.getElementById('categories-close-filters-btn');
-            const applyFiltersBtn = document.getElementById('apply-filters-categories');
-            const clearFiltersBtn = document.getElementById('clear-filters-categories');
-
-            if (filtersBtn && filtersPanel && filtersBackdrop) {
-                filtersBtn.addEventListener('click', function() {
-                    filtersPanel.classList.add('show');
-                    filtersBackdrop.classList.add('show');
-                });
-            }
-
-            if (closeFiltersBtn) {
-                closeFiltersBtn.addEventListener('click', function() {
-                    filtersPanel.classList.remove('show');
-                    filtersBackdrop.classList.remove('show');
-                });
-            }
-            if (filtersBackdrop) {
-                filtersBackdrop.addEventListener('click', function() {
-                    filtersPanel.classList.remove('show');
-                    filtersBackdrop.classList.remove('show');
-                });
-            }
-
-            if (applyFiltersBtn) {
-                applyFiltersBtn.addEventListener('click', function() {
-                    filtersPanel.classList.remove('show');
-                    filtersBackdrop.classList.remove('show');
-                });
-            }
-
-            if (clearFiltersBtn) {
-                clearFiltersBtn.addEventListener('click', function() {
-                    document.getElementById('area-filter-categories').value = 'todos';
-                    document.getElementById('position-filter-categories').value = 'todos';
-                    document.getElementById('gender-filter-categories').value = 'todos';
-                    document.getElementById('age-filter-categories').value = 'todos';
-                });
-            }
-
-            console.log('✅ Filtros de categorías inicializados');
-        }
-
-        // Inicializar filtros para Dominios
-        function initializeDomainsFilters() {
-            console.log('🔧 Inicializando filtros de dominios...');
-
-            const filtersBtn = document.getElementById('domains-filters-btn');
-            const filtersPanel = document.getElementById('domains-filters-side-panel');
-            const filtersBackdrop = document.getElementById('domains-filters-backdrop');
-            const closeFiltersBtn = document.getElementById('domains-close-filters-btn');
-            const applyFiltersBtn = document.getElementById('apply-filters-domains');
-            const clearFiltersBtn = document.getElementById('clear-filters-domains');
-
-            if (filtersBtn && filtersPanel && filtersBackdrop) {
-                filtersBtn.addEventListener('click', function() {
-                    filtersPanel.classList.add('show');
-                    filtersBackdrop.classList.add('show');
-                });
-            }
-
-            if (closeFiltersBtn) {
-                closeFiltersBtn.addEventListener('click', function() {
-                    filtersPanel.classList.remove('show');
-                    filtersBackdrop.classList.remove('show');
-                });
-            }
-            if (filtersBackdrop) {
-                filtersBackdrop.addEventListener('click', function() {
-                    filtersPanel.classList.remove('show');
-                    filtersBackdrop.classList.remove('show');
-                });
-            }
-
-            if (applyFiltersBtn) {
-                applyFiltersBtn.addEventListener('click', function() {
-                    filtersPanel.classList.remove('show');
-                    filtersBackdrop.classList.remove('show');
-                });
-            }
-
-            if (clearFiltersBtn) {
-                clearFiltersBtn.addEventListener('click', function() {
-                    document.getElementById('area-filter-domains').value = 'todos';
-                    document.getElementById('position-filter-domains').value = 'todos';
-                    document.getElementById('gender-filter-domains').value = 'todos';
-                    document.getElementById('age-filter-domains').value = 'todos';
-                });
-            }
-
-            console.log('✅ Filtros de dominios inicializados');
         }
 
         // Funciones auxiliares para filtros de dimensiones
@@ -5170,130 +5641,90 @@
 
         // FUNCIÓN PARA INICIALIZAR LOS NUEVOS TABS (CON ESTILO ORIGINAL)
         function initializeNewTabs() {
-            console.log('🚀 ===== INICIANDO NUEVOS TABS REFACTORIZADOS =====');
+            console.log('🚀 ===== INICIANDO NUEVOS TABS CON ESTILO ORIGINAL =====');
             
-            // TABS PRINCIPALES
-            const mainTabButtons = document.querySelectorAll('[data-new-tab]');
-            const mainTabPanels = document.querySelectorAll('#new-general-view-panel, #new-heat-map-panel');
+            // Buscar botones que tengan data-new-tab (los nuevos tabs)
+            const newTabButtons = document.querySelectorAll('[data-new-tab]');
+            const newTabPanels = document.querySelectorAll('#new-overview-panel, #new-dimensions-panel, #new-individual-panel');
             
-            console.log('🔍 Botones de tabs principales encontrados:', mainTabButtons.length);
-            console.log('🔍 Paneles de tabs principales encontrados:', mainTabPanels.length);
+            console.log('🔍 Botones de nuevos tabs encontrados:', newTabButtons.length);
+            console.log('🔍 Paneles de nuevos tabs encontrados:', newTabPanels.length);
             
-            function switchMainTab(targetTab) {
-                console.log('🔄 Cambiando a tab principal:', targetTab);
+            // Función para cambiar de tab
+            function switchNewTab(targetTab) {
+                console.log('🔄 Cambiando a nuevo tab:', targetTab);
                 
-                mainTabButtons.forEach(btn => btn.classList.remove('active'));
-                mainTabPanels.forEach(panel => panel.classList.remove('active'));
+                // Remover clase active de todos los botones nuevos
+                newTabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    console.log('❌ Removiendo active de botón:', btn.getAttribute('data-new-tab'));
+                });
                 
+                // Remover clase active de todos los paneles nuevos
+                newTabPanels.forEach(panel => {
+                    panel.classList.remove('active');
+                    console.log('❌ Removiendo active de panel:', panel.id);
+                });
+                
+                // Activar el botón seleccionado
                 const targetButton = document.querySelector(`[data-new-tab="${targetTab}"]`);
                 if (targetButton) {
                     targetButton.classList.add('active');
-                    console.log('✅ Activando botón principal:', targetTab);
+                    console.log('✅ Activando botón:', targetTab);
                 }
                 
+                // Activar el panel seleccionado
                 const targetPanel = document.getElementById(`new-${targetTab}-panel`);
                 if (targetPanel) {
                     targetPanel.classList.add('active');
-                    console.log('✅ Activando panel principal:', targetPanel.id);
+                    console.log('✅ Activando panel:', targetPanel.id);
                 }
+                
+                console.log('🎉 Cambio de nuevo tab completado:', targetTab);
             }
             
-            mainTabButtons.forEach(button => {
+            // Agregar event listeners a los botones nuevos
+            newTabButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const targetTab = this.getAttribute('data-new-tab');
-                    switchMainTab(targetTab);
+                    console.log('🖱️ Click en nuevo tab:', targetTab);
+                    switchNewTab(targetTab);
                 });
             });
-
-            // SELECTOR DE VISTA (CATEGORÍAS, DOMINIOS, DIMENSIONES)
-            const viewBySelect = document.getElementById('view-by-select');
-            const subPanels = document.querySelectorAll('.sub-tab-panel');
             
-            console.log('🔍 Selector de vista encontrado:', !!viewBySelect);
-            console.log('🔍 Sub-paneles encontrados:', subPanels.length);
+            // Verificar estado inicial
+            const activeNewButton = document.querySelector('[data-new-tab].active');
+            const activeNewPanel = document.querySelector('#new-overview-panel.active, #new-dimensions-panel.active, #new-individual-panel.active');
+            console.log('🔍 Botón activo inicial (nuevos tabs):', activeNewButton ? activeNewButton.getAttribute('data-new-tab') : 'ninguno');
+            console.log('🔍 Panel activo inicial (nuevos tabs):', activeNewPanel ? activeNewPanel.id : 'ninguno');
             
-            if (viewBySelect) {
-                viewBySelect.addEventListener('change', function() {
-                    const targetSub = this.value;
-                    console.log('🖱️ Cambio en selector "Ver por":', targetSub);
-                    
-                    subPanels.forEach(panel => {
-                        panel.classList.remove('active');
-                        panel.style.display = 'none'; // Aseguramos que se oculte
-                    });
-                    
-                    const targetPanel = document.getElementById(`sub-panel-${targetSub}`);
-                    if (targetPanel) {
-                        targetPanel.classList.add('active');
-                        targetPanel.style.display = 'block'; // Aseguramos que se muestre
-                        console.log('✅ Activando sub-panel:', targetPanel.id);
-                    }
-                });
-                
-                // Estado inicial del selector
-                const initialSub = viewBySelect.value;
-                const targetPanel = document.getElementById(`sub-panel-${initialSub}`);
-                if (targetPanel) {
-                    targetPanel.classList.add('active');
-                    targetPanel.style.display = 'block';
-                    console.log('✅ Activando sub-panel inicial:', targetPanel.id);
-                }
-            }
+            console.log('✅ ===== NUEVOS TABS CON ESTILO ORIGINAL INICIALIZADOS EXITOSAMENTE =====');
             
-            console.log('✅ ===== TABS REFACTORIZADOS INICIALIZADOS EXITOSAMENTE =====');
-
+            // Inicializar controles de la tabla en los nuevos tabs
+            initializeNewTableControls();
+            
             // Inicializar controles del tab Dimensiones
             initializeDimensionsTableControls();
-        }
-
-        // Configurar clics en tarjetas de métricas
-        function setupMetricsClickHandlers() {
-            const metricCards = document.querySelectorAll('.metric-card');
-
-            metricCards.forEach((card, index) => {
-                card.style.cursor = 'pointer';
-                card.addEventListener('click', function() {
-                    const metricTitle = this.querySelector('.metric-title')?.textContent || '';
-                    console.log('📊 Click en tarjeta de métrica:', metricTitle);
-
-                    // Filtrar según la tarjeta clickeada
-                    if (metricTitle.includes('canalizados')) {
-                        console.log('📊 Filtrando por: Canalizado');
-                        filterByRiskLevelEntorno('canalizado');
-                    } else if (metricTitle.includes('riesgo alto')) {
-                        console.log('📊 Filtrando por: Alto');
-                        filterByRiskLevelEntorno('alto');
-                    }
+            
+            // Inicializar la nueva tabla con la primera categoría abierta
+            setTimeout(() => {
+                const newTableDetailRows = document.querySelectorAll('#new-overview-panel .category-detail');
+                newTableDetailRows.forEach((row, index) => {
+                    // Abrir solo las filas de detalle de la primera categoría
+                    const isFirstCategory = index < 2; // Las primeras 2 filas de detalle pertenecen a la primera categoría
+                    row.style.display = isFirstCategory ? 'table-row' : 'none';
                 });
-            });
-        }
-
-        // Función para filtrar por nivel de riesgo desde las métricas (para la sección individual)
-        function filterByRiskLevelEntorno(riskLevel) {
-            // Obtener el select de riesgo individual
-            const riskSelect = document.getElementById('individual-risk-select');
-            if (!riskSelect) {
-                console.error('No se encontró el select de riesgo individual');
-                return;
-            }
-
-            // Deseleccionar todos los checkboxes de riesgo
-            const riskCheckboxes = riskSelect.querySelectorAll('input[type="checkbox"]');
-            riskCheckboxes.forEach(checkbox => {
-                checkbox.checked = false;
-            });
-
-            // Seleccionar solo el checkbox del nivel de riesgo deseado
-            const targetCheckbox = document.getElementById(`individual-risk-${riskLevel}`);
-            if (targetCheckbox) {
-                targetCheckbox.checked = true;
-                console.log(`✅ Seleccionado filtro: ${riskLevel}`);
-            }
-
-            // Aplicar los filtros (si existe la función)
-            if (typeof applyIndividualFilters === 'function') {
-                applyIndividualFilters();
-            }
+                
+                // Marcar la primera categoría como activa en la nueva tabla
+                const firstNewCategoryRow = document.querySelector('#new-overview-panel .category-summary');
+                if (firstNewCategoryRow) {
+                    firstNewCategoryRow.classList.add('active');
+                    const accordionIcon = firstNewCategoryRow.querySelector('.accordion-icon');
+                    if (accordionIcon) {
+                        accordionIcon.style.transform = 'rotate(90deg)';
+                    }
+                }
+            }, 100);
         }
 
         // Función para actualizar el texto del select
@@ -7618,10 +8049,10 @@
             },
             {
                 id: 5,
-                name: "Valentina Mendoza",
+                name: "Sofia Herrera",
                 role: "Asistente Administrativa",
                 riskLevel: "nulo",
-                avatar: "VM",
+                avatar: "SH",
                 avatarColor: "#6b7280",
                 details: {
                     age: 26,
@@ -8508,10 +8939,10 @@
             },
             {
                 id: 13,
-                name: "Camila Rodríguez",
+                name: "Laura Jiménez",
                 role: "Psicóloga Organizacional",
                 riskLevel: "nulo",
-                avatar: "CR",
+                avatar: "LJ",
                 avatarColor: "#6b7280",
                 details: {
                     age: 36,
@@ -8520,7 +8951,7 @@
                     gender: "Femenino",
                     maritalStatus: "Soltera",
                     experience: "8 años",
-                    email: "camila.rodriguez@empresa.com",
+                    email: "laura.jimenez@empresa.com",
                     leader: "María González"
                 },
                 surveyResults: {
@@ -8841,17 +9272,23 @@
         // Función para inicializar el Segment Control
         function initializeSegmentControl() {
             console.log('🎛️ ===== INICIALIZANDO SEGMENT CONTROL =====');
-
+            
             const segmentOptions = document.querySelectorAll('.segment-option');
             const dimensionsContent = document.getElementById('dimensions-content');
-
+            const individualContent = document.getElementById('individual-content');
+            
             console.log('🔍 Segment options encontrados:', segmentOptions.length);
             console.log('🔍 Dimensions content encontrado:', dimensionsContent ? 'SÍ' : 'NO');
-
+            console.log('🔍 Individual content encontrado:', individualContent ? 'SÍ' : 'NO');
+            
             // Asegurar que el contenido de dimensiones esté visible por defecto
             if (dimensionsContent) {
                 dimensionsContent.style.display = 'block';
                 console.log('✅ Contenido de dimensiones mostrado por defecto');
+            }
+            if (individualContent) {
+                individualContent.style.display = 'none';
+                console.log('✅ Contenido individual oculto por defecto');
             }
             
             segmentOptions.forEach(option => {
@@ -8878,7 +9315,18 @@
                         if (dimensionsContent) {
                             dimensionsContent.style.display = 'block';
                         }
+                        if (individualContent) {
+                            individualContent.style.display = 'none';
+                        }
                         console.log('✅ Mostrando contenido de dimensiones');
+                    } else if (segment === 'individual') {
+                        if (dimensionsContent) {
+                            dimensionsContent.style.display = 'none';
+                        }
+                        if (individualContent) {
+                            individualContent.style.display = 'block';
+                        }
+                        console.log('✅ Mostrando contenido individual');
                     }
                 });
             });
@@ -8887,7 +9335,7 @@
         }
 
         // Función para inicializar el Panel Individual
-        function initializeIndividualPanel() {
+        function initializeIndividualUsersPanel() {
             console.log('👥 ===== INICIALIZANDO PANEL INDIVIDUAL =====');
             
             // Renderizar lista de participantes
@@ -9586,7 +10034,7 @@
             initializeSegmentControl();
             
             // Inicializar Panel Individual
-
+            initializeIndividualUsersPanel();
             
             // Verificar que el panel de dimensiones existe desde el inicio
             const dimensionPanel = document.getElementById('dimension-panel');
@@ -9622,11 +10070,7 @@
                 // Inicializar los nuevos tabs
                 console.log('🔍 Inicializando nuevos tabs...');
                 initializeNewTabs();
-
-                // Inicializar clics en tarjetas de métricas
-                console.log('🔍 Inicializando handlers de métricas...');
-                setupMetricsClickHandlers();
-
+                
                 // Inicializar filtros con delay para asegurar que las funciones estén definidas
                 setTimeout(() => {
                     if (typeof initializeTableFilters === 'function') {
@@ -9635,14 +10079,6 @@
                     // Inicializar filtros de dimensiones
                     if (typeof initializeDimensionsFilters === 'function') {
                         initializeDimensionsFilters();
-                    }
-                    // Inicializar filtros de categorías
-                    if (typeof initializeCategoriesFilters === 'function') {
-                        initializeCategoriesFilters();
-                    }
-                    // Inicializar filtros de dominios
-                    if (typeof initializeDomainsFilters === 'function') {
-                        initializeDomainsFilters();
                     }
                 }, 100);
                 
@@ -9658,7 +10094,7 @@
                 
                 // Prueba inmediata de tabs
                 console.log('=== PRUEBA DE TABS ===');
-                const allTabs = ['general', 'dimension'];
+                const allTabs = ['general', 'dimension', 'individual'];
                 allTabs.forEach(tab => {
                     const button = document.querySelector(`[data-tab="${tab}"]`);
                     const panel = document.getElementById(`${tab}-panel`);
@@ -9713,8 +10149,9 @@
                 <label class="filter-label">Nivel de Riesgo</label>
                 <select class="filter-select" id="risk-filter">
                     <option value="">Todos</option>
-                    <option value="Canalizado">Canalizado</option>
                     <option value="Alto">Alto</option>
+                    <option value="Medio">Medio</option>
+                    <option value="Bajo">Bajo</option>
                 </select>
             </div>
 
@@ -10367,10 +10804,10 @@
             },
             {
                 id: 5,
-                name: "Valentina Mendoza",
+                name: "Sofia Herrera",
                 role: "Asistente Administrativa",
                 riskLevel: "nulo",
-                avatar: "VM",
+                avatar: "SH",
                 avatarColor: "#6b7280"
             },
             {
@@ -10431,10 +10868,10 @@
             },
             {
                 id: 13,
-                name: "Camila Rodríguez",
+                name: "Laura Jiménez",
                 role: "Psicóloga Organizacional",
                 riskLevel: "nulo",
-                avatar: "CR",
+                avatar: "LJ",
                 avatarColor: "#6b7280"
             },
             {
@@ -10920,8 +11357,10 @@
                 <label class="filter-label">Nivel de Riesgo</label>
                 <select class="filter-select" id="participants-risk-filter">
                     <option value="">Todos</option>
-                    <option value="canalizado">Canalizado</option>
+                    <option value="bajo">Bajo</option>
+                    <option value="medio">Medio</option>
                     <option value="alto">Alto</option>
+                    <option value="muy-alto">Muy Alto</option>
                 </select>
             </div>
             
