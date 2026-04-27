@@ -636,7 +636,6 @@
         .risk-level.risk-bajo { background: #dcfce7; color: #166534; }
         .risk-level.risk-medio { background: #f8f9fa; color: #92400e; }
         .risk-level.risk-alto { background: #fed7aa; color: #c2410c; }
-        .risk-level.risk-canalizado { background: #fecaca; color: #dc2626; }
         .risk-level.risk-muy-alto { background: #fecaca; color: #dc2626; }
 
         /* Participant Details */
@@ -1103,12 +1102,40 @@
         }
 
         .select-option {
-            padding: 8px 12px;
+            padding: 10px 12px;
             cursor: pointer;
             display: flex;
-            align-items: center;
-            gap: 8px;
+            align-items: flex-start;
+            gap: 10px;
             transition: background-color 0.2s ease;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .select-option:last-child {
+            border-bottom: none;
+        }
+
+        .select-option input[type="checkbox"] {
+            margin-top: 3px;
+        }
+
+        .option-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .option-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .option-desc {
+            font-size: 11px;
+            color: #6b7280;
+            font-weight: 400;
+            line-height: 1.3;
         }
 
         .select-option:hover {
@@ -2723,16 +2750,19 @@
 
                     <!-- Métricas -->
                     <div class="metrics-grid">
-                        <div class="metric-card">
-                            <div class="metric-title-section">
-                                <div class="metric-icon">
-                                    <i class="far fa-users"></i>
+                        <!-- Métrica 1: Factor de Riesgo Predominante -->
+                        <div class="metric-card" id="predominant-risk-metric" style="cursor: pointer;" title="En lugar de 'casos canalizados', esta métrica identifica cuántas categorías o dominios presentan el nivel de riesgo más elevado (Muy Alto). Haz clic para filtrar.">
+                            <div class="metric-header">
+                                <div class="metric-title-section">
+                                    <div class="metric-icon">
+                                        <i class="far fa-exclamation-triangle"></i>
+                                    </div>
+                                    <h3 class="metric-title">Factor de Riesgo Predominante</h3>
                                 </div>
-                                <h3 class="metric-title">Total de casos canalizados</h3>
                             </div>
                             <div class="metric-value-section">
-                                <div class="metric-main-number">5</div>
-                                <div class="metric-unit-text">Casos</div>
+                                <div class="metric-main-number">8</div>
+                                <div class="metric-unit-text">Incidencias Críticas</div>
                             </div>
                         </div>
 
@@ -2819,21 +2849,21 @@
                                     <tbody>
                                         <tr>
                                             <td>Ambiente de trabajo</td>
-                                            <td class="risk-count">12</td>
-                                            <td class="percentage">8.0%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td class="risk-count">5</td>
+                                            <td class="percentage">3.3%</td>
+                                            <td><span class="risk-badge nulo">Nulo o despreciable</span></td>
                                         </tr>
                                         <tr>
                                             <td>Factores propios de la actividad</td>
-                                            <td class="risk-count">43</td>
-                                            <td class="percentage">28.7%</td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
+                                            <td class="risk-count">95</td>
+                                            <td class="percentage">63.3%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
                                         </tr>
                                         <tr>
                                             <td>Violencia laboral</td>
-                                            <td class="risk-count">32</td>
-                                            <td class="percentage">21.3%</td>
-                                            <td><span class="risk-badge alto">Alto</span></td>
+                                            <td class="risk-count">78</td>
+                                            <td class="percentage">52.0%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
                                         </tr>
                                         <tr>
                                             <td>Organización del tiempo de trabajo</td>
@@ -2843,8 +2873,8 @@
                                         </tr>
                                         <tr>
                                             <td>Liderazgo y relaciones en el trabajo</td>
-                                            <td class="risk-count">28</td>
-                                            <td class="percentage">18.7%</td>
+                                            <td class="risk-count">45</td>
+                                            <td class="percentage">30.0%</td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                     </tbody>
@@ -2972,34 +3002,62 @@
                                             <td>Factores propios de la actividad</td>
                                             <td class="risk-count">90</td>
                                             <td class="percentage">60%</td>
-                                            <td><span class="risk-badge alto">Alto</span></td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
                                         </tr>
                                         <tr>
                                             <td>Violencia laboral</td>
                                             <td>Violencia laboral</td>
-                                            <td class="risk-count">32</td>
-                                            <td class="percentage">21.3%</td>
-                                            <td><span class="risk-badge alto">Alto</span></td>
+                                            <td class="risk-count">85</td>
+                                            <td class="percentage">56.7%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
                                         </tr>
                                         <tr>
                                             <td>Jornada de trabajo</td>
                                             <td>Organización del tiempo de trabajo</td>
-                                            <td class="risk-count">18</td>
-                                            <td class="percentage">12.0%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td class="risk-count">76</td>
+                                            <td class="percentage">50.7%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
                                         </tr>
                                         <tr>
                                             <td>Liderazgo</td>
                                             <td>Liderazgo y relaciones en el trabajo</td>
-                                            <td class="risk-count">15</td>
-                                            <td class="percentage">10.0%</td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
+                                            <td class="risk-count">82</td>
+                                            <td class="percentage">54.7%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
                                         </tr>
                                         <tr>
                                             <td>Relaciones en el trabajo</td>
                                             <td>Liderazgo y relaciones en el trabajo</td>
-                                            <td class="risk-count">13</td>
-                                            <td class="percentage">8.7%</td>
+                                            <td class="risk-count">79</td>
+                                            <td class="percentage">52.7%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Interferencia en la relación trabajo-familia</td>
+                                            <td>Organización del tiempo de trabajo</td>
+                                            <td class="risk-count">88</td>
+                                            <td class="percentage">58.7%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Definición de funciones</td>
+                                            <td>Liderazgo y relaciones en el trabajo</td>
+                                            <td class="risk-count">92</td>
+                                            <td class="percentage">61.3%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Capacitación insuficiente</td>
+                                            <td>Factores propios de la actividad</td>
+                                            <td class="risk-count">84</td>
+                                            <td class="percentage">56.0%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Falta de control sobre el trabajo</td>
+                                            <td>Factores propios de la actividad</td>
+                                            <td class="risk-count">15</td>
+                                            <td class="percentage">10.0%</td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                     </tbody>
@@ -3149,10 +3207,10 @@
                                                 </div>
                                             </td>
                                             <td class="dimension-domain-info">Condiciones en el ambiente de trabajo</td>
-                                            <td class="risk-count">12</td>
-                                            <td class="percentage">8.0%</td>
+                                            <td class="risk-count">45</td>
+                                            <td class="percentage">32.1%</td>
                                             <td>
-                                                <span class="risk-badge bajo">Bajo</span>
+                                                <span class="risk-badge muy-alto">Muy Alto</span>
                                             </td>
                                         </tr>
                                         
@@ -3164,10 +3222,10 @@
                                                 </div>
                                             </td>
                                             <td class="dimension-domain-info">Condiciones en el ambiente de trabajo</td>
-                                            <td class="risk-count">8</td>
-                                            <td class="percentage">5.3%</td>
+                                            <td class="risk-count">38</td>
+                                            <td class="percentage">27.1%</td>
                                             <td>
-                                                <span class="risk-badge bajo">Bajo</span>
+                                                <span class="risk-badge muy-alto">Muy Alto</span>
                                             </td>
                                         </tr>
                                         
@@ -3179,9 +3237,9 @@
                                                 </div>
                                             </td>
                                             <td class="dimension-domain-info">Carga de trabajo</td>
-                                            <td class="risk-count">18</td>
-                                            <td class="percentage">12.0%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td class="risk-count">42</td>
+                                            <td class="percentage">30.0%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 4: Exigencias mentales -->
@@ -3192,9 +3250,9 @@
                                                 </div>
                                             </td>
                                             <td class="dimension-domain-info">Carga de trabajo</td>
-                                            <td class="risk-count">25</td>
-                                            <td class="percentage">16.7%</td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
+                                            <td class="risk-count">50</td>
+                                            <td class="percentage">35.7%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 5: Exigencias emocionales -->
@@ -3205,9 +3263,9 @@
                                                 </div>
                                             </td>
                                             <td class="dimension-domain-info">Carga de trabajo</td>
-                                            <td class="risk-count">22</td>
-                                            <td class="percentage">14.7%</td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
+                                            <td class="risk-count">48</td>
+                                            <td class="percentage">34.3%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 6: Falta de control sobre el trabajo -->
@@ -3218,9 +3276,9 @@
                                                 </div>
                                             </td>
                                             <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
-                                            <td class="risk-count">15</td>
-                                            <td class="percentage">10.0%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td class="risk-count">41</td>
+                                            <td class="percentage">29.3%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 7: Falta de claridad de rol -->
@@ -3231,9 +3289,9 @@
                                                 </div>
                                             </td>
                                             <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
-                                            <td class="risk-count">10</td>
-                                            <td class="percentage">6.7%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td class="risk-count">36</td>
+                                            <td class="percentage">25.7%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 8: Falta de autonomía -->
@@ -3244,9 +3302,9 @@
                                                 </div>
                                             </td>
                                             <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
-                                            <td class="risk-count">13</td>
-                                            <td class="percentage">8.7%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td class="risk-count">39</td>
+                                            <td class="percentage">27.9%</td>
+                                            <td><span class="risk-badge muy-alto">Muy Alto</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 9: Falta de reconocimiento -->
@@ -3419,11 +3477,53 @@
                                         <!-- Filtros Básicos -->
                                         <div class="filter-group">
                                             <label class="filter-label">Nivel de Riesgo</label>
-                                            <select class="filter-select" id="risk-filter-dimensions">
-                                                <option value="todos">Todos</option>
-                                                <option value="canalizado">Canalizado</option>
-                                                <option value="alto">Alto</option>
-                                            </select>
+                                            <div class="custom-select" id="risk-filter-dimensions-select">
+                                                <div class="select-trigger">
+                                                    <span class="select-text" data-default="Seleccionar niveles">Seleccionar niveles</span>
+                                                    <i class="fas fa-chevron-down select-arrow"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos">
+                                                        <input type="checkbox" id="risk-dims-todos">
+                                                        <span class="option-text">Todos</span>
+                                                    </div>
+                                                    <div class="select-option" data-value="nulo">
+                                                        <input type="checkbox" id="risk-dims-nulo">
+                                                        <div class="option-content">
+                                                            <span class="option-text">Nulo o despreciable</span>
+                                                            <span class="option-desc">El nivel más bajo, no requiere intervención.</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="select-option" data-value="bajo">
+                                                        <input type="checkbox" id="risk-dims-bajo">
+                                                        <div class="option-content">
+                                                            <span class="option-text">Bajo</span>
+                                                            <span class="option-desc">Riesgo mínimo, requiere medidas preventivas generales.</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="select-option" data-value="medio">
+                                                        <input type="checkbox" id="risk-dims-medio">
+                                                        <div class="option-content">
+                                                            <span class="option-text">Medio</span>
+                                                            <span class="option-desc">Requiere acciones de mejora en el entorno.</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="select-option" data-value="alto">
+                                                        <input type="checkbox" id="risk-dims-alto">
+                                                        <div class="option-content">
+                                                            <span class="option-text">Alto</span>
+                                                            <span class="option-desc">Afectaciones importantes, requiere plan de acción formal.</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="select-option" data-value="muy-alto">
+                                                        <input type="checkbox" id="risk-dims-muy-alto">
+                                                        <div class="option-content">
+                                                            <span class="option-text">Muy Alto</span>
+                                                            <span class="option-desc">Intervención inmediata y profunda en la estructura.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         
                                         <div class="filter-group">
@@ -3599,6 +3699,123 @@
         function toggleDownloadDropdown() {
             const dropdown = document.getElementById('download-dropdown-content');
             dropdown.classList.toggle('show');
+        }
+
+        // Funciones globales para componentes personalizados
+        function normalizeRiskLevel(risk) {
+            if (!risk) return 'nulo';
+            const r = risk.toLowerCase();
+            if (r.includes('muy alto') || r.includes('muy-alto') || r.includes('crítico')) return 'muy-alto';
+            if (r.includes('alto')) return 'alto';
+            if (r.includes('medio')) return 'medio';
+            if (r.includes('bajo')) return 'bajo';
+            return 'nulo';
+        }
+
+        function getSelectedOptions(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return [];
+            const checkboxes = container.querySelectorAll('input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(cb => cb.closest('.select-option').dataset.value);
+        }
+
+        function updateSelectTexts() {
+            const customSelects = document.querySelectorAll('.custom-select');
+            customSelects.forEach(select => {
+                const selectText = select.querySelector('.select-text');
+                if (!selectText) return;
+                
+                const checkboxes = select.querySelectorAll('.select-option:not([data-value="todos"]) input[type="checkbox"]:checked');
+                const todosCheckbox = select.querySelector('.select-option[data-value="todos"] input[type="checkbox"]');
+                
+                if (todosCheckbox && todosCheckbox.checked) {
+                    selectText.textContent = 'Todos';
+                } else if (checkboxes.length === 0) {
+                    selectText.textContent = 'Seleccionar niveles';
+                } else if (checkboxes.length === 1) {
+                    selectText.textContent = checkboxes[0].closest('.select-option').querySelector('.option-text').textContent;
+                } else {
+                    selectText.textContent = `${checkboxes.length} seleccionados`;
+                }
+            });
+        }
+
+        function handleTodosOption(selectId, todosCheckbox) {
+            const select = document.getElementById(selectId);
+            const allCheckboxes = select.querySelectorAll('input[type="checkbox"]');
+            
+            if (todosCheckbox.checked) {
+                allCheckboxes.forEach(cb => {
+                    if (cb !== todosCheckbox) cb.checked = false;
+                });
+            } else {
+                const otherSelected = Array.from(allCheckboxes).some(cb => cb !== todosCheckbox && cb.checked);
+                if (!otherSelected) todosCheckbox.checked = true;
+            }
+            updateSelectTexts();
+        }
+
+        function setupCustomSelects() {
+            const customSelects = document.querySelectorAll('.custom-select');
+            customSelects.forEach(select => {
+                const trigger = select.querySelector('.select-trigger');
+                const dropdown = select.querySelector('.select-dropdown');
+                const options = select.querySelectorAll('.select-option');
+                
+                if (!trigger || !dropdown) return;
+
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isActive = trigger.classList.contains('active');
+                    customSelects.forEach(other => {
+                        const otherTrigger = other.querySelector('.select-trigger');
+                        const otherDropdown = other.querySelector('.select-dropdown');
+                        if (otherTrigger) otherTrigger.classList.remove('active');
+                        if (otherDropdown) otherDropdown.classList.remove('show');
+                    });
+                    if (!isActive) {
+                        trigger.classList.add('active');
+                        dropdown.classList.add('show');
+                    }
+                });
+
+                options.forEach(option => {
+                    const checkbox = option.querySelector('input[type="checkbox"]');
+                    const value = option.dataset.value;
+                    
+                    option.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (checkbox) {
+                            if (value === 'todos') {
+                                checkbox.checked = !checkbox.checked;
+                                handleTodosOption(select.id, checkbox);
+                            } else {
+                                checkbox.checked = !checkbox.checked;
+                                const todosCb = select.querySelector('.select-option[data-value="todos"] input[type="checkbox"]');
+                                if (checkbox.checked && todosCb) todosCb.checked = false;
+                                updateSelectTexts();
+                            }
+                            
+                            // Disparar cambio si es necesario
+                            const event = new Event('change');
+                            checkbox.dispatchEvent(event);
+                        }
+                    });
+
+                    if (checkbox) {
+                        checkbox.addEventListener('click', (e) => e.stopPropagation());
+                    }
+                });
+            });
+
+            document.addEventListener('click', () => {
+                customSelects.forEach(select => {
+                    const trigger = select.querySelector('.select-trigger');
+                    const dropdown = select.querySelector('.select-dropdown');
+                    if (trigger) trigger.classList.remove('active');
+                    if (dropdown) dropdown.classList.remove('show');
+                });
+            });
         }
 
         // Función para convertir datos a CSV
@@ -5257,9 +5474,9 @@
                     console.log('📊 Click en tarjeta de métrica:', metricTitle);
 
                     // Filtrar según la tarjeta clickeada
-                    if (metricTitle.includes('canalizados')) {
-                        console.log('📊 Filtrando por: Canalizado');
-                        filterByRiskLevelEntorno('canalizado');
+                    if (metricTitle.includes('Predominante') || metricTitle.includes('Crítica')) {
+                        console.log('📊 Filtrando por: Muy Alto');
+                        filterByRiskLevelEntorno('muy-alto');
                     } else if (metricTitle.includes('riesgo alto')) {
                         console.log('📊 Filtrando por: Alto');
                         filterByRiskLevelEntorno('alto');
@@ -6145,14 +6362,12 @@
                     risk: riskText
                 });
                 
-                // Aplicar filtros de contenido (nivel de riesgo)
-                if (shouldShow && riskFilter !== 'todos') {
-                    const riskTextLower = riskText.toLowerCase();
-                    const filterLower = riskFilter.toLowerCase();
-                    const riskMatch = riskTextLower.includes(filterLower) || 
-                                     (filterLower === 'muy-alto' && riskTextLower.includes('muy alto'));
-                    if (!riskMatch) shouldShow = false;
-                }
+            // Aplicar filtros de contenido (nivel de riesgo)
+            const selectedRiskLevels = getSelectedOptions('risk-filter-dimensions-select');
+            if (shouldShow && selectedRiskLevels.length > 0 && !selectedRiskLevels.includes('todos')) {
+                const rowRisk = normalizeRiskLevel(riskText);
+                if (!selectedRiskLevels.includes(rowRisk)) shouldShow = false;
+            }
                 
                 // Aplicar filtro de dominio
                 if (shouldShow && domainFilter !== 'todos') {
@@ -9534,24 +9749,24 @@
         // Funciones auxiliares
         function getRiskBadgeClass(riskLevel) {
             const riskClasses = {
-                'nulo': 'bajo',
+                'nulo': 'nulo',
                 'bajo': 'bajo',
                 'medio': 'medio',
                 'alto': 'alto',
                 'muy-alto': 'muy-alto'
             };
-            return riskClasses[riskLevel] || 'bajo';
+            return riskClasses[riskLevel] || 'nulo';
         }
 
         function getRiskBadgeText(riskLevel) {
             const riskTexts = {
-                'nulo': 'NULO',
+                'nulo': 'NULO O DESPRECIABLE',
                 'bajo': 'BAJO',
                 'medio': 'MEDIO',
                 'alto': 'ALTO',
                 'muy-alto': 'MUY ALTO'
             };
-            return riskTexts[riskLevel] || 'BAJO';
+            return riskTexts[riskLevel] || 'NULO O DESPRECIABLE';
         }
 
         function getIndividualSectionRiskLevel(score) {
@@ -9708,14 +9923,55 @@
             </button>
         </div>
         <div class="filters-content">
-            <!-- Filtro por Nivel de Riesgo -->
             <div class="filter-group">
                 <label class="filter-label">Nivel de Riesgo</label>
-                <select class="filter-select" id="risk-filter">
-                    <option value="">Todos</option>
-                    <option value="Canalizado">Canalizado</option>
-                    <option value="Alto">Alto</option>
-                </select>
+                <div class="custom-select" id="risk-filter-select">
+                    <div class="select-trigger">
+                        <span class="select-text" data-default="Seleccionar niveles">Seleccionar niveles</span>
+                        <i class="fas fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="risk-todos">
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="nulo">
+                            <input type="checkbox" id="risk-nulo">
+                            <div class="option-content">
+                                <span class="option-text">Nulo o despreciable</span>
+                                <span class="option-desc">El nivel más bajo, no requiere intervención.</span>
+                            </div>
+                        </div>
+                        <div class="select-option" data-value="bajo">
+                            <input type="checkbox" id="risk-bajo">
+                            <div class="option-content">
+                                <span class="option-text">Bajo</span>
+                                <span class="option-desc">Riesgo mínimo, requiere medidas preventivas generales.</span>
+                            </div>
+                        </div>
+                        <div class="select-option" data-value="medio">
+                            <input type="checkbox" id="risk-medio">
+                            <div class="option-content">
+                                <span class="option-text">Medio</span>
+                                <span class="option-desc">Requiere acciones de mejora en el entorno.</span>
+                            </div>
+                        </div>
+                        <div class="select-option" data-value="alto">
+                            <input type="checkbox" id="risk-alto">
+                            <div class="option-content">
+                                <span class="option-text">Alto</span>
+                                <span class="option-desc">Afectaciones importantes, requiere plan de acción formal.</span>
+                            </div>
+                        </div>
+                        <div class="select-option" data-value="muy-alto">
+                            <input type="checkbox" id="risk-muy-alto">
+                            <div class="option-content">
+                                <span class="option-text">Muy Alto</span>
+                                <span class="option-desc">Intervención inmediata y profunda en la estructura.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Filtro por Categoría -->
@@ -9885,9 +10141,17 @@
             const clearFiltersBtn = document.getElementById('clear-filters-btn');
             
             // Filtros básicos
-            const riskFilter = document.getElementById('risk-filter');
+            const riskFilterSelect = document.getElementById('risk-filter-select');
             const categoryFilter = document.getElementById('category-filter');
             const domainFilter = document.getElementById('domain-filter');
+
+            // Inicializar selects
+            setupCustomSelects();
+            updateSelectTexts();
+
+            // Inicializar selects
+            setupCustomSelects();
+            updateSelectTexts();
             
             // Filtros demográficos
             const areaFilter = document.getElementById('area-filter');
@@ -9942,7 +10206,7 @@
                 console.log('🔧 Aplicando filtros...');
                 
                 // Filtros básicos
-                const selectedRisk = riskFilter ? riskFilter.value : '';
+                const selectedRiskLevels = getSelectedOptions('risk-filter-select');
                 const selectedCategory = categoryFilter ? categoryFilter.value : '';
                 const selectedDomain = domainFilter ? domainFilter.value : '';
                 
@@ -9957,89 +10221,65 @@
                 const selectedLeader = leaderFilter ? leaderFilter.value : '';
                 
                 console.log('🔧 Filtros seleccionados:', {
-                    risk: selectedRisk,
+                    risk: selectedRiskLevels,
                     category: selectedCategory,
-                    domain: selectedDomain,
-                    area: selectedArea,
-                    position: selectedPosition,
-                    gender: selectedGender,
-                    marital: selectedMarital,
-                    age: selectedAge,
-                    country: selectedCountry,
-                    city: selectedCity,
-                    leader: selectedLeader
+                    domain: selectedDomain
                 });
                 
-                // Obtener todas las filas de categoría
-                const categoryRows = document.querySelectorAll('.results-table tbody tr.category-summary');
-                console.log('🔧 Filas de categoría encontradas:', categoryRows.length);
-                
+                const categoryRows = document.querySelectorAll('#new-overview-panel .results-table tbody tr.category-summary');
                 let visibleCount = 0;
-                
+
                 categoryRows.forEach((row, index) => {
                     const categoryText = row.querySelector('.category-cell')?.textContent || '';
                     const domainText = row.querySelector('.category-domain-info')?.textContent || '';
                     const riskBadge = row.querySelector('.risk-badge');
-                    const riskLevel = riskBadge ? riskBadge.textContent.trim() : '';
+                    const rowRisk = normalizeRiskLevel(riskBadge ? riskBadge.textContent : '');
                     
-                    // Simular datos demográficos para esta categoría
-                    const simulatedData = getSimulatedDemographicData(categoryText, index);
-                    
-                    console.log(`🔧 Fila ${index}:`, {
-                        category: categoryText,
-                        domain: domainText,
-                        risk: riskLevel,
-                        demographic: simulatedData
-                    });
-                    
-                    // Aplicar filtros básicos
                     let shouldShow = true;
                     
-                    if (selectedRisk && riskLevel !== selectedRisk) {
-                        shouldShow = false;
+                    // Filtrar por Riesgo
+                    if (selectedRiskLevels.length > 0 && !selectedRiskLevels.includes('todos')) {
+                        if (!selectedRiskLevels.includes(rowRisk)) shouldShow = false;
                     }
                     
-                    if (selectedCategory && !categoryText.includes(selectedCategory)) {
-                        shouldShow = false;
-                    }
+                    // Filtrar por Categoría
+                    if (selectedCategory && !categoryText.includes(selectedCategory)) shouldShow = false;
                     
-                    if (selectedDomain && !domainText.includes(selectedDomain)) {
-                        shouldShow = false;
-                    }
+                    // Filtrar por Dominio
+                    if (selectedDomain && !domainText.includes(selectedDomain)) shouldShow = false;
                     
-                    // Los filtros demográficos NO ocultan categorías, solo afectan los datos mostrados
-                    // Se aplicarán después para actualizar los números y datos
-                    
-                    console.log(`🔧 Fila ${index} - Mostrar:`, shouldShow);
-                    
-                    if (shouldShow) {
-                        row.style.display = '';
-                        visibleCount++;
+                    row.style.display = shouldShow ? '' : 'none';
+                    if (shouldShow) visibleCount++;
+
+                    // Manejar filas de detalle (dominios)
+                    let nextRow = row.nextElementSibling;
+                    while (nextRow && nextRow.classList.contains('category-detail')) {
+                        let detailShow = shouldShow;
                         
-                        // Si la categoría está abierta, también mostrar sus filas de detalle
-                        const isOpen = row.classList.contains('open');
-                        if (isOpen) {
-                            let nextRow = row.nextElementSibling;
-                            while (nextRow && nextRow.classList.contains('category-detail')) {
-                                nextRow.style.display = '';
-                                nextRow = nextRow.nextElementSibling;
-                            }
+                        // Si mostramos la categoría, pero hay un filtro de dominio específico
+                        if (shouldShow && selectedDomain) {
+                            const detailDomainText = nextRow.querySelector('.category-cell')?.textContent || '';
+                            if (!detailDomainText.includes(selectedDomain)) detailShow = false;
                         }
-                    } else {
-                        row.style.display = 'none';
                         
-                        // Ocultar todas las filas de detalle de esta categoría
-                        let nextRow = row.nextElementSibling;
-                        while (nextRow && nextRow.classList.contains('category-detail')) {
-                            nextRow.style.display = 'none';
-                            nextRow = nextRow.nextElementSibling;
+                        // Si mostramos la categoría, pero hay filtro de riesgo
+                        if (shouldShow && selectedRiskLevels.length > 0 && !selectedRiskLevels.includes('todos')) {
+                            const detailRiskBadge = nextRow.querySelector('.risk-badge');
+                            const detailRisk = normalizeRiskLevel(detailRiskBadge ? detailRiskBadge.textContent : '');
+                            if (!selectedRiskLevels.includes(detailRisk)) detailShow = false;
                         }
+
+                        // Solo mostrar si la categoría está abierta (clase 'active') Y el filtro permite mostrarlo
+                        const isOpen = row.classList.contains('active');
+                        nextRow.style.display = (detailShow && isOpen) ? '' : 'none';
+                        
+                        nextRow = nextRow.nextElementSibling;
                     }
                 });
                 
                 console.log('🔧 Resultado:', `${visibleCount} de ${categoryRows.length} filas visibles`);
                 
-                // Actualizar datos demográficos en las categorías visibles
+                // Actualizar datos demográficos (esto simula el cambio de scores)
                 updateDemographicData(selectedArea, selectedPosition, selectedGender, selectedMarital, selectedAge, selectedCountry, selectedCity, selectedLeader);
                 
                 // Actualizar badge de filtros
@@ -10050,12 +10290,18 @@
             function clearFilters() {
                 console.log('🧹 Limpiando filtros...');
                 
-                // Limpiar filtros básicos
-                if (riskFilter) riskFilter.value = '';
+                // Reset custom risk select
+                const riskSelect = document.getElementById('risk-filter-select');
+                if (riskSelect) {
+                    const checkboxes = riskSelect.querySelectorAll('input[type="checkbox"]');
+                    checkboxes.forEach(cb => cb.checked = false);
+                    const todoCb = document.getElementById('risk-todos');
+                    if (todoCb) todoCb.checked = true;
+                    updateSelectTexts();
+                }
+
                 if (categoryFilter) categoryFilter.value = '';
                 if (domainFilter) domainFilter.value = '';
-                
-                // Limpiar filtros demográficos
                 if (areaFilter) areaFilter.value = '';
                 if (positionFilter) positionFilter.value = '';
                 if (genderFilter) genderFilter.value = '';
@@ -10065,10 +10311,7 @@
                 if (cityFilter) cityFilter.value = '';
                 if (leaderFilter) leaderFilter.value = '';
                 
-                console.log('✅ Filtros limpiados');
-                
-                // Ocultar badge de filtros
-                hideFilterBadge();
+                applyFilters();
             }
             
             // Función para actualizar badge de filtros
@@ -10079,7 +10322,8 @@
                 let activeFiltersCount = 0;
                 
                 // Contar filtros básicos activos
-                if (riskFilter && riskFilter.value) activeFiltersCount++;
+                const riskLevels = getSelectedOptions('risk-filter-select');
+                if (riskLevels.length > 0 && !riskLevels.includes('todos')) activeFiltersCount++;
                 if (categoryFilter && categoryFilter.value) activeFiltersCount++;
                 if (domainFilter && domainFilter.value) activeFiltersCount++;
                 
@@ -10751,7 +10995,7 @@
         
         // Aplicar filtros de participantes
         function applyParticipantsFilters() {
-            const riskFilter = document.getElementById('participants-risk-filter').value;
+            const selectedRiskLevels = getSelectedOptions('participants-risk-filter-select');
             const areaFilter = document.getElementById('participants-area-filter').value;
             const positionFilter = document.getElementById('participants-position-filter').value;
             const genderFilter = document.getElementById('participants-gender-filter').value;
@@ -10765,7 +11009,7 @@
             const filterBadge = document.getElementById('individual-filter-badge');
             
             let activeFilters = 0;
-            if (riskFilter) activeFilters++;
+            if (selectedRiskLevels.length > 0 && !selectedRiskLevels.includes('todos')) activeFilters++;
             if (areaFilter) activeFilters++;
             if (positionFilter) activeFilters++;
             if (genderFilter) activeFilters++;
@@ -10786,17 +11030,11 @@
                 let showRow = true;
                 
                 // Filtro por nivel de riesgo
-                if (riskFilter) {
+                if (selectedRiskLevels.length > 0 && !selectedRiskLevels.includes('todos')) {
                     const riskBadge = row.querySelector('.risk-badge');
                     if (riskBadge) {
-                        const riskLevel = riskBadge.classList.contains('bajo') ? 'bajo' :
-                                        riskBadge.classList.contains('medio') ? 'medio' :
-                                        riskBadge.classList.contains('alto') ? 'alto' :
-                                        riskBadge.classList.contains('muy-alto') ? 'muy-alto' : '';
-                        
-                        if (riskLevel !== riskFilter) {
-                            showRow = false;
-                        }
+                        const rowRisk = normalizeRiskLevel(riskBadge.textContent);
+                        if (!selectedRiskLevels.includes(rowRisk)) showRow = false;
                     }
                 }
                 
@@ -10915,14 +11153,55 @@
             </button>
         </div>
         <div class="filters-content">
-            <!-- Filtro por Nivel de Riesgo -->
             <div class="filter-group">
                 <label class="filter-label">Nivel de Riesgo</label>
-                <select class="filter-select" id="participants-risk-filter">
-                    <option value="">Todos</option>
-                    <option value="canalizado">Canalizado</option>
-                    <option value="alto">Alto</option>
-                </select>
+                <div class="custom-select" id="participants-risk-filter-select">
+                    <div class="select-trigger">
+                        <span class="select-text" data-default="Seleccionar niveles">Seleccionar niveles</span>
+                        <i class="fas fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="risk-part-todos">
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="nulo">
+                            <input type="checkbox" id="risk-part-nulo">
+                            <div class="option-content">
+                                <span class="option-text">Nulo o despreciable</span>
+                                <span class="option-desc">El nivel más bajo, no requiere intervención.</span>
+                            </div>
+                        </div>
+                        <div class="select-option" data-value="bajo">
+                            <input type="checkbox" id="risk-part-bajo">
+                            <div class="option-content">
+                                <span class="option-text">Bajo</span>
+                                <span class="option-desc">Riesgo mínimo, requiere medidas preventivas generales.</span>
+                            </div>
+                        </div>
+                        <div class="select-option" data-value="medio">
+                            <input type="checkbox" id="risk-part-medio">
+                            <div class="option-content">
+                                <span class="option-text">Medio</span>
+                                <span class="option-desc">Requiere acciones de mejora en el entorno.</span>
+                            </div>
+                        </div>
+                        <div class="select-option" data-value="alto">
+                            <input type="checkbox" id="risk-part-alto">
+                            <div class="option-content">
+                                <span class="option-text">Alto</span>
+                                <span class="option-desc">Afectaciones importantes, requiere plan de acción formal.</span>
+                            </div>
+                        </div>
+                        <div class="select-option" data-value="muy-alto">
+                            <input type="checkbox" id="risk-part-muy-alto">
+                            <div class="option-content">
+                                <span class="option-text">Muy Alto</span>
+                                <span class="option-desc">Intervención inmediata y profunda en la estructura.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <!-- Filtros Demográficos -->
@@ -11349,5 +11628,57 @@
         });
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const metricCard = document.getElementById('predominant-risk-metric');
+            if (metricCard) {
+                metricCard.addEventListener('click', function() {
+                    console.log('Metric card clicked - filtering dimensions');
+                    
+                    // 1. Switch to the Dimensiones view in the select
+                    const viewSelect = document.getElementById('view-by-select');
+                    if (viewSelect) {
+                        viewSelect.value = 'dimensions';
+                        viewSelect.dispatchEvent(new Event('change'));
+                        
+                        // 2. Set the custom filter for "Muy Alto"
+                        setTimeout(function() {
+                            const riskSelect = document.getElementById('risk-filter-dimensions-select');
+                            if (riskSelect) {
+                                // Desmarcar todos primero
+                                const checkboxes = riskSelect.querySelectorAll('input[type="checkbox"]');
+                                checkboxes.forEach(cb => cb.checked = false);
+                                
+                                // Marcar "Muy Alto"
+                                const muyAltoCb = riskSelect.querySelector('input[id*="muy-alto"]');
+                                if (muyAltoCb) {
+                                    muyAltoCb.checked = true;
+                                    updateSelectTexts();
+                                    
+                                    // Aplicar filtros
+                                    if (typeof applyDimensionsFilters === 'function') {
+                                        applyDimensionsFilters();
+                                    }
+                                }
+                            }
+                            
+                            // Scroll to the dimensions section
+                            const dimensionsSection = document.getElementById('sub-panel-dimensions');
+                            if (dimensionsSection) {
+                                dimensionsSection.scrollIntoView({ behavior: 'smooth' });
+                            }
+                            
+                            // Optional: Highlight that a filter is applied
+                            const filterBadge = document.getElementById('dimensions-table-filter-badge');
+                            if (filterBadge) {
+                                filterBadge.textContent = '1';
+                                filterBadge.style.display = 'flex';
+                            }
+                        }, 300);
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
