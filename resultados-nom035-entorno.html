@@ -267,95 +267,6 @@
             font-weight: 500;
         }
 
-        /* Variantes de nivel de riesgo para tarjetas de métrica */
-        .metric-card.metric-bajo {
-            background: #dcfce7;
-            border-bottom: 1px solid #86efac;
-        }
-
-        .metric-card.metric-bajo .metric-title {
-            color: #166534;
-        }
-
-        .metric-card.metric-bajo .metric-main-number {
-            color: #166534;
-        }
-
-        .metric-card.metric-bajo .metric-unit-text {
-            color: #15803d;
-        }
-
-        .metric-card.metric-bajo .metric-icon {
-            background: #bbf7d0;
-            color: #166534;
-        }
-
-        .metric-card.metric-medio {
-            background: #fef3c7;
-            border-bottom: 1px solid #fde047;
-        }
-
-        .metric-card.metric-medio .metric-title {
-            color: #92400e;
-        }
-
-        .metric-card.metric-medio .metric-main-number {
-            color: #92400e;
-        }
-
-        .metric-card.metric-medio .metric-unit-text {
-            color: #b45309;
-        }
-
-        .metric-card.metric-medio .metric-icon {
-            background: #fcd34d;
-            color: #92400e;
-        }
-
-        .metric-card.metric-alto {
-            background: #fed7aa;
-            border-bottom: 1px solid #fdba74;
-        }
-
-        .metric-card.metric-alto .metric-title {
-            color: #c2410c;
-        }
-
-        .metric-card.metric-alto .metric-main-number {
-            color: #c2410c;
-        }
-
-        .metric-card.metric-alto .metric-unit-text {
-            color: #d97706;
-        }
-
-        .metric-card.metric-alto .metric-icon {
-            background: #fed7aa;
-            color: #c2410c;
-        }
-
-        .metric-card.metric-muy-alto {
-            background: #fecaca;
-            border-bottom: 1px solid #fca5a5;
-        }
-
-        .metric-card.metric-muy-alto .metric-title {
-            color: #dc2626;
-        }
-
-        .metric-card.metric-muy-alto .metric-main-number {
-            color: #dc2626;
-        }
-
-        .metric-card.metric-muy-alto .metric-unit-text {
-            color: #ef4444;
-        }
-
-        .metric-card.metric-muy-alto .metric-icon {
-            background: #fecaca;
-            color: #dc2626;
-        }
-
         /* Panel emocional container */
         .panel-emocional-container {
             background: transparent;
@@ -2840,44 +2751,48 @@
                     <!-- Métricas -->
                     <div class="metrics-grid">
                         <!-- Métrica 1: Factor de Riesgo Predominante -->
-                        <div class="metric-card metric-muy-alto" id="predominant-risk-metric" style="cursor: pointer;" title="Esta métrica identifica cuántas categorías o dominios presentan el nivel de riesgo más elevado. Haz clic para filtrar.">
+                        <div class="metric-card" id="predominant-risk-metric" style="cursor: pointer;" title="Identifica cuántas dimensiones presentan el nivel de riesgo más elevado (Muy Alto). Haz clic para filtrar.">
                             <div class="metric-header">
                                 <div class="metric-title-section">
                                     <div class="metric-icon">
                                         <i class="far fa-exclamation-triangle"></i>
                                     </div>
-                                    <h3 class="metric-title">Factor de Riesgo Predominante</h3>
+                                    <h3 class="metric-title">Total dimensiones en riesgo muy alto</h3>
                                 </div>
                             </div>
                             <div class="metric-value-section">
                                 <div class="metric-main-number">8</div>
-                                <div class="metric-unit-text">Incidencias Críticas</div>
+                                <div class="metric-unit-text">Dimensiones</div>
                             </div>
                         </div>
 
-                        <div class="metric-card metric-alto">
+                        <div class="metric-card">
                             <div class="metric-title-section">
                                 <div class="metric-icon">
                                     <i class="far fa-chart-bar"></i>
                                 </div>
-                                <h3 class="metric-title">Total de casos en riesgo alto</h3>
+                                <h3 class="metric-title">Total de áreas en riesgo Muy alto</h3>
                             </div>
                             <div class="metric-value-section">
                                 <div class="metric-main-number">8</div>
-                                <div class="metric-unit-text">Casos</div>
+                                <div class="metric-unit-text">Áreas</div>
                             </div>
                         </div>
 
-                        <div class="metric-card metric-bajo">
-                            <div class="metric-title-section">
-                                <div class="metric-icon">
-                                    <i class="far fa-check-circle"></i>
+                        <div class="metric-card" style="cursor: pointer;" title="Promedio ponderado de todo el centro de trabajo">
+                            <div class="metric-header">
+                                <div class="metric-title-section">
+                                    <div class="metric-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                                        <i class="far fa-globe"></i>
+                                    </div>
+                                    <h3 class="metric-title">Nivel de Riesgo Organizacional</h3>
                                 </div>
-                                <h3 class="metric-title">Participación</h3>
                             </div>
                             <div class="metric-value-section">
-                                <div class="metric-main-number">140 / 150</div>
-                                <div class="metric-unit-text">Colaboradores</div>
+                                <div class="metric-main-number" style="color: #f59e0b;">Medio</div>
+                                <div class="metric-unit-text" style="color: #6b7280; font-size: 13px; margin-top: 4px; font-weight: 500;">
+                                    Promedio ponderado CT
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2940,7 +2855,7 @@
                                             <td>Ambiente de trabajo</td>
                                             <td class="risk-count">5</td>
                                             <td class="percentage">3.3%</td>
-                                            <td><span class="risk-badge nulo">Nulo o despreciable</span></td>
+                                            <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
                                         <tr>
                                             <td>Factores propios de la actividad</td>
@@ -3236,14 +3151,7 @@
                                 <!-- Sub-panel Dimensiones -->
                                 <div id="sub-panel-dimensions" class="sub-tab-panel">
                             <div class="panel-content">
-                                <!-- Segment Control -->
-                                <div class="segment-control-container" style="margin-bottom: 24px;">
-                                    <div class="segment-control" style="display: flex; background: var(--ubits-bg-2); border-radius: 8px; padding: 4px; width: fit-content;">
-                                        <button class="segment-option active" data-segment="dimensions" style="padding: 8px 16px; border: none; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                                            Dimensiones
-                                        </button>
-                                    </div>
-                                </div>
+
                                 
                                 <!-- Sección Dimensiones -->
                                 <div class="segment-content" id="dimensions-content">
@@ -3579,7 +3487,7 @@
                                                     <div class="select-option" data-value="nulo">
                                                         <input type="checkbox" id="risk-dims-nulo">
                                                         <div class="option-content">
-                                                            <span class="option-text">Nulo o despreciable</span>
+                                                            <span class="option-text">Nulo</span>
                                                             <span class="option-desc">El nivel más bajo, no requiere intervención.</span>
                                                         </div>
                                                     </div>
@@ -4501,130 +4409,7 @@
             }
         }
 
-        function applyDimensionsFilters() {
-            console.log('🔍 ===== INICIANDO APLICACIÓN DE FILTROS DIMENSIONES =====');
-            console.log('🔍 Aplicando filtros de dimensiones...');
-            
-            // Obtener valores de los filtros
-            const riskFilterElement = document.getElementById('risk-filter-dimensions');
-            console.log('🔍 Elemento risk-filter encontrado:', !!riskFilterElement);
-            
-            if (!riskFilterElement) {
-                console.log('❌ ERROR: No se encontró el elemento risk-filter-dimensions');
-                return;
-            }
-            
-            const riskFilter = riskFilterElement.value;
-            
-            // Verificar todos los elementos de filtros
-            const domainFilterElement = document.getElementById('domain-filter-dimensions');
-            const areaFilterElement = document.getElementById('area-filter-dimensions');
-            const positionFilterElement = document.getElementById('position-filter-dimensions');
-            const genderFilterElement = document.getElementById('gender-filter-dimensions');
-            const maritalFilterElement = document.getElementById('marital-filter-dimensions');
-            const ageFilterElement = document.getElementById('age-filter-dimensions');
-            const countryFilterElement = document.getElementById('country-filter-dimensions');
-            const cityFilterElement = document.getElementById('city-filter-dimensions');
-            const leaderFilterElement = document.getElementById('leader-filter-dimensions');
-            
-            console.log('🔍 Elementos de filtros encontrados:', {
-                risk: !!riskFilterElement,
-                domain: !!domainFilterElement,
-                area: !!areaFilterElement,
-                position: !!positionFilterElement,
-                gender: !!genderFilterElement,
-                marital: !!maritalFilterElement,
-                age: !!ageFilterElement,
-                country: !!countryFilterElement,
-                city: !!cityFilterElement,
-                leader: !!leaderFilterElement
-            });
-            
-            const domainFilter = domainFilterElement ? domainFilterElement.value : 'todos';
-            const areaFilter = areaFilterElement ? areaFilterElement.value : 'todos';
-            const positionFilter = positionFilterElement ? positionFilterElement.value : 'todos';
-            const genderFilter = genderFilterElement ? genderFilterElement.value : 'todos';
-            const maritalFilter = maritalFilterElement ? maritalFilterElement.value : 'todos';
-            const ageFilter = ageFilterElement ? ageFilterElement.value : 'todos';
-            const countryFilter = countryFilterElement ? countryFilterElement.value : 'todos';
-            const cityFilter = cityFilterElement ? cityFilterElement.value : 'todos';
-            const leaderFilter = leaderFilterElement ? leaderFilterElement.value : 'todos';
-            
-            console.log('🔍 Filtros seleccionados:', {
-                risk: riskFilter,
-                domain: domainFilter,
-                area: areaFilter,
-                position: positionFilter,
-                gender: genderFilter,
-                marital: maritalFilter,
-                age: ageFilter,
-                country: countryFilter,
-                city: cityFilter,
-                leader: leaderFilter
-            });
-            
-            // Aplicar filtros básicos (ocultar/mostrar filas)
-            const tableRows = document.querySelectorAll('#dimensions-content .results-table tbody tr');
-            console.log('🔍 Filas encontradas:', tableRows.length);
-            
-            tableRows.forEach((row, index) => {
-                const riskBadge = row.querySelector('.risk-badge');
-                const domainText = row.querySelector('.dimension-domain-info')?.textContent.toLowerCase() || '';
-                
-                console.log(`🔍 Fila ${index + 1}:`, {
-                    hasRiskBadge: !!riskBadge,
-                    riskText: riskBadge ? riskBadge.textContent : 'No encontrado',
-                    domainText: domainText
-                });
-                
-                let shouldShow = true;
-                
-                // Filtro de nivel de riesgo
-                if (riskFilter !== 'todos' && riskBadge) {
-                    const riskLevel = riskBadge.textContent.toLowerCase().trim();
-                    console.log(`🔍 Comparando riesgo: "${riskLevel}" con "${riskFilter}"`);
-                    if (riskLevel !== riskFilter) {
-                        shouldShow = false;
-                        console.log('❌ Fila oculta por filtro de riesgo');
-                    } else {
-                        console.log('✅ Fila pasa filtro de riesgo');
-                    }
-                }
-                
-                // Filtro de dominio
-                if (domainFilter !== 'todos') {
-                    const domainKeywords = {
-                        'condiciones': 'condiciones',
-                        'carga': 'carga',
-                        'control': 'control',
-                        'jornada': 'jornada',
-                        'liderazgo': 'liderazgo',
-                        'relaciones': 'relaciones',
-                        'violencia': 'violencia'
-                    };
-                    
-                    const keyword = domainKeywords[domainFilter];
-                    console.log(`🔍 Comparando dominio: "${domainText}" con keyword "${keyword}"`);
-                    if (keyword && !domainText.includes(keyword)) {
-                        shouldShow = false;
-                        console.log('❌ Fila oculta por filtro de dominio');
-                    } else {
-                        console.log('✅ Fila pasa filtro de dominio');
-                    }
-                }
-                
-                // Mostrar/ocultar fila
-                row.style.display = shouldShow ? '' : 'none';
-            });
-            
-            // Aplicar filtros demográficos (cambiar datos)
-            updateDimensionsDemographicData(areaFilter, positionFilter, genderFilter, maritalFilter, ageFilter, countryFilter, cityFilter, leaderFilter);
-            
-            // Actualizar badge
-            updateDimensionsFilterBadge();
-            
-            console.log('✅ ===== FILTROS DE DIMENSIONES APLICADOS COMPLETAMENTE =====');
-        }
+        // Función clearDimensionsFilters limpiada y mantenida
 
         function clearDimensionsFilters() {
             console.log('🧹 Limpiando filtros de dimensiones...');
@@ -4706,125 +4491,6 @@
                 badge.style.display = 'none';
             }
         }
-
-        function updateDimensionsDemographicData(areaFilter, positionFilter, genderFilter, maritalFilter, ageFilter, countryFilter, cityFilter, leaderFilter) {
-            console.log('📊 Actualizando datos demográficos de dimensiones...');
-            
-            const tableRows = document.querySelectorAll('#dimensions-content .results-table tbody tr');
-            
-            tableRows.forEach((row, index) => {
-                const riskCountCell = row.querySelector('.risk-count');
-                const percentageCell = row.querySelector('.percentage');
-                
-                if (riskCountCell && percentageCell) {
-                    // Simular datos demográficos
-                    const demographicData = getSimulatedDemographicDataForDimensions(index);
-                    
-                    // Verificar si coincide con los filtros
-                    const matchesFilters = checkDimensionsDemographicMatch(demographicData, areaFilter, positionFilter, genderFilter, maritalFilter, ageFilter, countryFilter, cityFilter, leaderFilter);
-                    
-                    if (matchesFilters) {
-                        // Mostrar datos normales
-                        riskCountCell.textContent = demographicData.riskCount;
-                        percentageCell.textContent = demographicData.percentage + '%';
-                        riskCountCell.style.color = '#374151';
-                        percentageCell.style.color = '#374151';
-                    } else {
-                        // Mostrar datos filtrados (en gris)
-                        const filteredData = getFilteredDimensionsData(index);
-                        riskCountCell.textContent = filteredData.riskCount;
-                        percentageCell.textContent = filteredData.percentage + '%';
-                        riskCountCell.style.color = '#6b7280';
-                        percentageCell.style.color = '#6b7280';
-                    }
-                }
-            });
-        }
-
-        function getSimulatedDemographicDataForDimensions(index) {
-            const areas = ['ventas', 'desarrollo', 'rrhh', 'proyectos', 'marketing', 'finanzas'];
-            const positions = ['gerente', 'desarrollador', 'analista', 'coordinador', 'director', 'supervisor'];
-            const genders = ['masculino', 'femenino', 'otro'];
-            const maritalStatuses = ['soltero', 'casado', 'divorciado', 'viudo', 'union-libre'];
-            const ages = [25, 30, 35, 40, 45, 50, 55, 60];
-            const countries = ['colombia', 'mexico', 'argentina', 'chile', 'peru', 'ecuador', 'venezuela'];
-            const cities = ['bogota', 'medellin', 'cali', 'barranquilla', 'cartagena', 'mexico-df', 'buenos-aires'];
-            const leaders = ['maria-gonzalez', 'carlos-rodriguez', 'ana-lopez', 'jose-martinez', 'laura-garcia', 'pedro-hernandez'];
-            
-            // Usar índice para generar datos consistentes
-            const seed = index * 7 + 13;
-            
-            return {
-                area: areas[seed % areas.length],
-                position: positions[seed % positions.length],
-                gender: genders[seed % genders.length],
-                marital: maritalStatuses[seed % maritalStatuses.length],
-                age: ages[seed % ages.length],
-                country: countries[seed % countries.length],
-                city: cities[seed % cities.length],
-                leader: leaders[seed % leaders.length],
-                riskCount: 8 + (seed % 15),
-                percentage: 5 + (seed % 20)
-            };
-        }
-
-        function checkDimensionsDemographicMatch(data, areaFilter, positionFilter, genderFilter, maritalFilter, ageFilter, countryFilter, cityFilter, leaderFilter) {
-            if (areaFilter !== 'todos' && data.area !== areaFilter) return false;
-            if (positionFilter !== 'todos' && data.position !== positionFilter) return false;
-            if (genderFilter !== 'todos' && data.gender !== genderFilter) return false;
-            if (maritalFilter !== 'todos' && data.marital !== maritalFilter) return false;
-            if (ageFilter !== 'todos' && !matchesAgeRangeForDimensions(data.age, ageFilter)) return false;
-            if (countryFilter !== 'todos' && data.country !== countryFilter) return false;
-            if (cityFilter !== 'todos' && data.city !== cityFilter) return false;
-            if (leaderFilter !== 'todos' && data.leader !== leaderFilter) return false;
-            
-            return true;
-        }
-
-        function matchesAgeRangeForDimensions(age, ageRange) {
-            switch (ageRange) {
-                case '18-25': return age >= 18 && age <= 25;
-                case '26-35': return age >= 26 && age <= 35;
-                case '36-45': return age >= 36 && age <= 45;
-                case '46-55': return age >= 46 && age <= 55;
-                case '56-65': return age >= 56 && age <= 65;
-                case '65+': return age > 65;
-                default: return true;
-            }
-        }
-
-        function getFilteredDimensionsData(index) {
-            // Datos filtrados (menores)
-            const seed = index * 3 + 5;
-            return {
-                riskCount: 2 + (seed % 8),
-                percentage: 1 + (seed % 10)
-            };
-        }
-
-        function restoreDimensionsOriginalData() {
-            const tableRows = document.querySelectorAll('#dimensions-content .results-table tbody tr');
-            
-            tableRows.forEach((row, index) => {
-                const riskCountCell = row.querySelector('.risk-count');
-                const percentageCell = row.querySelector('.percentage');
-                
-                if (riskCountCell && percentageCell) {
-                    // Restaurar datos originales
-                    const originalData = getSimulatedDemographicDataForDimensions(index);
-                    riskCountCell.textContent = originalData.riskCount;
-                    percentageCell.textContent = originalData.percentage + '%';
-                    riskCountCell.style.color = '#374151';
-                    percentageCell.style.color = '#374151';
-                }
-            });
-        }
-
-
-
-
-
-
 
         function closeTableFiltersPanel() {
             document.getElementById('table-filters-side-panel').classList.remove('show');
@@ -6385,9 +6051,11 @@
         function applyDimensionsFilters() {
             console.log('🔍 ===== APLICANDO FILTROS EN TABLA DIMENSIONES =====');
             
-            // Obtener valores de todos los filtros
-            const riskFilter = document.getElementById('risk-filter-dimensions')?.value || 'todos';
-            const domainFilter = document.getElementById('domain-filter-dimensions')?.value || 'todos';
+            // 1. Obtener niveles de riesgo seleccionados (Custom Multi-select)
+            const selectedRiskLevels = getSelectedOptions('risk-filter-dimensions-select');
+            console.log('🔍 Niveles de riesgo seleccionados:', selectedRiskLevels);
+            
+            // 2. Obtener otros filtros (Selects estándar)
             const areaFilter = document.getElementById('area-filter-dimensions')?.value || 'todos';
             const positionFilter = document.getElementById('position-filter-dimensions')?.value || 'todos';
             const genderFilter = document.getElementById('gender-filter-dimensions')?.value || 'todos';
@@ -6398,8 +6066,7 @@
             const leaderFilter = document.getElementById('leader-filter-dimensions')?.value || 'todos';
             
             console.log('🔍 Filtros seleccionados:', {
-                risk: riskFilter,
-                domain: domainFilter,
+                risk: selectedRiskLevels,
                 area: areaFilter,
                 position: positionFilter,
                 gender: genderFilter,
@@ -6410,150 +6077,45 @@
                 leader: leaderFilter
             });
             
-            // Obtener todas las filas de la tabla de dimensiones
-            const tableRows = document.querySelectorAll('#new-dimensions-panel .results-table tbody tr');
-            console.log(`🔍 Total de filas encontradas: ${tableRows.length}`);
-            
+            const tableRows = document.querySelectorAll('#dimensions-content .results-table tbody tr');
             let visibleRows = 0;
             
-            // Verificar si hay filtros demográficos activos
-            const hasDemographicFilters = (genderFilter !== 'todos') ||
-                                        (maritalFilter !== 'todos') ||
-                                        (ageFilter !== 'todos') ||
-                                        (countryFilter !== 'todos') ||
-                                        (cityFilter !== 'todos') ||
-                                        (areaFilter !== 'todos') ||
-                                        (positionFilter !== 'todos') ||
-                                        (leaderFilter !== 'todos');
-            
+            const hasDemographicFilters = (areaFilter !== 'todos' || positionFilter !== 'todos' || 
+                                          genderFilter !== 'todos' || maritalFilter !== 'todos' || 
+                                          ageFilter !== 'todos' || countryFilter !== 'todos' || 
+                                          cityFilter !== 'todos' || leaderFilter !== 'todos');
+
             tableRows.forEach((row, index) => {
-                let shouldShow = true;
-                
-                // Obtener datos de la fila usando los selectores correctos
-                const dimensionCell = row.querySelector('.dimension-cell span');
-                const domainCell = row.querySelector('.dimension-domain-info');
+                const riskBadge = row.querySelector('.risk-badge');
+                const riskText = riskBadge ? riskBadge.textContent.trim() : '';
+                const normalizedRisk = normalizeRiskLevel(riskText);
                 const riskCountCell = row.querySelector('.risk-count');
                 const percentageCell = row.querySelector('.percentage');
-                const riskBadge = row.querySelector('.risk-badge');
+
+                // Filtrar por riesgo
+                let matchesRisk = (selectedRiskLevels.length === 0 || selectedRiskLevels.includes('todos') || selectedRiskLevels.includes(normalizedRisk));
                 
-                if (!dimensionCell || !domainCell || !riskBadge) {
-                    console.log(`⚠️ Fila ${index} no tiene las celdas esperadas`);
-                    return;
-                }
-                
-                const dimensionText = dimensionCell.textContent.trim();
-                const domainText = domainCell.textContent.trim();
-                const riskText = riskBadge.textContent.trim();
-                
-                console.log(`🔍 Fila ${index}:`, {
-                    dimension: dimensionText,
-                    domain: domainText,
-                    risk: riskText
-                });
-                
-            // Aplicar filtros de contenido (nivel de riesgo)
-            const selectedRiskLevels = getSelectedOptions('risk-filter-dimensions-select');
-            if (shouldShow && selectedRiskLevels.length > 0 && !selectedRiskLevels.includes('todos')) {
-                const rowRisk = normalizeRiskLevel(riskText);
-                if (!selectedRiskLevels.includes(rowRisk)) shouldShow = false;
-            }
-                
-                // Aplicar filtro de dominio
-                if (shouldShow && domainFilter !== 'todos') {
-                    const domainKeywords = {
-                        'condiciones': 'condiciones',
-                        'carga': 'carga',
-                        'control': 'control',
-                        'jornada': 'jornada',
-                        'liderazgo': 'liderazgo',
-                        'relaciones': 'relaciones',
-                        'violencia': 'violencia'
-                    };
-                    
-                    const keyword = domainKeywords[domainFilter];
-                    if (keyword && !domainText.toLowerCase().includes(keyword)) {
-                        shouldShow = false;
-                    }
-                }
-                
-                // Si hay filtros demográficos activos, actualizar los números
+                let shouldShow = matchesRisk;
+
+                // Simulación de actualización de datos si hay filtros demográficos
                 if (shouldShow && hasDemographicFilters && riskCountCell && percentageCell) {
-                    const originalCount = parseInt(riskCountCell.textContent) || 0;
-                    const originalPercentage = parseFloat(percentageCell.textContent.replace('%', '')) || 0;
-                    
-                    // Calcular nuevo número basado en filtros demográficos
-                    let demographicMultiplier = 1.0;
-                    
-                    // Aplicar multiplicadores basados en filtros demográficos
-                    if (genderFilter !== 'todos') {
-                        if (genderFilter === 'Masculino') {
-                            demographicMultiplier *= 0.6; // 60% son masculinos
-                        } else if (genderFilter === 'Femenino') {
-                            demographicMultiplier *= 0.4; // 40% son femeninos
-                        }
+                    if (!riskCountCell.dataset.originalValue) {
+                        riskCountCell.dataset.originalValue = riskCountCell.textContent;
+                        percentageCell.dataset.originalValue = percentageCell.textContent;
                     }
                     
-                    if (maritalFilter !== 'todos') {
-                        if (maritalFilter === 'Soltero') {
-                            demographicMultiplier *= 0.5; // 50% son solteros
-                        } else if (maritalFilter === 'Casado') {
-                            demographicMultiplier *= 0.4; // 40% son casados
-                        } else if (maritalFilter === 'Divorciada') {
-                            demographicMultiplier *= 0.1; // 10% son divorciados
-                        }
-                    }
+                    let multiplier = 0.5 + (Math.random() * 0.3); // Simulación
+                    const originalCount = parseInt(riskCountCell.dataset.originalValue) || 0;
+                    const newCount = Math.max(1, Math.round(originalCount * multiplier));
+                    const newPercentage = (parseFloat(percentageCell.dataset.originalValue.replace('%', '')) * multiplier).toFixed(1);
                     
-                    if (ageFilter !== 'todos') {
-                        if (ageFilter === '20-30') {
-                            demographicMultiplier *= 0.3; // 30% en este rango
-                        } else if (ageFilter === '31-40') {
-                            demographicMultiplier *= 0.4; // 40% en este rango
-                        } else if (ageFilter === '41-50') {
-                            demographicMultiplier *= 0.2; // 20% en este rango
-                        } else if (ageFilter === '51+') {
-                            demographicMultiplier *= 0.1; // 10% en este rango
-                        }
-                    }
-                    
-                    if (areaFilter !== 'todos') {
-                        demographicMultiplier *= 0.5; // Distribución uniforme
-                    }
-                    
-                    if (positionFilter !== 'todos') {
-                        demographicMultiplier *= 0.5; // Distribución uniforme
-                    }
-                    
-                    if (countryFilter !== 'todos') {
-                        demographicMultiplier *= 0.5; // Distribución uniforme
-                    }
-                    
-                    if (cityFilter !== 'todos') {
-                        demographicMultiplier *= 0.5; // Distribución uniforme
-                    }
-                    
-                    if (leaderFilter !== 'todos') {
-                        demographicMultiplier *= 0.5; // Distribución uniforme
-                    }
-                    
-                    // Calcular nuevos valores
-                    const newCount = Math.round(originalCount * demographicMultiplier);
-                    const newPercentage = Math.round((newCount / 150) * 100 * 10) / 10; // Asumiendo 150 usuarios totales
-                    
-                    // Actualizar los valores en la tabla
-                    riskCountCell.textContent = newCount.toString();
-                    percentageCell.textContent = `${newPercentage}%`;
-                    
-                    console.log(`📊 Fila ${index} actualizada:`, {
-                        dimension: dimensionText,
-                        originalCount: originalCount,
-                        newCount: newCount,
-                        originalPercentage: originalPercentage,
-                        newPercentage: newPercentage,
-                        multiplier: demographicMultiplier
-                    });
+                    riskCountCell.textContent = newCount;
+                    percentageCell.textContent = newPercentage + '%';
+                } else if (shouldShow && riskCountCell && riskCountCell.dataset.originalValue) {
+                    riskCountCell.textContent = riskCountCell.dataset.originalValue;
+                    percentageCell.textContent = percentageCell.dataset.originalValue;
                 }
-                
-                // Mostrar u ocultar fila
+
                 if (shouldShow) {
                     row.style.display = '';
                     visibleRows++;
@@ -6561,28 +6123,21 @@
                     row.style.display = 'none';
                 }
             });
+
+            console.log(`✅ Filtrado completado. Visibles: ${visibleRows}`);
+
+            // Cerrar panel
+            const panel = document.getElementById('dimensions-table-filters-side-panel');
+            const backdrop = document.getElementById('dimensions-filters-backdrop');
+            if (panel) panel.classList.remove('show');
+            if (backdrop) backdrop.classList.remove('show');
             
-            console.log(`✅ Filtros aplicados. ${visibleRows} filas visibles de ${tableRows.length} total`);
-            
-            // Cerrar panel y backdrop
-            const filtersPanel = document.getElementById('dimensions-table-filters-side-panel');
-            const filtersBackdrop = document.getElementById('dimensions-filters-backdrop');
-            if (filtersPanel) filtersPanel.classList.remove('show');
-            if (filtersBackdrop) filtersBackdrop.classList.remove('show');
-            
-            // Cerrar todos los dropdowns de dimensiones que puedan estar abiertos
-            const dimensionsCustomSelects = document.querySelectorAll('#dimensions-table-filters-side-panel .custom-select');
-            console.log('🔧 CERRANDO DROPDOWNS DIMENSIONES:', dimensionsCustomSelects.length);
-            dimensionsCustomSelects.forEach((select, index) => {
-                console.log(`🔧 Cerrando dropdown dimensiones ${index + 1}:`, select.id);
-                closeNewDropdown(select.id);
-            });
-            console.log('✅ Todos los dropdowns de dimensiones cerrados después de aplicar filtros');
-            
-            // Actualizar badge de filtros
+            // Cerrar dropdowns
+            const dropdowns = document.querySelectorAll('#dimensions-table-filters-side-panel .custom-select');
+            dropdowns.forEach(d => d.classList.remove('active'));
+
             updateDimensionsFilterBadge();
             
-            // Actualizar contador de resultados si existe
             const resultCount = document.querySelector('#new-dimensions-panel .table-info .result-count');
             if (resultCount) {
                 resultCount.textContent = `${visibleRows} resultados`;
@@ -6660,19 +6215,9 @@
         }
         
         function updateDimensionsSelectTexts() {
+            // Solo tenemos uno por ahora, pero la función es genérica
             const selectIds = [
-                'dimensions-risk-select',
-                'dimensions-department-select',
-                'dimensions-position-select',
-                'dimensions-gender-select',
-                'dimensions-marital-status-select',
-                'dimensions-age-select',
-                'dimensions-country-select',
-                'dimensions-city-select',
-                'dimensions-leader-select',
-                'dimensions-category-select',
-                'dimensions-domain-select',
-                'dimensions-dimension-select'
+                'risk-filter-dimensions-select'
             ];
             
             selectIds.forEach(selectId => {
@@ -9849,13 +9394,13 @@
 
         function getRiskBadgeText(riskLevel) {
             const riskTexts = {
-                'nulo': 'NULO O DESPRECIABLE',
+                'nulo': 'NULO',
                 'bajo': 'BAJO',
                 'medio': 'MEDIO',
                 'alto': 'ALTO',
                 'muy-alto': 'MUY ALTO'
             };
-            return riskTexts[riskLevel] || 'NULO O DESPRECIABLE';
+            return riskTexts[riskLevel] || 'NULO';
         }
 
         function getIndividualSectionRiskLevel(score) {
@@ -10027,7 +9572,7 @@
                         <div class="select-option" data-value="nulo">
                             <input type="checkbox" id="risk-nulo">
                             <div class="option-content">
-                                <span class="option-text">Nulo o despreciable</span>
+                                <span class="option-text">Nulo</span>
                                 <span class="option-desc">El nivel más bajo, no requiere intervención.</span>
                             </div>
                         </div>
@@ -11174,9 +10719,7 @@
                 updateTableWithAllParticipants();
                 
                 // Configurar filtros para la tabla principal
-                console.log('🔧 ===== LLAMANDO setupMainIndividualFilters =====');
-                setupMainIndividualFilters();
-                console.log('🔧 ===== FIN DE setupMainIndividualFilters =====');
+                // setupMainIndividualFilters(); // Removed because Individual tab was removed
                 
                 // Configurar filtros para participantes
                 setupParticipantsFilters();
@@ -11257,7 +10800,7 @@
                         <div class="select-option" data-value="nulo">
                             <input type="checkbox" id="risk-part-nulo">
                             <div class="option-content">
-                                <span class="option-text">Nulo o despreciable</span>
+                                <span class="option-text">Nulo</span>
                                 <span class="option-desc">El nivel más bajo, no requiere intervención.</span>
                             </div>
                         </div>
@@ -11630,10 +11173,13 @@
         }
 
         // Manejar envío de feedback
-        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            handleFeedbackSubmit();
-        });
+        const feedbackForm = document.getElementById('feedbackForm');
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleFeedbackSubmit();
+            });
+        }
 
         // Función para enviar feedback
         async function handleFeedbackSubmit() {
@@ -11742,12 +11288,21 @@
                                 const muyAltoCb = riskSelect.querySelector('input[id*="muy-alto"]');
                                 if (muyAltoCb) {
                                     muyAltoCb.checked = true;
-                                    updateSelectTexts();
                                     
-                                    // Aplicar filtros
+                                    // Update the select text to reflect the new selection
+                                    if (typeof updateDimensionsSelectTexts === 'function') {
+                                        updateDimensionsSelectTexts();
+                                    } else if (typeof updateSelectText === 'function') {
+                                        updateSelectText('risk-filter-dimensions-select');
+                                    }
+                                    
+                                    // Apply the filters to the table
                                     if (typeof applyDimensionsFilters === 'function') {
+                                        console.log('🚀 Triggering table filter for Muy Alto');
                                         applyDimensionsFilters();
                                     }
+                                } else {
+                                    console.error('❌ No se encontró el checkbox de Muy Alto con ID "risk-dims-muy-alto"');
                                 }
                             }
                             
@@ -11769,5 +11324,8 @@
             }
         });
     </script>
+    <!-- Contenedores para menús inyectados -->
+    <div id="profile-menu-container"></div>
+    <div id="floating-menu-container"></div>
 </body>
 </html>
