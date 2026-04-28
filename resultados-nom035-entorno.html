@@ -267,6 +267,95 @@
             font-weight: 500;
         }
 
+        /* Variantes de nivel de riesgo para tarjetas de métrica */
+        .metric-card.metric-bajo {
+            background: #dcfce7;
+            border-bottom: 1px solid #86efac;
+        }
+
+        .metric-card.metric-bajo .metric-title {
+            color: #166534;
+        }
+
+        .metric-card.metric-bajo .metric-main-number {
+            color: #166534;
+        }
+
+        .metric-card.metric-bajo .metric-unit-text {
+            color: #15803d;
+        }
+
+        .metric-card.metric-bajo .metric-icon {
+            background: #bbf7d0;
+            color: #166534;
+        }
+
+        .metric-card.metric-medio {
+            background: #fef3c7;
+            border-bottom: 1px solid #fde047;
+        }
+
+        .metric-card.metric-medio .metric-title {
+            color: #92400e;
+        }
+
+        .metric-card.metric-medio .metric-main-number {
+            color: #92400e;
+        }
+
+        .metric-card.metric-medio .metric-unit-text {
+            color: #b45309;
+        }
+
+        .metric-card.metric-medio .metric-icon {
+            background: #fcd34d;
+            color: #92400e;
+        }
+
+        .metric-card.metric-alto {
+            background: #fed7aa;
+            border-bottom: 1px solid #fdba74;
+        }
+
+        .metric-card.metric-alto .metric-title {
+            color: #c2410c;
+        }
+
+        .metric-card.metric-alto .metric-main-number {
+            color: #c2410c;
+        }
+
+        .metric-card.metric-alto .metric-unit-text {
+            color: #d97706;
+        }
+
+        .metric-card.metric-alto .metric-icon {
+            background: #fed7aa;
+            color: #c2410c;
+        }
+
+        .metric-card.metric-muy-alto {
+            background: #fecaca;
+            border-bottom: 1px solid #fca5a5;
+        }
+
+        .metric-card.metric-muy-alto .metric-title {
+            color: #dc2626;
+        }
+
+        .metric-card.metric-muy-alto .metric-main-number {
+            color: #dc2626;
+        }
+
+        .metric-card.metric-muy-alto .metric-unit-text {
+            color: #ef4444;
+        }
+
+        .metric-card.metric-muy-alto .metric-icon {
+            background: #fecaca;
+            color: #dc2626;
+        }
+
         /* Panel emocional container */
         .panel-emocional-container {
             background: transparent;
@@ -2751,7 +2840,7 @@
                     <!-- Métricas -->
                     <div class="metrics-grid">
                         <!-- Métrica 1: Factor de Riesgo Predominante -->
-                        <div class="metric-card" id="predominant-risk-metric" style="cursor: pointer;" title="En lugar de 'casos canalizados', esta métrica identifica cuántas categorías o dominios presentan el nivel de riesgo más elevado (Muy Alto). Haz clic para filtrar.">
+                        <div class="metric-card metric-muy-alto" id="predominant-risk-metric" style="cursor: pointer;" title="Esta métrica identifica cuántas categorías o dominios presentan el nivel de riesgo más elevado. Haz clic para filtrar.">
                             <div class="metric-header">
                                 <div class="metric-title-section">
                                     <div class="metric-icon">
@@ -2766,7 +2855,7 @@
                             </div>
                         </div>
 
-                        <div class="metric-card">
+                        <div class="metric-card metric-alto">
                             <div class="metric-title-section">
                                 <div class="metric-icon">
                                     <i class="far fa-chart-bar"></i>
@@ -2779,12 +2868,12 @@
                             </div>
                         </div>
 
-                        <div class="metric-card">
+                        <div class="metric-card metric-bajo">
                             <div class="metric-title-section">
                                 <div class="metric-icon">
                                     <i class="far fa-check-circle"></i>
                                 </div>
-                                <h3 class="metric-title">93% % de participación</h3>
+                                <h3 class="metric-title">Participación</h3>
                             </div>
                             <div class="metric-value-section">
                                 <div class="metric-main-number">140 / 150</div>
