@@ -2673,6 +2673,229 @@
             opacity: 1 !important;
             margin-bottom: 20px !important;
         }
+
+        /* Heatmap Styles */
+        .heatmap-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .heatmap-title-block h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin: 0 0 8px 0;
+        }
+
+        .heatmap-title-block p {
+            font-size: 14px;
+            color: #6b7280;
+            margin: 0;
+        }
+
+        .heatmap-view-toggle {
+            display: flex;
+            gap: 8px;
+        }
+
+        .hm-toggle {
+            padding: 8px 16px;
+            border: 1.5px solid #d1d5db;
+            background: white;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .hm-toggle.active {
+            background: #1d4ed8;
+            color: white;
+            border-color: #1d4ed8;
+        }
+
+        .heatmap-controls {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .heatmap-segment-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .segment-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .segment-btn {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            background: white;
+            font-size: 13px;
+            font-weight: 500;
+            color: #4b5563;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .segment-btn:hover {
+            border-color: #d1d5db;
+            background: #f3f4f6;
+        }
+
+        .segment-btn.active {
+            background: #1d4ed8;
+            color: white;
+            border-color: #1d4ed8;
+        }
+
+        .heatmap-filter-btn {
+            padding: 8px 16px;
+            border: 1.5px solid #d1d5db;
+            background: white;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #4b5563;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .heatmap-filter-btn:hover {
+            border-color: #1d4ed8;
+            color: #1d4ed8;
+        }
+
+        .heatmap-legend {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 24px;
+            padding: 12px 0;
+            font-size: 13px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #4b5563;
+        }
+
+        .legend-item.nulo { color: #9ca3af; }
+        .legend-item.bajo { color: #16a34a; }
+        .legend-item.medio { color: #92400e; }
+        .legend-item.alto { color: #c2410c; }
+        .legend-item.muy-alto { color: #dc2626; }
+
+        .heatmap-table {
+            border-collapse: collapse;
+            width: 100%;
+            background: white;
+        }
+
+        .heatmap-table thead {
+            background: #f3f4f6;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .heatmap-table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .heatmap-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .heatmap-table tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .hm-cell {
+            text-align: center;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
+            padding: 8px 12px;
+            min-width: 80px;
+        }
+
+        .hm-cell.nulo {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .hm-cell.bajo {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .hm-cell.medio {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .hm-cell.alto {
+            background: #fed7aa;
+            color: #c2410c;
+        }
+
+        .hm-cell.muy-alto {
+            background: #fecaca;
+            color: #dc2626;
+        }
+
+        .heatmap-row-name {
+            font-weight: 600;
+            color: #1f2937;
+            text-align: left;
+            max-width: 200px;
+        }
+
+        #heatmap-content-wrapper {
+            overflow-x: auto;
+        }
+
+        .tabla-view {
+            display: none;
+        }
+
+        .tabla-view.active {
+            display: block;
+        }
+
+        .heatmap-view {
+            display: block;
+        }
+
+        .heatmap-view.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -3664,13 +3887,56 @@
                             </div> <!-- Cierre sub-panels-container -->
                         </div> <!-- Cierre new-general-view-panel -->
 
-                        <!-- Tab Content - Heat Map -->
+                        <!-- Tab Content - Heatmap -->
                         <div class="tab-panel" id="new-heat-map-panel">
                             <div class="panel-content">
-                                <div style="padding: 80px 20px; text-align: center; color: #9ca3af;">
-                                    <i class="far fa-map" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
-                                    <h3 style="margin: 0; font-size: 18px; color: #4b5563;">Heat Map</h3>
-                                    <p style="margin-top: 8px;">El mapa de calor estará disponible próximamente.</p>
+                                <!-- Toolbar superior -->
+                                <div class="heatmap-toolbar">
+                                    <div class="heatmap-title-block">
+                                        <h2>Desglose por Dimensiones</h2>
+                                        <p>Vista analítica por segmentos demográficos y tendencias</p>
+                                    </div>
+                                    <!-- Toggle Tabla / Heatmap -->
+                                    <div class="heatmap-view-toggle">
+                                        <button class="hm-toggle active" data-view="heatmap">Heatmap</button>
+                                        <button class="hm-toggle" data-view="tabla">Tabla</button>
+                                    </div>
+                                </div>
+
+                                <!-- Controles: SEGMENTAR POR + ORDENAR + FILTROS DEMOGRÁFICOS -->
+                                <div class="heatmap-controls">
+                                    <div class="heatmap-segment-group">
+                                        <span class="segment-label">SEGMENTAR POR:</span>
+                                        <button class="segment-btn active" data-rows="dimensiones">Dimensiones</button>
+                                        <button class="segment-btn" data-rows="categorias">Categorías</button>
+                                        <button class="segment-btn" data-rows="dominios">Dominios</button>
+                                    </div>
+                                    <div class="heatmap-segment-group">
+                                        <span class="segment-label">COLUMNAS:</span>
+                                        <button class="segment-btn active" data-cols="area">Área</button>
+                                        <button class="segment-btn" data-cols="seniority">Seniority</button>
+                                        <button class="segment-btn" data-cols="pais">País</button>
+                                        <button class="segment-btn" data-cols="antiguedad">Antigüedad</button>
+                                        <button class="segment-btn" data-cols="col-a">Columna A</button>
+                                        <button class="segment-btn" data-cols="col-b">Columna B</button>
+                                    </div>
+                                    <button class="heatmap-filter-btn" id="heatmap-demo-filters-btn">
+                                        <i class="far fa-sliders-h"></i> Filtros Demográficos
+                                    </button>
+                                </div>
+
+                                <!-- Leyenda de colores -->
+                                <div class="heatmap-legend">
+                                    <span class="legend-item nulo">● Nulo</span>
+                                    <span class="legend-item bajo">● Bajo</span>
+                                    <span class="legend-item medio">● Medio</span>
+                                    <span class="legend-item alto">● Alto</span>
+                                    <span class="legend-item muy-alto">● Muy Alto</span>
+                                </div>
+
+                                <!-- Contenido (heatmap o tabla) -->
+                                <div id="heatmap-content-wrapper">
+                                    <!-- Se renderiza por JS -->
                                 </div>
                             </div>
                         </div>
@@ -9425,6 +9691,234 @@
             }
         }
 
+        // ===== HEATMAP FUNCTIONS =====
+        function getRiskLevelFromScore(score) {
+            if (score === null || score === undefined || isNaN(score)) return 'nulo';
+            if (score >= 4.5) return 'muy-alto';
+            if (score >= 3.5) return 'alto';
+            if (score >= 2.5) return 'medio';
+            if (score >= 1.5) return 'bajo';
+            return 'nulo';
+        }
+
+        function getHeatmapData(rowType, colType) {
+            const data = {};
+            const participants = individualParticipantsData || [];
+
+            // Define row labels
+            const rowLabels = {
+                dimensiones: [
+                    'Condiciones físicas', 'Carga de trabajo', 'Falta de control', 'Inseguridad',
+                    'Relaciones interpersonales', 'Liderazgo', 'Cambios', 'Cultura organizacional',
+                    'Reconocimiento', 'Oportunidades de carrera', 'Responsabilidades', 'Impunidad',
+                    'Bajas laborales', 'Acoso', 'Violencia laboral', 'Trabajo emocional',
+                    'Estabilidad laboral', 'Jornada de trabajo', 'Interferencia trabajo-familia',
+                    'Seguridad laboral'
+                ],
+                categorias: ['Ambiente de trabajo', 'Factores propios', 'Violencia laboral', 'Organización del tiempo', 'Liderazgo'],
+                dominios: [
+                    'Condiciones en el ambiente', 'Carga de trabajo', 'Jornada de trabajo',
+                    'Participación y supervisión', 'Relaciones interpersonales', 'Capacitación',
+                    'Salud en el trabajo', 'Reconocimiento y compensación', 'Cultura organizacional',
+                    'Acoso y violencia en el trabajo'
+                ]
+            };
+
+            // Define column labels
+            const colLabels = {
+                area: ['Tecnología', 'RRHH', 'Ventas', 'Marketing', 'Finanzas', 'Operaciones'],
+                seniority: ['Junior', 'Semi-Senior', 'Senior', 'Lead'],
+                pais: ['Colombia', 'México', 'Argentina'],
+                antiguedad: ['< 1 año', '1-3 años', '3-5 años', '> 5 años'],
+                'col-a': ['Opción A1', 'Opción A2', 'Opción A3'],
+                'col-b': ['Opción B1', 'Opción B2', 'Opción B3']
+            };
+
+            const rows = rowLabels[rowType] || rowLabels['dimensiones'];
+            const cols = colLabels[colType] || colLabels['area'];
+
+            // Initialize data structure
+            rows.forEach(row => {
+                data[row] = {};
+                cols.forEach(col => {
+                    data[row][col] = { score: 0, count: 0 };
+                });
+            });
+
+            // Aggregate data from participants
+            participants.forEach(participant => {
+                let participantRows = [];
+                let participantValue = 0;
+
+                if (rowType === 'dimensiones') {
+                    participantRows = participant.dimensionsResults ? Object.keys(participant.dimensionsResults).slice(0, 20) : [];
+                    participantRows = participantRows.map(i => rows[parseInt(i)-1] || rows[0]).filter(r => r);
+                } else if (rowType === 'categorias') {
+                    participantRows = participant.categoriesResults ? Object.keys(participant.categoriesResults) : [];
+                    participantRows = participantRows.map(i => rows[parseInt(i)-1] || rows[0]).filter(r => r);
+                } else if (rowType === 'dominios') {
+                    participantRows = participant.domainsResults ? Object.keys(participant.domainsResults).slice(0, 10) : [];
+                    participantRows = participantRows.map(i => rows[parseInt(i)-1] || rows[0]).filter(r => r);
+                }
+
+                participantRows.forEach(row => {
+                    let colValue = participant.area || 'Tecnología';
+
+                    if (colType === 'seniority') colValue = participant.seniority || 'Junior';
+                    else if (colType === 'pais') colValue = participant.pais || 'Colombia';
+                    else if (colType === 'antiguedad') colValue = participant.antiguedad || '< 1 año';
+                    else if (colType === 'col-a') colValue = participant.colA || 'Opción A1';
+                    else if (colType === 'col-b') colValue = participant.colB || 'Opción B1';
+
+                    if (data[row] && data[row][colValue]) {
+                        // Calculate average risk score
+                        let score = 0;
+                        if (rowType === 'dimensiones' && participant.dimensionsResults) {
+                            const dimIndex = rows.indexOf(row) + 1;
+                            score = participant.dimensionsResults[dimIndex] || 0;
+                        } else if (rowType === 'categorias' && participant.categoriesResults) {
+                            const catIndex = rows.indexOf(row) + 1;
+                            score = participant.categoriesResults[catIndex] || 0;
+                        } else if (rowType === 'dominios' && participant.domainsResults) {
+                            const domIndex = rows.indexOf(row) + 1;
+                            score = participant.domainsResults[domIndex] || 0;
+                        }
+
+                        data[row][colValue].score += score;
+                        data[row][colValue].count += 1;
+                    }
+                });
+            });
+
+            // Calculate averages
+            Object.keys(data).forEach(row => {
+                Object.keys(data[row]).forEach(col => {
+                    if (data[row][col].count > 0) {
+                        data[row][col].score = data[row][col].score / data[row][col].count;
+                    }
+                });
+            });
+
+            return { data, rows, cols };
+        }
+
+        function renderHeatmap(rowType = 'dimensiones', colType = 'area') {
+            const { data, rows, cols } = getHeatmapData(rowType, colType);
+            let html = '<table class="heatmap-table"><thead><tr><th>Dimensión</th>';
+
+            cols.forEach(col => {
+                html += `<th>${col}</th>`;
+            });
+            html += '</tr></thead><tbody>';
+
+            rows.forEach(row => {
+                html += `<tr><td class="heatmap-row-name">${row}</td>`;
+                cols.forEach(col => {
+                    const cellData = data[row][col];
+                    const score = cellData.score || 0;
+                    const riskLevel = getRiskLevelFromScore(score);
+                    const displayScore = score > 0 ? score.toFixed(1) : '-';
+                    html += `<td><div class="hm-cell ${riskLevel}">${displayScore}</div></td>`;
+                });
+                html += '</tr>';
+            });
+
+            html += '</tbody></table>';
+            return html;
+        }
+
+        function renderTabla(rowType = 'dimensiones', colType = 'area') {
+            const { data, rows, cols } = getHeatmapData(rowType, colType);
+            let html = '<table class="heatmap-table"><thead><tr><th>Dimensión</th>';
+
+            cols.forEach(col => {
+                html += `<th>${col}</th>`;
+            });
+            html += '<th>Nivel</th></tr></thead><tbody>';
+
+            rows.forEach(row => {
+                const rowAvg = Object.values(data[row]).reduce((sum, cell) => sum + (cell.score || 0), 0) / cols.length;
+                const rowRisk = getRiskLevelFromScore(rowAvg);
+                html += `<tr><td class="heatmap-row-name">${row}</td>`;
+                cols.forEach(col => {
+                    const cellData = data[row][col];
+                    const score = cellData.score || 0;
+                    const riskLevel = getRiskLevelFromScore(score);
+                    const displayScore = score > 0 ? score.toFixed(1) : '-';
+                    html += `<td><span class="risk-badge ${riskLevel}">${getRiskBadgeText(riskLevel)}</span></td>`;
+                });
+                html += `<td><span class="risk-badge ${rowRisk}">${getRiskBadgeText(rowRisk)}</span></td></tr>`;
+            });
+
+            html += '</tbody></table>';
+            return html;
+        }
+
+        function initHeatmap() {
+            const wrapper = document.getElementById('heatmap-content-wrapper');
+            if (!wrapper) return;
+
+            let currentRowType = 'dimensiones';
+            let currentColType = 'area';
+            let currentView = 'heatmap';
+
+            // Render initial view
+            wrapper.innerHTML = renderHeatmap(currentRowType, currentColType);
+
+            // Row type buttons
+            document.querySelectorAll('[data-rows]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('[data-rows]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentRowType = this.getAttribute('data-rows');
+
+                    const html = currentView === 'tabla'
+                        ? renderTabla(currentRowType, currentColType)
+                        : renderHeatmap(currentRowType, currentColType);
+                    wrapper.innerHTML = html;
+
+                    // Update title
+                    document.querySelector('.heatmap-title-block h2').textContent = `Desglose por ${this.textContent}`;
+                });
+            });
+
+            // Column type buttons
+            document.querySelectorAll('[data-cols]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('[data-cols]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentColType = this.getAttribute('data-cols');
+
+                    const html = currentView === 'tabla'
+                        ? renderTabla(currentRowType, currentColType)
+                        : renderHeatmap(currentRowType, currentColType);
+                    wrapper.innerHTML = html;
+                });
+            });
+
+            // View toggle
+            document.querySelectorAll('.hm-toggle').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.hm-toggle').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentView = this.getAttribute('data-view');
+
+                    const html = currentView === 'tabla'
+                        ? renderTabla(currentRowType, currentColType)
+                        : renderHeatmap(currentRowType, currentColType);
+                    wrapper.innerHTML = html;
+                });
+            });
+
+            // Filter button
+            const filterBtn = document.getElementById('heatmap-demo-filters-btn');
+            if (filterBtn) {
+                filterBtn.addEventListener('click', function() {
+                    alert('Filtros demográficos - Funcionalidad próxima');
+                });
+            }
+        }
+
         // Inicializar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 ===== INICIANDO CARGA DE PÁGINA =====');
@@ -9471,6 +9965,10 @@
                 // Inicializar los nuevos tabs
                 console.log('🔍 Inicializando nuevos tabs...');
                 initializeNewTabs();
+
+                // Inicializar Heatmap
+                console.log('🔍 Inicializando heatmap...');
+                initHeatmap();
 
                 // Inicializar clics en tarjetas de métricas
                 console.log('🔍 Inicializando handlers de métricas...');
