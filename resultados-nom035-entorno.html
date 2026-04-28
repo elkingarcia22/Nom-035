@@ -2744,27 +2744,29 @@
             letter-spacing: 0.5px;
         }
 
-        .segment-btn {
-            padding: 6px 14px;
+        .heatmap-dropdown {
+            padding: 8px 12px;
             border-radius: 6px;
-            border: 1px solid #e5e7eb;
+            border: 1.5px solid #d1d5db;
             background: white;
             font-size: 13px;
             font-weight: 500;
-            color: #4b5563;
+            color: #374151;
             cursor: pointer;
             transition: all 0.2s ease;
+            min-width: 150px;
+            font-family: inherit;
+            outline: none;
         }
 
-        .segment-btn:hover {
-            border-color: #d1d5db;
-            background: #f3f4f6;
-        }
-
-        .segment-btn.active {
-            background: #1d4ed8;
-            color: white;
+        .heatmap-dropdown:hover {
             border-color: #1d4ed8;
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+        }
+
+        .heatmap-dropdown:focus {
+            border-color: #1d4ed8;
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
         }
 
         .heatmap-filter-btn {
@@ -2812,37 +2814,52 @@
             border-collapse: collapse;
             width: 100%;
             background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .heatmap-table thead {
-            background: #f3f4f6;
-            border-bottom: 2px solid #e5e7eb;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border-bottom: 2px solid #d1d5db;
         }
 
         .heatmap-table th {
-            padding: 12px 16px;
-            text-align: left;
+            padding: 16px;
+            text-align: center;
             font-size: 13px;
-            font-weight: 600;
-            color: #374151;
+            font-weight: 700;
+            color: #1f2937;
+            text-transform: capitalize;
+        }
+
+        .heatmap-table th:first-child {
+            text-align: left;
         }
 
         .heatmap-table td {
-            padding: 12px 16px;
-            border-bottom: 1px solid #e5e7eb;
+            padding: 14px 16px;
+            border-bottom: 1px solid #f0f1f3;
+            text-align: center;
         }
 
         .heatmap-table tbody tr:hover {
             background: #f9fafb;
         }
 
+        .heatmap-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
         .hm-cell {
             text-align: center;
-            font-size: 13px;
-            font-weight: 500;
-            border-radius: 6px;
-            padding: 8px 12px;
-            min-width: 80px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 12px 16px;
+            min-width: 100px;
+            display: inline-block;
+            width: 100%;
         }
 
         .hm-cell.nulo {
@@ -2851,8 +2868,8 @@
         }
 
         .hm-cell.bajo {
-            background: #dcfce7;
-            color: #166534;
+            background: #d1fae5;
+            color: #065f46;
         }
 
         .hm-cell.medio {
@@ -2862,23 +2879,25 @@
 
         .hm-cell.alto {
             background: #fed7aa;
-            color: #c2410c;
+            color: #9a3412;
         }
 
         .hm-cell.muy-alto {
             background: #fecaca;
-            color: #dc2626;
+            color: #991b1b;
         }
 
         .heatmap-row-name {
-            font-weight: 600;
+            font-weight: 700;
             color: #1f2937;
             text-align: left;
-            max-width: 200px;
+            min-width: 280px;
+            padding: 12px 16px;
         }
 
         #heatmap-content-wrapper {
             overflow-x: auto;
+            padding: 20px 0;
         }
 
         .tabla-view {
@@ -3903,22 +3922,24 @@
                                     </div>
                                 </div>
 
-                                <!-- Controles: SEGMENTAR POR + ORDENAR + FILTROS DEMOGRÁFICOS -->
+                                <!-- Controles: Dropdowns + Filtros -->
                                 <div class="heatmap-controls">
                                     <div class="heatmap-segment-group">
-                                        <span class="segment-label">SEGMENTAR POR:</span>
-                                        <button class="segment-btn active" data-rows="dimensiones">Dimensiones</button>
-                                        <button class="segment-btn" data-rows="categorias">Categorías</button>
-                                        <button class="segment-btn" data-rows="dominios">Dominios</button>
+                                        <label class="segment-label">FILAS:</label>
+                                        <select id="heatmap-rows-select" class="heatmap-dropdown">
+                                            <option value="dimensiones">Dimensiones</option>
+                                            <option value="position">Posición</option>
+                                            <option value="gender">Género</option>
+                                        </select>
                                     </div>
                                     <div class="heatmap-segment-group">
-                                        <span class="segment-label">COLUMNAS:</span>
-                                        <button class="segment-btn active" data-cols="area">Área</button>
-                                        <button class="segment-btn" data-cols="seniority">Seniority</button>
-                                        <button class="segment-btn" data-cols="pais">País</button>
-                                        <button class="segment-btn" data-cols="antiguedad">Antigüedad</button>
-                                        <button class="segment-btn" data-cols="col-a">Columna A</button>
-                                        <button class="segment-btn" data-cols="col-b">Columna B</button>
+                                        <label class="segment-label">COLUMNAS:</label>
+                                        <select id="heatmap-cols-select" class="heatmap-dropdown">
+                                            <option value="department">Departamento</option>
+                                            <option value="position">Posición</option>
+                                            <option value="country">País</option>
+                                            <option value="gender">Género</option>
+                                        </select>
                                     </div>
                                     <button class="heatmap-filter-btn" id="heatmap-demo-filters-btn">
                                         <i class="far fa-sliders-h"></i> Filtros Demográficos
@@ -9701,100 +9722,86 @@
             return 'nulo';
         }
 
-        function getHeatmapData(rowType, colType) {
+        function getHeatmapData(rowType = 'dimensiones', colType = 'department') {
             const data = {};
             const participants = individualParticipantsData || [];
 
-            // Define row labels
-            const rowLabels = {
-                dimensiones: [
-                    'Condiciones físicas', 'Carga de trabajo', 'Falta de control', 'Inseguridad',
-                    'Relaciones interpersonales', 'Liderazgo', 'Cambios', 'Cultura organizacional',
-                    'Reconocimiento', 'Oportunidades de carrera', 'Responsabilidades', 'Impunidad',
-                    'Bajas laborales', 'Acoso', 'Violencia laboral', 'Trabajo emocional',
-                    'Estabilidad laboral', 'Jornada de trabajo', 'Interferencia trabajo-familia',
-                    'Seguridad laboral'
-                ],
-                categorias: ['Ambiente de trabajo', 'Factores propios', 'Violencia laboral', 'Organización del tiempo', 'Liderazgo'],
-                dominios: [
-                    'Condiciones en el ambiente', 'Carga de trabajo', 'Jornada de trabajo',
-                    'Participación y supervisión', 'Relaciones interpersonales', 'Capacitación',
-                    'Salud en el trabajo', 'Reconocimiento y compensación', 'Cultura organizacional',
-                    'Acoso y violencia en el trabajo'
-                ]
+            // Get unique values for columns from participants
+            const getColumnValues = (type) => {
+                const values = new Set();
+                participants.forEach(p => {
+                    if (type === 'department') values.add(p.details?.department || 'Sin Departamento');
+                    else if (type === 'position') values.add(p.details?.position || 'Sin Posición');
+                    else if (type === 'country') values.add(p.details?.country || 'Sin País');
+                    else if (type === 'gender') values.add(p.details?.gender || 'Sin Género');
+                });
+                return Array.from(values).sort();
             };
 
-            // Define column labels
-            const colLabels = {
-                area: ['Tecnología', 'RRHH', 'Ventas', 'Marketing', 'Finanzas', 'Operaciones'],
-                seniority: ['Junior', 'Semi-Senior', 'Senior', 'Lead'],
-                pais: ['Colombia', 'México', 'Argentina'],
-                antiguedad: ['< 1 año', '1-3 años', '3-5 años', '> 5 años'],
-                'col-a': ['Opción A1', 'Opción A2', 'Opción A3'],
-                'col-b': ['Opción B1', 'Opción B2', 'Opción B3']
-            };
+            // Get row values based on type
+            let rows = [];
+            if (rowType === 'dimensiones') {
+                // Get dimension names from first participant's results
+                if (participants.length > 0 && participants[0].dimensionsResults) {
+                    rows = Object.keys(participants[0].dimensionsResults);
+                }
+            } else if (rowType === 'position') {
+                rows = getColumnValues('position');
+            } else if (rowType === 'gender') {
+                rows = getColumnValues('gender');
+            }
 
-            const rows = rowLabels[rowType] || rowLabels['dimensiones'];
-            const cols = colLabels[colType] || colLabels['area'];
+            const cols = getColumnValues(colType);
 
             // Initialize data structure
             rows.forEach(row => {
                 data[row] = {};
                 cols.forEach(col => {
-                    data[row][col] = { score: 0, count: 0 };
+                    data[row][col] = { scores: [], avg: 0, count: 0 };
                 });
             });
 
             // Aggregate data from participants
             participants.forEach(participant => {
-                let participantRows = [];
-                let participantValue = 0;
+                let colValue = '';
+                if (colType === 'department') colValue = participant.details?.department || 'Sin Departamento';
+                else if (colType === 'position') colValue = participant.details?.position || 'Sin Posición';
+                else if (colType === 'country') colValue = participant.details?.country || 'Sin País';
+                else if (colType === 'gender') colValue = participant.details?.gender || 'Sin Género';
 
-                if (rowType === 'dimensiones') {
-                    participantRows = participant.dimensionsResults ? Object.keys(participant.dimensionsResults).slice(0, 20) : [];
-                    participantRows = participantRows.map(i => rows[parseInt(i)-1] || rows[0]).filter(r => r);
-                } else if (rowType === 'categorias') {
-                    participantRows = participant.categoriesResults ? Object.keys(participant.categoriesResults) : [];
-                    participantRows = participantRows.map(i => rows[parseInt(i)-1] || rows[0]).filter(r => r);
-                } else if (rowType === 'dominios') {
-                    participantRows = participant.domainsResults ? Object.keys(participant.domainsResults).slice(0, 10) : [];
-                    participantRows = participantRows.map(i => rows[parseInt(i)-1] || rows[0]).filter(r => r);
-                }
-
-                participantRows.forEach(row => {
-                    let colValue = participant.area || 'Tecnología';
-
-                    if (colType === 'seniority') colValue = participant.seniority || 'Junior';
-                    else if (colType === 'pais') colValue = participant.pais || 'Colombia';
-                    else if (colType === 'antiguedad') colValue = participant.antiguedad || '< 1 año';
-                    else if (colType === 'col-a') colValue = participant.colA || 'Opción A1';
-                    else if (colType === 'col-b') colValue = participant.colB || 'Opción B1';
-
-                    if (data[row] && data[row][colValue]) {
-                        // Calculate average risk score
-                        let score = 0;
-                        if (rowType === 'dimensiones' && participant.dimensionsResults) {
-                            const dimIndex = rows.indexOf(row) + 1;
-                            score = participant.dimensionsResults[dimIndex] || 0;
-                        } else if (rowType === 'categorias' && participant.categoriesResults) {
-                            const catIndex = rows.indexOf(row) + 1;
-                            score = participant.categoriesResults[catIndex] || 0;
-                        } else if (rowType === 'dominios' && participant.domainsResults) {
-                            const domIndex = rows.indexOf(row) + 1;
-                            score = participant.domainsResults[domIndex] || 0;
+                if (rowType === 'dimensiones' && participant.dimensionsResults) {
+                    Object.keys(participant.dimensionsResults).forEach(dimName => {
+                        if (data[dimName] && data[dimName][colValue]) {
+                            const score = participant.dimensionsResults[dimName].score || 0;
+                            data[dimName][colValue].scores.push(score);
+                            data[dimName][colValue].count += 1;
                         }
+                    });
+                } else if (rowType === 'position' || rowType === 'gender') {
+                    // For position/gender rows, use overall risk score
+                    let rowValue = rowType === 'position' ? participant.details?.position : participant.details?.gender;
+                    if (!rowValue) rowValue = rowType === 'position' ? 'Sin Posición' : 'Sin Género';
 
-                        data[row][colValue].score += score;
-                        data[row][colValue].count += 1;
+                    if (data[rowValue] && data[rowValue][colValue]) {
+                        const riskScore = (
+                            participant.details?.riskScore ||
+                            (participant.riskLevel === 'muy-alto' ? 4.5 :
+                             participant.riskLevel === 'alto' ? 3.5 :
+                             participant.riskLevel === 'medio' ? 2.5 :
+                             participant.riskLevel === 'bajo' ? 1.5 : 0.5)
+                        );
+                        data[rowValue][colValue].scores.push(riskScore);
+                        data[rowValue][colValue].count += 1;
                     }
-                });
+                }
             });
 
             // Calculate averages
             Object.keys(data).forEach(row => {
                 Object.keys(data[row]).forEach(col => {
-                    if (data[row][col].count > 0) {
-                        data[row][col].score = data[row][col].score / data[row][col].count;
+                    if (data[row][col].scores.length > 0) {
+                        const sum = data[row][col].scores.reduce((a, b) => a + b, 0);
+                        data[row][col].avg = sum / data[row][col].scores.length;
                     }
                 });
             });
@@ -9802,10 +9809,11 @@
             return { data, rows, cols };
         }
 
-        function renderHeatmap(rowType = 'dimensiones', colType = 'area') {
+        function renderHeatmap(rowType = 'dimensiones', colType = 'department') {
             const { data, rows, cols } = getHeatmapData(rowType, colType);
-            let html = '<table class="heatmap-table"><thead><tr><th>Dimensión</th>';
+            if (rows.length === 0) return '<p style="text-align:center; color: #9ca3af; padding: 40px;">Sin datos disponibles</p>';
 
+            let html = '<table class="heatmap-table"><thead><tr><th style="min-width: 250px;">Dimensión</th>';
             cols.forEach(col => {
                 html += `<th>${col}</th>`;
             });
@@ -9815,8 +9823,8 @@
                 html += `<tr><td class="heatmap-row-name">${row}</td>`;
                 cols.forEach(col => {
                     const cellData = data[row][col];
-                    const score = cellData.score || 0;
-                    const riskLevel = getRiskLevelFromScore(score);
+                    const score = cellData.avg || 0;
+                    const riskLevel = getRiskLevelFromScore(score / 20);
                     const displayScore = score > 0 ? score.toFixed(1) : '-';
                     html += `<td><div class="hm-cell ${riskLevel}">${displayScore}</div></td>`;
                 });
@@ -9827,24 +9835,25 @@
             return html;
         }
 
-        function renderTabla(rowType = 'dimensiones', colType = 'area') {
+        function renderTabla(rowType = 'dimensiones', colType = 'department') {
             const { data, rows, cols } = getHeatmapData(rowType, colType);
-            let html = '<table class="heatmap-table"><thead><tr><th>Dimensión</th>';
+            if (rows.length === 0) return '<p style="text-align:center; color: #9ca3af; padding: 40px;">Sin datos disponibles</p>';
 
+            let html = '<table class="heatmap-table"><thead><tr><th style="min-width: 250px;">Dimensión</th>';
             cols.forEach(col => {
                 html += `<th>${col}</th>`;
             });
-            html += '<th>Nivel</th></tr></thead><tbody>';
+            html += '<th>Promedio</th></tr></thead><tbody>';
 
             rows.forEach(row => {
-                const rowAvg = Object.values(data[row]).reduce((sum, cell) => sum + (cell.score || 0), 0) / cols.length;
-                const rowRisk = getRiskLevelFromScore(rowAvg);
+                const cellScores = cols.map(col => data[row][col].avg || 0);
+                const rowAvg = cellScores.reduce((a, b) => a + b, 0) / (cellScores.length || 1);
+                const rowRisk = getRiskLevelFromScore(rowAvg / 20);
                 html += `<tr><td class="heatmap-row-name">${row}</td>`;
                 cols.forEach(col => {
                     const cellData = data[row][col];
-                    const score = cellData.score || 0;
-                    const riskLevel = getRiskLevelFromScore(score);
-                    const displayScore = score > 0 ? score.toFixed(1) : '-';
+                    const score = cellData.avg || 0;
+                    const riskLevel = getRiskLevelFromScore(score / 20);
                     html += `<td><span class="risk-badge ${riskLevel}">${getRiskBadgeText(riskLevel)}</span></td>`;
                 });
                 html += `<td><span class="risk-badge ${rowRisk}">${getRiskBadgeText(rowRisk)}</span></td></tr>`;
@@ -9859,42 +9868,39 @@
             if (!wrapper) return;
 
             let currentRowType = 'dimensiones';
-            let currentColType = 'area';
+            let currentColType = 'department';
             let currentView = 'heatmap';
 
-            // Render initial view
-            wrapper.innerHTML = renderHeatmap(currentRowType, currentColType);
+            // Function to render based on current state
+            const updateHeatmap = () => {
+                const html = currentView === 'tabla'
+                    ? renderTabla(currentRowType, currentColType)
+                    : renderHeatmap(currentRowType, currentColType);
+                wrapper.innerHTML = html;
+            };
 
-            // Row type buttons
-            document.querySelectorAll('[data-rows]').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('[data-rows]').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentRowType = this.getAttribute('data-rows');
+            // Initial render
+            updateHeatmap();
 
-                    const html = currentView === 'tabla'
-                        ? renderTabla(currentRowType, currentColType)
-                        : renderHeatmap(currentRowType, currentColType);
-                    wrapper.innerHTML = html;
-
-                    // Update title
-                    document.querySelector('.heatmap-title-block h2').textContent = `Desglose por ${this.textContent}`;
+            // Row type dropdown
+            const rowSelect = document.getElementById('heatmap-rows-select');
+            if (rowSelect) {
+                rowSelect.addEventListener('change', function() {
+                    currentRowType = this.value;
+                    const rowLabel = this.options[this.selectedIndex].text;
+                    document.querySelector('.heatmap-title-block h2').textContent = `Desglose por ${rowLabel}`;
+                    updateHeatmap();
                 });
-            });
+            }
 
-            // Column type buttons
-            document.querySelectorAll('[data-cols]').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('[data-cols]').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentColType = this.getAttribute('data-cols');
-
-                    const html = currentView === 'tabla'
-                        ? renderTabla(currentRowType, currentColType)
-                        : renderHeatmap(currentRowType, currentColType);
-                    wrapper.innerHTML = html;
+            // Column type dropdown
+            const colSelect = document.getElementById('heatmap-cols-select');
+            if (colSelect) {
+                colSelect.addEventListener('change', function() {
+                    currentColType = this.value;
+                    updateHeatmap();
                 });
-            });
+            }
 
             // View toggle
             document.querySelectorAll('.hm-toggle').forEach(btn => {
@@ -9902,11 +9908,7 @@
                     document.querySelectorAll('.hm-toggle').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     currentView = this.getAttribute('data-view');
-
-                    const html = currentView === 'tabla'
-                        ? renderTabla(currentRowType, currentColType)
-                        : renderHeatmap(currentRowType, currentColType);
-                    wrapper.innerHTML = html;
+                    updateHeatmap();
                 });
             });
 
