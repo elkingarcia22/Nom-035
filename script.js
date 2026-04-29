@@ -87,13 +87,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // El sidebar debe tener al menos 578px de alto
         const sidebarHeight = Math.max(578, availableHeight);
         
-        sidebar.style.height = `${sidebarHeight}px`;
-        sidebar.style.minHeight = `578px`;
-        
-        // Ajustar posición para mantener margen de 16px arriba y abajo
-        const topPosition = topMargin;
-        sidebar.style.top = `${topPosition}px`;
-        sidebar.style.bottom = 'auto';
+        if (sidebar) {
+            sidebar.style.height = `${sidebarHeight}px`;
+            sidebar.style.minHeight = `578px`;
+            
+            // Ajustar posición para mantener margen de 16px arriba y abajo
+            const topPosition = topMargin;
+            sidebar.style.top = `${topPosition}px`;
+            sidebar.style.bottom = 'auto';
+        }
         
 
     }
@@ -221,17 +223,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const aiChatInterface = document.getElementById('ai-chat-interface');
         const contentPlaceholder = document.getElementById('content-placeholder');
         const contentAreaElement = document.querySelector('.content-area');
-        
+
         // Ocultar todas las vistas primero
         if (ubitsAiDashboard) ubitsAiDashboard.style.display = 'none';
         if (aiChatInterface) aiChatInterface.style.display = 'none';
         if (contentPlaceholder) contentPlaceholder.style.display = 'none';
-        
+
         if (section === 'ubits-ai') {
             // Mostrar dashboard de UBITS AI
             if (ubitsAiDashboard) {
                 ubitsAiDashboard.style.display = 'flex';
-                contentAreaElement.classList.add('no-background');
+                if (contentAreaElement) contentAreaElement.classList.add('no-background');
             }
         } else {
             // Mostrar contenido por defecto
@@ -342,35 +344,36 @@ document.addEventListener('DOMContentLoaded', function() {
         const windowHeight = window.innerHeight;
         
         // Ajustar sidebar para pantallas pequeñas
-        if (windowWidth <= 768) {
-            sidebar.style.width = '80px';
-            sidebar.style.minWidth = '80px';
-            sidebar.style.left = '8px';
-            
-            // Ajustar contenedor principal para mobile
-            const mainContent = document.querySelector('.main-content');
-            if (mainContent) {
-                mainContent.style.left = '108px';
-                mainContent.style.right = '12px';
+        if (sidebar) {
+            if (windowWidth <= 768) {
+                sidebar.style.width = '80px';
+                sidebar.style.minWidth = '80px';
+                sidebar.style.left = '8px';
+                
+                // Ajustar contenedor principal para mobile
+                const mainContent = document.querySelector('.main-content');
+                if (mainContent) {
+                    mainContent.style.left = '108px';
+                    mainContent.style.right = '12px';
+                }
+            } else {
+                sidebar.style.width = '96px';
+                sidebar.style.minWidth = '96px';
+                sidebar.style.left = '11px';
+                
+                // Restaurar posición del contenedor principal
+                const mainContent = document.querySelector('.main-content');
+                if (mainContent) {
+                    mainContent.style.left = '131px';
+                    mainContent.style.right = '12px';
+                }
             }
-        } else {
-            sidebar.style.width = '96px';
-            sidebar.style.minWidth = '96px';
-            sidebar.style.left = '11px';
-            
-            // Restaurar posición del contenedor principal
-            const mainContent = document.querySelector('.main-content');
-            if (mainContent) {
-                mainContent.style.left = '131px';
-                mainContent.style.right = '12px';
+            // Ajustar para pantallas con poco alto
+            if (windowHeight <= 600) {
+                sidebar.style.padding = '12px 22px';
+            } else {
+                sidebar.style.padding = '16px 28px';
             }
-        }
-        
-        // Ajustar para pantallas con poco alto
-        if (windowHeight <= 600) {
-            sidebar.style.padding = '12px 22px';
-        } else {
-            sidebar.style.padding = '16px 28px';
         }
         
         // Reajustar dimensiones
@@ -386,20 +389,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Tooltip hover para todos los botones (excepto el avatar del sidebar)
-        if (!button.classList.contains('user-avatar')) {
+        if (!button.classList.contains('user-avatar') && tooltip) {
             button.addEventListener('mouseenter', function(e) {
                 const tooltipText = this.getAttribute('data-tooltip');
-                tooltip.textContent = tooltipText;
-                tooltip.style.opacity = '1';
-                
-                // Posicionar tooltip a la derecha del botón
-                const rect = this.getBoundingClientRect();
-                tooltip.style.left = (rect.right + 20) + 'px';
-                tooltip.style.top = (rect.top + rect.height/2 - tooltip.offsetHeight/2) + 'px';
+                if (tooltip) {
+                    tooltip.textContent = tooltipText;
+                    tooltip.style.opacity = '1';
+
+                    // Posicionar tooltip a la derecha del botón
+                    const rect = this.getBoundingClientRect();
+                    tooltip.style.left = (rect.right + 20) + 'px';
+                    tooltip.style.top = (rect.top + rect.height/2 - tooltip.offsetHeight/2) + 'px';
+                }
             });
-            
+
             button.addEventListener('mouseleave', function() {
-                tooltip.style.opacity = '0';
+                if (tooltip) {
+                    tooltip.style.opacity = '0';
+                }
             });
         }
         
