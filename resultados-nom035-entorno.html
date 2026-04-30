@@ -360,7 +360,6 @@
 
             const renderSegmentsTable = () => {
                 const segmentType = document.getElementById('segments-row-select').value;
-                const analyzeType = document.getElementById('segments-analyze-select').value;
 
                 // Sample data structure based on segments
                 const segmentsData = [
@@ -422,10 +421,8 @@
             renderSegmentsTable();
 
             const rowSelect = document.getElementById('segments-row-select');
-            const analyzeSelect = document.getElementById('segments-analyze-select');
 
             if (rowSelect) rowSelect.addEventListener('change', renderSegmentsTable);
-            if (analyzeSelect) analyzeSelect.addEventListener('change', renderSegmentsTable);
 
             console.log('✅ Segments table renderizada');
         };
