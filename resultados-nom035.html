@@ -403,64 +403,6 @@
             margin-bottom: 2px;
         }
 
-        .tabs-header {
-            display: flex;
-            gap: 8px;
-        }
-
-        .tab-button {
-            padding: 12px 16px;
-            border: none;
-            background: transparent;
-            color: var(--ubits-fg-1-medium);
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-direction: row;
-        }
-
-        .tab-button:hover {
-            color: #374151;
-            background: rgba(0, 0, 0, 0.05);
-        }
-
-        .tab-button.active {
-            color: #1d4ed8;
-            background: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .tab-icon {
-            width: 16px;
-            height: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-        }
-
-        .tab-content {
-            padding: 16px 0 0 0;
-            min-height: 400px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .tab-panel {
-            display: none;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .tab-panel.active {
-            display: block;
-        }
-
         /* Panel Emocional - Nuevos Estilos */
         .panel-container {
             display: flex;
@@ -488,6 +430,11 @@
             border: 1px solid #e5e7eb;
             display: flex;
             flex-direction: column;
+        }
+
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
         }
 
         /* Panel Header - Rediseñado desde cero */
@@ -1169,10 +1116,6 @@
             .metrics-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .tabs-header {
-                flex-direction: column;
-            }
 
             .panel-container {
                 flex-direction: column;
@@ -1183,6 +1126,58 @@
             .participant-details-panel {
                 flex: none;
             }
+        }
+
+        /* ===== ESTILOS PARA LOS TABS ===== */
+        .tabs-container {
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .tab-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-direction: row;
+        }
+
+        .tab-button:hover {
+            background: white;
+            color: #374151;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: var(--ubits-accent-brand);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-button i {
+            font-size: 16px;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
         }
     </style>
 </head>
@@ -1303,8 +1298,30 @@
                         </div>
                     </div>
 
-                    <!-- Panel Acontecimientos traumáticos ATS -->
-                    <div class="panel-emocional-container">
+                    <!-- Panel ATS - Participantes y Detalles con TABS -->
+                    <div class="panel-emocional-container" style="margin-top: 24px;">
+                        <div class="tabs-container">
+                            <div class="tabs-header">
+                                <button class="tab-button active" data-tab="participante">
+                                    <i class="far fa-user"></i>
+                                    <span>Participante</span>
+                                </button>
+                                <button class="tab-button" data-tab="detalle-colaborador">
+                                    <i class="far fa-list"></i>
+                                    <span>Detalle por Colaborador</span>
+                                </button>
+                            </div>
+
+                            <!-- Tab 1: Participante (vacío) -->
+                            <div class="tab-panel active" id="tab-participante">
+                                <div style="padding: 40px; text-align: center; background: white; border-radius: 8px; color: #9ca3af;">
+                                    <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 16px;"></i>
+                                    <p style="font-size: 16px;">Contenido pendiente</p>
+                                </div>
+                            </div>
+
+                            <!-- Tab 2: Detalle por Colaborador (contenido actual) -->
+                            <div class="tab-panel" id="tab-detalle-colaborador">
                                 <div class="panel-container">
                                     <!-- Panel Izquierdo - Lista de Participantes -->
                                     <div class="participants-panel">
@@ -1396,238 +1413,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                                            <div class="filter-group">
-                                                <label class="filter-label">Cargo</label>
-                                                <div class="custom-select" id="position-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar cargos</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos">
-                                                            <input type="checkbox" id="pos-todos">
-                                                            <span class="option-text">Todos</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Gerente">
-                                                            <input type="checkbox" id="pos-gerente">
-                                                            <span class="option-text">Gerente</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Desarrollador">
-                                                            <input type="checkbox" id="pos-desarrollador">
-                                                            <span class="option-text">Desarrollador</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Analista">
-                                                            <input type="checkbox" id="pos-analista">
-                                                            <span class="option-text">Analista</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Contador">
-                                                            <input type="checkbox" id="pos-contador">
-                                                            <span class="option-text">Contador</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Asistente">
-                                                            <input type="checkbox" id="pos-asistente">
-                                                            <span class="option-text">Asistente</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="filter-group">
-                                                <label class="filter-label">Sexo</label>
-                                                <div class="custom-select" id="gender-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar sexo</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos">
-                                                            <input type="checkbox" id="gen-todos">
-                                                            <span class="option-text">Todos</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Femenino">
-                                                            <input type="checkbox" id="gen-femenino">
-                                                            <span class="option-text">Femenino</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Masculino">
-                                                            <input type="checkbox" id="gen-masculino">
-                                                            <span class="option-text">Masculino</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="filter-group">
-                                                <label class="filter-label">Estado Civil</label>
-                                                <div class="custom-select" id="marital-status-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar estado civil</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos">
-                                                            <input type="checkbox" id="est-todos">
-                                                            <span class="option-text">Todos</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Soltero">
-                                                            <input type="checkbox" id="est-soltero">
-                                                            <span class="option-text">Soltero</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Casado">
-                                                            <input type="checkbox" id="est-casado">
-                                                            <span class="option-text">Casado</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Divorciada">
-                                                            <input type="checkbox" id="est-divorciada">
-                                                            <span class="option-text">Divorciada</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="filter-group">
-                                                <label class="filter-label">Edad</label>
-                                                <div class="custom-select" id="age-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar rango de edad</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos">
-                                                            <input type="checkbox" id="age-todos">
-                                                            <span class="option-text">Todos</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="20-30">
-                                                            <input type="checkbox" id="age-20-30">
-                                                            <span class="option-text">20-30 años</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="31-40">
-                                                            <input type="checkbox" id="age-31-40">
-                                                            <span class="option-text">31-40 años</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="41-50">
-                                                            <input type="checkbox" id="age-41-50">
-                                                            <span class="option-text">41-50 años</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="51+">
-                                                            <input type="checkbox" id="age-51+">
-                                                            <span class="option-text">51+ años</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="filter-group">
-                                                <label class="filter-label">País</label>
-                                                <div class="custom-select" id="country-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar países</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos">
-                                                            <input type="checkbox" id="country-todos">
-                                                            <span class="option-text">Todos</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Colombia">
-                                                            <input type="checkbox" id="country-colombia">
-                                                            <span class="option-text">Colombia</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="México">
-                                                            <input type="checkbox" id="country-mexico">
-                                                            <span class="option-text">México</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Argentina">
-                                                            <input type="checkbox" id="country-argentina">
-                                                            <span class="option-text">Argentina</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Chile">
-                                                            <input type="checkbox" id="country-chile">
-                                                            <span class="option-text">Chile</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Perú">
-                                                            <input type="checkbox" id="country-peru">
-                                                            <span class="option-text">Perú</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="filter-group">
-                                                <label class="filter-label">Ciudad</label>
-                                                <div class="custom-select" id="city-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar ciudades</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos">
-                                                            <input type="checkbox" id="city-todos">
-                                                            <span class="option-text">Todos</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Bogotá">
-                                                            <input type="checkbox" id="city-bogota">
-                                                            <span class="option-text">Bogotá</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Medellín">
-                                                            <input type="checkbox" id="city-medellin">
-                                                            <span class="option-text">Medellín</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Cali">
-                                                            <input type="checkbox" id="city-cali">
-                                                            <span class="option-text">Cali</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Ciudad de México">
-                                                            <input type="checkbox" id="city-mexico">
-                                                            <span class="option-text">Ciudad de México</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Buenos Aires">
-                                                            <input type="checkbox" id="city-buenos-aires">
-                                                            <span class="option-text">Buenos Aires</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Santiago">
-                                                            <input type="checkbox" id="city-santiago">
-                                                            <span class="option-text">Santiago</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Lima">
-                                                            <input type="checkbox" id="city-lima">
-                                                            <span class="option-text">Lima</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="filter-group">
-                                                <label class="filter-label">Líder</label>
-                                                <div class="custom-select" id="leader-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar líderes</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos">
-                                                            <input type="checkbox" id="leader-todos">
-                                                            <span class="option-text">Todos</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Ana Martínez">
-                                                            <input type="checkbox" id="leader-ana-martinez">
-                                                            <span class="option-text">Ana Martínez</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Luis Fernández">
-                                                            <input type="checkbox" id="leader-luis-fernandez">
-                                                            <span class="option-text">Luis Fernández</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="María González">
-                                                            <input type="checkbox" id="leader-maria-gonzalez">
-                                                            <span class="option-text">María González</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Carlos Rodríguez">
-                                                            <input type="checkbox" id="leader-carlos-rodriguez">
-                                                            <span class="option-text">Carlos Rodríguez</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="filter-actions">
                                                 <button class="apply-filters-btn" id="apply-filters-btn">
                                                     <i class="far fa-check"></i>
@@ -1659,6 +1444,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3531,16 +3317,43 @@
                 updateCurrentSection(tabText);
             }
         });
-        
+
+        // ===== SISTEMA DE TABS =====
+        function initializeTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+
+                    // Remover clase active de todos los botones y paneles
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanels.forEach(panel => panel.classList.remove('active'));
+
+                    // Agregar clase active al botón y panel clickeado
+                    this.classList.add('active');
+                    document.getElementById('tab-' + tabName).classList.add('active');
+
+                    console.log('Tab activado:', tabName);
+                });
+            });
+        }
+
+        // Inicializar tabs cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTabs();
+        });
+
         // Inicializar sistema de feedback
         document.addEventListener('DOMContentLoaded', function() {
             // Ocultar elementos de feedback inicialmente
             document.getElementById('feedbackTrigger').style.display = 'none';
             document.getElementById('sectionIndicator').style.display = 'none';
-            
+
             // Generar ID único para el usuario
             currentUser = 'Usuario_' + Date.now();
-            
+
             console.log('Sistema de feedback inicializado para:', currentUser);
         });
         
