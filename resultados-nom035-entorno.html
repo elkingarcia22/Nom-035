@@ -202,6 +202,16 @@
                         window.initializeHeatmapContent();
                     } else if (targetTab === 'segments-results') {
                         window.initializeSegmentsContent();
+                    } else if (targetTab === 'general-view') {
+                        // Restaurar el sub-panel activo según el selector "Ver por"
+                        const viewBySelect = document.getElementById('view-by-select');
+                        const currentSub = viewBySelect ? viewBySelect.value : 'categories';
+                        const activeSubPanel = document.getElementById(`sub-panel-${currentSub}`);
+                        if (activeSubPanel) {
+                            activeSubPanel.classList.add('active');
+                            activeSubPanel.style.display = 'block';
+                            console.log('✅ Sub-panel restaurado al volver a Vista General:', activeSubPanel.id);
+                        }
                     }
                 }
             }
@@ -6252,7 +6262,17 @@
                 console.log('🔄 Cambiando a tab principal:', targetTab);
                 
                 mainTabButtons.forEach(btn => btn.classList.remove('active'));
-                mainTabPanels.forEach(panel => panel.classList.remove('active'));
+                mainTabPanels.forEach(panel => {
+                    panel.classList.remove('active');
+                    panel.style.display = 'none';
+                });
+
+                // Ocultar todos los sub-paneles al cambiar de tab
+                const allSubPanels = document.querySelectorAll('.sub-tab-panel');
+                allSubPanels.forEach(panel => {
+                    panel.classList.remove('active');
+                    panel.style.display = 'none';
+                });
                 
                 const targetButton = document.querySelector(`[data-new-tab="${targetTab}"]`);
                 if (targetButton) {
@@ -6263,7 +6283,20 @@
                 const targetPanel = document.getElementById(`new-${targetTab}-panel`);
                 if (targetPanel) {
                     targetPanel.classList.add('active');
+                    targetPanel.style.display = 'block';
                     console.log('✅ Activando panel principal:', targetPanel.id);
+
+                    // Restaurar sub-panel activo al volver a Vista General
+                    if (targetTab === 'general-view') {
+                        const viewBySelect = document.getElementById('view-by-select');
+                        const currentSub = viewBySelect ? viewBySelect.value : 'categories';
+                        const activeSubPanel = document.getElementById(`sub-panel-${currentSub}`);
+                        if (activeSubPanel) {
+                            activeSubPanel.classList.add('active');
+                            activeSubPanel.style.display = 'block';
+                            console.log('✅ Sub-panel restaurado al volver a Vista General:', activeSubPanel.id);
+                        }
+                    }
                 }
             }
             
