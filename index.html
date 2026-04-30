@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UBITS Playground - Dashboard</title>
+    
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "tuefzltpon");
+    </script>
+    
+    <!-- Estilos locales -->
+    <link rel="stylesheet" href="ubits-colors.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fontawesome-icons.css">
+    <link rel="stylesheet" href="ubits-typography.css">
+    <link rel="stylesheet" href="components/sub-nav.css">
+    <link rel="stylesheet" href="components-sidebar.css">
+    <link rel="stylesheet" href="components/tab-bar.css">
+    <link rel="stylesheet" href="components/floating-menu.css">
+    <link rel="stylesheet" href="components/profile-menu.css">
+    <link rel="stylesheet" href="profile.css">
+    <style>
+        /* ===== SISTEMA DE ENMASCARAMIENTO Y FEEDBACK ===== */
+        
+        /* Overlay de bienvenida que cubre toda la pantalla */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--ubits-fg-gray-subtle);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .welcome-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 25px 50px var(--ubits-bg-dim);
+            text-align: center;
+            animation: slideInUp 0.6s ease-out;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .welcome-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--ubits-fg-1-high);
+            margin-bottom: 16px;
+        }
+        
+        .welcome-subtitle {
+            font-size: 18px;
+            color: var(--ubits-fg-1-medium);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        
+        .prototype-badge {
+            display: inline-block;
+            background: var(--ubits-feedback-bg-warning-subtle);
+            color: var(--ubits-feedback-fg-warning-subtle);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        
+        .features-list {
+            text-align: left;
+            margin: 24px 0;
+            padding: 0 20px;
+        }
+        
+        .features-list li {
+            margin: 12px 0;
+            color: var(--ubits-fg-1-high);
+            font-size: 16px;
+        }
+        
+        .features-list i {
+            color: var(--ubits-feedback-accent-success);
+            margin-right: 12px;
+            width: 20px;
+        }
+        
+        .start-button {
+            background: var(--ubits-accent-brand);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 24px;
+        }
+        
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px var(--ubits-button-focus-ring);
+        }
+        
+        /* Modal de feedback flotante */
+        .feedback-modal {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px var(--ubits-bg-dim);
+            z-index: 9999;
+            display: none;
+            animation: slideInRight 0.3s ease-out;
+        }
+        
+        .feedback-modal.show {
+            display: block;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .feedback-header {
+            background: var(--ubits-accent-brand);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .feedback-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .feedback-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px;
+        }
+        
+        .feedback-body {
+            padding: 20px;
+        }
+        
+        .feedback-section {
+            margin-bottom: 16px;
+        }
+        
+        .feedback-label {
+            display: block;
+            font-weight: 600;
+            color: var(--ubits-fg-1-high);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .feedback-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--ubits-border-1);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .feedback-input:focus {
+            outline: none;
+            border-color: var(--ubits-accent-brand);
+        }
+        
+        .feedback-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .feedback-submit {
+            flex: 1;
+            background: var(--ubits-feedback-accent-success);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .feedback-submit:hover {
+            background: var(--ubits-feedback-accent-success-static);
+        }
+        
+        .feedback-cancel {
+            flex: 1;
+            background: var(--ubits-bg-2);
+            color: var(--ubits-fg-1-high);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .feedback-cancel:hover {
+            background: var(--ubits-bg-3);
+        }
+        
+        /* Botón flotante de feedback */
+        .feedback-trigger {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--ubits-accent-brand);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px var(--ubits-button-focus-ring);
+            z-index: 9998;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feedback-trigger:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px var(--ubits-button-focus-ring);
+        }
+        
+        /* Indicador de sección actual */
+        .section-indicator {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--ubits-accent-brand);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9997;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* ===== SISTEMA DE ONBOARDING TIPO USERPILOT ===== */
+        
+        /* Overlay oscuro para enmascarar elementos */
+        .onboarding-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--ubits-bg-dim);
+            z-index: 10001;
+            display: none;
+        }
+        
+        .onboarding-overlay.show {
+            display: block;
+        }
+        
+        /* Spotlight para destacar elemento */
+        .onboarding-spotlight {
+            position: absolute;
+            border: 3px solid var(--ubits-accent-brand);
+            border-radius: 8px;
+            box-shadow: 0 0 0 9999px var(--ubits-bg-dim);
+            z-index: 10002;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 9999px var(--ubits-bg-dim), 0 0 0 0 var(--ubits-button-focus-ring); }
+            50% { box-shadow: 0 0 0 9999px var(--ubits-bg-dim), 0 0 0 10px var(--ubits-button-active-bg); }
+            100% { box-shadow: 0 0 0 9999px var(--ubits-bg-dim), 0 0 0 0 var(--ubits-button-focus-ring); }
+        }
+        
+        /* Tooltip de onboarding */
+        .onboarding-tooltip {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 20px 40px var(--ubits-bg-dim);
+            z-index: 10003;
+            max-width: 350px;
+            animation: slideInTooltip 0.3s ease-out;
+        }
+        
+        @keyframes slideInTooltip {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .tooltip-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .tooltip-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--ubits-accent-brand);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            margin-right: 12px;
+        }
+        
+        .tooltip-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--ubits-fg-1-high);
+            margin: 0;
+        }
+        
+        .tooltip-content {
+            color: var(--ubits-fg-1-medium);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .tooltip-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        
+        .tooltip-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tooltip-button.primary {
+            background: var(--ubits-accent-brand);
+            color: white;
+        }
+        
+        .tooltip-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--ubits-button-focus-ring);
+        }
+        
+        .tooltip-button.secondary {
+            background: var(--ubits-bg-2);
+            color: var(--ubits-fg-1-high);
+        }
+        
+        .tooltip-button.secondary:hover {
+            background: var(--ubits-bg-3);
+        }
+        
+        /* Flecha del tooltip */
+        .tooltip-arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+        }
+        
+        .tooltip-arrow.top {
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-top-color: white;
+        }
+        
+        .tooltip-arrow.bottom {
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom-color: white;
+        }
+        
+        .tooltip-arrow.left {
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-left-color: white;
+        }
+        
+        .tooltip-arrow.right {
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-right-color: white;
+        }
+        
+        /* ¡A LA MIERDA LAS REGLAS PENDEJAS! */
+
+        /* Estilos específicos para content-sections - idéntico a left-wrapper */
+        .content-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+            overflow: visible;
+            max-height: none;
+        }
+
+        /* Espaciador para alinear elementos - idéntico a left-wrapper */
+        .content-sections > *:not(:last-child):not(.section-dual):not(.section-single):not(.section-triple):not(.section-quad) {
+            margin-bottom: 16px;
+        }
+
+        /* Espaciador final - idéntico a left-wrapper */
+        .content-sections::after {
+            content: '';
+            height: 0px;
+            flex-shrink: 0;
+        }
+
+        /* Reducir el gap del último elemento - idéntico a left-wrapper */
+        .content-sections > *:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Secciones de widgets */
+        .section-single {
+            display: flex;
+            width: 100%;
+        }
+
+        .section-dual {
+            display: flex;
+            gap: 20px;
+        }
+
+        .section-triple {
+            display: flex;
+            gap: 20px;
+        }
+
+        .section-quad {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Widgets en secciones - sin altura mínima forzada */
+        .section-single > div,
+        .section-dual > div,
+        .section-triple > div,
+        .section-quad > div {
+            background-color: var(--ubits-bg-1);
+            border: none;
+            border-radius: 8px;
+            padding: 16px !important; /* !important para sobrescribir el reset */
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Distribución de anchos */
+        .section-single > div {
+            flex: 1;
+        }
+
+        .section-dual > div {
+            flex: 1;
+        }
+
+        .section-triple > div {
+            flex: 1;
+        }
+
+        .section-quad > div {
+            flex: 1;
+        }
+
+        /* Responsive para secciones */
+        @media (max-width: 1023px) {
+            .content-sections {
+                padding-bottom: 0;
+            }
+            
+            .section-dual,
+            .section-triple,
+            .section-quad {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            /* Ajustar widgets para móvil - sin altura mínima forzada */
+        }
+
+        @media (max-width: 480px) {
+            /* Padding reducido en móviles pequeños - sin altura mínima forzada */
+            .section-single > div,
+            .section-dual > div,
+            .section-triple > div,
+            .section-quad > div {
+                padding: 12px !important; /* !important para sobrescribir el reset */
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- ===== OVERLAY DE BIENVENIDA ===== -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-container">
+            <div class="prototype-badge">
+                🚀 Construyamos juntos
+            </div>
+            <h1 class="welcome-title">¡Bienvenido al Prototipo VISTA DE RESULTADOS NOM-035!</h1>
+            <p class="welcome-subtitle">
+                Estás a punto de probar un prototipo funcional de la vista de resultados de la evaluación NOM-035. 
+                <strong>No te enfoques en el diseño</strong> - esto es una versión rápida para validar funcionalidades.
+            </p>
+            
+            <div class="features-list">
+                <h3 style="text-align: center; margin-bottom: 16px; color: var(--ubits-fg-1-high);">🎯 Lo que vas a probar:</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li><i class="fas fa-heart"></i> <strong>Resultados de Acontecimientos traumáticos:</strong> Análisis de acontecimientos traumáticos y afectación</li>
+                    <li><i class="fas fa-briefcase"></i> <strong>Resultados Riesgo psicosocial:</strong> Evaluación de condiciones de trabajo</li>
+                    <li><i class="fas fa-chart-bar"></i> <strong>Vista General:</strong> Dashboard con métricas y gráficos</li>
+                    <li><i class="fas fa-download"></i> <strong>Descarga de Reportes:</strong> Exportación de datos en CSV</li>
+                </ul>
+            </div>
+            
+            <div style="background: var(--ubits-feedback-bg-info-subtle); border: 2px solid var(--ubits-feedback-accent-info); border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center;">
+                <p style="color: var(--ubits-feedback-fg-info-subtle); font-size: 16px; margin: 0; font-weight: 600;">
+                    💡 <strong>¡IMPORTANTE!</strong> Usa el botón de feedback (💬) en la esquina inferior derecha para dejar tus comentarios sobre cada sección.
+                </p>
+            </div>
+            
+            <button class="start-button" onclick="startPrototype()">
+                <i class="fas fa-rocket"></i> Comenzar Prueba
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== MODAL DE FEEDBACK ===== -->
+    <div class="feedback-modal" id="feedbackModal">
+        <div class="feedback-header">
+            <span class="feedback-title">💬 Deja tu Feedback</span>
+            <button class="feedback-close" onclick="closeFeedbackModal()">&times;</button>
+        </div>
+        <div class="feedback-body">
+            <div class="feedback-section">
+                <label class="feedback-label">Sección actual:</label>
+                <input type="text" id="currentSection" class="feedback-input" readonly style="background: var(--ubits-bg-2);">
+            </div>
+            <div class="feedback-section">
+                <label class="feedback-label">Tu comentario:</label>
+                <textarea 
+                    id="feedbackComment" 
+                    class="feedback-input" 
+                    placeholder="¿Qué opinas de esta sección? ¿Qué funciona bien? ¿Qué se puede mejorar?"
+                ></textarea>
+            </div>
+            <div class="feedback-buttons">
+                <button class="feedback-submit" onclick="submitFeedback()">
+                    <i class="fas fa-paper-plane"></i> Enviar
+                </button>
+                <button class="feedback-cancel" onclick="closeFeedbackModal()">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== BOTÓN FLOTANTE DE FEEDBACK ===== -->
+    <button class="feedback-trigger" id="feedbackTrigger" onclick="openFeedbackModal()" title="Dejar feedback">
+        💬
+    </button>
+
+    <!-- ===== INDICADOR DE SECCIÓN ===== -->
+    <div class="section-indicator" id="sectionIndicator">
+        📊 Dashboard Principal
+    </div>
+
+    <!-- ===== SISTEMA DE ONBOARDING ===== -->
+    <div class="onboarding-overlay" id="onboardingOverlay">
+        <div class="onboarding-spotlight" id="onboardingSpotlight"></div>
+        <div class="onboarding-tooltip" id="onboardingTooltip">
+            <div class="tooltip-header">
+                <div class="tooltip-icon" id="tooltipIcon">🎯</div>
+                <h3 class="tooltip-title" id="tooltipTitle">¡Bienvenido!</h3>
+            </div>
+            <div class="tooltip-content" id="tooltipContent">
+                Te vamos a guiar paso a paso por el prototipo NOM-035.
+            </div>
+            <div class="tooltip-buttons">
+                <button class="tooltip-button secondary" onclick="skipOnboarding()">Omitir</button>
+                <button class="tooltip-button primary" onclick="nextOnboardingStep()" id="tooltipNextBtn">Comenzar</button>
+            </div>
+            <div class="tooltip-arrow" id="tooltipArrow"></div>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <div class="tooltip" id="tooltip"></div>
+        
+        <!-- Sidebar Container -->
+        <div id="sidebar-container"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navigation -->
+            <div id="top-nav-container"></div>
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Content wrapper con secciones de widgets -->
+                <div class="content-sections">
+                    <!-- Sección contenido principal -->
+                    <div class="section-single">
+                        <div class="widget-contenido-principal">
+                            <p class="ubits-body-md-regular">Contenido principal</p>
+                            <br><br><br><br><br><br><br><br><br><br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Tab Bar Container -->
+    <div id="tab-bar-container"></div>
+
+    <!-- Floating Menu Container -->
+    <div id="floating-menu-container"></div>
+    
+    <!-- Profile Menu Container -->
+    <div id="profile-menu-container"></div>
+
+    <script src="components/sidebar.js"></script>
+    <script src="components/sub-nav.js"></script>
+    <script src="components/tab-bar.js"></script>
+    <script src="components/floating-menu.js"></script>
+    <script src="components/profile-menu.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Cargar componentes dinámicamente
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSidebar();
+            loadSubNav('top-nav-container', 'template');
+            loadTabBar('tab-bar-container');
+            loadFloatingMenu('floating-menu-container');
+            loadProfileMenu('profile-menu-container');
+        });
+
+        // ===== SISTEMA DE FEEDBACK Y ENMASCARAMIENTO =====
+        
+        // Variables globales para el sistema de feedback
+        let currentUser = 'Usuario_' + Math.random().toString(36).substr(2, 9);
+        let currentSection = 'Dashboard Principal';
+        let feedbackData = [];
+        
+        // Función para iniciar el prototipo
+        function startPrototype() {
+            console.log('🚀 ===== INICIANDO PROTOTIPO =====');
+            console.log('📍 Paso 1: Ocultando overlay de bienvenida');
+            
+            document.getElementById('welcomeOverlay').style.display = 'none';
+            document.getElementById('feedbackTrigger').style.display = 'flex';
+            document.getElementById('sectionIndicator').style.display = 'block';
+            
+            console.log('✅ Overlay ocultado correctamente');
+            console.log('📍 Paso 2: Preparando redirección a encuestas.html');
+            
+            // Redirigir automáticamente a la página de encuestas
+            setTimeout(() => {
+                console.log('🔄 ===== REDIRIGIENDO A ENCUESTAS =====');
+                console.log('📍 URL actual:', window.location.href);
+                console.log('📍 Redirigiendo a: encuestas.html');
+                console.log('📍 Método: window.location.href');
+                
+                window.location.href = 'encuestas.html';
+                
+                console.log('✅ Comando de redirección ejecutado');
+            }, 100);
+        }
+        
+        // Función para abrir el modal de feedback
+        function openFeedbackModal() {
+            document.getElementById('currentSection').value = currentSection;
+            document.getElementById('feedbackModal').classList.add('show');
+            document.getElementById('feedbackComment').focus();
+        }
+        
+        // Función para cerrar el modal de feedback
+        function closeFeedbackModal() {
+            document.getElementById('feedbackModal').classList.remove('show');
+            document.getElementById('feedbackComment').value = '';
+        }
+        
+        // Función para enviar feedback
+        function submitFeedback() {
+            const comment = document.getElementById('feedbackComment').value.trim();
+            
+            if (!comment) {
+                showNotification('Por favor, escribe un comentario antes de enviar.', 'error');
+                return;
+            }
+            
+            // Crear objeto de feedback
+            const feedback = {
+                user: currentUser,
+                section: currentSection,
+                comment: comment,
+                timestamp: new Date().toISOString(),
+                url: window.location.href
+            };
+            
+            // Agregar a la lista local
+            feedbackData.push(feedback);
+            
+            // Enviar a Google Sheets
+            sendToGoogleSheets(feedback);
+            
+            // Cerrar modal y mostrar confirmación
+            closeFeedbackModal();
+            showNotification('¡Gracias por tu feedback! Se ha guardado correctamente.', 'success');
+        }
+        
+        // Función para enviar datos a Google Sheets
+        async function sendToGoogleSheets(feedback) {
+            try {
+                // URL del webhook de Google Apps Script
+                const webhookUrl = 'https://script.google.com/macros/s/AKfycbzKqCwZj410D4PYv88TSZPeMmTODz-aUaLj3lW4BmUWGHxBTnTd0ZzI06XE37F73FEl/exec';
+                
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(feedback)
+                });
+                
+                if (response.ok) {
+                    console.log('Feedback enviado a Google Sheets:', feedback);
+                } else {
+                    console.error('Error al enviar feedback:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error de conexión:', error);
+                // Guardar localmente como respaldo
+                localStorage.setItem('feedback_backup', JSON.stringify(feedbackData));
+            }
+        }
+        
+        // Función para mostrar notificaciones
+        function showNotification(message, type = 'info') {
+            // Crear elemento de notificación
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--ubits-feedback-accent-success)' : type === 'error' ? 'var(--ubits-feedback-accent-error)' : 'var(--ubits-accent-brand)'};
+                color: white;
+                padding: 16px 20px;
+                border-radius: 8px;
+                box-shadow: 0 10px 25px var(--ubits-bg-dim);
+                z-index: 10001;
+                font-weight: 600;
+                max-width: 300px;
+                animation: slideInRight 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Remover después de 4 segundos
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease-out';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+        
+        // Función para actualizar la sección actual
+        function updateCurrentSection(sectionName) {
+            currentSection = sectionName;
+            document.getElementById('sectionIndicator').textContent = `📊 ${sectionName}`;
+        }
+        
+        // Interceptar navegación para actualizar sección
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.nav-tab')) {
+                const tabText = e.target.closest('.nav-tab').textContent.trim();
+                updateCurrentSection(tabText);
+            }
+        });
+        
+        // ===== SISTEMA DE ONBOARDING TIPO USERPILOT =====
+        
+        // Variables del onboarding
+        let onboardingStep = 0;
+        let onboardingSteps = [];
+        
+        // Definir pasos del onboarding
+        function initializeOnboardingSteps() {
+            onboardingSteps = [
+                {
+                    target: null,
+                    title: "¡Bienvenido al Prototipo NOM-035!",
+                    content: "Te vamos a guiar paso a paso por las dos opciones principales: <strong>Resultados de Acontecimientos traumáticos</strong> y <strong>Resultados Riesgo psicosocial</strong>.",
+                    icon: "🎯",
+                    position: "center"
+                },
+                {
+                    target: ".results-container, .encuestas-content, .main-content",
+                    title: "📊 Home de Encuestas",
+                    content: "Aquí tienes el home de encuestas. Verás una tabla con las dos opciones principales de NOM-035 que vamos a explorar: <strong>Acontecimientos traumáticos</strong> y <strong>Riesgo psicosocial</strong>.",
+                    icon: "📊",
+                    position: "bottom"
+                },
+                {
+                    target: "a[href*='emocional'], .btn-emocional, [data-section='emocional']",
+                    title: "💖 Resultados de Acontecimientos traumáticos",
+                    content: "Haz clic aquí para ver los <strong>Resultados de Acontecimientos traumáticos</strong>. Esta sección analiza acontecimientos traumáticos y su afectación en los empleados. <br><br><strong>💡 Tip:</strong> Después de explorar, puedes volver aquí y probar Riesgo psicosocial.",
+                    icon: "💖",
+                    position: "bottom"
+                },
+                {
+                    target: "a[href*='entorno'], .btn-entorno, [data-section='entorno']",
+                    title: "💼 Resultados Riesgo psicosocial", 
+                    content: "Haz clic aquí para explorar los <strong>Resultados Riesgo psicosocial</strong> que evalúan las condiciones de trabajo. <br><br><strong>💡 Tip:</strong> Puedes navegar entre ambas opciones libremente.",
+                    icon: "💼",
+                    position: "bottom"
+                },
+                {
+                    target: ".feedback-trigger",
+                    title: "💬 Sistema de Feedback",
+                    content: "Usa este botón para dejar feedback en cada pantalla. Puedes comentar sobre lo que funciona bien, qué se puede mejorar, o qué necesita tu empresa para Acontecimientos traumáticos y Riesgo psicosocial.",
+                    icon: "💬",
+                    position: "left"
+                }
+            ];
+        }
+        
+        // Iniciar onboarding
+        function startOnboarding() {
+            console.log('🚀 Iniciando onboarding...');
+            initializeOnboardingSteps();
+            onboardingStep = 0;
+            
+            // Debug: verificar elementos disponibles
+            console.log('🔍 Elementos disponibles:');
+            console.log('- Nav tabs:', document.querySelectorAll('.nav-tab'));
+            console.log('- Links emocional:', document.querySelectorAll('a[href*="emocional"], .btn-emocional, [data-section="emocional"]'));
+            console.log('- Links entorno:', document.querySelectorAll('a[href*="entorno"], .btn-entorno, [data-section="entorno"]'));
+            console.log('- Feedback trigger:', document.querySelector('.feedback-trigger'));
+            
+            showOnboardingStep();
+        }
+        
+        // Mostrar paso actual del onboarding
+        function showOnboardingStep() {
+            if (onboardingStep >= onboardingSteps.length) {
+                finishOnboarding();
+                return;
+            }
+            
+            const step = onboardingSteps[onboardingStep];
+            const overlay = document.getElementById('onboardingOverlay');
+            const spotlight = document.getElementById('onboardingSpotlight');
+            const tooltip = document.getElementById('onboardingTooltip');
+            
+            // Mostrar overlay
+            overlay.classList.add('show');
+            
+            if (step.target && step.target !== 'center') {
+                // Buscar elemento objetivo
+                const targetElement = findTargetElement(step.target);
+                if (targetElement) {
+                    highlightElement(targetElement, spotlight);
+                    positionTooltip(targetElement, tooltip, step.position);
+                } else {
+                    // Si no encuentra el elemento, mostrar en el centro
+                    positionTooltip(null, tooltip, 'center');
+                }
+            } else {
+                // Mostrar en el centro
+                positionTooltip(null, tooltip, 'center');
+            }
+            
+            // Actualizar contenido del tooltip
+            updateTooltipContent(step);
+        }
+        
+        // Buscar elemento objetivo
+        function findTargetElement(selector) {
+            if (selector.includes('contains')) {
+                const text = selector.match(/contains\('([^']+)'\)/)[1];
+                const elements = document.querySelectorAll('.nav-tab');
+                for (let element of elements) {
+                    if (element.textContent.includes(text)) {
+                        return element;
+                    }
+                }
+            }
+            
+            // Buscar por múltiples selectores
+            const selectors = selector.split(', ');
+            for (let sel of selectors) {
+                const element = document.querySelector(sel.trim());
+                if (element) return element;
+            }
+            
+            // Buscar por texto en todos los elementos
+            if (selector.includes('emocional') || selector.includes('entorno')) {
+                const allElements = document.querySelectorAll('a, button, .btn, .nav-tab, [data-section]');
+                for (let element of allElements) {
+                    const text = element.textContent.toLowerCase();
+                    if (selector.includes('emocional') && (text.includes('emocional') || text.includes('emotional'))) {
+                        return element;
+                    }
+                    if (selector.includes('entorno') && (text.includes('entorno') || text.includes('laboral') || text.includes('work'))) {
+                        return element;
+                    }
+                }
+            }
+            
+            return null;
+        }
+        
+        // Destacar elemento
+        function highlightElement(element, spotlight) {
+            const rect = element.getBoundingClientRect();
+            spotlight.style.left = (rect.left - 3) + 'px';
+            spotlight.style.top = (rect.top - 3) + 'px';
+            spotlight.style.width = (rect.width + 6) + 'px';
+            spotlight.style.height = (rect.height + 6) + 'px';
+            spotlight.style.display = 'block';
+        }
+        
+        // Posicionar tooltip
+        function positionTooltip(targetElement, tooltip, position) {
+            if (position === 'center') {
+                tooltip.style.left = '50%';
+                tooltip.style.top = '50%';
+                tooltip.style.transform = 'translate(-50%, -50%)';
+                document.getElementById('onboardingSpotlight').style.display = 'none';
+            } else if (targetElement) {
+                const rect = targetElement.getBoundingClientRect();
+                const tooltipRect = tooltip.getBoundingClientRect();
+                
+                switch (position) {
+                    case 'bottom':
+                        tooltip.style.left = (rect.left + rect.width/2 - tooltipRect.width/2) + 'px';
+                        tooltip.style.top = (rect.bottom + 20) + 'px';
+                        tooltip.style.transform = 'none';
+                        break;
+                    case 'top':
+                        tooltip.style.left = (rect.left + rect.width/2 - tooltipRect.width/2) + 'px';
+                        tooltip.style.top = (rect.top - tooltipRect.height - 20) + 'px';
+                        tooltip.style.transform = 'none';
+                        break;
+                    case 'left':
+                        tooltip.style.left = (rect.left - tooltipRect.width - 20) + 'px';
+                        tooltip.style.top = (rect.top + rect.height/2 - tooltipRect.height/2) + 'px';
+                        tooltip.style.transform = 'none';
+                        break;
+                    case 'right':
+                        tooltip.style.left = (rect.right + 20) + 'px';
+                        tooltip.style.top = (rect.top + rect.height/2 - tooltipRect.height/2) + 'px';
+                        tooltip.style.transform = 'none';
+                        break;
+                }
+            }
+        }
+        
+        // Actualizar contenido del tooltip
+        function updateTooltipContent(step) {
+            document.getElementById('tooltipIcon').textContent = step.icon;
+            document.getElementById('tooltipTitle').textContent = step.title;
+            document.getElementById('tooltipContent').innerHTML = step.content;
+            
+            // Actualizar botones
+            const nextBtn = document.getElementById('tooltipNextBtn');
+            if (onboardingStep === onboardingSteps.length - 1) {
+                nextBtn.textContent = 'Finalizar';
+            } else {
+                nextBtn.textContent = 'Siguiente';
+            }
+        }
+        
+        // Siguiente paso del onboarding
+        function nextOnboardingStep() {
+            onboardingStep++;
+            showOnboardingStep();
+        }
+        
+        // Omitir onboarding
+        function skipOnboarding() {
+            finishOnboarding();
+        }
+        
+        // Finalizar onboarding
+        function finishOnboarding() {
+            document.getElementById('onboardingOverlay').classList.remove('show');
+            showNotification('¡Perfecto! Ahora puedes explorar el prototipo. Usa el botón 💬 para dejar feedback.', 'success');
+        }
+        
+        // Inicializar sistema de feedback
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ocultar elementos de feedback inicialmente
+            document.getElementById('feedbackTrigger').style.display = 'none';
+            document.getElementById('sectionIndicator').style.display = 'none';
+            
+            // Generar ID único para el usuario
+            currentUser = 'Usuario_' + Date.now();
+            
+            console.log('Sistema de feedback inicializado para:', currentUser);
+        });
+        
+    </script>
+</body>
+</html>

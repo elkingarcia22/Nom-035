@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados NOM-035 Entorno Laboral</title>
+    
+    <!-- UBITS CSS -->
+    <link rel="stylesheet" href="ubits-colors.css">
+    <link rel="stylesheet" href="ubits-typography.css">
+    <link rel="stylesheet" href="fontawesome-icons.css">
+    <link rel="stylesheet" href="components/button.css">
+    <link rel="stylesheet" href="components/alert.css">
+    <link rel="stylesheet" href="components/toast.css">
+    <link rel="stylesheet" href="components/sub-nav.css">
+    <link rel="stylesheet" href="components/tab-bar.css">
+    <link rel="stylesheet" href="components-sidebar.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="profile.css">
+    
+    <!-- Estilos para Tabs - Versión Debug -->
+    <style>
+        .tabs-container {
+            background: #ffffff !important;
+            border: 3px solid #ff0000 !important;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 24px;
+            min-height: 200px !important;
+        }
+        
+        .tabs-header {
+            display: flex !important;
+            background: #f0f0f0 !important;
+            border-bottom: 2px solid #000000 !important;
+            padding: 10px !important;
+        }
+        
+        .tab-button {
+            display: flex !important;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 25px !important;
+            background: #e0e0e0 !important;
+            border: 2px solid #000000 !important;
+            color: #000000 !important;
+            font-size: 16px !important;
+            font-weight: bold !important;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-right: 10px !important;
+        }
+        
+        .tab-button:hover {
+            background: #cccccc !important;
+            color: #000000 !important;
+        }
+        
+        .tab-button.active {
+            background: #007bff !important;
+            color: #ffffff !important;
+            border-color: #0056b3 !important;
+        }
+        
+        .tab-button i {
+            font-size: 18px !important;
+        }
+        
+        .tab-panel {
+            display: none !important;
+            padding: 20px !important;
+            background: #f9f9f9 !important;
+            border: 2px solid #00ff00 !important;
+            min-height: 300px !important;
+        }
+        
+        .tab-panel.active {
+            display: block !important;
+        }
+        
+        .panel-content {
+            padding: 24px !important;
+            background: #ffffff !important;
+        }
+        
+        /* Debug: Hacer todo muy visible */
+        .tabs-container * {
+            box-sizing: border-box !important;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs-header {
+                flex-wrap: wrap;
+            }
+            
+            .tab-button {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- SubNav -->
+    <div id="top-nav-container"></div>
+    
+    <!-- Sidebar -->
+    <div id="sidebar-container"></div>
+    
+    <!-- TabBar -->
+    <div id="tab-bar-container"></div>
+    
+    <!-- Profile Menu -->
+    <div id="profile-menu-container"></div>
+    
+    <!-- Floating Menu -->
+    <div id="floating-menu-container"></div>
+    
+    <!-- Toast Container -->
+    <div id="ubits-toast-container"></div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-area">
+            <div class="page-header">
+                <h1 class="ubits-heading-h1">Resultados NOM-035 Entorno Laboral</h1>
+                <p class="ubits-body-md-regular">Análisis detallado de factores de riesgo psicosocial en el entorno laboral</p>
+            </div>
+            
+            <!-- Métricas principales -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="far fa-users"></i>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Total Colaboradores</div>
+                        <div class="metric-value-section">
+                            <div class="metric-main-number">150</div>
+                            <div class="metric-unit-text">Personas</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="far fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">En Riesgo</div>
+                        <div class="metric-value-section">
+                            <div class="metric-main-number">93</div>
+                            <div class="metric-unit-text">Colaboradores</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="far fa-percentage"></i>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">% En Riesgo</div>
+                        <div class="metric-value-section">
+                            <div class="metric-main-number">62%</div>
+                            <div class="metric-unit-text">Del Total</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="far fa-shield-check"></i>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Sin Riesgo</div>
+                        <div class="metric-value-section">
+                            <div class="metric-main-number">140 / 150</div>
+                            <div class="metric-unit-text">Colaboradores</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs Container -->
+            <div class="tabs-container">
+                <div style="background: #ffff00; color: #000000; padding: 10px; font-weight: bold; text-align: center;">
+                    🚨 DEBUG: ESTE ES EL CONTENEDOR DE TABS - SI VES ESTO, EL HTML ESTÁ FUNCIONANDO
+                </div>
+                <div class="tabs-header">
+                    <button class="tab-button active" data-tab="general">
+                        <i class="far fa-chart-bar"></i>
+                        <span>General</span>
+                    </button>
+                    <button class="tab-button" data-tab="dimension">
+                        <i class="far fa-layer-group"></i>
+                        <span>Dimensión</span>
+                    </button>
+                    <button class="tab-button" data-tab="individual">
+                        <i class="far fa-user"></i>
+                        <span>Individual</span>
+                    </button>
+                </div>
+                
+                <!-- Tab Content -->
+                <div class="tab-panel active" id="general-panel">
+                <div class="panel-content">
+                    <div class="table-header">
+                        <h3>Vista General de Resultados NOM-035</h3>
+                        <div class="table-controls">
+                            <!-- Campo de búsqueda desplegable -->
+                            <div id="table-search-container" style="display: none; position: relative;">
+                                <input type="text" id="table-search" placeholder="Buscar en resultados..." 
+                                       style="padding: 8px 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); width: 250px; font-size: 14px;">
+                                <button id="close-table-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer;">
+                                    <i class="far fa-times"></i>
+                                </button>
+                            </div>
+                            <button id="table-search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                <i class="far fa-search"></i>
+                            </button>
+                            <button id="table-filters-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                <i class="far fa-filter"></i>
+                                <span class="filter-badge" id="table-filter-badge" style="display: none;">0</span>
+                            </button>
+                            <div class="download-dropdown">
+                                <button class="ubits-button ubits-button--secondary ubits-button--sm" onclick="toggleDownloadDropdown()">
+                                    <i class="far fa-download"></i>
+                                    <span>Descargar</span>
+                                    <i class="far fa-chevron-down"></i>
+                                </button>
+                                <div class="download-dropdown-content" id="download-dropdown-content">
+                                    <a href="#" onclick="downloadCSV()">
+                                        <i class="far fa-file-csv"></i>
+                                        <span>CSV</span>
+                                    </a>
+                                    <a href="#" onclick="downloadPDF()">
+                                        <i class="far fa-file-pdf"></i>
+                                        <span>PDF</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <table class="results-table" id="results-table">
+                        <thead>
+                            <tr>
+                                <th>Categoría</th>
+                                <th>Dominio</th>
+                                <th>Dimensión</th>
+                                <th>Total Usuarios en Riesgo</th>
+                                <th>% Colaboradores Afectados</th>
+                                <th>Nivel de Riesgo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-tbody">
+                            <!-- Contenido de la tabla se carga dinámicamente -->
+                        </tbody>
+                    </table>
+                    
+                    <!-- Filters Side Panel -->
+                    <div class="filters-side-panel" id="table-filters-side-panel">
+                        <div class="filters-header">
+                            <h3>Filtros</h3>
+                            <button id="close-table-filters" class="ubits-button ubits-button--tertiary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                <i class="far fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="filters-content">
+                            <div class="filter-group">
+                                <label>Categoría</label>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Condiciones en el ambiente de trabajo" data-filter="category">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Condiciones en el ambiente de trabajo</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Carga de trabajo" data-filter="category">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Carga de trabajo</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Jornada de trabajo" data-filter="category">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Jornada de trabajo</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Liderazgo y Relaciones interpersonales" data-filter="category">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Liderazgo y Relaciones interpersonales</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Violencia laboral" data-filter="category">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Violencia laboral</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Entorno organizacional" data-filter="category">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Entorno organizacional</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label>Nivel de Riesgo</label>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="nulo" data-filter="risk-level">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Nulo</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="bajo" data-filter="risk-level">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Bajo</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="medio" data-filter="risk-level">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Medio</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="alto" data-filter="risk-level">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Alto</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label>Área</label>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Tecnología" data-filter="area">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Tecnología</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Ventas" data-filter="area">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Ventas</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Marketing" data-filter="area">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Marketing</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Recursos Humanos" data-filter="area">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Recursos Humanos</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label>Cargo</label>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Desarrollador" data-filter="position">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Desarrollador</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Diseñador" data-filter="position">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Diseñador</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Gerente" data-filter="position">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Gerente</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Analista" data-filter="position">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Analista</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label>Género</label>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Masculino" data-filter="gender">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Masculino</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Femenino" data-filter="gender">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Femenino</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Otro" data-filter="gender">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Otro</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label>Estado Civil</label>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Soltero" data-filter="marital-status">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Soltero</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Casado" data-filter="marital-status">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Casado</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Divorciado" data-filter="marital-status">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Divorciado</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label>Rango de Edad</label>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="18-25" data-filter="age-range">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">18-25</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="26-35" data-filter="age-range">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">26-35</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="36-45" data-filter="age-range">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">36-45</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="46+" data-filter="age-range">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">46+</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label>País</label>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Colombia" data-filter="country">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Colombia</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="México" data-filter="country">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">México</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Argentina" data-filter="country">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Argentina</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Chile" data-filter="country">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Chile</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label>Ciudad</label>
+                                <div class="filter-options">
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Bogotá" data-filter="city">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Bogotá</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Medellín" data-filter="city">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Medellín</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Cali" data-filter="city">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Cali</span>
+                                    </label>
+                                    <label class="filter-option">
+                                        <input type="checkbox" value="Barranquilla" data-filter="city">
+                                        <span class="checkmark"></span>
+                                        <span class="filter-text">Barranquilla</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filters-actions">
+                            <button id="apply-table-filters" class="ubits-button ubits-button--primary ubits-button--sm">
+                                <i class="far fa-check"></i>
+                                <span>Aplicar</span>
+                            </button>
+                            <button id="clear-table-filters" class="ubits-button ubits-button--secondary ubits-button--sm">
+                                <i class="far fa-times"></i>
+                                <span>Limpiar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filters Overlay -->
+                    <div class="filters-overlay" id="table-filters-overlay"></div>
+                </div>
+                </div>
+                
+                <!-- Tab Dimensión -->
+                <div class="tab-panel" id="dimension-panel">
+                    <div class="panel-content">
+                        <div class="table-header">
+                            <h3>Análisis por Dimensiones NOM-035</h3>
+                            <div class="table-controls">
+                                <button id="load-dimension-btn" class="ubits-button ubits-button--primary ubits-button--sm" style="margin-right: 8px;">
+                                    <i class="far fa-refresh"></i>
+                                    <span>Cargar Dimensiones</span>
+                                </button>
+                                <button id="dimension-search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                    <i class="far fa-search"></i>
+                                </button>
+                                <button id="dimension-filters-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                    <i class="far fa-filter"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <table class="results-table" id="dimension-results-table">
+                            <thead>
+                                <tr>
+                                    <th>Dimensión</th>
+                                    <th>Dominio</th>
+                                    <th>Total Usuarios en Riesgo</th>
+                                    <th>% Colaboradores Afectados</th>
+                                    <th>Nivel de Riesgo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dimension-results-tbody">
+                                <!-- Contenido estático para prueba -->
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="background: #6b7280; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">
+                                                1
+                                            </div>
+                                            <span style="font-weight: 600;">Condiciones físicas, seguridad y comodidad</span>
+                                        </div>
+                                    </td>
+                                    <td style="color: #6b7280; font-weight: 500;">Condiciones en el ambiente de trabajo</td>
+                                    <td style="text-align: center; font-weight: 600;">12</td>
+                                    <td style="text-align: center; font-weight: 600;">8.0%</td>
+                                    <td style="text-align: center;">
+                                        <span class="risk-badge bajo" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; background: #10b981; color: white;">
+                                            Bajo
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="background: #6b7280; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">
+                                                2
+                                            </div>
+                                            <span style="font-weight: 600;">Exigencias cuantitativas, mentales y emocionales</span>
+                                        </div>
+                                    </td>
+                                    <td style="color: #6b7280; font-weight: 500;">Carga de trabajo</td>
+                                    <td style="text-align: center; font-weight: 600;">43</td>
+                                    <td style="text-align: center; font-weight: 600;">28.7%</td>
+                                    <td style="text-align: center;">
+                                        <span class="risk-badge medio" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; background: #f59e0b; color: white;">
+                                            Medio
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div style="background: #6b7280; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">
+                                                3
+                                            </div>
+                                            <span style="font-weight: 600;">Duración, distribución y pausas</span>
+                                        </div>
+                                    </td>
+                                    <td style="color: #6b7280; font-weight: 500;">Jornada de trabajo</td>
+                                    <td style="text-align: center; font-weight: 600;">22</td>
+                                    <td style="text-align: center; font-weight: 600;">14.7%</td>
+                                    <td style="text-align: center;">
+                                        <span class="risk-badge medio" style="padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; background: #f59e0b; color: white;">
+                                            Medio
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Tab Individual -->
+                <div class="tab-panel" id="individual-panel">
+                    <div class="panel-content">
+                        <div style="padding: 40px; text-align: center;">
+                            <h3 style="color: #1f2937; margin-bottom: 16px;">Análisis Individual</h3>
+                            <p style="color: #6b7280; margin-bottom: 24px;">Aquí va el contenido del tab Individual con análisis individual de participantes.</p>
+                            <div style="background: #f3f4f6; padding: 20px; border-radius: 8px; display: inline-block;">
+                                <i class="far fa-user" style="font-size: 48px; color: #9ca3af; margin-bottom: 16px;"></i>
+                                <p style="color: #6b7280; margin: 0;">Contenido individual en desarrollo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="components/sidebar.js"></script>
+    <script src="components/tab-bar.js"></script>
+    <script src="components/sub-nav.js"></script>
+    <script src="components/alert.js"></script>
+    <script src="components/toast.js"></script>
+    <script src="components/profile-menu.js"></script>
+    <script src="components/floating-menu.js"></script>
+    <script src="components/button.js"></script>
+    <script src="components/input.js"></script>
+    <script src="profile.js"></script>
+
+    <script>
+        // Funciones para el dropdown de descarga
+        function toggleDownloadDropdown() {
+            const dropdown = document.getElementById('download-dropdown-content');
+            dropdown.classList.toggle('show');
+        }
+
+        function downloadCSV() {
+            alert('Descargando CSV de resultados de entorno laboral...');
+            closeDownloadDropdown();
+        }
+
+        function downloadPDF() {
+            alert('Descargando PDF de resultados de entorno laboral...');
+            closeDownloadDropdown();
+        }
+
+        function closeDownloadDropdown() {
+            const dropdown = document.getElementById('download-dropdown-content');
+            dropdown.classList.remove('show');
+        }
+
+        // Cerrar dropdown al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('download-dropdown-content');
+            if (dropdown && !dropdown.contains(event.target)) {
+                closeDownloadDropdown();
+            }
+        });
+
+        // Función para obtener el texto del nivel de riesgo
+        function getRiskLevelText(level) {
+            const levels = {
+                'nulo': 'Nulo',
+                'bajo': 'Bajo',
+                'medio': 'Medio',
+                'alto': 'Alto'
+            };
+            return levels[level] || level;
+        }
+
+        // Función para obtener la clase CSS del nivel de riesgo
+        function getRiskLevelClass(level) {
+            const classes = {
+                'nulo': 'risk-nulo',
+                'bajo': 'risk-bajo',
+                'medio': 'risk-medio',
+                'alto': 'risk-alto'
+            };
+            return classes[level] || 'risk-nulo';
+        }
+
+        // Función para alternar la visibilidad de las filas de categoría
+        function toggleCategoryRow(row) {
+            const chevron = row.querySelector('.category-chevron');
+            const categoryName = row.querySelector('.category-header-row span').textContent;
+
+            const domainCell = row.querySelector('.category-domain-info');
+            const dimensionCell = row.querySelector('.category-dimension-info');
+
+            const allRows = Array.from(document.querySelectorAll('.results-table tbody tr'));
+            const currentIndex = allRows.indexOf(row);
+            const detailRows = [];
+
+            for (let i = currentIndex + 1; i < allRows.length; i++) {
+                const nextRow = allRows[i];
+                if (nextRow.classList.contains('category-detail')) {
+                    detailRows.push(nextRow);
+                } else if (nextRow.classList.contains('category-summary')) {
+                    break;
+                }
+            }
+
+            const isOpen = detailRows.length > 0 && detailRows[0].style.display !== 'none';
+
+            detailRows.forEach(detailRow => {
+                detailRow.style.display = isOpen ? 'none' : '';
+            });
+
+            // Toggle de la información en el encabezado
+            if (isOpen) {
+                // Cerrar: mostrar información de dominio y dimensión en el encabezado
+                if (domainCell) {
+                    domainCell.style.color = '#374151';
+                    domainCell.style.textShadow = 'none';
+                }
+                if (dimensionCell) {
+                    dimensionCell.style.color = '#6b7280';
+                    dimensionCell.style.textShadow = 'none';
+                }
+                row.classList.remove('open');
+            } else {
+                // Abrir: hacer texto transparente pero mantener el espacio
+                if (domainCell) {
+                    domainCell.style.color = 'transparent';
+                    domainCell.style.textShadow = 'none';
+                }
+                if (dimensionCell) {
+                    dimensionCell.style.color = 'transparent';
+                    dimensionCell.style.textShadow = 'none';
+                }
+                row.classList.add('open');
+            }
+        }
+
+        // Función para cargar los resultados de la tabla
+        function loadTableResults() {
+            const resultsTbody = document.getElementById('results-tbody');
+            
+            const resultsData = [
+                {
+                    category: 'Condiciones en el ambiente de trabajo',
+                    domain: 'Condiciones en el ambiente de trabajo',
+                    dimension: 'Condiciones físicas, seguridad y comodidad',
+                    riskCount: 12,
+                    percentage: 8.0,
+                    riskLevel: 'bajo'
+                },
+                {
+                    category: 'Carga de trabajo',
+                    domain: 'Carga de trabajo',
+                    dimension: 'Exigencias cuantitativas, mentales y emocionales',
+                    riskCount: 43,
+                    percentage: 28.7,
+                    riskLevel: 'medio'
+                },
+                {
+                    category: 'Jornada de trabajo',
+                    domain: 'Jornada de trabajo',
+                    dimension: 'Duración, distribución y pausas',
+                    riskCount: 22,
+                    percentage: 14.7,
+                    riskLevel: 'medio'
+                },
+                {
+                    category: 'Liderazgo y Relaciones interpersonales',
+                    domain: 'Liderazgo y Relaciones interpersonales',
+                    dimension: 'Estilo de liderazgo, comunicación, apoyo y relaciones',
+                    riskCount: 26,
+                    percentage: 17.3,
+                    riskLevel: 'bajo'
+                },
+                {
+                    category: 'Violencia laboral',
+                    domain: 'Violencia laboral',
+                    dimension: 'Acoso, hostigamiento y violencia',
+                    riskCount: 5,
+                    percentage: 3.3,
+                    riskLevel: 'nulo'
+                },
+                {
+                    category: 'Entorno organizacional',
+                    domain: 'Entorno organizacional',
+                    dimension: 'Cultura organizacional y políticas',
+                    riskCount: 77,
+                    percentage: 51.3,
+                    riskLevel: 'alto'
+                }
+            ];
+
+            let htmlContent = '';
+            resultsData.forEach((result, index) => {
+                htmlContent += `
+                    <tr class="category-summary" onclick="toggleCategoryRow(this)">
+                        <td class="category-cell">
+                            <div class="category-header-row">
+                                <i class="far fa-chevron-right category-chevron"></i>
+                                <span>${result.category}</span>
+                            </div>
+                        </td>
+                        <td class="category-domain-info">${result.domain}</td>
+                        <td class="category-dimension-info">${result.dimension}</td>
+                        <td class="risk-count">${result.riskCount}</td>
+                        <td class="percentage">${result.percentage}%</td>
+                        <td>
+                            <div class="category-risk-info">
+                                <span class="risk-badge ${result.riskLevel}">${getRiskLevelText(result.riskLevel)}</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="category-detail" style="display: none;">
+                        <td colspan="6">
+                            <div class="category-detail-content">
+                                <h4>Detalles de ${result.category}</h4>
+                                <p>Información detallada sobre ${result.dimension}</p>
+                                <div class="detail-metrics">
+                                    <div class="detail-metric">
+                                        <span class="metric-label">Usuarios en riesgo:</span>
+                                        <span class="metric-value">${result.riskCount}</span>
+                                    </div>
+                                    <div class="detail-metric">
+                                        <span class="metric-label">Porcentaje afectado:</span>
+                                        <span class="metric-value">${result.percentage}%</span>
+                                    </div>
+                                    <div class="detail-metric">
+                                        <span class="metric-label">Nivel de riesgo:</span>
+                                        <span class="metric-value ${getRiskLevelClass(result.riskLevel)}">${getRiskLevelText(result.riskLevel)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            resultsTbody.innerHTML = htmlContent;
+        }
+
+        // Función para inicializar los tabs
+        function initializeTabs() {
+            console.log('Inicializando tabs...');
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            
+            console.log('Botones de tab encontrados:', tabButtons.length);
+            console.log('Paneles de tab encontrados:', tabPanels.length);
+
+            // Función para cambiar de tab
+            function switchTab(targetTab) {
+                console.log('Cambiando a tab:', targetTab);
+                
+                // Remover clase active de todos los botones
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Remover clase active de todos los paneles
+                tabPanels.forEach(panel => {
+                    panel.classList.remove('active');
+                });
+                
+                // Activar el botón correspondiente
+                const targetButton = document.querySelector(`[data-tab="${targetTab}"]`);
+                if (targetButton) {
+                    targetButton.classList.add('active');
+                    console.log('Activando botón:', targetTab);
+                }
+                
+                // Activar el panel correspondiente
+                const targetPanel = document.getElementById(`${targetTab}-panel`);
+                if (targetPanel) {
+                    targetPanel.classList.add('active');
+                    console.log('Activando panel:', targetPanel.id);
+                } else {
+                    console.error('No se encontró el panel:', `${targetTab}-panel`);
+                }
+            }
+
+            // Agregar event listeners a todos los botones
+            tabButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetTab = button.getAttribute('data-tab');
+                    console.log('Click en tab:', targetTab);
+                    switchTab(targetTab);
+                });
+            });
+            
+            // Verificar estado inicial
+            const activeButton = document.querySelector('.tab-button.active');
+            const activePanel = document.querySelector('.tab-panel.active');
+            console.log('Botón activo inicial:', activeButton ? activeButton.getAttribute('data-tab') : 'ninguno');
+            console.log('Panel activo inicial:', activePanel ? activePanel.id : 'ninguno');
+        }
+
+        // Inicialización cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚨 DEBUG: Inicializando página con tabs...');
+            
+            // Debug: Verificar si los elementos existen
+            const tabsContainer = document.querySelector('.tabs-container');
+            const tabsHeader = document.querySelector('.tabs-header');
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+            
+            console.log('🚨 DEBUG: tabs-container encontrado:', tabsContainer);
+            console.log('🚨 DEBUG: tabs-header encontrado:', tabsHeader);
+            console.log('🚨 DEBUG: tab-buttons encontrados:', tabButtons.length);
+            console.log('🚨 DEBUG: tab-panels encontrados:', tabPanels.length);
+            
+            if (tabsContainer) {
+                console.log('🚨 DEBUG: tabs-container visible:', tabsContainer.offsetHeight > 0);
+                console.log('🚨 DEBUG: tabs-container display:', window.getComputedStyle(tabsContainer).display);
+            }
+            
+            // Cargar componentes
+            loadSidebar('ninguno');
+            loadSubNav('top-nav-container', 'template');
+            loadTabBar('tab-bar-container');
+            loadProfileMenu('profile-menu-container');
+            loadFloatingMenu('floating-menu-container');
+            
+            // Inicializar tabs
+            initializeTabs();
+            
+            // Cargar contenido de la tabla
+            loadTableResults();
+            
+            // Abrir la primera categoría por defecto
+            const firstCategoryRow = document.querySelector('.category-summary');
+            if (firstCategoryRow) {
+                toggleCategoryRow(firstCategoryRow);
+            }
+            
+            console.log('🚨 DEBUG: Página inicializada correctamente con tabs');
+            
+            // Debug adicional después de 2 segundos
+            setTimeout(() => {
+                console.log('🚨 DEBUG: Verificación después de 2 segundos...');
+                const tabsContainerAfter = document.querySelector('.tabs-container');
+                if (tabsContainerAfter) {
+                    console.log('🚨 DEBUG: tabs-container altura:', tabsContainerAfter.offsetHeight);
+                    console.log('🚨 DEBUG: tabs-container ancho:', tabsContainerAfter.offsetWidth);
+                    console.log('🚨 DEBUG: tabs-container posición:', tabsContainerAfter.getBoundingClientRect());
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

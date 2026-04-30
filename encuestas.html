@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UBITS Playground - Dashboard</title>
+    
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "tuefzltpon");
+    </script>
+    
+    <!-- Estilos locales -->
+    <link rel="stylesheet" href="ubits-colors.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fontawesome-icons.css">
+    <link rel="stylesheet" href="ubits-typography.css">
+    <link rel="stylesheet" href="components/sub-nav.css">
+    <link rel="stylesheet" href="components-sidebar.css">
+    <link rel="stylesheet" href="components/tab-bar.css">
+    <link rel="stylesheet" href="components/floating-menu.css">
+    <link rel="stylesheet" href="components/profile-menu.css">
+    <link rel="stylesheet" href="components/button.css">
+    <link rel="stylesheet" href="profile.css">
+    <style>
+        /* ===== SISTEMA DE ONBOARDING ===== */
+        
+        /* Overlay principal del onboarding - SIN VELO GRIS GLOBAL */
+        .onboarding-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 9999;
+            display: none;
+        }
+        
+        /* Spotlight para destacar elementos - CON VELO GRIS ALREDEDOR */
+        .onboarding-spotlight {
+            position: absolute;
+            border: 3px solid var(--ubits-accent-brand);
+            border-radius: 8px;
+            background: transparent;
+            z-index: 10000;
+            transition: all 0.3s ease;
+            /* Velo gris solo alrededor del elemento */
+            box-shadow: 
+                0 0 0 9999px var(--ubits-bg-dim),
+                inset 0 0 0 3px transparent;
+        }
+        
+        /* Tooltip del onboarding */
+        .onboarding-tooltip {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px var(--ubits-bg-dim);
+            z-index: 10001;
+            max-width: 350px;
+            font-family: 'Noto Sans', sans-serif;
+        }
+        
+        .onboarding-tooltip h3 {
+            margin: 0 0 5px 0;
+            color: var(--ubits-accent-brand);
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .onboarding-tooltip h4 {
+            margin: 0 0 12px 0;
+            color: var(--ubits-fg-1-high);
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .onboarding-tooltip p {
+            margin: 0 0 16px 0;
+            color: var(--ubits-fg-1-medium);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .onboarding-tooltip .tooltip-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        
+        .onboarding-tooltip .btn-next {
+            background: var(--ubits-accent-brand);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .onboarding-tooltip .btn-next:hover {
+            background: var(--ubits-button-primary-hover);
+        }
+        
+        /* Animación de entrada */
+        @keyframes slideInTooltip {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .onboarding-tooltip {
+            animation: slideInTooltip 0.3s ease-out;
+        }
+        
+        /* ===== BOTÓN DE FEEDBACK FLOTANTE ===== */
+        .feedback-trigger {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--ubits-accent-brand);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 20px var(--ubits-button-focus-ring);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        
+        .feedback-trigger:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px var(--ubits-button-focus-ring);
+        }
+        
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 4px 20px var(--ubits-button-focus-ring); }
+            50% { box-shadow: 0 4px 20px var(--ubits-button-focus-ring), 0 0 0 10px var(--ubits-button-active-bg); }
+            100% { box-shadow: 0 4px 20px var(--ubits-button-focus-ring); }
+        }
+        
+        /* ===== MODAL FLOTANTE DE FEEDBACK ===== */
+        .feedback-modal {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            z-index: 10000;
+            display: none;
+        }
+        
+        .feedback-modal.show {
+            display: block;
+        }
+
+        /* Modal deshabilitado */
+        .feedback-modal.disabled {
+            pointer-events: none;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .feedback-modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 350px;
+            max-height: 400px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-shadow: 0 20px 40px var(--ubits-bg-dim);
+            animation: slideInFloating 0.3s ease-out;
+            border: 1px solid var(--ubits-border-1);
+            box-sizing: border-box;
+        }
+        
+        @keyframes slideInFloating {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        @keyframes slideInModal {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .feedback-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--ubits-border-1);
+        }
+        
+        .feedback-modal-header h3 {
+            margin: 0;
+            color: var(--ubits-fg-1-high);
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .feedback-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--ubits-fg-1-medium);
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+        
+        .feedback-close:hover {
+            background: var(--ubits-bg-2);
+            color: var(--ubits-fg-1-high);
+        }
+        
+        .feedback-modal-body {
+            padding: 20px;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+        
+        .feedback-form-group {
+            margin-bottom: 20px;
+            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+        
+        .feedback-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--ubits-fg-1-high);
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .feedback-form-group input,
+        .feedback-form-group select,
+        .feedback-form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--ubits-border-1);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+        
+        .feedback-form-group input:focus,
+        .feedback-form-group select:focus,
+        .feedback-form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .feedback-form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+            max-width: 100%;
+            overflow-x: hidden;
+            word-wrap: break-word;
+        }
+        
+        .feedback-form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+        
+        .feedback-cancel,
+        .feedback-submit {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .feedback-cancel {
+            background: var(--ubits-bg-2);
+            color: var(--ubits-fg-1-high);
+        }
+        
+        .feedback-cancel:hover {
+            background: #e5e7eb;
+        }
+        
+        .feedback-submit {
+            background: var(--ubits-accent-brand);
+            color: white;
+        }
+        
+        .feedback-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .feedback-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* ===== ESTADOS DE CARGA ===== */
+        .feedback-loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--ubits-fg-1-medium);
+        }
+        
+        .feedback-loading.show {
+            display: flex;
+        }
+        
+        .feedback-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e7eb;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* ===== MENSAJES DE ESTADO ===== */
+        .feedback-message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .feedback-message.success {
+            background: var(--ubits-feedback-bg-success-subtle);
+            color: var(--ubits-feedback-fg-success-subtle);
+            border: 1px solid var(--ubits-feedback-accent-success);
+        }
+        
+        .feedback-message.error {
+            background: var(--ubits-feedback-bg-error-subtle);
+            color: var(--ubits-feedback-fg-error-subtle);
+            border: 1px solid var(--ubits-feedback-accent-error);
+        }
+        
+        /* ¡A LA MIERDA LAS REGLAS PENDEJAS! */
+
+        /* Custom Select Styles - Exactamente iguales a la página emocional */
+        .filter-group {
+            margin-bottom: 24px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--ubits-fg-1-medium);
+            font-size: 14px;
+        }
+
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-trigger {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--ubits-border-1);
+            border-radius: 6px;
+            background: var(--ubits-bg-1);
+            color: var(--ubits-fg-1-high);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .select-trigger:hover {
+            border-color: var(--ubits-fg-disabled);
+        }
+
+        .select-trigger.active {
+            border-color: var(--ubits-accent-brand);
+            box-shadow: 0 0 0 3px var(--ubits-button-focus-ring);
+        }
+
+        .select-trigger .select-text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .select-trigger .select-arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .select-trigger.active .select-arrow {
+            transform: rotate(180deg);
+        }
+
+        .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--ubits-bg-1);
+            border: 1px solid var(--ubits-border-1);
+            border-radius: 6px;
+            box-shadow: 0 4px 12px var(--ubits-bg-dim);
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .select-dropdown.show {
+            display: block;
+        }
+
+        .select-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .select-option:hover {
+            background: var(--ubits-bg-2);
+        }
+
+        .select-option.selected {
+            background: var(--ubits-button-active-bg);
+            color: var(--ubits-accent-brand);
+        }
+
+        .select-option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .select-option .option-text {
+            flex: 1;
+        }
+
+        /* Badge de filtros */
+        #filter-badge {
+            color: white !important;
+        }
+
+        /* Estilos específicos para content-sections - idéntico a left-wrapper */
+        .content-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+            overflow: visible;
+            max-height: none;
+        }
+
+        /* Espaciador para alinear elementos - idéntico a left-wrapper */
+        .content-sections > *:not(:last-child):not(.section-dual):not(.section-single):not(.section-triple):not(.section-quad) {
+            margin-bottom: 16px;
+        }
+
+        /* Espaciador final - idéntico a left-wrapper */
+        .content-sections::after {
+            content: '';
+            height: 0px;
+            flex-shrink: 0;
+        }
+
+        /* Reducir el gap del último elemento - idéntico a left-wrapper */
+        .content-sections > *:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Secciones de widgets */
+        .section-single {
+            display: flex;
+            width: 100%;
+        }
+
+        .section-dual {
+            display: flex;
+            gap: 20px;
+        }
+
+        .section-triple {
+            display: flex;
+            gap: 20px;
+        }
+
+        .section-quad {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Widgets en secciones - sin altura mínima forzada */
+        .section-single > div,
+        .section-dual > div,
+        .section-triple > div,
+        .section-quad > div {
+            background-color: var(--ubits-bg-1);
+            border: none;
+            border-radius: 8px;
+            padding: 16px !important; /* !important para sobrescribir el reset */
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Distribución de anchos */
+        .section-single > div {
+            flex: 1;
+        }
+
+        .section-dual > div {
+            flex: 1;
+        }
+
+        .section-triple > div {
+            flex: 1;
+        }
+
+        .section-quad > div {
+            flex: 1;
+        }
+
+        /* Responsive para secciones */
+        @media (max-width: 1023px) {
+            .content-sections {
+                padding-bottom: 0;
+            }
+            
+            .section-dual,
+            .section-triple,
+            .section-quad {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            /* Ajustar widgets para móvil - sin altura mínima forzada */
+        }
+
+        @media (max-width: 480px) {
+            /* Padding reducido en móviles pequeños - sin altura mínima forzada */
+            .section-single > div,
+            .section-dual > div,
+            .section-triple > div,
+            .section-quad > div {
+                padding: 12px !important; /* !important para sobrescribir el reset */
+            }
+        }
+
+        /* Estilos mejorados para la tabla */
+        .surveys-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px var(--ubits-bg-dim);
+        }
+
+        .surveys-table thead {
+            background: var(--ubits-bg-2);
+        }
+
+        .surveys-table th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--ubits-fg-1-medium);
+            border: none;
+            font-size: 14px;
+        }
+
+        .surveys-table tbody tr {
+            border-bottom: 1px solid var(--ubits-border-1);
+            transition: background-color 0.2s ease;
+        }
+
+        .surveys-table tbody tr:hover {
+            background: var(--ubits-bg-2);
+        }
+
+        .surveys-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .surveys-table td {
+            padding: 16px;
+            border: none;
+            vertical-align: middle;
+        }
+
+        .surveys-table .survey-name {
+            color: var(--ubits-fg-1-high);
+            font-weight: 500;
+        }
+
+        .surveys-table .survey-type {
+            color: var(--ubits-fg-1-medium);
+        }
+
+        .surveys-table .survey-dates {
+            color: var(--ubits-fg-1-medium);
+        }
+
+        .surveys-table .survey-participants {
+            color: var(--ubits-fg-1-medium);
+            text-align: center;
+        }
+
+        /* Status badges estilo minimalista */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid;
+            width: 100px;
+            text-align: center;
+        }
+
+        .status-badge.completed {
+            background: var(--ubits-feedback-bg-success-subtle);
+            color: var(--ubits-feedback-fg-success-subtle);
+            border-color: var(--ubits-feedback-accent-success);
+        }
+
+        .status-badge.in-progress {
+            background: var(--ubits-feedback-bg-info-subtle);
+            color: var(--ubits-feedback-fg-info-subtle);
+            border-color: var(--ubits-feedback-accent-info);
+        }
+
+        .status-badge.draft {
+            background: var(--ubits-bg-2);
+            color: var(--ubits-fg-1-medium);
+            border-color: var(--ubits-border-1);
+        }
+
+        .status-badge.pending {
+            background: var(--ubits-bg-2);
+            color: var(--ubits-fg-1-medium);
+            border-color: var(--ubits-border-1);
+        }
+
+        /* Progress bars mejorados */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .progress-bar {
+            width: 120px;
+            height: 12px;
+            background: var(--ubits-bg-2);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--ubits-border-1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--ubits-accent-brand);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-fill.completed {
+            background: var(--ubits-feedback-accent-success);
+        }
+
+        .progress-fill.in-progress {
+            background: var(--ubits-accent-brand);
+        }
+
+        .progress-fill.draft {
+            background: var(--ubits-fg-disabled);
+        }
+
+        .progress-text {
+            color: var(--ubits-fg-1-high);
+            font-size: 13px;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* Checkboxes mejorados */
+        .table-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--ubits-accent-brand);
+            cursor: pointer;
+        }
+
+        /* Clickable rows */
+        .clickable-row {
+            cursor: pointer;
+        }
+
+        .clickable-row:hover {
+            background: var(--ubits-bg-2) !important;
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- ===== SISTEMA DE ONBOARDING ELIMINADO ===== -->
+
+    <!-- ===== BOTÓN DE FEEDBACK FLOTANTE ===== -->
+    <div class="feedback-trigger" id="feedbackTrigger" onclick="openFeedbackModal()">
+        💬
+    </div>
+    
+    <!-- ===== SISTEMA DE ONBOARDING ===== -->
+    <div class="onboarding-overlay" id="onboardingOverlay">
+        <div class="onboarding-spotlight" id="onboardingSpotlight"></div>
+        <div class="onboarding-tooltip" id="onboardingTooltip">
+            <h3 id="tooltipStep">Paso 1</h3>
+            <h4 id="tooltipTitle">¡Bienvenido al Prototipo!</h4>
+            <p id="tooltipContent">Te vamos a guiar paso a paso por las funcionalidades principales.</p>
+            <div class="tooltip-actions">
+                <button class="btn-next" onclick="nextOnboardingStep()">Siguiente</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL DE FEEDBACK ===== -->
+    <div class="feedback-modal" id="feedbackModal">
+        <div class="feedback-modal-content">
+            <div class="feedback-modal-header">
+                <h3>💬 Deja tu Feedback</h3>
+                <button class="feedback-close" onclick="closeFeedbackModal()">&times;</button>
+            </div>
+            <div class="feedback-modal-body">
+                <form id="feedbackForm">
+                    <div class="feedback-form-group">
+                        <label for="feedbackSection">Sección actual:</label>
+                        <select id="feedbackSection" name="section" required>
+                            <option value="">Selecciona una sección</option>
+                            <option value="Home - Encuestas">Home - Encuestas</option>
+                            <option value="Resultados Acontecimientos traumáticos">Resultados Acontecimientos traumáticos</option>
+                            <option value="Resultados Riesgo psicosocial">Resultados Riesgo psicosocial</option>
+                            <option value="Vista General">Vista General</option>
+                            <option value="Descarga de Reportes">Descarga de Reportes</option>
+                            <option value="Otra">Otra</option>
+                        </select>
+                    </div>
+                    <div class="feedback-form-group">
+                        <label for="feedbackComment">Tu comentario:</label>
+                        <textarea id="feedbackComment" name="comment" placeholder="¿Qué funciona bien? ¿Qué falta? ¿Qué mejorarías? ¿Qué necesita tu empresa?" required></textarea>
+                    </div>
+                    <div class="feedback-form-actions">
+                        <button type="button" class="feedback-cancel" onclick="closeFeedbackModal()">Cancelar</button>
+                        <button type="submit" class="feedback-submit">Enviar Feedback</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <div class="tooltip" id="tooltip"></div>
+        
+        <!-- Sidebar Container -->
+        <div id="sidebar-container"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navigation -->
+            <div id="top-nav-container"></div>
+            
+            <!-- Botones de acción independientes -->
+            <div style="padding: 16px 24px;">
+                <div style="display: flex; justify-content: flex-end; gap: 12px;">
+                    <button class="ubits-button ubits-button--secondary ubits-button--md">
+                        <i class="far fa-clock"></i>
+                        <span>Datos demográficos</span>
+                    </button>
+                    <button class="ubits-button ubits-button--secondary ubits-button--md">
+                        <i class="far fa-file-plus"></i>
+                        <span>Crear con plantilla</span>
+                    </button>
+                    <button class="ubits-button ubits-button--primary ubits-button--md">
+                        <i class="far fa-plus"></i>
+                        <span>Crear encuesta</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Content wrapper con secciones de widgets -->
+                <div class="content-sections">
+                    <!-- Sección contenido encuestas -->
+                    <div class="section-single">
+                        <div class="widget-contenido-encuestas">
+                            <!-- Header con título y botones de acción -->
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <h1 class="ubits-heading-h1" style="margin: 0; color: var(--ubits-fg-1-high);">Lista de encuestas</h1>
+                                    <span class="ubits-body-md-regular" id="resultados-count" style="color: var(--ubits-fg-1-medium);">2 encuestas</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <!-- Campo de búsqueda desplegable -->
+                                    <div id="search-container" style="display: none; position: relative;">
+                                        <input type="text" id="search-input" placeholder="Buscar encuestas..." 
+                                               style="padding: 8px 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); width: 250px; font-size: 14px;">
+                                        <button id="close-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer;">
+                                            <i class="far fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <button id="search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                        <i class="far fa-search"></i>
+                                    </button>
+                                    <button id="filter-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px; position: relative;">
+                                        <i class="far fa-filter"></i>
+                                        <span id="filter-badge" style="position: absolute; top: -8px; right: -8px; background: var(--ubits-accent-brand); color: white !important; border-radius: 50%; width: 20px; height: 20px; display: none; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">0</span>
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <!-- Tabla de encuestas mejorada -->
+                            <table class="surveys-table">
+                                <!-- Header de la tabla -->
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" class="table-checkbox">
+                                        </th>
+                                        <th>Nombre de la encuesta</th>
+                                        <th>Tipo</th>
+                                        <th>Estado</th>
+                                        <th>Fecha inicio</th>
+                                        <th>Fecha cierre</th>
+                                        <th>Participantes</th>
+                                        <th>% de finalización</th>
+                                    </tr>
+                                </thead>
+                                    <!-- Cuerpo de la tabla -->
+                                    <tbody>
+                                        <!-- Fila 1: NOM 035 - Acontecimientos traumáticos -->
+                                        <tr class="clickable-row" onclick="window.location.href='resultados-nom035.html'">
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox" onclick="event.stopPropagation();">
+                                            </td>
+                                            <td class="survey-name">NOM 035 2024</td>
+                                            <td class="survey-type">NOM 035 - Acontecimientos traumáticos</td>
+                                            <td>
+                                                <span class="status-badge completed">Completado</span>
+                                            </td>
+                                            <td class="survey-dates">15 octubre 2024</td>
+                                            <td class="survey-dates">15 noviembre 2024</td>
+                                            <td class="survey-participants">150</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill completed" style="width: 100%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">100%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 2: NOM 035 - Riesgo psicosocial -->
+                                        <tr class="clickable-row" onclick="window.location.href='resultados-nom035-entorno.html'">
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox" onclick="event.stopPropagation();">
+                                            </td>
+                                            <td class="survey-name">NOM 035 2024</td>
+                                            <td class="survey-type">NOM 035 - Riesgo psicosocial</td>
+                                            <td>
+                                                <span class="status-badge completed">Completado</span>
+                                            </td>
+                                            <td class="survey-dates">15 octubre 2024</td>
+                                            <td class="survey-dates">15 noviembre 2024</td>
+                                            <td class="survey-participants">150</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill completed" style="width: 100%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">100%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Side Panel de Filtros -->
+    <div id="filter-side-panel" style="position: fixed; top: 0; right: -400px; width: 400px; height: 100vh; background: var(--ubits-bg-1); border-left: 1px solid var(--ubits-border-1); box-shadow: -4px 0 12px var(--ubits-bg-dim); z-index: 1000; transition: right 0.3s ease; display: flex; flex-direction: column;">
+        <!-- Header del side panel -->
+        <div style="padding: 20px; border-bottom: 1px solid var(--ubits-border-1); display: flex; justify-content: space-between; align-items: center;">
+            <h2 class="ubits-heading-h2" style="margin: 0; color: var(--ubits-fg-1-high);">Filtros</h2>
+            <button id="close-filter-panel" style="background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer; font-size: 18px;">
+                <i class="far fa-times"></i>
+            </button>
+        </div>
+        
+        <!-- Contenido del side panel -->
+        <div style="flex: 1; padding: 20px; overflow-y: auto; padding-bottom: 100px;">
+            <!-- Filtro por Estado -->
+            <div class="filter-group">
+                <label class="filter-label">Estado</label>
+                <div class="custom-select" id="estado-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Seleccionar estados</span>
+                        <i class="fas fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="estado-todos" checked>
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="Completado">
+                            <input type="checkbox" id="estado-completado">
+                            <span class="option-text">Completado</span>
+                        </div>
+                        <div class="select-option" data-value="En progreso">
+                            <input type="checkbox" id="estado-progreso">
+                            <span class="option-text">En progreso</span>
+                        </div>
+                        <div class="select-option" data-value="Borrador">
+                            <input type="checkbox" id="estado-borrador">
+                            <span class="option-text">Borrador</span>
+                        </div>
+                        <div class="select-option" data-value="Por iniciar">
+                            <input type="checkbox" id="estado-iniciar">
+                            <span class="option-text">Por iniciar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filtro por Tipo -->
+            <div class="filter-group">
+                <label class="filter-label">Tipo</label>
+                <div class="custom-select" id="tipo-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Seleccionar tipos</span>
+                        <i class="fas fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="tipo-todos" checked>
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="NOM 035">
+                            <input type="checkbox" id="tipo-nom035">
+                            <span class="option-text">NOM 035</span>
+                        </div>
+                        <div class="select-option" data-value="Cultura">
+                            <input type="checkbox" id="tipo-cultura">
+                            <span class="option-text">Cultura</span>
+                        </div>
+                        <div class="select-option" data-value="Clima">
+                            <input type="checkbox" id="tipo-clima">
+                            <span class="option-text">Clima</span>
+                        </div>
+                        <div class="select-option" data-value="eNPS">
+                            <input type="checkbox" id="tipo-enps">
+                            <span class="option-text">eNPS</span>
+                        </div>
+                        <div class="select-option" data-value="Satisfacción">
+                            <input type="checkbox" id="tipo-satisfaccion">
+                            <span class="option-text">Satisfacción</span>
+                        </div>
+                        <div class="select-option" data-value="Bienestar">
+                            <input type="checkbox" id="tipo-bienestar">
+                            <span class="option-text">Bienestar</span>
+                        </div>
+                        <div class="select-option" data-value="Liderazgo">
+                            <input type="checkbox" id="tipo-liderazgo">
+                            <span class="option-text">Liderazgo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filtro por Año -->
+            <div class="filter-group">
+                <label class="filter-label">Año</label>
+                <div class="custom-select" id="año-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Seleccionar años</span>
+                        <i class="fas fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="año-todos" checked>
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="2025">
+                            <input type="checkbox" id="año-2025">
+                            <span class="option-text">2025</span>
+                        </div>
+                        <div class="select-option" data-value="2024">
+                            <input type="checkbox" id="año-2024">
+                            <span class="option-text">2024</span>
+                        </div>
+                        <div class="select-option" data-value="2023">
+                            <input type="checkbox" id="año-2023">
+                            <span class="option-text">2023</span>
+                        </div>
+                        <div class="select-option" data-value="2022">
+                            <input type="checkbox" id="año-2022">
+                            <span class="option-text">2022</span>
+                        </div>
+                        <div class="select-option" data-value="2021">
+                            <input type="checkbox" id="año-2021">
+                            <span class="option-text">2021</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Botones de acción fijos en la parte inferior -->
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; gap: 12px; padding: 20px; background: var(--ubits-bg-1); border-top: 1px solid var(--ubits-border-1); box-shadow: 0 -2px 4px var(--ubits-bg-dim);">
+            <button id="apply-filters" class="ubits-button ubits-button--primary ubits-button--md" style="flex: 1;">
+                <i class="far fa-check"></i>
+                <span>Aplicar filtros</span>
+            </button>
+            <button id="clear-filters" class="ubits-button ubits-button--secondary ubits-button--md" style="flex: 1;">
+                <i class="far fa-times"></i>
+                <span>Limpiar filtros</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Overlay para cerrar el side panel -->
+    <div id="filter-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--ubits-bg-dim); z-index: 999; display: none;"></div>
+
+    <!-- Tab Bar Container -->
+    <div id="tab-bar-container"></div>
+
+    <!-- Floating Menu Container -->
+    <div id="floating-menu-container"></div>
+    
+    <!-- Profile Menu Container -->
+    <div id="profile-menu-container"></div>
+
+    <script src="components/sidebar.js"></script>
+    <script src="components/sub-nav.js"></script>
+    <script src="components/tab-bar.js"></script>
+    <script src="components/floating-menu.js"></script>
+    <script src="components/profile-menu.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Cargar componentes dinámicamente
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSidebar('sidebar-container', 'encuestas');
+            loadSubNav('top-nav-container', 'encuestas');
+            loadTabBar('tab-bar-container');
+            loadFloatingMenu('floating-menu-container');
+            loadProfileMenu('profile-menu-container');
+            
+            // Activar el tab "Encuestas" específicamente después de cargar el SubNav
+            setTimeout(() => {
+                // Remover active de todos los tabs (desktop y móvil)
+                document.querySelectorAll('.nav-tab, .hamburger-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Activar el tab Encuestas en desktop
+                const encuestasTab = document.querySelector('.nav-tab[data-tab="encuestas"]');
+                if (encuestasTab) {
+                    encuestasTab.classList.add('active');
+                }
+                
+                // Activar el tab Encuestas en móvil (hamburger menu)
+                const encuestasHamburger = document.querySelector('.hamburger-item[data-tab="encuestas"]');
+                if (encuestasHamburger) {
+                    encuestasHamburger.classList.add('active');
+                }
+                
+                // Activar el botón de encuestas en el sidebar
+                const encuestasButton = document.querySelector('.nav-button[data-section="encuestas"]');
+                if (encuestasButton) {
+                    // Remover active de todos los botones del sidebar
+                    document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+                    // Activar el botón de encuestas
+                    encuestasButton.classList.add('active');
+                }
+                
+                // Activar el botón "Módulos" del Tab-bar móvil
+                const modulosTabBarItem = document.querySelector('.tab-bar-item[data-tab="modulos"]');
+                if (modulosTabBarItem) {
+                    // Remover active de todos los items del tab-bar
+                    document.querySelectorAll('.tab-bar-item').forEach(item => item.classList.remove('active'));
+                    // Activar el item módulos
+                    modulosTabBarItem.classList.add('active');
+                }
+                
+                // Activar la opción "Encuestas" como direct link del floating menu
+                if (typeof setActiveDirectLink === 'function') {
+                    setActiveDirectLink('encuestas');
+                }
+            }, 200);
+        });
+
+        // Funcionalidad de búsqueda y filtros
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBtn = document.getElementById('search-btn');
+            const searchContainer = document.getElementById('search-container');
+            const searchInput = document.getElementById('search-input');
+            const closeSearch = document.getElementById('close-search');
+            const filterBtn = document.getElementById('filter-btn');
+            const filterSidePanel = document.getElementById('filter-side-panel');
+            const filterOverlay = document.getElementById('filter-overlay');
+            const closeFilterPanel = document.getElementById('close-filter-panel');
+            const applyFilters = document.getElementById('apply-filters');
+            const clearFilters = document.getElementById('clear-filters');
+            const resultadosCount = document.getElementById('resultados-count');
+            
+            // Datos originales de la tabla
+            let originalData = [];
+            let filteredData = [];
+            
+            // Inicializar datos
+            function initializeData() {
+                const rows = document.querySelectorAll('tbody tr');
+                originalData = Array.from(rows).map(row => {
+                    const cells = row.querySelectorAll('td');
+                    return {
+                        element: row,
+                        nombre: cells[1]?.textContent?.trim() || '',
+                        tipo: cells[2]?.textContent?.trim() || '',
+                        estado: cells[3]?.querySelector('span')?.textContent?.trim() || '',
+                        fechaInicio: cells[4]?.textContent?.trim() || '',
+                        fechaCierre: cells[5]?.textContent?.trim() || '',
+                        participantes: cells[6]?.textContent?.trim() || '',
+                        finalizacion: cells[7]?.textContent?.trim() || ''
+                    };
+                });
+                filteredData = [...originalData];
+            }
+            
+            // Mostrar/ocultar búsqueda
+            searchBtn.addEventListener('click', function() {
+                if (searchContainer.style.display === 'none') {
+                    searchContainer.style.display = 'block';
+                    searchInput.focus();
+                } else {
+                    searchContainer.style.display = 'none';
+                    searchInput.value = '';
+                    filterTable();
+                }
+            });
+            
+            // Cerrar búsqueda
+            closeSearch.addEventListener('click', function() {
+                searchContainer.style.display = 'none';
+                searchInput.value = '';
+                filterTable();
+            });
+            
+            // Búsqueda en tiempo real
+            searchInput.addEventListener('input', function() {
+                filterTable();
+            });
+            
+            // Mostrar/ocultar side panel de filtros
+            filterBtn.addEventListener('click', function() {
+                filterSidePanel.style.right = '0';
+                filterOverlay.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+            });
+            
+            // Cerrar side panel
+            function closeFilterSidePanel() {
+                filterSidePanel.style.right = '-400px';
+                filterOverlay.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restaurar scroll del body
+            }
+            
+            // Event listeners para cerrar el side panel
+            closeFilterPanel.addEventListener('click', closeFilterSidePanel);
+            filterOverlay.addEventListener('click', closeFilterSidePanel);
+            
+            // Aplicar filtros
+            applyFilters.addEventListener('click', function() {
+                filterTable();
+            });
+            
+            // Limpiar filtros
+            clearFilters.addEventListener('click', function() {
+                // Limpiar custom selects
+                const selectIds = ['estado-select', 'tipo-select', 'año-select'];
+                selectIds.forEach(selectId => {
+                    const select = document.getElementById(selectId);
+                    const checkboxes = select.querySelectorAll('input[type="checkbox"]');
+                    checkboxes.forEach(cb => cb.checked = false);
+                    // Marcar "todos" como seleccionado
+                    const todosOption = select.querySelector('.select-option[data-value="todos"]');
+                    if (todosOption) {
+                        const todosCheckbox = todosOption.querySelector('input[type="checkbox"]');
+                        if (todosCheckbox) todosCheckbox.checked = true;
+                    }
+                    updateSelectText(selectId);
+                });
+                
+                searchInput.value = '';
+                searchContainer.style.display = 'none';
+                filterTable();
+                closeFilterSidePanel(); // Cerrar el side panel después de limpiar
+            });
+            
+            // Función principal de filtrado
+            function filterTable() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const estadoFilters = getSelectedValues('estado-select');
+                const tipoFilters = getSelectedValues('tipo-select');
+                const añoFilters = getSelectedValues('año-select');
+                
+                // Ocultar todas las filas
+                originalData.forEach(item => {
+                    item.element.style.display = 'none';
+                });
+                
+                // Filtrar datos
+                filteredData = originalData.filter(item => {
+                    // Filtro de búsqueda
+                    const matchesSearch = !searchTerm || 
+                        item.nombre.toLowerCase().includes(searchTerm) ||
+                        item.tipo.toLowerCase().includes(searchTerm) ||
+                        item.estado.toLowerCase().includes(searchTerm);
+                    
+                    // Filtro de estado
+                    const matchesEstado = estadoFilters.length === 0 || estadoFilters.includes('todos') || estadoFilters.includes(item.estado);
+                    
+                    // Filtro de tipo
+                    const matchesTipo = tipoFilters.length === 0 || tipoFilters.includes('todos') || tipoFilters.includes(item.tipo);
+                    
+                    // Filtro de año
+                    const matchesAño = añoFilters.length === 0 || añoFilters.includes('todos') || añoFilters.includes(item.año);
+                    
+                    return matchesSearch && matchesEstado && matchesTipo && matchesAño;
+                });
+                
+                // Mostrar filas filtradas
+                filteredData.forEach(item => {
+                    item.element.style.display = '';
+                });
+                
+                // Actualizar contador
+                const count = filteredData.length;
+                resultadosCount.textContent = `${count} resultado${count !== 1 ? 's' : ''}`;
+                
+                // Actualizar badge de filtros
+                updateFilterBadge();
+            }
+
+            // Función para obtener valores seleccionados de un custom select
+            function getSelectedValues(selectId) {
+                const select = document.getElementById(selectId);
+                const checkboxes = select.querySelectorAll('input[type="checkbox"]:checked');
+                return Array.from(checkboxes).map(cb => cb.closest('.select-option').dataset.value);
+            }
+
+            // Función para actualizar el badge de filtros
+            function updateFilterBadge() {
+                const badge = document.getElementById('filter-badge');
+                const estadoFilters = getSelectedValues('estado-select');
+                const tipoFilters = getSelectedValues('tipo-select');
+                const añoFilters = getSelectedValues('año-select');
+                const searchTerm = searchInput.value;
+
+                let activeFiltersCount = 0;
+
+                // Contar filtros activos (excluyendo "todos")
+                if (estadoFilters.length > 0 && !estadoFilters.includes('todos')) {
+                    activeFiltersCount += estadoFilters.length;
+                }
+                if (tipoFilters.length > 0 && !tipoFilters.includes('todos')) {
+                    activeFiltersCount += tipoFilters.length;
+                }
+                if (añoFilters.length > 0 && !añoFilters.includes('todos')) {
+                    activeFiltersCount += añoFilters.length;
+                }
+                if (searchTerm) {
+                    activeFiltersCount += 1;
+                }
+
+                // Mostrar/ocultar badge
+                if (activeFiltersCount > 0) {
+                    badge.textContent = activeFiltersCount;
+                    badge.style.display = 'flex';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+
+            // Función para configurar custom selects
+            function setupCustomSelects() {
+                const customSelects = document.querySelectorAll('.custom-select');
+                
+                customSelects.forEach(select => {
+                    const trigger = select.querySelector('.select-trigger');
+                    const dropdown = select.querySelector('.select-dropdown');
+                    const options = select.querySelectorAll('.select-option');
+                    
+                    // Toggle dropdown
+                    trigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const isActive = trigger.classList.contains('active');
+                        
+                        // Cerrar otros selects
+                        customSelects.forEach(otherSelect => {
+                            if (otherSelect !== select) {
+                                otherSelect.querySelector('.select-trigger').classList.remove('active');
+                                otherSelect.querySelector('.select-dropdown').classList.remove('show');
+                            }
+                        });
+                        
+                        // Toggle current select
+                        if (isActive) {
+                            trigger.classList.remove('active');
+                            dropdown.classList.remove('show');
+                        } else {
+                            trigger.classList.add('active');
+                            dropdown.classList.add('show');
+                        }
+                    });
+
+                    // Manejar cambios en checkboxes
+                    options.forEach(option => {
+                        const checkbox = option.querySelector('input[type="checkbox"]');
+                        const optionValue = option.dataset.value;
+                        
+                        // Prevenir que el click en la opción cierre el dropdown
+                        option.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            // Solo toggle si el click no es directamente en el checkbox
+                            if (e.target !== checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                handleCheckboxChange(select.id, optionValue, checkbox.checked);
+                            }
+                        });
+                        
+                        checkbox.addEventListener('change', (e) => {
+                            e.stopPropagation();
+                            handleCheckboxChange(select.id, optionValue, checkbox.checked);
+                        });
+                    });
+                });
+
+                // Cerrar al hacer click fuera
+                document.addEventListener('click', (e) => {
+                    // Solo cerrar si el click no es dentro de ningún custom select
+                    if (!e.target.closest('.custom-select')) {
+                        customSelects.forEach(select => {
+                            select.querySelector('.select-trigger').classList.remove('active');
+                            select.querySelector('.select-dropdown').classList.remove('show');
+                        });
+                    }
+                });
+            }
+
+            // Función para manejar cambios en checkboxes
+            function handleCheckboxChange(selectId, optionValue, isChecked) {
+                const select = document.getElementById(selectId);
+                const todosOption = select.querySelector('.select-option[data-value="todos"]');
+                const todosCheckbox = todosOption ? todosOption.querySelector('input[type="checkbox"]') : null;
+                const otherOptions = select.querySelectorAll('.select-option:not([data-value="todos"])');
+                
+                if (optionValue === 'todos') {
+                    // Si se selecciona "Todos", deseleccionar todo lo demás
+                    if (isChecked) {
+                        otherOptions.forEach(option => {
+                            const checkbox = option.querySelector('input[type="checkbox"]');
+                            checkbox.checked = false;
+                        });
+                    }
+                } else {
+                    // Si se selecciona cualquier otra opción, deseleccionar "Todos"
+                    if (todosCheckbox) {
+                        todosCheckbox.checked = false;
+                    }
+                }
+                
+                updateSelectText(selectId);
+                updateFilterBadge();
+            }
+
+            // Función para actualizar el texto del select
+            function updateSelectText(selectId) {
+                const select = document.getElementById(selectId);
+                const selectedValues = getSelectedValues(selectId);
+                const selectText = select.querySelector('.select-text');
+                
+                if (selectedValues.length === 0) {
+                    selectText.textContent = 'Seleccionar';
+                } else if (selectedValues.includes('todos')) {
+                    selectText.textContent = 'Todos';
+                } else if (selectedValues.length === 1) {
+                    selectText.textContent = selectedValues[0];
+                } else {
+                    selectText.textContent = selectedValues.length + ' seleccionados';
+                }
+            }
+            
+            // Función para inicializar los selects
+            function initializeSelects() {
+                const selectIds = ['estado-select', 'tipo-select', 'año-select'];
+                selectIds.forEach(selectId => {
+                    updateSelectText(selectId);
+                });
+            }
+
+            // Inicializar cuando se carga la página
+            setTimeout(() => {
+                initializeData();
+                setupCustomSelects();
+                initializeSelects();
+            }, 500);
+        });
+
+        // ===== SISTEMA DE ONBOARDING ELIMINADO =====
+        
+        // ===== SISTEMA DE ONBOARDING ELIMINADO =====
+        
+        // ===== SISTEMA DE ONBOARDING ELIMINADO =====
+        
+        // ===== SISTEMA DE ONBOARDING ELIMINADO =====
+        
+        // ===== SISTEMA DE ONBOARDING ELIMINADO =====
+        
+        // ===== SISTEMA DE ONBOARDING ELIMINADO =====
+        
+        // ===== SISTEMA DE ONBOARDING ELIMINADO =====
+        
+        // ===== SISTEMA DE FEEDBACK =====
+        
+        // ===== SISTEMA DE FEEDBACK COMPLETO =====
+        
+        // SISTEMA DE FEEDBACK HÍBRIDO (LOCAL + GOOGLE SHEETS)
+        // Sistema que guarda localmente Y envía a Google Sheets
+        
+        // URL del webhook de n8n (PRODUCCIÓN)
+        const FEEDBACK_WEBHOOK_URL = 'https://egarcia.app.n8n.cloud/webhook/feedback';
+        
+        // Modo híbrido - intentar Google Sheets, respaldo local
+        const HYBRID_MODE = true;
+        
+        // Función para guardar feedback localmente
+        function saveFeedbackLocally(feedbackData) {
+            // Guardar en localStorage para persistencia
+            const existingFeedback = JSON.parse(localStorage.getItem('nom035_feedback') || '[]');
+            existingFeedback.push({
+                ...feedbackData,
+                id: Date.now(),
+                savedAt: new Date().toISOString()
+            });
+            localStorage.setItem('nom035_feedback', JSON.stringify(existingFeedback));
+            
+            console.log('💾 Feedback guardado localmente:', feedbackData);
+            console.log('📊 Total de feedback guardado:', existingFeedback.length);
+            
+            return existingFeedback;
+        }
+        
+        // Función para obtener todos los feedback guardados
+        function getAllFeedback() {
+            return JSON.parse(localStorage.getItem('nom035_feedback') || '[]');
+        }
+        
+        // Función para exportar feedback como JSON
+        function exportFeedback() {
+            const feedback = getAllFeedback();
+            const dataStr = JSON.stringify(feedback, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `nom035_feedback_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            console.log('📁 Feedback exportado como JSON');
+        }
+        
+        // Función híbrida: intentar n8n, respaldo local
+        async function sendFeedbackHybrid(feedbackData) {
+            console.log('🔄 SISTEMA HÍBRIDO: Intentando n8n...');
+            console.log('📋 URL del webhook n8n:', FEEDBACK_WEBHOOK_URL);
+            console.log('📋 Datos a enviar:', feedbackData);
+            
+            try {
+                console.log('🌐 Iniciando petición fetch...');
+                
+                // Intentar enviar a n8n
+                const response = await fetch(FEEDBACK_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(feedbackData)
+                });
+                
+                console.log('📡 Respuesta recibida:', response);
+                console.log('📊 Status:', response.status);
+                console.log('📊 Status Text:', response.statusText);
+                console.log('📊 Headers:', response.headers);
+                
+                if (response.ok) {
+                    console.log('✅ Enviado a n8n exitosamente');
+                    const result = await response.json();
+                    console.log('📊 Respuesta de n8n:', result);
+                    
+                    // También guardar localmente como respaldo
+                    saveFeedbackLocally(feedbackData);
+                    
+                    return {
+                        success: true,
+                        method: 'n8n',
+                        message: 'Feedback enviado a n8n y guardado localmente'
+                    };
+                } else {
+                    console.error('❌ Error del servidor:', response.status, response.statusText);
+                    const errorText = await response.text();
+                    console.error('❌ Contenido del error:', errorText);
+                    throw new Error(`Error del servidor: ${response.status} - ${errorText}`);
+                }
+                
+            } catch (error) {
+                console.error('❌ Error detallado con n8n:', error);
+                console.error('❌ Tipo de error:', error.name);
+                console.error('❌ Mensaje de error:', error.message);
+                console.error('❌ Stack trace:', error.stack);
+                
+                // Respaldo local
+                const savedFeedback = saveFeedbackLocally(feedbackData);
+                
+                return {
+                    success: true,
+                    method: 'local-backup',
+                    message: `Feedback guardado localmente (${savedFeedback.length} comentarios)`,
+                    error: error.message
+                };
+            }
+        }
+        
+        // INSTRUCCIONES PARA CONFIGURAR GOOGLE APPS SCRIPT:
+        // 1. Ve a https://script.google.com/
+        // 2. Crea un nuevo proyecto
+        // 3. Copia el código de google-apps-script.js
+        // 4. Reemplaza YOUR_SHEET_ID con el ID real de tu Google Sheet
+        // 5. Despliega como aplicación web con permisos "Cualquiera"
+        // 6. Reemplaza la URL de arriba con la URL real del webhook
+        
+        // Función para abrir el modal de feedback
+        function openFeedbackModal() {
+            console.log('💬 Abriendo modal de feedback...');
+            const modal = document.getElementById('feedbackModal');
+            console.log('🔍 Modal encontrado:', modal);
+            
+            if (modal) {
+                modal.classList.add('show');
+                console.log('✅ Modal mostrado con clase "show"');
+                
+                // Detectar sección actual automáticamente
+                detectCurrentSection();
+            } else {
+                console.error('❌ No se encontró el modal de feedback');
+            }
+        }
+        
+        // Función para cerrar el modal de feedback
+        function closeFeedbackModal() {
+            console.log('💬 Cerrando modal de feedback...');
+            const modal = document.getElementById('feedbackModal');
+            modal.classList.remove('show');
+            
+            // Limpiar formulario
+            document.getElementById('feedbackForm').reset();
+            hideMessage();
+        }
+
+        // Función para deshabilitar el modal de feedback
+        function disableFeedbackModal() {
+            console.log('🔒 Deshabilitando modal de feedback...');
+            const modal = document.getElementById('feedbackModal');
+            console.log('🔍 Modal encontrado:', modal);
+            
+            if (modal) {
+                // Deshabilitar el modal principal
+                modal.style.pointerEvents = 'none';
+                modal.style.opacity = '0.6';
+                modal.classList.add('disabled');
+                console.log('🔒 Modal principal deshabilitado');
+                
+                // Deshabilitar todos los elementos interactivos dentro del modal
+                const inputs = modal.querySelectorAll('input, textarea, select, button');
+                console.log('🔍 Elementos encontrados para deshabilitar:', inputs.length);
+                
+                inputs.forEach((element, index) => {
+                    element.disabled = true;
+                    element.style.pointerEvents = 'none';
+                    console.log(`🔒 Elemento ${index + 1} deshabilitado:`, element.tagName, element.type || element.nodeName);
+                });
+                
+                console.log('✅ Modal completamente deshabilitado');
+            } else {
+                console.error('❌ No se encontró el modal para deshabilitar');
+            }
+        }
+
+        // Función para habilitar el modal de feedback
+        function enableFeedbackModal() {
+            console.log('🔓 Habilitando modal de feedback...');
+            const modal = document.getElementById('feedbackModal');
+            console.log('🔍 Modal encontrado para habilitar:', modal);
+            
+            if (modal) {
+                // Habilitar el modal principal
+                modal.style.pointerEvents = 'auto';
+                modal.style.opacity = '1';
+                modal.classList.remove('disabled');
+                console.log('🔓 Modal principal habilitado');
+                
+                // Habilitar todos los elementos interactivos dentro del modal
+                const inputs = modal.querySelectorAll('input, textarea, select, button');
+                console.log('🔍 Elementos encontrados para habilitar:', inputs.length);
+                
+                inputs.forEach((element, index) => {
+                    element.disabled = false;
+                    element.style.pointerEvents = 'auto';
+                    console.log(`🔓 Elemento ${index + 1} habilitado:`, element.tagName, element.type || element.nodeName);
+                });
+                
+                console.log('✅ Modal completamente habilitado');
+            } else {
+                console.error('❌ No se encontró el modal para habilitar');
+            }
+        }
+        
+        // Detectar sección actual automáticamente
+        function detectCurrentSection() {
+            const currentPath = window.location.pathname;
+            const sectionSelect = document.getElementById('feedbackSection');
+            
+            if (currentPath.includes('emocional')) {
+                sectionSelect.value = 'Resultados Acontecimientos traumáticos';
+            } else if (currentPath.includes('entorno')) {
+                sectionSelect.value = 'Resultados Riesgo psicosocial';
+            } else if (currentPath.includes('encuestas')) {
+                sectionSelect.value = 'Home - Encuestas';
+            } else {
+                sectionSelect.value = 'Otra';
+            }
+        }
+        
+        // Manejar envío del formulario de feedback
+        document.addEventListener('DOMContentLoaded', function() {
+            const feedbackForm = document.getElementById('feedbackForm');
+            if (feedbackForm) {
+                feedbackForm.addEventListener('submit', handleFeedbackSubmit);
+            }
+        });
+        
+        // Función para manejar el envío del feedback
+        async function handleFeedbackSubmit(e) {
+            e.preventDefault();
+            console.log('📤 Enviando feedback anónimo...');
+            
+            const formData = new FormData(e.target);
+            const feedbackData = {
+                user: 'Anónimo', // Feedback anónimo
+                section: formData.get('section'),
+                comment: formData.get('comment'),
+                timestamp: new Date().toISOString(),
+                url: window.location.href
+            };
+            
+            console.log('📋 Datos del feedback:', feedbackData);
+            
+            // Mostrar estado de carga
+            showLoading(true);
+            hideMessage();
+            
+            // Sistema híbrido: Google Sheets + respaldo local
+            if (HYBRID_MODE) {
+                console.log('🔄 SISTEMA HÍBRIDO: Enviando feedback...');
+                
+                try {
+                    const result = await sendFeedbackHybrid(feedbackData);
+                    console.log('📊 Resultado del sistema híbrido:', result);
+                    
+                    if (result.success) {
+                        showMessage(result.message, 'success');
+                        setTimeout(() => {
+                            closeFeedbackModal();
+                        }, 2000);
+                    } else {
+                        showMessage('Error al enviar feedback. Inténtalo de nuevo.', 'error');
+                    }
+                } catch (error) {
+                    console.error('❌ Error en sistema híbrido:', error);
+                    showMessage('Error inesperado. Inténtalo de nuevo.', 'error');
+                } finally {
+                    showLoading(false);
+                }
+            } else {
+                // Sistema solo local (respaldo)
+                console.log('💾 SISTEMA LOCAL: Guardando feedback...');
+                const savedFeedback = saveFeedbackLocally(feedbackData);
+                
+                setTimeout(() => {
+                    showMessage(`¡Feedback guardado! (${savedFeedback.length} comentarios guardados)`, 'success');
+                    setTimeout(() => {
+                        closeFeedbackModal();
+                    }, 2000);
+                    showLoading(false);
+                }, 1000);
+            }
+        }
+        
+        // Mostrar/ocultar estado de carga
+        function showLoading(show) {
+            const submitBtn = document.querySelector('.feedback-submit');
+            const loadingDiv = document.querySelector('.feedback-loading');
+            
+            if (show) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Enviando...';
+                if (loadingDiv) loadingDiv.classList.add('show');
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Enviar Feedback';
+                if (loadingDiv) loadingDiv.classList.remove('show');
+            }
+        }
+        
+        // Mostrar mensaje de estado
+        function showMessage(message, type) {
+            // Crear o actualizar mensaje
+            let messageDiv = document.querySelector('.feedback-message');
+            if (!messageDiv) {
+                messageDiv = document.createElement('div');
+                messageDiv.className = 'feedback-message';
+                document.querySelector('.feedback-modal-body').insertBefore(messageDiv, document.querySelector('#feedbackForm'));
+            }
+            
+            messageDiv.textContent = message;
+            messageDiv.className = `feedback-message ${type}`;
+            messageDiv.style.display = 'block';
+        }
+        
+        // Ocultar mensaje
+        function hideMessage() {
+            const messageDiv = document.querySelector('.feedback-message');
+            if (messageDiv) {
+                messageDiv.style.display = 'none';
+            }
+        }
+        
+        // Cerrar modal al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('feedbackModal');
+            if (e.target === modal) {
+                closeFeedbackModal();
+            }
+        });
+        
+        // Cerrar modal con tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('feedbackModal');
+                if (modal.classList.contains('show')) {
+                    closeFeedbackModal();
+                }
+            }
+        });
+        
+        // Función para detectar clics en filas NOM-035
+        function setupRowClickListeners() {
+            const allRows = document.querySelectorAll('tbody tr');
+            
+            allRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    const rowText = this.textContent.toLowerCase();
+                    
+                    if (rowText.includes('emocional') && rowText.includes('nom 035')) {
+                        hasClickedEmocional = true;
+                        console.log('✅ Usuario hizo clic en Emocional');
+                        
+                        
+                    } else if (rowText.includes('entorno') && rowText.includes('nom 035')) {
+                        hasClickedEntorno = true;
+                        console.log('✅ Usuario hizo clic en Entorno Laboral');
+                        
+                    }
+                });
+            });
+        }
+        
+        // ===== SISTEMA DE ONBOARDING ELIMINADO =====
+        
+        // Iniciar onboarding automáticamente al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📄 ===== DOM CONTENT LOADED =====');
+            console.log('📍 Página encuestas.html cargada');
+            console.log('📍 URL actual:', window.location.href);
+            console.log('📍 Timestamp:', new Date().toISOString());
+            
+            // Verificar elementos críticos
+            const overlay = document.getElementById('onboardingOverlay');
+            const spotlight = document.getElementById('onboardingSpotlight');
+            const tooltip = document.getElementById('onboardingTooltip');
+            
+            console.log('🔍 Elementos críticos del onboarding:');
+            console.log('- Overlay:', overlay ? '✅ Encontrado' : '❌ No encontrado');
+            console.log('- Spotlight:', spotlight ? '✅ Encontrado' : '❌ No encontrado');
+            console.log('- Tooltip:', tooltip ? '✅ Encontrado' : '❌ No encontrado');
+            
+            // Esperar a que se cargue el contenido
+            console.log('📍 Esperando 2 segundos para que se cargue el contenido...');
+            setTimeout(() => {
+                console.log('🚀 ===== SISTEMA DE ONBOARDING ELIMINADO =====');
+                setupRowClickListeners();
+            }, 2000);
+        });
+        
+        // También intentar iniciar cuando la ventana se carga completamente
+        window.addEventListener('load', function() {
+            console.log('🔄 ===== WINDOW LOAD EVENT =====');
+            console.log('📍 Ventana completamente cargada');
+            console.log('📍 Verificando estado del onboarding...');
+            
+            const overlay = document.getElementById('onboardingOverlay');
+            const isShowing = overlay ? overlay.classList.contains('show') : false;
+            
+            console.log('🔍 Estado del sistema:');
+            console.log('- Overlay visible:', isShowing);
+            
+            console.log('🚀 ===== SISTEMA DE ONBOARDING ELIMINADO =====');
+            setupRowClickListeners();
+        });
+        
+        // ===== SISTEMA DE ONBOARDING =====
+        
+        // Estado del onboarding
+        let currentOnboardingStep = 0;
+        let onboardingSteps = [
+            {
+                title: "Resultados Acontecimientos traumáticos",
+                content: "Primero vamos a explorar los resultados de acontecimientos traumáticos. Haz clic en esta fila para ver el análisis detallado, observa los resultados y las funcionalidades, también el CSV que puedes descargar y danos tu feedback.",
+                target: "tr.clickable-row:first-of-type",
+                action: "highlight"
+            },
+            {
+                title: "Resultados Riesgo psicosocial",
+                content: "Una vez revisado los resultados de la encuesta de acontecimientos traumáticos, haz clic en esta fila para ver el análisis detallado de riesgo psicosocial y danos tu feedback.",
+                target: "tr.clickable-row:nth-of-type(2)",
+                action: "highlight"
+            },
+            {
+                title: "Feedback",
+                content: "Tu feedback es invaluable para nosotros. Puedes sugerir elementos que faltan, datos que podrían estar de otra forma, mejoras en la interfaz, o cualquier funcionalidad que te gustaría ver. ¡Haz clic en el botón de feedback para compartir tus ideas!",
+                target: ".feedback-trigger",
+                action: "highlight"
+            }
+        ];
+        
+        // Iniciar onboarding
+        function startOnboarding() {
+            console.log('🚀 Iniciando onboarding...');
+            console.log('🔍 Verificando elementos del onboarding:');
+            console.log('- Overlay:', document.getElementById('onboardingOverlay'));
+            console.log('- Spotlight:', document.getElementById('onboardingSpotlight'));
+            console.log('- Tooltip:', document.getElementById('onboardingTooltip'));
+            
+            currentOnboardingStep = 0;
+            showOnboardingStep();
+        }
+        
+        // Mostrar paso actual del onboarding
+        function showOnboardingStep() {
+            const step = onboardingSteps[currentOnboardingStep];
+            if (!step) {
+                console.error('❌ DEBUG: No hay paso disponible para:', currentOnboardingStep);
+                return;
+            }
+            
+            console.log('📍 DEBUG: Mostrando paso:', currentOnboardingStep);
+            console.log('📋 DEBUG: Datos del paso:', step);
+            
+            // Mostrar overlay
+            const overlay = document.getElementById('onboardingOverlay');
+            console.log('🔍 DEBUG: Overlay encontrado:', overlay);
+            console.log('🎭 DEBUG: Mostrando overlay...');
+            if (overlay) {
+                overlay.style.display = 'block';
+                console.log('✅ DEBUG: Overlay mostrado');
+                console.log('🔍 DEBUG: Display del overlay:', overlay.style.display);
+            } else {
+                console.error('❌ DEBUG: No se encontró el overlay');
+            }
+            
+            // Actualizar contenido del tooltip
+            console.log('📝 DEBUG: Actualizando tooltip...');
+            document.getElementById('tooltipStep').textContent = `Paso ${currentOnboardingStep + 1}`;
+            document.getElementById('tooltipTitle').textContent = step.title;
+            document.getElementById('tooltipContent').textContent = step.content;
+            
+            // Actualizar botón "Siguiente" / "Comenzar"
+            const nextButton = document.querySelector('.btn-next');
+            if (currentOnboardingStep === onboardingSteps.length - 1) {
+                nextButton.textContent = 'Comenzar';
+            } else {
+                nextButton.textContent = 'Siguiente';
+            }
+            
+            console.log('✅ DEBUG: Tooltip actualizado - Título:', step.title);
+            
+            // Si hay target, destacarlo
+            if (step.target) {
+                console.log('🎯 DEBUG: Destacando elemento:', step.target);
+                highlightElement(step.target);
+            } else {
+                console.log('📍 DEBUG: Sin target, centrando tooltip');
+                // Si no hay target, centrar el tooltip
+                centerTooltip();
+            }
+        }
+        
+        // Destacar elemento específico
+        function highlightElement(selector) {
+            console.log('🔍 DEBUG: Buscando elemento con selector:', selector);
+            const element = document.querySelector(selector);
+            if (!element) {
+                console.error('❌ Elemento no encontrado:', selector);
+                console.log('🔍 DEBUG: Elementos disponibles:', document.querySelectorAll('tr'));
+                console.log('🔍 DEBUG: Botones disponibles:', document.querySelectorAll('button'));
+                console.log('🔍 DEBUG: Elementos con clase feedback:', document.querySelectorAll('.feedback-button'));
+                return;
+            }
+            
+            console.log('🎯 DEBUG: Elemento encontrado:', element);
+            console.log('📏 DEBUG: Dimensiones del elemento:', element.getBoundingClientRect());
+            
+            const rect = element.getBoundingClientRect();
+            const spotlight = document.getElementById('onboardingSpotlight');
+            
+            console.log('🎨 DEBUG: Configurando spotlight...');
+            console.log('📍 DEBUG: Posición - left:', rect.left - 3, 'top:', rect.top - 3);
+            console.log('📐 DEBUG: Tamaño - width:', rect.width + 6, 'height:', rect.height + 6);
+            
+            // Posicionar spotlight
+            spotlight.style.left = (rect.left - 3) + 'px';
+            spotlight.style.top = (rect.top - 3) + 'px';
+            spotlight.style.width = (rect.width + 6) + 'px';
+            spotlight.style.height = (rect.height + 6) + 'px';
+            spotlight.style.display = 'block';
+            
+            console.log('✅ DEBUG: Spotlight configurado');
+            console.log('🎨 DEBUG: Estilos aplicados:', {
+                left: spotlight.style.left,
+                top: spotlight.style.top,
+                width: spotlight.style.width,
+                height: spotlight.style.height,
+                display: spotlight.style.display
+            });
+            
+            // Posicionar tooltip
+            positionTooltip(rect);
+        }
+        
+        // Posicionar tooltip
+        function positionTooltip(rect) {
+            const tooltip = document.getElementById('onboardingTooltip');
+            const tooltipRect = tooltip.getBoundingClientRect();
+            
+            // Posición por defecto: abajo del elemento
+            let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+            let top = rect.bottom + 20;
+            
+            // Ajustar si se sale de la pantalla
+            if (left < 20) left = 20;
+            if (left + tooltipRect.width > window.innerWidth - 20) {
+                left = window.innerWidth - tooltipRect.width - 20;
+            }
+            if (top + tooltipRect.height > window.innerHeight - 20) {
+                top = rect.top - tooltipRect.height - 20;
+            }
+            
+            tooltip.style.left = left + 'px';
+            tooltip.style.top = top + 'px';
+        }
+        
+        // Centrar tooltip
+        function centerTooltip() {
+            const tooltip = document.getElementById('onboardingTooltip');
+            const tooltipRect = tooltip.getBoundingClientRect();
+            
+            tooltip.style.left = (window.innerWidth / 2) - (tooltipRect.width / 2) + 'px';
+            tooltip.style.top = (window.innerHeight / 2) - (tooltipRect.height / 2) + 'px';
+        }
+        
+        // Siguiente paso
+        function nextOnboardingStep() {
+            console.log('➡️ Siguiente paso del onboarding');
+            
+            // Si es el paso 3 (último paso), finalizar onboarding
+            if (currentOnboardingStep === onboardingSteps.length - 1) {
+                console.log('🎯 Paso 3: Finalizando onboarding');
+                finishOnboarding();
+                return;
+            }
+            
+            currentOnboardingStep++;
+            
+            if (currentOnboardingStep >= onboardingSteps.length) {
+                finishOnboarding();
+            } else {
+                showOnboardingStep();
+            }
+        }
+        
+        // Omitir onboarding
+        
+        // Finalizar onboarding
+        function finishOnboarding() {
+            console.log('✅ Onboarding finalizado');
+            document.getElementById('onboardingOverlay').style.display = 'none';
+            document.getElementById('onboardingSpotlight').style.display = 'none';
+            
+            // Marcar onboarding como completado en localStorage
+            localStorage.setItem('onboardingCompleted', 'true');
+            console.log('💾 Onboarding marcado como completado en localStorage');
+            
+            // Abrir modal de feedback automáticamente después de finalizar el onboarding
+            console.log('💬 Abriendo modal de feedback automáticamente...');
+            setTimeout(() => {
+                openFeedbackModal();
+            }, 500); // Esperar 500ms para que se cierre completamente el onboarding
+        }
+        
+        // Iniciar onboarding automáticamente al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📄 DOM cargado, verificando onboarding...');
+            
+            // Verificar si el onboarding ya se completó
+            const onboardingCompleted = localStorage.getItem('onboardingCompleted');
+            console.log('🔍 Estado del onboarding:', onboardingCompleted);
+            
+            if (onboardingCompleted === 'true') {
+                console.log('✅ Onboarding ya completado, no se mostrará');
+                return;
+            }
+            
+            console.log('🚀 Iniciando onboarding por primera vez...');
+            setTimeout(() => {
+                startOnboarding();
+            }, 1000);
+        });
+        
+    </script>
+</body>
+</html>

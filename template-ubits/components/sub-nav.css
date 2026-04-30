@@ -1,0 +1,419 @@
+/* ========================================
+   TOP NAVIGATION COMPONENT
+   ======================================== */
+
+/* Importar tokens de color UBITS */
+@import url('../ubits-colors.css');
+
+/* Sub Navigation Base */
+.sub-nav {
+    background-color: var(--ubits-bg-1);
+    height: 40px;
+    border-radius: 8px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 24px);
+    max-width: calc(100% - 24px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Nav Tabs Container */
+.nav-tabs {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    height: 100%;
+    flex: 1;
+}
+
+/* Nav Right Container */
+.nav-right {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    position: relative;
+}
+
+/* Posicionar dropdown desde el sub-nav principal */
+.sub-nav {
+    position: relative;
+}
+
+/* Nav Title */
+.nav-title {
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: none; /* Oculto por defecto en desktop */
+    align-items: center;
+    justify-content: center;
+    color: var(--ubits-fg-1-medium);
+    transition: color 0.3s ease;
+}
+
+.hamburger-menu:hover {
+    color: var(--ubits-fg-1-high);
+}
+
+.hamburger-menu i {
+    font-size: 18px;
+}
+
+/* Hamburger Dropdown */
+.hamburger-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: var(--ubits-bg-1);
+    border: 1px solid var(--ubits-border-1);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+    padding: 8px 0;
+    margin-top: 4px;
+}
+
+.hamburger-dropdown.show {
+    display: flex;
+}
+
+/* Hamburger Items */
+.hamburger-item {
+    background: none;
+    border: none;
+    padding: 12px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    text-align: left;
+    transition: background-color 0.2s ease;
+    color: var(--ubits-fg-1-medium);
+}
+
+.hamburger-item:hover {
+    background-color: var(--ubits-bg-2);
+    color: var(--ubits-fg-1-high);
+}
+
+.hamburger-item.active {
+    background-color: var(--ubits-bg-active);
+    color: var(--ubits-accent-brand) !important;
+    font-weight: 600;
+}
+
+.hamburger-item.active i {
+    color: var(--ubits-accent-brand) !important;
+}
+
+.hamburger-item.active span {
+    color: var(--ubits-accent-brand) !important;
+}
+
+.hamburger-item i {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.hamburger-item span {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    white-space: nowrap;
+}
+
+/* Individual Nav Tab */
+.nav-tab {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    border-radius: 0;
+}
+
+/* Nav Tab Icon */
+.nav-tab i {
+    font-size: 16px;
+    color: var(--ubits-fg-1-medium);
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Nav Tab Background Hover Effect */
+.nav-tab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border-radius: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+/* Nav Tab Text */
+.nav-tab span {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 16px;
+    color: var(--ubits-fg-1-medium);
+    text-align: left;
+    line-height: 24px;
+    white-space: nowrap;
+    font-weight: 400;
+}
+
+/* Active State */
+.nav-tab.active {
+    background: transparent;
+}
+
+.nav-tab.active span {
+    font-weight: 600;
+}
+
+.nav-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: var(--ubits-accent-brand);
+    border-radius: 2px;
+}
+
+/* Hover States */
+.nav-tab:hover {
+    background-color: var(--ubits-bg-2);
+    border-radius: 6px;
+}
+
+.nav-tab:hover i {
+    color: var(--ubits-fg-1-high);
+}
+
+.nav-tab:hover span {
+    color: var(--ubits-fg-1-high);
+}
+
+/* Active Tab States */
+.nav-tab.active i {
+    color: var(--ubits-fg-1-high);
+}
+
+.nav-tab.active span {
+    color: var(--ubits-fg-1-high);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 950px) {
+    .sub-nav {
+        padding: 0 8px;
+        height: 36px;
+        position: relative;
+        justify-content: space-between;
+    }
+    
+    .nav-tabs {
+        flex: 1;
+    }
+    
+    .nav-right {
+        flex-shrink: 0;
+    }
+    
+    .nav-tab {
+        padding: 6px;
+    }
+    
+    .nav-tab span {
+        font-size: 14px;
+        line-height: 20px;
+    }
+    
+    .nav-tab i {
+        font-size: 14px;
+        width: 14px;
+        height: 14px;
+    }
+    
+    .nav-title {
+        font-size: 14px;
+        line-height: 20px;
+        margin-right: 12px;
+    }
+    
+    /* Mostrar hamburger menu en móvil para documentación */
+    .hamburger-menu {
+        display: flex;
+    }
+    
+    /* Ocultar tabs normales en móvil para documentación */
+    [data-variant="documentacion"] .nav-tab {
+        display: none;
+    }
+    
+    /* Ajustar margen derecho del nav-title para documentación en móvil */
+    .sub-nav[data-variant="documentacion"] .nav-title {
+        margin-right: 6px !important;
+    }
+    
+    /* Ajustar padding del sub-nav para documentación en móvil */
+    .sub-nav[data-variant="documentacion"] {
+        padding: 0 12px 0 12px !important;
+    }
+    
+    /* Ajustar dropdown para móvil */
+    .hamburger-dropdown {
+        width: 100%;
+        border-radius: 0 0 6px 6px;
+    }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+
+[data-theme="dark"] .sub-nav {
+    background-color: var(--ubits-bg-2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .nav-tab span {
+    color: var(--ubits-fg-1-medium) !important;
+}
+
+[data-theme="dark"] .nav-tab i {
+    color: var(--ubits-fg-1-medium) !important;
+}
+
+[data-theme="dark"] .nav-tab:hover span {
+    color: var(--ubits-fg-1-high) !important;
+}
+
+[data-theme="dark"] .nav-tab:hover i {
+    color: var(--ubits-fg-1-high) !important;
+}
+
+[data-theme="dark"] .nav-tab.active span {
+    color: var(--ubits-fg-1-high) !important;
+}
+
+[data-theme="dark"] .nav-tab.active i {
+    color: var(--ubits-fg-1-high) !important;
+}
+
+/* Dark mode para hamburger menu */
+[data-theme="dark"] .hamburger-menu {
+    color: var(--ubits-fg-1-medium) !important;
+}
+
+[data-theme="dark"] .hamburger-menu:hover {
+    color: var(--ubits-fg-1-high) !important;
+}
+
+[data-theme="dark"] .hamburger-dropdown {
+    background-color: var(--ubits-bg-2);
+    border-color: var(--ubits-border-1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .hamburger-item {
+    color: var(--ubits-fg-1-medium) !important;
+}
+
+[data-theme="dark"] .hamburger-item:hover {
+    background-color: var(--ubits-bg-3);
+    color: var(--ubits-fg-1-high) !important;
+}
+
+[data-theme="dark"] .hamburger-item.active {
+    background-color: var(--ubits-bg-active);
+    color: var(--ubits-accent-brand) !important;
+}
+
+[data-theme="dark"] .hamburger-item.active i {
+    color: var(--ubits-accent-brand) !important;
+}
+
+[data-theme="dark"] .hamburger-item.active span {
+    color: var(--ubits-accent-brand) !important;
+}
+
+/* ========================================
+   DESKTOP BEHAVIOR
+   ======================================== */
+
+/* Ocultar SubNav en resoluciones menores a 1024px (excepto documentación) */
+@media (max-width: 1023px) {
+    .sub-nav:not([data-variant="documentacion"]) {
+        display: none !important;
+    }
+    
+    /* Ajustar margen derecho del nav-title para documentación en resoluciones 841px-1023px */
+    .sub-nav[data-variant="documentacion"] .nav-title {
+        margin-right: 6px !important;
+    }
+    
+    /* Ajustar padding del sub-nav para documentación en resoluciones 841px-1023px */
+    .sub-nav[data-variant="documentacion"] {
+        padding: 0 12px 0 12px !important;
+        margin-top: 16px !important;
+    }
+}
+
+/* En desktop, mostrar tabs normales y ocultar hamburger */
+@media (min-width: 841px) {
+    .hamburger-menu {
+        display: none !important;
+    }
+    
+    .hamburger-dropdown {
+        display: none !important;
+    }
+    
+    [data-variant="documentacion"] .nav-tab {
+        display: flex !important;
+    }
+}

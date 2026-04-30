@@ -1,0 +1,25 @@
+{
+  "name": "nom-035-prototype",
+  "version": "1.0.0",
+  "description": "Prototipo funcional del sistema NOM-035 con sistema de feedback integrado",
+  "main": "resultados-nom035.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000"
+  },
+  "keywords": [
+    "nom-035",
+    "prototype",
+    "feedback",
+    "ubits",
+    "hr"
+  ],
+  "author": "UBITS",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

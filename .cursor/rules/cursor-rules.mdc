@@ -1,0 +1,177 @@
+---
+alwaysApply: true
+---
+
+# UBITS Playground - Cursor AI Rules
+
+## 🔄 GITHUB WORKFLOW - CONTROL DE VERSIONES OBLIGATORIO
+
+### **🚨 MANDATORY: ALWAYS USE GIT FOR VERSION CONTROL**
+**EVERY change to the project MUST be tracked with Git and pushed to GitHub for:**
+- ✅ **Version control** - Complete history of all changes
+- ✅ **Backup safety** - Automatic backup in GitHub cloud
+- ✅ **Rollback capability** - Can revert any change if needed
+- ✅ **Collaboration** - Multiple developers can work safely
+- ✅ **Professional workflow** - Industry standard practices
+
+### **📋 GITHUB WORKFLOW RULES:**
+
+#### **1. ALWAYS COMMIT AFTER MAKING CHANGES:**
+```bash
+# After completing any task or making changes:
+git add .
+git commit -m "feat: descripción clara del cambio realizado"
+git push origin main
+```
+
+#### **2. COMMIT MESSAGE FORMAT (MANDATORY):**
+```bash
+# Use conventional commits format:
+feat: nueva funcionalidad
+fix: corrección de bug
+style: cambios de formato/estilo
+refactor: refactorización de código
+docs: actualización de documentación
+test: agregar o modificar tests
+chore: tareas de mantenimiento
+
+# Examples:
+git commit -m "feat: Agregar tabla de dimensiones NOM-035 con columna dominio"
+git commit -m "fix: Corregir dropdown expandido por defecto en Vista General"
+git commit -m "style: Aplicar tokens UBITS en lugar de colores hardcodeados"
+```
+
+#### **3. WORKFLOW FOR DIFFERENT TYPES OF CHANGES:**
+
+##### **For Quick Changes (like UI adjustments):**
+```bash
+# 1. Make changes directly in main branch
+# 2. Verify changes work correctly
+# 3. Commit and push immediately
+git add .
+git commit -m "feat: descripción del cambio"
+git push origin main
+```
+
+##### **For New Features (recommended for larger changes):**
+```bash
+# 1. Create feature branch
+git checkout -b feature/nombre-de-la-funcionalidad
+
+# 2. Make changes
+# (edit files)
+
+# 3. Commit changes
+git add .
+git commit -m "feat: descripción de la funcionalidad"
+
+# 4. Push feature branch
+git push origin feature/nombre-de-la-funcionalidad
+
+# 5. Create Pull Request in GitHub (optional for solo work)
+# 6. Merge to main when ready
+git checkout main
+git merge feature/nombre-de-la-funcionalidad
+git push origin main
+```
+
+#### **4. ALWAYS VERIFY GIT STATUS:**
+```bash
+# Before making changes:
+git status
+
+# After making changes:
+git status
+git diff  # Review changes before committing
+```
+
+#### **5. EMERGENCY ROLLBACK (if needed):**
+```bash
+# View commit history
+git log --oneline
+
+# Revert to previous commit
+git revert <commit-hash>
+
+# Or reset to previous commit (DANGEROUS - use with caution)
+git reset --hard <commit-hash>
+```
+
+### **🎯 GITHUB WORKFLOW INTEGRATION:**
+
+#### **BEFORE STARTING ANY TASK:**
+1. ✅ **Check git status** - Ensure clean working directory
+2. ✅ **Plan the changes** - Know what you're going to modify
+3. ✅ **Make changes** - Implement the requested functionality
+4. ✅ **Test changes** - Verify everything works correctly
+5. ✅ **Commit changes** - With descriptive message
+6. ✅ **Push to GitHub** - Ensure backup and version control
+
+#### **AFTER COMPLETING ANY TASK:**
+1. ✅ **Verify git status** - All changes should be committed
+2. ✅ **Confirm push** - Changes should be in GitHub
+3. ✅ **Inform user** - Let them know changes are saved and versioned
+
+### **📝 EXAMPLE WORKFLOW IN PRACTICE:**
+
+```bash
+# User requests: "Add a new button to the dashboard"
+
+# 1. Check current status
+git status
+# Output: "working tree clean"
+
+# 2. Make the changes
+# (edit HTML file, add button component)
+
+# 3. Verify changes
+git status
+# Output: "modified: dashboard.html"
+
+# 4. Review changes
+git diff
+# (review the changes made)
+
+# 5. Commit changes
+git add .
+git commit -m "feat: Agregar botón de acción principal al dashboard"
+
+# 6. Push to GitHub
+git push origin main
+
+# 7. Confirm success
+git status
+# Output: "working tree clean" and "up to date with origin/main"
+```
+
+### **🚨 CRITICAL GITHUB RULES:**
+
+#### **ALWAYS DO:**
+- ✅ **Commit after every logical change** - Don't let changes accumulate
+- ✅ **Use descriptive commit messages** - Future you will thank you
+- ✅ **Push to GitHub immediately** - Don't risk losing work
+- ✅ **Verify git status** - Ensure everything is tracked
+- ✅ **Handle all Git operations** - Users are non-technical
+
+#### **NEVER DO:**
+- ❌ **Leave uncommitted changes** - Always commit before finishing
+- ❌ **Use vague commit messages** - "fix stuff" is not helpful
+- ❌ **Forget to push** - Local commits can be lost
+- ❌ **Ask users to run Git commands** - Handle all technical tasks
+- ❌ **Work without version control** - Every change must be tracked
+
+### **🛡️ BENEFITS OF THIS WORKFLOW:**
+
+1. **✅ Complete History** - Every change is documented and traceable
+2. **✅ Safety Net** - Can always revert to previous working state
+3. **✅ Professional Practice** - Industry standard version control
+4. **✅ Collaboration Ready** - Multiple developers can work safely
+5. **✅ Backup Protection** - Code is safely stored in GitHub cloud
+6. **✅ Change Tracking** - Easy to see what changed and when
+7. **✅ Rollback Capability** - Can undo any problematic change
+
+### **📊 GITHUB REPOSITORY INFO:**
+- **Repository:** https://github.com/elkingarcia22/Nom-035
+- **Main Branch:** `main`
+- **Deployment:** Automatic via Vercel (nom-035.vercel.app)
+- **Workflow:** Direct commits to main for rapid development

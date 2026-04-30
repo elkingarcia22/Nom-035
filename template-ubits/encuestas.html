@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UBITS Playground - Dashboard</title>
+    
+    <!-- Estilos locales -->
+    <link rel="stylesheet" href="ubits-colors.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="fontawesome-icons.css">
+    <link rel="stylesheet" href="ubits-typography.css">
+    <link rel="stylesheet" href="components/sub-nav.css">
+    <link rel="stylesheet" href="components-sidebar.css">
+    <link rel="stylesheet" href="components/tab-bar.css">
+    <link rel="stylesheet" href="components/floating-menu.css">
+    <link rel="stylesheet" href="components/profile-menu.css">
+    <link rel="stylesheet" href="components/button.css">
+    <link rel="stylesheet" href="profile.css">
+    <style>
+        /* ¡A LA MIERDA LAS REGLAS PENDEJAS! */
+
+        /* Custom Select Styles - Exactamente iguales a la página emocional */
+        .filter-group {
+            margin-bottom: 24px;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--ubits-fg-1-medium);
+            font-size: 14px;
+        }
+
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-trigger {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: #fff;
+            color: #374151;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .select-trigger:hover {
+            border-color: #9ca3af;
+        }
+
+        .select-trigger.active {
+            border-color: var(--ubits-accent-brand);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .select-trigger .select-text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .select-trigger .select-arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .select-trigger.active .select-arrow {
+            transform: rotate(180deg);
+        }
+
+        .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .select-dropdown.show {
+            display: block;
+        }
+
+        .select-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .select-option:hover {
+            background: #f3f4f6;
+        }
+
+        .select-option.selected {
+            background: #eff6ff;
+            color: var(--ubits-accent-brand);
+        }
+
+        .select-option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .select-option .option-text {
+            flex: 1;
+        }
+
+        /* Badge de filtros */
+        #filter-badge {
+            color: white !important;
+        }
+
+        /* Estilos específicos para content-sections - idéntico a left-wrapper */
+        .content-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+            overflow: visible;
+            max-height: none;
+        }
+
+        /* Espaciador para alinear elementos - idéntico a left-wrapper */
+        .content-sections > *:not(:last-child):not(.section-dual):not(.section-single):not(.section-triple):not(.section-quad) {
+            margin-bottom: 16px;
+        }
+
+        /* Espaciador final - idéntico a left-wrapper */
+        .content-sections::after {
+            content: '';
+            height: 0px;
+            flex-shrink: 0;
+        }
+
+        /* Reducir el gap del último elemento - idéntico a left-wrapper */
+        .content-sections > *:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Secciones de widgets */
+        .section-single {
+            display: flex;
+            width: 100%;
+        }
+
+        .section-dual {
+            display: flex;
+            gap: 20px;
+        }
+
+        .section-triple {
+            display: flex;
+            gap: 20px;
+        }
+
+        .section-quad {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Widgets en secciones - sin altura mínima forzada */
+        .section-single > div,
+        .section-dual > div,
+        .section-triple > div,
+        .section-quad > div {
+            background-color: var(--ubits-bg-1);
+            border: none;
+            border-radius: 8px;
+            padding: 16px !important; /* !important para sobrescribir el reset */
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Distribución de anchos */
+        .section-single > div {
+            flex: 1;
+        }
+
+        .section-dual > div {
+            flex: 1;
+        }
+
+        .section-triple > div {
+            flex: 1;
+        }
+
+        .section-quad > div {
+            flex: 1;
+        }
+
+        /* Responsive para secciones */
+        @media (max-width: 1023px) {
+            .content-sections {
+                padding-bottom: 0;
+            }
+            
+            .section-dual,
+            .section-triple,
+            .section-quad {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            /* Ajustar widgets para móvil - sin altura mínima forzada */
+        }
+
+        @media (max-width: 480px) {
+            /* Padding reducido en móviles pequeños - sin altura mínima forzada */
+            .section-single > div,
+            .section-dual > div,
+            .section-triple > div,
+            .section-quad > div {
+                padding: 12px !important; /* !important para sobrescribir el reset */
+            }
+        }
+
+        /* Estilos mejorados para la tabla */
+        .surveys-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .surveys-table thead {
+            background: var(--ubits-bg-2);
+        }
+
+        .surveys-table th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--ubits-fg-1-medium);
+            border: none;
+            font-size: 14px;
+        }
+
+        .surveys-table tbody tr {
+            border-bottom: 1px solid var(--ubits-border-1);
+            transition: background-color 0.2s ease;
+        }
+
+        .surveys-table tbody tr:hover {
+            background: var(--ubits-bg-2);
+        }
+
+        .surveys-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .surveys-table td {
+            padding: 16px;
+            border: none;
+            vertical-align: middle;
+        }
+
+        .surveys-table .survey-name {
+            color: var(--ubits-fg-1-high);
+            font-weight: 500;
+        }
+
+        .surveys-table .survey-type {
+            color: var(--ubits-fg-1-medium);
+        }
+
+        .surveys-table .survey-dates {
+            color: var(--ubits-fg-1-medium);
+        }
+
+        .surveys-table .survey-participants {
+            color: var(--ubits-fg-1-medium);
+            text-align: center;
+        }
+
+        /* Status badges estilo minimalista */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid;
+            width: 100px;
+            text-align: center;
+        }
+
+        .status-badge.completed {
+            background: #f0fdf4;
+            color: #166534;
+            border-color: #22c55e;
+        }
+
+        .status-badge.in-progress {
+            background: #f0f9ff;
+            color: #0369a1;
+            border-color: #0ea5e9;
+        }
+
+        .status-badge.draft {
+            background: #f9fafb;
+            color: #6b7280;
+            border-color: #d1d5db;
+        }
+
+        .status-badge.pending {
+            background: #f9fafb;
+            color: #6b7280;
+            border-color: #d1d5db;
+        }
+
+        /* Progress bars mejorados */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .progress-bar {
+            width: 120px;
+            height: 12px;
+            background: #f3f4f6;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #e5e7eb;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #3b82f6;
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-fill.completed {
+            background: #10b981;
+        }
+
+        .progress-fill.in-progress {
+            background: #3b82f6;
+        }
+
+        .progress-fill.draft {
+            background: #9ca3af;
+        }
+
+        .progress-text {
+            color: #374151;
+            font-size: 13px;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* Checkboxes mejorados */
+        .table-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--ubits-accent-brand);
+            cursor: pointer;
+        }
+
+        /* Clickable rows */
+        .clickable-row {
+            cursor: pointer;
+        }
+
+        .clickable-row:hover {
+            background: var(--ubits-bg-2) !important;
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="dashboard-container">
+        <div class="tooltip" id="tooltip"></div>
+        
+        <!-- Sidebar Container -->
+        <div id="sidebar-container"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navigation -->
+            <div id="top-nav-container"></div>
+            
+            <!-- Botones de acción independientes -->
+            <div style="padding: 16px 24px;">
+                <div style="display: flex; justify-content: flex-end; gap: 12px;">
+                    <button class="ubits-button ubits-button--secondary ubits-button--md">
+                        <i class="far fa-clock"></i>
+                        <span>Datos demográficos</span>
+                    </button>
+                    <button class="ubits-button ubits-button--secondary ubits-button--md">
+                        <i class="far fa-file-plus"></i>
+                        <span>Crear con plantilla</span>
+                    </button>
+                    <button class="ubits-button ubits-button--primary ubits-button--md">
+                        <i class="far fa-plus"></i>
+                        <span>Crear encuesta</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Content wrapper con secciones de widgets -->
+                <div class="content-sections">
+                    <!-- Sección contenido encuestas -->
+                    <div class="section-single">
+                        <div class="widget-contenido-encuestas">
+                            <!-- Header con título y botones de acción -->
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <h1 class="ubits-heading-h1" style="margin: 0; color: var(--ubits-fg-1-high);">Lista de finalizados</h1>
+                                    <span class="ubits-body-md-regular" id="resultados-count" style="color: var(--ubits-fg-1-medium);">13 resultados</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <!-- Campo de búsqueda desplegable -->
+                                    <div id="search-container" style="display: none; position: relative;">
+                                        <input type="text" id="search-input" placeholder="Buscar encuestas..." 
+                                               style="padding: 8px 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); width: 250px; font-size: 14px;">
+                                        <button id="close-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer;">
+                                            <i class="far fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <button id="search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                        <i class="far fa-search"></i>
+                                    </button>
+                                    <button id="filter-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px; position: relative;">
+                                        <i class="far fa-filter"></i>
+                                        <span id="filter-badge" style="position: absolute; top: -8px; right: -8px; background: #3b82f6; color: white !important; border-radius: 50%; width: 20px; height: 20px; display: none; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">0</span>
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <!-- Tabla de encuestas mejorada -->
+                            <table class="surveys-table">
+                                <!-- Header de la tabla -->
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" class="table-checkbox">
+                                        </th>
+                                        <th>Nombre de la encuesta</th>
+                                        <th>Tipo</th>
+                                        <th>Estado</th>
+                                        <th>Fecha inicio</th>
+                                        <th>Fecha cierre</th>
+                                        <th>Participantes</th>
+                                        <th>% de finalización</th>
+                                    </tr>
+                                </thead>
+                                    <!-- Cuerpo de la tabla -->
+                                    <tbody>
+                                        <!-- Fila 1: NOM 035 - emocional -->
+                                        <tr class="clickable-row" onclick="window.location.href='resultados-nom035.html'">
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox" onclick="event.stopPropagation();">
+                                            </td>
+                                            <td class="survey-name">NOM 035 2024</td>
+                                            <td class="survey-type">NOM 035 - emocional</td>
+                                            <td>
+                                                <span class="status-badge completed">Completado</span>
+                                            </td>
+                                            <td class="survey-dates">15 octubre 2024</td>
+                                            <td class="survey-dates">15 noviembre 2024</td>
+                                            <td class="survey-participants">150</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill completed" style="width: 100%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">100%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 2: NOM 035 - entorno laboral -->
+                                        <tr class="clickable-row" onclick="window.location.href='resultados-nom035-entorno.html'">
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox" onclick="event.stopPropagation();">
+                                            </td>
+                                            <td class="survey-name">NOM 035 2024</td>
+                                            <td class="survey-type">NOM 035 - entorno laboral</td>
+                                            <td>
+                                                <span class="status-badge completed">Completado</span>
+                                            </td>
+                                            <td class="survey-dates">15 octubre 2024</td>
+                                            <td class="survey-dates">15 noviembre 2024</td>
+                                            <td class="survey-participants">150</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill completed" style="width: 100%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">100%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 3: Clima 2024 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
+                                            </td>
+                                            <td class="survey-name">Clima 2024</td>
+                                            <td class="survey-type">Clima</td>
+                                            <td>
+                                                <span class="status-badge in-progress">En progreso</span>
+                                            </td>
+                                            <td class="survey-dates">10 enero 2025</td>
+                                            <td class="survey-dates">10 febrero 2025</td>
+                                            <td class="survey-participants">200</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill in-progress" style="width: 50%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">50%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 4: eNPS 2024 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
+                                            </td>
+                                            <td class="survey-name">eNPS 2024</td>
+                                            <td class="survey-type">eNPS</td>
+                                            <td>
+                                                <span class="status-badge draft">Borrador</span>
+                                            </td>
+                                            <td class="survey-dates">--</td>
+                                            <td class="survey-dates">--</td>
+                                            <td class="survey-participants">--</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill draft" style="width: 0%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">0%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 5: Cultura 2024 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
+                                            </td>
+                                            <td class="survey-name">Cultura 2024</td>
+                                            <td class="survey-type">Cultura</td>
+                                            <td>
+                                                <span class="status-badge in-progress">En progreso</span>
+                                            </td>
+                                            <td class="survey-dates">10 enero 2025</td>
+                                            <td class="survey-dates">10 febrero 2025</td>
+                                            <td class="survey-participants">200</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill in-progress" style="width: 60%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">60%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 6: Clima 2024 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
+                                            </td>
+                                            <td class="survey-name">Clima 2024</td>
+                                            <td class="survey-type">Clima</td>
+                                            <td>
+                                                <span class="status-badge in-progress">En progreso</span>
+                                            </td>
+                                            <td class="survey-dates">10 enero 2025</td>
+                                            <td class="survey-dates">10 febrero 2025</td>
+                                            <td class="survey-participants">200</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill in-progress" style="width: 60%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">60%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 7: Cultura 2023 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
+                                            </td>
+                                            <td class="survey-name">Cultura 2023</td>
+                                            <td class="survey-type">Cultura</td>
+                                            <td>
+                                                <span class="status-badge in-progress">En progreso</span>
+                                            </td>
+                                            <td class="survey-dates">10 enero 2025</td>
+                                            <td class="survey-dates">10 febrero 2025</td>
+                                            <td class="survey-participants">200</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill in-progress" style="width: 70%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">70%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 8: Cultura 2022 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
+                                            </td>
+                                            <td class="survey-name">Cultura 2022</td>
+                                            <td class="survey-type">Cultura</td>
+                                            <td>
+                                                <span class="status-badge in-progress">En progreso</span>
+                                            </td>
+                                            <td class="survey-dates">10 enero 2025</td>
+                                            <td class="survey-dates">10 febrero 2025</td>
+                                            <td class="survey-participants">200</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill in-progress" style="width: 80%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">80%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 9: Cultura 2021 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
+                                            </td>
+                                            <td class="survey-name">Cultura 2021</td>
+                                            <td class="survey-type">Cultura</td>
+                                            <td>
+                                                <span class="status-badge completed">Completado</span>
+                                            </td>
+                                            <td class="survey-dates">10 enero 2025</td>
+                                            <td class="survey-dates">10 febrero 2025</td>
+                                            <td class="survey-participants">200</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill completed" style="width: 100%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">100%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 10: Satisfacción 2024 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
+                                            </td>
+                                            <td class="survey-name">Satisfacción 2024</td>
+                                            <td class="survey-type">Satisfacción</td>
+                                            <td>
+                                                <span class="status-badge in-progress">En progreso</span>
+                                            </td>
+                                            <td class="survey-dates">1 diciembre 2024</td>
+                                            <td class="survey-dates">31 diciembre 2024</td>
+                                            <td class="survey-participants">180</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill in-progress" style="width: 45%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">45%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 11: Bienestar 2024 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
+                                            </td>
+                                            <td class="survey-name">Bienestar 2024</td>
+                                            <td class="survey-type">Bienestar</td>
+                                            <td>
+                                                <span class="status-badge draft">Borrador</span>
+                                            </td>
+                                            <td class="survey-dates">--</td>
+                                            <td class="survey-dates">--</td>
+                                            <td class="survey-participants">--</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill draft" style="width: 0%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">0%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 12: Liderazgo 2024 -->
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox">
+                                            </td>
+                                            <td class="survey-name">Liderazgo 2024</td>
+                                            <td class="survey-type">Liderazgo</td>
+                                            <td>
+                                                <span class="status-badge pending">Por iniciar</span>
+                                            </td>
+                                            <td class="survey-dates">15 enero 2025</td>
+                                            <td class="survey-dates">15 febrero 2025</td>
+                                            <td class="survey-participants">120</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill draft" style="width: 0%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">0%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Fila 13: NOM 035 2023 -->
+                                        <tr class="clickable-row" onclick="window.location.href='resultados-nom035.html'">
+                                            <td>
+                                                <input type="checkbox" class="table-checkbox" onclick="event.stopPropagation();">
+                                            </td>
+                                            <td class="survey-name">NOM 035 2023</td>
+                                            <td class="survey-type">NOM 035</td>
+                                            <td>
+                                                <span class="status-badge completed">Completado</span>
+                                            </td>
+                                            <td class="survey-dates">15 octubre 2023</td>
+                                            <td class="survey-dates">15 noviembre 2023</td>
+                                            <td class="survey-participants">140</td>
+                                            <td>
+                                                <div class="progress-container">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill completed" style="width: 100%;"></div>
+                                                    </div>
+                                                    <span class="progress-text">100%</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Side Panel de Filtros -->
+    <div id="filter-side-panel" style="position: fixed; top: 0; right: -400px; width: 400px; height: 100vh; background: var(--ubits-bg-1); border-left: 1px solid var(--ubits-border-1); box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1); z-index: 1000; transition: right 0.3s ease; display: flex; flex-direction: column;">
+        <!-- Header del side panel -->
+        <div style="padding: 20px; border-bottom: 1px solid var(--ubits-border-1); display: flex; justify-content: space-between; align-items: center;">
+            <h2 class="ubits-heading-h2" style="margin: 0; color: var(--ubits-fg-1-high);">Filtros</h2>
+            <button id="close-filter-panel" style="background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer; font-size: 18px;">
+                <i class="far fa-times"></i>
+            </button>
+        </div>
+        
+        <!-- Contenido del side panel -->
+        <div style="flex: 1; padding: 20px; overflow-y: auto; padding-bottom: 100px;">
+            <!-- Filtro por Estado -->
+            <div class="filter-group">
+                <label class="filter-label">Estado</label>
+                <div class="custom-select" id="estado-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Seleccionar estados</span>
+                        <i class="fas fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="estado-todos" checked>
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="Completado">
+                            <input type="checkbox" id="estado-completado">
+                            <span class="option-text">Completado</span>
+                        </div>
+                        <div class="select-option" data-value="En progreso">
+                            <input type="checkbox" id="estado-progreso">
+                            <span class="option-text">En progreso</span>
+                        </div>
+                        <div class="select-option" data-value="Borrador">
+                            <input type="checkbox" id="estado-borrador">
+                            <span class="option-text">Borrador</span>
+                        </div>
+                        <div class="select-option" data-value="Por iniciar">
+                            <input type="checkbox" id="estado-iniciar">
+                            <span class="option-text">Por iniciar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filtro por Tipo -->
+            <div class="filter-group">
+                <label class="filter-label">Tipo</label>
+                <div class="custom-select" id="tipo-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Seleccionar tipos</span>
+                        <i class="fas fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="tipo-todos" checked>
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="NOM 035">
+                            <input type="checkbox" id="tipo-nom035">
+                            <span class="option-text">NOM 035</span>
+                        </div>
+                        <div class="select-option" data-value="Cultura">
+                            <input type="checkbox" id="tipo-cultura">
+                            <span class="option-text">Cultura</span>
+                        </div>
+                        <div class="select-option" data-value="Clima">
+                            <input type="checkbox" id="tipo-clima">
+                            <span class="option-text">Clima</span>
+                        </div>
+                        <div class="select-option" data-value="eNPS">
+                            <input type="checkbox" id="tipo-enps">
+                            <span class="option-text">eNPS</span>
+                        </div>
+                        <div class="select-option" data-value="Satisfacción">
+                            <input type="checkbox" id="tipo-satisfaccion">
+                            <span class="option-text">Satisfacción</span>
+                        </div>
+                        <div class="select-option" data-value="Bienestar">
+                            <input type="checkbox" id="tipo-bienestar">
+                            <span class="option-text">Bienestar</span>
+                        </div>
+                        <div class="select-option" data-value="Liderazgo">
+                            <input type="checkbox" id="tipo-liderazgo">
+                            <span class="option-text">Liderazgo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filtro por Año -->
+            <div class="filter-group">
+                <label class="filter-label">Año</label>
+                <div class="custom-select" id="año-select">
+                    <div class="select-trigger">
+                        <span class="select-text">Seleccionar años</span>
+                        <i class="fas fa-chevron-down select-arrow"></i>
+                    </div>
+                    <div class="select-dropdown">
+                        <div class="select-option" data-value="todos">
+                            <input type="checkbox" id="año-todos" checked>
+                            <span class="option-text">Todos</span>
+                        </div>
+                        <div class="select-option" data-value="2025">
+                            <input type="checkbox" id="año-2025">
+                            <span class="option-text">2025</span>
+                        </div>
+                        <div class="select-option" data-value="2024">
+                            <input type="checkbox" id="año-2024">
+                            <span class="option-text">2024</span>
+                        </div>
+                        <div class="select-option" data-value="2023">
+                            <input type="checkbox" id="año-2023">
+                            <span class="option-text">2023</span>
+                        </div>
+                        <div class="select-option" data-value="2022">
+                            <input type="checkbox" id="año-2022">
+                            <span class="option-text">2022</span>
+                        </div>
+                        <div class="select-option" data-value="2021">
+                            <input type="checkbox" id="año-2021">
+                            <span class="option-text">2021</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Botones de acción fijos en la parte inferior -->
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; gap: 12px; padding: 20px; background: var(--ubits-bg-1); border-top: 1px solid var(--ubits-border-1); box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);">
+            <button id="apply-filters" class="ubits-button ubits-button--primary ubits-button--md" style="flex: 1;">
+                <i class="far fa-check"></i>
+                <span>Aplicar filtros</span>
+            </button>
+            <button id="clear-filters" class="ubits-button ubits-button--secondary ubits-button--md" style="flex: 1;">
+                <i class="far fa-times"></i>
+                <span>Limpiar filtros</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Overlay para cerrar el side panel -->
+    <div id="filter-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999; display: none;"></div>
+
+    <!-- Tab Bar Container -->
+    <div id="tab-bar-container"></div>
+
+    <!-- Floating Menu Container -->
+    <div id="floating-menu-container"></div>
+    
+    <!-- Profile Menu Container -->
+    <div id="profile-menu-container"></div>
+
+    <script src="components/sidebar.js"></script>
+    <script src="components/sub-nav.js"></script>
+    <script src="components/tab-bar.js"></script>
+    <script src="components/floating-menu.js"></script>
+    <script src="components/profile-menu.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Cargar componentes dinámicamente
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSidebar('sidebar-container', 'encuestas');
+            loadSubNav('top-nav-container', 'encuestas');
+            loadTabBar('tab-bar-container');
+            loadFloatingMenu('floating-menu-container');
+            loadProfileMenu('profile-menu-container');
+            
+            // Activar el tab "Encuestas" específicamente después de cargar el SubNav
+            setTimeout(() => {
+                // Remover active de todos los tabs (desktop y móvil)
+                document.querySelectorAll('.nav-tab, .hamburger-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Activar el tab Encuestas en desktop
+                const encuestasTab = document.querySelector('.nav-tab[data-tab="encuestas"]');
+                if (encuestasTab) {
+                    encuestasTab.classList.add('active');
+                }
+                
+                // Activar el tab Encuestas en móvil (hamburger menu)
+                const encuestasHamburger = document.querySelector('.hamburger-item[data-tab="encuestas"]');
+                if (encuestasHamburger) {
+                    encuestasHamburger.classList.add('active');
+                }
+                
+                // Activar el botón de encuestas en el sidebar
+                const encuestasButton = document.querySelector('.nav-button[data-section="encuestas"]');
+                if (encuestasButton) {
+                    // Remover active de todos los botones del sidebar
+                    document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+                    // Activar el botón de encuestas
+                    encuestasButton.classList.add('active');
+                }
+                
+                // Activar el botón "Módulos" del Tab-bar móvil
+                const modulosTabBarItem = document.querySelector('.tab-bar-item[data-tab="modulos"]');
+                if (modulosTabBarItem) {
+                    // Remover active de todos los items del tab-bar
+                    document.querySelectorAll('.tab-bar-item').forEach(item => item.classList.remove('active'));
+                    // Activar el item módulos
+                    modulosTabBarItem.classList.add('active');
+                }
+                
+                // Activar la opción "Encuestas" como direct link del floating menu
+                if (typeof setActiveDirectLink === 'function') {
+                    setActiveDirectLink('encuestas');
+                }
+            }, 200);
+        });
+
+        // Funcionalidad de búsqueda y filtros
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBtn = document.getElementById('search-btn');
+            const searchContainer = document.getElementById('search-container');
+            const searchInput = document.getElementById('search-input');
+            const closeSearch = document.getElementById('close-search');
+            const filterBtn = document.getElementById('filter-btn');
+            const filterSidePanel = document.getElementById('filter-side-panel');
+            const filterOverlay = document.getElementById('filter-overlay');
+            const closeFilterPanel = document.getElementById('close-filter-panel');
+            const applyFilters = document.getElementById('apply-filters');
+            const clearFilters = document.getElementById('clear-filters');
+            const resultadosCount = document.getElementById('resultados-count');
+            
+            // Datos originales de la tabla
+            let originalData = [];
+            let filteredData = [];
+            
+            // Inicializar datos
+            function initializeData() {
+                const rows = document.querySelectorAll('tbody tr');
+                originalData = Array.from(rows).map(row => {
+                    const cells = row.querySelectorAll('td');
+                    return {
+                        element: row,
+                        nombre: cells[1]?.textContent?.trim() || '',
+                        tipo: cells[2]?.textContent?.trim() || '',
+                        estado: cells[3]?.querySelector('span')?.textContent?.trim() || '',
+                        fechaInicio: cells[4]?.textContent?.trim() || '',
+                        fechaCierre: cells[5]?.textContent?.trim() || '',
+                        participantes: cells[6]?.textContent?.trim() || '',
+                        finalizacion: cells[7]?.textContent?.trim() || ''
+                    };
+                });
+                filteredData = [...originalData];
+            }
+            
+            // Mostrar/ocultar búsqueda
+            searchBtn.addEventListener('click', function() {
+                if (searchContainer.style.display === 'none') {
+                    searchContainer.style.display = 'block';
+                    searchInput.focus();
+                } else {
+                    searchContainer.style.display = 'none';
+                    searchInput.value = '';
+                    filterTable();
+                }
+            });
+            
+            // Cerrar búsqueda
+            closeSearch.addEventListener('click', function() {
+                searchContainer.style.display = 'none';
+                searchInput.value = '';
+                filterTable();
+            });
+            
+            // Búsqueda en tiempo real
+            searchInput.addEventListener('input', function() {
+                filterTable();
+            });
+            
+            // Mostrar/ocultar side panel de filtros
+            filterBtn.addEventListener('click', function() {
+                filterSidePanel.style.right = '0';
+                filterOverlay.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+            });
+            
+            // Cerrar side panel
+            function closeFilterSidePanel() {
+                filterSidePanel.style.right = '-400px';
+                filterOverlay.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restaurar scroll del body
+            }
+            
+            // Event listeners para cerrar el side panel
+            closeFilterPanel.addEventListener('click', closeFilterSidePanel);
+            filterOverlay.addEventListener('click', closeFilterSidePanel);
+            
+            // Aplicar filtros
+            applyFilters.addEventListener('click', function() {
+                filterTable();
+            });
+            
+            // Limpiar filtros
+            clearFilters.addEventListener('click', function() {
+                // Limpiar custom selects
+                const selectIds = ['estado-select', 'tipo-select', 'año-select'];
+                selectIds.forEach(selectId => {
+                    const select = document.getElementById(selectId);
+                    const checkboxes = select.querySelectorAll('input[type="checkbox"]');
+                    checkboxes.forEach(cb => cb.checked = false);
+                    // Marcar "todos" como seleccionado
+                    const todosOption = select.querySelector('.select-option[data-value="todos"]');
+                    if (todosOption) {
+                        const todosCheckbox = todosOption.querySelector('input[type="checkbox"]');
+                        if (todosCheckbox) todosCheckbox.checked = true;
+                    }
+                    updateSelectText(selectId);
+                });
+                
+                searchInput.value = '';
+                searchContainer.style.display = 'none';
+                filterTable();
+                closeFilterSidePanel(); // Cerrar el side panel después de limpiar
+            });
+            
+            // Función principal de filtrado
+            function filterTable() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const estadoFilters = getSelectedValues('estado-select');
+                const tipoFilters = getSelectedValues('tipo-select');
+                const añoFilters = getSelectedValues('año-select');
+                
+                // Ocultar todas las filas
+                originalData.forEach(item => {
+                    item.element.style.display = 'none';
+                });
+                
+                // Filtrar datos
+                filteredData = originalData.filter(item => {
+                    // Filtro de búsqueda
+                    const matchesSearch = !searchTerm || 
+                        item.nombre.toLowerCase().includes(searchTerm) ||
+                        item.tipo.toLowerCase().includes(searchTerm) ||
+                        item.estado.toLowerCase().includes(searchTerm);
+                    
+                    // Filtro de estado
+                    const matchesEstado = estadoFilters.length === 0 || estadoFilters.includes('todos') || estadoFilters.includes(item.estado);
+                    
+                    // Filtro de tipo
+                    const matchesTipo = tipoFilters.length === 0 || tipoFilters.includes('todos') || tipoFilters.includes(item.tipo);
+                    
+                    // Filtro de año
+                    const matchesAño = añoFilters.length === 0 || añoFilters.includes('todos') || añoFilters.includes(item.año);
+                    
+                    return matchesSearch && matchesEstado && matchesTipo && matchesAño;
+                });
+                
+                // Mostrar filas filtradas
+                filteredData.forEach(item => {
+                    item.element.style.display = '';
+                });
+                
+                // Actualizar contador
+                const count = filteredData.length;
+                resultadosCount.textContent = `${count} resultado${count !== 1 ? 's' : ''}`;
+                
+                // Actualizar badge de filtros
+                updateFilterBadge();
+            }
+
+            // Función para obtener valores seleccionados de un custom select
+            function getSelectedValues(selectId) {
+                const select = document.getElementById(selectId);
+                const checkboxes = select.querySelectorAll('input[type="checkbox"]:checked');
+                return Array.from(checkboxes).map(cb => cb.closest('.select-option').dataset.value);
+            }
+
+            // Función para actualizar el badge de filtros
+            function updateFilterBadge() {
+                const badge = document.getElementById('filter-badge');
+                const estadoFilters = getSelectedValues('estado-select');
+                const tipoFilters = getSelectedValues('tipo-select');
+                const añoFilters = getSelectedValues('año-select');
+                const searchTerm = searchInput.value;
+
+                let activeFiltersCount = 0;
+
+                // Contar filtros activos (excluyendo "todos")
+                if (estadoFilters.length > 0 && !estadoFilters.includes('todos')) {
+                    activeFiltersCount += estadoFilters.length;
+                }
+                if (tipoFilters.length > 0 && !tipoFilters.includes('todos')) {
+                    activeFiltersCount += tipoFilters.length;
+                }
+                if (añoFilters.length > 0 && !añoFilters.includes('todos')) {
+                    activeFiltersCount += añoFilters.length;
+                }
+                if (searchTerm) {
+                    activeFiltersCount += 1;
+                }
+
+                // Mostrar/ocultar badge
+                if (activeFiltersCount > 0) {
+                    badge.textContent = activeFiltersCount;
+                    badge.style.display = 'flex';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+
+            // Función para configurar custom selects
+            function setupCustomSelects() {
+                const customSelects = document.querySelectorAll('.custom-select');
+                
+                customSelects.forEach(select => {
+                    const trigger = select.querySelector('.select-trigger');
+                    const dropdown = select.querySelector('.select-dropdown');
+                    const options = select.querySelectorAll('.select-option');
+                    
+                    // Toggle dropdown
+                    trigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const isActive = trigger.classList.contains('active');
+                        
+                        // Cerrar otros selects
+                        customSelects.forEach(otherSelect => {
+                            if (otherSelect !== select) {
+                                otherSelect.querySelector('.select-trigger').classList.remove('active');
+                                otherSelect.querySelector('.select-dropdown').classList.remove('show');
+                            }
+                        });
+                        
+                        // Toggle current select
+                        if (isActive) {
+                            trigger.classList.remove('active');
+                            dropdown.classList.remove('show');
+                        } else {
+                            trigger.classList.add('active');
+                            dropdown.classList.add('show');
+                        }
+                    });
+
+                    // Manejar cambios en checkboxes
+                    options.forEach(option => {
+                        const checkbox = option.querySelector('input[type="checkbox"]');
+                        const optionValue = option.dataset.value;
+                        
+                        // Prevenir que el click en la opción cierre el dropdown
+                        option.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            // Solo toggle si el click no es directamente en el checkbox
+                            if (e.target !== checkbox) {
+                                checkbox.checked = !checkbox.checked;
+                                handleCheckboxChange(select.id, optionValue, checkbox.checked);
+                            }
+                        });
+                        
+                        checkbox.addEventListener('change', (e) => {
+                            e.stopPropagation();
+                            handleCheckboxChange(select.id, optionValue, checkbox.checked);
+                        });
+                    });
+                });
+
+                // Cerrar al hacer click fuera
+                document.addEventListener('click', (e) => {
+                    // Solo cerrar si el click no es dentro de ningún custom select
+                    if (!e.target.closest('.custom-select')) {
+                        customSelects.forEach(select => {
+                            select.querySelector('.select-trigger').classList.remove('active');
+                            select.querySelector('.select-dropdown').classList.remove('show');
+                        });
+                    }
+                });
+            }
+
+            // Función para manejar cambios en checkboxes
+            function handleCheckboxChange(selectId, optionValue, isChecked) {
+                const select = document.getElementById(selectId);
+                const todosOption = select.querySelector('.select-option[data-value="todos"]');
+                const todosCheckbox = todosOption ? todosOption.querySelector('input[type="checkbox"]') : null;
+                const otherOptions = select.querySelectorAll('.select-option:not([data-value="todos"])');
+                
+                if (optionValue === 'todos') {
+                    // Si se selecciona "Todos", deseleccionar todo lo demás
+                    if (isChecked) {
+                        otherOptions.forEach(option => {
+                            const checkbox = option.querySelector('input[type="checkbox"]');
+                            checkbox.checked = false;
+                        });
+                    }
+                } else {
+                    // Si se selecciona cualquier otra opción, deseleccionar "Todos"
+                    if (todosCheckbox) {
+                        todosCheckbox.checked = false;
+                    }
+                }
+                
+                updateSelectText(selectId);
+                updateFilterBadge();
+            }
+
+            // Función para actualizar el texto del select
+            function updateSelectText(selectId) {
+                const select = document.getElementById(selectId);
+                const selectedValues = getSelectedValues(selectId);
+                const selectText = select.querySelector('.select-text');
+                
+                if (selectedValues.length === 0) {
+                    selectText.textContent = 'Seleccionar';
+                } else if (selectedValues.includes('todos')) {
+                    selectText.textContent = 'Todos';
+                } else if (selectedValues.length === 1) {
+                    selectText.textContent = selectedValues[0];
+                } else {
+                    selectText.textContent = selectedValues.length + ' seleccionados';
+                }
+            }
+            
+            // Función para inicializar los selects
+            function initializeSelects() {
+                const selectIds = ['estado-select', 'tipo-select', 'año-select'];
+                selectIds.forEach(selectId => {
+                    updateSelectText(selectId);
+                });
+            }
+
+            // Inicializar cuando se carga la página
+            setTimeout(() => {
+                initializeData();
+                setupCustomSelects();
+                initializeSelects();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
