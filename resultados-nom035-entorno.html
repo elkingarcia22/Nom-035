@@ -360,19 +360,46 @@
 
             const renderSegmentsTable = () => {
                 const segmentType = document.getElementById('segments-row-select').value;
+                console.log('📊 Renderizando tabla para segmento:', segmentType);
 
-                // Sample data structure based on segments
-                const segmentsData = [
-                    { name: 'Administración', participants: 2, avgRisk: 2.26, min: 0.25, max: 4.25, level: 'bajo' },
-                    { name: 'Finanzas', participants: 2, avgRisk: 1.09, min: 0.25, max: 2.00, level: 'nulo' },
-                    { name: 'Mantenimiento', participants: 1, avgRisk: 1.77, min: 0.75, max: 2.75, level: 'bajo' },
-                    { name: 'Marketing', participants: 1, avgRisk: 1.43, min: 0.50, max: 2.25, level: 'nulo' },
-                    { name: 'Producción', participants: 1, avgRisk: 2.25, min: 1.25, max: 3.25, level: 'bajo' },
-                    { name: 'Recursos Humanos', participants: 2, avgRisk: 1.13, min: 0.25, max: 2.25, level: 'nulo' },
-                    { name: 'Seguridad', participants: 1, avgRisk: 4.49, min: 3.00, max: 5.00, level: 'alto' },
-                    { name: 'Tecnología', participants: 3, avgRisk: 1.94, min: 0.25, max: 3.60, level: 'bajo' },
-                    { name: 'Ventas', participants: 2, avgRisk: 3.93, min: 2.25, max: 4.75, level: 'alto' }
-                ];
+                let segmentsData = [];
+
+                if (segmentType === 'department') {
+                    segmentsData = [
+                        { name: 'Administración', participants: 2, avgRisk: 2.26, min: 0.25, max: 4.25, level: 'bajo' },
+                        { name: 'Finanzas', participants: 2, avgRisk: 1.09, min: 0.25, max: 2.00, level: 'nulo' },
+                        { name: 'Mantenimiento', participants: 1, avgRisk: 1.77, min: 0.75, max: 2.75, level: 'bajo' },
+                        { name: 'Marketing', participants: 1, avgRisk: 1.43, min: 0.50, max: 2.25, level: 'nulo' },
+                        { name: 'Producción', participants: 1, avgRisk: 2.25, min: 1.25, max: 3.25, level: 'bajo' },
+                        { name: 'Recursos Humanos', participants: 2, avgRisk: 1.13, min: 0.25, max: 2.25, level: 'nulo' },
+                        { name: 'Seguridad', participants: 1, avgRisk: 4.49, min: 3.00, max: 5.00, level: 'alto' },
+                        { name: 'Tecnología', participants: 3, avgRisk: 1.94, min: 0.25, max: 3.60, level: 'bajo' },
+                        { name: 'Ventas', participants: 2, avgRisk: 3.93, min: 2.25, max: 4.75, level: 'alto' }
+                    ];
+                } else if (segmentType === 'leader') {
+                    segmentsData = [
+                        { name: 'Líder A', participants: 5, avgRisk: 1.50, min: 0.50, max: 2.50, level: 'nulo' },
+                        { name: 'Líder B', participants: 4, avgRisk: 3.20, min: 2.00, max: 4.50, level: 'medio' },
+                        { name: 'Líder C', participants: 6, avgRisk: 2.10, min: 1.00, max: 3.50, level: 'bajo' }
+                    ];
+                } else if (segmentType === 'city') {
+                    segmentsData = [
+                        { name: 'CDMX', participants: 10, avgRisk: 2.45, min: 1.00, max: 4.80, level: 'bajo' },
+                        { name: 'Guadalajara', participants: 8, avgRisk: 1.90, min: 0.50, max: 3.20, level: 'bajo' },
+                        { name: 'Monterrey', participants: 7, avgRisk: 4.10, min: 3.00, max: 5.00, level: 'alto' }
+                    ];
+                } else if (segmentType === 'country') {
+                    segmentsData = [
+                        { name: 'México', participants: 25, avgRisk: 2.80, min: 0.50, max: 5.00, level: 'medio' },
+                        { name: 'Colombia', participants: 15, avgRisk: 2.10, min: 1.00, max: 4.20, level: 'bajo' }
+                    ];
+                } else if (segmentType === 'position') {
+                    segmentsData = [
+                        { name: 'Gerente', participants: 5, avgRisk: 1.80, min: 1.00, max: 3.00, level: 'bajo' },
+                        { name: 'Analista', participants: 12, avgRisk: 3.50, min: 2.00, max: 5.00, level: 'alto' },
+                        { name: 'Operativo', participants: 20, avgRisk: 2.30, min: 0.50, max: 4.50, level: 'bajo' }
+                    ];
+                }
 
                 const getColor = (level) => {
                     if (level === 'muy-alto' || level === 'alto') return { bg: '#fed7aa', text: '#c2410c' };
@@ -421,10 +448,12 @@
             renderSegmentsTable();
 
             const rowSelect = document.getElementById('segments-row-select');
+            if (rowSelect) {
+                rowSelect.removeEventListener('change', renderSegmentsTable); // Evitar duplicados
+                rowSelect.addEventListener('change', renderSegmentsTable);
+            }
 
-            if (rowSelect) rowSelect.addEventListener('change', renderSegmentsTable);
-
-            console.log('✅ Segments table renderizada');
+            console.log('✅ Segments table inicializada con datos dinámicos');
         };
 
         // ===== FUNCIONES ORIGINALES DEL HEATMAP =====
