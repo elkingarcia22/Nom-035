@@ -518,6 +518,12 @@
             transition: right 0.3s ease;
             display: flex;
             flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .filters-side-panel,
+        .filters-side-panel * {
+            box-sizing: border-box;
         }
 
         .filters-side-panel.show {
@@ -575,9 +581,24 @@
 
         .filters-content {
             flex: 1;
-            padding: 20px 20px 0 20px;
+            padding: 20px 28px 0 20px;
             overflow-y: auto;
             padding-bottom: 100px; /* Espacio para los botones fijos */
+        }
+
+        /* Custom scrollbar inside filters side panel to make it look premium and prevent layout crowding */
+        .filters-side-panel ::-webkit-scrollbar {
+            width: 6px;
+        }
+        .filters-side-panel ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .filters-side-panel ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .filters-side-panel ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
 
         .filter-group {
@@ -599,7 +620,7 @@
 
         .select-trigger {
             width: 100%;
-            padding: 8px 12px;
+            padding: 8px 12px 8px 12px;
             border: 1px solid var(--ubits-border-1);
             border-radius: 6px;
             background: #fff;
@@ -610,6 +631,7 @@
             justify-content: space-between;
             align-items: center;
             transition: border-color 0.2s ease;
+            box-sizing: border-box;
         }
 
         .select-trigger:hover {
@@ -628,6 +650,7 @@
 
         .select-trigger .select-arrow {
             transition: transform 0.2s ease;
+            margin-left: 8px;
         }
 
         .select-trigger.active .select-arrow {
@@ -1462,6 +1485,12 @@
                                         <option value="areas" selected>Área</option>
                                         <option value="leaders">Líder</option>
                                         <option value="collaborators">Colaborador</option>
+                                        <option value="country">País</option>
+                                        <option value="city">Ciudad</option>
+                                        <option value="age">Edad</option>
+                                        <option value="sexo">Sexo</option>
+                                        <option value="columna-a">Columna A</option>
+                                        <option value="columna-b">Columna B</option>
                                     </select>
 
                                     <!-- Controles de búsqueda toggleable -->
@@ -1581,6 +1610,119 @@
                                                             <input type="checkbox" id="dept-administracion">
                                                             <span class="option-text">Administración</span>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="filter-group">
+                                                <label class="filter-label">Líder</label>
+                                                <div class="custom-select" id="leader-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar líderes</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="leader-todos"><span class="option-text">Todos</span></div>
+                                                        <div class="select-option" data-value="Ana Martínez"><input type="checkbox" id="leader-ana"><span class="option-text">Ana Martínez</span></div>
+                                                        <div class="select-option" data-value="Carlos Gómez"><input type="checkbox" id="leader-carlos"><span class="option-text">Carlos Gómez</span></div>
+                                                        <div class="select-option" data-value="Laura Pérez"><input type="checkbox" id="leader-laura"><span class="option-text">Laura Pérez</span></div>
+                                                        <div class="select-option" data-value="Roberto Sánchez"><input type="checkbox" id="leader-roberto"><span class="option-text">Roberto Sánchez</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="filter-group">
+                                                <label class="filter-label">País</label>
+                                                <div class="custom-select" id="country-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar países</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="country-todos"><span class="option-text">Todos</span></div>
+                                                        <div class="select-option" data-value="Colombia"><input type="checkbox" id="country-col"><span class="option-text">Colombia</span></div>
+                                                        <div class="select-option" data-value="México"><input type="checkbox" id="country-mex"><span class="option-text">México</span></div>
+                                                        <div class="select-option" data-value="Perú"><input type="checkbox" id="country-per"><span class="option-text">Perú</span></div>
+                                                        <div class="select-option" data-value="Chile"><input type="checkbox" id="country-chi"><span class="option-text">Chile</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="filter-group">
+                                                <label class="filter-label">Ciudad</label>
+                                                <div class="custom-select" id="city-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar ciudades</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="city-todos"><span class="option-text">Todos</span></div>
+                                                        <div class="select-option" data-value="Bogotá"><input type="checkbox" id="city-bog"><span class="option-text">Bogotá</span></div>
+                                                        <div class="select-option" data-value="Medellín"><input type="checkbox" id="city-med"><span class="option-text">Medellín</span></div>
+                                                        <div class="select-option" data-value="CDMX"><input type="checkbox" id="city-cdmx"><span class="option-text">CDMX</span></div>
+                                                        <div class="select-option" data-value="Lima"><input type="checkbox" id="city-lim"><span class="option-text">Lima</span></div>
+                                                        <div class="select-option" data-value="Santiago"><input type="checkbox" id="city-san"><span class="option-text">Santiago</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="filter-group">
+                                                <label class="filter-label">Edad</label>
+                                                <div class="custom-select" id="age-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar edades</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="age-todos"><span class="option-text">Todos</span></div>
+                                                        <div class="select-option" data-value="18-25"><input type="checkbox" id="age-18-25"><span class="option-text">18-25</span></div>
+                                                        <div class="select-option" data-value="26-35"><input type="checkbox" id="age-26-35"><span class="option-text">26-35</span></div>
+                                                        <div class="select-option" data-value="36-45"><input type="checkbox" id="age-36-45"><span class="option-text">36-45</span></div>
+                                                        <div class="select-option" data-value="46-55"><input type="checkbox" id="age-46-55"><span class="option-text">46-55</span></div>
+                                                        <div class="select-option" data-value="55+"><input type="checkbox" id="age-55plus"><span class="option-text">55+</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="filter-group">
+                                                <label class="filter-label">Sexo</label>
+                                                <div class="custom-select" id="sexo-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar sexo</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="sexo-todos"><span class="option-text">Todos</span></div>
+                                                        <div class="select-option" data-value="Masculino"><input type="checkbox" id="sexo-mas"><span class="option-text">Masculino</span></div>
+                                                        <div class="select-option" data-value="Femenino"><input type="checkbox" id="sexo-fem"><span class="option-text">Femenino</span></div>
+                                                        <div class="select-option" data-value="Otro"><input type="checkbox" id="sexo-otro"><span class="option-text">Otro</span></div>
+                                                        <div class="select-option" data-value="Prefiero no decir"><input type="checkbox" id="sexo-ns"><span class="option-text">Prefiero no decir</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="filter-group">
+                                                <label class="filter-label">Columna A</label>
+                                                <div class="custom-select" id="columna-a-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar valores</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="cola-todos"><span class="option-text">Todos</span></div>
+                                                        <div class="select-option" data-value="Opción 1"><input type="checkbox" id="cola-op1"><span class="option-text">Opción 1</span></div>
+                                                        <div class="select-option" data-value="Opción 2"><input type="checkbox" id="cola-op2"><span class="option-text">Opción 2</span></div>
+                                                        <div class="select-option" data-value="Opción 3"><input type="checkbox" id="cola-op3"><span class="option-text">Opción 3</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="filter-group">
+                                                <label class="filter-label">Columna B</label>
+                                                <div class="custom-select" id="columna-b-select">
+                                                    <div class="select-trigger">
+                                                        <span class="select-text">Seleccionar valores</span>
+                                                        <i class="fas fa-chevron-down select-arrow"></i>
+                                                    </div>
+                                                    <div class="select-dropdown">
+                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="colb-todos"><span class="option-text">Todos</span></div>
+                                                        <div class="select-option" data-value="Opción X"><input type="checkbox" id="colb-op1"><span class="option-text">Opción X</span></div>
+                                                        <div class="select-option" data-value="Opción Y"><input type="checkbox" id="colb-op2"><span class="option-text">Opción Y</span></div>
+                                                        <div class="select-option" data-value="Opción Z"><input type="checkbox" id="colb-op3"><span class="option-text">Opción Z</span></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2756,6 +2898,7 @@
         // Función para actualizar el texto del select
         function updateSelectText(selectId) {
             const select = document.getElementById(selectId);
+            if (!select) return;
             const selectedValues = getSelectedValues(selectId);
             const selectText = select.querySelector('.select-text');
             
@@ -2822,10 +2965,14 @@
                 // Manejar clics en opciones
                 options.forEach(option => {
                     const checkbox = option.querySelector('input[type="checkbox"]');
+                    if (!checkbox) return;
                     
                     option.addEventListener('click', (e) => {
                         e.stopPropagation();
-                        checkbox.checked = !checkbox.checked;
+                        // Evitar doble toggle al hacer clic directo en el checkbox
+                        if (e.target !== checkbox) {
+                            checkbox.checked = !checkbox.checked;
+                        }
                         
                         // Manejar opción "Todos"
                         if (option.dataset.value === 'todos') {
@@ -2833,7 +2980,7 @@
                         } else {
                             // Si se selecciona una opción específica, deseleccionar "Todos"
                             const todosCheckbox = select.querySelector('input[type="checkbox"][id$="-todos"]');
-                            if (todosCheckbox && todosCheckbox.checked) {
+                            if (todosCheckbox && checkbox.checked && todosCheckbox.checked) {
                                 todosCheckbox.checked = false;
                             }
                         }
@@ -2908,6 +3055,8 @@
             const countryFilters = getSelectedValues('country-select');
             const cityFilters = getSelectedValues('city-select');
             const leaderFilters = getSelectedValues('leader-select');
+            const columnaAFilters = getSelectedValues('columna-a-select');
+            const columnaBFilters = getSelectedValues('columna-b-select');
             
             const searchInput = document.getElementById('participant-search');
             console.log('🔍 searchInput existe:', !!searchInput);
@@ -2934,13 +3083,8 @@
                 const matchesSearch = !searchTerm || 
                     (participant.name && participant.name.toLowerCase().includes(searchTerm)) ||
                     (participant.role && participant.role.toLowerCase().includes(searchTerm)) ||
-                    (participant.details && participant.details.department && participant.details.department.toLowerCase().includes(searchTerm)) ||
-                    (participant.details && participant.details.position && participant.details.position.toLowerCase().includes(searchTerm)) ||
-                    (participant.details && participant.details.gender && participant.details.gender.toLowerCase().includes(searchTerm)) ||
-                    (participant.details && participant.details.maritalStatus && participant.details.maritalStatus.toLowerCase().includes(searchTerm)) ||
-                    (participant.details && participant.details.country && participant.details.country.toLowerCase().includes(searchTerm)) ||
-                    (participant.details && participant.details.city && participant.details.city.toLowerCase().includes(searchTerm)) ||
-                    (participant.details && participant.details.leader && participant.details.leader.toLowerCase().includes(searchTerm));
+                    (participant.details && participant.details.email && participant.details.email.toLowerCase().includes(searchTerm)) ||
+                    (participant.details && participant.details.position && participant.details.position.toLowerCase().includes(searchTerm));
                 
                 // Debug para búsqueda
                 if (searchTerm && searchTerm.trim() !== '') {
@@ -2977,7 +3121,13 @@
                 // Filtro por líder
                 const matchesLeader = leaderFilters.length === 0 || leaderFilters.includes('todos') || leaderFilters.includes(participant.details.leader);
 
-                const matches = matchesSearch && matchesRisk && matchesDepartment && matchesPosition && matchesGender && matchesMaritalStatus && matchesAge && matchesCountry && matchesCity && matchesLeader;
+                // Filtro por columna A
+                const matchesColumnaA = columnaAFilters.length === 0 || columnaAFilters.includes('todos') || (participant.details.columnaA && columnaAFilters.includes(participant.details.columnaA));
+
+                // Filtro por columna B
+                const matchesColumnaB = columnaBFilters.length === 0 || columnaBFilters.includes('todos') || (participant.details.columnaB && columnaBFilters.includes(participant.details.columnaB));
+
+                const matches = matchesSearch && matchesRisk && matchesDepartment && matchesPosition && matchesGender && matchesMaritalStatus && matchesAge && matchesCountry && matchesCity && matchesLeader && matchesColumnaA && matchesColumnaB;
                 
                 if (departmentFilters.length > 0 && !departmentFilters.includes('todos')) {
                     console.log(`Participante ${participant.name} (${participant.details.department}): matchesDepartment = ${matchesDepartment}, departmentFilters = ${departmentFilters}`);
@@ -3091,6 +3241,7 @@
         // Función auxiliar para obtener valores seleccionados
         function getSelectedValues(selectId) {
             const select = document.getElementById(selectId);
+            if (!select) return [];
             const checkboxes = select.querySelectorAll('input[type="checkbox"]:checked');
             return Array.from(checkboxes).map(cb => cb.closest('.select-option').dataset.value);
         }
@@ -3101,6 +3252,7 @@
             
             selectIds.forEach(selectId => {
                 const select = document.getElementById(selectId);
+                if (!select) return;
                 const checkboxes = select.querySelectorAll('input[type="checkbox"]');
                 checkboxes.forEach(cb => cb.checked = false);
                 updateSelectText(selectId);
@@ -3497,6 +3649,12 @@
             const leaders = ['Nicolás Miguel Peña Belmar', 'Srf Waternoose', 'Mike Wazowski', 'Rozz Zum', 'Randall Boggs'];
             const names = ['Juan', 'Pedro', 'Maria', 'Ana', 'Luis', 'Carlos', 'Elena', 'Diego', 'Lucia', 'Miguel', 'Sara', 'Javier', 'Paula', 'Andres', 'Marta', 'Ricardo', 'Daniela', 'Fernando', 'Isabel', 'Jorge'];
             const surnames = ['Garcia', 'Rodriguez', 'Lopez', 'Martinez', 'Sanchez', 'Perez', 'Gomez', 'Martin', 'Jimenez', 'Ruiz'];
+            const countries = ['Colombia', 'México', 'Perú', 'Chile'];
+            const cities = { 'Colombia': ['Bogotá', 'Medellín', 'Cali'], 'México': ['CDMX', 'Guadalajara', 'Monterrey'], 'Perú': ['Lima', 'Arequipa', 'Cuzco'], 'Chile': ['Santiago', 'Valparaíso', 'Concepción'] };
+            const sexos = ['Masculino', 'Femenino', 'Otro', 'Prefiero no decir'];
+            const ageRanges = ['18-25', '26-35', '36-45', '46-55', '55+'];
+            const columnaA = ['Planta', 'Oficina', 'Terreno'];
+            const columnaB = ['Tiempo completo', 'Tiempo parcial', 'Contrato'];
 
             const participants = [];
             for (let i = 1; i <= 150; i++) {
@@ -3507,6 +3665,12 @@
                 const leader = leaders[Math.floor(Math.random() * leaders.length)];
                 const status = Math.random() > 0.3 ? 'Completada' : '-';
                 const username = `${name.toLowerCase()}${i}@monster.com`;
+                const country = countries[Math.floor(Math.random() * countries.length)];
+                const city = cities[country][Math.floor(Math.random() * cities[country].length)];
+                const age = ageRanges[Math.floor(Math.random() * ageRanges.length)];
+                const sexo = sexos[Math.floor(Math.random() * sexos.length)];
+                const colA = columnaA[Math.floor(Math.random() * columnaA.length)];
+                const colB = columnaB[Math.floor(Math.random() * columnaB.length)];
 
                 participants.push({
                     id: i,
@@ -3515,7 +3679,13 @@
                     email: username,
                     area: area,
                     leader: leader,
-                    status: status
+                    status: status,
+                    country: country,
+                    city: city,
+                    age: age,
+                    sexo: sexo,
+                    columnaA: colA,
+                    columnaB: colB
                 });
             }
             window.nomParticipationData = participants;
@@ -3683,6 +3853,336 @@
             return html;
         };
 
+        window.renderNomCountryTable = function(search = '') {
+            const grouped = {};
+            window.nomParticipationData.forEach(p => {
+                if (!grouped[p.country]) grouped[p.country] = { completed: 0, total: 0 };
+                grouped[p.country].total++;
+                if (p.status === 'Completada') grouped[p.country].completed++;
+            });
+            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
+
+            let html = `
+                <div class="participation-controls" style="margin-bottom: 12px;">
+                    <div class="participation-title">Tabla de participación - Países <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                </div>
+                <table class="participation-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">País <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            filtered.forEach(name => {
+                const data = grouped[name];
+                const percentage = Math.round((data.completed / data.total) * 100);
+                const pending = data.total - data.completed;
+                html += `
+                    <tr>
+                        <td style="font-weight: 700;">${name}</td>
+                        <td style="text-align: center;">${data.completed}</td>
+                        <td style="text-align: center;">${data.total}</td>
+                        <td>
+                            <div class="progress-container">
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
+                                <span class="participation-percentage">${percentage}%</span>
+                            </div>
+                        </td>
+                        <td style="text-align: center;">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        </td>
+                    </tr>`;
+            });
+            html += '</tbody></table>' + `
+                <div class="participation-legend">
+                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
+                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
+                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                </div>
+            `;
+            return html;
+        };
+
+        window.renderNomCityTable = function(search = '') {
+            const grouped = {};
+            window.nomParticipationData.forEach(p => {
+                if (!grouped[p.city]) grouped[p.city] = { completed: 0, total: 0 };
+                grouped[p.city].total++;
+                if (p.status === 'Completada') grouped[p.city].completed++;
+            });
+            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
+
+            let html = `
+                <div class="participation-controls" style="margin-bottom: 12px;">
+                    <div class="participation-title">Tabla de participación - Ciudades <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                </div>
+                <table class="participation-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Ciudad <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            filtered.forEach(name => {
+                const data = grouped[name];
+                const percentage = Math.round((data.completed / data.total) * 100);
+                const pending = data.total - data.completed;
+                html += `
+                    <tr>
+                        <td style="font-weight: 700;">${name}</td>
+                        <td style="text-align: center;">${data.completed}</td>
+                        <td style="text-align: center;">${data.total}</td>
+                        <td>
+                            <div class="progress-container">
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
+                                <span class="participation-percentage">${percentage}%</span>
+                            </div>
+                        </td>
+                        <td style="text-align: center;">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        </td>
+                    </tr>`;
+            });
+            html += '</tbody></table>' + `
+                <div class="participation-legend">
+                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
+                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
+                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                </div>
+            `;
+            return html;
+        };
+
+        window.renderNomAgeTable = function(search = '') {
+            const grouped = {};
+            window.nomParticipationData.forEach(p => {
+                if (!grouped[p.age]) grouped[p.age] = { completed: 0, total: 0 };
+                grouped[p.age].total++;
+                if (p.status === 'Completada') grouped[p.age].completed++;
+            });
+            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
+
+            let html = `
+                <div class="participation-controls" style="margin-bottom: 12px;">
+                    <div class="participation-title">Tabla de participación - Edad <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                </div>
+                <table class="participation-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Rango de edad <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            filtered.forEach(name => {
+                const data = grouped[name];
+                const percentage = Math.round((data.completed / data.total) * 100);
+                const pending = data.total - data.completed;
+                html += `
+                    <tr>
+                        <td style="font-weight: 700;">${name}</td>
+                        <td style="text-align: center;">${data.completed}</td>
+                        <td style="text-align: center;">${data.total}</td>
+                        <td>
+                            <div class="progress-container">
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
+                                <span class="participation-percentage">${percentage}%</span>
+                            </div>
+                        </td>
+                        <td style="text-align: center;">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        </td>
+                    </tr>`;
+            });
+            html += '</tbody></table>' + `
+                <div class="participation-legend">
+                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
+                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
+                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                </div>
+            `;
+            return html;
+        };
+
+        window.renderNomSexoTable = function(search = '') {
+            const grouped = {};
+            window.nomParticipationData.forEach(p => {
+                if (!grouped[p.sexo]) grouped[p.sexo] = { completed: 0, total: 0 };
+                grouped[p.sexo].total++;
+                if (p.status === 'Completada') grouped[p.sexo].completed++;
+            });
+            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
+
+            let html = `
+                <div class="participation-controls" style="margin-bottom: 12px;">
+                    <div class="participation-title">Tabla de participación - Sexo <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                </div>
+                <table class="participation-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Sexo <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            filtered.forEach(name => {
+                const data = grouped[name];
+                const percentage = Math.round((data.completed / data.total) * 100);
+                const pending = data.total - data.completed;
+                html += `
+                    <tr>
+                        <td style="font-weight: 700;">${name}</td>
+                        <td style="text-align: center;">${data.completed}</td>
+                        <td style="text-align: center;">${data.total}</td>
+                        <td>
+                            <div class="progress-container">
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
+                                <span class="participation-percentage">${percentage}%</span>
+                            </div>
+                        </td>
+                        <td style="text-align: center;">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        </td>
+                    </tr>`;
+            });
+            html += '</tbody></table>' + `
+                <div class="participation-legend">
+                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
+                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
+                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                </div>
+            `;
+            return html;
+        };
+
+        window.renderNomColumnaATable = function(search = '') {
+            const grouped = {};
+            window.nomParticipationData.forEach(p => {
+                if (!grouped[p.columnaA]) grouped[p.columnaA] = { completed: 0, total: 0 };
+                grouped[p.columnaA].total++;
+                if (p.status === 'Completada') grouped[p.columnaA].completed++;
+            });
+            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
+
+            let html = `
+                <div class="participation-controls" style="margin-bottom: 12px;">
+                    <div class="participation-title">Tabla de participación - Columna A <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                </div>
+                <table class="participation-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Columna A <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            filtered.forEach(name => {
+                const data = grouped[name];
+                const percentage = Math.round((data.completed / data.total) * 100);
+                const pending = data.total - data.completed;
+                html += `
+                    <tr>
+                        <td style="font-weight: 700;">${name}</td>
+                        <td style="text-align: center;">${data.completed}</td>
+                        <td style="text-align: center;">${data.total}</td>
+                        <td>
+                            <div class="progress-container">
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
+                                <span class="participation-percentage">${percentage}%</span>
+                            </div>
+                        </td>
+                        <td style="text-align: center;">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        </td>
+                    </tr>`;
+            });
+            html += '</tbody></table>' + `
+                <div class="participation-legend">
+                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
+                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
+                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                </div>
+            `;
+            return html;
+        };
+
+        window.renderNomColumnaBTable = function(search = '') {
+            const grouped = {};
+            window.nomParticipationData.forEach(p => {
+                if (!grouped[p.columnaB]) grouped[p.columnaB] = { completed: 0, total: 0 };
+                grouped[p.columnaB].total++;
+                if (p.status === 'Completada') grouped[p.columnaB].completed++;
+            });
+            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
+
+            let html = `
+                <div class="participation-controls" style="margin-bottom: 12px;">
+                    <div class="participation-title">Tabla de participación - Columna B <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                </div>
+                <table class="participation-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Columna B <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
+                            <th style="text-align: center;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            filtered.forEach(name => {
+                const data = grouped[name];
+                const percentage = Math.round((data.completed / data.total) * 100);
+                const pending = data.total - data.completed;
+                html += `
+                    <tr>
+                        <td style="font-weight: 700;">${name}</td>
+                        <td style="text-align: center;">${data.completed}</td>
+                        <td style="text-align: center;">${data.total}</td>
+                        <td>
+                            <div class="progress-container">
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
+                                <span class="participation-percentage">${percentage}%</span>
+                            </div>
+                        </td>
+                        <td style="text-align: center;">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        </td>
+                    </tr>`;
+            });
+            html += '</tbody></table>' + `
+                <div class="participation-legend">
+                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
+                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
+                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                </div>
+            `;
+            return html;
+        };
+
         window.initializeNomParticipationContent = function() {
             const wrapper = document.getElementById('nom-participation-table-wrapper');
             const segmentSelect = document.getElementById('nom-participation-segment-select');
@@ -3698,7 +4198,7 @@
 
             // Recuperar segmento guardado
             const savedSegment = sessionStorage.getItem('nom_participation_active_segment');
-            if (savedSegment && ['areas', 'leaders', 'collaborators'].includes(savedSegment)) {
+            if (savedSegment && ['areas', 'leaders', 'collaborators', 'country', 'city', 'age', 'sexo', 'columna-a', 'columna-b'].includes(savedSegment)) {
                 segmentSelect.value = savedSegment;
             }
 
@@ -3741,6 +4241,12 @@
                 if (segment === 'areas') html = window.renderNomAreasTable(searchTerm);
                 else if (segment === 'leaders') html = window.renderNomLeadersTable(searchTerm);
                 else if (segment === 'collaborators') html = window.renderNomCollaboratorsTable(searchTerm);
+                else if (segment === 'country') html = window.renderNomCountryTable(searchTerm);
+                else if (segment === 'city') html = window.renderNomCityTable(searchTerm);
+                else if (segment === 'age') html = window.renderNomAgeTable(searchTerm);
+                else if (segment === 'sexo') html = window.renderNomSexoTable(searchTerm);
+                else if (segment === 'columna-a') html = window.renderNomColumnaATable(searchTerm);
+                else if (segment === 'columna-b') html = window.renderNomColumnaBTable(searchTerm);
 
                 wrapper.innerHTML = html;
             };
@@ -3767,6 +4273,16 @@
                     document.getElementById('tab-' + tabName).classList.add('active');
 
                     console.log('Tab activado:', tabName);
+
+                    // Inicializar panel de búsqueda cuando se activa el tab detalle-colaborador
+                    if (tabName === 'detalle-colaborador') {
+                        setTimeout(() => {
+                            if (typeof initializeEmotionalPanel === 'function') {
+                                initializeEmotionalPanel();
+                                console.log('Panel emocional inicializado para tab detalle-colaborador');
+                            }
+                        }, 100);
+                    }
                 });
             });
         }
