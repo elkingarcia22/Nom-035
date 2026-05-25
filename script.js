@@ -4,7 +4,7 @@
 function toggleDarkMode() {
     const body = document.body;
     const currentTheme = body.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    const newTheme = 'light'; // Forzado a light debido a colores fijos en la UI
     
     body.setAttribute('data-theme', newTheme);
     
@@ -120,7 +120,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Función para cargar tema guardado
     function loadSavedTheme() {
-        const savedTheme = localStorage.getItem('theme');
+        const savedTheme = 'light'; // Forzar modo light
+        localStorage.setItem('theme', 'light');
         if (savedTheme) {
             document.body.setAttribute('data-theme', savedTheme);
             

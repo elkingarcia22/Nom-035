@@ -1344,7 +1344,102 @@
         }
         .legend-dot.completed { background: #2563eb; }
         .legend-dot.pending { background: #9ca3af; }
-    </style>
+    
+        /* Indicador de Rangos NOM-035 */
+        .range-indicator-container {
+            width: 100%;
+            min-width: 200px;
+            padding: 8px 0;
+        }
+        .range-track {
+            position: relative;
+            height: 16px;
+            background-color: #f3f4f6;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+        }
+        .range-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        .range-fill.nulo { background-color: #60a5fa; }
+        .range-fill.bajo { background-color: #86efac; }
+        .range-fill.medio { background-color: #fde047; }
+        .range-fill.alto { background-color: #fbbf24; }
+        .range-fill.muy-alto { background-color: #ef4444; }
+        
+        .range-thresholds {
+            position: relative;
+            height: 14px;
+            margin-top: 4px;
+            width: 100%;
+        }
+        .range-threshold {
+            position: absolute;
+            font-size: 11px;
+            color: #6b7280;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+        .score-value {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 14px;
+        }
+
+
+        /* Leyenda General de Rangos */
+        .general-range-legend {
+            margin-top: 24px;
+            padding: 24px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .legend-bar {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+            height: 24px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .legend-segment {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .legend-labels {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+            justify-content: space-between;
+        }
+        .legend-label {
+            flex: 1;
+            text-align: center;
+            font-size: 13px;
+            color: #4b5563;
+        }
+        .legend-title {
+            margin-top: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f2937;
+            text-align: center;
+        }
+
+</style>
 </head>
 <body data-theme="light">
 

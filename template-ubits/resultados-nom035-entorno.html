@@ -2104,7 +2104,102 @@
             align-items: center;
             justify-content: center;
         }
-    </style>
+    
+        /* Indicador de Rangos NOM-035 */
+        .range-indicator-container {
+            width: 100%;
+            min-width: 200px;
+            padding: 8px 0;
+        }
+        .range-track {
+            position: relative;
+            height: 16px;
+            background-color: #f3f4f6;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+        }
+        .range-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        .range-fill.nulo { background-color: #60a5fa; }
+        .range-fill.bajo { background-color: #86efac; }
+        .range-fill.medio { background-color: #fde047; }
+        .range-fill.alto { background-color: #fbbf24; }
+        .range-fill.muy-alto { background-color: #ef4444; }
+        
+        .range-thresholds {
+            position: relative;
+            height: 14px;
+            margin-top: 4px;
+            width: 100%;
+        }
+        .range-threshold {
+            position: absolute;
+            font-size: 11px;
+            color: #6b7280;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+        .score-value {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 14px;
+        }
+
+
+        /* Leyenda General de Rangos */
+        .general-range-legend {
+            margin-top: 24px;
+            padding: 24px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .legend-bar {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+            height: 24px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .legend-segment {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .legend-labels {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+            justify-content: space-between;
+        }
+        .legend-label {
+            flex: 1;
+            text-align: center;
+            font-size: 13px;
+            color: #4b5563;
+        }
+        .legend-title {
+            margin-top: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f2937;
+            text-align: center;
+        }
+
+</style>
 </head>
 <body>
     <div class="app-container">
@@ -2269,7 +2364,7 @@
                                             <th>Dimensión</th>
                                             <th>Total Usuarios en Riesgo</th>
                                             <th>% Colaboradores Afectados</th>
-                                            <th>Nivel de Riesgo</th>
+                                            <th>Puntaje</th><th>Calificación</th><th>Nivel de Riesgo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2479,7 +2574,7 @@
                                             <th>Dominio</th>
                                             <th>Total Usuarios en Riesgo</th>
                                             <th>% Colaboradores Afectados</th>
-                                            <th>Nivel de Riesgo</th>
+                                            <th>Puntaje</th><th>Calificación</th><th>Nivel de Riesgo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2493,6 +2588,16 @@
                                             <td class="dimension-domain-info">Condiciones en el ambiente de trabajo</td>
                                             <td class="risk-count">12</td>
                                             <td class="percentage">8.0%</td>
+                                            <td><span class="score-value">5.9</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill bajo" style="width: 23.6%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         
@@ -2506,7 +2611,17 @@
                                             <td class="dimension-domain-info">Condiciones en el ambiente de trabajo</td>
                                             <td class="risk-count">8</td>
                                             <td class="percentage">5.3%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td><span class="score-value">7.8</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill muy-alto" style="width: 31.2%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge muy-alto">Muy alto</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 3: Exigencias cuantitativas -->
@@ -2519,7 +2634,17 @@
                                             <td class="dimension-domain-info">Carga de trabajo</td>
                                             <td class="risk-count">18</td>
                                             <td class="percentage">12.0%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td><span class="score-value">10.7</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill alto" style="width: 42.8%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge alto">Alto</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 4: Exigencias mentales -->
@@ -2532,6 +2657,16 @@
                                             <td class="dimension-domain-info">Carga de trabajo</td>
                                             <td class="risk-count">25</td>
                                             <td class="percentage">16.7%</td>
+                                            <td><span class="score-value">18.9</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill medio" style="width: 75.6%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                         
@@ -2545,7 +2680,17 @@
                                             <td class="dimension-domain-info">Carga de trabajo</td>
                                             <td class="risk-count">22</td>
                                             <td class="percentage">14.7%</td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
+                                            <td><span class="score-value">9.5</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill nulo" style="width: 38%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 6: Falta de control sobre el trabajo -->
@@ -2558,7 +2703,17 @@
                                             <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
                                             <td class="risk-count">15</td>
                                             <td class="percentage">10.0%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td><span class="score-value">7.6</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill nulo" style="width: 30.4%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 7: Falta de claridad de rol -->
@@ -2571,7 +2726,17 @@
                                             <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
                                             <td class="risk-count">10</td>
                                             <td class="percentage">6.7%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td><span class="score-value">11.9</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill muy-alto" style="width: 47.6%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge muy-alto">Muy alto</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 8: Falta de autonomía -->
@@ -2584,6 +2749,16 @@
                                             <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
                                             <td class="risk-count">13</td>
                                             <td class="percentage">8.7%</td>
+                                            <td><span class="score-value">9.6</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill bajo" style="width: 38.4%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         
@@ -2597,7 +2772,17 @@
                                             <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
                                             <td class="risk-count">20</td>
                                             <td class="percentage">13.3%</td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
+                                            <td><span class="score-value">18.5</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill bajo" style="width: 74%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 10: Jornada de trabajo -->
@@ -2610,7 +2795,17 @@
                                             <td class="dimension-domain-info">Jornada de trabajo</td>
                                             <td class="risk-count">22</td>
                                             <td class="percentage">14.7%</td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
+                                            <td><span class="score-value">14.3</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill nulo" style="width: 57.2%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 11: Distribución de la jornada -->
@@ -2623,6 +2818,16 @@
                                             <td class="dimension-domain-info">Jornada de trabajo</td>
                                             <td class="risk-count">16</td>
                                             <td class="percentage">10.7%</td>
+                                            <td><span class="score-value">15.5</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill bajo" style="width: 62%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         
@@ -2636,7 +2841,17 @@
                                             <td class="dimension-domain-info">Jornada de trabajo</td>
                                             <td class="risk-count">14</td>
                                             <td class="percentage">9.3%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td><span class="score-value">13.6</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill muy-alto" style="width: 54.400000000000006%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge muy-alto">Muy alto</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 13: Liderazgo -->
@@ -2649,6 +2864,16 @@
                                             <td class="dimension-domain-info">Liderazgo y Relaciones interpersonales</td>
                                             <td class="risk-count">18</td>
                                             <td class="percentage">12.0%</td>
+                                            <td><span class="score-value">5.5</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill bajo" style="width: 22%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         
@@ -2662,7 +2887,17 @@
                                             <td class="dimension-domain-info">Liderazgo y Relaciones interpersonales</td>
                                             <td class="risk-count">12</td>
                                             <td class="percentage">8.0%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td><span class="score-value">16.1</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill nulo" style="width: 64.4%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 15: Apoyo social -->
@@ -2675,7 +2910,17 @@
                                             <td class="dimension-domain-info">Liderazgo y Relaciones interpersonales</td>
                                             <td class="risk-count">8</td>
                                             <td class="percentage">5.3%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td><span class="score-value">7</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill nulo" style="width: 28.000000000000004%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 16: Relaciones interpersonales -->
@@ -2688,6 +2933,16 @@
                                             <td class="dimension-domain-info">Liderazgo y Relaciones interpersonales</td>
                                             <td class="risk-count">8</td>
                                             <td class="percentage">5.3%</td>
+                                            <td><span class="score-value">6.1</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill bajo" style="width: 24.4%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         
@@ -2701,7 +2956,17 @@
                                             <td class="dimension-domain-info">Violencia laboral</td>
                                             <td class="risk-count">32</td>
                                             <td class="percentage">21.3%</td>
-                                            <td><span class="risk-badge alto">Alto</span></td>
+                                            <td><span class="score-value">16</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill bajo" style="width: 64%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 18: Equidad -->
@@ -2714,7 +2979,17 @@
                                             <td class="dimension-domain-info">Entorno organizacional</td>
                                             <td class="risk-count">19</td>
                                             <td class="percentage">12.7%</td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
+                                            <td><span class="score-value">19.7</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill bajo" style="width: 78.8%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 19: Respeto -->
@@ -2727,7 +3002,17 @@
                                             <td class="dimension-domain-info">Entorno organizacional</td>
                                             <td class="risk-count">15</td>
                                             <td class="percentage">10.0%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td><span class="score-value">13.9</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill nulo" style="width: 55.60000000000001%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
                                         
                                         <!-- Dimensión 20: Seguridad laboral -->
@@ -2740,7 +3025,17 @@
                                             <td class="dimension-domain-info">Entorno organizacional</td>
                                             <td class="risk-count">11</td>
                                             <td class="percentage">7.3%</td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                            <td><span class="score-value">11.8</span></td>
+                                            <td>
+    <div class="range-indicator-container">
+        <div class="range-track">
+            <div class="range-fill medio" style="width: 47.2%;"></div>
+        </div>
+        <div class="range-thresholds">
+            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
+        </div>
+    </div></td>
+                                            <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
