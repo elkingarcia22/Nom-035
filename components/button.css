@@ -15,8 +15,8 @@
     gap: 8px;
     padding: 12px 16px;
     border: none;
-    border-radius: 8px;
-    font-family: 'Noto Sans', sans-serif;
+    border-radius: 9999px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-weight: 600;
     line-height: 1;
     text-decoration: none;
@@ -36,17 +36,10 @@
    BUTTON STATES
    ======================================== */
 
-/* Hover State */
-.ubits-button:hover:not(:disabled) {
-    background: var(--ubits-button-primary-hover);
-    border-color: var(--ubits-button-primary-hover);
-}
-
 /* Pressed State */
 .ubits-button:active:not(:disabled) {
     background: var(--ubits-button-primary-pressed);
     border-color: var(--ubits-button-primary-pressed);
-    transform: translateY(1px);
 }
 
 /* Focus State */
@@ -83,7 +76,7 @@
     right: 0;
     bottom: 0;
     border: 1px solid var(--ubits-border-disabled-button);
-    border-radius: 8px;
+    border-radius: 9999px;
     pointer-events: none;
 }
 
@@ -98,17 +91,7 @@
     border: 1px solid var(--ubits-accent-brand);
 }
 
-.ubits-button--active:hover:not(:disabled) {
-    background: var(--ubits-button-active-bg);
-    color: var(--ubits-accent-brand);
-    border-color: var(--ubits-accent-brand);
-}
 
-.ubits-button--active:active:not(:disabled) {
-    background: var(--ubits-button-active-bg);
-    color: var(--ubits-accent-brand);
-    border-color: var(--ubits-accent-brand);
-}
 
 /* ========================================
    SECONDARY BUTTON VARIANT
@@ -121,19 +104,11 @@
     border: 1px solid var(--ubits-btn-secondary-border);
 }
 
-/* Secondary Button Hover */
-.ubits-button--secondary:hover:not(:disabled) {
-    background: var(--ubits-btn-secondary-bg-hover);
-    color: var(--ubits-btn-secondary-fg-default);
-    border-color: var(--ubits-btn-secondary-border);
-}
-
 /* Secondary Button Pressed */
 .ubits-button--secondary:active:not(:disabled) {
     background: var(--ubits-btn-secondary-bg-pressed);
     color: var(--ubits-btn-secondary-fg-default);
     border-color: var(--ubits-btn-secondary-border);
-    transform: translateY(1px);
 }
 
 /* Secondary Button Active State */
@@ -143,17 +118,7 @@
     border: none;
 }
 
-.ubits-button--secondary.ubits-button--active:hover:not(:disabled) {
-    background: var(--ubits-button-active-bg);
-    color: var(--ubits-accent-brand);
-    border: none;
-}
 
-.ubits-button--secondary.ubits-button--active:active:not(:disabled) {
-    background: var(--ubits-button-active-bg);
-    color: var(--ubits-accent-brand);
-    border: none;
-}
 
 /* ========================================
    TERTIARY BUTTON VARIANT
@@ -166,19 +131,11 @@
     border: 1px solid transparent;
 }
 
-/* Tertiary Button Hover */
-.ubits-button--tertiary:hover:not(:disabled) {
-    background: var(--ubits-btn-tertiary-bg-hover);
-    color: var(--ubits-btn-tertiary-fg);
-    border: 1px solid transparent;
-}
-
 /* Tertiary Button Pressed */
 .ubits-button--tertiary:active:not(:disabled) {
     background: var(--ubits-btn-tertiary-bg-pressed);
     color: var(--ubits-btn-tertiary-fg);
     border: 1px solid transparent;
-    transform: translateY(1px);
 }
 
 /* Tertiary Button Active State */
@@ -188,17 +145,7 @@
     border: 1px solid transparent;
 }
 
-.ubits-button--tertiary.ubits-button--active:hover:not(:disabled) {
-    background: var(--ubits-button-active-bg);
-    color: var(--ubits-accent-brand);
-    border: 1px solid transparent;
-}
 
-.ubits-button--tertiary.ubits-button--active:active:not(:disabled) {
-    background: var(--ubits-button-active-bg);
-    color: var(--ubits-accent-brand);
-    border: 1px solid transparent;
-}
 
 /* Tertiary Button Focus State */
 .ubits-button--tertiary:focus-visible {
@@ -232,7 +179,7 @@
 
 /* Aplicar tipografía UBITS al texto del botón medium */
 .ubits-button span {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 16px;
     font-weight: 600;
     line-height: 24px;
@@ -247,7 +194,7 @@
 
 /* Aplicar tipografía UBITS al texto del botón small - ubits-body-sm-semibold */
 .ubits-button--sm span {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 13px;
     font-weight: 600;
     line-height: 19.5px;
@@ -268,7 +215,7 @@
 
 /* Aplicar tipografía UBITS al texto del botón large */
 .ubits-button--lg span {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 20px;
     font-weight: 600;
     line-height: 30px;

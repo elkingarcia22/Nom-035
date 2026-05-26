@@ -36,7 +36,7 @@
 }
 
 .floating-menu-title {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 18px;
     font-weight: 600;
     color: var(--ubits-sidebar-button-fg-default);
@@ -85,7 +85,7 @@
 .accordion-title {
     display: flex;
     align-items: center;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 14px;
     font-weight: 600;
     color: var(--ubits-sidebar-button-fg-default);

@@ -43,7 +43,7 @@
 
 /* Nav Title */
 .nav-title {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
@@ -139,7 +139,7 @@
 }
 
 .hamburger-item span {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 14px;
     line-height: 20px;
     white-space: nowrap;
@@ -191,7 +191,7 @@
 
 /* Nav Tab Text */
 .nav-tab span {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 16px;
     color: var(--ubits-fg-1-medium);
     text-align: left;

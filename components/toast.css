@@ -23,7 +23,7 @@
     padding: 8px; /* match alert */
     border-radius: 10px; /* match alert */
     position: relative; /* for pseudo border */
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     box-sizing: border-box;
     background: var(--ubits-bg-1);
     color: var(--ubits-fg-1-high);

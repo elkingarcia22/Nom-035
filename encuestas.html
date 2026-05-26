@@ -15,17 +15,22 @@
     </script>
     
     <!-- Estilos locales -->
-    <link rel="stylesheet" href="ubits-colors.css">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="fontawesome-icons.css">
-    <link rel="stylesheet" href="ubits-typography.css">
-    <link rel="stylesheet" href="components/sub-nav.css">
-    <link rel="stylesheet" href="components-sidebar.css">
-    <link rel="stylesheet" href="components/tab-bar.css">
-    <link rel="stylesheet" href="components/floating-menu.css">
-    <link rel="stylesheet" href="components/profile-menu.css">
-    <link rel="stylesheet" href="components/button.css">
-    <link rel="stylesheet" href="profile.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.4/css/all.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- UBITS Design System -->
+    <link rel="stylesheet" href="ubits-colors.css?v=2">
+    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="fontawesome-icons.css?v=2">
+    <link rel="stylesheet" href="ubits-typography.css?v=2">
+    <link rel="stylesheet" href="components/sub-nav.css?v=2">
+    <link rel="stylesheet" href="components-sidebar.css?v=2">
+    <link rel="stylesheet" href="components/tab-bar.css?v=2">
+    <link rel="stylesheet" href="components/floating-menu.css?v=2">
+    <link rel="stylesheet" href="components/profile-menu.css?v=2">
+    <link rel="stylesheet" href="components/button.css?v=2">
+    <link rel="stylesheet" href="profile.css?v=2">
     <style>
         /* ===== SISTEMA DE ONBOARDING ===== */
         
@@ -558,7 +563,7 @@
             background-color: var(--ubits-bg-1);
             border: none;
             border-radius: 8px;
-            padding: 16px !important; /* !important para sobrescribir el reset */
+            padding: 12px !important; /* !important para sobrescribir el reset */
             width: 100%;
             box-sizing: border-box;
             display: flex;
@@ -623,12 +628,12 @@
         }
 
         .surveys-table th {
-            padding: 16px;
+            padding: 12px 16px;
             text-align: left;
             font-weight: 600;
             color: var(--ubits-fg-1-medium);
             border: none;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .surveys-table tbody tr {
@@ -645,9 +650,10 @@
         }
 
         .surveys-table td {
-            padding: 16px;
+            padding: 12px 16px;
             border: none;
             vertical-align: middle;
+            font-size: 13px;
         }
 
         .surveys-table .survey-name {
@@ -671,14 +677,14 @@
         /* Status badges estilo minimalista */
         .status-badge {
             display: inline-block;
-            padding: 6px 12px;
+            padding: 4px 8px;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             border: 1px solid;
-            width: 100px;
+            width: 90px;
             text-align: center;
         }
 
@@ -714,10 +720,10 @@
         }
 
         .progress-bar {
-            width: 120px;
-            height: 12px;
+            width: 100px;
+            height: 8px;
             background: var(--ubits-bg-2);
-            border-radius: 6px;
+            border-radius: 4px;
             overflow: hidden;
             position: relative;
             border: 1px solid var(--ubits-border-1);
@@ -744,9 +750,9 @@
 
         .progress-text {
             color: var(--ubits-fg-1-high);
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
-            min-width: 40px;
+            min-width: 35px;
             text-align: right;
         }
 
@@ -834,23 +840,7 @@
             <!-- Top Navigation -->
             <div id="top-nav-container"></div>
             
-            <!-- Botones de acción independientes -->
-            <div style="padding: 16px 24px;">
-                <div style="display: flex; justify-content: flex-end; gap: 12px;">
-                    <button class="ubits-button ubits-button--secondary ubits-button--md">
-                        <i class="far fa-clock"></i>
-                        <span>Datos demográficos</span>
-                    </button>
-                    <button class="ubits-button ubits-button--secondary ubits-button--md">
-                        <i class="far fa-file-plus"></i>
-                        <span>Crear con plantilla</span>
-                    </button>
-                    <button class="ubits-button ubits-button--primary ubits-button--md">
-                        <i class="far fa-plus"></i>
-                        <span>Crear encuesta</span>
-                    </button>
-                </div>
-            </div>
+            <!-- Botones movidos junto a buscar/filtrar -->
             
             <!-- Content Area -->
             <div class="content-area">
@@ -862,25 +852,41 @@
                             <!-- Header con título y botones de acción -->
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                                 <div style="display: flex; align-items: center; gap: 12px;">
-                                    <h1 class="ubits-heading-h1" style="margin: 0; color: var(--ubits-fg-1-high);">Lista de encuestas</h1>
-                                    <span class="ubits-body-md-regular" id="resultados-count" style="color: var(--ubits-fg-1-medium);">2 encuestas</span>
+                                    <h1 class="ubits-heading-h2" style="margin: 0; color: var(--ubits-fg-1-high);">Lista de encuestas</h1>
+                                    <span class="ubits-body-sm-regular" id="resultados-count" style="color: var(--ubits-fg-1-medium);">2 encuestas</span>
                                 </div>
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <!-- Campo de búsqueda desplegable -->
-                                    <div id="search-container" style="display: none; position: relative;">
-                                        <input type="text" id="search-input" placeholder="Buscar encuestas..." 
-                                               style="padding: 8px 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); width: 250px; font-size: 14px;">
-                                        <button id="close-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer;">
-                                            <i class="far fa-times"></i>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <!-- Campo de búsqueda desplegable -->
+                                        <div id="search-container" style="display: none; position: relative;">
+                                            <input type="text" id="search-input" placeholder="Buscar encuestas..." 
+                                                   style="padding: 8px 12px; border: 1px solid var(--ubits-border-1); border-radius: 6px; background: var(--ubits-bg-1); color: var(--ubits-fg-1-high); width: 250px; font-size: 14px;">
+                                            <button id="close-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer;">
+                                                <i class="far fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <button id="search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
+                                            <i class="far fa-search"></i>
+                                        </button>
+                                        <button id="filter-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px; position: relative;">
+                                            <i class="far fa-filter"></i>
+                                            <span id="filter-badge" style="position: absolute; top: -8px; right: -8px; background: var(--ubits-accent-brand); color: white !important; border-radius: 50%; width: 20px; height: 20px; display: none; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">0</span>
                                         </button>
                                     </div>
-                                    <button id="search-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px;">
-                                        <i class="far fa-search"></i>
-                                    </button>
-                                    <button id="filter-btn" class="ubits-button ubits-button--secondary ubits-button--sm ubits-button--icon-only" style="width: 32px; height: 32px; position: relative;">
-                                        <i class="far fa-filter"></i>
-                                        <span id="filter-badge" style="position: absolute; top: -8px; right: -8px; background: var(--ubits-accent-brand); color: white !important; border-radius: 50%; width: 20px; height: 20px; display: none; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">0</span>
-                                    </button>
+                                    <div style="display: flex; align-items: center; gap: 12px; border-left: 1px solid var(--ubits-border-1); padding-left: 12px;">
+                                        <button class="ubits-button ubits-button--secondary ubits-button--sm">
+                                            <i class="far fa-clock"></i>
+                                            <span>Datos demográficos</span>
+                                        </button>
+                                        <button class="ubits-button ubits-button--secondary ubits-button--sm">
+                                            <i class="far fa-file-plus"></i>
+                                            <span>Crear con plantilla</span>
+                                        </button>
+                                        <button class="ubits-button ubits-button--primary ubits-button--sm">
+                                            <i class="far fa-plus"></i>
+                                            <span>Crear encuesta</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -961,7 +967,7 @@
     <div id="filter-side-panel" style="position: fixed; top: 0; right: -400px; width: 400px; height: 100vh; background: var(--ubits-bg-1); border-left: 1px solid var(--ubits-border-1); box-shadow: -4px 0 12px var(--ubits-bg-dim); z-index: 1000; transition: right 0.3s ease; display: flex; flex-direction: column;">
         <!-- Header del side panel -->
         <div style="padding: 20px; border-bottom: 1px solid var(--ubits-border-1); display: flex; justify-content: space-between; align-items: center;">
-            <h2 class="ubits-heading-h2" style="margin: 0; color: var(--ubits-fg-1-high);">Filtros</h2>
+            <h2 class="ubits-heading-h3" style="margin: 0; color: var(--ubits-fg-1-high);">Filtros</h2>
             <button id="close-filter-panel" style="background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer; font-size: 18px;">
                 <i class="far fa-times"></i>
             </button>

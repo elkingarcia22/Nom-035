@@ -41,34 +41,36 @@ body {
     overflow: visible;
 }
 
-/* Sidebar - Dimensiones fijas que NO cambian con el tema */
+/* Sidebar */
 .sidebar {
-    background-color: var(--ubits-sidebar-bg);
-    width: 96px;
-    min-width: 96px;
-    max-width: 96px;
-    height: 578px;
-    padding: 16px 28px;
+    background-color: #111827;
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+    padding: 24px 0;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 0;
     align-items: center;
     justify-content: flex-start;
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: var(--ubits-radius-xl);
     position: fixed;
-    left: 24px;
+    left: 20px;
     top: 16px;
+    bottom: 16px;
     z-index: 10;
     box-sizing: border-box;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.50), 0 0 0 1px rgba(255,255,255,0.05);
 }
 
 /* Contenedor principal para header y body */
 .sidebar-main {
     display: flex;
     flex-direction: column;
-    gap: 16px;
     align-items: center;
+    width: 100%;
     flex-shrink: 0;
 }
 
@@ -79,6 +81,7 @@ body {
     justify-content: center;
     width: 100%;
     flex-shrink: 0;
+    margin-bottom: 24px;
 }
 
 .logo {
@@ -94,8 +97,7 @@ body {
 }
 
 .logo:hover {
-    background: var(--ubits-button-active-bg);
-    transform: scale(1.05);
+    background: rgba(255,255,255,0.08);
 }
 
 .logo img {
@@ -109,61 +111,52 @@ body {
     flex: none;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
     align-items: center;
     justify-content: flex-start;
     min-height: 0;
     min-width: 0;
     flex-shrink: 0;
+    width: 100%;
+    padding: 0 16px;
 }
 
 /* Footer */
 .sidebar-footer {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
     align-items: center;
     justify-content: flex-start;
     margin-top: auto;
     padding: 16px 0 0 0;
     width: 100%;
     flex-shrink: 0;
-    border-top: 1px solid var(--ubits-sidebar-button-fg-default);
+    border-top: 1px solid rgba(255,255,255,0.1);
     position: relative;
-}
-
-.sidebar-footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background-color: var(--ubits-fg-1-medium);
+    padding: 16px;
 }
 
 /* Botones de navegación */
 .nav-button {
     background: transparent;
     border: none;
-    padding: 8px;
-    border-radius: 1000px;
+    padding: 0;
+    border-radius: 50%;
     cursor: pointer;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
     position: relative;
     flex-shrink: 0;
     width: 40px;
     height: 40px;
-    overflow: hidden;
 }
 
 .nav-button i {
-    font-size: 16px;
-    color: var(--ubits-sidebar-button-fg-default);
+    font-size: 18px;
+    color: rgba(255,255,255,0.45);
     width: 24px;
     height: 24px;
     display: flex;
@@ -171,24 +164,7 @@ body {
     justify-content: center;
     overflow: hidden;
     flex-shrink: 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Efecto de brillo para todos los nav-button */
-.nav-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, var(--ubits-button-active-bg), transparent);
-    transition: left 0.6s ease;
-    pointer-events: none;
-}
-
-.nav-button:hover::before {
-    left: 100%;
+    transition: all 0.2s ease;
 }
 
 /* Estados de los botones */
@@ -203,22 +179,10 @@ body {
     background: rgba(255, 255, 255, 0) !important;
 }
 
-#darkmode-toggle:hover {
-    background: var(--ubits-button-active-bg) !important;
-}
-
-#darkmode-toggle:active {
-    background: var(--ubits-button-active-bg) !important;
-}
-
 /* El icono del botón modo oscuro SIEMPRE debe ser visible */
 #darkmode-toggle i {
     color: var(--ubits-sidebar-button-fg-default) !important;
     transition: color 0.2s ease;
-}
-
-#darkmode-toggle:hover i {
-    color: var(--ubits-sidebar-button-fg-hover) !important;
 }
 
 /* En modo oscuro, el icono debe ser más claro para que se vea */
@@ -226,44 +190,36 @@ body {
     color: var(--ubits-sidebar-button-fg-default) !important;
 }
 
-[data-theme="dark"] #darkmode-toggle:hover i {
-    color: var(--ubits-sidebar-button-fg-hover) !important;
-}
+
 
 .nav-button i {
     color: var(--ubits-sidebar-button-fg-default);
 }
 
-/* Hover State - Solo cuando el mouse está encima */
-.nav-button:hover {
-    background: var(--ubits-button-active-bg);
-    transform: scale(1.08);
-    box-shadow: 0 0 20px var(--ubits-button-active-bg);
-}
-
-.nav-button:hover i {
-    color: var(--ubits-sidebar-button-fg-hover);
-    transform: scale(1.1);
-}
-
-/* Pressed State - Solo cuando mantienes presionado el mouse */
+/* Pressed State */
 .nav-button:active {
-    background: var(--ubits-sidebar-button-bg-pressed);
-    transform: scale(0.95);
+    background: rgba(255,255,255,0.12);
+}
+
+.nav-button.active {
+    background: var(--ubits-accent-brand);
+}
+
+.nav-button.active i {
+    color: #ffffff;
 }
 
 .nav-button:active i {
     color: var(--ubits-sidebar-button-fg-pressed);
-    transform: scale(0.9);
 }
 
 /* Active State - Estado seleccionado */
 .nav-button.active {
-    background: var(--ubits-sidebar-button-bg-active);
+    background: var(--ubits-accent-brand) !important;
 }
 
 .nav-button.active i {
-    color: var(--ubits-sidebar-button-fg-active);
+    color: #ffffff !important;
 }
 
 /* Focus State - Solo cuando navegas con teclado (Tab) */
@@ -296,11 +252,11 @@ body {
     border-radius: 6px;
     white-space: nowrap;
     z-index: 10000;
-    box-shadow: 0px 2px 8px var(--ubits-bg-dim);
+    box-shadow: 0px 2px 8px rgba(15,23,42,0.06);
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s ease;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 14px;
     font-weight: 400;
 }
@@ -358,7 +314,7 @@ body {
 .main-content {
     position: relative;
     flex: 1;
-    margin: 16px 24px 0 143px;
+    margin: 16px 24px 24px 143px;
     width: calc(100% - 143px - 24px);
     overflow: visible;
     max-height: none;
@@ -366,6 +322,7 @@ body {
     flex-direction: column;
     gap: 20px;
     z-index: 5;
+    align-items: center;
 }
 
 /* Ajustar gap en móvil cuando no hay subnav */
@@ -386,13 +343,15 @@ body {
 .top-nav {
     background-color: var(--ubits-bg-1);
     height: 40px;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 0 12px;
     display: flex;
     align-items: center;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    border: 1px solid var(--ubits-border-1);
+    box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 2px 8px rgba(15,23,42,0.06);
 }
 
 .nav-tabs {
@@ -405,16 +364,15 @@ body {
 .nav-tab {
     background: none;
     border: none;
-    padding: 8px;
+    padding: 8px 12px;
     cursor: pointer;
     display: flex;
     flex-direction: row;
     gap: 8px;
     align-items: center;
     position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-    border-radius: 0;
+    transition: all 0.2s ease;
+    border-radius: 6px;
 }
 
 .nav-tab i {
@@ -429,59 +387,29 @@ body {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Efecto sutil para los nav-tab */
-.nav-tab::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--ubits-button-active-bg);
-    border-radius: 0;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    pointer-events: none;
-}
-
-.nav-tab:hover::before {
-    opacity: 1;
-}
-
 .nav-tab span {
     color: var(--ubits-fg-1-medium);
     text-align: left;
     white-space: nowrap;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 /* Estado activo del tab */
+.nav-tab.active {
+    background: var(--ubits-accent-brand) !important;
+}
+
 .nav-tab.active span {
+    color: #ffffff !important;
     font-weight: 600;
 }
 
-.nav-tab.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background-color: var(--ubits-accent-brand);
-    border-radius: 2px;
+.nav-tab.active i {
+    color: #ffffff !important;
 }
 
-/* Hover effects para nav-tab */
-.nav-tab:hover {
-    background: var(--ubits-button-active-bg);
-}
 
-.nav-tab:hover i {
-    color: var(--ubits-accent-brand);
-}
-
-.nav-tab:hover span {
-    color: var(--ubits-accent-brand);
-}
 
 /* Content Area */
 .content-area {
@@ -497,6 +425,10 @@ body {
     box-sizing: border-box;
     max-height: none;
     box-shadow: none !important;
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 16px;
 }
 
 /* Content Area sin fondo para UBITS AI */
@@ -835,7 +767,7 @@ body[data-theme="dark"] .content-placeholder p {
 
 /* ===== STEP NUMBERS ===== */
 .step-number {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 24px;
     font-weight: 700;
     line-height: 1;
@@ -945,7 +877,7 @@ body[data-theme="dark"] .content-placeholder p {
     border: none;
     cursor: pointer;
     padding: 9.5px;
-    border-radius: 8px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -956,22 +888,7 @@ body[data-theme="dark"] .content-placeholder p {
     height: 32px;
 }
 
-.action-btn:hover {
-    background-color: var(--ubits-button-active-bg);
-    color: var(--ubits-fg-2-medium-static-inverted);
-}
 
-.action-btn.like-btn:hover {
-    color: var(--ubits-feedback-accent-success);
-}
-
-.action-btn.dislike-btn:hover {
-    color: var(--ubits-feedback-accent-error);
-}
-
-.action-btn.copy-btn:hover {
-    color: var(--ubits-accent-brand);
-}
 
 .action-btn i {
     font-size: 13px;
@@ -988,13 +905,7 @@ body[data-theme="dark"] .content-placeholder p {
     color: var(--ubits-accent-brand) !important;
 }
 
-.action-btn.liked:hover {
-    background-color: var(--ubits-button-active-bg) !important;
-}
 
-.action-btn.disliked:hover {
-    background-color: var(--ubits-button-active-bg) !important;
-}
 
 
 .message-time {
@@ -1042,9 +953,7 @@ body[data-theme="dark"] .content-placeholder p {
     transition: color 0.2s ease;
 }
 
-.send-button:hover {
-    color: var(--ubits-accent-brand);
-}
+
 
 /* Responsive para el chat */
 @media (max-width: 768px) {
@@ -1080,22 +989,6 @@ body[data-theme="dark"] .content-placeholder p {
     transform-origin: center;
 }
 
-/* Efecto de brillo en hover */
-#darkmode-toggle::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, var(--ubits-button-active-bg), transparent);
-    transition: left 0.5s ease;
-}
-
-#darkmode-toggle:hover::before {
-    left: 100%;
-}
-
 /* Animación de rotación y cambio de icono */
 #darkmode-toggle[data-theme="dark"] i {
     transform: rotate(180deg) scale(1.1);
@@ -1105,12 +998,6 @@ body[data-theme="dark"] .content-placeholder p {
 #darkmode-toggle[data-theme="light"] i {
     transform: rotate(0deg) scale(1);
     color: var(--ubits-fg-1-high);
-}
-
-/* Efecto de pulso sutil en hover */
-#darkmode-toggle:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px var(--ubits-button-focus-ring);
 }
 
 /* Transición suave para el cambio de tema */
@@ -1239,7 +1126,7 @@ body {
     font-size: 24px;
     font-weight: 700;
     line-height: 1;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .results-search-filters {
@@ -1250,7 +1137,7 @@ body {
     position: sticky;
     top: 16px;
     z-index: 100;
-    box-shadow: 0 1px 3px var(--ubits-bg-dim);
+    box-shadow: 0 1px 3px rgba(15,23,42,0.06);
 }
 
 .results-search-layout {
@@ -1271,14 +1158,14 @@ body {
     font-weight: 700;
     color: var(--ubits-fg-2-high);
     line-height: 24px;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .results-count {
     font-size: 13px;
     color: var(--ubits-fg-1-medium);
     line-height: 19.5px;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .search-container {
@@ -1305,17 +1192,12 @@ body {
     border: none;
     width: 32px;
     height: 32px;
-    border-radius: 100px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
     flex-shrink: 0;
-}
-
-.clear-search-btn:hover {
-    background: var(--ubits-fg-2-medium);
 }
 
 .clear-search-btn i {
@@ -1334,7 +1216,7 @@ body {
     transition: all 0.2s ease;
     background: transparent;
     color: var(--ubits-fg-1-medium);
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     box-sizing: border-box;
 }
 
@@ -1378,7 +1260,7 @@ body {
 
 .icon-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px var(--ubits-bg-dim);
+    box-shadow: 0 8px 25px rgba(15,23,42,0.06);
     border-color: var(--ubits-accent-brand);
 }
 
@@ -1394,7 +1276,7 @@ body {
     color: var(--ubits-fg-1-medium);
     font-weight: 400;
     line-height: 19.5px;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
@@ -1458,7 +1340,7 @@ body {
     font-weight: 600;
     color: var(--ubits-fg-1-high);
     margin-bottom: 8px;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .empty-state-description {
@@ -1466,7 +1348,7 @@ body {
     color: var(--ubits-fg-1-medium);
     margin-bottom: 24px;
     line-height: 1.5;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .clear-search-button {
@@ -1474,17 +1356,11 @@ body {
     color: white;
     border: none;
     padding: 12px 24px;
-    border-radius: 8px;
+    border-radius: 9999px;
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: 'Noto Sans', sans-serif;
-}
-
-.clear-search-button:hover {
-    background: var(--ubits-accent-brand-hover);
-    transform: translateY(-1px);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* Sistema de Toast con 4 tipos */
@@ -1504,7 +1380,7 @@ body {
     max-width: 400px;
     border-radius: 10px;
     padding: 10px 15px;
-    box-shadow: 0 4px 12px var(--ubits-bg-dim);
+    box-shadow: 0 4px 12px rgba(15,23,42,0.06);
     animation: slideInDown 0.3s ease-out;
     border: 1px solid;
 }
@@ -1531,7 +1407,7 @@ body {
     font-size: 14px;
     line-height: 18px;
     font-weight: 400;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .toast-close {
@@ -1549,9 +1425,7 @@ body {
     font-size: 12px;
 }
 
-.toast-close:hover {
-    background: var(--ubits-button-active-bg);
-}
+
 
 /* Toast Success */
 .toast-success {
@@ -1639,7 +1513,7 @@ body {
     background: var(--ubits-bg-1);
     border-radius: 20px;
     padding: 8px 4px;
-    box-shadow: 0 4px 20px var(--ubits-bg-dim);
+    box-shadow: 0 4px 20px rgba(15,23,42,0.06);
     z-index: 1000;
     overflow-y: auto;
     scrollbar-width: thin;
@@ -1676,7 +1550,7 @@ body {
     border-radius: 12px;
     text-align: center;
     transition: all 0.2s ease;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .alphabet-nav-icons a:hover {
@@ -1807,7 +1681,7 @@ body {
 
 .feature-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 25px var(--ubits-bg-dim);
+    box-shadow: 0 8px 25px rgba(15,23,42,0.06);
     border-color: var(--ubits-accent-brand);
 }
 
@@ -1839,13 +1713,12 @@ body {
 .btn-primary, .btn-secondary {
     display: inline-block;
     padding: 12px 24px;
-    border-radius: 8px;
+    border-radius: 9999px;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s ease;
     border: none;
     cursor: pointer;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .btn-primary {
@@ -1853,20 +1726,10 @@ body {
     color: var(--ubits-fg-bold);
 }
 
-.btn-primary:hover {
-    background: var(--ubits-accent-brand-hover);
-    transform: translateY(-2px);
-}
-
 .btn-secondary {
     background: transparent;
     color: var(--ubits-accent-brand);
     border: 1px solid var(--ubits-accent-brand);
-}
-
-.btn-secondary:hover {
-    background: var(--ubits-accent-brand);
-    color: var(--ubits-fg-bold);
 }
 
 /* Philosophy Section */
@@ -1922,7 +1785,7 @@ body {
 
 .component-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px var(--ubits-bg-dim);
+    box-shadow: 0 4px 15px rgba(15,23,42,0.06);
 }
 
 .component-card h3 {
@@ -2019,7 +1882,7 @@ body {
 
 .mini-btn {
     padding: 6px 12px;
-    border-radius: 4px;
+    border-radius: 9999px;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -2068,7 +1931,7 @@ body {
     height: 60px;
     border-radius: 8px;
     border: 1px solid var(--ubits-border-1);
-    box-shadow: 0 2px 8px var(--ubits-bg-dim);
+    box-shadow: 0 2px 8px rgba(15,23,42,0.06);
 }
 
 .swatch-name {
@@ -2107,7 +1970,7 @@ body {
 
 .icon-category-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px var(--ubits-bg-dim);
+    box-shadow: 0 4px 15px rgba(15,23,42,0.06);
 }
 
 .icon-category-item i {
@@ -2236,7 +2099,7 @@ body {
 
 .resource-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px var(--ubits-bg-dim);
+    box-shadow: 0 4px 15px rgba(15,23,42,0.06);
     border-color: var(--ubits-accent-brand);
 }
 
@@ -2339,7 +2202,7 @@ body {
     background: var(--ubits-sidebar-bg);
     border: 1px solid var(--ubits-border-1);
     border-radius: 8px;
-    box-shadow: 0 4px 12px var(--ubits-bg-dim);
+    box-shadow: 0 4px 12px rgba(15,23,42,0.06);
     z-index: 2000;
     padding: 8px 0;
 }
@@ -2360,7 +2223,7 @@ body {
 
 .sidebar-profile-menu .profile-menu-item span {
     color: inherit;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 13px;
     font-weight: 400;
     line-height: 19.5px;

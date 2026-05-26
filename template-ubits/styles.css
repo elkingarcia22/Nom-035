@@ -259,11 +259,11 @@ body {
 
 /* Active State - Estado seleccionado */
 .nav-button.active {
-    background: var(--ubits-sidebar-button-bg-active);
+    background: var(--ubits-accent-brand) !important;
 }
 
 .nav-button.active i {
-    color: var(--ubits-sidebar-button-fg-active);
+    color: #ffffff !important;
 }
 
 /* Focus State - Solo cuando navegas con teclado (Tab) */

@@ -45,9 +45,7 @@ const TOP_NAV_VARIANTS = {
     },
     encuestas: {
         name: 'Encuestas',
-        tabs: [
-            { id: 'encuestas', label: 'Encuestas', icon: 'far fa-clipboard-list-check', url: 'encuestas.html' }
-        ]
+        tabs: []
     },
     tareas: {
         name: 'Tareas',
@@ -71,9 +69,10 @@ function getTopNavHTML(variant = 'template', customTabs = []) {
         return '';
     }
 
-    // Para la variante template, usar customTabs si se proporcionan, sino usar tabs de ejemplo
     const tabs = variant === 'template' && customTabs.length > 0 ? customTabs : config.tabs;
-    
+
+    if (tabs.length === 0) return '';
+
     let tabsHTML = '';
     
     if (tabs.length > 0) {
@@ -110,22 +109,9 @@ function getTopNavHTML(variant = 'template', customTabs = []) {
                 </button>
             `).join('');
             
-            // Para la variante template, agregar mensaje de personalización
-            if (variant === 'template') {
-                tabsHTML += `
-                    <div class="ubits-body-xs-regular" style="color: var(--ubits-fg-1-medium); font-style: italic; margin-left: 16px; margin-top: 4px;">
-                        Personalizable - Indica a Cursor cuántos tabs necesitas
-                    </div>
-                `;
-            }
         }
     } else {
-        // Para otras variantes sin tabs, mostrar mensaje
-        tabsHTML = `
-            <div class="ubits-body-sm-regular" style="color: var(--ubits-fg-1-medium); font-style: italic;">
-                Top-nav personalizable - Agrega tus tabs aquí
-            </div>
-        `;
+        tabsHTML = '';
     }
 
     // Añadir texto de título para la variante documentacion

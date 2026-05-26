@@ -8,6 +8,7 @@
     <!-- Estilos locales -->
     <link rel="stylesheet" href="ubits-colors.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ubits-design-system.css">
     <link rel="stylesheet" href="fontawesome-icons.css">
     <link rel="stylesheet" href="ubits-typography.css">
     <link rel="stylesheet" href="components/sub-nav.css">
@@ -194,71 +195,103 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        /* Tabla de encuestas */
-        .surveys-table {
+        /* Tabla de encuestas - Shadcn Style */
+        .encuestas-table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-
-        .surveys-table th {
-            background: #f8fafc;
-            padding: 16px;
+        .encuestas-table thead tr {
+            background: rgba(243, 243, 244, 0.5);
+            border-bottom: 1px solid var(--ubits-border-1);
+        }
+        .encuestas-table th {
+            padding: 16px 16px;
             text-align: left;
-            font-weight: 600;
-            color: #2d3748;
-            border-bottom: 1px solid #e2e8f0;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--ubits-fg-1-medium);
+            letter-spacing: -0.01em;
+            text-transform: none;
+            border: none;
         }
-
-        .surveys-table td {
-            padding: 16px;
-            border-bottom: 1px solid #f1f5f9;
-            color: #4a5568;
+        .encuestas-table td {
+            padding: 14px 16px;
+            font-size: 12px;
+            color: var(--ubits-fg-1-high);
+            border-bottom: 1px solid rgba(208, 210, 213, 0.25);
+            vertical-align: middle;
         }
-
-        .surveys-table tr:hover {
-            background: #f8fafc;
+        .encuestas-table tbody tr:last-child td {
+            border-bottom: none;
         }
-
+        .encuestas-table tbody tr:hover {
+            background: rgba(240, 244, 255, 0.5);
+        }
         .clickable-row {
             cursor: pointer;
             transition: background-color 0.2s ease;
         }
-
         .clickable-row:hover {
-            background: #f0f4f8 !important;
+            background: rgba(240, 244, 255, 0.5) !important;
         }
-
-        .status-badge {
+        .status-badge-encuesta {
             display: inline-flex;
             align-items: center;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
+            padding: 2px 10px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        .status-badge-encuesta.positive {
+            background: rgba(16, 185, 129, 0.1);
+            color: rgb(16, 185, 129);
+        }
+        .cell-name {
+            font-weight: 600;
+        }
+        .cell-type {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            background: rgba(243, 243, 244, 0.5);
+            color: var(--ubits-fg-1-medium);
             font-weight: 500;
         }
-
-        .status-completed {
-            background: #d1fae5;
-            color: #065f46;
+        .cell-date {
+            font-size: 12px;
+            color: var(--ubits-fg-1-high);
         }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e2e8f0;
-            border-radius: 4px;
+        .cell-participants {
+            font-weight: 600;
+            font-size: 12px;
+        }
+        .progress-encuesta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .progress-encuesta-track {
+            flex: 1;
+            height: 6px;
+            background: rgba(208, 210, 213, 0.3);
+            border-radius: 99px;
             overflow: hidden;
         }
-
-        .progress-fill {
+        .progress-encuesta-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            border-radius: 4px;
-            transition: width 0.3s ease;
+            background: var(--ubits-accent-brand);
+            border-radius: 99px;
+            transition: width 0.2s ease;
+        }
+        .progress-encuesta-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--ubits-fg-1-medium);
+            min-width: 30px;
+            text-align: right;
         }
     </style>
 </head>
@@ -328,76 +361,65 @@
                 </div>
 
                 <!-- Tabla de Encuestas -->
-                <table class="surveys-table">
+                <table class="encuestas-table">
                     <thead>
                         <tr>
-                            <th>Encuesta</th>
-                            <th>Estado</th>
-                            <th>Fecha Inicio</th>
-                            <th>Fecha Fin</th>
-                            <th>Participantes</th>
-                            <th>Progreso</th>
+                            <th style="width: 28%;">Nombre</th>
+                            <th style="width: 12%;">Tipo</th>
+                            <th style="width: 12%;">Estado</th>
+                            <th style="width: 11%;">Inicio</th>
+                            <th style="width: 11%;">Cierre</th>
+                            <th style="width: 8%; text-align: center;">Part.</th>
+                            <th style="width: 18%;">Avance</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="clickable-row" onclick="window.location.href='resultados-nom035.html'">
+                            <td><span class="cell-name">NOM 035 Acontecimientos traumáticos</span></td>
+                            <td><span class="cell-type">NOM-035</span></td>
+                            <td><span class="status-badge-encuesta positive">Completado</span></td>
+                            <td><span class="cell-date">15 oct 2024</span></td>
+                            <td><span class="cell-date">15 nov 2024</span></td>
+                            <td><span class="cell-participants">140/150</span></td>
                             <td>
-                                <div>
-                                    <strong>NOM 035 2024</strong><br>
-                                    <small>NOM 035 - emocional</small>
+                                <div class="progress-encuesta">
+                                    <div class="progress-encuesta-track">
+                                        <div class="progress-encuesta-fill" style="width: 93%;"></div>
+                                    </div>
+                                    <span class="progress-encuesta-label">93%</span>
                                 </div>
-                            </td>
-                            <td>
-                                <span class="status-badge status-completed">completado</span>
-                            </td>
-                            <td>15 octubre 2024</td>
-                            <td>15 noviembre 2024</td>
-                            <td>150</td>
-                            <td>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 100%"></div>
-                                </div>
-                                <small>100%</small>
                             </td>
                         </tr>
                         <tr class="clickable-row" onclick="window.location.href='resultados-nom035-entorno.html'">
+                            <td><span class="cell-name">NOM 035 Entorno organizacional</span></td>
+                            <td><span class="cell-type">NOM-035</span></td>
+                            <td><span class="status-badge-encuesta positive">Completado</span></td>
+                            <td><span class="cell-date">15 oct 2024</span></td>
+                            <td><span class="cell-date">15 nov 2024</span></td>
+                            <td><span class="cell-participants">135/150</span></td>
                             <td>
-                                <div>
-                                    <strong>NOM 035 2024</strong><br>
-                                    <small>NOM 035 - entorno laboral</small>
+                                <div class="progress-encuesta">
+                                    <div class="progress-encuesta-track">
+                                        <div class="progress-encuesta-fill" style="width: 90%;"></div>
+                                    </div>
+                                    <span class="progress-encuesta-label">90%</span>
                                 </div>
-                            </td>
-                            <td>
-                                <span class="status-badge status-completed">completado</span>
-                            </td>
-                            <td>15 octubre 2024</td>
-                            <td>15 noviembre 2024</td>
-                            <td>150</td>
-                            <td>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 100%"></div>
-                                </div>
-                                <small>100%</small>
                             </td>
                         </tr>
                         <tr class="clickable-row" onclick="window.location.href='resultados-nom035.html'">
+                            <td><span class="cell-name">Encuesta de Satisfacción</span></td>
+                            <td><span class="cell-type">Clima</span></td>
+                            <td><span class="status-badge-encuesta positive">Completado</span></td>
+                            <td><span class="cell-date">01 ene 2024</span></td>
+                            <td><span class="cell-date">31 ene 2024</span></td>
+                            <td><span class="cell-participants">170/200</span></td>
                             <td>
-                                <div>
-                                    <strong>Encuesta de Satisfacción</strong><br>
-                                    <small>Evaluación general</small>
+                                <div class="progress-encuesta">
+                                    <div class="progress-encuesta-track">
+                                        <div class="progress-encuesta-fill" style="width: 85%;"></div>
+                                    </div>
+                                    <span class="progress-encuesta-label">85%</span>
                                 </div>
-                            </td>
-                            <td>
-                                <span class="status-badge status-completed">completado</span>
-                            </td>
-                            <td>1 enero 2024</td>
-                            <td>31 enero 2024</td>
-                            <td>200</td>
-                            <td>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 85%"></div>
-                                </div>
-                                <small>85%</small>
                             </td>
                         </tr>
                     </tbody>

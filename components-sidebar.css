@@ -24,7 +24,7 @@
 }
 
 .sidebar-title {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 14px;
     font-weight: 600;
     color: var(--ubits-fg-1-high);
@@ -39,7 +39,7 @@
 }
 
 .sidebar-subtitle {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 13px;
     font-weight: 500;
     color: var(--ubits-fg-1-medium);
@@ -72,7 +72,7 @@
 }
 
 .sidebar-text {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-size: 14px;
     color: var(--ubits-fg-1-high);
     transition: color 0.2s ease;

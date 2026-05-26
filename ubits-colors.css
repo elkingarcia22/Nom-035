@@ -390,11 +390,11 @@
   --ubits-sidebar-logo: #ffffff;
   --ubits-sidebar-button-bg-pressed: #3b4350;
   --ubits-sidebar-button-bg-disabled: #3b4350;
-  --ubits-sidebar-button-bg-active: #ffffff;
+  --ubits-sidebar-button-bg-active: var(--ubits-accent-brand);
   --ubits-sidebar-button-fg-default: #d0d2d5;
   --ubits-sidebar-button-fg-hover: #edeeef;
   --ubits-sidebar-button-fg-pressed: #edeeef;
-  --ubits-sidebar-button-fg-active: #303a47;
+  --ubits-sidebar-button-fg-active: #ffffff;
   --ubits-sidebar-button-fg-disabled: #828690;
   
   /* ========================================
@@ -414,6 +414,43 @@
      ======================================== */
   
   --ubits-bottom-nav-shadow-opacity: rgba(0, 0, 0, 0.36);
+
+  /* ========================================
+     ALIAS TOKENS (compatibilidad con estilos internos)
+     ======================================== */
+
+  /* bg-0 = superficie base blanca */
+  --ubits-bg-0: #ffffff;
+
+  /* Radius system (alineado a comparativo-encuestas-v1) */
+  --ubits-radius-xs:   6px;
+  --ubits-radius-sm:   10px;
+  --ubits-radius-md:   14px;
+  --ubits-radius-lg:   20px;
+  --ubits-radius-xl:   28px;
+  --ubits-radius-full: 9999px;
+
+  /* Sombras del sistema */
+  --ubits-shadow-card:     0 1px 2px rgba(15,23,42,.04), 0 2px 8px rgba(15,23,42,.06);
+  --ubits-shadow-drawer:   0 4px 16px rgba(15,23,42,.14), 0 1px 4px rgba(15,23,42,.06);
+  --ubits-shadow-premium:  0 10px 40px rgba(15,23,42,.12), 0 2px 8px rgba(15,23,42,.06);
+
+  /* Alias brand hover */
+  --ubits-accent-brand-hover:    #1e4abf;
+  --ubits-accent-brand-pressed:  #223a91;
+
+  /* Fg placeholder */
+  --ubits-fg-1-placeholder: #979ba3;
+
+  /* Semantic shortcuts (Success / Warning / Danger / Info) */
+  --ubits-semantic-success:       #328e2c;
+  --ubits-semantic-success-light: #e8f8e4;
+  --ubits-semantic-warning:       #d68b0d;
+  --ubits-semantic-warning-light: #fff1e0;
+  --ubits-semantic-danger:        #e9343c;
+  --ubits-semantic-danger-light:  #fff0ee;
+  --ubits-semantic-info:          #4a74ee;
+  --ubits-semantic-info-light:    #f3f2ff;
 }
 
 /* ========================================
@@ -794,4 +831,35 @@
      ======================================== */
   
   --ubits-bottom-nav-shadow-opacity: rgba(0, 0, 0, 0.36);
+
+  /* ========================================
+     ALIAS TOKENS - DARK MODE
+     ======================================== */
+
+  --ubits-bg-0: #202837;
+
+  --ubits-radius-xs:   6px;
+  --ubits-radius-sm:   10px;
+  --ubits-radius-md:   14px;
+  --ubits-radius-lg:   20px;
+  --ubits-radius-xl:   28px;
+  --ubits-radius-full: 9999px;
+
+  --ubits-shadow-card:     0 1px 2px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.18);
+  --ubits-shadow-drawer:   0 4px 16px rgba(0,0,0,.28), 0 1px 4px rgba(0,0,0,.16);
+  --ubits-shadow-premium:  0 10px 40px rgba(0,0,0,.32), 0 2px 8px rgba(0,0,0,.18);
+
+  --ubits-accent-brand-hover:    #223a91;
+  --ubits-accent-brand-pressed:  #1a2e6e;
+
+  --ubits-fg-1-placeholder: #6b7480;
+
+  --ubits-semantic-success:       #4ab028;
+  --ubits-semantic-success-light: #223b16;
+  --ubits-semantic-warning:       #d68b0d;
+  --ubits-semantic-warning-light: #4c2e15;
+  --ubits-semantic-danger:        #f96f6f;
+  --ubits-semantic-danger-light:  #65181e;
+  --ubits-semantic-info:          #7397fe;
+  --ubits-semantic-info-light:    #20335f;
 }

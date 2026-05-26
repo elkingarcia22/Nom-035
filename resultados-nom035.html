@@ -8,6 +8,7 @@
     <!-- Estilos locales -->
     <link rel="stylesheet" href="ubits-colors.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ubits-design-system.css">
     <link rel="stylesheet" href="fontawesome-icons.css">
     <link rel="stylesheet" href="ubits-typography.css">
     <!-- Font Awesome CDN como respaldo -->
@@ -38,7 +39,7 @@
         }
         
         .welcome-container {
-            background: white;
+            background: var(--ubits-bg-1);
             border-radius: 20px;
             padding: 40px;
             max-width: 600px;
@@ -75,8 +76,8 @@
         
         .prototype-badge {
             display: inline-block;
-            background: #fef3c7;
-            color: #92400e;
+            background: var(--ubits-feedback-bg-warning-subtle);
+            color: var(--ubits-feedback-fg-warning-subtle);
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 14px;
@@ -92,7 +93,7 @@
         
         .features-list li {
             margin: 12px 0;
-            color: #374151;
+            color: var(--ubits-fg-1-high);
             font-size: 16px;
         }
         
@@ -107,17 +108,11 @@
             color: white;
             border: none;
             padding: 16px 32px;
-            border-radius: 12px;
+            border-radius: 9999px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
             margin-top: 24px;
-        }
-        
-        .start-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
         
         
@@ -142,10 +137,7 @@
             justify-content: center;
         }
         
-        .feedback-trigger:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
-        }
+
         
         /* Indicador de sección actual */
         .section-indicator {
@@ -187,21 +179,14 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: #f3f4f6;
+            background: var(--ubits-bg-2);
             border: 1px solid var(--ubits-border-1);
-            color: #374151;
+            color: var(--ubits-fg-1-high);
             font-size: 14px;
             font-weight: 500;
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 9999px;
             cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .back-button:hover {
-            background: #e5e7eb;
-            border-color: #9ca3af;
-            color: var(--ubits-fg-1-high);
         }
 
         .title-section {
@@ -228,9 +213,9 @@
             border: 1px solid;
             width: 100px;
             text-align: center;
-            background: #f0fdf4;
-            color: #166534;
-            border-color: #22c55e;
+            background: var(--ubits-feedback-bg-success-subtle);
+            color: var(--ubits-feedback-fg-success-subtle);
+            border-color: var(--ubits-feedback-accent-success);
         }
 
 
@@ -239,27 +224,16 @@
             color: white;
             border: none;
             padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 9999px;
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.2s ease;
             text-decoration: none;
             outline: none;
             position: relative;
-        }
-
-        .download-button:hover {
-            background: var(--ubits-accent-brand-hover);
-            color: white;
-        }
-
-        .download-button:active {
-            background: var(--ubits-accent-brand);
-            transform: translateY(1px);
         }
 
         .download-button:focus {
@@ -270,10 +244,10 @@
 
         /* Información de la encuesta - EXACTO COMO LA IMAGEN */
         .survey-info {
-            background: white;
+            background: var(--ubits-bg-1);
             border-radius: 8px;
             padding: 20px;
-            border: 1px solid #e5e7eb;
+            border: 1px solid var(--ubits-border-1);
             margin-bottom: 0px;
         }
 
@@ -295,7 +269,7 @@
         .detail-separator {
             width: 1px;
             height: 16px;
-            background: #d1d5db;
+            background: var(--ubits-border-1);
         }
 
         .detail-item {
@@ -334,10 +308,10 @@
         }
 
         .metric-card {
-            background: white;
+            background: var(--ubits-bg-1);
             border-radius: 8px;
             padding: 20px;
-            border: 1px solid #e5e7eb;
+            border: 1px solid var(--ubits-border-1);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
@@ -358,7 +332,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #f3f4f6;
+            background: var(--ubits-bg-2);
             color: var(--ubits-fg-1-medium);
             display: flex;
             align-items: center;
@@ -368,7 +342,7 @@
 
         .metric-title {
             font-size: 14px;
-            color: #374151;
+            color: var(--ubits-fg-1-high);
             margin: 0;
             font-weight: 600;
         }
@@ -414,9 +388,9 @@
 
         .participants-panel {
             flex: 1;
-            background: white;
+            background: var(--ubits-bg-1);
             border-radius: 8px;
-            border: 1px solid #e5e7eb;
+            border: 1px solid var(--ubits-border-1);
             display: flex;
             flex-direction: column;
             width: 100%;
@@ -425,9 +399,9 @@
 
         .participant-details-panel {
             flex: 2;
-            background: white;
+            background: var(--ubits-bg-1);
             border-radius: 8px;
-            border: 1px solid #e5e7eb;
+            border: 1px solid var(--ubits-border-1);
             display: flex;
             flex-direction: column;
         }
@@ -443,13 +417,7 @@
             border-bottom: 1px solid var(--ubits-border-1);
             background: #f9fafb;
             border-radius: 8px 8px 0 0;
-        }
-
-        .panel-header h3 {
-            margin: 0 0 8px 0;
-            color: var(--ubits-fg-1-high);
-            font-size: 18px;
-            font-weight: 600;
+            background: var(--ubits-bg-2);
         }
 
         /* Search and Filters Container - Solo layout básico */
@@ -461,30 +429,23 @@
 
         /* Filters Button - Tamaño fijo y bien alineado */
         .filters-button {
-            background: #f3f4f6;
+            background: var(--ubits-bg-2);
             border: 1px solid var(--ubits-border-1);
             color: var(--ubits-fg-1-medium);
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s ease;
             width: 44px;
             height: 44px;
             flex-shrink: 0;
             position: relative;
         }
 
-        .filters-button:hover {
-            background: #e5e7eb;
-            color: #374151;
-            border-color: #9ca3af;
-        }
-
         .filters-button:active {
-            background: #d1d5db;
+            background: var(--ubits-border-1);
         }
 
         .filter-badge {
@@ -570,13 +531,7 @@
             color: var(--ubits-fg-1-medium);
             cursor: pointer;
             padding: 4px;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .close-filters-btn:hover {
-            background: #e5e7eb;
-            color: #374151;
+            border-radius: 9999px;
         }
 
         .filters-content {
@@ -594,11 +549,11 @@
             background: transparent;
         }
         .filters-side-panel ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: var(--ubits-border-1);
             border-radius: 3px;
         }
         .filters-side-panel ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+            background: var(--ubits-border-2);
         }
 
         .filter-group {
@@ -607,7 +562,7 @@
 
         .filter-label {
             display: block;
-            color: #374151;
+            color: var(--ubits-fg-1-high);
             font-weight: 600;
             font-size: 14px;
             margin-bottom: 12px;
@@ -686,11 +641,11 @@
         }
 
         .select-option:hover {
-            background: #f3f4f6;
+            background: var(--ubits-bg-1);
         }
 
         .select-option.selected {
-            background: #eff6ff;
+            background: var(--ubits-bg-1);
             color: var(--ubits-accent-brand);
         }
 
@@ -710,8 +665,8 @@
             display: flex;
             gap: 12px;
             padding: 20px;
-            background: #fff;
-            border-top: 1px solid #e5e7eb;
+            background: var(--ubits-bg-1);
+            border-top: 1px solid var(--ubits-border-1);
             box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
         }
 
@@ -721,39 +676,28 @@
             color: white;
             border: none;
             padding: 10px 16px;
-            border-radius: 6px;
+            border-radius: 9999px;
             font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .apply-filters-btn:hover {
-            background: var(--ubits-accent-brand-hover);
         }
 
         .clear-filters-btn {
             flex: 1;
-            background: #f3f4f6;
+            background: var(--ubits-bg-2);
             color: var(--ubits-fg-1-medium);
             border: 1px solid var(--ubits-border-1);
             padding: 10px 16px;
-            border-radius: 6px;
+            border-radius: 9999px;
             font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .clear-filters-btn:hover {
-            background: #e5e7eb;
-            color: #374151;
         }
 
         .participants-list {
@@ -773,11 +717,11 @@
         }
 
         .participant-item:hover {
-            background: #f3f4f6;
+            background: var(--ubits-bg-1);
         }
 
         .participant-item.selected {
-            background: #eff6ff;
+            background: var(--ubits-bg-1);
             border-left-color: var(--ubits-accent-brand);
         }
 
@@ -818,12 +762,12 @@
             text-transform: uppercase;
         }
 
-        .risk-nulo { background: #f3f4f6; color: #6b7280; }
-        .risk-bajo { background: #dcfce7; color: #166534; }
-        .risk-medio { background: #fef3c7; color: #92400e; }
-        .risk-alto { background: #fed7aa; color: #c2410c; }
-        .risk-canalizado { background: #fecaca; color: #dc2626; }
-        .risk-muy-alto { background: #fecaca; color: #dc2626; }
+        .risk-nulo { background: var(--ubits-bg-2); color: var(--ubits-fg-1-medium); }
+        .risk-bajo { background: var(--ubits-feedback-bg-success-subtle); color: var(--ubits-feedback-fg-success-subtle); }
+        .risk-medio { background: var(--ubits-feedback-bg-warning-subtle); color: var(--ubits-feedback-fg-warning-subtle); }
+        .risk-alto { background: var(--ubits-feedback-bg-warning-subtle); color: var(--ubits-feedback-fg-warning-subtle); }
+        .risk-canalizado { background: var(--ubits-feedback-bg-error-subtle); color: var(--ubits-feedback-fg-error-subtle); }
+        .risk-muy-alto { background: var(--ubits-feedback-bg-error-subtle); color: var(--ubits-feedback-fg-error-subtle); }
 
         .no-selection {
             display: flex;
@@ -923,19 +867,19 @@
             display: flex;
             align-items: center;
             padding: 8px 16px;
-            background: #f9fafb;
+            background: var(--ubits-bg-2);
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
-            border-left: 4px solid #e5e7eb;
+            border-left: 4px solid var(--ubits-border-1);
         }
 
         .section-header:hover {
-            background: #f3f4f6;
+            background: var(--ubits-bg-1);
         }
 
         .section-header.open {
-            background: #eff6ff;
+            background: var(--ubits-bg-1);
             border-left-color: var(--ubits-accent-brand);
         }
 
@@ -957,34 +901,34 @@
         }
 
         .section-risk-level.nulo {
-            background: #f3f4f6;
+            background: var(--ubits-bg-2);
             color: var(--ubits-fg-1-medium);
         }
 
         .section-risk-level.bajo {
-            background: #dcfce7;
-            color: #166534;
+            background: var(--ubits-feedback-bg-success-subtle);
+            color: var(--ubits-feedback-fg-success-subtle);
         }
 
         .section-risk-level.medio {
-            background: #fef3c7;
-            color: #92400e;
+            background: var(--ubits-feedback-bg-warning-subtle);
+            color: var(--ubits-feedback-fg-warning-subtle);
         }
 
         .section-risk-level.alto {
-            background: #fed7aa;
-            color: #c2410c;
+            background: var(--ubits-feedback-bg-warning-subtle);
+            color: var(--ubits-feedback-fg-warning-subtle);
         }
 
         .section-risk-level.muy-alto {
-            background: #fecaca;
-            color: #dc2626;
+            background: var(--ubits-feedback-bg-error-subtle);
+            color: var(--ubits-feedback-fg-error-subtle);
         }
 
         .section-percentage {
             font-size: 12px;
             font-weight: 600;
-            color: #374151;
+            color: var(--ubits-fg-1-high);
             min-width: 35px;
             text-align: right;
         }
@@ -996,8 +940,8 @@
             width: 24px;
             height: 24px;
             background: transparent;
-            color: #374151;
-            border: 2px solid #d1d5db;
+            color: var(--ubits-fg-1-high);
+            border: 2px solid var(--ubits-border-2);
             border-radius: 50%;
             font-size: 12px;
             font-weight: 600;
@@ -1065,8 +1009,8 @@
         .section-content {
             display: none;
             padding: 16px;
-            background: white;
-            border: 1px solid #e5e7eb;
+            background: var(--ubits-bg-1);
+            border: 1px solid var(--ubits-border-1);
             border-top: none;
             border-radius: 0 0 6px 6px;
         }
@@ -1079,7 +1023,7 @@
             display: flex;
             align-items: center;
             padding: 12px 0;
-            border-bottom: 1px solid #f3f4f6;
+            border-bottom: 1px solid var(--ubits-border-1);
         }
 
         .question-item:last-child {
@@ -1088,7 +1032,7 @@
 
         .question-text {
             flex: 1;
-            color: #374151;
+            color: var(--ubits-fg-1-high);
             font-size: 14px;
             line-height: 1.4;
         }
@@ -1130,16 +1074,17 @@
 
         /* NOM Participation Dropdown Styling */
         #nom-participation-segment-select {
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 8px;
-            border: 1.5px solid #d1d5db;
-            background: white;
+            border: 1.5px solid var(--ubits-border-1);
+            background: var(--ubits-bg-1);
             font-family: inherit;
-            font-size: 14px;
-            color: #1f2937;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ubits-fg-1-high);
             cursor: pointer;
             transition: all 0.2s ease;
-            min-width: 180px;
+            min-width: 160px;
             outline: none;
         }
         #nom-participation-segment-select:hover {
@@ -1175,14 +1120,16 @@
 
         /* ===== ESTILOS PARA LOS TABS ===== */
         .tabs-container {
-            background: #f3f4f6;
-            border-radius: 8px;
-            padding: 8px;
+            margin-top: 16px;
         }
 
         .tabs-header {
             display: flex;
-            gap: 8px;
+            gap: 4px;
+            padding: 4px;
+            background: var(--ubits-bg-2);
+            border-radius: var(--ubits-radius-sm);
+            width: fit-content;
             margin-bottom: 16px;
         }
 
@@ -1190,31 +1137,26 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 20px;
+            padding: 8px 16px;
             background: transparent;
             border: none;
-            border-radius: 6px;
-            color: #6b7280;
-            font-size: 14px;
-            font-weight: 500;
+            border-radius: 9999px;
+            color: var(--ubits-fg-1-medium);
+            font-size: 13px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
             flex-direction: row;
-        }
-
-        .tab-button:hover {
-            background: white;
-            color: #374151;
+            letter-spacing: -0.01em;
         }
 
         .tab-button.active {
-            background: white;
+            background: var(--ubits-bg-0);
             color: var(--ubits-accent-brand);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 3px rgba(15,23,42,0.10), 0 1px 2px rgba(15,23,42,0.06);
         }
 
         .tab-button i {
-            font-size: 16px;
+            font-size: 14px;
         }
 
         .tab-panel {
@@ -1225,28 +1167,57 @@
             display: block;
         }
 
-        /* ===== ESTILOS DE PARTICIPACIÓN ===== */
+        /* ===== ESTILOS DE PARTICIPACIÓN (SHADCN) ===== */
         .participation-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 14px;
-            color: #374151;
+        }
+        .participation-table thead tr {
+            background: rgba(243, 243, 244, 0.5);
+            border-bottom: 1px solid var(--ubits-border-1);
         }
         .participation-table th {
-            padding: 12px 16px;
+            padding: 16px 16px;
             text-align: left;
-            font-weight: 600;
-            color: #4b5563;
-            border-bottom: 1px solid #e5e7eb;
-            background: #f9fafb;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--ubits-fg-1-medium);
+            letter-spacing: -0.01em;
+            text-transform: none;
+            border: none;
         }
         .participation-table td {
-            padding: 16px;
-            border-bottom: 1px solid #f3f4f6;
+            padding: 14px 16px;
+            font-size: 12px;
+            color: var(--ubits-fg-1-high);
+            border-bottom: 1px solid rgba(208, 210, 213, 0.25);
             vertical-align: middle;
         }
-        .participation-table tr:hover {
-            background: #f9fafb;
+        .participation-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .participation-table tbody tr:hover {
+            background: rgba(240, 244, 255, 0.5);
+        }
+        .participation-table .text-center { text-align: center; }
+        .participation-table .fw-bold { font-weight: 700; }
+        .participation-table .cell-name { font-weight: 700; }
+        .participation-table .th-icon { margin-left: 6px; color: var(--ubits-fg-1-medium); }
+        .btn-success-check {
+            color: var(--ubits-feedback-fg-success-subtle);
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .update-tag {
+            margin-left: auto;
+            color: var(--ubits-fg-1-medium);
+            font-style: italic;
+        }
+        .filter-counter {
+            font-weight: 400;
+            color: var(--ubits-fg-1-medium);
+            font-size: 14px;
         }
         .progress-container {
             display: flex;
@@ -1257,37 +1228,38 @@
         .progress-bar-bg {
             flex: 1;
             height: 8px;
-            background: #e5e7eb;
-            border-radius: 4px;
+            background: var(--ubits-border-1);
+            border-radius: var(--ubits-radius-sm);
             overflow: hidden;
         }
         .progress-bar-fill {
             height: 100%;
-            background: #4b6b8d;
-            border-radius: 4px;
+            background: var(--ubits-accent-brand);
+            border-radius: var(--ubits-radius-sm);
             transition: width 0.3s ease;
         }
         .participation-percentage {
             font-weight: 600;
             font-size: 13px;
-            color: #374151;
+            color: var(--ubits-fg-1-high);
             min-width: 40px;
         }
         .status-badge {
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 10px;
+            border-radius: 9999px;
+            font-size: 11px;
             font-weight: 600;
+            letter-spacing: -0.01em;
         }
         .status-badge.completed {
-            background: #eff6ff;
-            color: #2563eb;
-            border: 1px solid #dbeafe;
+            background: rgba(16, 185, 129, 0.1);
+            color: rgb(16, 185, 129);
         }
         .status-badge.pending {
-            background: #f3f4f6;
-            color: #6b7280;
-            border: 1px solid #e5e7eb;
+            background: rgba(234, 236, 239, 0.8);
+            color: rgb(148, 163, 184);
         }
         .participation-controls {
             display: flex;
@@ -1298,39 +1270,39 @@
         .participation-title {
             font-size: 16px;
             font-weight: 700;
-            color: #1f2937;
+            color: var(--ubits-fg-1-high);
         }
         .reminder-btn {
-            background: white;
-            border: 1px solid #d1d5db;
+            background: var(--ubits-bg-0);
+            border: 1px solid var(--ubits-border-2);
             padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 14px;
+            border-radius: var(--ubits-radius-md);
+            font-size: 12px;
             font-weight: 600;
-            color: #374151;
-            display: flex;
+            color: var(--ubits-fg-1-medium);
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.15s ease;
         }
         .reminder-btn:hover {
-            background: #f9fafb;
-            border-color: #9ca3af;
+            background: var(--ubits-bg-2);
+            border-color: var(--ubits-border-1);
         }
         .reminder-btn.btn-sm {
             padding: 4px 8px;
-            font-size: 12px;
+            font-size: 10px;
         }
         .participation-legend {
             display: flex;
             gap: 16px;
             margin-top: 16px;
             padding: 12px;
-            background: #f9fafb;
-            border-radius: 8px;
+            background: var(--ubits-bg-2);
+            border-radius: var(--ubits-radius-md);
             font-size: 12px;
-            color: #6b7280;
+            color: var(--ubits-fg-1-medium);
         }
         .legend-item {
             display: flex;
@@ -1342,8 +1314,8 @@
             height: 8px;
             border-radius: 50%;
         }
-        .legend-dot.completed { background: #2563eb; }
-        .legend-dot.pending { background: #9ca3af; }
+        .legend-dot.completed { background: var(--ubits-accent-brand); }
+        .legend-dot.pending { background: var(--ubits-fg-1-medium); }
     
         /* Indicador de Rangos NOM-035 */
         .range-indicator-container {
@@ -1354,10 +1326,11 @@
         .range-track {
             position: relative;
             height: 16px;
-            background-color: #f3f4f6;
+            background-color: var(--ubits-bg-2);
             border-radius: 4px;
             overflow: hidden;
             display: flex;
+            border: 1px solid var(--ubits-border-1);
         }
         .range-fill {
             height: 100%;
@@ -1378,13 +1351,13 @@
         .range-threshold {
             position: absolute;
             font-size: 11px;
-            color: #6b7280;
+            color: var(--ubits-fg-1-medium);
             transform: translateX(-50%);
             white-space: nowrap;
         }
         .score-value {
             font-weight: 600;
-            color: #1f2937;
+            color: var(--ubits-fg-1-high);
             font-size: 14px;
         }
 
@@ -1393,13 +1366,14 @@
         .general-range-legend {
             margin-top: 24px;
             padding: 24px;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
+            background: var(--ubits-bg-1);
+            border: 1px solid var(--ubits-border-1);
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 1px 3px var(--ubits-bg-dim);
         }
         .legend-bar {
             display: flex;
@@ -1429,15 +1403,17 @@
             flex: 1;
             text-align: center;
             font-size: 13px;
-            color: #4b5563;
+            color: var(--ubits-fg-1-medium);
         }
         .legend-title {
             margin-top: 12px;
             font-size: 16px;
             font-weight: 700;
-            color: #1f2937;
+            color: var(--ubits-fg-1-high);
             text-align: center;
         }
+
+
 
 </style>
 </head>
@@ -1472,11 +1448,11 @@
                             <span>Regresar</span>
                         </button>
                         <div class="title-section">
-                            <h1>NOM 035 Acontecimientos traumáticos</h1>
+                            <h1 style="font-size: 20px;">NOM 035 Acontecimientos traumáticos</h1>
                             <span class="status-badge">Completado</span>
                         </div>
                         <div style="margin-left: auto;">
-                            <button class="ubits-button ubits-button--primary ubits-button--md" type="button" id="download-csv-btn" onclick="downloadEmotionalResponses()">
+                            <button class="ubits-button ubits-button--primary ubits-button--sm" type="button" id="download-csv-btn" onclick="downloadEmotionalResponses()">
                                 <i class="far fa-download"></i>
                                 <span>Descargar respuestas</span>
                             </button>
@@ -1575,7 +1551,7 @@
                             <!-- Tab 1: Participante -->
                             <div class="tab-panel active" id="tab-participante">
                                 <div style="padding: 16px 24px; background: white; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 16px; border-radius: 8px 8px 0 0;">
-                                    <span style="font-size: 14px; font-weight: 600; color: #374151;">Segmento demográfico:</span>
+                                    <span style="font-size: 12px; font-weight: 600; color: #374151;">Segmento demográfico:</span>
                                     <select id="nom-participation-segment-select">
                                         <option value="areas" selected>Área</option>
                                         <option value="leaders">Líder</option>
@@ -1590,14 +1566,14 @@
 
                                     <!-- Controles de búsqueda toggleable -->
                                     <div style="position: relative; margin-left: 8px;">
-                                        <button id="nom-participation-search-toggle-btn" style="background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 8px; padding: 8px; cursor: pointer; color: #6b7280; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" title="Buscar">
+                                        <button id="nom-participation-search-toggle-btn" style="background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 50%; padding: 8px; cursor: pointer; color: #6b7280; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" title="Buscar">
                                             <i class="far fa-search"></i>
                                         </button>
 
                                         <div id="nom-participation-search-container" style="position: absolute; top: 0; left: 0; display: none; background: white; border: 1px solid #d1d5db; border-radius: 8px; z-index: 1000; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
                                             <div style="display: flex; align-items: center; gap: 8px; padding: 4px 8px;">
-                                                <input type="text" id="nom-participation-search-input" placeholder="Buscar..." style="padding: 8px 12px; border: none; outline: none; font-size: 14px; width: 220px; background: transparent;" />
-                                                <button id="nom-participation-search-close-btn" style="background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; padding: 6px; cursor: pointer; color: #6b7280; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;">
+                                                <input type="text" id="nom-participation-search-input" placeholder="Buscar..." style="padding: 6px 12px; border: none; outline: none; font-size: 12px; width: 200px; background: transparent;" />
+                                                <button id="nom-participation-search-close-btn" style="background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 50%; padding: 6px; cursor: pointer; color: #6b7280; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;">
                                                     <i class="far fa-times"></i>
                                                 </button>
                                             </div>
@@ -1607,7 +1583,7 @@
                                 <div class="panel-content" style="padding: 24px;">
                                     <div id="nom-participation-table-wrapper">
                                         <!-- Aquí se cargará la tabla de participación -->
-                                        <div style="text-align: center; padding: 40px; color: #9ca3af;">
+                                        <div style="text-align: center; padding: 40px; color: var(--ubits-fg-1-medium);">
                                             <i class="fas fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 12px;"></i>
                                             <p>Cargando datos de participación...</p>
                                         </div>
@@ -1854,6 +1830,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </main>
@@ -3798,17 +3775,17 @@
             const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
 
             let html = `
-                <div class="participation-controls" style="margin-bottom: 12px;">
-                    <div class="participation-title">Tabla de participación - Áreas <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                <div class="participation-controls">
+                    <div class="participation-title">Tabla de participación - Áreas <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Áreas <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Acciones</th>
+                            <th>Áreas <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
+                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -3819,17 +3796,17 @@
                 const pending = data.total - data.completed;
                 html += `
                     <tr>
-                        <td style="font-weight: 700;">${name}</td>
-                        <td style="text-align: center;">${data.completed}</td>
-                        <td style="text-align: center;">${data.total}</td>
+                        <td class="fw-bold">${name}</td>
+                        <td class="text-center">${data.completed}</td>
+                        <td class="text-center">${data.total}</td>
                         <td>
                             <div class="progress-container">
                                 <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
                                 <span class="participation-percentage">${percentage}%</span>
                             </div>
                         </td>
-                        <td style="text-align: center;">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        <td class="text-center">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -3837,7 +3814,7 @@
                 <div class="participation-legend">
                     <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
                     <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                    <div class="update-tag">Última actualización: hace 5 minutos</div>
                 </div>
             `;
             return html;
@@ -3854,17 +3831,17 @@
             const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
 
             let html = `
-                <div class="participation-controls" style="margin-bottom: 12px;">
-                    <div class="participation-title">Tabla de participación - Líderes <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                <div class="participation-controls">
+                    <div class="participation-title">Tabla de participación - Líderes <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Líderes <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Acciones</th>
+                            <th>Líderes <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
+                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -3875,17 +3852,17 @@
                 const pending = data.total - data.completed;
                 html += `
                     <tr>
-                        <td style="font-weight: 700;">${name}</td>
-                        <td style="text-align: center;">${data.completed}</td>
-                        <td style="text-align: center;">${data.total}</td>
+                        <td class="fw-bold">${name}</td>
+                        <td class="text-center">${data.completed}</td>
+                        <td class="text-center">${data.total}</td>
                         <td>
                             <div class="progress-container">
                                 <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
                                 <span class="participation-percentage">${percentage}%</span>
                             </div>
                         </td>
-                        <td style="text-align: center;">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes del equipo de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        <td class="text-center">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes del equipo de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -3893,7 +3870,7 @@
                 <div class="participation-legend">
                     <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
                     <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                    <div class="update-tag">Última actualización: hace 5 minutos</div>
                 </div>
             `;
             return html;
@@ -3908,8 +3885,8 @@
             );
 
             let html = `
-                <div class="participation-controls" style="margin-bottom: 12px;">
-                    <div class="participation-title">Tabla de participación - Colaboradores <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${window.nomParticipationData.length} resultados</span></div>
+                <div class="participation-controls">
+                    <div class="participation-title">Tabla de participación - Colaboradores <span class="filter-counter">${filtered.length}/${window.nomParticipationData.length} resultados</span></div>
                     <div style="display: flex; gap: 12px; align-items: center;">
                         <button class="reminder-btn" onclick="alert('Recordatorios masivos enviados a todos los colaboradores pendientes')">
                             <i class="far fa-bell"></i> Recordatorio masivo
@@ -3921,11 +3898,11 @@
                         <thead>
                             <tr>
                                 <th style="width: 40px;"><input type="checkbox" id="nom-select-all-participation"></th>
-                                <th>Colaborador <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                                <th>Área <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                                <th>Líder <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                                <th style="text-align: center;">Estado <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                                <th style="text-align: center;">Acciones</th>
+                                <th>Colaborador <i class="far fa-sort th-icon"></i></th>
+                                <th>Área <i class="far fa-sort th-icon"></i></th>
+                                <th>Líder <i class="far fa-sort th-icon"></i></th>
+                                <th class="text-center">Estado <i class="far fa-sort th-icon"></i></th>
+                                <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>`;
@@ -3938,8 +3915,8 @@
                         <td>${p.name}</td>
                         <td>${p.area}</td>
                         <td>${p.leader}</td>
-                        <td style="text-align: center;"><span class="status-badge status-${statusClass}">${p.status}</span></td>
-                        <td style="text-align: center;">
+                        <td class="text-center"><span class="status-badge ${statusClass}">${p.status}</span></td>
+                        <td class="text-center">
                             <button class="reminder-btn btn-sm" onclick="alert('Recordatorio enviado a ${p.name}')"><i class="far fa-bell"></i></button>
                         </td>
                     </tr>`;
@@ -3958,17 +3935,17 @@
             const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
 
             let html = `
-                <div class="participation-controls" style="margin-bottom: 12px;">
-                    <div class="participation-title">Tabla de participación - Países <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                <div class="participation-controls">
+                    <div class="participation-title">Tabla de participación - Países <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">País <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Acciones</th>
+                            <th>País <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
+                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -3979,17 +3956,17 @@
                 const pending = data.total - data.completed;
                 html += `
                     <tr>
-                        <td style="font-weight: 700;">${name}</td>
-                        <td style="text-align: center;">${data.completed}</td>
-                        <td style="text-align: center;">${data.total}</td>
+                        <td class="fw-bold">${name}</td>
+                        <td class="text-center">${data.completed}</td>
+                        <td class="text-center">${data.total}</td>
                         <td>
                             <div class="progress-container">
                                 <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
                                 <span class="participation-percentage">${percentage}%</span>
                             </div>
                         </td>
-                        <td style="text-align: center;">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        <td class="text-center">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -3997,7 +3974,7 @@
                 <div class="participation-legend">
                     <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
                     <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                    <div class="update-tag">Última actualización: hace 5 minutos</div>
                 </div>
             `;
             return html;
@@ -4013,17 +3990,17 @@
             const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
 
             let html = `
-                <div class="participation-controls" style="margin-bottom: 12px;">
-                    <div class="participation-title">Tabla de participación - Ciudades <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                <div class="participation-controls">
+                    <div class="participation-title">Tabla de participación - Ciudades <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Ciudad <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Acciones</th>
+                            <th>Ciudad <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
+                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -4034,17 +4011,17 @@
                 const pending = data.total - data.completed;
                 html += `
                     <tr>
-                        <td style="font-weight: 700;">${name}</td>
-                        <td style="text-align: center;">${data.completed}</td>
-                        <td style="text-align: center;">${data.total}</td>
+                        <td class="fw-bold">${name}</td>
+                        <td class="text-center">${data.completed}</td>
+                        <td class="text-center">${data.total}</td>
                         <td>
                             <div class="progress-container">
                                 <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
                                 <span class="participation-percentage">${percentage}%</span>
                             </div>
                         </td>
-                        <td style="text-align: center;">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        <td class="text-center">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -4052,7 +4029,7 @@
                 <div class="participation-legend">
                     <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
                     <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                    <div class="update-tag">Última actualización: hace 5 minutos</div>
                 </div>
             `;
             return html;
@@ -4068,17 +4045,17 @@
             const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
 
             let html = `
-                <div class="participation-controls" style="margin-bottom: 12px;">
-                    <div class="participation-title">Tabla de participación - Edad <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                <div class="participation-controls">
+                    <div class="participation-title">Tabla de participación - Edad <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Rango de edad <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Acciones</th>
+                            <th>Rango de edad <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
+                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -4089,17 +4066,17 @@
                 const pending = data.total - data.completed;
                 html += `
                     <tr>
-                        <td style="font-weight: 700;">${name}</td>
-                        <td style="text-align: center;">${data.completed}</td>
-                        <td style="text-align: center;">${data.total}</td>
+                        <td class="fw-bold">${name}</td>
+                        <td class="text-center">${data.completed}</td>
+                        <td class="text-center">${data.total}</td>
                         <td>
                             <div class="progress-container">
                                 <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
                                 <span class="participation-percentage">${percentage}%</span>
                             </div>
                         </td>
-                        <td style="text-align: center;">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        <td class="text-center">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -4107,7 +4084,7 @@
                 <div class="participation-legend">
                     <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
                     <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                    <div class="update-tag">Última actualización: hace 5 minutos</div>
                 </div>
             `;
             return html;
@@ -4123,17 +4100,17 @@
             const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
 
             let html = `
-                <div class="participation-controls" style="margin-bottom: 12px;">
-                    <div class="participation-title">Tabla de participación - Sexo <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                <div class="participation-controls">
+                    <div class="participation-title">Tabla de participación - Sexo <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Sexo <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Acciones</th>
+                            <th>Sexo <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
+                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -4144,17 +4121,17 @@
                 const pending = data.total - data.completed;
                 html += `
                     <tr>
-                        <td style="font-weight: 700;">${name}</td>
-                        <td style="text-align: center;">${data.completed}</td>
-                        <td style="text-align: center;">${data.total}</td>
+                        <td class="fw-bold">${name}</td>
+                        <td class="text-center">${data.completed}</td>
+                        <td class="text-center">${data.total}</td>
                         <td>
                             <div class="progress-container">
                                 <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
                                 <span class="participation-percentage">${percentage}%</span>
                             </div>
                         </td>
-                        <td style="text-align: center;">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        <td class="text-center">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -4162,7 +4139,7 @@
                 <div class="participation-legend">
                     <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
                     <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                    <div class="update-tag">Última actualización: hace 5 minutos</div>
                 </div>
             `;
             return html;
@@ -4178,17 +4155,17 @@
             const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
 
             let html = `
-                <div class="participation-controls" style="margin-bottom: 12px;">
-                    <div class="participation-title">Tabla de participación - Columna A <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                <div class="participation-controls">
+                    <div class="participation-title">Tabla de participación - Columna A <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Columna A <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Acciones</th>
+                            <th>Columna A <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
+                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -4199,17 +4176,17 @@
                 const pending = data.total - data.completed;
                 html += `
                     <tr>
-                        <td style="font-weight: 700;">${name}</td>
-                        <td style="text-align: center;">${data.completed}</td>
-                        <td style="text-align: center;">${data.total}</td>
+                        <td class="fw-bold">${name}</td>
+                        <td class="text-center">${data.completed}</td>
+                        <td class="text-center">${data.total}</td>
                         <td>
                             <div class="progress-container">
                                 <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
                                 <span class="participation-percentage">${percentage}%</span>
                             </div>
                         </td>
-                        <td style="text-align: center;">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        <td class="text-center">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -4217,7 +4194,7 @@
                 <div class="participation-legend">
                     <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
                     <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                    <div class="update-tag">Última actualización: hace 5 minutos</div>
                 </div>
             `;
             return html;
@@ -4233,17 +4210,17 @@
             const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
 
             let html = `
-                <div class="participation-controls" style="margin-bottom: 12px;">
-                    <div class="participation-title">Tabla de participación - Columna B <span style="font-weight: 400; color: #6b7280; font-size: 14px;">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                <div class="participation-controls">
+                    <div class="participation-title">Tabla de participación - Columna B <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
                         <tr>
-                            <th style="width: 30%;">Columna B <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Completados <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Total <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="width: 25%;">% de participación <i class="far fa-sort" style="margin-left: 8px; color: #9ca3af;"></i></th>
-                            <th style="text-align: center;">Acciones</th>
+                            <th>Columna B <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
+                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -4254,17 +4231,17 @@
                 const pending = data.total - data.completed;
                 html += `
                     <tr>
-                        <td style="font-weight: 700;">${name}</td>
-                        <td style="text-align: center;">${data.completed}</td>
-                        <td style="text-align: center;">${data.total}</td>
+                        <td class="fw-bold">${name}</td>
+                        <td class="text-center">${data.completed}</td>
+                        <td class="text-center">${data.total}</td>
                         <td>
                             <div class="progress-container">
                                 <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
                                 <span class="participation-percentage">${percentage}%</span>
                             </div>
                         </td>
-                        <td style="text-align: center;">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span style="color: #10b981; font-size: 12px; font-weight: 600;"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                        <td class="text-center">
+                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -4272,7 +4249,7 @@
                 <div class="participation-legend">
                     <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
                     <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div style="margin-left: auto; color: #9ca3af; font-style: italic;">Última actualización: hace 5 minutos</div>
+                    <div class="update-tag">Última actualización: hace 5 minutos</div>
                 </div>
             `;
             return html;
@@ -4466,11 +4443,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .feedback-trigger:hover {
-            background: var(--ubits-button-primary-hover);
-            transform: scale(1.1);
         }
 
         .feedback-modal {

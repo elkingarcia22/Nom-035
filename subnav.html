@@ -8,6 +8,7 @@
     <!-- Estilos locales -->
     <link rel="stylesheet" href="ubits-colors.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ubits-design-system.css">
     <link rel="stylesheet" href="fontawesome-icons.css">
     <link rel="stylesheet" href="ubits-typography.css">
     <link rel="stylesheet" href="components/sub-nav.css">
@@ -498,14 +499,7 @@ updateActiveSubNavTab('componentes'); // Cambiar pestaña activa</code></pre>
                     break;
                     
                 case 'encuestas':
-                    preview.innerHTML = `
-                        <div class="nav-tabs">
-                            <button class="nav-tab active" data-tab="encuestas">
-                                <i class="fa far fa-clipboard-list-check"></i>
-                                <span class="ubits-body-sm-regular">Encuestas</span>
-                            </button>
-                        </div>
-                    `;
+                    preview.innerHTML = `<div class="nav-tabs"></div>`;
                     break;
                     
                 case 'tareas':
