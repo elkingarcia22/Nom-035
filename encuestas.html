@@ -683,42 +683,47 @@
             text-align: center;
         }
 
+        /* Force brand font on all elements to ensure consistency */
+        body, table, th, td, h1, h2, h3, h4, span, button, input, select {
+            font-family: 'Inter', sans-serif !important;
+        }
+
         /* Status badges estilo minimalista */
         .status-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px 10px;
+            border-radius: 9999px;
             font-size: 11px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: 1px solid;
-            width: 90px;
+            font-weight: 600;
+            text-transform: none;
+            letter-spacing: -0.01em;
+            width: auto;
+            min-width: 80px;
             text-align: center;
+            border: none !important;
         }
 
         .status-badge.completed {
-            background: var(--ubits-feedback-bg-success-subtle);
-            color: var(--ubits-feedback-fg-success-subtle);
-            border-color: var(--ubits-feedback-accent-success);
+            background: var(--ubits-feedback-bg-success-subtle) !important;
+            color: var(--ubits-feedback-fg-success-subtle) !important;
+            border: 1px solid var(--ubits-feedback-accent-success) !important;
         }
 
         .status-badge.in-progress {
-            background: var(--ubits-feedback-bg-info-subtle);
-            color: var(--ubits-feedback-fg-info-subtle);
-            border-color: var(--ubits-feedback-accent-info);
+            background: rgba(59, 130, 246, 0.1) !important;
+            color: rgb(59, 130, 246) !important;
         }
 
         .status-badge.draft {
-            background: var(--ubits-bg-2);
-            color: var(--ubits-fg-1-medium);
-            border-color: var(--ubits-border-1);
+            background: rgba(234, 236, 239, 0.8) !important;
+            color: rgb(148, 163, 184) !important;
         }
 
         .status-badge.pending {
-            background: var(--ubits-bg-2);
-            color: var(--ubits-fg-1-medium);
-            border-color: var(--ubits-border-1);
+            background: rgba(234, 236, 239, 0.8) !important;
+            color: rgb(148, 163, 184) !important;
         }
 
         /* Progress bars mejorados */

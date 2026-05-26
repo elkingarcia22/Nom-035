@@ -560,11 +560,11 @@
                 let html = '<table class="results-table">';
                 html += '<thead><tr>';
                 html += '<th>Segmento</th>';
-                html += '<th class="text-center" style="width: 100px;">Participantes</th>';
-                html += '<th class="text-center" style="width: 280px;">Promedio Riesgo</th>';
-                html += '<th class="text-center" style="width: 80px;">Mínimo</th>';
-                html += '<th class="text-center" style="width: 80px;">Máximo</th>';
-                html += '<th class="text-center" style="width: 120px;">Nivel General</th>';
+                html += '<th style="width: 100px;">Participantes</th>';
+                html += '<th style="width: 200px;">Promedio Riesgo</th>';
+                html += '<th style="width: 80px;">Mínimo</th>';
+                html += '<th style="width: 80px;">Máximo</th>';
+                html += '<th style="width: 120px;">Nivel General</th>';
                 html += '</tr></thead><tbody>';
 
                 segmentsData.forEach(segment => {
@@ -573,19 +573,24 @@
 
                     html += '<tr>';
                     html += '<td>' + segment.name + '</td>';
-                    html += '<td class="text-center">' + segment.participants + '</td>';
-                    html += '<td class="text-center">' +
-                            '<div style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 8px 16px; border-radius: var(--ubits-radius-sm); font-weight: 600;">' +
+                    html += '<td>' + segment.participants + '</td>';
+                    html += '<td>' +
+                            '<span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; display: inline-block; min-width: 50px; text-align: center;">' +
                             segment.avgRisk.toFixed(2) +
-                            '</div></td>';
-                    html += '<td class="text-center" style="color: var(--ubits-semantic-success);">' + segment.min.toFixed(2) + '</td>';
-                    html += '<td class="text-center" style="color: var(--ubits-semantic-danger);">' + segment.max.toFixed(2) + '</td>';
-                    html += '<td class="text-center"><span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; font-size: 12px;">' + levelText + '</span></td>';
+                            '</span></td>';
+                    html += '<td style="color: var(--ubits-semantic-success);">' + segment.min.toFixed(2) + '</td>';
+                    html += '<td style="color: var(--ubits-semantic-danger);">' + segment.max.toFixed(2) + '</td>';
+                    html += '<td><span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; font-size: 12px;">' + levelText + '</span></td>';
                     html += '</tr>';
                 });
 
                 html += '</tbody></table>';
                 wrapper.innerHTML = html;
+
+                const counterEl = document.getElementById('segments-filter-counter');
+                if (counterEl) {
+                    counterEl.textContent = `${segmentsData.length} resultados`;
+                }
             };
 
             renderSegmentsTable();
@@ -856,7 +861,7 @@
 
             let html = `
                 <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Áreas <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                    <div class="participation-title">Tabla de participación - Áreas <span class="filter-counter">${filtered.length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
@@ -912,7 +917,7 @@
 
             let html = `
                 <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Cargo <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                    <div class="participation-title">Tabla de participación - Cargo <span class="filter-counter">${filtered.length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
@@ -968,7 +973,7 @@
 
             let html = `
                 <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Colaboradores <span class="filter-counter">${filtered.length}/${window.nomParticipationData.length} resultados</span></div>
+                    <div class="participation-title">Tabla de participación - Colaboradores <span class="filter-counter">${filtered.length} resultados</span></div>
                     <div style="display: flex; gap: 12px; align-items: center;">
                         <button class="ubits-button ubits-button--secondary ubits-button--md reminder-btn" onclick="alert('Recordatorios masivos enviados a todos los colaboradores pendientes')">
                             <i class="far fa-bell"></i> Recordatorio masivo
@@ -1018,7 +1023,7 @@
 
             let html = `
                 <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Países <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                    <div class="participation-title">Tabla de participación - Países <span class="filter-counter">${filtered.length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
@@ -1073,7 +1078,7 @@
 
             let html = `
                 <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Ciudades <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                    <div class="participation-title">Tabla de participación - Ciudades <span class="filter-counter">${filtered.length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
@@ -1128,7 +1133,7 @@
 
             let html = `
                 <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Edad <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                    <div class="participation-title">Tabla de participación - Edad <span class="filter-counter">${filtered.length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
@@ -1183,7 +1188,7 @@
 
             let html = `
                 <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Sexo <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                    <div class="participation-title">Tabla de participación - Sexo <span class="filter-counter">${filtered.length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
@@ -1238,7 +1243,7 @@
 
             let html = `
                 <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Columna A <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                    <div class="participation-title">Tabla de participación - Columna A <span class="filter-counter">${filtered.length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
@@ -1293,7 +1298,7 @@
 
             let html = `
                 <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Columna B <span class="filter-counter">${filtered.length}/${Object.keys(grouped).length} resultados</span></div>
+                    <div class="participation-title">Tabla de participación - Columna B <span class="filter-counter">${filtered.length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
@@ -1593,7 +1598,7 @@
             border-radius: var(--ubits-radius-sm);
             font-size: 12px;
             font-weight: 500;
-            text-transform: uppercase;
+            text-transform: none;
             letter-spacing: 0.5px;
             border: 1px solid;
             width: 100px;
@@ -1619,7 +1624,7 @@
         .survey-info {
             background: var(--ubits-bg-0);
             border-radius: var(--ubits-radius-md);
-            padding: 20px;
+            padding: 12px 20px;
             border: 1px solid var(--ubits-border-1);
             margin-bottom: 0px;
             box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 2px 8px rgba(15,23,42,0.06);
@@ -1636,7 +1641,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
-            margin-top: 16px;
+            margin-top: 0px;
             flex-wrap: wrap;
         }
 
@@ -1660,7 +1665,7 @@
             border-radius: var(--ubits-radius-sm);
             font-size: 12px;
             font-weight: 500;
-            text-transform: uppercase;
+            text-transform: none;
             letter-spacing: 0.5px;
         }
 
@@ -2080,7 +2085,7 @@
             border-radius: var(--ubits-radius-lg);
             font-size: 11px;
             font-weight: 600;
-            text-transform: uppercase;
+            text-transform: none;
             letter-spacing: 0.5px;
             flex-shrink: 0;
         }
@@ -2366,7 +2371,7 @@
             border-radius: var(--ubits-radius-lg);
             font-size: 10px;
             font-weight: 600;
-            text-transform: uppercase;
+            text-transform: none;
             letter-spacing: 0.5px;
         }
 
@@ -2454,7 +2459,7 @@
             border-radius: var(--ubits-radius-sm);
             font-size: 12px;
             font-weight: 600;
-            text-transform: uppercase;
+            text-transform: none;
             letter-spacing: 0.5px;
         }
 
@@ -2844,13 +2849,10 @@
 
         .risk-count {
             font-weight: 600;
-            text-align: center;
+            text-align: left;
             background: none !important;
-            border: none !important;
             border-radius: 0 !important;
-            padding: 0 !important;
             color: var(--ubits-fg-1-medium) !important;
-            display: inline !important;
             width: auto !important;
             height: auto !important;
             min-width: auto !important;
@@ -2860,29 +2862,38 @@
         /* Asegurar que los números no tengan formato de círculo */
         .results-table .risk-count {
             background: transparent !important;
-            border: none !important;
             border-radius: 0 !important;
-            padding: 0 !important;
             margin: 0 !important;
-            display: inline !important;
-            width: auto !important;
-            height: auto !important;
         }
         
         /* Estilos específicos para la nueva tabla de prueba */
         .results-table-container .results-table .risk-count {
             background: none !important;
-            border: none !important;
             border-radius: 0 !important;
-            padding: 0 !important;
             margin: 0 !important;
-            display: inline !important;
-            width: auto !important;
-            height: auto !important;
             min-width: auto !important;
             min-height: auto !important;
             font-size: 14px !important;
             line-height: normal !important;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+
+        /* Ocultar columna Calificación y alinear columnas en tabla de Dimensiones */
+        #sub-panel-dimensions .results-table th:nth-child(3),
+        #sub-panel-dimensions .results-table td:nth-child(3),
+        #sub-panel-dimensions .results-table th:nth-child(4),
+        #sub-panel-dimensions .results-table td:nth-child(4),
+        #sub-panel-dimensions .results-table th:nth-child(5),
+        #sub-panel-dimensions .results-table td:nth-child(5) {
+            text-align: left !important;
+        }
+
+        #sub-panel-dimensions .results-table th:nth-child(6),
+        #sub-panel-dimensions .results-table td:nth-child(6) {
+            display: none !important;
         }
         
         /* Estado activo solo cuando el acordeón está abierto - usando colores de tabla original */
@@ -2941,7 +2952,7 @@
 
         .percentage {
             font-weight: 600;
-            text-align: center;
+            text-align: left;
             color: var(--ubits-fg-1-medium);
         }
 
@@ -3221,7 +3232,7 @@
             border-radius: var(--ubits-radius-sm);
             font-size: 11px;
             font-weight: 600;
-            text-transform: uppercase;
+            text-transform: none;
             letter-spacing: 0.5px;
         }
 
@@ -4099,7 +4110,7 @@
             border-radius: var(--ubits-radius-sm);
             font-size: 12px;
             font-weight: 600;
-            text-transform: uppercase;
+            text-transform: none;
         }
 
         .risk-bajo {
@@ -4209,7 +4220,7 @@
             font-size: 12px;
             font-weight: 600;
             color: var(--ubits-fg-1-medium);
-            text-transform: uppercase;
+            text-transform: none;
             letter-spacing: 0.5px;
         }
 
@@ -4764,7 +4775,7 @@
             border: 1px solid var(--ubits-border-1) !important;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
             border-radius: var(--ubits-radius-lg) !important;
-            padding: 24px !important;
+            padding: 16px 20px !important;
             transition: all 0.2s ease !important;
         }
         .metric-card:hover, .segment-risk-card:hover {
@@ -4772,14 +4783,14 @@
             transform: translateY(-2px) !important;
         }
         .metric-title {
-            font-family: 'Noto Sans', sans-serif !important;
-            font-size: 16px !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 13px !important;
             font-weight: 700 !important;
             color: var(--ubits-fg-1-high) !important;
         }
         .metric-main-number {
-            font-family: 'Noto Sans', sans-serif !important;
-            font-size: 32px !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 24px !important;
             font-weight: 700 !important;
             color: var(--ubits-fg-1-high) !important;
             line-height: 1.2 !important;
@@ -4793,7 +4804,7 @@
             padding: 20px 24px !important;
         }
         .filters-header h3 {
-            font-family: 'Noto Sans', sans-serif !important;
+            font-family: 'Inter', sans-serif !important;
             font-size: 20px !important;
             font-weight: 700 !important;
             color: var(--ubits-fg-1-high) !important;
@@ -4805,33 +4816,33 @@
             width: 100% !important;
         }
         .results-container th {
-            font-family: 'Noto Sans', sans-serif !important;
-            font-size: 14px !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 11px !important;
             font-weight: 700 !important;
             color: var(--ubits-fg-1-medium) !important;
             border-bottom: 1px solid var(--ubits-border-1) !important;
-            padding: 16px 20px !important;
+            padding: 16px 16px !important;
             text-align: left !important;
         }
         .results-container td {
-            font-family: 'Noto Sans', sans-serif !important;
-            font-size: 14px !important;
-            font-weight: 400 !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 12px !important;
+            font-weight: 500 !important;
             color: var(--ubits-fg-1-high) !important;
             border-bottom: 1px solid var(--ubits-border-1) !important;
-            padding: 16px 20px !important;
+            padding: 14px 16px !important;
         }
         /* Tags / Badges */
         .risk-badge {
             border-radius: var(--ubits-radius-full) !important;
             padding: 4px 12px !important;
-            font-family: 'Noto Sans', sans-serif !important;
+            font-family: 'Inter', sans-serif !important;
             font-size: 12px !important;
             font-weight: 700 !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            text-transform: uppercase !important;
+            text-transform: none !important;
             letter-spacing: 0.5px !important;
         }
         .filter-badge {
@@ -4843,11 +4854,11 @@
         /* Inline Tags generated by JS */
         span[style*="padding: 4px 12px"] {
             border-radius: var(--ubits-radius-full) !important;
-            font-family: 'Noto Sans', sans-serif !important;
+            font-family: 'Inter', sans-serif !important;
         }
         span[style*="padding: 8px 16px"] {
             border-radius: var(--ubits-radius-full) !important;
-            font-family: 'Noto Sans', sans-serif !important;
+            font-family: 'Inter', sans-serif !important;
         }
     
         /* --- UBITS SIDEBAR PREMIUM OVERRIDES --- */
@@ -4980,6 +4991,18 @@
         .custom-single-select .select-trigger.active .select-arrow {
             transform: rotate(180deg);
         }
+        
+        /* Force no uppercase on metrics, status tags, and tables */
+        .metric-title, 
+        .status-badge, 
+        .risk-badge, 
+        .risk-level, 
+        .section-risk-level, 
+        .participation-table th, 
+        .results-container th, 
+        th {
+            text-transform: none !important;
+        }
     </style>
 </head>
 <body>
@@ -5042,9 +5065,7 @@
                                 <i class="far fa-calendar"></i>
                                 <span>Inicio <strong>15 octubre 2024</strong></span>
                             </div>
-                            <div class="detail-separator"></div>
                             <div class="detail-item">
-                                <i class="far fa-calendar"></i>
                                 <span>Hasta <strong>15 noviembre 2024</strong></span>
                             </div>
                             <div class="detail-separator"></div>
@@ -5103,29 +5124,26 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- NUEVOS TABS CON ESTILO ORIGINAL -->
                     <div class="tabs-container" style="margin-top: 24px;">
                         <div class="tabs-header">
-                            <button class="ubits-button ubits-button--tertiary ubits-button--md tab-button active" data-new-tab="participantes">
+                            <button class="tab-button active" data-new-tab="participantes">
                                 <i class="far fa-user"></i>
                                 <span>Participantes</span>
                             </button>
-                            <button class="ubits-button ubits-button--tertiary ubits-button--md tab-button" data-new-tab="general-view">
+                            <button class="tab-button" data-new-tab="general-view">
                                 <i class="far fa-chart-line"></i>
                                 <span>Vista General</span>
                             </button>
-                            <button class="ubits-button ubits-button--tertiary ubits-button--md tab-button" data-new-tab="segments-results">
+                            <button class="tab-button" data-new-tab="segments-results">
                                 <i class="far fa-table"></i>
                                 <span>Resultados por Segmentos</span>
                             </button>
-                            <button class="ubits-button ubits-button--tertiary ubits-button--md tab-button" data-new-tab="heat-map">
+                            <button class="tab-button" data-new-tab="heat-map">
                                 <i class="far fa-map"></i>
                                 <span>Heatmap</span>
                             </button>
                         </div>
-                        
-                        
                         <!-- Tab Content - Participantes -->
                         <div class="tab-panel active" id="new-participantes-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: hidden;">
                             <div class="nom-table-header-card">
@@ -5202,7 +5220,7 @@
                             <div style="background: white;">
                                 <div class="table-header">
                                     <div style="display: flex; align-items: center; gap: 12px;">
-                                        <h2 style="font-size: 24px; font-weight: 600; color: var(--ubits-fg-1-high); margin: 0;">Análisis por categoría</h2>
+                                        <h2 style="font-size: 16px; font-weight: 700; color: var(--ubits-fg-1-high); margin: 0;">Análisis por categoría</h2>
                                         <span style="font-size: 14px; color: var(--ubits-fg-1-medium);">5 categorías</span>
                                     </div>
                                     <div class="table-controls" style="display: flex; align-items: center; gap: 12px;">
@@ -5240,7 +5258,8 @@
                                             <th>Categoría</th>
                                             <th>Total Usuarios en Riesgo</th>
                                             <th>% Colaboradores Afectados</th>
-                                            <th>Puntaje</th><th>Calificación</th><th>Nivel de Riesgo</th>
+                                            <th>Puntaje</th>
+                                            <th>Nivel de Riesgo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -5249,15 +5268,6 @@
                                             <td class="risk-count">5</td>
                                             <td class="percentage">3.3%</td>
                                             <td><span class="score-value">6.9</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill bajo" style="width: 34.5%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 25%;">5</span><span class="range-threshold" style="left: 45%;">9</span><span class="range-threshold" style="left: 55.00000000000001%;">11</span><span class="range-threshold" style="left: 70%;">14</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         <tr>
@@ -5265,15 +5275,6 @@
                                             <td class="risk-count">95</td>
                                             <td class="percentage">63.3%</td>
                                             <td><span class="score-value">38.6</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill medio" style="width: 51.46666666666667%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">15</span><span class="range-threshold" style="left: 40%;">30</span><span class="range-threshold" style="left: 60%;">45</span><span class="range-threshold" style="left: 80%;">60</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                         <tr>
@@ -5281,15 +5282,6 @@
                                             <td class="risk-count">78</td>
                                             <td class="percentage">52.0%</td>
                                             <td><span class="score-value">16.5</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill alto" style="width: 55.00000000000001%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 33.33333333333333%;">10</span><span class="range-threshold" style="left: 46.666666666666664%;">14</span><span class="range-threshold" style="left: 60%;">18</span><span class="range-threshold" style="left: 76.66666666666667%;">23</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge alto">Alto</span></td>
                                         </tr>
                                         <tr>
@@ -5297,15 +5289,6 @@
                                             <td class="risk-count">18</td>
                                             <td class="percentage">12.0%</td>
                                             <td><span class="score-value">7</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill medio" style="width: 35%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 25%;">5</span><span class="range-threshold" style="left: 35%;">7</span><span class="range-threshold" style="left: 50%;">10</span><span class="range-threshold" style="left: 65%;">13</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                         <tr>
@@ -5313,15 +5296,6 @@
                                             <td class="risk-count">45</td>
                                             <td class="percentage">30.0%</td>
                                             <td><span class="score-value">18.9</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill bajo" style="width: 25.2%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 18.666666666666668%;">14</span><span class="range-threshold" style="left: 38.666666666666664%;">29</span><span class="range-threshold" style="left: 56.00000000000001%;">42</span><span class="range-threshold" style="left: 77.33333333333333%;">58</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                     </tbody>
@@ -5471,7 +5445,7 @@
                             <div style="background: white;">
                                 <div class="table-header">
                                     <div style="display: flex; align-items: center; gap: 12px;">
-                                        <h2 style="font-size: 24px; font-weight: 600; color: var(--ubits-fg-1-high); margin: 0;">Análisis por dominio</h2>
+                                        <h2 style="font-size: 16px; font-weight: 700; color: var(--ubits-fg-1-high); margin: 0;">Análisis por dominio</h2>
                                         <span style="font-size: 14px; color: var(--ubits-fg-1-medium);">10 dominios</span>
                                     </div>
                                     <div class="table-controls" style="display: flex; align-items: center; gap: 12px;">
@@ -5510,7 +5484,8 @@
                                             <th>Categoría</th>
                                             <th>Total Usuarios en Riesgo</th>
                                             <th>% Colaboradores Afectados</th>
-                                            <th>Puntaje</th><th>Calificación</th><th>Nivel de Riesgo</th>
+                                            <th>Puntaje</th>
+                                            <th>Nivel de Riesgo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -5520,15 +5495,6 @@
                                             <td class="risk-count">20</td>
                                             <td class="percentage">13.3%</td>
                                             <td><span class="score-value">6.9</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill bajo" style="width: 34.5%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 25%;">5</span><span class="range-threshold" style="left: 45%;">9</span><span class="range-threshold" style="left: 55.00000000000001%;">11</span><span class="range-threshold" style="left: 70%;">14</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         <tr>
@@ -5537,15 +5503,6 @@
                                             <td class="risk-count">90</td>
                                             <td class="percentage">60%</td>
                                             <td><span class="score-value">25</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill alto" style="width: 50%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 30%;">15</span><span class="range-threshold" style="left: 42%;">21</span><span class="range-threshold" style="left: 54%;">27</span><span class="range-threshold" style="left: 74%;">37</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge alto">Alto</span></td>
                                         </tr>
                                         <tr>
@@ -5554,15 +5511,6 @@
                                             <td class="risk-count">85</td>
                                             <td class="percentage">56.7%</td>
                                             <td><span class="score-value">16.5</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill alto" style="width: 55.00000000000001%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 33.33333333333333%;">10</span><span class="range-threshold" style="left: 46.666666666666664%;">14</span><span class="range-threshold" style="left: 60%;">18</span><span class="range-threshold" style="left: 76.66666666666667%;">23</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge alto">Alto</span></td>
                                         </tr>
                                         <tr>
@@ -5571,15 +5519,6 @@
                                             <td class="risk-count">76</td>
                                             <td class="percentage">50.7%</td>
                                             <td><span class="score-value">8.5</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill muy-alto" style="width: 85%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 10%;">1</span><span class="range-threshold" style="left: 20%;">2</span><span class="range-threshold" style="left: 40%;">4</span><span class="range-threshold" style="left: 60%;">6</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge muy-alto">Muy alto</span></td>
                                         </tr>
                                         <tr>
@@ -5588,15 +5527,6 @@
                                             <td class="risk-count">82</td>
                                             <td class="percentage">54.7%</td>
                                             <td><span class="score-value">12</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill alto" style="width: 48%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 36%;">9</span><span class="range-threshold" style="left: 48%;">12</span><span class="range-threshold" style="left: 64%;">16</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge alto">Alto</span></td>
                                         </tr>
                                         <tr>
@@ -5605,15 +5535,6 @@
                                             <td class="risk-count">79</td>
                                             <td class="percentage">52.7%</td>
                                             <td><span class="score-value">15</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill medio" style="width: 60%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 52%;">13</span><span class="range-threshold" style="left: 68%;">17</span><span class="range-threshold" style="left: 84%;">21</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                         <tr>
@@ -5622,15 +5543,6 @@
                                             <td class="risk-count">88</td>
                                             <td class="percentage">58.7%</td>
                                             <td><span class="score-value">6.5</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill medio" style="width: 43.333333333333336%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 26.666666666666668%;">4</span><span class="range-threshold" style="left: 40%;">6</span><span class="range-threshold" style="left: 53.333333333333336%;">8</span><span class="range-threshold" style="left: 66.66666666666666%;">10</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                         <tr>
@@ -5639,15 +5551,6 @@
                                             <td class="risk-count">92</td>
                                             <td class="percentage">61.3%</td>
                                             <td><span class="score-value">8</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill medio" style="width: 53.333333333333336%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 33.33333333333333%;">5</span><span class="range-threshold" style="left: 46.666666666666664%;">7</span><span class="range-threshold" style="left: 60%;">9</span><span class="range-threshold" style="left: 73.33333333333333%;">11</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                         <tr>
@@ -5656,15 +5559,6 @@
                                             <td class="risk-count">84</td>
                                             <td class="percentage">56.0%</td>
                                             <td><span class="score-value">4</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill medio" style="width: 33.33333333333333%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 25%;">3</span><span class="range-threshold" style="left: 41.66666666666667%;">5</span><span class="range-threshold" style="left: 58.333333333333336%;">7</span><span class="range-threshold" style="left: 75%;">9</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                         <tr>
@@ -5673,15 +5567,6 @@
                                             <td class="risk-count">15</td>
                                             <td class="percentage">10.0%</td>
                                             <td><span class="score-value">11.5</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
-            <div class="range-fill bajo" style="width: 38.333333333333336%;"></div>
-        </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 36.666666666666664%;">11</span><span class="range-threshold" style="left: 53.333333333333336%;">16</span><span class="range-threshold" style="left: 70%;">21</span><span class="range-threshold" style="left: 83.33333333333334%;">25</span>
-        </div>
-    </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                     </tbody>
@@ -5834,7 +5719,7 @@
                                 <div class="segment-content" id="dimensions-content">
                                 <div class="table-header">
                                     <div style="display: flex; align-items: center; gap: 12px;">
-                                        <h2 style="font-size: 24px; font-weight: 600; color: var(--ubits-fg-1-high); margin: 0;">Análisis por dimensión general</h2>
+                                        <h2 style="font-size: 16px; font-weight: 700; color: var(--ubits-fg-1-high); margin: 0;">Análisis por dimensión general</h2>
                                         <span style="font-size: 14px; color: var(--ubits-fg-1-medium);">20 dimensiones</span>
                                     </div>
                                     <div class="table-controls" style="display: flex; align-items: center; gap: 12px;">
@@ -6776,8 +6661,7 @@
                                 <!-- Header -->
                                 <div class="nom-table-header-card" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--ubits-border-1); padding: 16px 24px; background: white; border-radius: 8px 8px 0 0;">
                                     <div>
-                                        <h2 style="margin: 0; color: var(--ubits-fg-1-high); font-size: 16px; font-weight: 700;">Resultados por Segmentos</h2>
-                                        <p style="margin: 4px 0 0 0; color: var(--ubits-fg-1-medium); font-size: 12px;">Análisis estadístico detallado por segmentos demográficos</p>
+                                        <h2 style="margin: 0; color: var(--ubits-fg-1-high); font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 8px;">Resultados por Segmentos <span class="filter-counter" id="segments-filter-counter" style="font-weight: 400; color: var(--ubits-fg-1-medium); font-size: 14px; margin-left: 8px;"></span></h2>
                                     </div>
 
                                     <!-- Filtros -->
@@ -8083,7 +7967,7 @@
                         <td style="text-align: center; font-weight: 600;">${dim.riskCount}</td>
                         <td style="text-align: center; font-weight: 600;">${dim.percentage}%</td>
                         <td class="text-center">
-                            <span class="risk-badge ${dim.riskLevel}" style="padding: 4px 12px; border-radius: var(--ubits-radius-2xl); font-size: 12px; font-weight: 600; text-transform: uppercase;">
+                            <span class="risk-badge ${dim.riskLevel}" style="padding: 4px 12px; border-radius: var(--ubits-radius-2xl); font-size: 12px; font-weight: 600; text-transform: none;">
                                 ${getRiskLevelText(dim.riskLevel)}
                             </span>
                         </td>
@@ -10283,6 +10167,14 @@
             console.log('🚀 [INIT] Timestamp:', new Date().toLocaleTimeString());
 
             try {
+                console.log('📋 [INIT] Paso 0: Cargando sidebar');
+                if (typeof loadSidebar === 'function') {
+                    loadSidebar('encuestas');
+                    console.log('✅ [INIT] Sidebar cargado');
+                } else {
+                    console.error('❌ [INIT] loadSidebar no es una función');
+                }
+
                 console.log('📋 [INIT] Paso 1: Validando funciones disponibles');
                 console.log('   - initializeNewTabs:', typeof initializeNewTabs);
                 console.log('   - setupCustomSelects:', typeof setupCustomSelects);
