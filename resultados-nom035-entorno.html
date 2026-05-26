@@ -117,6 +117,16 @@
                         if (otherTrigger) otherTrigger.classList.remove('active');
                         if (otherDropdown) otherDropdown.classList.remove('show');
                     });
+                    // Cerrar select single si está abierto
+                    const singleSelect = document.getElementById('nom-participation-segment-custom-select');
+                    if (singleSelect) {
+                        const singleTrigger = singleSelect.querySelector('.select-trigger');
+                        const singleDropdown = singleSelect.querySelector('.select-dropdown');
+                        if (singleTrigger && singleDropdown) {
+                            singleTrigger.classList.remove('active');
+                            singleDropdown.classList.remove('show');
+                        }
+                    }
                     if (!isActive) {
                         trigger.classList.add('active');
                         dropdown.classList.add('show');
@@ -230,8 +240,8 @@
                         }
                     } else if (targetTab === 'general-view') {
                         // Restaurar el sub-panel activo según el selector "Ver por"
-                        const viewBySelect = document.getElementById('view-by-select');
-                        const currentSub = viewBySelect ? viewBySelect.value : 'categories';
+                        const firstViewBySelect = document.querySelector('.view-by-select-hidden');
+                        const currentSub = firstViewBySelect ? firstViewBySelect.value : 'categories';
                         const activeSubPanel = document.getElementById(`sub-panel-${currentSub}`);
                         if (activeSubPanel) {
                             activeSubPanel.classList.add('active');
@@ -250,32 +260,56 @@
             });
 
             // SELECTOR DE VISTA (CATEGORÍAS, DOMINIOS, DIMENSIONES)
-            const viewBySelect = document.getElementById('view-by-select');
+            const viewBySelects = document.querySelectorAll('.view-by-select-hidden');
             const subPanels = document.querySelectorAll('.sub-tab-panel');
 
-            console.log('🔍 Selector de vista encontrado:', !!viewBySelect);
+            console.log('🔍 Selector de vista locales encontrados:', viewBySelects.length);
             console.log('🔍 Sub-paneles encontrados:', subPanels.length);
 
-            if (viewBySelect) {
-                viewBySelect.addEventListener('change', function() {
-                    const targetSub = this.value;
-                    console.log('🖱️ Cambio en selector "Ver por":', targetSub);
+            if (viewBySelects.length > 0) {
+                viewBySelects.forEach(selectEl => {
+                    selectEl.addEventListener('change', function() {
+                        const targetSub = this.value;
+                        console.log('🖱️ Cambio en selector "Ver por" (local):', targetSub);
 
-                    subPanels.forEach(panel => {
-                        panel.classList.remove('active');
-                        panel.style.display = 'none';
+                        // Sincronizar todos los selectores locales
+                        viewBySelects.forEach(otherSelect => {
+                            if (otherSelect.value !== targetSub) {
+                                otherSelect.value = targetSub;
+                                // Actualizar el texto del custom select correspondiente
+                                const customWrapper = otherSelect.nextElementSibling;
+                                if (customWrapper && customWrapper.classList.contains('custom-select')) {
+                                    const selectedOpt = customWrapper.querySelector(`.select-option[data-value="${targetSub}"]`);
+                                    const textEl = customWrapper.querySelector('.selected-text');
+                                    if (selectedOpt && textEl) {
+                                        textEl.textContent = selectedOpt.textContent;
+                                        customWrapper.querySelectorAll('.select-option').forEach(opt => opt.classList.remove('selected'));
+                                        selectedOpt.classList.add('selected');
+                                    }
+                                }
+                            }
+                        });
+
+                        subPanels.forEach(panel => {
+                            panel.classList.remove('active');
+                            panel.style.display = 'none';
+                        });
+
+                        const targetPanel = document.getElementById(`sub-panel-${targetSub}`);
+                        if (targetPanel) {
+                            targetPanel.classList.add('active');
+                            targetPanel.style.display = 'block';
+                            console.log('✅ Activando sub-panel:', targetPanel.id);
+                        }
                     });
-
-                    const targetPanel = document.getElementById(`sub-panel-${targetSub}`);
-                    if (targetPanel) {
-                        targetPanel.classList.add('active');
-                        targetPanel.style.display = 'block';
-                        console.log('✅ Activando sub-panel:', targetPanel.id);
-                    }
                 });
 
                 // Estado inicial del selector
-                const initialSub = viewBySelect.value;
+                const initialSub = viewBySelects[0].value;
+                subPanels.forEach(panel => {
+                    panel.classList.remove('active');
+                    panel.style.display = 'none';
+                });
                 const targetPanel = document.getElementById(`sub-panel-${initialSub}`);
                 if (targetPanel) {
                     targetPanel.classList.add('active');
@@ -523,35 +557,34 @@
                     return texts[level] || 'NULO';
                 };
 
-                let html = '<table style="width: 100%; border-collapse: collapse; font-size: 13px;">';
-                html += '<tr style="background: var(--ubits-bg-1); font-weight: 600; color: var(--ubits-fg-1-high);">';
-                html += '<td style="padding: 12px; text-align: left; border: 1px solid var(--ubits-border-1);">Segmento</td>';
-                html += '<td style="padding: 12px; text-align: center; border: 1px solid var(--ubits-border-1); width: 100px;">Participantes</td>';
-                html += '<td style="padding: 12px; text-align: center; border: 1px solid var(--ubits-border-1); width: 280px;">Promedio Riesgo</td>';
-                html += '<td style="padding: 12px; text-align: center; border: 1px solid var(--ubits-border-1); width: 80px;">Mínimo</td>';
-                html += '<td style="padding: 12px; text-align: center; border: 1px solid var(--ubits-border-1); width: 80px;">Máximo</td>';
-                html += '<td style="padding: 12px; text-align: center; border: 1px solid var(--ubits-border-1); width: 120px;">Nivel General</td>';
-                html += '</tr>';
+                let html = '<table class="results-table">';
+                html += '<thead><tr>';
+                html += '<th>Segmento</th>';
+                html += '<th class="text-center" style="width: 100px;">Participantes</th>';
+                html += '<th class="text-center" style="width: 280px;">Promedio Riesgo</th>';
+                html += '<th class="text-center" style="width: 80px;">Mínimo</th>';
+                html += '<th class="text-center" style="width: 80px;">Máximo</th>';
+                html += '<th class="text-center" style="width: 120px;">Nivel General</th>';
+                html += '</tr></thead><tbody>';
 
                 segmentsData.forEach(segment => {
                     const colors = getColor(segment.level);
                     const levelText = getRiskLevelText(segment.level);
-                    const barWidth = Math.min((segment.avgRisk / 5) * 100, 100);
 
-                    html += '<tr style="border: 1px solid var(--ubits-border-1);">';
-                    html += '<td style="padding: 12px; text-align: left; border-right: 1px solid var(--ubits-border-1);">' + segment.name + '</td>';
-                    html += '<td style="padding: 12px; text-align: center; border-right: 1px solid var(--ubits-border-1);">' + segment.participants + '</td>';
-                    html += '<td style="padding: 12px; text-align: center; border-right: 1px solid var(--ubits-border-1);">' +
+                    html += '<tr>';
+                    html += '<td>' + segment.name + '</td>';
+                    html += '<td class="text-center">' + segment.participants + '</td>';
+                    html += '<td class="text-center">' +
                             '<div style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 8px 16px; border-radius: var(--ubits-radius-sm); font-weight: 600;">' +
                             segment.avgRisk.toFixed(2) +
                             '</div></td>';
-                    html += '<td style="padding: 12px; text-align: center; color: var(--ubits-semantic-success); border-right: 1px solid var(--ubits-border-1);">' + segment.min.toFixed(2) + '</td>';
-                    html += '<td style="padding: 12px; text-align: center; color: var(--ubits-semantic-danger); border-right: 1px solid var(--ubits-border-1);">' + segment.max.toFixed(2) + '</td>';
-                    html += '<td style="padding: 12px; text-align: center;"><span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; font-size: 12px;">' + levelText + '</span></td>';
+                    html += '<td class="text-center" style="color: var(--ubits-semantic-success);">' + segment.min.toFixed(2) + '</td>';
+                    html += '<td class="text-center" style="color: var(--ubits-semantic-danger);">' + segment.max.toFixed(2) + '</td>';
+                    html += '<td class="text-center"><span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; font-size: 12px;">' + levelText + '</span></td>';
                     html += '</tr>';
                 });
 
-                html += '</table>';
+                html += '</tbody></table>';
                 wrapper.innerHTML = html;
             };
 
@@ -741,31 +774,26 @@
                     return 'Nulo';
                 };
 
-                let html = '<div style="padding: 20px; background: var(--ubits-bg-2); border-radius: var(--ubits-radius-lg);">';
-                html += '<h2 style="margin: 0 0 20px 0; color: var(--ubits-fg-1-high); font-size: 20px;">Mapa de Riesgo NOM-035</h2>';
-                
-                html += '<div style="overflow-x: auto; background: var(--ubits-bg-0); border-radius: var(--ubits-radius-md); padding: 16px;">';
-                html += '<table style="border-collapse: collapse; width: 100%; font-size: 12px;">';
-                
-                html += '<tr><th style="padding: 12px; text-align: left; min-width: 200px; background: var(--ubits-bg-1); border: 1px solid var(--ubits-border-1); font-weight: 600;">Item</th>';
+                let html = '<table class="results-table" style="text-align: center;">';
+                html += '<thead><tr><th style="text-align: left; min-width: 200px;">Item</th>';
                 colData.forEach(col => {
-                    html += '<th style="padding: 12px; text-align: center; min-width: 75px; background: var(--ubits-bg-1); border: 1px solid var(--ubits-border-1); font-weight: 600; font-size: 11px;">' + col + '</th>';
+                    html += '<th style="text-align: center; min-width: 75px;">' + col + '</th>';
                 });
-                html += '</tr>';
+                html += '</tr></thead><tbody>';
 
                 rowData.rows.forEach((row, idx) => {
                     html += '<tr>';
-                    html += '<td style="padding: 12px; text-align: left; font-weight: 500; background: var(--ubits-bg-2); border: 1px solid var(--ubits-border-1);">' + row + '</td>';
+                    html += '<td style="text-align: left; font-weight: 500;">' + row + '</td>';
                     
                     rowData.matrix[idx].forEach((level) => {
                         const colors = getColor(level);
                         const text = getRiskText(level);
-                        html += '<td style="padding: 12px; text-align: center; background: ' + colors.bg + '; color: ' + colors.text + '; font-weight: 700; border: 1px solid var(--ubits-border-1); cursor: pointer;" title="' + text + '">' + level + '</td>';
+                        html += '<td style="background: ' + colors.bg + '; color: ' + colors.text + '; font-weight: 700; cursor: pointer;" title="' + text + '">' + level + '</td>';
                     });
                     html += '</tr>';
                 });
 
-                html += '</table></div></div>';
+                html += '</tbody></table>';
                 wrapper.innerHTML = html;
             };
 
@@ -1328,6 +1356,28 @@
                 segmentSelect.value = savedSegment;
             }
 
+            // Sincronizar selector de segmento personalizado con el valor inicial
+            const customSelect = document.getElementById('nom-participation-segment-custom-select');
+            if (customSelect) {
+                const options = customSelect.querySelectorAll('.select-option');
+                const textEl = customSelect.querySelector('#nom-participation-segment-text');
+
+                const syncCustomSelect = () => {
+                    const val = segmentSelect.value;
+                    options.forEach(opt => {
+                        if (opt.dataset.value === val) {
+                            opt.classList.add('selected');
+                            if (textEl) textEl.textContent = opt.textContent;
+                        } else {
+                            opt.classList.remove('selected');
+                        }
+                    });
+                };
+                
+                segmentSelect.addEventListener('change', syncCustomSelect);
+                syncCustomSelect();
+            }
+
             // Inicializar controles de búsqueda toggleable
             const searchToggleBtn = document.getElementById('nom-participation-search-toggle-btn');
             const searchContainer = document.getElementById('nom-participation-search-container');
@@ -1340,7 +1390,8 @@
                     searchInput.focus();
                 });
 
-                searchCloseBtn.addEventListener('click', () => {
+                searchCloseBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     searchContainer.style.display = 'none';
                     searchInput.value = '';
                     render();
@@ -1369,12 +1420,22 @@
                 if (segment === 'areas') html = window.renderNomAreasTable(searchTerm);
                 else if (segment === 'cargo') html = window.renderNomCargoTable(searchTerm);
                 else if (segment === 'collaborators') html = window.renderNomCollaboratorsTable(searchTerm);
-                
                 else if (segment === 'age') html = window.renderNomAgeTable(searchTerm);
                 else if (segment === 'sexo') html = window.renderNomSexoTable(searchTerm);
                 
 
                 wrapper.innerHTML = html;
+
+                // Extraer título y contador dinámicos para la cabecera fija
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+                const titleEl = tempDiv.querySelector('.participation-title');
+                if (titleEl) {
+                    const headerTitleEl = document.getElementById('nom-participation-table-title');
+                    if (headerTitleEl) {
+                        headerTitleEl.innerHTML = titleEl.innerHTML;
+                    }
+                }
             };
 
             segmentSelect.addEventListener('change', render);
@@ -2704,21 +2765,29 @@
         /* Results Table Styles */
         .results-table-container {
             overflow-x: auto;
-            margin-top: 16px;
+            margin-top: 0 !important;
         }
 
         .results-table {
             width: 100%;
             border-collapse: collapse;
             background: var(--ubits-bg-0);
-            border-radius: var(--ubits-radius-md);
+            border-radius: 0 !important;
             overflow: hidden;
-            box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 2px 8px rgba(15,23,42,0.06);
-            border: 1px solid var(--ubits-border-1);
+            box-shadow: none !important;
+            border: none !important;
+        }
+        .results-table th:first-child,
+        .results-table td:first-child {
+            padding-left: 24px !important;
+        }
+        .results-table th:last-child,
+        .results-table td:last-child {
+            padding-right: 24px !important;
         }
 
         .results-table thead {
-            background: var(--ubits-bg-1);
+            background: #F4F5F6;
         }
 
         .results-table th {
@@ -3181,19 +3250,16 @@
             color: var(--ubits-semantic-danger);
         }
 
-        /* Table Header and Controls */
         .table-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--ubits-border-1);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .table-header {
-            display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
+            gap: 16px;
+            background: white;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0 !important;
         }
 
         .table-header h3 {
@@ -4337,7 +4403,7 @@
             font-size: 14px;
         }
         .participation-table thead tr {
-            background: rgba(243, 243, 244, 0.5);
+            background: #F4F5F6;
             border-bottom: 1px solid var(--ubits-border-1);
         }
         .participation-table th {
@@ -4356,6 +4422,14 @@
             color: var(--ubits-fg-1-high);
             border-bottom: 1px solid rgba(208, 210, 213, 0.25);
             vertical-align: middle;
+        }
+        .participation-table th:first-child,
+        .participation-table td:first-child {
+            padding-left: 24px !important;
+        }
+        .participation-table th:last-child,
+        .participation-table td:last-child {
+            padding-right: 24px !important;
         }
         .participation-table tbody tr:last-child td {
             border-bottom: none;
@@ -4862,6 +4936,50 @@
             margin-left: 128px !important;
             width: calc(100% - 128px) !important;
         }
+
+        #new-participantes-panel .participation-controls {
+            display: none !important;
+        }
+        
+        #new-participantes-panel .participation-legend {
+            display: none !important;
+        }
+        
+        .nom-table-header-card {
+            padding: 16px 24px; 
+            border-bottom: 1px solid var(--ubits-border-1); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            gap: 16px;
+            background: white;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .custom-single-select {
+            position: relative;
+            width: 100%;
+        }
+        .custom-single-select .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border: 1px solid var(--ubits-border-1);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            max-height: 240px;
+            overflow-y: auto;
+            display: none;
+        }
+        .custom-single-select .select-dropdown.show {
+            display: block !important;
+        }
+        .custom-single-select .select-trigger.active .select-arrow {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 <body>
@@ -5009,47 +5127,60 @@
                         
                         
                         <!-- Tab Content - Participantes -->
-                        <div class="tab-panel active" id="new-participantes-panel">
-                            <div style="padding: 16px 24px; background: var(--ubits-bg-0); border-bottom: 1px solid var(--ubits-border-1); display: flex; align-items: center; gap: 16px; border-radius: var(--ubits-radius-md) 8px 0 0;">
-                                <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-medium);">Segmento demográfico:</span>
-                                <select id="nom-participation-segment-select" style="display: none;">
-                                    <option value="areas" selected>Área</option>
-                                    <option value="cargo">Cargo</option>
-                                    <option value="collaborators">Colaborador</option>
-                                    <option value="age">Edad</option>
-                                    <option value="sexo">Sexo</option>
-                                </select>
-                                <div class="custom-select single-select" id="custom-segment-select" tabindex="0">
-                                    <div class="select-trigger">
-                                        <span class="selected-text">Área</span>
-                                        <i class="far fa-chevron-down"></i>
-                                    </div>
-                                    <div class="select-dropdown">
-                                        <div class="select-option selected" data-value="areas">Área</div>
-                                        <div class="select-option" data-value="cargo">Cargo</div>
-                                        <div class="select-option" data-value="collaborators">Colaborador</div>
-                                        <div class="select-option" data-value="age">Edad</div>
-                                        <div class="select-option" data-value="sexo">Sexo</div>
-                                    </div>
+                        <div class="tab-panel active" id="new-participantes-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: hidden;">
+                            <div class="nom-table-header-card">
+                                <!-- Al lado izquierdo: título de la tabla -->
+                                <div id="nom-participation-table-title" style="font-size: 16px; font-weight: 700; color: var(--ubits-fg-1-high);">
+                                    Tabla de participación - Áreas <span class="filter-counter" id="nom-participation-counter" style="font-weight: 400; color: var(--ubits-fg-1-medium); font-size: 14px; margin-left: 8px;"></span>
                                 </div>
+                                
+                                <!-- Al lado derecho: buscador (izquierda) y segmento (derecha) -->
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <!-- Buscador Toggleable -->
+                                    <div style="position: relative; display: flex; align-items: center;">
+                                        <button id="nom-participation-search-toggle-btn" style="background: var(--ubits-bg-1); border: 1.5px solid var(--ubits-border-1); border-radius: 8px; padding: 8px; cursor: pointer; color: var(--ubits-fg-1-high); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;" title="Buscar">
+                                            <i class="far fa-search"></i>
+                                        </button>
 
-                                <!-- Controles de búsqueda toggleable -->
-                                <div style="position: relative; margin-left: 8px;">
-                                    <button id="nom-participation-search-toggle-btn" style="background: var(--ubits-bg-1); border: 1px solid var(--ubits-border-2); border-radius: 50%; padding: 8px; cursor: pointer; color: var(--ubits-fg-1-medium); display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" title="Buscar">
-                                        <i class="far fa-search"></i>
-                                    </button>
-
-                                    <div id="nom-participation-search-container" style="position: absolute; top: 0; left: 0; display: none; background: var(--ubits-bg-0); border: 1px solid var(--ubits-border-2); border-radius: var(--ubits-radius-md); z-index: 1000; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-                                        <div style="display: flex; align-items: center; gap: 8px; padding: 4px 8px;">
-                                            <input type="text" id="nom-participation-search-input" placeholder="Buscar..." style="padding: 6px 12px; border: none; outline: none; font-size: 12px; width: 200px; background: transparent;" />
-                                            <button id="nom-participation-search-close-btn" style="background: var(--ubits-bg-1); border: 1px solid var(--ubits-border-2); border-radius: 50%; padding: 6px; cursor: pointer; color: var(--ubits-fg-1-medium); display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;">
-                                                <i class="far fa-times"></i>
-                                            </button>
+                                        <div id="nom-participation-search-container" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); display: none; background: white; border: 1.5px solid var(--ubits-border-1); border-radius: 8px; z-index: 1000; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); width: 240px;">
+                                            <div style="display: flex; align-items: center; gap: 8px; padding: 4px 8px;">
+                                                <i class="far fa-search" style="color: var(--ubits-fg-1-medium); font-size: 13px; margin-left: 4px;"></i>
+                                                <input type="text" id="nom-participation-search-input" placeholder="Buscar..." style="padding: 6px 4px; border: none !important; outline: none !important; box-shadow: none !important; font-size: 12px; width: 100%; background: transparent; color: var(--ubits-fg-1-high);" />
+                                                <button id="nom-participation-search-close-btn" style="background: transparent; border: none; cursor: pointer; color: var(--ubits-fg-1-medium); display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;">
+                                                    <i class="far fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Segmento demográfico -->
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high);">Segmento demográfico:</span>
+                                        <select id="nom-participation-segment-select" style="display: none;">
+                                            <option value="areas" selected>Área</option>
+                                            <option value="cargo">Cargo</option>
+                                            <option value="collaborators">Colaborador</option>
+                                            <option value="age">Edad</option>
+                                            <option value="sexo">Sexo</option>
+                                        </select>
+                                        
+                                        <div class="custom-select single-select" id="nom-participation-segment-custom-select" style="min-width: 160px; font-family: inherit;" tabindex="0">
+                                            <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
+                                                <span class="selected-text" id="nom-participation-segment-text">Área</span>
+                                                <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
+                                            </div>
+                                            <div class="select-dropdown" id="nom-participation-segment-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 160px;">
+                                                <div class="select-option selected" data-value="areas" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Área</div>
+                                                <div class="select-option" data-value="cargo" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Cargo</div>
+                                                <div class="select-option" data-value="collaborators" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Colaborador</div>
+                                                <div class="select-option" data-value="age" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Edad</div>
+                                                <div class="select-option" data-value="sexo" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Sexo</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel-content" style="padding: 24px;">
+                            <div style="background: white; overflow-x: auto;">
                                 <div id="nom-participation-table-wrapper">
                                     <!-- Aquí se cargará la tabla de participación -->
                                     <div style="text-align: center; padding: 40px; color: var(--ubits-fg-1-placeholder);">
@@ -5061,39 +5192,40 @@
                         </div>
 
                         <!-- Tab Content - Vista General -->
-                        <div class="tab-panel" id="new-general-view-panel">
-                            <!-- Selector de vista -->
-                            <div style="padding: 16px 24px; background: var(--ubits-bg-0); border-bottom: 1px solid var(--ubits-border-1); display: flex; align-items: center; gap: 16px; border-radius: var(--ubits-radius-md) 8px 0 0;">
-                                <span style="font-size: 14px; font-weight: 600; color: var(--ubits-fg-1-medium);">Ver por:</span>
-                                <select id="view-by-select" style="display: none;">
-                                    <option value="categories" selected>Categoría</option>
-                                    <option value="domains">Dominio</option>
-                                    <option value="dimensions">Dimensiones</option>
-                                </select>
-                                            <div class="custom-select single-select" tabindex="0">
-                                                <div class="select-trigger">
-                                                    <span class="selected-text">Categoría</span>
-                                                    <i class="far fa-chevron-down"></i>
-                                                </div>
-                                                <div class="select-dropdown">
-                                                    <div class="select-option selected" data-value="categories">Categoría</div>
-                                                    <div class="select-option" data-value="domains">Dominio</div>
-                                                    <div class="select-option" data-value="dimensions">Dimensiones</div>
-                                                </div>
-                                            </div>
-                            </div>
+                        <div class="tab-panel" id="new-general-view-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: hidden;">
+
 
                             <!-- Contenedor de sub-paneles -->
                             <div class="sub-panels-container">
                                 <!-- Sub-panel Categorías -->
                                 <div id="sub-panel-categories" class="sub-tab-panel active">
-                            <div class="panel-content">
+                            <div style="background: white;">
                                 <div class="table-header">
                                     <div style="display: flex; align-items: center; gap: 12px;">
                                         <h2 style="font-size: 24px; font-weight: 600; color: var(--ubits-fg-1-high); margin: 0;">Análisis por categoría</h2>
                                         <span style="font-size: 14px; color: var(--ubits-fg-1-medium);">5 categorías</span>
                                     </div>
-                                    <div class="table-controls">
+                                    <div class="table-controls" style="display: flex; align-items: center; gap: 12px;">
+                                        <!-- Selector de vista -->
+                                        <div style="display: flex; align-items: center; gap: 8px; margin-right: 4px;">
+                                            <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high);">Ver por:</span>
+                                            <select class="view-by-select-hidden" style="display: none;">
+                                                <option value="categories" selected>Categoría</option>
+                                                <option value="domains">Dominio</option>
+                                                <option value="dimensions">Dimensiones</option>
+                                            </select>
+                                            <div class="custom-select single-select view-by-custom-select" style="min-width: 140px; font-family: inherit;" tabindex="0">
+                                                <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
+                                                    <span class="selected-text">Categoría</span>
+                                                    <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
+                                                </div>
+                                                <div class="select-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 140px;">
+                                                    <div class="select-option selected" data-value="categories" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Categoría</div>
+                                                    <div class="select-option" data-value="domains" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dominio</div>
+                                                    <div class="select-option" data-value="dimensions" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dimensiones</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <button class="ubits-button ubits-button--secondary ubits-button--md filters-button" id="categories-filters-btn" title="Filtros">
                                             <i class="far fa-filter"></i>
                                             <span class="filter-badge" id="categories-filter-badge" style="display: none;">0</span>
@@ -5336,13 +5468,33 @@
                                 
                                 <!-- Sub-panel Dominios -->
                                 <div id="sub-panel-domains" class="sub-tab-panel">
-                            <div class="panel-content">
+                            <div style="background: white;">
                                 <div class="table-header">
                                     <div style="display: flex; align-items: center; gap: 12px;">
                                         <h2 style="font-size: 24px; font-weight: 600; color: var(--ubits-fg-1-high); margin: 0;">Análisis por dominio</h2>
                                         <span style="font-size: 14px; color: var(--ubits-fg-1-medium);">10 dominios</span>
                                     </div>
-                                    <div class="table-controls">
+                                    <div class="table-controls" style="display: flex; align-items: center; gap: 12px;">
+                                        <!-- Selector de vista -->
+                                        <div style="display: flex; align-items: center; gap: 8px; margin-right: 4px;">
+                                            <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high);">Ver por:</span>
+                                            <select class="view-by-select-hidden" style="display: none;">
+                                                <option value="categories">Categoría</option>
+                                                <option value="domains" selected>Dominio</option>
+                                                <option value="dimensions">Dimensiones</option>
+                                            </select>
+                                            <div class="custom-select single-select view-by-custom-select" style="min-width: 140px; font-family: inherit;" tabindex="0">
+                                                <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
+                                                    <span class="selected-text">Dominio</span>
+                                                    <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
+                                                </div>
+                                                <div class="select-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 140px;">
+                                                    <div class="select-option" data-value="categories" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Categoría</div>
+                                                    <div class="select-option selected" data-value="domains" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dominio</div>
+                                                    <div class="select-option" data-value="dimensions" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dimensiones</div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <button class="ubits-button ubits-button--secondary ubits-button--md filters-button" id="domains-filters-btn" title="Filtros">
                                             <i class="far fa-filter"></i>
                                             <span class="filter-badge" id="domains-filter-badge" style="display: none;">0</span>
@@ -5675,7 +5827,7 @@
 
                                 <!-- Sub-panel Dimensiones -->
                                 <div id="sub-panel-dimensions" class="sub-tab-panel">
-                            <div class="panel-content">
+                            <div style="background: white;">
 
                                 
                                 <!-- Sección Dimensiones -->
@@ -5685,7 +5837,7 @@
                                         <h2 style="font-size: 24px; font-weight: 600; color: var(--ubits-fg-1-high); margin: 0;">Análisis por dimensión general</h2>
                                         <span style="font-size: 14px; color: var(--ubits-fg-1-medium);">20 dimensiones</span>
                                     </div>
-                                    <div class="table-controls">
+                                    <div class="table-controls" style="display: flex; align-items: center; gap: 12px;">
                                         <!-- Controles de búsqueda -->
                                         <div style="position: relative;">
                                             <!-- Botón de búsqueda (icono) -->
@@ -5703,6 +5855,28 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        
+                                        <!-- Selector de vista (al lado derecho del buscador) -->
+                                        <div style="display: flex; align-items: center; gap: 8px; margin-right: 4px;">
+                                            <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high);">Ver por:</span>
+                                            <select class="view-by-select-hidden" style="display: none;">
+                                                <option value="categories">Categoría</option>
+                                                <option value="domains">Dominio</option>
+                                                <option value="dimensions" selected>Dimensiones</option>
+                                            </select>
+                                            <div class="custom-select single-select view-by-custom-select" style="min-width: 140px; font-family: inherit;" tabindex="0">
+                                                <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
+                                                    <span class="selected-text">Dimensiones</span>
+                                                    <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
+                                                </div>
+                                                <div class="select-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 140px;">
+                                                    <div class="select-option" data-value="categories" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Categoría</div>
+                                                    <div class="select-option" data-value="domains" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dominio</div>
+                                                    <div class="select-option selected" data-value="dimensions" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dimensiones</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         <button class="ubits-button ubits-button--secondary ubits-button--md filters-button" id="dimensions-table-filters-btn" title="Filtros">
                                             <i class="far fa-filter"></i>
                                             <span class="filter-badge" id="dimensions-table-filter-badge" style="display: none;">0</span>
@@ -6520,113 +6694,122 @@
                         </div> <!-- Cierre new-general-view-panel -->
 
                         <!-- Tab Content - Heatmap -->
-                        <div class="tab-panel" id="new-heat-map-panel">
-                            <div class="panel-content">
-                                <!-- Controles: Dropdowns + Filtros -->
-                                <div class="heatmap-controls">
-                                    <div class="heatmap-segment-group">
-                                        <label class="segment-label">TIPO:</label>
-                                        <select id="heatmap-rows-select" class="heatmap-dropdown" style="display: none;">
-                                            <option value="dimensiones">Dimensiones</option>
-                                            <option value="categorias">Categorías</option>
-                                            <option value="dominio">Dominio</option>
-                                        </select>
-                                            <div class="custom-select single-select" tabindex="0">
-                                                <div class="select-trigger">
-                                                    <span class="selected-text">Dimensiones</span>
-                                                    <i class="far fa-chevron-down"></i>
-                                                </div>
-                                                <div class="select-dropdown">
-                                                    <div class="select-option" data-value="dimensiones">Dimensiones</div>
-                                                    <div class="select-option" data-value="categorias">Categorías</div>
-                                                    <div class="select-option" data-value="dominio">Dominio</div>
-                                                </div>
-                                            </div>
-                                    </div>
-                                    <div class="heatmap-segment-group">
-                                        <label class="segment-label">VER POR:</label>
-                                        <select id="heatmap-cols-select" class="heatmap-dropdown" style="display: none;">
-                                            <option value="department">Áreas</option>
-                                            <option value="leader">Líderes</option>
-                                            <option value="city">Ciudades</option>
-                                            <option value="country">Países</option>
-                                        </select>
-                                            <div class="custom-select single-select" tabindex="0">
-                                                <div class="select-trigger">
-                                                    <span class="selected-text">Áreas</span>
-                                                    <i class="far fa-chevron-down"></i>
-                                                </div>
-                                                <div class="select-dropdown">
-                                                    <div class="select-option" data-value="department">Áreas</div>
-                                                    <div class="select-option" data-value="leader">Líderes</div>
-                                                    <div class="select-option" data-value="city">Ciudades</div>
-                                                    <div class="select-option" data-value="country">Países</div>
+                        <div class="tab-panel" id="new-heat-map-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: hidden;">
+                            <div style="background: white;">
+                                <!-- Header y controles del Heatmap -->
+                                <div class="nom-table-header-card" style="display: flex; flex-direction: column; align-items: stretch; gap: 16px; border-bottom: 1px solid var(--ubits-border-1); padding: 16px 24px; background: white; border-radius: 8px 8px 0 0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <div>
+                                            <h2 style="margin: 0; color: var(--ubits-fg-1-high); font-size: 16px; font-weight: 700;">Mapa de Riesgo NOM-035</h2>
+                                        </div>
+                                        
+                                        <!-- Controles -->
+                                        <div style="display: flex; align-items: center; gap: 16px;">
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <span style="font-weight: 600; color: var(--ubits-fg-1-high); font-size: 12px;">TIPO:</span>
+                                                <select id="heatmap-rows-select" class="heatmap-dropdown" style="display: none;">
+                                                    <option value="dimensiones" selected>Dimensiones</option>
+                                                    <option value="categorias">Categorías</option>
+                                                    <option value="dominio">Dominio</option>
+                                                </select>
+                                                <div class="custom-select single-select" tabindex="0" style="min-width: 140px;">
+                                                    <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
+                                                        <span class="selected-text">Dimensiones</span>
+                                                        <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
+                                                    </div>
+                                                    <div class="select-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 140px;">
+                                                        <div class="select-option selected" data-value="dimensiones" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dimensiones</div>
+                                                        <div class="select-option" data-value="categorias" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Categorías</div>
+                                                        <div class="select-option" data-value="dominio" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dominio</div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                    </div>
-                                    <button class="heatmap-filter-btn" id="heatmap-demo-filters-btn">
-                                        <i class="far fa-sliders-h"></i> Filtros Demográficos
-                                    </button>
-                                </div>
 
-                                <!-- Leyenda de colores -->
-                                <div class="heatmap-legend">
-                                    <span class="legend-item nulo">● Nulo</span>
-                                    <span class="legend-item bajo">● Bajo</span>
-                                    <span class="legend-item medio">● Medio</span>
-                                    <span class="legend-item alto">● Alto</span>
-                                    <span class="legend-item muy-alto">● Muy Alto</span>
+                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                <span style="font-weight: 600; color: var(--ubits-fg-1-high); font-size: 12px;">VER POR:</span>
+                                                <select id="heatmap-cols-select" class="heatmap-dropdown" style="display: none;">
+                                                    <option value="department" selected>Áreas</option>
+                                                    <option value="leader">Líderes</option>
+                                                    <option value="city">Ciudades</option>
+                                                    <option value="country">Países</option>
+                                                </select>
+                                                <div class="custom-select single-select" tabindex="0" style="min-width: 140px;">
+                                                    <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
+                                                        <span class="selected-text">Áreas</span>
+                                                        <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
+                                                    </div>
+                                                    <div class="select-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 140px;">
+                                                        <div class="select-option selected" data-value="department" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Áreas</div>
+                                                        <div class="select-option" data-value="leader" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Líderes</div>
+                                                        <div class="select-option" data-value="city" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Ciudades</div>
+                                                        <div class="select-option" data-value="country" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Países</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button class="heatmap-filter-btn" id="heatmap-demo-filters-btn" style="height: 36px; padding: 8px 16px; font-size: 12px; font-weight: 600;">
+                                                <i class="far fa-sliders-h"></i> Filtros Demográficos
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Leyenda de colores -->
+                                    <div class="heatmap-legend" style="margin: 0; display: flex; gap: 12px;">
+                                        <span class="legend-item nulo" style="font-size: 11px;">● Nulo</span>
+                                        <span class="legend-item bajo" style="font-size: 11px;">● Bajo</span>
+                                        <span class="legend-item medio" style="font-size: 11px;">● Medio</span>
+                                        <span class="legend-item alto" style="font-size: 11px;">● Alto</span>
+                                        <span class="legend-item muy-alto" style="font-size: 11px;">● Muy Alto</span>
+                                    </div>
                                 </div>
 
                                 <!-- Contenido (heatmap o tabla) -->
-                                <div id="heatmap-content-wrapper">
+                                <div id="heatmap-content-wrapper" style="overflow-x: auto;">
                                     <!-- Se renderiza por JS -->
                                 </div>
                             </div>
                         </div>
 
                         <!-- Tab Content - Resultados por Segmentos -->
-                        <div class="tab-panel" id="new-segments-results-panel">
-                            <div class="panel-content">
+                        <div class="tab-panel" id="new-segments-results-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: hidden;">
+                            <div style="background: white;">
                                 <!-- Header -->
-                                <div style="margin-bottom: 24px;">
-                                    <h2 style="margin: 0 0 8px 0; color: var(--ubits-fg-1-high); font-size: 24px; font-weight: 600;">Resultados por Segmentos</h2>
-                                    <p style="margin: 0; color: var(--ubits-fg-1-medium); font-size: 14px;">Análisis estadístico detallado por segmentos demográficos</p>
-                                </div>
+                                <div class="nom-table-header-card" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--ubits-border-1); padding: 16px 24px; background: white; border-radius: 8px 8px 0 0;">
+                                    <div>
+                                        <h2 style="margin: 0; color: var(--ubits-fg-1-high); font-size: 16px; font-weight: 700;">Resultados por Segmentos</h2>
+                                        <p style="margin: 4px 0 0 0; color: var(--ubits-fg-1-medium); font-size: 12px;">Análisis estadístico detallado por segmentos demográficos</p>
+                                    </div>
 
-                                <!-- Filtros -->
-                                <div style="display: flex; gap: 24px; margin-bottom: 24px;">
+                                    <!-- Filtros -->
                                     <div style="display: flex; align-items: center; gap: 12px;">
-                                        <label style="font-weight: 600; color: var(--ubits-fg-1-medium); font-size: 13px;">SEGMENTAR POR:</label>
+                                        <span style="font-weight: 600; color: var(--ubits-fg-1-high); font-size: 12px;">Segmentar por:</span>
                                         <select id="segments-row-select" class="heatmap-dropdown" style="display: none; min-width: 160px;">
-                                            <option value="department">Áreas</option>
+                                            <option value="department" selected>Áreas</option>
                                             <option value="leader">Líderes</option>
                                             <option value="city">Ciudades</option>
                                             <option value="country">Países</option>
                                             <option value="position">Posición</option>
                                         </select>
-                                            <div class="custom-select single-select" tabindex="0">
-                                                <div class="select-trigger">
-                                                    <span class="selected-text">Áreas</span>
-                                                    <i class="far fa-chevron-down"></i>
-                                                </div>
-                                                <div class="select-dropdown">
-                                                    <div class="select-option" data-value="department">Áreas</div>
-                                                    <div class="select-option" data-value="leader">Líderes</div>
-                                                    <div class="select-option" data-value="city">Ciudades</div>
-                                                    <div class="select-option" data-value="country">Países</div>
-                                                    <div class="select-option" data-value="position">Posición</div>
-                                                </div>
+                                        <div class="custom-select single-select" tabindex="0" style="min-width: 160px;">
+                                            <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
+                                                <span class="selected-text">Áreas</span>
+                                                <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
                                             </div>
+                                            <div class="select-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 160px;">
+                                                <div class="select-option selected" data-value="department" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Áreas</div>
+                                                <div class="select-option" data-value="leader" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Líderes</div>
+                                                <div class="select-option" data-value="city" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Ciudades</div>
+                                                <div class="select-option" data-value="country" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Países</div>
+                                                <div class="select-option" data-value="position" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Posición</div>
+                                            </div>
+                                        </div>
                                     </div>
-
                                 </div>
 
                                 <!-- Tabla de resultados por segmentos -->
                                 <div id="segments-table-wrapper" style="overflow-x: auto;">
                                     <!-- Se renderiza por JS -->
                                 </div>
-
                             </div>
                         </div>
                     </div>

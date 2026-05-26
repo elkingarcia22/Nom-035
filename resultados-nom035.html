@@ -308,18 +308,18 @@
         }
 
         .metric-card {
-            background: var(--ubits-bg-1);
-            border-radius: 8px;
-            padding: 20px;
-            border: 1px solid var(--ubits-border-1);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            background: var(--ubits-bg-1) !important;
+            border-radius: 8px !important;
+            padding: 12px !important;
+            border: 1px solid var(--ubits-border-1) !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
         }
 
         .metric-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            margin-bottom: 8px !important;
         }
 
         .metric-title-section {
@@ -329,22 +329,24 @@
         }
 
         .metric-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--ubits-bg-2);
-            color: var(--ubits-fg-1-medium);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
+            width: 20px !important;
+            height: 20px !important;
+            border-radius: 50% !important;
+            background: var(--ubits-bg-2) !important;
+            color: var(--ubits-fg-1-medium) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 12px !important;
         }
 
         .metric-title {
-            font-size: 14px;
-            color: var(--ubits-fg-1-high);
-            margin: 0;
-            font-weight: 600;
+            font-size: 11px !important;
+            color: var(--ubits-fg-1-high) !important;
+            margin: 0 !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
         }
 
 
@@ -354,18 +356,6 @@
             gap: 8px;
         }
 
-        .metric-main-number {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--ubits-fg-1-high);
-            line-height: 1;
-        }
-
-        .metric-unit-text {
-            font-size: 14px;
-            color: var(--ubits-fg-1-medium);
-            font-weight: 400;
-        }
 
 
 
@@ -473,7 +463,7 @@
             right: -400px;
             width: 400px;
             height: 100vh;
-            background: white;
+            background: var(--ubits-bg-0);
             box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             transition: right 0.3s ease;
@@ -765,7 +755,7 @@
         .risk-nulo { background: var(--ubits-bg-2); color: var(--ubits-fg-1-medium); }
         .risk-bajo { background: var(--ubits-feedback-bg-success-subtle); color: var(--ubits-feedback-fg-success-subtle); }
         .risk-medio { background: var(--ubits-feedback-bg-warning-subtle); color: var(--ubits-feedback-fg-warning-subtle); }
-        .risk-alto { background: var(--ubits-feedback-bg-warning-subtle); color: var(--ubits-feedback-fg-warning-subtle); }
+        .risk-alto { background: #ffe0c2; color: #7a3200; }
         .risk-canalizado { background: var(--ubits-feedback-bg-error-subtle); color: var(--ubits-feedback-fg-error-subtle); }
         .risk-muy-alto { background: var(--ubits-feedback-bg-error-subtle); color: var(--ubits-feedback-fg-error-subtle); }
 
@@ -962,8 +952,8 @@
             border: 1px solid var(--ubits-border-1);
             border-radius: 6px;
             font-size: 14px;
-            background: white;
-            color: #374151;
+            background: var(--ubits-bg-0);
+            color: var(--ubits-fg-1-high);
             outline: none;
             box-sizing: border-box;
             transition: border-color 0.2s ease;
@@ -1174,7 +1164,7 @@
             font-size: 14px;
         }
         .participation-table thead tr {
-            background: rgba(243, 243, 244, 0.5);
+            background: #F4F5F6;
             border-bottom: 1px solid var(--ubits-border-1);
         }
         .participation-table th {
@@ -1193,6 +1183,14 @@
             color: var(--ubits-fg-1-high);
             border-bottom: 1px solid rgba(208, 210, 213, 0.25);
             vertical-align: middle;
+        }
+        .participation-table th:first-child,
+        .participation-table td:first-child {
+            padding-left: 24px !important;
+        }
+        .participation-table th:last-child,
+        .participation-table td:last-child {
+            padding-right: 24px !important;
         }
         .participation-table tbody tr:last-child td {
             border-bottom: none;
@@ -1413,8 +1411,142 @@
             text-align: center;
         }
 
+        #tab-participante .participation-controls {
+            display: none !important;
+        }
+        
+        #tab-participante .participation-legend {
+            display: none !important;
+        }
+        
+        .nom-table-header-card {
+            padding: 16px 24px; 
+            border-bottom: 1px solid var(--ubits-border-1); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            gap: 16px;
+            background: var(--ubits-bg-0);
+            border-radius: 8px 8px 0 0;
+        }
 
+        .custom-single-select {
+            position: relative;
+            width: 100%;
+        }
+        .custom-single-select .select-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--ubits-bg-0);
+            border: 1px solid var(--ubits-border-1);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            max-height: 240px;
+            overflow-y: auto;
+            display: none;
+        }
+        .custom-single-select .select-dropdown.show {
+            display: block !important;
+        }
+        .custom-single-select .select-trigger.active .select-arrow {
+            transform: rotate(180deg);
+        }
 
+        /* --- UBITS DESIGN SYSTEM OVERRIDES (for visual consistency with Riesgo Psicosocial) --- */
+        /* Cards */
+        .metric-card, .segment-risk-card {
+            background: var(--ubits-bg-1) !important;
+            border: 1px solid var(--ubits-border-1) !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+            border-radius: var(--ubits-radius-lg) !important;
+            padding: 24px !important;
+            transition: all 0.2s ease !important;
+        }
+        .metric-card:hover, .segment-risk-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+            transform: translateY(-2px) !important;
+        }
+        .metric-title {
+            font-family: 'Noto Sans', sans-serif !important;
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            color: var(--ubits-fg-1-high) !important;
+        }
+        .metric-main-number {
+            font-family: 'Noto Sans', sans-serif !important;
+            font-size: 32px !important;
+            font-weight: 700 !important;
+            color: var(--ubits-fg-1-high) !important;
+            line-height: 1.2 !important;
+        }
+        /* Drawer / Panel */
+        .filters-panel {
+            box-shadow: -4px 0 24px rgba(0,0,0,0.15) !important;
+        }
+        .filters-header {
+            border-bottom: 1px solid var(--ubits-border-1) !important;
+            padding: 20px 24px !important;
+        }
+        .filters-header h3 {
+            font-family: 'Noto Sans', sans-serif !important;
+            font-size: 20px !important;
+            font-weight: 700 !important;
+            color: var(--ubits-fg-1-high) !important;
+        }
+        /* Tables */
+        .results-container table {
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+            width: 100% !important;
+        }
+        .results-container th {
+            font-family: 'Noto Sans', sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            color: var(--ubits-fg-1-medium) !important;
+            border-bottom: 1px solid var(--ubits-border-1) !important;
+            padding: 16px 20px !important;
+            text-align: left !important;
+        }
+        .results-container td {
+            font-family: 'Noto Sans', sans-serif !important;
+            font-size: 14px !important;
+            font-weight: 400 !important;
+            color: var(--ubits-fg-1-high) !important;
+            border-bottom: 1px solid var(--ubits-border-1) !important;
+            padding: 16px 20px !important;
+        }
+        /* Tags / Badges */
+        .risk-badge {
+            border-radius: var(--ubits-radius-full) !important;
+            padding: 4px 12px !important;
+            font-family: 'Noto Sans', sans-serif !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+        }
+        .filter-badge {
+            border-radius: var(--ubits-radius-full) !important;
+            padding: 2px 6px !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+        }
+        /* Inline Tags generated by JS */
+        span[style*="padding: 4px 12px"] {
+            border-radius: var(--ubits-radius-full) !important;
+            font-family: 'Noto Sans', sans-serif !important;
+        }
+        span[style*="padding: 8px 16px"] {
+            border-radius: var(--ubits-radius-full) !important;
+            font-family: 'Noto Sans', sans-serif !important;
+        }
 </style>
 </head>
 <body data-theme="light">
@@ -1448,7 +1580,7 @@
                             <span>Regresar</span>
                         </button>
                         <div class="title-section">
-                            <h1 style="font-size: 20px;">NOM 035 Acontecimientos traumáticos</h1>
+                            <h1>NOM 035 Acontecimientos traumáticos</h1>
                             <span class="status-badge">Completado</span>
                         </div>
                         <div style="margin-left: auto;">
@@ -1549,38 +1681,68 @@
                             </div>
 
                             <!-- Tab 1: Participante -->
-                            <div class="tab-panel active" id="tab-participante">
-                                <div style="padding: 16px 24px; background: white; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 16px; border-radius: 8px 8px 0 0;">
-                                    <span style="font-size: 12px; font-weight: 600; color: #374151;">Segmento demográfico:</span>
-                                    <select id="nom-participation-segment-select">
-                                        <option value="areas" selected>Área</option>
-                                        <option value="leaders">Líder</option>
-                                        <option value="collaborators">Colaborador</option>
-                                        <option value="country">País</option>
-                                        <option value="city">Ciudad</option>
-                                        <option value="age">Edad</option>
-                                        <option value="sexo">Sexo</option>
-                                        <option value="columna-a">Columna A</option>
-                                        <option value="columna-b">Columna B</option>
-                                    </select>
-
-                                    <!-- Controles de búsqueda toggleable -->
-                                    <div style="position: relative; margin-left: 8px;">
-                                        <button id="nom-participation-search-toggle-btn" style="background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 50%; padding: 8px; cursor: pointer; color: #6b7280; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" title="Buscar">
-                                            <i class="far fa-search"></i>
-                                        </button>
-
-                                        <div id="nom-participation-search-container" style="position: absolute; top: 0; left: 0; display: none; background: white; border: 1px solid #d1d5db; border-radius: 8px; z-index: 1000; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
-                                            <div style="display: flex; align-items: center; gap: 8px; padding: 4px 8px;">
-                                                <input type="text" id="nom-participation-search-input" placeholder="Buscar..." style="padding: 6px 12px; border: none; outline: none; font-size: 12px; width: 200px; background: transparent;" />
-                                                <button id="nom-participation-search-close-btn" style="background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 50%; padding: 6px; cursor: pointer; color: #6b7280; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px;">
-                                                    <i class="far fa-times"></i>
-                                                </button>
+                            <div class="tab-panel active" id="tab-participante" style="background: var(--ubits-bg-0); border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: hidden;">
+                                <div class="nom-table-header-card">
+                                    <!-- Al lado izquierdo: título de la tabla -->
+                                    <div id="nom-participation-table-title" style="font-size: 16px; font-weight: 700; color: var(--ubits-fg-1-high);">
+                                        Tabla de participación - Áreas <span class="filter-counter" id="nom-participation-counter" style="font-weight: 400; color: var(--ubits-fg-1-medium); font-size: 14px; margin-left: 8px;"></span>
+                                    </div>
+                                    
+                                    <!-- Al lado derecho: buscador (izquierda) y segmento (derecha) -->
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <!-- Buscador Toggleable -->
+                                        <div style="position: relative; display: flex; align-items: center;">
+                                            <button id="nom-participation-search-toggle-btn" style="background: var(--ubits-bg-1); border: 1.5px solid var(--ubits-border-1); border-radius: 8px; padding: 8px; cursor: pointer; color: var(--ubits-fg-1-high); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;" title="Buscar">
+                                                <i class="far fa-search"></i>
+                                            </button>
+ 
+                                            <div id="nom-participation-search-container" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); display: none; background: var(--ubits-bg-0); border: 1.5px solid var(--ubits-border-1); border-radius: 8px; z-index: 1000; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); width: 240px;">
+                                                <div style="display: flex; align-items: center; gap: 8px; padding: 4px 8px;">
+                                                    <i class="far fa-search" style="color: var(--ubits-fg-1-medium); font-size: 13px; margin-left: 4px;"></i>
+                                                    <input type="text" id="nom-participation-search-input" placeholder="Buscar..." style="padding: 6px 4px; border: none !important; outline: none !important; box-shadow: none !important; font-size: 12px; width: 100%; background: transparent; color: var(--ubits-fg-1-high);" />
+                                                    <button id="nom-participation-search-close-btn" style="background: transparent; border: none; cursor: pointer; color: var(--ubits-fg-1-medium); display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;">
+                                                        <i class="far fa-times"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
+                                        
+                                        <!-- Segmento demográfico -->
+                                         <div style="display: flex; align-items: center; gap: 8px;">
+                                             <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high);">Segmento demográfico:</span>
+                                             <div class="custom-single-select" id="nom-participation-segment-custom-select" style="min-width: 160px; font-family: inherit;">
+                                                 <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: var(--ubits-bg-0);">
+                                                     <span class="select-text" id="nom-participation-segment-text">Área</span>
+                                                     <i class="fas fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
+                                                 </div>
+                                                 <div class="select-dropdown" id="nom-participation-segment-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 160px;">
+                                                     <div class="select-option selected" data-value="areas" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Área</div>
+                                                     <div class="select-option" data-value="leaders" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Líder</div>
+                                                     <div class="select-option" data-value="collaborators" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Colaborador</div>
+                                                     <div class="select-option" data-value="country" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">País</div>
+                                                     <div class="select-option" data-value="city" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Ciudad</div>
+                                                     <div class="select-option" data-value="age" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Edad</div>
+                                                     <div class="select-option" data-value="sexo" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Sexo</div>
+                                                     <div class="select-option" data-value="columna-a" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Columna A</div>
+                                                     <div class="select-option" data-value="columna-b" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Columna B</div>
+                                                 </div>
+                                             </div>
+                                             
+                                             <select id="nom-participation-segment-select" style="display: none;">
+                                                 <option value="areas" selected>Área</option>
+                                                 <option value="leaders">Líder</option>
+                                                 <option value="collaborators">Colaborador</option>
+                                                 <option value="country">País</option>
+                                                 <option value="city">Ciudad</option>
+                                                 <option value="age">Edad</option>
+                                                 <option value="sexo">Sexo</option>
+                                                 <option value="columna-a">Columna A</option>
+                                                 <option value="columna-b">Columna B</option>
+                                             </select>
+                                         </div>
                                     </div>
                                 </div>
-                                <div class="panel-content" style="padding: 24px;">
+                                <div style="background: var(--ubits-bg-0); overflow-x: auto;">
                                     <div id="nom-participation-table-wrapper">
                                         <!-- Aquí se cargará la tabla de participación -->
                                         <div style="text-align: center; padding: 40px; color: var(--ubits-fg-1-medium);">
@@ -3028,6 +3190,17 @@
                             otherSelect.querySelector('.select-dropdown').classList.remove('show');
                         }
                     });
+
+                    // Cerrar select single si está abierto
+                    const singleSelect = document.getElementById('nom-participation-segment-custom-select');
+                    if (singleSelect) {
+                        const singleTrigger = singleSelect.querySelector('.select-trigger');
+                        const singleDropdown = singleSelect.querySelector('.select-dropdown');
+                        if (singleTrigger && singleDropdown) {
+                            singleTrigger.classList.remove('active');
+                            singleDropdown.classList.remove('show');
+                        }
+                    }
                     
                     // Toggle current select
                     trigger.classList.toggle('active');
@@ -3806,7 +3979,7 @@
                             </div>
                         </td>
                         <td class="text-center">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -3862,7 +4035,7 @@
                             </div>
                         </td>
                         <td class="text-center">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes del equipo de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes del equipo de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -3888,7 +4061,7 @@
                 <div class="participation-controls">
                     <div class="participation-title">Tabla de participación - Colaboradores <span class="filter-counter">${filtered.length}/${window.nomParticipationData.length} resultados</span></div>
                     <div style="display: flex; gap: 12px; align-items: center;">
-                        <button class="reminder-btn" onclick="alert('Recordatorios masivos enviados a todos los colaboradores pendientes')">
+                        <button class="ubits-button ubits-button--secondary ubits-button--md reminder-btn" onclick="alert('Recordatorios masivos enviados a todos los colaboradores pendientes')">
                             <i class="far fa-bell"></i> Recordatorio masivo
                         </button>
                     </div>
@@ -3917,7 +4090,7 @@
                         <td>${p.leader}</td>
                         <td class="text-center"><span class="status-badge ${statusClass}">${p.status}</span></td>
                         <td class="text-center">
-                            <button class="reminder-btn btn-sm" onclick="alert('Recordatorio enviado a ${p.name}')"><i class="far fa-bell"></i></button>
+                            <button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorio enviado a ${p.name}')"><i class="far fa-bell"></i></button>
                         </td>
                     </tr>`;
             });
@@ -3966,7 +4139,7 @@
                             </div>
                         </td>
                         <td class="text-center">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -4021,7 +4194,7 @@
                             </div>
                         </td>
                         <td class="text-center">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -4076,7 +4249,7 @@
                             </div>
                         </td>
                         <td class="text-center">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -4131,7 +4304,7 @@
                             </div>
                         </td>
                         <td class="text-center">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -4186,7 +4359,7 @@
                             </div>
                         </td>
                         <td class="text-center">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -4241,7 +4414,7 @@
                             </div>
                         </td>
                         <td class="text-center">
-                            ${pending > 0 ? `<button class="reminder-btn btn-sm" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -4274,6 +4447,62 @@
                 segmentSelect.value = savedSegment;
             }
 
+            // Inicializar selector de segmento personalizado
+            const customSelect = document.getElementById('nom-participation-segment-custom-select');
+            if (customSelect) {
+                const trigger = customSelect.querySelector('.select-trigger');
+                const dropdown = customSelect.querySelector('.select-dropdown');
+                const options = customSelect.querySelectorAll('.select-option');
+                const textEl = customSelect.querySelector('#nom-participation-segment-text');
+
+                const syncCustomSelect = () => {
+                    const val = segmentSelect.value;
+                    options.forEach(opt => {
+                        if (opt.dataset.value === val) {
+                            opt.classList.add('selected');
+                            textEl.textContent = opt.textContent;
+                        } else {
+                            opt.classList.remove('selected');
+                        }
+                    });
+                };
+
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    // Cerrar otros dropdowns del sistema
+                    document.querySelectorAll('.custom-select .select-trigger').forEach(otherTrigger => {
+                        if (otherTrigger !== trigger) {
+                            otherTrigger.classList.remove('active');
+                            const otherDropdown = otherTrigger.nextElementSibling;
+                            if (otherDropdown) otherDropdown.classList.remove('show');
+                        }
+                    });
+                    trigger.classList.toggle('active');
+                    dropdown.classList.toggle('show');
+                });
+
+                options.forEach(opt => {
+                    opt.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const val = opt.dataset.value;
+                        segmentSelect.value = val;
+                        syncCustomSelect();
+                        
+                        trigger.classList.remove('active');
+                        dropdown.classList.remove('show');
+                        
+                        segmentSelect.dispatchEvent(new Event('change'));
+                    });
+                });
+
+                document.addEventListener('click', () => {
+                    trigger.classList.remove('active');
+                    dropdown.classList.remove('show');
+                });
+
+                syncCustomSelect();
+            }
+
             // Inicializar controles de búsqueda toggleable
             const searchToggleBtn = document.getElementById('nom-participation-search-toggle-btn');
             const searchContainer = document.getElementById('nom-participation-search-container');
@@ -4286,7 +4515,8 @@
                     searchInput.focus();
                 });
 
-                searchCloseBtn.addEventListener('click', () => {
+                searchCloseBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     searchContainer.style.display = 'none';
                     searchInput.value = '';
                     render();
@@ -4321,6 +4551,17 @@
                 else if (segment === 'columna-b') html = window.renderNomColumnaBTable(searchTerm);
 
                 wrapper.innerHTML = html;
+
+                // Extraer título y contador dinámicos para la cabecera fija
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+                const titleEl = tempDiv.querySelector('.participation-title');
+                if (titleEl) {
+                    const headerTitleEl = document.getElementById('nom-participation-table-title');
+                    if (headerTitleEl) {
+                        headerTitleEl.innerHTML = titleEl.innerHTML;
+                    }
+                }
             };
 
             segmentSelect.addEventListener('change', render);
@@ -4451,7 +4692,7 @@
             right: 20px;
             width: 400px;
             max-width: 90vw;
-            background: white;
+            background: var(--ubits-bg-0);
             border-radius: 12px;
             box-shadow: 0 10px 30px var(--ubits-bg-dim);
             z-index: 1001;
