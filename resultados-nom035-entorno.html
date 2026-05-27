@@ -5056,6 +5056,8 @@
             color: var(--ubits-fg-1-medium) !important;
             background: transparent !important;
         }
+    
+        .filter-label { text-transform: none !important; }
     </style>
 </head>
 <body>
@@ -5441,6 +5443,32 @@
                                     </div>
                                     <div class="filters-content">
                                         <!-- Filtros Demográficos -->
+                                        <div class="filter-group">
+                                            <label class="filter-label">Nivel de Riesgo</label>
+                                            <select class="filter-select" id="risk-filter-categories" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="muy-alto">Muy Alto</option>
+                                                <option value="alto">Alto</option>
+                                                <option value="medio">Medio</option>
+                                                <option value="bajo">Bajo</option>
+                                                <option value="nulo">Nulo</option>
+                                            </select>
+                                            <div class="custom-select single-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="selected-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos">Todos</div>
+                                                    <div class="select-option" data-value="muy-alto">Muy Alto</div>
+                                                    <div class="select-option" data-value="alto">Alto</div>
+                                                    <div class="select-option" data-value="medio">Medio</div>
+                                                    <div class="select-option" data-value="bajo">Bajo</div>
+                                                    <div class="select-option" data-value="nulo">Nulo</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="filter-group">
                                             <label class="filter-label">Área</label>
                                             <select class="filter-select" id="area-filter-categories" style="display: none;">
@@ -5843,6 +5871,32 @@
                                     </div>
                                     <div class="filters-content">
                                         <!-- Filtros Demográficos -->
+                                        <div class="filter-group">
+                                            <label class="filter-label">Nivel de Riesgo</label>
+                                            <select class="filter-select" id="risk-filter-domains" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="muy-alto">Muy Alto</option>
+                                                <option value="alto">Alto</option>
+                                                <option value="medio">Medio</option>
+                                                <option value="bajo">Bajo</option>
+                                                <option value="nulo">Nulo</option>
+                                            </select>
+                                            <div class="custom-select single-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="selected-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos">Todos</div>
+                                                    <div class="select-option" data-value="muy-alto">Muy Alto</div>
+                                                    <div class="select-option" data-value="alto">Alto</div>
+                                                    <div class="select-option" data-value="medio">Medio</div>
+                                                    <div class="select-option" data-value="bajo">Bajo</div>
+                                                    <div class="select-option" data-value="nulo">Nulo</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="filter-group">
                                             <label class="filter-label">Área</label>
                                             <select class="filter-select" id="area-filter-domains" style="display: none;">
@@ -7002,6 +7056,32 @@
                                     </div>
                                     <div class="filters-content">
                                         <div class="filter-group">
+                                            <label class="filter-label">Nivel de Riesgo</label>
+                                            <select class="filter-select" id="risk-filter-segments" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="muy-alto">Muy Alto</option>
+                                                <option value="alto">Alto</option>
+                                                <option value="medio">Medio</option>
+                                                <option value="bajo">Bajo</option>
+                                                <option value="nulo">Nulo</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="muy-alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Muy Alto</span></div>
+                                                    <div class="select-option" data-value="alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Alto</span></div>
+                                                    <div class="select-option" data-value="medio"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Medio</span></div>
+                                                    <div class="select-option" data-value="bajo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Bajo</span></div>
+                                                    <div class="select-option" data-value="nulo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Nulo</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
                                             <label class="filter-label">Cargo</label>
                                             <select class="filter-select" id="position-filter-segments" style="display: none;">
                                                 <option value="todos">Todos</option>
@@ -7095,32 +7175,6 @@
                                                     <div class="select-option" data-value="46-55"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">46-55 años</span></div>
                                                     <div class="select-option" data-value="56-65"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">56-65 años</span></div>
                                                     <div class="select-option" data-value="65+"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">65+ años</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="filter-group">
-                                            <label class="filter-label">Nivel de Riesgo</label>
-                                            <select class="filter-select" id="risk-filter-segments" style="display: none;">
-                                                <option value="todos">Todos</option>
-                                                <option value="muy-alto">Muy Alto</option>
-                                                <option value="alto">Alto</option>
-                                                <option value="medio">Medio</option>
-                                                <option value="bajo">Bajo</option>
-                                                <option value="nulo">Nulo</option>
-                                            </select>
-                                            <div class="custom-select" tabindex="0">
-                                                <div class="select-trigger">
-                                                    <span class="select-text">Todos</span>
-                                                    <i class="far fa-chevron-down"></i>
-                                                </div>
-                                                <div class="select-dropdown">
-                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
-                                                    <div class="select-option" data-value="muy-alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Muy Alto</span></div>
-                                                    <div class="select-option" data-value="alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Alto</span></div>
-                                                    <div class="select-option" data-value="medio"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Medio</span></div>
-                                                    <div class="select-option" data-value="bajo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Bajo</span></div>
-                                                    <div class="select-option" data-value="nulo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Nulo</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -7266,6 +7320,32 @@
                                     </div>
                                     <div class="filters-content">
                                         <div class="filter-group">
+                                            <label class="filter-label">Nivel de Riesgo</label>
+                                            <select class="filter-select" id="risk-filter-heatmap" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="muy-alto">Muy Alto</option>
+                                                <option value="alto">Alto</option>
+                                                <option value="medio">Medio</option>
+                                                <option value="bajo">Bajo</option>
+                                                <option value="nulo">Nulo</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="muy-alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Muy Alto</span></div>
+                                                    <div class="select-option" data-value="alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Alto</span></div>
+                                                    <div class="select-option" data-value="medio"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Medio</span></div>
+                                                    <div class="select-option" data-value="bajo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Bajo</span></div>
+                                                    <div class="select-option" data-value="nulo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Nulo</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
                                             <label class="filter-label">Cargo</label>
                                             <select class="filter-select" id="position-filter-heatmap" style="display: none;">
                                                 <option value="todos">Todos</option>
@@ -7359,32 +7439,6 @@
                                                     <div class="select-option" data-value="46-55"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">46-55 años</span></div>
                                                     <div class="select-option" data-value="56-65"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">56-65 años</span></div>
                                                     <div class="select-option" data-value="65+"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">65+ años</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="filter-group">
-                                            <label class="filter-label">Nivel de Riesgo</label>
-                                            <select class="filter-select" id="risk-filter-heatmap" style="display: none;">
-                                                <option value="todos">Todos</option>
-                                                <option value="muy-alto">Muy Alto</option>
-                                                <option value="alto">Alto</option>
-                                                <option value="medio">Medio</option>
-                                                <option value="bajo">Bajo</option>
-                                                <option value="nulo">Nulo</option>
-                                            </select>
-                                            <div class="custom-select" tabindex="0">
-                                                <div class="select-trigger">
-                                                    <span class="select-text">Todos</span>
-                                                    <i class="far fa-chevron-down"></i>
-                                                </div>
-                                                <div class="select-dropdown">
-                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
-                                                    <div class="select-option" data-value="muy-alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Muy Alto</span></div>
-                                                    <div class="select-option" data-value="alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Alto</span></div>
-                                                    <div class="select-option" data-value="medio"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Medio</span></div>
-                                                    <div class="select-option" data-value="bajo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Bajo</span></div>
-                                                    <div class="select-option" data-value="nulo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Nulo</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -7530,6 +7584,32 @@
                                     </div>
                                     <div class="filters-content">
                                         <div class="filter-group">
+                                            <label class="filter-label">Nivel de Riesgo</label>
+                                            <select class="filter-select" id="risk-filter-segments-tab" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="muy-alto">Muy Alto</option>
+                                                <option value="alto">Alto</option>
+                                                <option value="medio">Medio</option>
+                                                <option value="bajo">Bajo</option>
+                                                <option value="nulo">Nulo</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="muy-alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Muy Alto</span></div>
+                                                    <div class="select-option" data-value="alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Alto</span></div>
+                                                    <div class="select-option" data-value="medio"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Medio</span></div>
+                                                    <div class="select-option" data-value="bajo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Bajo</span></div>
+                                                    <div class="select-option" data-value="nulo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Nulo</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
                                             <label class="filter-label">Cargo</label>
                                             <select class="filter-select" id="position-filter-segments-tab" style="display: none;">
                                                 <option value="todos">Todos</option>
@@ -7623,32 +7703,6 @@
                                                     <div class="select-option" data-value="46-55"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">46-55 años</span></div>
                                                     <div class="select-option" data-value="56-65"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">56-65 años</span></div>
                                                     <div class="select-option" data-value="65+"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">65+ años</span></div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="filter-group">
-                                            <label class="filter-label">Nivel de Riesgo</label>
-                                            <select class="filter-select" id="risk-filter-segments-tab" style="display: none;">
-                                                <option value="todos">Todos</option>
-                                                <option value="muy-alto">Muy Alto</option>
-                                                <option value="alto">Alto</option>
-                                                <option value="medio">Medio</option>
-                                                <option value="bajo">Bajo</option>
-                                                <option value="nulo">Nulo</option>
-                                            </select>
-                                            <div class="custom-select" tabindex="0">
-                                                <div class="select-trigger">
-                                                    <span class="select-text">Todos</span>
-                                                    <i class="far fa-chevron-down"></i>
-                                                </div>
-                                                <div class="select-dropdown">
-                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
-                                                    <div class="select-option" data-value="muy-alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Muy Alto</span></div>
-                                                    <div class="select-option" data-value="alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Alto</span></div>
-                                                    <div class="select-option" data-value="medio"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Medio</span></div>
-                                                    <div class="select-option" data-value="bajo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Bajo</span></div>
-                                                    <div class="select-option" data-value="nulo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Nulo</span></div>
                                                 </div>
                                             </div>
                                         </div>
