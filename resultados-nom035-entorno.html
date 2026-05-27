@@ -5147,7 +5147,7 @@
                             </div>
                         </div>
 
-                        <div class="metric-card">
+                        <div class="metric-card" id="total-areas-risk-metric" style="cursor: pointer;" title="Haz clic para ver el detalle de áreas en riesgo Muy Alto">
                             <div class="metric-header">
                                 <div class="metric-title-section">
                                     <div class="metric-icon">
@@ -5162,7 +5162,7 @@
                             </div>
                         </div>
 
-                        <div class="metric-card metric-medio" style="cursor: pointer;" title="Promedio ponderado de todo el centro de trabajo">
+                        <div class="metric-card metric-medio" id="org-risk-metric" style="cursor: pointer;" title="Promedio ponderado de todo el centro de trabajo">
                             <div class="metric-header">
                                 <div class="metric-title-section">
                                     <div class="metric-icon" style="background: rgba(253, 224, 71, 0.1); color: var(--ubits-semantic-warning);">
@@ -11094,6 +11094,131 @@
                 });
             }
             
+
+            // ==========================================
+            // LOGIC FOR METRIC CARDS CLICKS
+            // ==========================================
+
+            const predominantRiskCard = document.getElementById('predominant-risk-metric');
+            if (predominantRiskCard) {
+                predominantRiskCard.addEventListener('click', () => {
+                    // 1. Switch to general view tab
+                    const generalTabBtn = document.querySelector('[data-new-tab="general-view"]');
+                    if (generalTabBtn) generalTabBtn.click();
+                    
+                    // 2. Select Dimensions view
+                    const viewSelects = document.querySelectorAll('.view-by-select-hidden');
+                    if (viewSelects.length > 0) {
+                        viewSelects[0].value = 'dimensions';
+                        viewSelects[0].dispatchEvent(new Event('change'));
+                    }
+
+                    // 3. Filter rows to show only 'Muy alto'
+                    setTimeout(() => {
+                        const rows = document.querySelectorAll('#sub-panel-dimensions .results-table tbody tr');
+                        rows.forEach(row => {
+                            const riskBadge = row.querySelector('.risk-badge');
+                            if (riskBadge) {
+                                if (riskBadge.textContent.trim().toLowerCase() === 'muy alto') {
+                                    row.style.display = '';
+                                } else {
+                                    row.style.display = 'none';
+                                }
+                            }
+                        });
+                        console.log('✅ Filtrado Dimensiones por Riesgo Muy Alto');
+                    }, 150);
+                });
+            }
+
+            const totalAreasCard = document.getElementById('total-areas-risk-metric');
+            if (totalAreasCard) {
+                totalAreasCard.addEventListener('click', () => {
+                    // 1. Switch to Segments Results tab
+                    const segmentsTabBtn = document.querySelector('[data-new-tab="segments-results"]');
+                    if (segmentsTabBtn) segmentsTabBtn.click();
+                    
+                    // 2. Select 'Áreas' (department)
+                    const segmentSelect = document.getElementById('segments-row-select');
+                    if (segmentSelect) {
+                        segmentSelect.value = 'department';
+                        segmentSelect.dispatchEvent(new Event('change'));
+                        
+                        // Sync custom select UI
+                        const customWrapper = segmentSelect.nextElementSibling;
+                        if (customWrapper && customWrapper.classList.contains('custom-select')) {
+                            const selectedOpt = customWrapper.querySelector('.select-option[data-value="department"]');
+                            const textEl = customWrapper.querySelector('.selected-text');
+                            if (selectedOpt && textEl) {
+                                textEl.textContent = selectedOpt.textContent;
+                                customWrapper.querySelectorAll('.select-option').forEach(opt => opt.classList.remove('selected'));
+                                selectedOpt.classList.add('selected');
+                            }
+                        }
+                    }
+
+                    // 3. Filter rows to show only 'Muy alto'
+                    setTimeout(() => {
+                        const rows = document.querySelectorAll('#segments-table-wrapper .results-table tbody tr');
+                        rows.forEach(row => {
+                            const tds = row.querySelectorAll('td');
+                            if (tds.length > 0) {
+                                const levelCell = tds[tds.length - 1]; // Last cell usually has the level
+                                if (levelCell.textContent.trim().toLowerCase() === 'muy alto') {
+                                    row.style.display = '';
+                                } else {
+                                    row.style.display = 'none';
+                                }
+                            }
+                        });
+                        console.log('✅ Filtrado Áreas por Riesgo Muy Alto');
+                    }, 150);
+                });
+            }
+
+            const orgRiskCard = document.getElementById('org-risk-metric');
+            if (orgRiskCard) {
+                orgRiskCard.addEventListener('click', () => {
+                    // 1. Switch to general view tab
+                    const generalTabBtn = document.querySelector('[data-new-tab="general-view"]');
+                    if (generalTabBtn) generalTabBtn.click();
+                    
+                    // 2. Select Categories view
+                    const viewSelects = document.querySelectorAll('.view-by-select-hidden');
+                    if (viewSelects.length > 0) {
+                        viewSelects[0].value = 'categories';
+                        viewSelects[0].dispatchEvent(new Event('change'));
+                    }
+
+                    // 3. Sort Categories by risk (highest to null)
+                    setTimeout(() => {
+                        const tbody = document.querySelector('#sub-panel-categories .results-table tbody');
+                        if (!tbody) return;
+                        
+                        const rows = Array.from(tbody.querySelectorAll('tr'));
+                        const riskWeights = {
+                            'muy alto': 5,
+                            'alto': 4,
+                            'medio': 3,
+                            'bajo': 2,
+                            'nulo': 1
+                        };
+                        
+                        rows.sort((a, b) => {
+                            const riskA = a.querySelector('.risk-badge')?.textContent.trim().toLowerCase() || '';
+                            const riskB = b.querySelector('.risk-badge')?.textContent.trim().toLowerCase() || '';
+                            return (riskWeights[riskB] || 0) - (riskWeights[riskA] || 0);
+                        });
+                        
+                        rows.forEach(row => {
+                            row.style.display = ''; // Also clear any previous filters
+                            tbody.appendChild(row);
+                        });
+                        console.log('✅ Categorías ordenadas por nivel de riesgo');
+                    }, 150);
+                });
+            }
+
 if (document.readyState === 'loading') {
             console.log('📌 [INIT] DOM aún se está cargando, esperando DOMContentLoaded');
             document.addEventListener('DOMContentLoaded', function() {
