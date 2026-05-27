@@ -2999,8 +2999,8 @@
         }
 
         .risk-badge.nulo {
-            background-color: var(--ubits-bg-1);
-            color: var(--ubits-fg-1-medium);
+            background-color: var(--ubits-semantic-info-light);
+            color: var(--ubits-semantic-info);
         }
 
         .risk-badge.bajo {
@@ -3009,13 +3009,13 @@
         }
 
         .risk-badge.medio {
-            background-color: var(--ubits-semantic-warning-light);
-            color: var(--ubits-semantic-warning);
+            background-color: #fef9c3;
+            color: #a16207;
         }
 
         .risk-badge.alto {
-            background-color: var(--ubits-semantic-warning-light);
-            color: var(--ubits-semantic-warning);
+            background-color: #ffedd5;
+            color: #ea580c;
         }
 
         .risk-badge.muy-alto {
@@ -3269,8 +3269,8 @@
         }
 
         .risk-badge.nulo {
-            background: var(--ubits-bg-1);
-            color: var(--ubits-fg-1-medium);
+            background: var(--ubits-semantic-info-light);
+            color: var(--ubits-semantic-info);
         }
 
         .risk-badge.bajo {
@@ -3279,13 +3279,13 @@
         }
 
         .risk-badge.medio {
-            background: var(--ubits-semantic-warning-light);
-            color: var(--ubits-semantic-warning);
+            background: #fef9c3;
+            color: #a16207;
         }
 
         .risk-badge.alto {
-            background: var(--ubits-semantic-warning-light);
-            color: var(--ubits-semantic-warning);
+            background: #ffedd5;
+            color: #ea580c;
         }
 
         .risk-badge.muy-alto {
@@ -4727,9 +4727,9 @@
             transition: width 0.3s ease;
         }
         .range-fill.nulo { background-color: #60a5fa; }
-        .range-fill.bajo { background-color: #86efac; }
-        .range-fill.medio { background-color: var(--ubits-semantic-warning-light); }
-        .range-fill.alto { background-color: var(--ubits-semantic-warning); }
+        .range-fill.bajo { background-color: var(--ubits-semantic-success); }
+        .range-fill.medio { background-color: #eab308; }
+        .range-fill.alto { background-color: #f97316; }
         .range-fill.muy-alto { background-color: var(--ubits-semantic-danger); }
         
         .range-thresholds {
@@ -5322,6 +5322,7 @@
                                             <th>Total Usuarios en Riesgo</th>
                                             <th>% Colaboradores Afectados</th>
                                             <th>Puntaje</th>
+                                            <th>Calificación</th>
                                             <th>Nivel de Riesgo</th>
                                         </tr>
                                     </thead>
@@ -5331,6 +5332,19 @@
                                             <td class="risk-count">5</td>
                                             <td class="percentage">3.3%</td>
                                             <td><span class="score-value">6.9</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill bajo" style="width: 34.5%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 25.0%;">5</span>
+                                                        <span class="range-threshold" style="left: 45.0%;">9</span>
+                                                        <span class="range-threshold" style="left: 55.0%;">11</span>
+                                                        <span class="range-threshold" style="left: 70.0%;">14</span>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         <tr>
@@ -5338,20 +5352,59 @@
                                             <td class="risk-count">95</td>
                                             <td class="percentage">63.3%</td>
                                             <td><span class="score-value">38.6</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill medio" style="width: 51.5%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 20.0%;">15</span>
+                                                        <span class="range-threshold" style="left: 40.0%;">30</span>
+                                                        <span class="range-threshold" style="left: 60.0%;">45</span>
+                                                        <span class="range-threshold" style="left: 80.0%;">60</span>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                         <tr>
-                                            <td>Violencia laboral</td>
+                                            <td>Entorno organizacional</td>
                                             <td class="risk-count">78</td>
                                             <td class="percentage">52.0%</td>
-                                            <td><span class="score-value">16.5</span></td>
-                                            <td><span class="risk-badge alto">Alto</span></td>
+                                            <td><span class="score-value">10.1</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill bajo" style="width: 25.3%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 25.0%;">10</span>
+                                                        <span class="range-threshold" style="left: 35.0%;">14</span>
+                                                        <span class="range-threshold" style="left: 45.0%;">18</span>
+                                                        <span class="range-threshold" style="left: 57.5%;">23</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         <tr>
                                             <td>Organización del tiempo de trabajo</td>
                                             <td class="risk-count">18</td>
                                             <td class="percentage">12.0%</td>
-                                            <td><span class="score-value">7</span></td>
+                                            <td><span class="score-value">7.0</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill medio" style="width: 29.2%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 20.8%;">5</span>
+                                                        <span class="range-threshold" style="left: 29.2%;">7</span>
+                                                        <span class="range-threshold" style="left: 41.7%;">10</span>
+                                                        <span class="range-threshold" style="left: 54.2%;">13</span>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                         <tr>
@@ -5359,6 +5412,19 @@
                                             <td class="risk-count">45</td>
                                             <td class="percentage">30.0%</td>
                                             <td><span class="score-value">18.9</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill bajo" style="width: 18.2%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 13.5%;">14</span>
+                                                        <span class="range-threshold" style="left: 27.9%;">29</span>
+                                                        <span class="range-threshold" style="left: 40.4%;">42</span>
+                                                        <span class="range-threshold" style="left: 55.8%;">58</span>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                     </tbody>
@@ -5548,6 +5614,7 @@
                                             <th>Total Usuarios en Riesgo</th>
                                             <th>% Colaboradores Afectados</th>
                                             <th>Puntaje</th>
+                                            <th>Calificación</th>
                                             <th>Nivel de Riesgo</th>
                                         </tr>
                                     </thead>
@@ -5558,70 +5625,40 @@
                                             <td class="risk-count">20</td>
                                             <td class="percentage">13.3%</td>
                                             <td><span class="score-value">6.9</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill bajo" style="width: 34.5%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 25.0%;">5</span>
+                                                        <span class="range-threshold" style="left: 45.0%;">9</span>
+                                                        <span class="range-threshold" style="left: 55.0%;">11</span>
+                                                        <span class="range-threshold" style="left: 70.0%;">14</span>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         <tr>
                                             <td>Carga de trabajo</td>
                                             <td>Factores propios de la actividad</td>
                                             <td class="risk-count">90</td>
-                                            <td class="percentage">60%</td>
-                                            <td><span class="score-value">25</span></td>
-                                            <td><span class="risk-badge alto">Alto</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Violencia laboral</td>
-                                            <td>Violencia laboral</td>
-                                            <td class="risk-count">85</td>
-                                            <td class="percentage">56.7%</td>
-                                            <td><span class="score-value">16.5</span></td>
-                                            <td><span class="risk-badge alto">Alto</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Jornada de trabajo</td>
-                                            <td>Organización del tiempo de trabajo</td>
-                                            <td class="risk-count">76</td>
-                                            <td class="percentage">50.7%</td>
-                                            <td><span class="score-value">8.5</span></td>
-                                            <td><span class="risk-badge muy-alto">Muy alto</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Liderazgo</td>
-                                            <td>Liderazgo y relaciones en el trabajo</td>
-                                            <td class="risk-count">82</td>
-                                            <td class="percentage">54.7%</td>
-                                            <td><span class="score-value">12</span></td>
-                                            <td><span class="risk-badge alto">Alto</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Relaciones en el trabajo</td>
-                                            <td>Liderazgo y relaciones en el trabajo</td>
-                                            <td class="risk-count">79</td>
-                                            <td class="percentage">52.7%</td>
-                                            <td><span class="score-value">15</span></td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Interferencia en la relación trabajo-familia</td>
-                                            <td>Organización del tiempo de trabajo</td>
-                                            <td class="risk-count">88</td>
-                                            <td class="percentage">58.7%</td>
-                                            <td><span class="score-value">6.5</span></td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Definición de funciones</td>
-                                            <td>Liderazgo y relaciones en el trabajo</td>
-                                            <td class="risk-count">92</td>
-                                            <td class="percentage">61.3%</td>
-                                            <td><span class="score-value">8</span></td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Capacitación insuficiente</td>
-                                            <td>Factores propios de la actividad</td>
-                                            <td class="risk-count">84</td>
-                                            <td class="percentage">56.0%</td>
-                                            <td><span class="score-value">4</span></td>
+                                            <td class="percentage">60.0%</td>
+                                            <td><span class="score-value">22.1</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill medio" style="width: 44.2%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 30.0%;">15</span>
+                                                        <span class="range-threshold" style="left: 42.0%;">21</span>
+                                                        <span class="range-threshold" style="left: 54.0%;">27</span>
+                                                        <span class="range-threshold" style="left: 74.0%;">37</span>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                         <tr>
@@ -5629,8 +5666,168 @@
                                             <td>Factores propios de la actividad</td>
                                             <td class="risk-count">15</td>
                                             <td class="percentage">10.0%</td>
-                                            <td><span class="score-value">11.5</span></td>
+                                            <td><span class="score-value">16.5</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill medio" style="width: 55.0%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 36.7%;">11</span>
+                                                        <span class="range-threshold" style="left: 53.3%;">16</span>
+                                                        <span class="range-threshold" style="left: 70.0%;">21</span>
+                                                        <span class="range-threshold" style="left: 83.3%;">25</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><span class="risk-badge medio">Medio</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jornada de trabajo</td>
+                                            <td>Organización del tiempo de trabajo</td>
+                                            <td class="risk-count">76</td>
+                                            <td class="percentage">50.7%</td>
+                                            <td><span class="score-value">3.3</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill medio" style="width: 33.0%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 10.0%;">1</span>
+                                                        <span class="range-threshold" style="left: 20.0%;">2</span>
+                                                        <span class="range-threshold" style="left: 40.0%;">4</span>
+                                                        <span class="range-threshold" style="left: 60.0%;">6</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><span class="risk-badge medio">Medio</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Interferencia en la relación trabajo-familia</td>
+                                            <td>Organización del tiempo de trabajo</td>
+                                            <td class="risk-count">88</td>
+                                            <td class="percentage">58.7%</td>
+                                            <td><span class="score-value">3.7</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill nulo" style="width: 24.7%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 26.7%;">4</span>
+                                                        <span class="range-threshold" style="left: 40.0%;">6</span>
+                                                        <span class="range-threshold" style="left: 53.3%;">8</span>
+                                                        <span class="range-threshold" style="left: 66.7%;">10</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><span class="risk-badge nulo">Nulo</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Liderazgo</td>
+                                            <td>Liderazgo y relaciones en el trabajo</td>
+                                            <td class="risk-count">82</td>
+                                            <td class="percentage">54.7%</td>
+                                            <td><span class="score-value">8.1</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill nulo" style="width: 32.4%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 36.0%;">9</span>
+                                                        <span class="range-threshold" style="left: 48.0%;">12</span>
+                                                        <span class="range-threshold" style="left: 64.0%;">16</span>
+                                                        <span class="range-threshold" style="left: 80.0%;">20</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><span class="risk-badge nulo">Nulo</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Relaciones en el trabajo</td>
+                                            <td>Liderazgo y relaciones en el trabajo</td>
+                                            <td class="risk-count">79</td>
+                                            <td class="percentage">52.7%</td>
+                                            <td><span class="score-value">5.3</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill nulo" style="width: 21.2%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 40.0%;">10</span>
+                                                        <span class="range-threshold" style="left: 52.0%;">13</span>
+                                                        <span class="range-threshold" style="left: 68.0%;">17</span>
+                                                        <span class="range-threshold" style="left: 84.0%;">21</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><span class="risk-badge nulo">Nulo</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Violencia</td>
+                                            <td>Liderazgo y relaciones en el trabajo</td>
+                                            <td class="risk-count">85</td>
+                                            <td class="percentage">56.7%</td>
+                                            <td><span class="score-value">5.4</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill nulo" style="width: 16.9%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 21.9%;">7</span>
+                                                        <span class="range-threshold" style="left: 31.3%;">10</span>
+                                                        <span class="range-threshold" style="left: 40.6%;">13</span>
+                                                        <span class="range-threshold" style="left: 50.0%;">16</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><span class="risk-badge nulo">Nulo</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Reconocimiento del desempeño</td>
+                                            <td>Entorno organizacional</td>
+                                            <td class="risk-count">92</td>
+                                            <td class="percentage">61.3%</td>
+                                            <td><span class="score-value">6.9</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill bajo" style="width: 27.6%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 24.0%;">6</span>
+                                                        <span class="range-threshold" style="left: 40.0%;">10</span>
+                                                        <span class="range-threshold" style="left: 56.0%;">14</span>
+                                                        <span class="range-threshold" style="left: 72.0%;">18</span>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Insuficiente sentido de pertenencia e inestabilidad</td>
+                                            <td>Entorno organizacional</td>
+                                            <td class="risk-count">84</td>
+                                            <td class="percentage">56.0%</td>
+                                            <td><span class="score-value">3.2</span></td>
+                                            <td>
+                                                <div class="range-indicator-container">
+                                                    <div class="range-track">
+                                                        <div class="range-fill nulo" style="width: 21.3%;"></div>
+                                                    </div>
+                                                    <div class="range-thresholds">
+                                                        <span class="range-threshold" style="left: 26.7%;">4</span>
+                                                        <span class="range-threshold" style="left: 40.0%;">6</span>
+                                                        <span class="range-threshold" style="left: 53.3%;">8</span>
+                                                        <span class="range-threshold" style="left: 66.7%;">10</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -6374,9 +6571,12 @@
                                                 <option value="carga">Carga de trabajo</option>
                                                 <option value="control">Falta de control sobre el trabajo</option>
                                                 <option value="jornada">Jornada de trabajo</option>
+                                                <option value="interferencia">Interferencia en la relación trabajo-familia</option>
                                                 <option value="liderazgo">Liderazgo</option>
                                                 <option value="relaciones">Relaciones en el trabajo</option>
-                                                <option value="violencia">Violencia laboral</option>
+                                                <option value="violencia">Violencia</option>
+                                                <option value="reconocimiento">Reconocimiento del desempeño</option>
+                                                <option value="pertenencia">Insuficiente sentido de pertenencia e inestabilidad</option>
                                             </select>
                                             <div class="custom-select single-select" tabindex="0">
                                                 <div class="select-trigger">
@@ -6389,9 +6589,12 @@
                                                     <div class="select-option" data-value="carga">Carga de trabajo</div>
                                                     <div class="select-option" data-value="control">Falta de control sobre el trabajo</div>
                                                     <div class="select-option" data-value="jornada">Jornada de trabajo</div>
+                                                    <div class="select-option" data-value="interferencia">Interferencia en la relación trabajo-familia</div>
                                                     <div class="select-option" data-value="liderazgo">Liderazgo</div>
                                                     <div class="select-option" data-value="relaciones">Relaciones en el trabajo</div>
-                                                    <div class="select-option" data-value="violencia">Violencia laboral</div>
+                                                    <div class="select-option" data-value="violencia">Violencia</div>
+                                                    <div class="select-option" data-value="reconocimiento">Reconocimiento del desempeño</div>
+                                                    <div class="select-option" data-value="pertenencia">Insuficiente sentido de pertenencia e inestabilidad</div>
                                                 </div>
                                             </div>
                                         </div>

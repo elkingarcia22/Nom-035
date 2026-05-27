@@ -48,7 +48,7 @@ function loadTabBar(containerId) {
             addTabBarEventListeners();
             
             // Activar el tab correcto basado en la página actual
-            activateCurrentPageTab();
+            activateCurrentTabBarTab();
             
             console.log('Tab bar component loaded successfully');
         })
@@ -57,7 +57,7 @@ function loadTabBar(containerId) {
             // Fallback al HTML generado
             container.innerHTML = getTabBarHTML();
             addTabBarEventListeners();
-            activateCurrentPageTab();
+            activateCurrentTabBarTab();
         });
 }
 
@@ -143,7 +143,7 @@ function addTabBarEventListeners() {
 /**
  * Activa el tab correcto basado en la página actual
  */
-function activateCurrentPageTab() {
+function activateCurrentTabBarTab() {
     // Obtener la URL actual
     const currentPath = window.location.pathname;
     const currentPage = currentPath.split('/').pop().replace('.html', '');
@@ -201,4 +201,4 @@ window.getTabBarHTML = getTabBarHTML;
 window.loadTabBar = loadTabBar;
 window.addTabBarEventListeners = addTabBarEventListeners;
 // window.navigateToTab removido - usar la del subnav
-window.activateCurrentPageTab = activateCurrentPageTab;
+window.activateCurrentTabBarTab = activateCurrentTabBarTab;

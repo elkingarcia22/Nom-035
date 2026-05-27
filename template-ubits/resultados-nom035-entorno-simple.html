@@ -367,36 +367,31 @@
                             <div class="filter-group">
                                 <label>Categoría</label>
                                 <div class="filter-options">
-                                    <label class="filter-option">
-                                        <input type="checkbox" value="Condiciones en el ambiente de trabajo" data-filter="category">
-                                        <span class="checkmark"></span>
-                                        <span class="filter-text">Condiciones en el ambiente de trabajo</span>
-                                    </label>
-                                    <label class="filter-option">
-                                        <input type="checkbox" value="Carga de trabajo" data-filter="category">
-                                        <span class="checkmark"></span>
-                                        <span class="filter-text">Carga de trabajo</span>
-                                    </label>
-                                    <label class="filter-option">
-                                        <input type="checkbox" value="Jornada de trabajo" data-filter="category">
-                                        <span class="checkmark"></span>
-                                        <span class="filter-text">Jornada de trabajo</span>
-                                    </label>
-                                    <label class="filter-option">
-                                        <input type="checkbox" value="Liderazgo y Relaciones interpersonales" data-filter="category">
-                                        <span class="checkmark"></span>
-                                        <span class="filter-text">Liderazgo y Relaciones interpersonales</span>
-                                    </label>
-                                    <label class="filter-option">
-                                        <input type="checkbox" value="Violencia laboral" data-filter="category">
-                                        <span class="checkmark"></span>
-                                        <span class="filter-text">Violencia laboral</span>
-                                    </label>
-                                    <label class="filter-option">
-                                        <input type="checkbox" value="Entorno organizacional" data-filter="category">
-                                        <span class="checkmark"></span>
-                                        <span class="filter-text">Entorno organizacional</span>
-                                    </label>
+                                     <label class="filter-option">
+                                         <input type="checkbox" value="Ambiente de trabajo" data-filter="category">
+                                         <span class="checkmark"></span>
+                                         <span class="filter-text">Ambiente de trabajo</span>
+                                     </label>
+                                     <label class="filter-option">
+                                         <input type="checkbox" value="Factores propios de la actividad" data-filter="category">
+                                         <span class="checkmark"></span>
+                                         <span class="filter-text">Factores propios de la actividad</span>
+                                     </label>
+                                     <label class="filter-option">
+                                         <input type="checkbox" value="Organización del tiempo de trabajo" data-filter="category">
+                                         <span class="checkmark"></span>
+                                         <span class="filter-text">Organización del tiempo de trabajo</span>
+                                     </label>
+                                     <label class="filter-option">
+                                         <input type="checkbox" value="Liderazgo y relaciones en el trabajo" data-filter="category">
+                                         <span class="checkmark"></span>
+                                         <span class="filter-text">Liderazgo y relaciones en el trabajo</span>
+                                     </label>
+                                     <label class="filter-option">
+                                         <input type="checkbox" value="Entorno organizacional" data-filter="category">
+                                         <span class="checkmark"></span>
+                                         <span class="filter-text">Entorno organizacional</span>
+                                     </label>
                                 </div>
                             </div>
                             <div class="filter-group">
@@ -832,63 +827,149 @@
             }
         }
 
-        // Función para cargar los resultados de la tabla
-        function loadTableResults() {
-            const resultsTbody = document.getElementById('results-tbody');
-            
-            const resultsData = [
-                {
-                    category: 'Condiciones en el ambiente de trabajo',
-                    domain: 'Condiciones en el ambiente de trabajo',
-                    dimension: 'Condiciones físicas, seguridad y comodidad',
-                    riskCount: 12,
-                    percentage: 8.0,
-                    riskLevel: 'bajo'
-                },
-                {
-                    category: 'Carga de trabajo',
-                    domain: 'Carga de trabajo',
-                    dimension: 'Exigencias cuantitativas, mentales y emocionales',
-                    riskCount: 43,
-                    percentage: 28.7,
-                    riskLevel: 'medio'
-                },
-                {
-                    category: 'Jornada de trabajo',
-                    domain: 'Jornada de trabajo',
-                    dimension: 'Duración, distribución y pausas',
-                    riskCount: 22,
-                    percentage: 14.7,
-                    riskLevel: 'medio'
-                },
-                {
-                    category: 'Liderazgo y Relaciones interpersonales',
-                    domain: 'Liderazgo y Relaciones interpersonales',
-                    dimension: 'Estilo de liderazgo, comunicación, apoyo y relaciones',
-                    riskCount: 26,
-                    percentage: 17.3,
-                    riskLevel: 'bajo'
-                },
-                {
-                    category: 'Violencia laboral',
-                    domain: 'Violencia laboral',
-                    dimension: 'Acoso, hostigamiento y violencia',
-                    riskCount: 5,
-                    percentage: 3.3,
-                    riskLevel: 'nulo'
-                },
-                {
-                    category: 'Entorno organizacional',
-                    domain: 'Entorno organizacional',
-                    dimension: 'Cultura organizacional y políticas',
-                    riskCount: 77,
-                    percentage: 51.3,
-                    riskLevel: 'alto'
-                }
-            ];
+        // Mapeo completo de datos para resultados NOM-035 (10 Dominios oficiales)
+        const resultsData = [
+            {
+                category: 'Ambiente de trabajo',
+                domain: 'Condiciones en el ambiente de trabajo',
+                dimension: 'Condiciones físicas, seguridad y comodidad',
+                riskCount: 20,
+                percentage: 13.3,
+                score: 6.9,
+                max: 20,
+                ranges: [5, 9, 11, 14],
+                riskLevel: 'bajo'
+            },
+            {
+                category: 'Factores propios de la actividad',
+                domain: 'Carga de trabajo',
+                dimension: 'Exigencias cuantitativas, mentales y emocionales',
+                riskCount: 90,
+                percentage: 60.0,
+                score: 22.1,
+                max: 50,
+                ranges: [15, 21, 27, 37],
+                riskLevel: 'medio'
+            },
+            {
+                category: 'Factores propios de la actividad',
+                domain: 'Falta de control sobre el trabajo',
+                dimension: 'Autonomía y claridad de rol',
+                riskCount: 15,
+                percentage: 10.0,
+                score: 16.5,
+                max: 30,
+                ranges: [11, 16, 21, 25],
+                riskLevel: 'medio'
+            },
+            {
+                category: 'Organización del tiempo de trabajo',
+                domain: 'Jornada de trabajo',
+                dimension: 'Duración, distribución y pausas',
+                riskCount: 76,
+                percentage: 50.7,
+                score: 3.3,
+                max: 10,
+                ranges: [1, 2, 4, 6],
+                riskLevel: 'medio'
+            },
+            {
+                category: 'Organización del tiempo de trabajo',
+                domain: 'Interferencia en la relación trabajo-familia',
+                dimension: 'Influencia trabajo-familia',
+                riskCount: 88,
+                percentage: 58.7,
+                score: 3.7,
+                max: 15,
+                ranges: [4, 6, 8, 10],
+                riskLevel: 'nulo'
+            },
+            {
+                category: 'Liderazgo y relaciones en el trabajo',
+                domain: 'Liderazgo',
+                dimension: 'Estilo de liderazgo y comunicación',
+                riskCount: 82,
+                percentage: 54.7,
+                score: 8.1,
+                max: 25,
+                ranges: [9, 12, 16, 20],
+                riskLevel: 'nulo'
+            },
+            {
+                category: 'Liderazgo y relaciones en el trabajo',
+                domain: 'Relaciones en el trabajo',
+                dimension: 'Relaciones interpersonales y apoyo',
+                riskCount: 79,
+                percentage: 52.7,
+                score: 5.3,
+                max: 25,
+                ranges: [10, 13, 17, 21],
+                riskLevel: 'nulo'
+            },
+            {
+                category: 'Liderazgo y relaciones en el trabajo',
+                domain: 'Violencia',
+                dimension: 'Acoso, hostigamiento y violencia',
+                riskCount: 85,
+                percentage: 56.7,
+                score: 5.4,
+                max: 32,
+                ranges: [7, 10, 13, 16],
+                riskLevel: 'nulo'
+            },
+            {
+                category: 'Entorno organizacional',
+                domain: 'Reconocimiento del desempeño',
+                dimension: 'Evaluación y reconocimiento',
+                riskCount: 92,
+                percentage: 61.3,
+                score: 6.9,
+                max: 25,
+                ranges: [6, 10, 14, 18],
+                riskLevel: 'bajo'
+            },
+            {
+                category: 'Entorno organizacional',
+                domain: 'Insuficiente sentido de pertenencia e inestabilidad',
+                dimension: 'Sentido de pertenencia y estabilidad',
+                riskCount: 84,
+                percentage: 56.0,
+                score: 3.2,
+                max: 15,
+                ranges: [4, 6, 8, 10],
+                riskLevel: 'nulo'
+            }
+        ];
 
+        // Función auxiliar para obtener el HTML del semáforo/rango indicador
+        function getRangeIndicatorHTML(result) {
+            const width = Math.min(100, Math.max(0, (result.score / result.max) * 100)).toFixed(1);
+            const th1 = ((result.ranges[0] / result.max) * 100).toFixed(1);
+            const th2 = ((result.ranges[1] / result.max) * 100).toFixed(1);
+            const th3 = ((result.ranges[2] / result.max) * 100).toFixed(1);
+            const th4 = ((result.ranges[3] / result.max) * 100).toFixed(1);
+
+            return `
+                <div class="range-indicator-container">
+                    <div class="range-track">
+                        <div class="range-fill ${result.riskLevel}" style="width: ${width}%;"></div>
+                    </div>
+                    <div class="range-thresholds">
+                        <span class="range-threshold" style="left: ${th1}%;">${result.ranges[0]}</span>
+                        <span class="range-threshold" style="left: ${th2}%;">${result.ranges[1]}</span>
+                        <span class="range-threshold" style="left: ${th3}%;">${result.ranges[2]}</span>
+                        <span class="range-threshold" style="left: ${th4}%;">${result.ranges[3]}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Función para renderizar las filas de la tabla
+        function renderTableRows(data) {
+            const resultsTbody = document.getElementById('results-tbody');
             let htmlContent = '';
-            resultsData.forEach((result, index) => {
+
+            data.forEach((result, index) => {
                 htmlContent += `
                     <tr class="category-summary" onclick="toggleCategoryRow(this)">
                         <td class="category-cell">
@@ -901,6 +982,8 @@
                         <td class="category-dimension-info">${result.dimension}</td>
                         <td class="risk-count">${result.riskCount}</td>
                         <td class="percentage">${result.percentage}%</td>
+                        <td><span class="score-value">${result.score}</span></td>
+                        <td>${getRangeIndicatorHTML(result)}</td>
                         <td>
                             <div class="category-risk-info">
                                 <span class="risk-badge ${result.riskLevel}">${getRiskLevelText(result.riskLevel)}</span>
@@ -908,7 +991,7 @@
                         </td>
                     </tr>
                     <tr class="category-detail" style="display: none;">
-                        <td colspan="6">
+                        <td colspan="8">
                             <div class="category-detail-content">
                                 <h4>Detalles de ${result.category}</h4>
                                 <p>Información detallada sobre ${result.dimension}</p>
@@ -922,6 +1005,10 @@
                                         <span class="metric-value">${result.percentage}%</span>
                                     </div>
                                     <div class="detail-metric">
+                                        <span class="metric-label">Puntaje:</span>
+                                        <span class="metric-value">${result.score} / ${result.max}</span>
+                                    </div>
+                                    <div class="detail-metric">
                                         <span class="metric-label">Nivel de riesgo:</span>
                                         <span class="metric-value ${getRiskLevelClass(result.riskLevel)}">${getRiskLevelText(result.riskLevel)}</span>
                                     </div>
@@ -933,6 +1020,57 @@
             });
 
             resultsTbody.innerHTML = htmlContent;
+        }
+
+        // Función para cargar los resultados de la tabla inicialmente
+        function loadTableResults() {
+            renderTableRows(resultsData);
+            setupFilterListeners();
+        }
+
+        // Función para aplicar filtros de la barra lateral
+        function applyTableFilters() {
+            const selectedCategories = Array.from(document.querySelectorAll('input[data-filter="category"]:checked')).map(cb => cb.value);
+            const selectedRiskLevels = Array.from(document.querySelectorAll('input[data-filter="risk-level"]:checked')).map(cb => cb.value);
+
+            const filteredData = resultsData.filter(result => {
+                const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(result.category);
+                const riskMatch = selectedRiskLevels.length === 0 || selectedRiskLevels.includes(result.riskLevel);
+                return categoryMatch && riskMatch;
+            });
+
+            renderTableRows(filteredData);
+
+            // Re-abrir la primera categoría si hay filas disponibles
+            const firstCategoryRow = document.querySelector('.category-summary');
+            if (firstCategoryRow) {
+                toggleCategoryRow(firstCategoryRow);
+            }
+        }
+
+        // Configurar los listeners para filtros
+        function setupFilterListeners() {
+            const filtersBtn = document.getElementById('table-filters-btn');
+            const filtersPanel = document.getElementById('table-filters-side-panel');
+            const closeFiltersBtn = document.getElementById('close-table-filters');
+
+            if (filtersBtn && filtersPanel) {
+                filtersBtn.addEventListener('click', () => {
+                    filtersPanel.classList.add('show');
+                });
+            }
+
+            if (closeFiltersBtn && filtersPanel) {
+                closeFiltersBtn.addEventListener('click', () => {
+                    filtersPanel.classList.remove('show');
+                });
+            }
+
+            const filterCheckboxes = document.querySelectorAll('#table-filters-side-panel input[type="checkbox"]');
+            filterCheckboxes.forEach(cb => {
+                cb.removeEventListener('change', applyTableFilters);
+                cb.addEventListener('change', applyTableFilters);
+            });
         }
 
         // Función para inicializar los tabs

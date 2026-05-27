@@ -1714,7 +1714,7 @@
                                 </button>
                                 <button class="tab-button" data-tab="detalle-colaborador">
                                     <i class="far fa-list"></i>
-                                    <span>Detalle por Colaborador</span>
+                                    <span>Vista por colaborador</span>
                                 </button>
                             </div>
 
@@ -1792,236 +1792,69 @@
                             </div>
 
                             <!-- Tab 2: Detalle por Colaborador (contenido actual) -->
-                            <div class="tab-panel" id="tab-detalle-colaborador">
-                                <div class="panel-container">
-                                    <!-- Panel Izquierdo - Lista de Participantes -->
-                                    <div class="participants-panel">
-                                        <div class="panel-header">
-                                            <h3>Participantes</h3>
-                                            <div class="search-filters-container">
-                                            <div class="simple-search-container" style="flex: 1; position: relative;">
-                                                <i class="far fa-search simple-search-icon"></i>
-                                                <input type="text" id="participant-search" placeholder="Buscar participante..." class="simple-search-input">
-                                                <button id="clear-participant-search" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--ubits-fg-1-medium); cursor: pointer; display: none; width: 20px; height: 20px; align-items: center; justify-content: center;" title="Limpiar búsqueda">
-                                                    <i class="far fa-times"></i>
-                                                </button>
-                                            </div>
-                                                <button class="filters-button" id="filters-btn" title="Filtros">
-                                                    <i class="far fa-filter"></i>
-                                                    <span class="filter-badge" id="filter-badge" style="display: none;">0</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="participants-list" id="participants-list">
-                                            <!-- Lista de participantes se generará dinámicamente -->
-                                        </div>
+<div class="tab-panel" id="tab-detalle-colaborador">
+                                <div class="nom-table-header-card">
+                                    <!-- Al lado izquierdo: título de la tabla -->
+                                    <div id="nom-vista-colaborador-table-title" style="font-size: 16px; font-weight: 700; color: var(--ubits-fg-1-high);">
+                                        Vista por colaborador <span class="filter-counter" id="nom-vista-colaborador-counter" style="font-weight: 400; color: var(--ubits-fg-1-medium); font-size: 14px; margin-left: 8px;"></span>
                                     </div>
-
-                                    <!-- Side Panel de Filtros -->
-                                    <div class="filters-side-panel" id="filters-side-panel">
-                                        <div class="filters-header">
-                                            <h3>Filtros Demográficos</h3>
-                                            <button class="ubits-button ubits-button--tertiary ubits-button--sm ubits-button--icon-only close-filters-btn" id="close-filters-btn">
-                                                <i class="far fa-times"></i>
+                                    
+                                    <!-- Al lado derecho: buscador (izquierda) y segmento (derecha) -->
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <!-- Buscador Toggleable -->
+                                        <div style="position: relative; display: flex; align-items: center;">
+                                            <button id="nom-vista-colaborador-search-toggle-btn" style="background: var(--ubits-bg-1); border: 1.5px solid var(--ubits-border-1); border-radius: 8px; padding: 8px; cursor: pointer; color: var(--ubits-fg-1-high); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;" title="Buscar">
+                                                <i class="far fa-search"></i>
                                             </button>
-                                        </div>
-                                        <div class="filters-content">
-                                            <div class="filter-group">
-                                                <label class="filter-label">Nivel de Riesgo</label>
-                                                <div class="custom-select" id="risk-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar niveles</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos">
-                                                            <input type="checkbox" id="risk-todos">
-                                                            <span class="option-text">Todos</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="canalizado">
-                                                            <input type="checkbox" id="risk-canalizado">
-                                                            <span class="option-text">Canalizado</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="alto">
-                                                            <input type="checkbox" id="risk-alto">
-                                                            <span class="option-text">Alto</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="filter-group">
-                                                <label class="filter-label">Área</label>
-                                                <div class="custom-select" id="department-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar áreas</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos">
-                                                            <input type="checkbox" id="dept-todos">
-                                                            <span class="option-text">Todos</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Ventas">
-                                                            <input type="checkbox" id="dept-ventas">
-                                                            <span class="option-text">Ventas</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Tecnología">
-                                                            <input type="checkbox" id="dept-tecnologia">
-                                                            <span class="option-text">Tecnología</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Recursos Humanos">
-                                                            <input type="checkbox" id="dept-rrhh">
-                                                            <span class="option-text">Recursos Humanos</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Finanzas">
-                                                            <input type="checkbox" id="dept-finanzas">
-                                                            <span class="option-text">Finanzas</span>
-                                                        </div>
-                                                        <div class="select-option" data-value="Administración">
-                                                            <input type="checkbox" id="dept-administracion">
-                                                            <span class="option-text">Administración</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="filter-group">
-                                                <label class="filter-label">Líder</label>
-                                                <div class="custom-select" id="leader-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar líderes</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="leader-todos"><span class="option-text">Todos</span></div>
-                                                        <div class="select-option" data-value="Ana Martínez"><input type="checkbox" id="leader-ana"><span class="option-text">Ana Martínez</span></div>
-                                                        <div class="select-option" data-value="Carlos Gómez"><input type="checkbox" id="leader-carlos"><span class="option-text">Carlos Gómez</span></div>
-                                                        <div class="select-option" data-value="Laura Pérez"><input type="checkbox" id="leader-laura"><span class="option-text">Laura Pérez</span></div>
-                                                        <div class="select-option" data-value="Roberto Sánchez"><input type="checkbox" id="leader-roberto"><span class="option-text">Roberto Sánchez</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="filter-group">
-                                                <label class="filter-label">País</label>
-                                                <div class="custom-select" id="country-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar países</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="country-todos"><span class="option-text">Todos</span></div>
-                                                        <div class="select-option" data-value="Colombia"><input type="checkbox" id="country-col"><span class="option-text">Colombia</span></div>
-                                                        <div class="select-option" data-value="México"><input type="checkbox" id="country-mex"><span class="option-text">México</span></div>
-                                                        <div class="select-option" data-value="Perú"><input type="checkbox" id="country-per"><span class="option-text">Perú</span></div>
-                                                        <div class="select-option" data-value="Chile"><input type="checkbox" id="country-chi"><span class="option-text">Chile</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="filter-group">
-                                                <label class="filter-label">Ciudad</label>
-                                                <div class="custom-select" id="city-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar ciudades</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="city-todos"><span class="option-text">Todos</span></div>
-                                                        <div class="select-option" data-value="Bogotá"><input type="checkbox" id="city-bog"><span class="option-text">Bogotá</span></div>
-                                                        <div class="select-option" data-value="Medellín"><input type="checkbox" id="city-med"><span class="option-text">Medellín</span></div>
-                                                        <div class="select-option" data-value="CDMX"><input type="checkbox" id="city-cdmx"><span class="option-text">CDMX</span></div>
-                                                        <div class="select-option" data-value="Lima"><input type="checkbox" id="city-lim"><span class="option-text">Lima</span></div>
-                                                        <div class="select-option" data-value="Santiago"><input type="checkbox" id="city-san"><span class="option-text">Santiago</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="filter-group">
-                                                <label class="filter-label">Edad</label>
-                                                <div class="custom-select" id="age-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar edades</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="age-todos"><span class="option-text">Todos</span></div>
-                                                        <div class="select-option" data-value="18-25"><input type="checkbox" id="age-18-25"><span class="option-text">18-25</span></div>
-                                                        <div class="select-option" data-value="26-35"><input type="checkbox" id="age-26-35"><span class="option-text">26-35</span></div>
-                                                        <div class="select-option" data-value="36-45"><input type="checkbox" id="age-36-45"><span class="option-text">36-45</span></div>
-                                                        <div class="select-option" data-value="46-55"><input type="checkbox" id="age-46-55"><span class="option-text">46-55</span></div>
-                                                        <div class="select-option" data-value="55+"><input type="checkbox" id="age-55plus"><span class="option-text">55+</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="filter-group">
-                                                <label class="filter-label">Sexo</label>
-                                                <div class="custom-select" id="sexo-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar sexo</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="sexo-todos"><span class="option-text">Todos</span></div>
-                                                        <div class="select-option" data-value="Masculino"><input type="checkbox" id="sexo-mas"><span class="option-text">Masculino</span></div>
-                                                        <div class="select-option" data-value="Femenino"><input type="checkbox" id="sexo-fem"><span class="option-text">Femenino</span></div>
-                                                        <div class="select-option" data-value="Otro"><input type="checkbox" id="sexo-otro"><span class="option-text">Otro</span></div>
-                                                        <div class="select-option" data-value="Prefiero no decir"><input type="checkbox" id="sexo-ns"><span class="option-text">Prefiero no decir</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="filter-group">
-                                                <label class="filter-label">Columna A</label>
-                                                <div class="custom-select" id="columna-a-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar valores</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="cola-todos"><span class="option-text">Todos</span></div>
-                                                        <div class="select-option" data-value="Opción 1"><input type="checkbox" id="cola-op1"><span class="option-text">Opción 1</span></div>
-                                                        <div class="select-option" data-value="Opción 2"><input type="checkbox" id="cola-op2"><span class="option-text">Opción 2</span></div>
-                                                        <div class="select-option" data-value="Opción 3"><input type="checkbox" id="cola-op3"><span class="option-text">Opción 3</span></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="filter-group">
-                                                <label class="filter-label">Columna B</label>
-                                                <div class="custom-select" id="columna-b-select">
-                                                    <div class="select-trigger">
-                                                        <span class="select-text">Seleccionar valores</span>
-                                                        <i class="fas fa-chevron-down select-arrow"></i>
-                                                    </div>
-                                                    <div class="select-dropdown">
-                                                        <div class="select-option" data-value="todos"><input type="checkbox" id="colb-todos"><span class="option-text">Todos</span></div>
-                                                        <div class="select-option" data-value="Opción X"><input type="checkbox" id="colb-op1"><span class="option-text">Opción X</span></div>
-                                                        <div class="select-option" data-value="Opción Y"><input type="checkbox" id="colb-op2"><span class="option-text">Opción Y</span></div>
-                                                        <div class="select-option" data-value="Opción Z"><input type="checkbox" id="colb-op3"><span class="option-text">Opción Z</span></div>
-                                                    </div>
+ 
+                                            <div id="nom-vista-colaborador-search-container" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); display: none; background: var(--ubits-bg-0); border: 1.5px solid var(--ubits-border-1); border-radius: 8px; z-index: 1000; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); width: 240px;">
+                                                <div style="display: flex; align-items: center; gap: 8px; padding: 4px 8px;">
+                                                    <i class="far fa-search" style="color: var(--ubits-fg-1-medium); font-size: 13px; margin-left: 4px;"></i>
+                                                    <input type="text" id="nom-vista-colaborador-search-input" placeholder="Buscar..." style="padding: 6px 4px; border: none !important; outline: none !important; box-shadow: none !important; font-size: 12px; width: 100%; background: transparent; color: var(--ubits-fg-1-high);" />
+                                                    <button id="nom-vista-colaborador-search-close-btn" style="background: transparent; border: none; cursor: pointer; color: var(--ubits-fg-1-medium); display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;">
+                                                        <i class="far fa-times"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="filters-actions">
-                                            <button class="ubits-button ubits-button--primary ubits-button--md" id="apply-filters-btn" style="flex: 1;">
-                                                <i class="far fa-check"></i><span>Aplicar</span>
-                                            </button>
-                                            <button class="ubits-button ubits-button--secondary ubits-button--md" id="clear-filters-btn" style="flex: 1;">
-                                                <i class="far fa-times"></i><span>Limpiar</span>
-                                            </button>
-                                        </div>
+                                        
+                                        <!-- Segmento demográfico -->
+                                         <div style="display: flex; align-items: center; gap: 8px;">
+                                             <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); white-space: nowrap;">Segmentar por:</span>
+                                             <div class="custom-single-select" id="nom-vista-colaborador-segment-custom-select" style="min-width: 160px; font-family: inherit;">
+                                                 <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: var(--ubits-bg-0);">
+                                                     <span class="select-text" id="nom-vista-colaborador-segment-text">Área</span>
+                                                     <i class="fas fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
+                                                 </div>
+                                                 <div class="select-dropdown" id="nom-vista-colaborador-segment-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 160px; max-height: 240px; overflow-y: auto !important;">
+                                                     <div class="select-option selected" data-value="areas" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Área</div>
+                                                     <div class="select-option" data-value="leaders" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Líder</div>
+                                                     <div class="select-option" data-value="collaborators" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Colaborador</div>
+                                                     <div class="select-option" data-value="country" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">País</div>
+                                                     <div class="select-option" data-value="city" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Ciudad</div>
+                                                     <div class="select-option" data-value="age" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Edad</div>
+                                                     <div class="select-option" data-value="sexo" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Sexo</div>
+                                                 </div>
+                                             </div>
+                                             
+                                             <select id="nom-vista-colaborador-segment-select" style="display: none;">
+                                                 <option value="areas" selected>Área</option>
+                                                 <option value="leaders">Líder</option>
+                                                 <option value="collaborators">Colaborador</option>
+                                                 <option value="country">País</option>
+                                                 <option value="city">Ciudad</option>
+                                                 <option value="age">Edad</option>
+                                                 <option value="sexo">Sexo</option>
+                                             </select>
+                                         </div>
                                     </div>
-                                    <div class="filters-overlay" id="filters-overlay"></div>
-
-                                    <!-- Panel Derecho - Detalles del Participante -->
-                                    <div class="participant-details-panel">
-                                        <div class="panel-header">
-                                            <h3>Detalles del Participante</h3>
-                                        </div>
-                                        <div class="participant-info" id="participant-info">
-                                            <div class="no-selection">
-                                                <i class="far fa-user"></i>
-                                                <p>Selecciona un participante para ver sus detalles</p>
-                                            </div>
-                                        </div>
-                                        <div class="survey-results" id="survey-results">
-                                            <!-- Resultados de la encuesta se mostrarán aquí -->
+                                </div>
+                                <div style="background: var(--ubits-bg-0); overflow-x: auto;">
+                                    <div id="nom-vista-colaborador-table-wrapper">
+                                        <!-- Aquí se cargará la tabla de vista por colaborador -->
+                                        <div style="text-align: center; padding: 40px; color: var(--ubits-fg-1-medium);">
+                                            <i class="fas fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 12px;"></i>
+                                            <p>Cargando datos de colaboradores...</p>
                                         </div>
                                     </div>
                                 </div>
@@ -2882,14 +2715,15 @@
         }
 
         // Inicializar panel de acontecimientos traumáticos
+        // Inicializar panel de acontecimientos traumáticos
         function initializeEmotionalPanel() {
-            renderParticipantsList();
-            setupSearch();
-
-            // Seleccionar automáticamente el primer participante
-            if (participantsData.length > 0) {
-                selectParticipant(participantsData[0].id);
+            if (typeof renderNomVistaColaboradorTable === 'function') {
+                renderNomVistaColaboradorTable();
             }
+            if (typeof setupNomVistaColaboradorControls === 'function') {
+                setupNomVistaColaboradorControls();
+            }
+            // setupSearch(); // Removido porque la nueva tabla tiene su propio buscador
         }
 
         // Configurar clics en tarjetas de métricas
@@ -2963,179 +2797,158 @@
             applyFilters();
         }
 
-        // Renderizar lista de participantes
-        function renderParticipantsList(participants = participantsData) {
-            console.log('🔍 ===== INICIANDO RENDERIZADO =====');
-            console.log('🔍 Participantes recibidos:', participants.length);
-            console.log('🔍 Nombres de participantes:', participants.map(p => p.name));
-            
-            const participantsList = document.getElementById('participants-list');
-            console.log('🔍 Elemento participants-list encontrado:', !!participantsList);
-            console.log('🔍 Elemento participants-list:', participantsList);
-            
-            if (!participantsList) {
-                console.error('🔍 ERROR: No se encontró el elemento participants-list');
-                return;
+// Renderizar la tabla de vista por colaborador
+        window.renderNomVistaColaboradorTable = function(participants = participantsData, search = '') {
+            const tableWrapper = document.getElementById('nom-vista-colaborador-table-wrapper');
+            if (!tableWrapper) return;
+
+            // Filtrar por búsqueda si es necesario
+            let filteredData = participants;
+            if (search) {
+                const searchLower = search.toLowerCase();
+                filteredData = filteredData.filter(p => 
+                    p.name.toLowerCase().includes(searchLower) ||
+                    (p.details && p.details.department && p.details.department.toLowerCase().includes(searchLower)) ||
+                    p.riskLevel.toLowerCase().includes(searchLower)
+                );
             }
-            
-            console.log('🔍 Limpiando contenido anterior...');
-            participantsList.innerHTML = '';
-            console.log('🔍 Contenido limpiado, iniciando renderizado...');
 
-            participants.forEach((participant, index) => {
-                console.log(`🔍 Renderizando participante ${index + 1}: ${participant.name}`);
-                console.log(`🔍 RiskLevel original: ${participant.riskLevel}`);
+            // Actualizar contador
+            const counter = document.getElementById('nom-vista-colaborador-counter');
+            if (counter) {
+                counter.textContent = `${filteredData.length} resultados`;
+            }
 
-                const participantItem = document.createElement('div');
-                participantItem.className = 'participant-item';
-                participantItem.dataset.participantId = participant.id;
-
-                // Normalizar nivel de riesgo para mostrar solo alto o medio
-                const normalizedRisk = normalizeRiskLevel(participant.riskLevel);
-                console.log(`🔍 RiskLevel normalizado: ${normalizedRisk}`);
-
-                // Solo mostrar badge de riesgo si hay nivel normalizado (alto o medio)
-                const riskBadge = normalizedRisk ?
-                    `<div class="risk-level risk-${normalizedRisk}">${normalizedRisk}</div>` :
-                    '';
-                console.log(`🔍 RiskBadge: ${riskBadge ? 'Mostrar' : 'No mostrar'}`);
-                
-                participantItem.innerHTML = `
-                    <div class="participant-avatar" style="background-color: ${participant.avatarColor}">
-                        ${participant.avatar}
-                    </div>
-                    <div class="participant-info-content">
-                        <div class="participant-name">${participant.name}</div>
-                        <div class="participant-role">${participant.role}</div>
-                    </div>
-                    ${riskBadge}
-                `;
-
-                participantItem.addEventListener('click', () => {
-                    selectParticipant(participant.id);
-                });
-
-                participantsList.appendChild(participantItem);
-                console.log(`🔍 Participante ${participant.name} agregado al DOM`);
-            });
-            
-            console.log('🔍 ===== RENDERIZADO COMPLETADO =====');
-            console.log('🔍 Total de elementos en participantsList:', participantsList.children.length);
-        }
-
-        // Seleccionar participante
-        function selectParticipant(participantId) {
-            // Remover selección anterior
-            document.querySelectorAll('.participant-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-
-            // Agregar selección al item actual
-            document.querySelector(`[data-participant-id="${participantId}"]`).classList.add('selected');
-
-            // Mostrar detalles del participante
-            showParticipantDetails(participantId);
-        }
-
-        // Mostrar detalles del participante
-        function showParticipantDetails(participantId) {
-            const participant = participantsData.find(p => p.id === participantId);
-            if (!participant) return;
-
-            const participantInfo = document.getElementById('participant-info');
-            const surveyResults = document.getElementById('survey-results');
-
-            // Mostrar información del participante
-            participantInfo.innerHTML = `
-                <div class="participant-details show">
-                    <div class="participant-header">
-                        <div class="participant-avatar-large" style="background-color: ${participant.avatarColor}">
-                            ${participant.avatar}
-                        </div>
-                        <div class="participant-details-content">
-                            <div class="participant-info-line">
-                                <span class="participant-name">${participant.name}</span>
-                                <span class="participant-separator">•</span>
-                                <span class="participant-role">${participant.role}</span>
-                                <span class="participant-separator">•</span>
-                                <span class="participant-department">${participant.details.department}</span>
-                                <span class="participant-separator">•</span>
-                                <span class="participant-age">${participant.details.age} años</span>
-                                <span class="participant-separator">•</span>
-                                <span class="participant-gender">${participant.details.gender}</span>
-                                <span class="participant-separator">•</span>
-                                <span class="participant-status">${participant.details.maritalStatus}</span>
-                                <span class="participant-separator">•</span>
-                                <span class="participant-country">${participant.details.country}</span>
-                                <span class="participant-separator">•</span>
-                                <span class="participant-city">${participant.details.city}</span>
-                                <span class="participant-separator">•</span>
-                                <span class="participant-experience">${participant.details.experience} de experiencia</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            let html = `
+                <table class="participation-table" style="width: 100%; min-width: 600px;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 16px; text-align: left; font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-medium); border-bottom: 1px solid var(--ubits-border-1);">Participante <i class="far fa-sort th-icon" style="margin-left: 4px; cursor: pointer;"></i></th>
+                            <th style="padding: 16px; text-align: left; font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-medium); border-bottom: 1px solid var(--ubits-border-1);">Área <i class="far fa-sort th-icon" style="margin-left: 4px; cursor: pointer;"></i></th>
+                            <th style="padding: 16px; text-align: left; font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-medium); border-bottom: 1px solid var(--ubits-border-1);">Nivel de riesgo <i class="far fa-sort th-icon" style="margin-left: 4px; cursor: pointer;"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
             `;
 
-            // Mostrar resultados de la encuesta
-            surveyResults.innerHTML = `
-                ${Object.entries(participant.surveyResults).map(([sectionName, questions], index) => `
-                    <div class="survey-section">
-                        <div class="section-header" onclick="toggleSection(this)">
-                            <div class="section-number">${index + 1}</div>
-                            <div class="section-title">${sectionName}</div>
-                            <div class="section-risk-info">
-                            </div>
-                            <i class="far fa-chevron-down section-chevron"></i>
-                        </div>
-                        <div class="section-content ${index === 0 ? 'open' : ''}">
-                            ${questions.map(q => `
-                                <div class="question-item">
-                                    <div class="question-text">${q.question}</div>
-                                    <div class="question-answer ${q.answer === 'Sí' ? 'answer-yes' : 'answer-no'}">
-                                        ${q.answer}
+            if (filteredData.length === 0) {
+                html += `
+                    <tr>
+                        <td colspan="3" style="padding: 32px; text-align: center; color: var(--ubits-fg-1-medium); font-size: 14px;">
+                            <i class="far fa-search" style="font-size: 24px; margin-bottom: 12px; opacity: 0.5;"></i>
+                            <p>No se encontraron resultados</p>
+                        </td>
+                    </tr>
+                `;
+            } else {
+                filteredData.forEach(p => {
+                    const normalizedRisk = normalizeRiskLevel(p.riskLevel);
+                    // Mostrar texto formateado (Canalizado, Alto, etc.)
+                    let riskLabel = "Nulo";
+                    if (normalizedRisk === "alto") riskLabel = "Alto";
+                    if (normalizedRisk === "canalizado") riskLabel = "Canalizado";
+                    
+                    const riskBadge = normalizedRisk ? 
+                        `<div class="risk-level risk-${normalizedRisk}" style="display: inline-block;">${riskLabel}</div>` : 
+                        `<div class="risk-level risk-nulo" style="display: inline-block;">Nulo</div>`;
+
+                    html += `
+                        <tr style="border-bottom: 1px solid var(--ubits-border-1); transition: background-color 0.2s ease;">
+                            <td style="padding: 16px; font-size: 13px; color: var(--ubits-fg-1-high); font-weight: 500;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 50%; background-color: ${p.avatarColor}; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">
+                                        ${p.avatar}
+                                    </div>
+                                    <div>
+                                        <div style="font-weight: 600;">${p.name}</div>
+                                        <div style="font-size: 11px; color: var(--ubits-fg-1-medium); margin-top: 2px;">${p.role}</div>
                                     </div>
                                 </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `).join('')}
-            `;
-        }
-
-        // Calcular nivel de riesgo de una sección (solo alto y medio)
-        function getSectionRiskLevel(questions) {
-            const yesCount = questions.filter(q => q.answer === 'Sí').length;
-            const totalQuestions = questions.length;
-            const percentage = (yesCount / totalQuestions) * 100;
-            
-            // Solo devolver alto o medio
-            if (percentage >= 60) return 'alto';
-            return 'medio';
-        }
-
-        // Calcular porcentaje de una sección
-        function getSectionPercentage(questions) {
-            const yesCount = questions.filter(q => q.answer === 'Sí').length;
-            const totalQuestions = questions.length;
-            return Math.round((yesCount / totalQuestions) * 100);
-        }
-
-
-        // Toggle de secciones (acordeones)
-        function toggleSection(header) {
-            const content = header.nextElementSibling;
-            const isOpen = content.classList.contains('open');
-
-            // Toggle de la sección actual
-            if (!isOpen) {
-                content.classList.add('open');
-                header.classList.add('open');
-            } else {
-                content.classList.remove('open');
-                header.classList.remove('open');
+                            </td>
+                            <td style="padding: 16px; font-size: 13px; color: var(--ubits-fg-1-high);">${p.details && p.details.department ? p.details.department : 'N/A'}</td>
+                            <td style="padding: 16px; font-size: 13px; color: var(--ubits-fg-1-high);">
+                                ${riskBadge}
+                            </td>
+                        </tr>
+                    `;
+                });
             }
-        }
+
+            html += `
+                    </tbody>
+                </table>
+            `;
+
+            tableWrapper.innerHTML = html;
+        };
+        
+        window.setupNomVistaColaboradorControls = function() {
+            const searchInput = document.getElementById('nom-vista-colaborador-search-input');
+            const searchToggle = document.getElementById('nom-vista-colaborador-search-toggle-btn');
+            const searchContainer = document.getElementById('nom-vista-colaborador-search-container');
+            const searchClose = document.getElementById('nom-vista-colaborador-search-close-btn');
+
+            if (searchToggle && searchContainer) {
+                searchToggle.addEventListener('click', () => {
+                    searchContainer.style.display = 'block';
+                    if (searchInput) searchInput.focus();
+                });
+            }
+
+            if (searchClose && searchContainer) {
+                searchClose.addEventListener('click', () => {
+                    searchContainer.style.display = 'none';
+                    if (searchInput) {
+                        searchInput.value = '';
+                        if (typeof renderNomVistaColaboradorTable === 'function') {
+                            renderNomVistaColaboradorTable(window.currentFilteredParticipants || participantsData, '');
+                        }
+                    }
+                });
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    if (typeof renderNomVistaColaboradorTable === 'function') {
+                        renderNomVistaColaboradorTable(window.currentFilteredParticipants || participantsData, e.target.value);
+                    }
+                });
+            }
+            
+            // Add custom select behaviour for segment dropdown
+            const segmentSelect = document.getElementById('nom-vista-colaborador-segment-custom-select');
+            if (segmentSelect) {
+                const trigger = segmentSelect.querySelector('.select-trigger');
+                const dropdown = segmentSelect.querySelector('.select-dropdown');
+                const text = segmentSelect.querySelector('.select-text');
+                
+                if (trigger && dropdown) {
+                    trigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        trigger.classList.toggle('active');
+                        dropdown.classList.toggle('show');
+                    });
+                    
+                    const options = dropdown.querySelectorAll('.select-option');
+                    options.forEach(option => {
+                        option.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            options.forEach(opt => opt.classList.remove('selected'));
+                            option.classList.add('selected');
+                            if (text) text.textContent = option.textContent;
+                            trigger.classList.remove('active');
+                            dropdown.classList.remove('show');
+                            // In a real implementation this would change the grouping, but for now we just change the label
+                        });
+                    });
+                    
+                    document.addEventListener('click', () => {
+                        trigger.classList.remove('active');
+                        dropdown.classList.remove('show');
+                    });
+                }
+            }
+        };
 
 
         // Inicializar panel de acontecimientos traumáticos cuando se carga la página
@@ -3144,16 +2957,16 @@
 
             // Función para verificar que todos los elementos estén disponibles
             function checkElementsReady() {
-                const searchInput = document.getElementById('participant-search');
-                const participantsList = document.getElementById('participants-list');
-                const filtersBtn = document.getElementById('filters-btn');
+                
+                
+                
 
                 console.log('🔍 Verificando elementos:');
-                console.log('  - participant-search:', !!searchInput);
-                console.log('  - participants-list:', !!participantsList);
-                console.log('  - filters-btn:', !!filtersBtn);
+                
+                
+                
 
-                return searchInput && participantsList && filtersBtn;
+                return true;
             }
 
             // Intentar inicializar inmediatamente
@@ -3304,7 +3117,7 @@
 
         // Configurar funcionalidad de filtros
         function setupFilters() {
-            const filtersBtn = document.getElementById('filters-btn');
+            
             const filtersSidePanel = document.getElementById('filters-side-panel');
             const filtersOverlay = document.getElementById('filters-overlay');
             const closeFiltersBtn = document.getElementById('close-filters-btn');
@@ -3360,7 +3173,7 @@
             const columnaAFilters = getSelectedValues('columna-a-select');
             const columnaBFilters = getSelectedValues('columna-b-select');
             
-            const searchInput = document.getElementById('participant-search');
+            
             console.log('🔍 searchInput existe:', !!searchInput);
             console.log('🔍 searchInput.value:', searchInput ? searchInput.value : 'undefined');
             
@@ -3442,7 +3255,10 @@
             console.log('🔍 Lista de participantes filtrados:', filteredParticipants.map(p => p.name));
             
             console.log('🔍 Llamando a renderParticipantsList...');
-            renderParticipantsList(filteredParticipants);
+            window.currentFilteredParticipants = filteredParticipants;
+            if (typeof renderNomVistaColaboradorTable === 'function') {
+                renderNomVistaColaboradorTable(filteredParticipants, document.getElementById('nom-vista-colaborador-search-input')?.value || '');
+            }
             console.log('🔍 renderParticipantsList completado');
             
             // Actualizar badge de filtros
@@ -3561,7 +3377,10 @@
             });
             
             document.getElementById('participant-search').value = '';
-            renderParticipantsList(participantsData);
+            window.currentFilteredParticipants = participantsData;
+            if (typeof renderNomVistaColaboradorTable === 'function') {
+                renderNomVistaColaboradorTable(participantsData, document.getElementById('nom-vista-colaborador-search-input')?.value || '');
+            }
             
             // Ocultar badge de filtros
             const badge = document.getElementById('filter-badge');
@@ -3595,7 +3414,7 @@
             
             // Función para limpiar la búsqueda
             function clearSearch() {
-                const searchInput = document.getElementById('participant-search');
+                
                 const clearButton = document.getElementById('clear-participant-search');
                 
                 if (searchInput) {
@@ -3613,7 +3432,7 @@
             
             // Función para configurar el buscador cuando esté disponible
             function configureSearch() {
-                const searchInput = document.getElementById('participant-search');
+                
                 const clearButton = document.getElementById('clear-participant-search');
                 console.log('🔍 Elemento de búsqueda encontrado:', searchInput);
                 console.log('🔍 Botón de limpiar encontrado:', clearButton);

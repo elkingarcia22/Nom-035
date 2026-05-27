@@ -1195,28 +1195,28 @@
         }
 
         .risk-badge.nulo {
-            background-color: #f3f4f6;
-            color: #6b7280;
+            background-color: var(--ubits-semantic-info-light);
+            color: var(--ubits-semantic-info);
         }
 
         .risk-badge.bajo {
-            background-color: #dcfce7;
-            color: #166534;
+            background-color: var(--ubits-semantic-success-light);
+            color: var(--ubits-semantic-success);
         }
 
         .risk-badge.medio {
-            background-color: #fef3c7;
-            color: #92400e;
+            background-color: #fef9c3;
+            color: #a16207;
         }
 
         .risk-badge.alto {
-            background-color: #fed7d7;
-            color: #c53030;
+            background-color: #ffedd5;
+            color: #ea580c;
         }
 
         .risk-badge.muy-alto {
-            background-color: #fecaca;
-            color: #991b1b;
+            background-color: var(--ubits-semantic-danger-light);
+            color: var(--ubits-semantic-danger);
         }
 
         /* Estilos para las filas de categoría con dropdown - Estilo emocional */
@@ -1415,28 +1415,28 @@
         }
 
         .risk-badge.nulo {
-            background: #f3f4f6;
-            color: #6b7280;
+            background: var(--ubits-semantic-info-light);
+            color: var(--ubits-semantic-info);
         }
 
         .risk-badge.bajo {
-            background: #dcfce7;
-            color: #166534;
+            background: var(--ubits-semantic-success-light);
+            color: var(--ubits-semantic-success);
         }
 
         .risk-badge.medio {
-            background: #fef3c7;
-            color: #92400e;
+            background: #fef9c3;
+            color: #a16207;
         }
 
         .risk-badge.alto {
-            background: #fed7aa;
-            color: #c2410c;
+            background: #ffedd5;
+            color: #ea580c;
         }
 
         .risk-badge.muy-alto {
-            background: #fecaca;
-            color: #dc2626;
+            background: var(--ubits-semantic-danger-light);
+            color: var(--ubits-semantic-danger);
         }
 
         /* Table Header and Controls */
@@ -2124,10 +2124,10 @@
             transition: width 0.3s ease;
         }
         .range-fill.nulo { background-color: #60a5fa; }
-        .range-fill.bajo { background-color: #86efac; }
-        .range-fill.medio { background-color: #fde047; }
-        .range-fill.alto { background-color: #fbbf24; }
-        .range-fill.muy-alto { background-color: #ef4444; }
+        .range-fill.bajo { background-color: var(--ubits-semantic-success); }
+        .range-fill.medio { background-color: #eab308; }
+        .range-fill.alto { background-color: #f97316; }
+        .range-fill.muy-alto { background-color: var(--ubits-semantic-danger); }
         
         .range-thresholds {
             position: relative;
@@ -2364,7 +2364,7 @@
                                             <th>Dimensión</th>
                                             <th>Total Usuarios en Riesgo</th>
                                             <th>% Colaboradores Afectados</th>
-                                            <th>Puntaje</th><th>Calificación</th><th>Nivel de Riesgo</th>
+                                            <th>Nivel de Riesgo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2468,8 +2468,8 @@
                                                     <span>Liderazgo y relaciones en el trabajo</span>
                                                 </div>
                                             </td>
-                                            <td class="category-domain-info">Liderazgo y Relaciones interpersonales</td>
-                                            <td class="category-dimension-info">Estilo de liderazgo, comunicación, apoyo y relaciones</td>
+                                            <td class="category-domain-info">Liderazgo, relaciones y violencia</td>
+                                            <td class="category-dimension-info">Estilo de liderazgo, relaciones y violencia laboral</td>
                                             <td class="risk-count">26</td>
                                             <td class="percentage">17.3%</td>
                                             <td>
@@ -2495,6 +2495,14 @@
                                             <td class="percentage">5.3%</td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
+                                        <tr class="category-detail" style="display: none;">
+                                            <td class="category-cell"></td>
+                                            <td>Violencia laboral</td>
+                                            <td>Acoso, hostigamiento y violencia</td>
+                                            <td class="risk-count">5</td>
+                                            <td class="percentage">3.3%</td>
+                                            <td><span class="risk-badge nulo">Nulo</span></td>
+                                        </tr>
                                         
                                         <!-- Categoría: Entorno organizacional -->
                                         <tr class="category-summary" onclick="toggleNewCategoryRow(this)">
@@ -2504,10 +2512,10 @@
                                                     <span>Entorno organizacional</span>
                                                 </div>
                                             </td>
-                                            <td class="category-domain-info">Violencia laboral</td>
-                                            <td class="category-dimension-info">Equidad, respeto y seguridad laboral</td>
-                                            <td class="risk-count">32</td>
-                                            <td class="percentage">21.3%</td>
+                                            <td class="category-domain-info">Entorno organizacional</td>
+                                            <td class="category-dimension-info">Cultura organizacional y políticas</td>
+                                            <td class="risk-count">77</td>
+                                            <td class="percentage">51.3%</td>
                                             <td>
                                                 <div class="category-risk-info">
                                                     <span class="risk-badge alto">Alto</span>
@@ -2517,10 +2525,10 @@
                                         </tr>
                                         <tr class="category-detail" style="display: none;">
                                             <td class="category-cell"></td>
-                                            <td>Violencia laboral</td>
-                                            <td>Equidad, respeto y seguridad laboral</td>
-                                            <td class="risk-count">32</td>
-                                            <td class="percentage">21.3%</td>
+                                            <td>Entorno organizacional</td>
+                                            <td>Cultura organizacional y políticas</td>
+                                            <td class="risk-count">77</td>
+                                            <td class="percentage">51.3%</td>
                                             <td><span class="risk-badge alto">Alto</span></td>
                                         </tr>
                                     </tbody>
@@ -4141,8 +4149,10 @@
             
             selectIds.forEach(selectId => {
                 const select = document.getElementById(selectId);
+                if (!select) return;
                 const trigger = select.querySelector('.select-trigger');
                 const dropdown = select.querySelector('.select-dropdown');
+                if (!trigger || !dropdown) return;
                 const options = select.querySelectorAll('.select-option');
 
                 // Toggle dropdown
@@ -6186,7 +6196,7 @@
         }
 
         // Función para inicializar el Panel Individual
-
+        function initializeIndividualUsersPanel() {
             console.log('👥 ===== INICIALIZANDO PANEL INDIVIDUAL =====');
             
             // Renderizar lista de participantes
@@ -6802,8 +6812,7 @@
             initializeSegmentControl();
             
             // Inicializar Panel Individual
-
-            
+            initializeIndividualUsersPanel();
             // Verificar que el panel de dimensiones existe desde el inicio
             const dimensionPanel = document.getElementById('dimension-panel');
             console.log('🔍 Panel dimension-panel encontrado:', dimensionPanel ? 'SÍ' : 'NO');
