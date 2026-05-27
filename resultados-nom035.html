@@ -298,66 +298,108 @@
             font-weight: 600;
         }
 
-        /* Métricas - COMPACTAS COMO LA IMAGEN */
+        /* Métricas - ESTILO REFERENCIA: fila horizontal, compactas */
         .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            flex-direction: row;
             gap: 16px;
             margin-top: 2px;
             margin-bottom: 8px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            overflow: visible;
+            box-shadow: none;
         }
 
         .metric-card {
+            flex: 1;
             background: var(--ubits-bg-1) !important;
-            border-radius: 8px !important;
-            padding: 12px !important;
-            border: 1px solid var(--ubits-border-1) !important;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+            border-radius: 0 !important;
+            padding: 14px 20px !important;
+            border: none !important;
+            border-right: 1px solid var(--ubits-border-1) !important;
+            box-shadow: none !important;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 0;
+        }
+
+        .metric-card:last-child {
+            border-right: none !important;
         }
 
         .metric-header {
             display: flex !important;
             align-items: center !important;
             justify-content: space-between !important;
-            margin-bottom: 8px !important;
+            margin-bottom: 0 !important;
         }
 
         .metric-title-section {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .metric-icon {
-            width: 20px !important;
-            height: 20px !important;
+            width: 16px !important;
+            height: 16px !important;
             border-radius: 50% !important;
-            background: var(--ubits-bg-2) !important;
+            background: transparent !important;
             color: var(--ubits-fg-1-medium) !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             font-size: 12px !important;
+            flex-shrink: 0;
         }
 
         .metric-title {
-            font-size: 11px !important;
-            color: var(--ubits-fg-1-high) !important;
+            font-size: 10px !important;
+            color: var(--ubits-fg-1-medium) !important;
             margin: 0 !important;
-            font-weight: 600 !important;
-            text-transform: none !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
             letter-spacing: 0.5px !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-
 
         .metric-value-section {
             display: flex;
             align-items: baseline;
-            gap: 8px;
+            gap: 6px;
         }
 
+        .metric-main-number {
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--ubits-fg-1-high);
+        }
 
+        .metric-unit-text {
+            font-size: 12px;
+            color: var(--ubits-fg-1-medium);
+            font-weight: 400;
+        }
 
+        /* Colores de valor por tipo de métrica */
+        .metric-card:nth-child(1) .metric-main-number { color: var(--ubits-fg-1-high); }
+        .metric-card:nth-child(2) .metric-main-number { color: var(--ubits-accent-brand); }
+        .metric-card:nth-child(3) .metric-main-number { color: #16a34a; }
+
+        /* Dot indicador opcional en header */
+        .metric-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--ubits-accent-brand);
+            flex-shrink: 0;
+        }
 
         /* Panel emocional container */
         .panel-emocional-container {
@@ -371,9 +413,16 @@
         .panel-container {
             display: flex;
             gap: 16px;
-            height: 600px;
+            height: calc(100vh - 380px);
+            min-height: 400px;
             width: 100%;
             box-sizing: border-box;
+        }
+
+        #tab-detalle-colaborador .panel-container {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
         }
 
         .participants-panel {
@@ -385,6 +434,7 @@
             flex-direction: column;
             width: 100%;
             box-sizing: border-box;
+            overflow: hidden;
         }
 
         .participant-details-panel {
@@ -394,6 +444,7 @@
             border: 1px solid var(--ubits-border-1);
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .panel-content {
@@ -405,9 +456,8 @@
         .panel-header {
             padding: 12px 24px;
             border-bottom: 1px solid var(--ubits-border-1);
-            background: #f9fafb;
+            background: #E8E9EC;
             border-radius: 8px 8px 0 0;
-            background: var(--ubits-bg-2);
         }
 
         /* Search and Filters Container - Solo layout básico */
@@ -505,7 +555,7 @@
             align-items: center;
             padding: 20px;
             border-bottom: 1px solid var(--ubits-border-1);
-            background: #f9fafb;
+            background: #E8E9EC;
         }
 
         .filters-header h3 {
@@ -1094,8 +1144,9 @@
             }
             
             .metrics-grid {
-                grid-template-columns: 1fr;
+                flex-direction: column;
             }
+
 
             .panel-container {
                 flex-direction: column;
@@ -1117,7 +1168,7 @@
             display: flex;
             gap: 4px;
             padding: 4px;
-            background: var(--ubits-bg-2);
+            background: #E8E9EC;
             border-radius: var(--ubits-radius-sm);
             width: fit-content;
             margin-bottom: 16px;
@@ -1164,7 +1215,7 @@
             font-size: 14px;
         }
         .participation-table thead tr {
-            background: #F4F5F6;
+            background: #E8E9EC;
             border-bottom: 1px solid var(--ubits-border-1);
         }
         .participation-table th {
@@ -1445,7 +1496,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             z-index: 1000;
             max-height: 240px;
-            overflow-y: auto;
+            overflow-y: auto !important;
             display: none;
         }
         .custom-single-select .select-dropdown.show {
@@ -1638,6 +1689,7 @@
                                     </div>
                                     <h3 class="metric-title">Total de casos canalizados</h3>
                                 </div>
+                                <div class="metric-dot"></div>
                             </div>
                             <div class="metric-value-section">
                                 <div class="metric-main-number">3</div>
@@ -1668,15 +1720,16 @@
                                     <div class="metric-icon">
                                         <i class="far fa-check-circle"></i>
                                     </div>
-                                    <h3 class="metric-title">90% de participación</h3>
+                                    <h3 class="metric-title">Participación</h3>
                                 </div>
                             </div>
                             <div class="metric-value-section">
-                                <div class="metric-main-number">140 / 150</div>
-                                <div class="metric-unit-text">Colaboradores</div>
+                                <div class="metric-main-number">90%</div>
+                                <div class="metric-unit-text">140 / 150 colaboradores</div>
                             </div>
                         </div>
                     </div>
+
 
                     <!-- Panel ATS - Participantes y Detalles con TABS -->
                     <div class="panel-emocional-container" style="margin-top: 24px;">
@@ -1693,7 +1746,7 @@
                             </div>
 
                             <!-- Tab 1: Participante -->
-                            <div class="tab-panel active" id="tab-participante" style="background: var(--ubits-bg-0); border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: hidden;">
+                            <div class="tab-panel active" id="tab-participante" style="background: var(--ubits-bg-0); border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05);">
                                 <div class="nom-table-header-card">
                                     <!-- Al lado izquierdo: título de la tabla -->
                                     <div id="nom-participation-table-title" style="font-size: 16px; font-weight: 700; color: var(--ubits-fg-1-high);">
@@ -1721,7 +1774,7 @@
                                         
                                         <!-- Segmento demográfico -->
                                          <div style="display: flex; align-items: center; gap: 8px;">
-                                             <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high);">Segmento demográfico:</span>
+                                             <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); white-space: nowrap;">Segmentar por:</span>
                                              <div class="custom-single-select" id="nom-participation-segment-custom-select" style="min-width: 160px; font-family: inherit;">
                                                  <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: var(--ubits-bg-0);">
                                                      <span class="select-text" id="nom-participation-segment-text">Área</span>
@@ -4580,6 +4633,22 @@
             render();
         };
 
+        // Ajustar altura de los paneles de detalle por colaborador responsivamente
+        function adjustPanelHeight() {
+            const panel = document.querySelector('#tab-detalle-colaborador .panel-container');
+            if (!panel) return;
+            const rect = panel.getBoundingClientRect();
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Borde inferior del panel alineado al final de la pantalla respetando el margen de 24px
+            const availableHeight = window.innerHeight - rect.top - 24;
+            
+            // Asignar el alto calculado asegurando un alto mínimo de 400px
+            panel.style.height = `${Math.max(400, availableHeight)}px`;
+        }
+
+        window.addEventListener('resize', adjustPanelHeight);
+
         // ===== SISTEMA DE TABS =====
         function initializeTabs() {
             const tabButtons = document.querySelectorAll('.tab-button');
@@ -4606,6 +4675,7 @@
                                 initializeEmotionalPanel();
                                 console.log('Panel emocional inicializado para tab detalle-colaborador');
                             }
+                            adjustPanelHeight();
                         }, 100);
                     }
                 });
@@ -4621,6 +4691,9 @@
                 window.initializeNomParticipationContent();
                 console.log('✅ Contenido de participación NOM inicializado');
             }
+
+            // Ajustar altura inicial si el panel ya está visible
+            setTimeout(adjustPanelHeight, 150);
         });
 
         // Inicializar sistema de feedback

@@ -1676,66 +1676,98 @@
 
         /* Métricas - COMPACTAS COMO LA IMAGEN */
         .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            flex-direction: row;
             gap: 16px;
             margin-top: 2px;
             margin-bottom: 8px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            overflow: visible;
+            box-shadow: none;
         }
 
         .metric-card {
-            background: var(--ubits-bg-0);
-            border-radius: var(--ubits-radius-md);
-            padding: 20px;
-            border: 1px solid var(--ubits-border-1);
+            flex: 1;
+            background: var(--ubits-bg-1) !important;
+            border-radius: 0 !important;
+            padding: 14px 20px !important;
+            border: none !important;
+            border-right: 1px solid var(--ubits-border-1) !important;
+            box-shadow: none !important;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 2px 8px rgba(15,23,42,0.06);
+            gap: 6px;
+            min-width: 0;
+        }
+
+        .metric-card:last-child {
+            border-right: none !important;
+        }
+
+        .metric-header {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            margin-bottom: 0 !important;
         }
 
         .metric-title-section {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 6px;
         }
 
         .metric-icon {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--ubits-bg-1);
-            border-radius: var(--ubits-radius-sm);
-            color: var(--ubits-fg-1-medium);
-            font-size: 12px;
+            width: 16px !important;
+            height: 16px !important;
+            border-radius: 50% !important;
+            background: transparent !important;
+            color: var(--ubits-fg-1-medium) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 12px !important;
+            flex-shrink: 0;
         }
 
         .metric-title {
-            color: var(--ubits-fg-1-medium);
-            font-size: 14px;
-            font-weight: 600;
-            margin: 0;
+            font-size: 10px !important;
+            color: var(--ubits-fg-1-medium) !important;
+            margin: 0 !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .metric-value-section {
             display: flex;
             align-items: baseline;
-            gap: 8px;
+            gap: 6px;
         }
 
         .metric-main-number {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 700;
-            color: var(--ubits-fg-1-high);
             line-height: 1;
+            color: var(--ubits-fg-1-high);
         }
 
         .metric-unit-text {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--ubits-fg-1-medium);
             font-weight: 500;
+        }
+
+        .metric-dot {
+            width: 6px !important;
+            height: 6px !important;
+            border-radius: 50% !important;
+            background-color: var(--ubits-accent-brand) !important;
         }
 
         /* Panel emocional container */
@@ -1750,7 +1782,7 @@
             display: flex;
             gap: 4px;
             padding: 4px;
-            background: var(--ubits-bg-2);
+            background: #E8E9EC;
             border-radius: var(--ubits-radius-sm);
             width: fit-content;
         }
@@ -2701,7 +2733,7 @@
             display: flex;
             gap: 4px;
             padding: 4px;
-            background: var(--ubits-bg-2);
+            background: #E8E9EC;
             border-radius: var(--ubits-radius-sm);
             width: fit-content;
             margin-bottom: 16px;
@@ -2792,7 +2824,7 @@
         }
 
         .results-table thead {
-            background: #F4F5F6;
+            background: #E8E9EC;
         }
 
         .results-table th {
@@ -4010,7 +4042,7 @@
         }
 
         .dimensions-table thead {
-            background: var(--ubits-bg-1);
+            background: #E8E9EC;
         }
 
         .dimensions-table th {
@@ -4294,7 +4326,7 @@
         }
 
         .heatmap-table thead {
-            background: linear-gradient(135deg, var(--ubits-bg-1) 0%, var(--ubits-border-1) 100%);
+            background: #E8E9EC;
             border-bottom: 2px solid var(--ubits-border-2);
         }
 
@@ -4414,7 +4446,7 @@
             font-size: 14px;
         }
         .participation-table thead tr {
-            background: #F4F5F6;
+            background: #E8E9EC;
             border-bottom: 1px solid var(--ubits-border-1);
         }
         .participation-table th {
@@ -4783,13 +4815,13 @@
             transform: translateY(-2px) !important;
         }
         .metric-title {
-            font-family: 'Inter', sans-serif !important;
+            font-family: 'Noto Sans', sans-serif !important;
             font-size: 13px !important;
             font-weight: 700 !important;
             color: var(--ubits-fg-1-high) !important;
         }
         .metric-main-number {
-            font-family: 'Inter', sans-serif !important;
+            font-family: 'Noto Sans', sans-serif !important;
             font-size: 24px !important;
             font-weight: 700 !important;
             color: var(--ubits-fg-1-high) !important;
@@ -4859,6 +4891,18 @@
         span[style*="padding: 8px 16px"] {
             border-radius: var(--ubits-radius-full) !important;
             font-family: 'Inter', sans-serif !important;
+        }
+        
+        /* Force no uppercase on metrics, status tags, and tables */
+        .metric-title, 
+        .status-badge, 
+        .risk-badge, 
+        .risk-level, 
+        .section-risk-level, 
+        .participation-table th, 
+        .results-container th, 
+        th {
+            text-transform: none !important;
         }
     
         /* --- UBITS SIDEBAR PREMIUM OVERRIDES --- */
@@ -4982,7 +5026,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             z-index: 1000;
             max-height: 240px;
-            overflow-y: auto;
+            overflow-y: auto !important;
             display: none;
         }
         .custom-single-select .select-dropdown.show {
@@ -5095,11 +5139,13 @@
                         </div>
 
                         <div class="metric-card">
-                            <div class="metric-title-section">
-                                <div class="metric-icon">
-                                    <i class="far fa-chart-bar"></i>
+                            <div class="metric-header">
+                                <div class="metric-title-section">
+                                    <div class="metric-icon">
+                                        <i class="far fa-chart-bar"></i>
+                                    </div>
+                                    <h3 class="metric-title">Total de áreas en riesgo Muy alto</h3>
                                 </div>
-                                <h3 class="metric-title">Total de áreas en riesgo Muy alto</h3>
                             </div>
                             <div class="metric-value-section">
                                 <div class="metric-main-number">8</div>
@@ -5145,7 +5191,7 @@
                             </button>
                         </div>
                         <!-- Tab Content - Participantes -->
-                        <div class="tab-panel active" id="new-participantes-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: hidden;">
+                        <div class="tab-panel active" id="new-participantes-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05);">
                             <div class="nom-table-header-card">
                                 <!-- Al lado izquierdo: título de la tabla -->
                                 <div id="nom-participation-table-title" style="font-size: 16px; font-weight: 700; color: var(--ubits-fg-1-high);">
@@ -5173,7 +5219,7 @@
                                     
                                     <!-- Segmento demográfico -->
                                     <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high);">Segmento demográfico:</span>
+                                        <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); white-space: nowrap;">Segmentar por:</span>
                                         <select id="nom-participation-segment-select" style="display: none;">
                                             <option value="areas" selected>Área</option>
                                             <option value="cargo">Cargo</option>
@@ -5244,9 +5290,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button class="ubits-button ubits-button--secondary ubits-button--md filters-button" id="categories-filters-btn" title="Filtros">
-                                            <i class="far fa-filter"></i>
-                                            <span class="filter-badge" id="categories-filter-badge" style="display: none;">0</span>
+                                        <button class="heatmap-filter-btn" id="categories-filters-btn" style="height: 36px; padding: 8px 16px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                            <i class="far fa-sliders-h"></i> Filtros Demográficos
+                                            <span class="filter-badge segments-badge" style="display: none; position: static; width: auto; min-width: 20px; padding: 0 6px; height: 20px;">0</span>
                                         </button>
                                     </div>
                                 </div>
@@ -5469,9 +5515,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button class="ubits-button ubits-button--secondary ubits-button--md filters-button" id="domains-filters-btn" title="Filtros">
-                                            <i class="far fa-filter"></i>
-                                            <span class="filter-badge" id="domains-filter-badge" style="display: none;">0</span>
+                                        <button class="heatmap-filter-btn" id="domains-filters-btn" style="height: 36px; padding: 8px 16px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                            <i class="far fa-sliders-h"></i> Filtros Demográficos
+                                            <span class="filter-badge segments-badge" style="display: none; position: static; width: auto; min-width: 20px; padding: 0 6px; height: 20px;">0</span>
                                         </button>
                                     </div>
                                 </div>
@@ -5762,9 +5808,9 @@
                                             </div>
                                         </div>
                                         
-                                        <button class="ubits-button ubits-button--secondary ubits-button--md filters-button" id="dimensions-table-filters-btn" title="Filtros">
-                                            <i class="far fa-filter"></i>
-                                            <span class="filter-badge" id="dimensions-table-filter-badge" style="display: none;">0</span>
+                                        <button class="heatmap-filter-btn" id="dimensions-table-filters-btn" style="height: 36px; padding: 8px 16px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                            <i class="far fa-sliders-h"></i> Filtros Demográficos
+                                            <span class="filter-badge segments-badge" style="display: none; position: static; width: auto; min-width: 20px; padding: 0 6px; height: 20px;">0</span>
                                         </button>
                                     </div>
                                 </div>
@@ -6591,27 +6637,27 @@
                                         <!-- Controles -->
                                         <div style="display: flex; align-items: center; gap: 16px;">
                                             <div style="display: flex; align-items: center; gap: 8px;">
-                                                <span style="font-weight: 600; color: var(--ubits-fg-1-high); font-size: 12px;">TIPO:</span>
+                                                <span style="font-weight: 600; color: var(--ubits-fg-1-high); font-size: 12px;">Tipo:</span>
                                                 <select id="heatmap-rows-select" class="heatmap-dropdown" style="display: none;">
-                                                    <option value="dimensiones" selected>Dimensiones</option>
-                                                    <option value="categorias">Categorías</option>
+                                                    <option value="categorias" selected>Categorías</option>
                                                     <option value="dominio">Dominio</option>
+                                                    <option value="dimensiones">Dimensiones</option>
                                                 </select>
                                                 <div class="custom-select single-select" tabindex="0" style="min-width: 140px;">
                                                     <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
-                                                        <span class="selected-text">Dimensiones</span>
+                                                        <span class="selected-text">Categorías</span>
                                                         <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
                                                     </div>
                                                     <div class="select-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 140px;">
-                                                        <div class="select-option selected" data-value="dimensiones" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dimensiones</div>
-                                                        <div class="select-option" data-value="categorias" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Categorías</div>
+                                                        <div class="select-option selected" data-value="categorias" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Categorías</div>
                                                         <div class="select-option" data-value="dominio" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dominio</div>
+                                                        <div class="select-option" data-value="dimensiones" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dimensiones</div>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div style="display: flex; align-items: center; gap: 8px;">
-                                                <span style="font-weight: 600; color: var(--ubits-fg-1-high); font-size: 12px;">VER POR:</span>
+                                                <span style="font-weight: 600; color: var(--ubits-fg-1-high); font-size: 12px;">Ver por:</span>
                                                 <select id="heatmap-cols-select" class="heatmap-dropdown" style="display: none;">
                                                     <option value="department" selected>Áreas</option>
                                                     <option value="leader">Líderes</option>
@@ -6632,8 +6678,9 @@
                                                 </div>
                                             </div>
 
-                                            <button class="heatmap-filter-btn" id="heatmap-demo-filters-btn" style="height: 36px; padding: 8px 16px; font-size: 12px; font-weight: 600;">
+                                            <button class="heatmap-filter-btn" id="heatmap-demo-filters-btn" style="height: 36px; padding: 8px 16px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
                                                 <i class="far fa-sliders-h"></i> Filtros Demográficos
+                                                <span class="filter-badge segments-badge" style="display: none; position: static; width: auto; min-width: 20px; padding: 0 6px; height: 20px;">0</span>
                                             </button>
                                         </div>
                                     </div>
@@ -7450,8 +7497,8 @@
             console.log('🔧 Inicializando filtros de dimensiones...');
             
             const filtersBtn = document.getElementById('dimensions-table-filters-btn');
-            const filtersPanel = document.getElementById('dimensions-table-filters-side-panel');
-            const filtersBackdrop = document.getElementById('dimensions-filters-backdrop');
+            const filtersPanel = document.getElementById('segments-filters-side-panel');
+            const filtersBackdrop = document.getElementById('segments-filters-backdrop');
             const closeFiltersBtn = document.getElementById('dimensions-close-filters-btn');
             const applyFiltersBtn = document.getElementById('apply-filters-dimensions');
             const clearFiltersBtn = document.getElementById('clear-filters-dimensions');
@@ -7503,8 +7550,8 @@
             console.log('🔧 Inicializando filtros de categorías...');
 
             const filtersBtn = document.getElementById('categories-filters-btn');
-            const filtersPanel = document.getElementById('categories-filters-side-panel');
-            const filtersBackdrop = document.getElementById('categories-filters-backdrop');
+            const filtersPanel = document.getElementById('segments-filters-side-panel');
+            const filtersBackdrop = document.getElementById('segments-filters-backdrop');
             const closeFiltersBtn = document.getElementById('categories-close-filters-btn');
             const applyFiltersBtn = document.getElementById('apply-filters-categories');
             const clearFiltersBtn = document.getElementById('clear-filters-categories');
@@ -7553,8 +7600,8 @@
             console.log('🔧 Inicializando filtros de dominios...');
 
             const filtersBtn = document.getElementById('domains-filters-btn');
-            const filtersPanel = document.getElementById('domains-filters-side-panel');
-            const filtersBackdrop = document.getElementById('domains-filters-backdrop');
+            const filtersPanel = document.getElementById('segments-filters-side-panel');
+            const filtersBackdrop = document.getElementById('segments-filters-backdrop');
             const closeFiltersBtn = document.getElementById('domains-close-filters-btn');
             const applyFiltersBtn = document.getElementById('apply-filters-domains');
             const clearFiltersBtn = document.getElementById('clear-filters-domains');
@@ -7601,8 +7648,8 @@
         // Funciones auxiliares para filtros de dimensiones
         function openDimensionsFiltersPanel() {
             console.log('🔧 Abriendo panel de filtros de dimensiones...');
-            const panel = document.getElementById('dimensions-table-filters-side-panel');
-            const backdrop = document.getElementById('dimensions-filters-backdrop');
+            const panel = document.getElementById('segments-filters-side-panel');
+            const backdrop = document.getElementById('segments-filters-backdrop');
             console.log('🔧 Elementos encontrados:', { panel: !!panel, backdrop: !!backdrop });
             if (panel && backdrop) {
                 panel.classList.add('show');
@@ -7614,8 +7661,8 @@
         }
 
         function closeDimensionsFiltersPanel() {
-            const panel = document.getElementById('dimensions-table-filters-side-panel');
-            const backdrop = document.getElementById('dimensions-filters-backdrop');
+            const panel = document.getElementById('segments-filters-side-panel');
+            const backdrop = document.getElementById('segments-filters-backdrop');
             if (panel && backdrop) {
                 panel.classList.remove('show');
                 backdrop.classList.remove('show');
@@ -10361,6 +10408,7 @@ console.log('✅ [DATA] Data asignado a window');
             const segmentsFiltersSidePanel = document.getElementById('segments-filters-side-panel');
             const segmentsFiltersBackdrop = document.getElementById('segments-filters-backdrop');
             const segmentsCloseFiltersBtn = document.getElementById('segments-close-filters-btn');
+            const applySegmentsFiltersBtn = document.getElementById('apply-filters-segments');
             
             if (heatmapFiltersBtn && segmentsFiltersSidePanel && segmentsFiltersBackdrop) {
                 console.log('✅ Conectando botón de heatmap a filtros');
@@ -10375,10 +10423,118 @@ console.log('✅ [DATA] Data asignado a window');
                     !!heatmapFiltersBtn, !!segmentsFiltersSidePanel, !!segmentsFiltersBackdrop);
             }
             
+            // Conectar los botones de Vista General (Categorías, Dominios, Dimensiones) al mismo drawer
+            const categoriesFiltersBtn = document.getElementById('categories-filters-btn');
+            const domainsFiltersBtn = document.getElementById('domains-filters-btn');
+            const dimensionsFiltersBtn = document.getElementById('dimensions-table-filters-btn');
+            
+            [categoriesFiltersBtn, domainsFiltersBtn, dimensionsFiltersBtn].forEach(btn => {
+                if (btn && segmentsFiltersSidePanel && segmentsFiltersBackdrop) {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        segmentsFiltersSidePanel.classList.add('show');
+                        segmentsFiltersBackdrop.classList.add('show');
+                    });
+                }
+            });
+            
             if (segmentsCloseFiltersBtn && segmentsFiltersSidePanel && segmentsFiltersBackdrop) {
                 segmentsCloseFiltersBtn.addEventListener('click', () => {
                     segmentsFiltersSidePanel.classList.remove('show');
                     segmentsFiltersBackdrop.classList.remove('show');
+                });
+            }
+            
+            const clearSegmentsFiltersBtn = document.getElementById('clear-filters-segments');
+            if (clearSegmentsFiltersBtn) {
+                clearSegmentsFiltersBtn.addEventListener('click', () => {
+                    // Resetear todos los custom selects a "todos"
+                    const customSelects = document.querySelectorAll('#segments-filters-side-panel .single-select');
+                    customSelects.forEach(customSelect => {
+                        const selectedText = customSelect.querySelector('.selected-text');
+                        if (selectedText) selectedText.textContent = 'Todos';
+                        
+                        const options = customSelect.querySelectorAll('.select-option');
+                        options.forEach(opt => {
+                            if (opt.dataset.value === 'todos') {
+                                opt.classList.add('selected');
+                            } else {
+                                opt.classList.remove('selected');
+                            }
+                        });
+                    });
+                    
+                    // Resetear los native selects también (por si acaso)
+                    const nativeSelects = document.querySelectorAll('#segments-filters-side-panel .filter-select');
+                    nativeSelects.forEach(select => {
+                        select.value = 'todos';
+                    });
+                    
+                    // Aplicar automáticamente para limpiar los badges y las tablas
+                    if (applySegmentsFiltersBtn) applySegmentsFiltersBtn.click();
+                });
+            }
+            
+            if (applySegmentsFiltersBtn && segmentsFiltersSidePanel && segmentsFiltersBackdrop) {
+                applySegmentsFiltersBtn.addEventListener('click', () => {
+                    // Simular aplicación de filtros a las tablas
+                    const rows = document.querySelectorAll('.results-table tbody tr');
+                    let activeFiltersCount = 0;
+                    const segmentsSelects = document.querySelectorAll('#segments-filters-side-panel .filter-select');
+                    
+                    // Verificar si en los dropdowns hidden, alguno no es "todos"
+                    // También verificamos los custom selects
+                    const customOptions = document.querySelectorAll('#segments-filters-side-panel .single-select .select-option.selected');
+                    customOptions.forEach(opt => {
+                        if (opt.dataset.value && opt.dataset.value !== 'todos') {
+                            activeFiltersCount++;
+                        }
+                    });
+
+                    const hasFilters = activeFiltersCount > 0;
+
+                    // Actualizar badges
+                    const badges = document.querySelectorAll('.segments-badge');
+                    badges.forEach(badge => {
+                        if (hasFilters) {
+                            badge.textContent = activeFiltersCount;
+                            badge.style.display = 'flex';
+                        } else {
+                            badge.style.display = 'none';
+                        }
+                    });
+
+                    rows.forEach(row => {
+                        const riskCountCell = row.querySelector('.risk-count');
+                        const percentageCell = row.querySelector('.percentage');
+                        
+                        if (!riskCountCell || !percentageCell) return;
+                        
+                        if (!riskCountCell.dataset.originalValue) {
+                            riskCountCell.dataset.originalValue = riskCountCell.textContent;
+                            percentageCell.dataset.originalValue = percentageCell.textContent;
+                        }
+                        
+                        if (hasFilters) {
+                            // Simular cambio (40% a 80% de los valores originales)
+                            let multiplier = 0.4 + (Math.random() * 0.4);
+                            const originalCount = parseInt(riskCountCell.dataset.originalValue) || 0;
+                            const newCount = Math.max(0, Math.round(originalCount * multiplier));
+                            const originalPercentage = parseFloat(percentageCell.dataset.originalValue.replace('%', '')) || 0;
+                            const newPercentage = (originalPercentage * multiplier).toFixed(1);
+                            
+                            riskCountCell.textContent = newCount;
+                            percentageCell.textContent = newPercentage + '%';
+                        } else {
+                            // Restaurar original
+                            riskCountCell.textContent = riskCountCell.dataset.originalValue;
+                            percentageCell.textContent = percentageCell.dataset.originalValue;
+                        }
+                    });
+
+                    segmentsFiltersSidePanel.classList.remove('show');
+                    segmentsFiltersBackdrop.classList.remove('show');
+                    console.log('✅ Filtros demográficos aplicados sobre las tablas');
                 });
             }
             
