@@ -5228,10 +5228,14 @@
                                         <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); white-space: nowrap;">Segmentar por:</span>
                                         <select id="nom-participation-segment-select" style="display: none;">
                                             <option value="areas" selected>Área</option>
-                                            <option value="cargo">Cargo</option>
+                                            <option value="leaders">Líder</option>
                                             <option value="collaborators">Colaborador</option>
+                                            <option value="country">País</option>
+                                            <option value="city">Ciudad</option>
                                             <option value="age">Edad</option>
                                             <option value="sexo">Sexo</option>
+                                            <option value="columna-a">Columna A</option>
+                                            <option value="columna-b">Columna B</option>
                                         </select>
                                         
                                         <div class="custom-select single-select" id="nom-participation-segment-custom-select" style="min-width: 160px; font-family: inherit;" tabindex="0">
@@ -5239,12 +5243,16 @@
                                                 <span class="selected-text" id="nom-participation-segment-text">Área</span>
                                                 <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
                                             </div>
-                                            <div class="select-dropdown" id="nom-participation-segment-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 160px;">
+                                            <div class="select-dropdown" id="nom-participation-segment-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 160px; max-height: 240px; overflow-y: auto !important;">
                                                 <div class="select-option selected" data-value="areas" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Área</div>
-                                                <div class="select-option" data-value="cargo" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Cargo</div>
+                                                <div class="select-option" data-value="leaders" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Líder</div>
                                                 <div class="select-option" data-value="collaborators" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Colaborador</div>
+                                                <div class="select-option" data-value="country" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">País</div>
+                                                <div class="select-option" data-value="city" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Ciudad</div>
                                                 <div class="select-option" data-value="age" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Edad</div>
                                                 <div class="select-option" data-value="sexo" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Sexo</div>
+                                                <div class="select-option" data-value="columna-a" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Columna A</div>
+                                                <div class="select-option" data-value="columna-b" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Columna B</div>
                                             </div>
                                         </div>
                                     </div>
@@ -5262,7 +5270,7 @@
                         </div>
 
                         <!-- Tab Content - Vista General -->
-                        <div class="tab-panel" id="new-general-view-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: hidden;">
+                        <div class="tab-panel" id="new-general-view-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: visible;">
 
 
                             <!-- Contenedor de sub-paneles -->
@@ -6631,7 +6639,7 @@
                         </div> <!-- Cierre new-general-view-panel -->
 
                         <!-- Tab Content - Heatmap -->
-                        <div class="tab-panel" id="new-heat-map-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: hidden;">
+                        <div class="tab-panel" id="new-heat-map-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: visible;">
                             <div style="background: white;">
                                 <!-- Header y controles del Heatmap -->
                                 <div class="nom-table-header-card" style="display: flex; flex-direction: column; align-items: stretch; gap: 16px; border-bottom: 1px solid var(--ubits-border-1); padding: 16px 24px; background: white; border-radius: 8px 8px 0 0;">
@@ -6709,7 +6717,7 @@
                         </div>
 
                         <!-- Tab Content - Resultados por Segmentos -->
-                        <div class="tab-panel" id="new-segments-results-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: hidden;">
+                        <div class="tab-panel" id="new-segments-results-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: visible;">
                             <div style="background: white;">
                                 <!-- Header -->
                                 <div class="nom-table-header-card" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--ubits-border-1); padding: 16px 24px; background: white; border-radius: 8px 8px 0 0;">
@@ -6723,21 +6731,29 @@
                                         <select id="segments-row-select" class="heatmap-dropdown" style="display: none; min-width: 160px;">
                                             <option value="department" selected>Áreas</option>
                                             <option value="leader">Líderes</option>
-                                            <option value="city">Ciudades</option>
+                                            <option value="collaborators">Colaborador</option>
                                             <option value="country">Países</option>
-                                            <option value="position">Posición</option>
+                                            <option value="city">Ciudades</option>
+                                            <option value="age">Edad</option>
+                                            <option value="sexo">Sexo</option>
+                                            <option value="columna-a">Columna A</option>
+                                            <option value="columna-b">Columna B</option>
                                         </select>
                                         <div class="custom-select single-select" tabindex="0" style="min-width: 160px;">
                                             <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
                                                 <span class="selected-text">Áreas</span>
                                                 <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
                                             </div>
-                                            <div class="select-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 160px;">
+                                            <div class="select-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 160px; max-height: 240px; overflow-y: auto !important;">
                                                 <div class="select-option selected" data-value="department" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Áreas</div>
                                                 <div class="select-option" data-value="leader" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Líderes</div>
-                                                <div class="select-option" data-value="city" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Ciudades</div>
+                                                <div class="select-option" data-value="collaborators" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Colaborador</div>
                                                 <div class="select-option" data-value="country" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Países</div>
-                                                <div class="select-option" data-value="position" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Posición</div>
+                                                <div class="select-option" data-value="city" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Ciudades</div>
+                                                <div class="select-option" data-value="age" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Edad</div>
+                                                <div class="select-option" data-value="sexo" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Sexo</div>
+                                                <div class="select-option" data-value="columna-a" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Columna A</div>
+                                                <div class="select-option" data-value="columna-b" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Columna B</div>
                                             </div>
                                         </div>
                                     </div>
