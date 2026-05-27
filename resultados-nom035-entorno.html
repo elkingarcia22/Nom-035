@@ -6740,7 +6740,7 @@
 
                                     <!-- Filtros -->
                                     <div style="display: flex; align-items: center; gap: 12px;">
-                                        <span style="font-weight: 600; color: var(--ubits-fg-1-high); font-size: 12px;">Segmentar por:</span>
+                                        <span style="font-weight: 600; color: var(--ubits-fg-1-high); font-size: 12px;">Ver por:</span>
                                         <select id="segments-row-select" class="heatmap-dropdown" style="display: none; min-width: 160px;">
                                             <option value="department" selected>Áreas</option>
                                             <option value="leader">Líderes</option>
@@ -6769,6 +6769,10 @@
                                                 <div class="select-option" data-value="columna-b" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Columna B</div>
                                             </div>
                                         </div>
+                                        <button class="heatmap-filter-btn" id="segments-tab-demo-filters-btn" style="height: 36px; padding: 8px 16px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px; background: white; border: 1.5px solid var(--ubits-border-1); color: var(--ubits-fg-1-high); border-radius: 8px;">
+                                            <i class="far fa-sliders-h"></i> Filtros Demográficos
+                                            <span class="filter-badge segments-tab-badge" style="display: none; position: static; width: auto; min-width: 20px; padding: 0 6px; height: 20px; background: var(--ubits-semantic-danger); color: white; border-radius: 10px; align-items: center; justify-content: center;">0</span>
+                                        </button>
                                     </div>
                                 </div>
 
@@ -7313,6 +7317,270 @@
                                 </div>
                                 <!-- Backdrop para filtros -->
                                 <div id="heatmap-filters-backdrop" class="filters-backdrop"></div>
+
+<div id="segments-tab-filters-side-panel" class="filters-panel">
+                                    <div class="filters-header">
+                                        <h3>Filtros Demográficos</h3>
+                                        <button class="ubits-button ubits-button--tertiary ubits-button--sm ubits-button--icon-only close-filters-btn" id="segments-tab-close-filters-btn">
+                                            <i class="far fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div class="filters-content">
+                                        <div class="filter-group">
+                                            <label class="filter-label">Cargo</label>
+                                            <select class="filter-select" id="position-filter-segments-tab" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="asistente">Asistente</option>
+                                                <option value="especialista">Especialista</option>
+                                                <option value="coordinador">Coordinador</option>
+                                                <option value="supervisor">Supervisor</option>
+                                                <option value="gerente">Gerente</option>
+                                                <option value="director">Director</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="asistente"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Asistente</span></div>
+                                                    <div class="select-option" data-value="especialista"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Especialista</span></div>
+                                                    <div class="select-option" data-value="coordinador"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Coordinador</span></div>
+                                                    <div class="select-option" data-value="supervisor"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Supervisor</span></div>
+                                                    <div class="select-option" data-value="gerente"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Gerente</span></div>
+                                                    <div class="select-option" data-value="director"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Director</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Género</label>
+                                            <select class="filter-select" id="gender-filter-segments-tab" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="masculino">Masculino</option>
+                                                <option value="femenino">Femenino</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="masculino"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Masculino</span></div>
+                                                    <div class="select-option" data-value="femenino"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Femenino</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">País</label>
+                                            <select class="filter-select" id="country-filter-segments-tab" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="colombia">Colombia</option>
+                                                <option value="mexico">México</option>
+                                                <option value="argentina">Argentina</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="colombia"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Colombia</span></div>
+                                                    <div class="select-option" data-value="mexico"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">México</span></div>
+                                                    <div class="select-option" data-value="argentina"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Argentina</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Edad</label>
+                                            <select class="filter-select" id="age-filter-segments-tab" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="18-25">18-25 años</option>
+                                                <option value="26-35">26-35 años</option>
+                                                <option value="36-45">36-45 años</option>
+                                                <option value="46-55">46-55 años</option>
+                                                <option value="56-65">56-65 años</option>
+                                                <option value="65+">65+ años</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="18-25"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">18-25 años</span></div>
+                                                    <div class="select-option" data-value="26-35"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">26-35 años</span></div>
+                                                    <div class="select-option" data-value="36-45"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">36-45 años</span></div>
+                                                    <div class="select-option" data-value="46-55"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">46-55 años</span></div>
+                                                    <div class="select-option" data-value="56-65"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">56-65 años</span></div>
+                                                    <div class="select-option" data-value="65+"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">65+ años</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Nivel de Riesgo</label>
+                                            <select class="filter-select" id="risk-filter-segments-tab" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="muy-alto">Muy Alto</option>
+                                                <option value="alto">Alto</option>
+                                                <option value="medio">Medio</option>
+                                                <option value="bajo">Bajo</option>
+                                                <option value="nulo">Nulo</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="muy-alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Muy Alto</span></div>
+                                                    <div class="select-option" data-value="alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Alto</span></div>
+                                                    <div class="select-option" data-value="medio"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Medio</span></div>
+                                                    <div class="select-option" data-value="bajo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Bajo</span></div>
+                                                    <div class="select-option" data-value="nulo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Nulo</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Área</label>
+                                            <select class="filter-select" id="department-filter-segments-tab" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="ventas">Ventas</option>
+                                                <option value="tecnologia">Tecnología</option>
+                                                <option value="rrhh">Recursos Humanos</option>
+                                                <option value="finanzas">Finanzas</option>
+                                                <option value="administracion">Administración</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="ventas"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Ventas</span></div>
+                                                    <div class="select-option" data-value="tecnologia"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Tecnología</span></div>
+                                                    <div class="select-option" data-value="rrhh"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Recursos Humanos</span></div>
+                                                    <div class="select-option" data-value="finanzas"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Finanzas</span></div>
+                                                    <div class="select-option" data-value="administracion"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Administración</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Líder</label>
+                                            <select class="filter-select" id="leader-filter-segments-tab" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="ana-martinez">Ana Martínez</option>
+                                                <option value="carlos-gomez">Carlos Gómez</option>
+                                                <option value="laura-perez">Laura Pérez</option>
+                                                <option value="roberto-sanchez">Roberto Sánchez</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="ana-martinez"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Ana Martínez</span></div>
+                                                    <div class="select-option" data-value="carlos-gomez"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Carlos Gómez</span></div>
+                                                    <div class="select-option" data-value="laura-perez"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Laura Pérez</span></div>
+                                                    <div class="select-option" data-value="roberto-sanchez"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Roberto Sánchez</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Ciudad</label>
+                                            <select class="filter-select" id="city-filter-segments-tab" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="bogota">Bogotá</option>
+                                                <option value="medellin">Medellín</option>
+                                                <option value="cdmx">CDMX</option>
+                                                <option value="lima">Lima</option>
+                                                <option value="santiago">Santiago</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="bogota"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Bogotá</span></div>
+                                                    <div class="select-option" data-value="medellin"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Medellín</span></div>
+                                                    <div class="select-option" data-value="cdmx"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">CDMX</span></div>
+                                                    <div class="select-option" data-value="lima"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Lima</span></div>
+                                                    <div class="select-option" data-value="santiago"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Santiago</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Columna A</label>
+                                            <select class="filter-select" id="cola-filter-segments-tab" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="opcion-1">Opción 1</option>
+                                                <option value="opcion-2">Opción 2</option>
+                                                <option value="opcion-3">Opción 3</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="opcion-1"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Opción 1</span></div>
+                                                    <div class="select-option" data-value="opcion-2"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Opción 2</span></div>
+                                                    <div class="select-option" data-value="opcion-3"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Opción 3</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Columna B</label>
+                                            <select class="filter-select" id="colb-filter-segments-tab" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="opcion-x">Opción X</option>
+                                                <option value="opcion-y">Opción Y</option>
+                                                <option value="opcion-z">Opción Z</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="opcion-x"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Opción X</span></div>
+                                                    <div class="select-option" data-value="opcion-y"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Opción Y</span></div>
+                                                    <div class="select-option" data-value="opcion-z"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Opción Z</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="filters-actions">
+                                        <button class="ubits-button ubits-button--primary ubits-button--md" id="apply-filters-segments-tab" style="flex: 1;">
+                                            <i class="far fa-check"></i><span>Aplicar</span>
+                                        </button>
+                                        <button class="ubits-button ubits-button--secondary ubits-button--md" id="clear-filters-segments-tab" style="flex: 1;">
+                                            <i class="far fa-times"></i><span>Limpiar</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- Backdrop para filtros -->
+                                <div id="segments-tab-filters-backdrop" class="filters-backdrop"></div>
     <!-- Scripts -->
     <!-- Estos scripts son para el dashboard principal, NO para esta página de resultados -->
     <!-- <script src="script.js"></script> -->
@@ -10711,7 +10979,122 @@
         // Intentar inicialización inmediata (script inline)
         console.log('📌 [INIT] Registrando listeners de carga...');
 
-        if (document.readyState === 'loading') {
+        
+            // Logic for Segments Tab filters
+            const segmentsTabFiltersBtn = document.getElementById('segments-tab-demo-filters-btn');
+            const segmentsTabFiltersSidePanel = document.getElementById('segments-tab-filters-side-panel');
+            const segmentsTabFiltersBackdrop = document.getElementById('segments-tab-filters-backdrop');
+            
+            if (segmentsTabFiltersBtn && segmentsTabFiltersSidePanel && segmentsTabFiltersBackdrop) {
+                segmentsTabFiltersBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    segmentsTabFiltersSidePanel.classList.add('show');
+                    segmentsTabFiltersBackdrop.classList.add('show');
+                });
+            }
+
+            const segmentsTabCloseFiltersBtn = document.getElementById('segments-tab-close-filters-btn');
+            const applySegmentsTabFiltersBtn = document.getElementById('apply-filters-segments-tab');
+            const clearSegmentsTabFiltersBtn = document.getElementById('clear-filters-segments-tab');
+
+            if (segmentsTabCloseFiltersBtn && segmentsTabFiltersSidePanel && segmentsTabFiltersBackdrop) {
+                segmentsTabCloseFiltersBtn.addEventListener('click', () => {
+                    segmentsTabFiltersSidePanel.classList.remove('show');
+                    segmentsTabFiltersBackdrop.classList.remove('show');
+                });
+            }
+
+            if (clearSegmentsTabFiltersBtn) {
+                clearSegmentsTabFiltersBtn.addEventListener('click', () => {
+                    const customSelects = document.querySelectorAll('#segments-tab-filters-side-panel .custom-select');
+                    customSelects.forEach(customSelect => {
+                        const selectText = customSelect.querySelector('.select-text');
+                        if (selectText) selectText.textContent = 'Todos';
+                        
+                        const checkboxes = customSelect.querySelectorAll('input[type="checkbox"]');
+                        checkboxes.forEach(cb => {
+                            if (cb.closest('.select-option').dataset.value === 'todos') {
+                                cb.checked = true;
+                            } else {
+                                cb.checked = false;
+                            }
+                        });
+                    });
+                    
+                    const nativeSelects = document.querySelectorAll('#segments-tab-filters-side-panel .filter-select');
+                    nativeSelects.forEach(select => {
+                        select.value = 'todos';
+                    });
+                    
+                    if (applySegmentsTabFiltersBtn) applySegmentsTabFiltersBtn.click();
+                });
+            }
+
+            if (applySegmentsTabFiltersBtn && segmentsTabFiltersSidePanel && segmentsTabFiltersBackdrop) {
+                applySegmentsTabFiltersBtn.addEventListener('click', () => {
+                    let activeFiltersCount = 0;
+                    
+                    const customOptions = document.querySelectorAll('#segments-tab-filters-side-panel .custom-select .select-option input[type="checkbox"]:checked');
+                    customOptions.forEach(cb => {
+                        const opt = cb.closest('.select-option');
+                        if (opt.dataset.value && opt.dataset.value !== 'todos') {
+                            activeFiltersCount++;
+                        }
+                    });
+
+                    const hasFilters = activeFiltersCount > 0;
+
+                    const badges = document.querySelectorAll('.segments-tab-badge');
+                    badges.forEach(badge => {
+                        if (hasFilters) {
+                            badge.textContent = activeFiltersCount;
+                            badge.style.display = 'flex';
+                        } else {
+                            badge.style.display = 'none';
+                        }
+                    });
+
+                    // Update rows if needed
+                    const rows = document.querySelectorAll('#segments-table-wrapper .results-table tbody tr');
+                    rows.forEach(row => {
+                        const riskCountCell = row.querySelector('.risk-count');
+                        const percentageCell = row.querySelector('.percentage');
+                        if (!riskCountCell || !percentageCell) return;
+                        
+                        if (!riskCountCell.dataset.originalValue) {
+                            riskCountCell.dataset.originalValue = riskCountCell.textContent;
+                            percentageCell.dataset.originalValue = percentageCell.textContent;
+                        }
+                        
+                        if (hasFilters) {
+                            let multiplier = 0.4 + (Math.random() * 0.4);
+                            const originalCount = parseInt(riskCountCell.dataset.originalValue) || 0;
+                            const newCount = Math.max(0, Math.round(originalCount * multiplier));
+                            const originalPercentage = parseFloat(percentageCell.dataset.originalValue.replace('%', '')) || 0;
+                            const newPercentage = (originalPercentage * multiplier).toFixed(1);
+                            
+                            riskCountCell.textContent = newCount;
+                            percentageCell.textContent = newPercentage + '%';
+                        } else {
+                            riskCountCell.textContent = riskCountCell.dataset.originalValue;
+                            percentageCell.textContent = percentageCell.dataset.originalValue;
+                        }
+                    });
+
+                    segmentsTabFiltersSidePanel.classList.remove('show');
+                    segmentsTabFiltersBackdrop.classList.remove('show');
+                    console.log('✅ Filtros aplicados sobre Resultados por Segmentos');
+                });
+            }
+            
+            if (segmentsTabFiltersBackdrop && segmentsTabFiltersSidePanel) {
+                segmentsTabFiltersBackdrop.addEventListener('click', () => {
+                    segmentsTabFiltersSidePanel.classList.remove('show');
+                    segmentsTabFiltersBackdrop.classList.remove('show');
+                });
+            }
+            
+if (document.readyState === 'loading') {
             console.log('📌 [INIT] DOM aún se está cargando, esperando DOMContentLoaded');
             document.addEventListener('DOMContentLoaded', function() {
                 console.log('✅ [INIT] Evento DOMContentLoaded disparado');
