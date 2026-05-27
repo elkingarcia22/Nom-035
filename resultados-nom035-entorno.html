@@ -5047,6 +5047,12 @@
         th {
             text-transform: none !important;
         }
+
+        /* Fuerza íconos de métricas a gris y sin fondo, sobreescribiendo cualquier color azul */
+        .metric-icon, .metric-icon i {
+            color: var(--ubits-fg-1-medium) !important;
+            background: transparent !important;
+        }
     </style>
 </head>
 <body>
@@ -8418,13 +8424,36 @@
                     const metricTitle = this.querySelector('.metric-title')?.textContent || '';
                     console.log('📊 Click en tarjeta de métrica:', metricTitle);
 
-                    // Filtrar según la tarjeta clickeada
+                    // Remover el punto de todas las tarjetas
+                    document.querySelectorAll('.metric-dot').forEach(dot => dot.remove());
+                    // Agregar el punto a la tarjeta clickeada
+                    const header = this.querySelector('.metric-header');
+                    if (header) {
+                        const dot = document.createElement('div');
+                        dot.className = 'metric-dot';
+                        header.appendChild(dot);
+                    }
+
+                    // Acciones según la tarjeta clickeada
                     if (metricTitle.includes('Predominante') || metricTitle.includes('Crítica')) {
                         console.log('📊 Filtrando por: Muy Alto');
                         filterByRiskLevelEntorno('muy-alto');
+                        const detalleTab = document.querySelector('.tab-button[data-tab="detalle-colaborador"]');
+                        if (detalleTab) detalleTab.click();
                     } else if (metricTitle.includes('riesgo alto')) {
                         console.log('📊 Filtrando por: Alto');
                         filterByRiskLevelEntorno('alto');
+                        const detalleTab = document.querySelector('.tab-button[data-tab="detalle-colaborador"]');
+                        if (detalleTab) detalleTab.click();
+                    } else if (metricTitle.toLowerCase().includes('participación')) {
+                        console.log('📊 Limpiando filtros de riesgo y yendo a Participantes');
+                        const riskSelect = document.getElementById('individual-risk-select');
+                        if (riskSelect) {
+                            riskSelect.value = '';
+                            riskSelect.dispatchEvent(new Event('change'));
+                        }
+                        const partTab = document.querySelector('.tab-button[data-tab="participante"]');
+                        if (partTab) partTab.click();
                     }
                 });
             });
