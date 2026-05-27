@@ -2913,7 +2913,7 @@
             text-align: center !important;
         }
 
-        /* Ocultar columna Calificación y alinear columnas en tabla de Dimensiones */
+        /* Alinear columnas en tabla de Dimensiones */
         #sub-panel-dimensions .results-table th:nth-child(3),
         #sub-panel-dimensions .results-table td:nth-child(3),
         #sub-panel-dimensions .results-table th:nth-child(4),
@@ -2921,11 +2921,6 @@
         #sub-panel-dimensions .results-table th:nth-child(5),
         #sub-panel-dimensions .results-table td:nth-child(5) {
             text-align: left !important;
-        }
-
-        #sub-panel-dimensions .results-table th:nth-child(6),
-        #sub-panel-dimensions .results-table td:nth-child(6) {
-            display: none !important;
         }
         
         /* Estado activo solo cuando el acordeón está abierto - usando colores de tabla original */
@@ -4717,10 +4712,11 @@
         .range-track {
             position: relative;
             height: 16px;
-            background-color: var(--ubits-bg-1);
+            background-color: var(--ubits-bg-2);
             border-radius: var(--ubits-radius-sm);
             overflow: hidden;
             display: flex;
+            border: 1px solid var(--ubits-border-1);
         }
         .range-fill {
             height: 100%;
@@ -4749,6 +4745,24 @@
             font-weight: 600;
             color: var(--ubits-fg-1-high);
             font-size: 14px;
+        }
+        .results-table td[colspan="2"] {
+            position: relative;
+        }
+        .results-table td[colspan="2"] .score-value {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: 600;
+            color: var(--ubits-fg-1-high);
+            font-size: 13px;
+            line-height: 1;
+        }
+        .results-table td[colspan="2"] .range-indicator-container {
+            width: calc(100% - 50px);
+            min-width: 0;
+            padding: 4px 0;
         }
 
 
@@ -5323,8 +5337,7 @@
                                             <th>Categoría</th>
                                             <th>Total Usuarios en Riesgo</th>
                                             <th>% Colaboradores Afectados</th>
-                                            <th>Puntaje</th>
-                                            <th>Calificación</th>
+                                            <th colspan="2">Puntaje Relativo</th>
                                             <th>Nivel de Riesgo</th>
                                         </tr>
                                     </thead>
@@ -5333,18 +5346,12 @@
                                             <td>Ambiente de trabajo</td>
                                             <td class="risk-count">5</td>
                                             <td class="percentage">3.3%</td>
-                                            <td><span class="score-value">6.9</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">34.5</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 34.5%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill bajo" style="width: 34.5%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 25.0%;">5</span>
-                                                        <span class="range-threshold" style="left: 45.0%;">9</span>
-                                                        <span class="range-threshold" style="left: 55.0%;">11</span>
-                                                        <span class="range-threshold" style="left: 70.0%;">14</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
@@ -5353,18 +5360,12 @@
                                             <td>Factores propios de la actividad</td>
                                             <td class="risk-count">95</td>
                                             <td class="percentage">63.3%</td>
-                                            <td><span class="score-value">38.6</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">51.5</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 51.5%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill medio" style="width: 51.5%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 20.0%;">15</span>
-                                                        <span class="range-threshold" style="left: 40.0%;">30</span>
-                                                        <span class="range-threshold" style="left: 60.0%;">45</span>
-                                                        <span class="range-threshold" style="left: 80.0%;">60</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge medio">Medio</span></td>
@@ -5373,18 +5374,12 @@
                                             <td>Entorno organizacional</td>
                                             <td class="risk-count">78</td>
                                             <td class="percentage">52.0%</td>
-                                            <td><span class="score-value">10.1</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">25.3</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 25.3%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill bajo" style="width: 25.3%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 25.0%;">10</span>
-                                                        <span class="range-threshold" style="left: 35.0%;">14</span>
-                                                        <span class="range-threshold" style="left: 45.0%;">18</span>
-                                                        <span class="range-threshold" style="left: 57.5%;">23</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
@@ -5393,18 +5388,12 @@
                                             <td>Organización del tiempo de trabajo</td>
                                             <td class="risk-count">18</td>
                                             <td class="percentage">12.0%</td>
-                                            <td><span class="score-value">7.0</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">29.2</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 29.2%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill medio" style="width: 29.2%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 20.8%;">5</span>
-                                                        <span class="range-threshold" style="left: 29.2%;">7</span>
-                                                        <span class="range-threshold" style="left: 41.7%;">10</span>
-                                                        <span class="range-threshold" style="left: 54.2%;">13</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge medio">Medio</span></td>
@@ -5413,18 +5402,12 @@
                                             <td>Liderazgo y relaciones en el trabajo</td>
                                             <td class="risk-count">45</td>
                                             <td class="percentage">30.0%</td>
-                                            <td><span class="score-value">18.9</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">18.2</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 18.2%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill bajo" style="width: 18.2%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 13.5%;">14</span>
-                                                        <span class="range-threshold" style="left: 27.9%;">29</span>
-                                                        <span class="range-threshold" style="left: 40.4%;">42</span>
-                                                        <span class="range-threshold" style="left: 55.8%;">58</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
@@ -5640,30 +5623,23 @@
                                             <th>Dominio</th>
                                             <th>Categoría</th>
                                             <th>Total Usuarios en Riesgo</th>
-                                            <th>% Colaboradores Afectados</th>
-                                            <th>Puntaje</th>
-                                            <th>Calificación</th>
-                                            <th>Nivel de Riesgo</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Condiciones en el ambiente de trabajo</td>
+                                             <th>% Colaboradores Afectados</th>
+                                              <th colspan="2">Puntaje Relativo</th>
+                                              <th>Nivel de Riesgo</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr>
+                                              <td>Condiciones en el ambiente de trabajo</td>
                                             <td>Ambiente de trabajo</td>
                                             <td class="risk-count">20</td>
                                             <td class="percentage">13.3%</td>
-                                            <td><span class="score-value">6.9</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">34.5</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 34.5%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill bajo" style="width: 34.5%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 25.0%;">5</span>
-                                                        <span class="range-threshold" style="left: 45.0%;">9</span>
-                                                        <span class="range-threshold" style="left: 55.0%;">11</span>
-                                                        <span class="range-threshold" style="left: 70.0%;">14</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
@@ -5673,18 +5649,12 @@
                                             <td>Factores propios de la actividad</td>
                                             <td class="risk-count">90</td>
                                             <td class="percentage">60.0%</td>
-                                            <td><span class="score-value">22.1</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">44.2</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 44.2%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill medio" style="width: 44.2%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 30.0%;">15</span>
-                                                        <span class="range-threshold" style="left: 42.0%;">21</span>
-                                                        <span class="range-threshold" style="left: 54.0%;">27</span>
-                                                        <span class="range-threshold" style="left: 74.0%;">37</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge medio">Medio</span></td>
@@ -5694,18 +5664,12 @@
                                             <td>Factores propios de la actividad</td>
                                             <td class="risk-count">15</td>
                                             <td class="percentage">10.0%</td>
-                                            <td><span class="score-value">16.5</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">55.0</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 55.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill medio" style="width: 55.0%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 36.7%;">11</span>
-                                                        <span class="range-threshold" style="left: 53.3%;">16</span>
-                                                        <span class="range-threshold" style="left: 70.0%;">21</span>
-                                                        <span class="range-threshold" style="left: 83.3%;">25</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge medio">Medio</span></td>
@@ -5715,18 +5679,12 @@
                                             <td>Organización del tiempo de trabajo</td>
                                             <td class="risk-count">76</td>
                                             <td class="percentage">50.7%</td>
-                                            <td><span class="score-value">3.3</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">33.0</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 33.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill medio" style="width: 33.0%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 10.0%;">1</span>
-                                                        <span class="range-threshold" style="left: 20.0%;">2</span>
-                                                        <span class="range-threshold" style="left: 40.0%;">4</span>
-                                                        <span class="range-threshold" style="left: 60.0%;">6</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge medio">Medio</span></td>
@@ -5736,18 +5694,12 @@
                                             <td>Organización del tiempo de trabajo</td>
                                             <td class="risk-count">88</td>
                                             <td class="percentage">58.7%</td>
-                                            <td><span class="score-value">3.7</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">24.7</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 24.7%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill nulo" style="width: 24.7%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 26.7%;">4</span>
-                                                        <span class="range-threshold" style="left: 40.0%;">6</span>
-                                                        <span class="range-threshold" style="left: 53.3%;">8</span>
-                                                        <span class="range-threshold" style="left: 66.7%;">10</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge nulo">Nulo</span></td>
@@ -5757,18 +5709,12 @@
                                             <td>Liderazgo y relaciones en el trabajo</td>
                                             <td class="risk-count">82</td>
                                             <td class="percentage">54.7%</td>
-                                            <td><span class="score-value">8.1</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">32.4</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 32.4%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill nulo" style="width: 32.4%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 36.0%;">9</span>
-                                                        <span class="range-threshold" style="left: 48.0%;">12</span>
-                                                        <span class="range-threshold" style="left: 64.0%;">16</span>
-                                                        <span class="range-threshold" style="left: 80.0%;">20</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge nulo">Nulo</span></td>
@@ -5778,18 +5724,12 @@
                                             <td>Liderazgo y relaciones en el trabajo</td>
                                             <td class="risk-count">79</td>
                                             <td class="percentage">52.7%</td>
-                                            <td><span class="score-value">5.3</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">21.2</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 21.2%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill nulo" style="width: 21.2%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 40.0%;">10</span>
-                                                        <span class="range-threshold" style="left: 52.0%;">13</span>
-                                                        <span class="range-threshold" style="left: 68.0%;">17</span>
-                                                        <span class="range-threshold" style="left: 84.0%;">21</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge nulo">Nulo</span></td>
@@ -5799,18 +5739,12 @@
                                             <td>Liderazgo y relaciones en el trabajo</td>
                                             <td class="risk-count">85</td>
                                             <td class="percentage">56.7%</td>
-                                            <td><span class="score-value">5.4</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">16.9</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 16.9%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill nulo" style="width: 16.9%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 21.9%;">7</span>
-                                                        <span class="range-threshold" style="left: 31.3%;">10</span>
-                                                        <span class="range-threshold" style="left: 40.6%;">13</span>
-                                                        <span class="range-threshold" style="left: 50.0%;">16</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge nulo">Nulo</span></td>
@@ -5820,18 +5754,12 @@
                                             <td>Entorno organizacional</td>
                                             <td class="risk-count">92</td>
                                             <td class="percentage">61.3%</td>
-                                            <td><span class="score-value">6.9</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">27.6</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 27.6%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill bajo" style="width: 27.6%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 24.0%;">6</span>
-                                                        <span class="range-threshold" style="left: 40.0%;">10</span>
-                                                        <span class="range-threshold" style="left: 56.0%;">14</span>
-                                                        <span class="range-threshold" style="left: 72.0%;">18</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
@@ -5841,18 +5769,12 @@
                                             <td>Entorno organizacional</td>
                                             <td class="risk-count">84</td>
                                             <td class="percentage">56.0%</td>
-                                            <td><span class="score-value">3.2</span></td>
-                                            <td>
-                                                <div class="range-indicator-container">
-                                                    <div class="range-track">
+                                            <td colspan="2"><span class="score-value">21.3</span>
+                                                <div class="range-indicator-container range-with-score">
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 21.3%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill nulo" style="width: 21.3%;"></div>
                                                     </div>
-                                                    <div class="range-thresholds">
-                                                        <span class="range-threshold" style="left: 26.7%;">4</span>
-                                                        <span class="range-threshold" style="left: 40.0%;">6</span>
-                                                        <span class="range-threshold" style="left: 53.3%;">8</span>
-                                                        <span class="range-threshold" style="left: 66.7%;">10</span>
-                                                    </div>
+                                                    
                                                 </div>
                                             </td>
                                             <td><span class="risk-badge nulo">Nulo</span></td>
@@ -6090,7 +6012,7 @@
                                             <th>Dominio</th>
                                             <th>Total Usuarios en Riesgo</th>
                                             <th>% Colaboradores Afectados</th>
-                                            <th>Puntaje</th><th>Calificación</th><th>Nivel de Riesgo</th>
+                                             <th colspan="2">Puntaje Relativo</th><th>Nivel de Riesgo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -6104,15 +6026,12 @@
                                             <td class="dimension-domain-info">Condiciones en el ambiente de trabajo</td>
                                             <td class="risk-count">45</td>
                                             <td class="percentage">32.1%</td>
-                                            <td><span class="score-value">16.8</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">67.2</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 67.2%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 67.2%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
@@ -6127,15 +6046,12 @@
                                             <td class="dimension-domain-info">Condiciones en el ambiente de trabajo</td>
                                             <td class="risk-count">38</td>
                                             <td class="percentage">27.1%</td>
-                                            <td><span class="score-value">13.2</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">52.800000000000004</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 52.800000000000004%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 52.800000000000004%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
@@ -6150,15 +6066,12 @@
                                             <td class="dimension-domain-info">Carga de trabajo</td>
                                             <td class="risk-count">42</td>
                                             <td class="percentage">30.0%</td>
-                                            <td><span class="score-value">15.5</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">62</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 62.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill nulo" style="width: 62%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
@@ -6173,15 +6086,12 @@
                                             <td class="dimension-domain-info">Carga de trabajo</td>
                                             <td class="risk-count">50</td>
                                             <td class="percentage">35.7%</td>
-                                            <td><span class="score-value">17.6</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">70.4</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 70.4%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 70.4%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
@@ -6196,15 +6106,12 @@
                                             <td class="dimension-domain-info">Carga de trabajo</td>
                                             <td class="risk-count">48</td>
                                             <td class="percentage">34.3%</td>
-                                            <td><span class="score-value">17.4</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">69.6</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Muy Alto<br>Puntaje relativo: 69.6%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill muy-alto" style="width: 69.6%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge muy-alto">Muy alto</span></td>
                                         </tr>
@@ -6219,15 +6126,12 @@
                                             <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
                                             <td class="risk-count">41</td>
                                             <td class="percentage">29.3%</td>
-                                            <td><span class="score-value">20</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">80</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 80.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 80%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
@@ -6242,15 +6146,12 @@
                                             <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
                                             <td class="risk-count">36</td>
                                             <td class="percentage">25.7%</td>
-                                            <td><span class="score-value">16.4</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">65.6</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 65.6%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill medio" style="width: 65.6%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
@@ -6265,15 +6166,12 @@
                                             <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
                                             <td class="risk-count">39</td>
                                             <td class="percentage">27.9%</td>
-                                            <td><span class="score-value">19.9</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">79.6</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Alto<br>Puntaje relativo: 79.6%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill alto" style="width: 79.6%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge alto">Alto</span></td>
                                         </tr>
@@ -6288,15 +6186,12 @@
                                             <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
                                             <td class="risk-count">20</td>
                                             <td class="percentage">13.3%</td>
-                                            <td><span class="score-value">19.6</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">78.4</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 78.4%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 78.4%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
@@ -6311,15 +6206,12 @@
                                             <td class="dimension-domain-info">Jornada de trabajo</td>
                                             <td class="risk-count">22</td>
                                             <td class="percentage">14.7%</td>
-                                            <td><span class="score-value">17.5</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">70</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 70.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill medio" style="width: 70%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
@@ -6334,15 +6226,12 @@
                                             <td class="dimension-domain-info">Jornada de trabajo</td>
                                             <td class="risk-count">16</td>
                                             <td class="percentage">10.7%</td>
-                                            <td><span class="score-value">17.9</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">71.6</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Muy Alto<br>Puntaje relativo: 71.6%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill muy-alto" style="width: 71.6%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge muy-alto">Muy alto</span></td>
                                         </tr>
@@ -6357,15 +6246,12 @@
                                             <td class="dimension-domain-info">Jornada de trabajo</td>
                                             <td class="risk-count">14</td>
                                             <td class="percentage">9.3%</td>
-                                            <td><span class="score-value">9.7</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">38.8</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 38.8%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 38.8%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
@@ -6380,15 +6266,12 @@
                                             <td class="dimension-domain-info">Liderazgo y Relaciones interpersonales</td>
                                             <td class="risk-count">18</td>
                                             <td class="percentage">12.0%</td>
-                                            <td><span class="score-value">9</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">36</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Alto<br>Puntaje relativo: 36.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill alto" style="width: 36%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge alto">Alto</span></td>
                                         </tr>
@@ -6403,15 +6286,12 @@
                                             <td class="dimension-domain-info">Liderazgo y Relaciones interpersonales</td>
                                             <td class="risk-count">12</td>
                                             <td class="percentage">8.0%</td>
-                                            <td><span class="score-value">16</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">64</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 64.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill medio" style="width: 64%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
@@ -6426,15 +6306,12 @@
                                             <td class="dimension-domain-info">Liderazgo y Relaciones interpersonales</td>
                                             <td class="risk-count">8</td>
                                             <td class="percentage">5.3%</td>
-                                            <td><span class="score-value">13.9</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">55.60000000000001</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 55.60000000000001%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill nulo" style="width: 55.60000000000001%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
@@ -6449,15 +6326,12 @@
                                             <td class="dimension-domain-info">Liderazgo y Relaciones interpersonales</td>
                                             <td class="risk-count">8</td>
                                             <td class="percentage">5.3%</td>
-                                            <td><span class="score-value">11.5</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">46</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 46.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 46%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
@@ -6472,15 +6346,12 @@
                                             <td class="dimension-domain-info">Violencia laboral</td>
                                             <td class="risk-count">32</td>
                                             <td class="percentage">21.3%</td>
-                                            <td><span class="score-value">9.7</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">38.8</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 38.8%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill medio" style="width: 38.8%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
@@ -6495,15 +6366,12 @@
                                             <td class="dimension-domain-info">Entorno organizacional</td>
                                             <td class="risk-count">19</td>
                                             <td class="percentage">12.7%</td>
-                                            <td><span class="score-value">16.3</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">65.2</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Alto<br>Puntaje relativo: 65.2%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill alto" style="width: 65.2%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge alto">Alto</span></td>
                                         </tr>
@@ -6518,15 +6386,12 @@
                                             <td class="dimension-domain-info">Entorno organizacional</td>
                                             <td class="risk-count">15</td>
                                             <td class="percentage">10.0%</td>
-                                            <td><span class="score-value">5.2</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">20.8</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 20.8%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 20.8%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
@@ -6541,15 +6406,12 @@
                                             <td class="dimension-domain-info">Entorno organizacional</td>
                                             <td class="risk-count">11</td>
                                             <td class="percentage">7.3%</td>
-                                            <td><span class="score-value">14.1</span></td>
-                                            <td>
-    <div class="range-indicator-container">
-        <div class="range-track">
+                                            <td colspan="2"><span class="score-value">56.39999999999999</span>
+    <div class="range-indicator-container range-with-score">
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 56.39999999999999%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill nulo" style="width: 56.39999999999999%;"></div>
         </div>
-        <div class="range-thresholds">
-            <span class="range-threshold" style="left: 20%;">5</span><span class="range-threshold" style="left: 40%;">10</span><span class="range-threshold" style="left: 60%;">15</span><span class="range-threshold" style="left: 80%;">20</span>
-        </div>
+        
     </div></td>
                                             <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
