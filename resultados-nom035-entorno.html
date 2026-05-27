@@ -6675,19 +6675,29 @@
                                                 <select id="heatmap-cols-select" class="heatmap-dropdown" style="display: none;">
                                                     <option value="department" selected>Áreas</option>
                                                     <option value="leader">Líderes</option>
-                                                    <option value="city">Ciudades</option>
+                                                    <option value="collaborators">Colaborador</option>
                                                     <option value="country">Países</option>
+                                                    <option value="city">Ciudades</option>
+                                                    <option value="age">Edad</option>
+                                                    <option value="sexo">Sexo</option>
+                                                    <option value="columna-a">Columna A</option>
+                                                    <option value="columna-b">Columna B</option>
                                                 </select>
                                                 <div class="custom-select single-select" tabindex="0" style="min-width: 140px;">
                                                     <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
                                                         <span class="selected-text">Áreas</span>
                                                         <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
                                                     </div>
-                                                    <div class="select-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 140px;">
+                                                    <div class="select-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 140px; max-height: 240px; overflow-y: auto !important;">
                                                         <div class="select-option selected" data-value="department" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Áreas</div>
                                                         <div class="select-option" data-value="leader" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Líderes</div>
-                                                        <div class="select-option" data-value="city" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Ciudades</div>
+                                                        <div class="select-option" data-value="collaborators" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Colaborador</div>
                                                         <div class="select-option" data-value="country" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Países</div>
+                                                        <div class="select-option" data-value="city" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Ciudades</div>
+                                                        <div class="select-option" data-value="age" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Edad</div>
+                                                        <div class="select-option" data-value="sexo" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Sexo</div>
+                                                        <div class="select-option" data-value="columna-a" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Columna A</div>
+                                                        <div class="select-option" data-value="columna-b" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Columna B</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -6792,19 +6802,19 @@
                                                 <option value="gerente">Gerente</option>
                                                 <option value="director">Director</option>
                                             </select>
-                                            <div class="custom-select single-select" tabindex="0">
+                                            <div class="custom-select" tabindex="0">
                                                 <div class="select-trigger">
-                                                    <span class="selected-text">Todos</span>
+                                                    <span class="select-text">Todos</span>
                                                     <i class="far fa-chevron-down"></i>
                                                 </div>
                                                 <div class="select-dropdown">
-                                                    <div class="select-option" data-value="todos">Todos</div>
-                                                    <div class="select-option" data-value="asistente">Asistente</div>
-                                                    <div class="select-option" data-value="especialista">Especialista</div>
-                                                    <div class="select-option" data-value="coordinador">Coordinador</div>
-                                                    <div class="select-option" data-value="supervisor">Supervisor</div>
-                                                    <div class="select-option" data-value="gerente">Gerente</div>
-                                                    <div class="select-option" data-value="director">Director</div>
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="asistente"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Asistente</span></div>
+                                                    <div class="select-option" data-value="especialista"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Especialista</span></div>
+                                                    <div class="select-option" data-value="coordinador"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Coordinador</span></div>
+                                                    <div class="select-option" data-value="supervisor"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Supervisor</span></div>
+                                                    <div class="select-option" data-value="gerente"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Gerente</span></div>
+                                                    <div class="select-option" data-value="director"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Director</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -6816,15 +6826,15 @@
                                                 <option value="masculino">Masculino</option>
                                                 <option value="femenino">Femenino</option>
                                             </select>
-                                            <div class="custom-select single-select" tabindex="0">
+                                            <div class="custom-select" tabindex="0">
                                                 <div class="select-trigger">
-                                                    <span class="selected-text">Todos</span>
+                                                    <span class="select-text">Todos</span>
                                                     <i class="far fa-chevron-down"></i>
                                                 </div>
                                                 <div class="select-dropdown">
-                                                    <div class="select-option" data-value="todos">Todos</div>
-                                                    <div class="select-option" data-value="masculino">Masculino</div>
-                                                    <div class="select-option" data-value="femenino">Femenino</div>
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="masculino"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Masculino</span></div>
+                                                    <div class="select-option" data-value="femenino"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Femenino</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -6837,16 +6847,16 @@
                                                 <option value="mexico">México</option>
                                                 <option value="argentina">Argentina</option>
                                             </select>
-                                            <div class="custom-select single-select" tabindex="0">
+                                            <div class="custom-select" tabindex="0">
                                                 <div class="select-trigger">
-                                                    <span class="selected-text">Todos</span>
+                                                    <span class="select-text">Todos</span>
                                                     <i class="far fa-chevron-down"></i>
                                                 </div>
                                                 <div class="select-dropdown">
-                                                    <div class="select-option" data-value="todos">Todos</div>
-                                                    <div class="select-option" data-value="colombia">Colombia</div>
-                                                    <div class="select-option" data-value="mexico">México</div>
-                                                    <div class="select-option" data-value="argentina">Argentina</div>
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="colombia"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Colombia</span></div>
+                                                    <div class="select-option" data-value="mexico"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">México</span></div>
+                                                    <div class="select-option" data-value="argentina"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Argentina</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -6862,19 +6872,19 @@
                                                 <option value="56-65">56-65 años</option>
                                                 <option value="65+">65+ años</option>
                                             </select>
-                                            <div class="custom-select single-select" tabindex="0">
+                                            <div class="custom-select" tabindex="0">
                                                 <div class="select-trigger">
-                                                    <span class="selected-text">Todos</span>
+                                                    <span class="select-text">Todos</span>
                                                     <i class="far fa-chevron-down"></i>
                                                 </div>
                                                 <div class="select-dropdown">
-                                                    <div class="select-option" data-value="todos">Todos</div>
-                                                    <div class="select-option" data-value="18-25">18-25 años</div>
-                                                    <div class="select-option" data-value="26-35">26-35 años</div>
-                                                    <div class="select-option" data-value="36-45">36-45 años</div>
-                                                    <div class="select-option" data-value="46-55">46-55 años</div>
-                                                    <div class="select-option" data-value="56-65">56-65 años</div>
-                                                    <div class="select-option" data-value="65+">65+ años</div>
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="18-25"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">18-25 años</span></div>
+                                                    <div class="select-option" data-value="26-35"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">26-35 años</span></div>
+                                                    <div class="select-option" data-value="36-45"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">36-45 años</span></div>
+                                                    <div class="select-option" data-value="46-55"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">46-55 años</span></div>
+                                                    <div class="select-option" data-value="56-65"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">56-65 años</span></div>
+                                                    <div class="select-option" data-value="65+"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">65+ años</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -6889,18 +6899,138 @@
                                                 <option value="bajo">Bajo</option>
                                                 <option value="nulo">Nulo</option>
                                             </select>
-                                            <div class="custom-select single-select" tabindex="0">
+                                            <div class="custom-select" tabindex="0">
                                                 <div class="select-trigger">
-                                                    <span class="selected-text">Todos</span>
+                                                    <span class="select-text">Todos</span>
                                                     <i class="far fa-chevron-down"></i>
                                                 </div>
                                                 <div class="select-dropdown">
-                                                    <div class="select-option" data-value="todos">Todos</div>
-                                                    <div class="select-option" data-value="muy-alto">Muy Alto</div>
-                                                    <div class="select-option" data-value="alto">Alto</div>
-                                                    <div class="select-option" data-value="medio">Medio</div>
-                                                    <div class="select-option" data-value="bajo">Bajo</div>
-                                                    <div class="select-option" data-value="nulo">Nulo</div>
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="muy-alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Muy Alto</span></div>
+                                                    <div class="select-option" data-value="alto"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Alto</span></div>
+                                                    <div class="select-option" data-value="medio"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Medio</span></div>
+                                                    <div class="select-option" data-value="bajo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Bajo</span></div>
+                                                    <div class="select-option" data-value="nulo"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Nulo</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Área</label>
+                                            <select class="filter-select" id="department-filter-segments" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="ventas">Ventas</option>
+                                                <option value="tecnologia">Tecnología</option>
+                                                <option value="rrhh">Recursos Humanos</option>
+                                                <option value="finanzas">Finanzas</option>
+                                                <option value="administracion">Administración</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="ventas"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Ventas</span></div>
+                                                    <div class="select-option" data-value="tecnologia"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Tecnología</span></div>
+                                                    <div class="select-option" data-value="rrhh"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Recursos Humanos</span></div>
+                                                    <div class="select-option" data-value="finanzas"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Finanzas</span></div>
+                                                    <div class="select-option" data-value="administracion"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Administración</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Líder</label>
+                                            <select class="filter-select" id="leader-filter-segments" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="ana-martinez">Ana Martínez</option>
+                                                <option value="carlos-gomez">Carlos Gómez</option>
+                                                <option value="laura-perez">Laura Pérez</option>
+                                                <option value="roberto-sanchez">Roberto Sánchez</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="ana-martinez"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Ana Martínez</span></div>
+                                                    <div class="select-option" data-value="carlos-gomez"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Carlos Gómez</span></div>
+                                                    <div class="select-option" data-value="laura-perez"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Laura Pérez</span></div>
+                                                    <div class="select-option" data-value="roberto-sanchez"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Roberto Sánchez</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Ciudad</label>
+                                            <select class="filter-select" id="city-filter-segments" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="bogota">Bogotá</option>
+                                                <option value="medellin">Medellín</option>
+                                                <option value="cdmx">CDMX</option>
+                                                <option value="lima">Lima</option>
+                                                <option value="santiago">Santiago</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="bogota"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Bogotá</span></div>
+                                                    <div class="select-option" data-value="medellin"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Medellín</span></div>
+                                                    <div class="select-option" data-value="cdmx"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">CDMX</span></div>
+                                                    <div class="select-option" data-value="lima"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Lima</span></div>
+                                                    <div class="select-option" data-value="santiago"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Santiago</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Columna A</label>
+                                            <select class="filter-select" id="cola-filter-segments" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="opcion-1">Opción 1</option>
+                                                <option value="opcion-2">Opción 2</option>
+                                                <option value="opcion-3">Opción 3</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="opcion-1"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Opción 1</span></div>
+                                                    <div class="select-option" data-value="opcion-2"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Opción 2</span></div>
+                                                    <div class="select-option" data-value="opcion-3"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Opción 3</span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="filter-group">
+                                            <label class="filter-label">Columna B</label>
+                                            <select class="filter-select" id="colb-filter-segments" style="display: none;">
+                                                <option value="todos">Todos</option>
+                                                <option value="opcion-x">Opción X</option>
+                                                <option value="opcion-y">Opción Y</option>
+                                                <option value="opcion-z">Opción Z</option>
+                                            </select>
+                                            <div class="custom-select" tabindex="0">
+                                                <div class="select-trigger">
+                                                    <span class="select-text">Todos</span>
+                                                    <i class="far fa-chevron-down"></i>
+                                                </div>
+                                                <div class="select-dropdown">
+                                                    <div class="select-option" data-value="todos"><input type="checkbox" checked style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Todos</span></div>
+                                                    <div class="select-option" data-value="opcion-x"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Opción X</span></div>
+                                                    <div class="select-option" data-value="opcion-y"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Opción Y</span></div>
+                                                    <div class="select-option" data-value="opcion-z"><input type="checkbox" style="margin: 0; margin-right: 8px;"><span class="option-text" style="flex: 1;">Opción Z</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -10494,17 +10624,17 @@ console.log('✅ [DATA] Data asignado a window');
             if (clearSegmentsFiltersBtn) {
                 clearSegmentsFiltersBtn.addEventListener('click', () => {
                     // Resetear todos los custom selects a "todos"
-                    const customSelects = document.querySelectorAll('#segments-filters-side-panel .single-select');
+                    const customSelects = document.querySelectorAll('#segments-filters-side-panel .custom-select');
                     customSelects.forEach(customSelect => {
-                        const selectedText = customSelect.querySelector('.selected-text');
-                        if (selectedText) selectedText.textContent = 'Todos';
+                        const selectText = customSelect.querySelector('.select-text');
+                        if (selectText) selectText.textContent = 'Todos';
                         
-                        const options = customSelect.querySelectorAll('.select-option');
-                        options.forEach(opt => {
-                            if (opt.dataset.value === 'todos') {
-                                opt.classList.add('selected');
+                        const checkboxes = customSelect.querySelectorAll('input[type="checkbox"]');
+                        checkboxes.forEach(cb => {
+                            if (cb.closest('.select-option').dataset.value === 'todos') {
+                                cb.checked = true;
                             } else {
-                                opt.classList.remove('selected');
+                                cb.checked = false;
                             }
                         });
                     });
@@ -10529,8 +10659,9 @@ console.log('✅ [DATA] Data asignado a window');
                     
                     // Verificar si en los dropdowns hidden, alguno no es "todos"
                     // También verificamos los custom selects
-                    const customOptions = document.querySelectorAll('#segments-filters-side-panel .single-select .select-option.selected');
-                    customOptions.forEach(opt => {
+                    const customOptions = document.querySelectorAll('#segments-filters-side-panel .custom-select .select-option input[type="checkbox"]:checked');
+                    customOptions.forEach(cb => {
+                        const opt = cb.closest('.select-option');
                         if (opt.dataset.value && opt.dataset.value !== 'todos') {
                             activeFiltersCount++;
                         }
