@@ -5170,11 +5170,11 @@
                                     <div class="metric-icon" style="background: rgba(253, 224, 71, 0.1); color: var(--ubits-semantic-warning);">
                                         <i class="far fa-globe"></i>
                                     </div>
-                                    <h3 class="metric-title">Nivel de Riesgo Organizacional</h3>
+                                    <h3 class="metric-title">Nivel de Riesgo Organizacional <i class="fas fa-info-circle" style="color: var(--ubits-fg-1-medium); margin-left: 4px; font-size: 14px; cursor: help;" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.textContent='Resultado del promedio ponderado de los factores de riesgo psicosocial evaluados en la organización. El nivel actual indica la exposición global detectada en la investigación.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='250px'; t.style.textAlign='center'; t.style.lineHeight='1.4'; const r=this.getBoundingClientRect(); t.style.left=(r.left - 100)+'px'; t.style.top=(r.bottom + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) { t.style.opacity='0'; t.style.whiteSpace=''; t.style.width=''; t.style.textAlign=''; t.style.lineHeight=''; }"></i></h3>
                                 </div>
                             </div>
                             <div class="metric-value-section">
-                                <div class="metric-main-number" style="color: var(--ubits-semantic-warning);">Medio</div>
+                                <div class="metric-main-number" style="color: var(--ubits-semantic-warning); display: flex; align-items: baseline; gap: 8px;">75.4 <span style="font-size: 16px; font-weight: 600;">(Medio)</span></div>
                                 <div class="metric-unit-text" style="color: var(--ubits-fg-1-medium); font-size: 13px; margin-top: 4px; font-weight: 500;">
                                     Promedio ponderado CT
                                 </div>
@@ -11901,5 +11901,6 @@ console.log('✅ [DATA] Data asignado a window');
             document.querySelectorAll('.single-select.active').forEach(w => w.classList.remove('active'));
         });
 </script>
+    <div class="tooltip" id="tooltip"></div>
 </body>
 </html>
