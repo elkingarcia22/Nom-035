@@ -11881,6 +11881,16 @@ console.log('✅ [DATA] Data asignado a window');
                     <div class="rp-report-radio"><div class="rp-radio-dot"></div></div>
                 </div>
             </div>
+            <div class="rp-report-card" id="rpFmt-pdf" onclick="selectRpFmt('pdf')" style="margin-top: 12px;">
+                <div class="rp-report-card-header">
+                    <div class="rp-report-icon"><i class="far fa-file-pdf"></i></div>
+                    <div class="rp-report-info">
+                        <strong>Resultados generales (PDF)</strong>
+                        <span>Reporte visual con gráficos, heatmaps y resultados de la empresa</span>
+                    </div>
+                    <div class="rp-report-radio"><div class="rp-radio-dot"></div></div>
+                </div>
+            </div>
         </div>
 
         <!-- TAB: Descargas -->
@@ -11970,21 +11980,32 @@ console.log('✅ [DATA] Data asignado a window');
                 document.getElementById('rpFooter-' + t).style.display = t === tab ? '' : 'none';
             });
         }
-        function selectRpFmt(fmt) {
+                function selectRpFmt(fmt) {
             rpFmt = fmt;
+            ['xlsx','pdf'].forEach(f => {
+                const el = document.getElementById('rpFmt-' + f);
+                if (el) {
+                    if (f === fmt) el.classList.add('selected');
+                    else el.classList.remove('selected');
+                }
+            });
+            const btnLabel = document.getElementById('rpDlBtnLabel');
+            if (btnLabel) {
+                btnLabel.textContent = fmt === 'pdf' ? 'Ver y descargar PDF' : 'Descargar XLSX';
+            }
         }
 
         function startRpDownload() {
             const today = new Date().toISOString().split('T')[0];
-            const fileName = `resultados-riesgo-psicosocial-nom035-${today}.xlsx`;
+            const fileName = rpFmt === 'pdf' ? `reporte-riesgo-psicosocial-nom035-${today}.pdf` : `resultados-riesgo-psicosocial-nom035-${today}.xlsx`;
 
-            rpDownloads.unshift({ name: fileName, progress: 0, done: false });
+            rpDownloads.unshift({ name: fileName, progress: 0, done: false, fmt: rpFmt });
             renderRpDlList();
             switchRpTab('downloads');
 
             // Prepare mini widget (hidden until minimize)
             rpProgress = 0;
-            document.getElementById('rpMiniTitle').textContent = 'Preparando XLSX...';
+            document.getElementById('rpMiniTitle').textContent = rpFmt === 'pdf' ? 'Preparando PDF...' : 'Preparando XLSX...';
             document.getElementById('rpMiniSub').textContent = '1 en progreso';
             document.getElementById('rpMiniFile').textContent = fileName;
             document.getElementById('rpMiniSpinner').className = 'rp-mini-spinner';
@@ -12025,7 +12046,7 @@ console.log('✅ [DATA] Data asignado a window');
             c.innerHTML = rpDownloads.map(dl => `
                 <div class="rp-dl-item">
                     <div style="width:32px;height:32px;border-radius:8px;background:var(--ubits-bg-1,#f3f4f6);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                        <i class="far fa-file-excel" style="color:var(--ubits-fg-1-medium,#6b7280)"></i>
+                        <i class="far fa-file-${dl.fmt === 'pdf' ? 'pdf' : 'excel'}" style="color:var(--ubits-fg-1-medium,#6b7280)"></i>
                     </div>
                     <div class="rp-dl-info">
                         <div class="rp-dl-name">${dl.name}</div>
@@ -12034,7 +12055,9 @@ console.log('✅ [DATA] Data asignado a window');
                     </div>
                     ${!dl.done
                         ? `<div class="rp-dl-pct">${dl.progress}%</div>`
-                        : `<button onclick="downloadRpXlsx()" style="background:var(--ubits-primary,#2563eb);color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0">Descargar</button>`
+                        : dl.fmt === 'pdf'
+                            ? `<button onclick="openEntornoPdfViewer()" style="background:var(--ubits-primary,#2563eb);color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0">Ver</button>`
+                            : `<button onclick="downloadRpXlsx()" style="background:var(--ubits-primary,#2563eb);color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0">Descargar</button>`
                     }
                 </div>
             `).join('');
@@ -12043,6 +12066,290 @@ console.log('✅ [DATA] Data asignado a window');
         function downloadRpXlsx() {
             // Delegate to existing download functions
             if (typeof downloadGeneralResults === 'function') downloadGeneralResults();
+        }
+
+        
+        function openEntornoPdfViewer() {
+            const html = `<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Reporte Riesgo Psicosocial NOM-035 – Visor</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#525659;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.toolbar{background:#323639;height:48px;display:flex;align-items:center;padding:0 10px;gap:6px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.4);z-index:10}
+.tb-btn{background:none;border:none;color:#d0d0d0;cursor:pointer;padding:5px 8px;border-radius:4px;font-size:13px;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.tb-btn:hover{background:rgba(255,255,255,.12)}
+.tb-btn.primary{background:#2563eb;color:#fff;font-weight:600}
+.tb-btn.primary:hover{background:#1d4ed8}
+.tb-sep{width:1px;height:22px;background:rgba(255,255,255,.2);margin:0 3px;flex-shrink:0}
+.tb-file{color:#fff;font-size:12px;font-weight:500;flex:1;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tb-ctrl{display:flex;align-items:center;gap:5px}
+.tb-input{background:#525659;border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:3px;padding:3px 5px;font-size:12px;text-align:center}
+.tb-input.wide{width:52px} .tb-input.narrow{width:34px}
+.main{display:flex;flex:1;overflow:hidden}
+.sidebar{width:168px;background:#3a3a3a;overflow-y:auto;flex-shrink:0;padding:10px;display:flex;flex-direction:column;gap:8px;scrollbar-width:thin;scrollbar-color:#666 #3a3a3a}
+.thumb{cursor:pointer;border:2px solid transparent;border-radius:4px;overflow:hidden;transition:border-color .15s}
+.thumb.active{border-color:#4d90fe}
+.thumb:hover:not(.active){border-color:#888}
+.th-inner{background:#fff;padding:9px 8px;min-height:105px;display:flex;flex-direction:column;justify-content:center;align-items:center;}
+.th-label{text-align:center;color:#aaa;font-size:10px;padding:4px 0 2px;background:#444}
+.content{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:24px 24px 40px;gap:24px;scrollbar-width:thin;scrollbar-color:#666 #525659}
+.pdf-page{width:760px;min-height:980px;background:#fff;box-shadow:0 4px 24px rgba(0,0,0,.35);padding:44px 60px 60px;position:relative;transition:transform .2s;color:#333}
+.pdf-title{font-size:24px;font-weight:700;color:#111;margin-bottom:8px;text-align:center;}
+.pdf-subtitle{font-size:14px;color:#666;text-align:center;margin-bottom:30px;}
+.pdf-section{margin-bottom:30px;}
+.pdf-section h2{font-size:16px;font-weight:600;margin-bottom:15px;color:#222;border-bottom:1px solid #eee;padding-bottom:5px;}
+.pdf-chart-placeholder{background:#f9fafb;border:1px dashed #ccc;height:250px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#888;font-size:14px;margin-bottom:15px;}
+.pdf-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:15px;}
+.pdf-table th{background:#f3f4f6;padding:8px;text-align:left;border:1px solid #e5e7eb;font-weight:600;}
+.pdf-table td{padding:8px;border:1px solid #e5e7eb;}
+.risk-alto{color:#ef4444;font-weight:600;}
+.risk-medio{color:#eab308;font-weight:600;}
+.risk-bajo{color:#22c55e;font-weight:600;}
+.heatmap-cell{width:30px;height:30px;border-radius:4px;margin:auto;}
+.hm-r{background-color:#fee2e2;}
+.hm-o{background-color:#ffedd5;}
+.hm-y{background-color:#fef9c3;}
+.hm-g{background-color:#dcfce7;}
+.hm-b{background-color:#dbeafe;}
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <div class="tb-ctrl">
+    <button class="tb-btn" onclick="gp(cp-1)">&#9664;</button>
+    <input class="tb-input narrow" id="pi" type="number" value="1" min="1" max="5" onchange="gp(+this.value)">
+    <span style="color:#aaa;font-size:12px">/ 5</span>
+    <button class="tb-btn" onclick="gp(cp+1)">&#9654;</button>
+  </div>
+  <div class="tb-sep"></div>
+  <div class="tb-file" id="pdf-filename">reporte-riesgo-psicosocial.pdf</div>
+  <div class="tb-sep"></div>
+  <div class="tb-ctrl">
+    <button class="tb-btn" onclick="zoom(-10)">&#8722;</button>
+    <input class="tb-input wide" id="zi" value="100%">
+    <button class="tb-btn" onclick="zoom(10)">&#43;</button>
+  </div>
+  <div class="tb-sep"></div>
+  <button class="tb-btn primary" onclick="alert('Descargando reporte...')">&#11015; Descargar PDF</button>
+  <button class="tb-btn" onclick="window.print()" title="Imprimir">&#128438;</button>
+</div>
+<div class="main">
+  <div class="sidebar">
+    <div class="thumb active" onclick="gp(1)"><div class="th-inner"><div style="font-size:6px;font-weight:bold;margin-bottom:4px">PORTADA</div><div style="font-size:5px;color:#666">Resumen General</div></div><div class="th-label">Pág. 1</div></div>
+    <div class="thumb" onclick="gp(2)"><div class="th-inner"><div style="font-size:6px;font-weight:bold;margin-bottom:4px">PARTICIPACIÓN</div><div style="font-size:5px;color:#666">Por Áreas</div></div><div class="th-label">Pág. 2</div></div>
+    <div class="thumb" onclick="gp(3)"><div class="th-inner"><div style="font-size:6px;font-weight:bold;margin-bottom:4px">RESULTADOS GENERALES</div><div style="font-size:5px;color:#666">Categorías y Dominios</div></div><div class="th-label">Pág. 3</div></div>
+    <div class="thumb" onclick="gp(4)"><div class="th-inner"><div style="font-size:6px;font-weight:bold;margin-bottom:4px">HEATMAP 1</div><div style="font-size:5px;color:#666">Categorías vs Áreas</div></div><div class="th-label">Pág. 4</div></div>
+    <div class="thumb" onclick="gp(5)"><div class="th-inner"><div style="font-size:6px;font-weight:bold;margin-bottom:4px">HEATMAP 2</div><div style="font-size:5px;color:#666">Dominios vs Áreas</div></div><div class="th-label">Pág. 5</div></div>
+  </div>
+  <div class="content" id="cnt">
+    <!-- Page 1: Portada y Resultado General -->
+    <div class="pdf-page" id="page-1">
+      <div style="margin-top: 100px;">
+        <div class="pdf-title">Reporte de Resultados: Riesgo Psicosocial</div>
+        <div class="pdf-subtitle">NOM-035-STPS-2018 | Noviembre 2024</div>
+        
+        <div style="text-align: center; margin-top: 80px; padding: 40px; background: #f9fafb; border-radius: 12px; border: 1px solid #e5e7eb;">
+            <h2 style="font-size: 20px; color: #4b5563; margin-bottom: 20px;">Nivel de Riesgo General de la Empresa</h2>
+            <div style="font-size: 48px; font-weight: 800; color: #ef4444; margin-bottom: 10px;">ALTO</div>
+            <p style="font-size: 14px; color: #6b7280; max-width: 400px; margin: 0 auto;">El resultado global de los cuestionarios indica un nivel de riesgo psicosocial ALTO, requiriendo acciones de intervención de segundo y tercer nivel según la norma.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Page 2: Participación -->
+    <div class="pdf-page" id="page-2">
+      <div class="pdf-title" style="font-size: 18px; text-align: left;">Participación por Áreas</div>
+      <div class="pdf-section">
+        <p style="font-size: 13px; color: #555; margin-bottom: 15px;">Resumen de la cantidad de colaboradores encuestados en comparación con el universo total esperado para cada área de la organización.</p>
+        <div class="pdf-chart-placeholder">
+            [Gráfico de barras de participación]
+        </div>
+        <table class="pdf-table">
+          <thead>
+            <tr><th>Área</th><th>Universo</th><th>Participantes</th><th>Tasa de Participación</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Operaciones</td><td>120</td><td>115</td><td>95.8%</td></tr>
+            <tr><td>Ventas</td><td>85</td><td>80</td><td>94.1%</td></tr>
+            <tr><td>Tecnología</td><td>60</td><td>58</td><td>96.6%</td></tr>
+            <tr><td>Recursos Humanos</td><td>15</td><td>15</td><td>100%</td></tr>
+            <tr><td>Marketing</td><td>25</td><td>22</td><td>88.0%</td></tr>
+            <tr><td style="font-weight:bold;">TOTAL</td><td style="font-weight:bold;">305</td><td style="font-weight:bold;">290</td><td style="font-weight:bold;">95.1%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Page 3: Resultados Generales -->
+    <div class="pdf-page" id="page-3">
+      <div class="pdf-title" style="font-size: 18px; text-align: left;">Resultados Generales por Categoría y Dominio</div>
+      <div class="pdf-section">
+        <h2>Por Categoría</h2>
+        <table class="pdf-table">
+          <thead>
+            <tr><th>Categoría</th><th>Puntaje Promedio</th><th>Nivel de Riesgo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Ambiente de trabajo</td><td>45.2</td><td class="risk-medio">Medio</td></tr>
+            <tr><td>Factores propios de la actividad</td><td>68.5</td><td class="risk-alto">Alto</td></tr>
+            <tr><td>Organización del tiempo de trabajo</td><td>55.0</td><td class="risk-alto">Alto</td></tr>
+            <tr><td>Liderazgo y relaciones en el trabajo</td><td>32.1</td><td class="risk-bajo">Bajo</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pdf-section">
+        <h2>Por Dominio (Top 5)</h2>
+        <table class="pdf-table">
+          <thead>
+            <tr><th>Dominio</th><th>Categoría</th><th>Nivel de Riesgo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Carga de trabajo</td><td>Factores propios de la actividad</td><td class="risk-alto">Muy Alto</td></tr>
+            <tr><td>Jornada de trabajo</td><td>Organización del tiempo</td><td class="risk-alto">Alto</td></tr>
+            <tr><td>Condiciones en el ambiente de trabajo</td><td>Ambiente de trabajo</td><td class="risk-medio">Medio</td></tr>
+            <tr><td>Interferencia en la relación trabajo-familia</td><td>Organización del tiempo</td><td class="risk-medio">Medio</td></tr>
+            <tr><td>Liderazgo</td><td>Liderazgo y relaciones</td><td class="risk-bajo">Bajo</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Page 4: Heatmaps Categorías -->
+    <div class="pdf-page" id="page-4">
+      <div class="pdf-title" style="font-size: 18px; text-align: left;">Análisis Específico: Categorías vs Áreas</div>
+      <div class="pdf-section">
+        <p style="font-size: 13px; color: #555; margin-bottom: 15px;">Tabla de calor que muestra el nivel de riesgo por categoría desglosado por cada área de la empresa.</p>
+        <table class="pdf-table" style="text-align: center;">
+          <thead>
+            <tr>
+              <th style="text-align: left;">Categoría</th>
+              <th>Operaciones</th>
+              <th>Ventas</th>
+              <th>Tecnología</th>
+              <th>Recursos Humanos</th>
+              <th>Marketing</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: left;">Ambiente de trabajo</td>
+              <td><div class="heatmap-cell hm-r"></div></td>
+              <td><div class="heatmap-cell hm-o"></div></td>
+              <td><div class="heatmap-cell hm-y"></div></td>
+              <td><div class="heatmap-cell hm-g"></div></td>
+              <td><div class="heatmap-cell hm-y"></div></td>
+            </tr>
+            <tr>
+              <td style="text-align: left;">Factores propios de la actividad</td>
+              <td><div class="heatmap-cell hm-r"></div></td>
+              <td><div class="heatmap-cell hm-r"></div></td>
+              <td><div class="heatmap-cell hm-o"></div></td>
+              <td><div class="heatmap-cell hm-y"></div></td>
+              <td><div class="heatmap-cell hm-o"></div></td>
+            </tr>
+            <tr>
+              <td style="text-align: left;">Organización del tiempo</td>
+              <td><div class="heatmap-cell hm-o"></div></td>
+              <td><div class="heatmap-cell hm-o"></div></td>
+              <td><div class="heatmap-cell hm-r"></div></td>
+              <td><div class="heatmap-cell hm-g"></div></td>
+              <td><div class="heatmap-cell hm-y"></div></td>
+            </tr>
+            <tr>
+              <td style="text-align: left;">Liderazgo y relaciones</td>
+              <td><div class="heatmap-cell hm-y"></div></td>
+              <td><div class="heatmap-cell hm-y"></div></td>
+              <td><div class="heatmap-cell hm-g"></div></td>
+              <td><div class="heatmap-cell hm-b"></div></td>
+              <td><div class="heatmap-cell hm-g"></div></td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <div style="margin-top: 30px; font-size: 11px; color: #666; display: flex; gap: 15px; justify-content: center;">
+          <div style="display: flex; align-items: center; gap: 5px;"><div style="width: 12px; height: 12px; background: #fee2e2;"></div> Muy Alto</div>
+          <div style="display: flex; align-items: center; gap: 5px;"><div style="width: 12px; height: 12px; background: #ffedd5;"></div> Alto</div>
+          <div style="display: flex; align-items: center; gap: 5px;"><div style="width: 12px; height: 12px; background: #fef9c3;"></div> Medio</div>
+          <div style="display: flex; align-items: center; gap: 5px;"><div style="width: 12px; height: 12px; background: #dcfce7;"></div> Bajo</div>
+          <div style="display: flex; align-items: center; gap: 5px;"><div style="width: 12px; height: 12px; background: #dbeafe;"></div> Nulo</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Page 5: Heatmaps Dominios -->
+    <div class="pdf-page" id="page-5">
+      <div class="pdf-title" style="font-size: 18px; text-align: left;">Análisis Específico: Dominios vs Áreas</div>
+      <div class="pdf-section">
+        <p style="font-size: 13px; color: #555; margin-bottom: 15px;">Tabla de calor detallada por dominios específicos.</p>
+        <table class="pdf-table" style="text-align: center;">
+          <thead>
+            <tr>
+              <th style="text-align: left;">Dominio</th>
+              <th>Operaciones</th>
+              <th>Ventas</th>
+              <th>Tecnología</th>
+              <th>Recursos Humanos</th>
+              <th>Marketing</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: left;">Carga de trabajo</td>
+              <td><div class="heatmap-cell hm-r"></div></td>
+              <td><div class="heatmap-cell hm-r"></div></td>
+              <td><div class="heatmap-cell hm-r"></div></td>
+              <td><div class="heatmap-cell hm-o"></div></td>
+              <td><div class="heatmap-cell hm-o"></div></td>
+            </tr>
+            <tr>
+              <td style="text-align: left;">Jornada de trabajo</td>
+              <td><div class="heatmap-cell hm-o"></div></td>
+              <td><div class="heatmap-cell hm-o"></div></td>
+              <td><div class="heatmap-cell hm-r"></div></td>
+              <td><div class="heatmap-cell hm-g"></div></td>
+              <td><div class="heatmap-cell hm-y"></div></td>
+            </tr>
+            <tr>
+              <td style="text-align: left;">Falta de control</td>
+              <td><div class="heatmap-cell hm-o"></div></td>
+              <td><div class="heatmap-cell hm-y"></div></td>
+              <td><div class="heatmap-cell hm-y"></div></td>
+              <td><div class="heatmap-cell hm-g"></div></td>
+              <td><div class="heatmap-cell hm-g"></div></td>
+            </tr>
+            <tr>
+              <td style="text-align: left;">Liderazgo</td>
+              <td><div class="heatmap-cell hm-y"></div></td>
+              <td><div class="heatmap-cell hm-y"></div></td>
+              <td><div class="heatmap-cell hm-g"></div></td>
+              <td><div class="heatmap-cell hm-b"></div></td>
+              <td><div class="heatmap-cell hm-g"></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+let cp=1,zl=100;
+function gp(n){n=Math.max(1,Math.min(5,+n));cp=n;document.getElementById('pi').value=n;document.querySelectorAll('.thumb').forEach((t,i)=>t.classList.toggle('active',i+1===n));document.getElementById('page-'+n).scrollIntoView({behavior:'smooth',block:'start'});}
+function zoom(d){zl=Math.max(50,Math.min(200,zl+d));document.getElementById('zi').value=zl+'%';document.querySelectorAll('.pdf-page').forEach(p=>{p.style.transformOrigin='top center';p.style.transform='scale('+zl/100+')'});}
+document.getElementById('cnt').addEventListener('scroll',function(){
+  document.querySelectorAll('.pdf-page').forEach((p,i)=>{
+    const r=p.getBoundingClientRect();
+    if(r.top>=0&&r.top<window.innerHeight/2){cp=i+1;document.getElementById('pi').value=cp;document.querySelectorAll('.thumb').forEach((t,j)=>t.classList.toggle('active',j===i));}
+  });
+});
+<\/script>
+</body>
+</html>`;
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            window.open(url, '_blank');
         }
 
         function toggleRpMiniCollapse() {
