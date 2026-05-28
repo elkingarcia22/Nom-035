@@ -1660,7 +1660,7 @@
                     <!-- Métricas clave - FUERA DEL CONTENEDOR SUPERIOR -->
                     <div class="metrics-grid">
                         <!-- Métrica 1: Total canalizados -->
-                        <div class="metric-card">
+                        <div class="metric-card" style="cursor: pointer;" onclick="filterByRiskAndSwitchTab('detalle-colaborador', 'canalizado')">
                             <div class="metric-header">
                                 <div class="metric-title-section">
                                     <div class="metric-icon">
@@ -1676,7 +1676,7 @@
                         </div>
 
                         <!-- Métrica 2: Total de casos de riesgo -->
-                        <div class="metric-card">
+                        <div class="metric-card" style="cursor: pointer;" onclick="filterByRiskAndSwitchTab('detalle-colaborador', 'alto')">
                             <div class="metric-header">
                                 <div class="metric-title-section">
                                     <div class="metric-icon">
@@ -1692,7 +1692,7 @@
                         </div>
 
                         <!-- Métrica 3: % de participación -->
-                        <div class="metric-card">
+                        <div class="metric-card" style="cursor: pointer;" onclick="filterByRiskAndSwitchTab('participante', '')">
                             <div class="metric-header">
                                 <div class="metric-title-section">
                                     <div class="metric-icon">
@@ -1888,6 +1888,34 @@
     <script src="components/input.js"></script>
     <script src="script.js"></script>
     <script>
+        // Helper to switch tab and filter table based on card clicks
+        function filterByRiskAndSwitchTab(tabId, filterText) {
+            const tabBtn = document.querySelector(`button[data-tab="${tabId}"]`);
+            if (tabBtn) tabBtn.click();
+            
+            if (filterText !== undefined && tabId === 'detalle-colaborador') {
+                setTimeout(() => {
+                    const searchContainer = document.getElementById('nom-vista-colaborador-search-container');
+                    const searchInput = document.getElementById('nom-vista-colaborador-search-input');
+                    
+                    if (searchContainer && searchInput) {
+                        searchContainer.style.display = 'block';
+                        searchInput.value = filterText;
+                        searchInput.dispatchEvent(new Event('input'));
+                        
+                        // Hacer scroll a la tabla suavemente
+                        const tableWrapper = document.getElementById('nom-vista-colaborador-table-wrapper');
+                        if (tableWrapper) tableWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 150);
+            } else if (tabId === 'participante') {
+                setTimeout(() => {
+                    const tableWrapper = document.getElementById('nom-participation-table-wrapper');
+                    if (tableWrapper) tableWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 150);
+            }
+        }
+
         // Cargar componentes dinámicamente
         document.addEventListener('DOMContentLoaded', function() {
             loadSidebar('sidebar-container', 'encuestas');
