@@ -1841,8 +1841,12 @@
                                 </div>
                             </div>
                             <div class="metric-value-section">
-                                <div class="metric-main-number">90%</div>
+                                <div class="metric-main-number" style="color: var(--ubits-red-500, #ef4444);">90%</div>
                                 <div class="metric-unit-text">140 / 150 colaboradores</div>
+                            </div>
+                            <div style="margin-top: 12px; display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--ubits-fg-1-medium, #6b7280);">
+                                <i class="fas fa-exclamation-triangle" style="color: var(--ubits-warning-500, #f59e0b);"></i>
+                                <span>La NOM-035 exige 100% de participación</span>
                             </div>
                         </div>
                     </div>
@@ -2955,6 +2959,7 @@
         // Estado global para la tabla de Vista por Colaborador
         window.nomVistaColaboradorState = {
             search: '',
+            liderSearch: '',
             filters: {
                 area: [],
                 riesgo: []
@@ -3002,6 +3007,15 @@
                 );
             }
 
+            // 1.5 Aplicar Filtro de Búsqueda (Líder)
+            if (window.nomVistaColaboradorState.liderSearch) {
+                const liderSearchLower = window.nomVistaColaboradorState.liderSearch.toLowerCase();
+                filteredData = filteredData.filter(p => {
+                    const lider = p.details && p.details.leader ? p.details.leader : 'N/A';
+                    return lider.toLowerCase().includes(liderSearchLower);
+                });
+            }
+
             // 2. Aplicar Filtros Multi-select (Área y Riesgo)
             if (filters.area.length > 0) {
                 filteredData = filteredData.filter(p => {
@@ -3030,6 +3044,9 @@
                     } else if (sort.column === 'area') {
                         valA = (a.details && a.details.department ? a.details.department : 'N/A').toLowerCase();
                         valB = (b.details && b.details.department ? b.details.department : 'N/A').toLowerCase();
+                    } else if (sort.column === 'lider') {
+                        valA = (a.details && a.details.leader ? a.details.leader : 'N/A').toLowerCase();
+                        valB = (b.details && b.details.leader ? b.details.leader : 'N/A').toLowerCase();
                     } else if (sort.column === 'riesgo') {
                         valA = normalizeRiskLevel(a.riskLevel) || 'nulo';
                         valB = normalizeRiskLevel(b.riskLevel) || 'nulo';
@@ -3087,6 +3104,19 @@
                             </th>
                             <th style="padding: 16px; text-align: left; font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-medium); border-bottom: 1px solid var(--ubits-border-1); position: relative;">
                                 <div class="nom-th-inner">
+                                    <span>Líder</span>
+                                    <button class="nom-th-filter-btn" data-col="lider" title="Buscar">
+                                        <i class="far fa-search"></i>
+                                    </button>
+                                    <i class="far fa-sort th-icon ${sort.column === 'lider' ? (sort.direction === 'asc' ? 'sort-asc' : 'sort-desc') : ''}" data-sort="lider" style="margin-left: 4px; cursor: pointer;"></i>
+                                </div>
+                                <div class="nom-th-popover" id="popover-lider">
+                                    <div class="nom-th-popover-label">Buscar Líder</div>
+                                    <input type="text" class="nom-col-search-input" id="filter-lider" placeholder="Escribe líder..." value="${window.nomVistaColaboradorState.liderSearch}">
+                                </div>
+                            </th>
+                            <th style="padding: 16px; text-align: left; font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-medium); border-bottom: 1px solid var(--ubits-border-1); position: relative;">
+                                <div class="nom-th-inner">
                                     <span>Nivel de riesgo</span>
                                     <button class="nom-th-filter-btn" data-col="riesgo" title="Filtrar">
                                         <i class="far fa-filter"></i>
@@ -3113,7 +3143,7 @@
                 if (filteredData.length === 0) {
                     html += `
                         <tr>
-                            <td colspan="3" style="padding: 32px; text-align: center; color: var(--ubits-fg-1-medium); font-size: 14px;">
+                            <td colspan="4" style="padding: 32px; text-align: center; color: var(--ubits-fg-1-medium); font-size: 14px;">
                                 <i class="far fa-search" style="font-size: 24px; margin-bottom: 12px; opacity: 0.5;"></i>
                                 <p>No se encontraron resultados</p>
                             </td>
@@ -3143,6 +3173,7 @@
                                     </div>
                                 </td>
                                 <td style="padding: 16px; font-size: 13px; color: var(--ubits-fg-1-high);">${p.details && p.details.department ? p.details.department : 'N/A'}</td>
+                                <td style="padding: 16px; font-size: 13px; color: var(--ubits-fg-1-high);">${p.details && p.details.leader ? p.details.leader : 'N/A'}</td>
                                 <td style="padding: 16px; font-size: 13px; color: var(--ubits-fg-1-high);">
                                     ${riskBadge}
                                 </td>
@@ -3203,6 +3234,15 @@
             if (searchInput) {
                 searchInput.addEventListener('input', (e) => {
                     window.nomVistaColaboradorState.search = e.target.value;
+                    renderNomVistaColaboradorTable();
+                });
+            }
+
+            // 3.5 Search Input (Líder)
+            const searchLiderInput = document.getElementById('filter-lider');
+            if (searchLiderInput) {
+                searchLiderInput.addEventListener('input', (e) => {
+                    window.nomVistaColaboradorState.liderSearch = e.target.value;
                     renderNomVistaColaboradorTable();
                 });
             }
