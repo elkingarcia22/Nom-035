@@ -510,38 +510,38 @@
 
                 if (segmentType === 'department') {
                     segmentsData = [
-                        { name: 'Administración', participants: 35, avgRisk: 2.26, level: 'bajo' },
-                        { name: 'Finanzas', participants: 28, avgRisk: 1.09, level: 'nulo' },
-                        { name: 'Mantenimiento', participants: 22, avgRisk: 1.77, level: 'bajo' },
-                        { name: 'Marketing', participants: 18, avgRisk: 1.43, level: 'nulo' },
-                        { name: 'Producción', participants: 45, avgRisk: 2.25, level: 'bajo' },
-                        { name: 'Recursos Humanos', participants: 30, avgRisk: 1.13, level: 'nulo' },
-                        { name: 'Seguridad', participants: 15, avgRisk: 4.89, level: 'muy-alto' },
-                        { name: 'Tecnología', participants: 25, avgRisk: 1.94, level: 'bajo' },
-                        { name: 'Ventas', participants: 40, avgRisk: 4.75, level: 'muy-alto' }
+                        { name: 'Administración', participants: 35, usuariosEnRiesgo: 8, avgRisk: 2.26, level: 'bajo' },
+                        { name: 'Finanzas', participants: 28, usuariosEnRiesgo: 3, avgRisk: 1.09, level: 'nulo' },
+                        { name: 'Mantenimiento', participants: 22, usuariosEnRiesgo: 5, avgRisk: 1.77, level: 'bajo' },
+                        { name: 'Marketing', participants: 18, usuariosEnRiesgo: 2, avgRisk: 1.43, level: 'nulo' },
+                        { name: 'Producción', participants: 45, usuariosEnRiesgo: 11, avgRisk: 2.25, level: 'bajo' },
+                        { name: 'Recursos Humanos', participants: 30, usuariosEnRiesgo: 3, avgRisk: 1.13, level: 'nulo' },
+                        { name: 'Seguridad', participants: 15, usuariosEnRiesgo: 12, avgRisk: 4.89, level: 'muy-alto' },
+                        { name: 'Tecnología', participants: 25, usuariosEnRiesgo: 6, avgRisk: 1.94, level: 'bajo' },
+                        { name: 'Ventas', participants: 40, usuariosEnRiesgo: 32, avgRisk: 4.75, level: 'muy-alto' }
                     ];
                 } else if (segmentType === 'leader') {
                     segmentsData = [
-                        { name: 'Líder A', participants: 20, avgRisk: 1.50, level: 'nulo' },
-                        { name: 'Líder B', participants: 25, avgRisk: 3.20, level: 'medio' },
-                        { name: 'Líder C', participants: 30, avgRisk: 2.10, level: 'bajo' }
+                        { name: 'Líder A', participants: 20, usuariosEnRiesgo: 2, avgRisk: 1.50, level: 'nulo' },
+                        { name: 'Líder B', participants: 25, usuariosEnRiesgo: 11, avgRisk: 3.20, level: 'medio' },
+                        { name: 'Líder C', participants: 30, usuariosEnRiesgo: 7, avgRisk: 2.10, level: 'bajo' }
                     ];
                 } else if (segmentType === 'city') {
                     segmentsData = [
-                        { name: 'CDMX', participants: 45, avgRisk: 2.45, level: 'bajo' },
-                        { name: 'Guadalajara', participants: 25, avgRisk: 1.90, level: 'bajo' },
-                        { name: 'Monterrey', participants: 30, avgRisk: 4.10, level: 'alto' }
+                        { name: 'CDMX', participants: 45, usuariosEnRiesgo: 11, avgRisk: 2.45, level: 'bajo' },
+                        { name: 'Guadalajara', participants: 25, usuariosEnRiesgo: 6, avgRisk: 1.90, level: 'bajo' },
+                        { name: 'Monterrey', participants: 30, usuariosEnRiesgo: 19, avgRisk: 4.10, level: 'alto' }
                     ];
                 } else if (segmentType === 'country') {
                     segmentsData = [
-                        { name: 'México', participants: 50, avgRisk: 2.80, level: 'medio' },
-                        { name: 'Colombia', participants: 35, avgRisk: 2.10, level: 'bajo' }
+                        { name: 'México', participants: 50, usuariosEnRiesgo: 22, avgRisk: 2.80, level: 'medio' },
+                        { name: 'Colombia', participants: 35, usuariosEnRiesgo: 8, avgRisk: 2.10, level: 'bajo' }
                     ];
                 } else if (segmentType === 'position') {
                     segmentsData = [
-                        { name: 'Gerente', participants: 15, avgRisk: 1.80, level: 'bajo' },
-                        { name: 'Analista', participants: 35, avgRisk: 3.50, level: 'alto' },
-                        { name: 'Operativo', participants: 50, avgRisk: 2.30, level: 'bajo' }
+                        { name: 'Gerente', participants: 15, usuariosEnRiesgo: 4, avgRisk: 1.80, level: 'bajo' },
+                        { name: 'Analista', participants: 35, usuariosEnRiesgo: 22, avgRisk: 3.50, level: 'alto' },
+                        { name: 'Operativo', participants: 50, usuariosEnRiesgo: 12, avgRisk: 2.30, level: 'bajo' }
                     ];
                 }
 
@@ -561,6 +561,7 @@
                 html += '<thead><tr>';
                 html += '<th>Segmento</th>';
                 html += '<th style="width: 100px;">Participantes</th>';
+                html += '<th style="width: 120px;">Usuarios en riesgo</th>';
                 html += '<th style="width: 200px;">Promedio Riesgo</th>';
                 html += '<th style="width: 120px;">Nivel General</th>';
                 html += '</tr></thead><tbody>';
@@ -575,8 +576,10 @@
                     html += '<td>' + segment.participants + '</td>';
                     if (isPrivate) {
                         html += '<td style="text-align: center;"><span style="background: #f3f4f6; color: #9ca3af; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; display: inline-block; min-width: 50px; text-align: center; cursor: help;" onmouseenter="const t=document.getElementById(\'tooltip\'); if(t){ t.textContent=\'Este segmento no alcanza el umbral de anonimato para poder mostrar los resultados.\'; t.style.opacity=\'1\'; t.style.whiteSpace=\'normal\'; t.style.width=\'260px\'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+\'px\'; t.style.top=(r.bottom + window.scrollY + 10)+\'px\'; }" onmouseleave="const t=document.getElementById(\'tooltip\'); if(t){ t.style.opacity=\'0\'; t.style.whiteSpace=\'\'; t.style.width=\'\'; }">Privado</span></td>';
+                        html += '<td style="text-align: center;"><span style="background: #f3f4f6; color: #9ca3af; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; display: inline-block; min-width: 50px; text-align: center; cursor: help;" onmouseenter="const t=document.getElementById(\'tooltip\'); if(t){ t.textContent=\'Este segmento no alcanza el umbral de anonimato para poder mostrar los resultados.\'; t.style.opacity=\'1\'; t.style.whiteSpace=\'normal\'; t.style.width=\'260px\'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+\'px\'; t.style.top=(r.bottom + window.scrollY + 10)+\'px\'; }" onmouseleave="const t=document.getElementById(\'tooltip\'); if(t){ t.style.opacity=\'0\'; t.style.whiteSpace=\'\'; t.style.width=\'\'; }">Privado</span></td>';
                         html += '<td style="text-align: center;"><span style="background: #f3f4f6; color: #9ca3af; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; font-size: 12px; cursor: help;" onmouseenter="const t=document.getElementById(\'tooltip\'); if(t){ t.textContent=\'Este segmento no alcanza el umbral de anonimato para poder mostrar los resultados.\'; t.style.opacity=\'1\'; t.style.whiteSpace=\'normal\'; t.style.width=\'260px\'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+\'px\'; t.style.top=(r.bottom + window.scrollY + 10)+\'px\'; }" onmouseleave="const t=document.getElementById(\'tooltip\'); if(t){ t.style.opacity=\'0\'; t.style.whiteSpace=\'\'; t.style.width=\'\'; }">Privado</span></td>';
                     } else {
+                        html += '<td>' + segment.usuariosEnRiesgo + '</td>';
                         html += '<td>' +
                                 '<span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; display: inline-block; min-width: 50px; text-align: center;">' +
                                 segment.avgRisk.toFixed(2) +
