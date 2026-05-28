@@ -502,6 +502,14 @@
                 return;
             }
 
+            
+            // --- ESTADO GLOBAL FILTROS SEGMENTOS ---
+            let segSortCol = null;
+            let segSortDir = 'asc';
+            let segTextSearch = '';
+            let segMinRisk = 0;
+            let segSelectedRisks = new Set(['muy-alto', 'alto', 'medio', 'bajo', 'nulo']);
+
             const renderSegmentsTable = () => {
                 const segmentType = document.getElementById('segments-row-select').value;
                 console.log('📊 Renderizando tabla para segmento:', segmentType);
@@ -550,16 +558,91 @@
                     return texts[level] || 'NULO';
                 };
 
-                let html = '<table class="results-table">';
-                html += '<thead><tr>';
-                html += '<th>Segmento</th>';
-                html += '<th style="width: 100px;">Participantes</th>';
-                html += '<th style="width: 120px;">Usuarios en riesgo</th>';
-                html += '<th style="width: 200px;">Promedio Riesgo</th>';
-                html += '<th style="width: 120px;">Nivel de Riesgo</th>';
-                html += '</tr></thead><tbody>';
+                // FILTRADO
+                let filteredData = segmentsData.filter(seg => {
+                    if (segTextSearch && !seg.name.toLowerCase().includes(segTextSearch.toLowerCase())) return false;
+                    if (seg.avgRisk < segMinRisk) return false;
+                    if (!segSelectedRisks.has(seg.level)) return false;
+                    return true;
+                });
 
-                segmentsData.forEach(segment => {
+                // ORDENAMIENTO
+                if (segSortCol !== null) {
+                    filteredData.sort((a, b) => {
+                        let valA, valB;
+                        if (segSortCol === 0) { valA = a.name.toLowerCase(); valB = b.name.toLowerCase(); }
+                        else if (segSortCol === 1) { valA = a.participants; valB = b.participants; }
+                        else if (segSortCol === 2) { valA = a.usuariosEnRiesgo || 0; valB = b.usuariosEnRiesgo || 0; }
+                        else if (segSortCol === 3) { valA = a.avgRisk; valB = b.avgRisk; }
+                        else if (segSortCol === 4) { valA = a.level; valB = b.level; } // Not exact numeric, but string sort is fine
+                        
+                        if (typeof valA === 'string' && typeof valB === 'string') {
+                            return segSortDir === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                        } else {
+                            return segSortDir === 'asc' ? valA - valB : valB - valA;
+                        }
+                    });
+                }
+
+                let html = '<table class="results-table">';
+                html += `<thead><tr>
+                    <th class="nom-sortable sort-text" data-col="0" style="position:relative;">
+                        <div class="nom-th-inner">
+                            <span class="nom-th-sort-label">Segmento</span>
+                            <button class="nom-th-filter-btn nom-search-btn ${segTextSearch ? 'active' : ''}" title="Buscar" onclick="event.stopPropagation()" type="button">
+                                <i class="far fa-search"></i>
+                            </button>
+                            <i class="far fa-sort th-icon ${segSortCol === 0 ? (segSortDir === 'asc' ? 'fa-sort-up active' : 'fa-sort-down active') : ''}"></i>
+                        </div>
+                        <div class="nom-th-popover nom-search-popover" onclick="event.stopPropagation()">
+                            <div class="nom-th-popover-label">Buscar Segmento</div>
+                            <input type="text" class="nom-col-search-input" placeholder="Escribe para buscar..." value="${segTextSearch}" />
+                        </div>
+                    </th>
+                    <th class="nom-sortable sort-num" data-col="1" style="width: 100px;">
+                        Participantes <i class="far fa-sort th-icon ${segSortCol === 1 ? (segSortDir === 'asc' ? 'fa-sort-up active' : 'fa-sort-down active') : ''}"></i>
+                    </th>
+                    <th class="nom-sortable sort-num" data-col="2" style="width: 120px;">
+                        Usuarios en riesgo <i class="far fa-sort th-icon ${segSortCol === 2 ? (segSortDir === 'asc' ? 'fa-sort-up active' : 'fa-sort-down active') : ''}"></i>
+                    </th>
+                    <th class="nom-sortable sort-num" data-col="3" style="position:relative; width: 200px;">
+                        <div class="nom-th-inner">
+                            <span class="nom-th-sort-label">Promedio Riesgo</span>
+                            <button class="nom-th-filter-btn nom-score-btn ${segMinRisk > 0 ? 'active' : ''}" title="Filtrar por puntaje" onclick="event.stopPropagation()" type="button">
+                                <i class="far fa-filter"></i>
+                            </button>
+                            <i class="far fa-sort th-icon ${segSortCol === 3 ? (segSortDir === 'asc' ? 'fa-sort-up active' : 'fa-sort-down active') : ''}"></i>
+                        </div>
+                        <div class="nom-th-popover nom-score-popover" onclick="event.stopPropagation()">
+                            <div class="nom-th-popover-label">Riesgo mínimo</div>
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <input type="range" class="nom-col-score-slider" min="0" max="5" value="${segMinRisk}" step="0.5" />
+                                <span class="nom-col-score-value" style="font-size:12px;font-weight:700;color:var(--ubits-accent-brand);min-width:34px;text-align:right;">≥${segMinRisk}</span>
+                            </div>
+                        </div>
+                    </th>
+                    <th class="nom-sortable sort-text" data-col="4" style="position:relative; width: 120px;">
+                        <div class="nom-th-inner">
+                            <span class="nom-th-sort-label">Nivel de Riesgo</span>
+                            <button class="nom-th-filter-btn nom-risk-btn ${segSelectedRisks.size < 5 ? 'active' : ''}" title="Filtrar por riesgo" onclick="event.stopPropagation()" type="button">
+                                <i class="far fa-filter"></i>
+                            </button>
+                            <i class="far fa-sort th-icon ${segSortCol === 4 ? (segSortDir === 'asc' ? 'fa-sort-up active' : 'fa-sort-down active') : ''}"></i>
+                        </div>
+                        <div class="nom-th-popover nom-risk-popover" onclick="event.stopPropagation()">
+                            <div class="nom-th-popover-label" style="margin-bottom:8px;">Seleccionar niveles</div>
+                            <div style="display:flex; flex-direction:column; gap:6px;">
+                                <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="muy-alto" ${segSelectedRisks.has('muy-alto') ? 'checked' : ''}> Muy Alto</label>
+                                <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="alto" ${segSelectedRisks.has('alto') ? 'checked' : ''}> Alto</label>
+                                <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="medio" ${segSelectedRisks.has('medio') ? 'checked' : ''}> Medio</label>
+                                <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="bajo" ${segSelectedRisks.has('bajo') ? 'checked' : ''}> Bajo</label>
+                                <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="nulo" ${segSelectedRisks.has('nulo') ? 'checked' : ''}> Nulo</label>
+                            </div>
+                        </div>
+                    </th>
+                </tr></thead><tbody>`;
+
+                filteredData.forEach(segment => {
                     const levelText = getRiskLevelText(segment.level);
                     const isPrivate = segment.participants <= 15;
 
@@ -586,8 +669,101 @@
 
                 const counterEl = document.getElementById('segments-filter-counter');
                 if (counterEl) {
-                    counterEl.textContent = `${segmentsData.length} resultados`;
+                    counterEl.textContent = `${filteredData.length} resultados`;
                 }
+
+                // Bind events after rendering
+                bindSegmentFilters();
+            };
+
+            const bindSegmentFilters = () => {
+                const table = wrapper.querySelector('.results-table');
+                if (!table) return;
+
+                table.querySelectorAll('th.nom-sortable').forEach(th => {
+                    const colIdx = parseInt(th.dataset.col);
+
+                    // Sort click
+                    th.addEventListener('click', (e) => {
+                        if (e.target.closest('.nom-th-filter-btn') || e.target.closest('.nom-th-popover')) return;
+                        
+                        if (segSortCol === colIdx) {
+                            segSortDir = segSortDir === 'asc' ? 'desc' : 'asc';
+                        } else {
+                            segSortCol = colIdx;
+                            segSortDir = 'asc';
+                        }
+                        renderSegmentsTable();
+                    });
+
+                    // Search filter
+                    const searchBtn = th.querySelector('.nom-search-btn');
+                    const searchPopover = th.querySelector('.nom-search-popover');
+                    const searchInput = th.querySelector('.nom-col-search-input');
+                    if (searchBtn && searchPopover && searchInput) {
+                        searchBtn.addEventListener('click', e => {
+                            e.stopPropagation();
+                            document.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== searchPopover) p.classList.remove('open'); });
+                            const isOpen = searchPopover.classList.toggle('open');
+                            if (isOpen) searchInput.focus();
+                        });
+                        searchInput.addEventListener('input', e => {
+                            segTextSearch = e.target.value;
+                            renderSegmentsTable();
+                        });
+                        searchInput.addEventListener('keydown', e => {
+                            if (e.key === 'Escape') {
+                                searchPopover.classList.remove('open');
+                                segTextSearch = '';
+                                renderSegmentsTable();
+                            }
+                        });
+                    }
+
+                    // Score Slider Filter
+                    const scoreBtn = th.querySelector('.nom-score-btn');
+                    const scorePopover = th.querySelector('.nom-score-popover');
+                    const scoreInput = th.querySelector('.nom-col-score-slider');
+                    const scoreVal = th.querySelector('.nom-col-score-value');
+                    if (scoreBtn && scorePopover && scoreInput) {
+                        scoreBtn.addEventListener('click', e => {
+                            e.stopPropagation();
+                            document.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== scorePopover) p.classList.remove('open'); });
+                            scorePopover.classList.toggle('open');
+                        });
+                        scoreInput.addEventListener('input', e => {
+                            segMinRisk = parseFloat(e.target.value);
+                            // Set background to fake a progress bar
+                            const pct = (segMinRisk / 5) * 100;
+                            e.target.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${pct}%, var(--ubits-border-1) ${pct}%, var(--ubits-border-1) 100%)`;
+                            renderSegmentsTable();
+                        });
+                        // Initialize background
+                        const pct = (segMinRisk / 5) * 100;
+                        scoreInput.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${pct}%, var(--ubits-border-1) ${pct}%, var(--ubits-border-1) 100%)`;
+                    }
+
+                    // Risk Multiselect Filter
+                    const riskBtn = th.querySelector('.nom-risk-btn');
+                    const riskPopover = th.querySelector('.nom-risk-popover');
+                    const riskCheckboxes = th.querySelectorAll('.nom-risk-popover input[type="checkbox"]');
+                    if (riskBtn && riskPopover && riskCheckboxes.length > 0) {
+                        riskBtn.addEventListener('click', e => {
+                            e.stopPropagation();
+                            document.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== riskPopover) p.classList.remove('open'); });
+                            riskPopover.classList.toggle('open');
+                        });
+                        riskCheckboxes.forEach(cb => {
+                            cb.addEventListener('change', () => {
+                                segSelectedRisks.clear();
+                                riskCheckboxes.forEach(c => {
+                                    if (c.checked) segSelectedRisks.add(c.value);
+                                });
+                                renderSegmentsTable();
+                            });
+                        });
+                    }
+                });
             };
 
             renderSegmentsTable();
@@ -595,7 +771,14 @@
             const rowSelect = document.getElementById('segments-row-select');
             if (rowSelect) {
                 rowSelect.removeEventListener('change', renderSegmentsTable); // Evitar duplicados
-                rowSelect.addEventListener('change', renderSegmentsTable);
+                rowSelect.addEventListener('change', () => {
+                    segSortCol = null;
+                    segSortDir = 'asc';
+                    segTextSearch = '';
+                    segMinRisk = 0;
+                    segSelectedRisks = new Set(['muy-alto', 'alto', 'medio', 'bajo', 'nulo']);
+                    renderSegmentsTable();
+                });
             }
 
             console.log('✅ Segments table inicializada con datos dinámicos');
