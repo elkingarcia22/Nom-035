@@ -2995,7 +2995,8 @@
             
             // Add custom select behaviour for risk dropdown
             const riskSelect = document.getElementById('nom-vista-colaborador-risk-filter');
-            if (riskSelect) {
+            if (riskSelect && !riskSelect.dataset.initialized) {
+                riskSelect.dataset.initialized = 'true';
                 const trigger = riskSelect.querySelector('.select-trigger');
                 const dropdown = riskSelect.querySelector('.select-dropdown');
                 const text = riskSelect.querySelector('.select-text');
@@ -3034,7 +3035,8 @@
 
             // Add custom select behaviour for segment dropdown
             const segmentSelect = document.getElementById('nom-vista-colaborador-segment-custom-select');
-            if (segmentSelect) {
+            if (segmentSelect && !segmentSelect.dataset.initialized) {
+                segmentSelect.dataset.initialized = 'true';
                 const trigger = segmentSelect.querySelector('.select-trigger');
                 const dropdown = segmentSelect.querySelector('.select-dropdown');
                 const text = segmentSelect.querySelector('.select-text');
