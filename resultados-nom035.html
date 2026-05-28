@@ -1589,6 +1589,79 @@
         }
 
         .filter-label { text-transform: none !important; }
+
+        /* ===== SORT ICONS & ACTIVE STATES ===== */
+        .participation-table th.sortable {
+            cursor: pointer;
+            user-select: none;
+        }
+        .participation-table th.sortable:hover {
+            color: var(--ubits-accent-brand) !important;
+        }
+        .participation-table th.sort-asc .th-icon::before { content: '\f0de'; }
+        .participation-table th.sort-desc .th-icon::before { content: '\f0dd'; }
+        .participation-table th.sort-asc .th-icon,
+        .participation-table th.sort-desc .th-icon {
+            color: var(--ubits-accent-brand) !important;
+        }
+
+        /* ===== SLIDER PARTICIPACIÓN ===== */
+        .nom-slider-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--ubits-bg-1);
+            border: 1.5px solid var(--ubits-border-1);
+            border-radius: 8px;
+            padding: 6px 12px;
+            height: 36px;
+            box-sizing: border-box;
+        }
+        .nom-slider-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ubits-fg-1-high);
+            white-space: nowrap;
+        }
+        .nom-slider-value {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--ubits-accent-brand);
+            min-width: 36px;
+            text-align: right;
+        }
+        #nom-participation-pct-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100px;
+            height: 4px;
+            border-radius: 4px;
+            background: linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) 0%, var(--ubits-border-1) 0%, var(--ubits-border-1) 100%);
+            outline: none;
+            cursor: pointer;
+        }
+        #nom-participation-pct-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--ubits-accent-brand);
+            cursor: pointer;
+            box-shadow: 0 0 0 2px var(--ubits-bg-0), 0 0 0 3px var(--ubits-accent-brand);
+            transition: box-shadow 0.2s;
+        }
+        #nom-participation-pct-slider::-webkit-slider-thumb:hover {
+            box-shadow: 0 0 0 3px var(--ubits-bg-0), 0 0 0 5px var(--ubits-accent-brand);
+        }
+        #nom-participation-pct-slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--ubits-accent-brand);
+            cursor: pointer;
+            border: none;
+        }
     </style>
 </head>
 <body data-theme="light">
@@ -1732,7 +1805,7 @@
                                     </div>
                                     
                                     <!-- Al lado derecho: buscador (izquierda) y segmento (derecha) -->
-                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                                         <!-- Buscador Toggleable -->
                                         <div style="position: relative; display: flex; align-items: center;">
                                             <button id="nom-participation-search-toggle-btn" style="background: var(--ubits-bg-1); border: 1.5px solid var(--ubits-border-1); border-radius: 8px; padding: 8px; cursor: pointer; color: var(--ubits-fg-1-high); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;" title="Buscar">
@@ -1748,6 +1821,13 @@
                                                     </button>
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        <!-- Slider % de participación -->
+                                        <div class="nom-slider-wrapper">
+                                            <span class="nom-slider-label"><i class="far fa-filter" style="margin-right:4px;"></i>% mín:</span>
+                                            <input type="range" id="nom-participation-pct-slider" min="0" max="100" value="0" step="5" />
+                                            <span class="nom-slider-value" id="nom-participation-pct-value">0%</span>
                                         </div>
                                         
                                         <!-- Segmento demográfico -->
@@ -3932,49 +4012,80 @@
             console.log('✅ Datos de participación NOM generados: 150 registros');
         };
 
-        window.renderNomAreasTable = function(search = '') {
+        // Helper to build a grouped participation table (areas, leaders, country, city, age, sexo, columnaA, columnaB)
+        window._renderNomGroupedTable = function(groupKey, label, headerLabel, search, sortBy, sortDir, minPct) {
             const grouped = {};
             window.nomParticipationData.forEach(p => {
-                if (!grouped[p.area]) grouped[p.area] = { completed: 0, total: 0 };
-                grouped[p.area].total++;
-                if (p.status === 'Completada') grouped[p.area].completed++;
+                const key = p[groupKey];
+                if (!key) return;
+                if (!grouped[key]) grouped[key] = { completed: 0, total: 0 };
+                grouped[key].total++;
+                if (p.status === 'Completada') grouped[key].completed++;
             });
 
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
+            // Build rows array with percentage
+            let rows = Object.keys(grouped)
+                .filter(name => name.toLowerCase().includes(search))
+                .map(name => {
+                    const data = grouped[name];
+                    const percentage = data.total > 0 ? Math.round((data.completed / data.total) * 100) : 0;
+                    return { name, completed: data.completed, total: data.total, percentage, pending: data.total - data.completed };
+                });
+
+            // Filter by minimum percentage slider
+            rows = rows.filter(r => r.percentage >= minPct);
+
+            // Sort
+            rows.sort((a, b) => {
+                let aVal, bVal;
+                if (sortBy === 'name')       { aVal = a.name.toLowerCase(); bVal = b.name.toLowerCase(); }
+                else if (sortBy === 'completed') { aVal = a.completed; bVal = b.completed; }
+                else if (sortBy === 'total')     { aVal = a.total; bVal = b.total; }
+                else if (sortBy === 'pct')       { aVal = a.percentage; bVal = b.percentage; }
+                else                             { aVal = a.name.toLowerCase(); bVal = b.name.toLowerCase(); }
+                if (aVal < bVal) return sortDir === 'asc' ? -1 : 1;
+                if (aVal > bVal) return sortDir === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            const sortClass = (col) => {
+                if (sortBy !== col) return 'sortable';
+                return sortDir === 'asc' ? 'sortable sort-asc' : 'sortable sort-desc';
+            };
 
             let html = `
                 <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Áreas <span class="filter-counter">${filtered.length} resultados</span></div>
+                    <div class="participation-title">Tabla de participación - ${label} <span class="filter-counter">${rows.length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
                         <tr>
-                            <th>Áreas <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
+                            <th class="${sortClass('name')}" data-sort="name">${headerLabel} <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center ${sortClass('completed')}" data-sort="completed">Completados <i class="far fa-sort th-icon"></i></th>
+                            <th class="text-center ${sortClass('total')}" data-sort="total">Total <i class="far fa-sort th-icon"></i></th>
+                            <th class="${sortClass('pct')}" data-sort="pct">% de participación <i class="far fa-sort th-icon"></i></th>
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>`;
 
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
+            if (rows.length === 0) {
+                html += `<tr><td colspan="5" style="padding:32px; text-align:center; color: var(--ubits-fg-1-medium);">Sin resultados para los filtros aplicados</td></tr>`;
+            }
+            rows.forEach(r => {
                 html += `
                     <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
+                        <td class="fw-bold">${r.name}</td>
+                        <td class="text-center">${r.completed}</td>
+                        <td class="text-center">${r.total}</td>
                         <td>
                             <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${r.percentage}%;"></div></div>
+                                <span class="participation-percentage">${r.percentage}%</span>
                             </div>
                         </td>
                         <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                            ${r.pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${r.pending} pendientes de ${r.name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -3988,60 +4099,12 @@
             return html;
         };
 
-        window.renderNomLeadersTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.leader]) grouped[p.leader] = { completed: 0, total: 0 };
-                grouped[p.leader].total++;
-                if (p.status === 'Completada') grouped[p.leader].completed++;
-            });
+        window.renderNomAreasTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
+            return window._renderNomGroupedTable('area', 'Áreas', 'Áreas', search, sortBy, sortDir, minPct);
+        };
 
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
-
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Líderes <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>Líderes <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes del equipo de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+        window.renderNomLeadersTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
+            return window._renderNomGroupedTable('leader', 'Líderes', 'Líderes', search, sortBy, sortDir, minPct);
         };
 
         window.renderNomCollaboratorsTable = function(search = '') {
@@ -4093,334 +4156,28 @@
             return html;
         };
 
-        window.renderNomCountryTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.country]) grouped[p.country] = { completed: 0, total: 0 };
-                grouped[p.country].total++;
-                if (p.status === 'Completada') grouped[p.country].completed++;
-            });
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
-
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Países <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>País <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+        window.renderNomCountryTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
+            return window._renderNomGroupedTable('country', 'Países', 'País', search, sortBy, sortDir, minPct);
         };
 
-        window.renderNomCityTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.city]) grouped[p.city] = { completed: 0, total: 0 };
-                grouped[p.city].total++;
-                if (p.status === 'Completada') grouped[p.city].completed++;
-            });
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
-
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Ciudades <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>Ciudad <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+        window.renderNomCityTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
+            return window._renderNomGroupedTable('city', 'Ciudades', 'Ciudad', search, sortBy, sortDir, minPct);
         };
 
-        window.renderNomAgeTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.age]) grouped[p.age] = { completed: 0, total: 0 };
-                grouped[p.age].total++;
-                if (p.status === 'Completada') grouped[p.age].completed++;
-            });
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
-
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Edad <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>Rango de edad <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+        window.renderNomAgeTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
+            return window._renderNomGroupedTable('age', 'Edad', 'Rango de edad', search, sortBy, sortDir, minPct);
         };
 
-        window.renderNomSexoTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.sexo]) grouped[p.sexo] = { completed: 0, total: 0 };
-                grouped[p.sexo].total++;
-                if (p.status === 'Completada') grouped[p.sexo].completed++;
-            });
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
-
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Sexo <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>Sexo <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+        window.renderNomSexoTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
+            return window._renderNomGroupedTable('sexo', 'Sexo', 'Sexo', search, sortBy, sortDir, minPct);
         };
 
-        window.renderNomColumnaATable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.columnaA]) grouped[p.columnaA] = { completed: 0, total: 0 };
-                grouped[p.columnaA].total++;
-                if (p.status === 'Completada') grouped[p.columnaA].completed++;
-            });
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
-
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Columna A <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>Columna A <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+        window.renderNomColumnaATable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
+            return window._renderNomGroupedTable('columnaA', 'Columna A', 'Columna A', search, sortBy, sortDir, minPct);
         };
 
-        window.renderNomColumnaBTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.columnaB]) grouped[p.columnaB] = { completed: 0, total: 0 };
-                grouped[p.columnaB].total++;
-                if (p.status === 'Completada') grouped[p.columnaB].completed++;
-            });
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
-
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Columna B <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>Columna B <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+        window.renderNomColumnaBTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
+            return window._renderNomGroupedTable('columnaB', 'Columna B', 'Columna B', search, sortBy, sortDir, minPct);
         };
 
         window.initializeNomParticipationContent = function() {
@@ -4526,24 +4283,29 @@
                 });
             }
 
+            // Sort state for participation table
+            let nomSortBy = 'name';
+            let nomSortDir = 'asc';
+            let nomMinPct = 0;
+
             const render = () => {
                 const segment = segmentSelect.value;
                 sessionStorage.setItem('nom_participation_active_segment', segment);
 
                 const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
 
-                console.log('📊 Renderizando participación NOM:', segment, 'Búsqueda:', searchTerm);
+                console.log('📊 Renderizando participación NOM:', segment, 'Búsqueda:', searchTerm, 'Sort:', nomSortBy, nomSortDir, 'MinPct:', nomMinPct);
 
                 let html = '';
-                if (segment === 'areas') html = window.renderNomAreasTable(searchTerm);
-                else if (segment === 'leaders') html = window.renderNomLeadersTable(searchTerm);
+                if (segment === 'areas') html = window.renderNomAreasTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
+                else if (segment === 'leaders') html = window.renderNomLeadersTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
                 else if (segment === 'collaborators') html = window.renderNomCollaboratorsTable(searchTerm);
-                else if (segment === 'country') html = window.renderNomCountryTable(searchTerm);
-                else if (segment === 'city') html = window.renderNomCityTable(searchTerm);
-                else if (segment === 'age') html = window.renderNomAgeTable(searchTerm);
-                else if (segment === 'sexo') html = window.renderNomSexoTable(searchTerm);
-                else if (segment === 'columna-a') html = window.renderNomColumnaATable(searchTerm);
-                else if (segment === 'columna-b') html = window.renderNomColumnaBTable(searchTerm);
+                else if (segment === 'country') html = window.renderNomCountryTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
+                else if (segment === 'city') html = window.renderNomCityTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
+                else if (segment === 'age') html = window.renderNomAgeTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
+                else if (segment === 'sexo') html = window.renderNomSexoTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
+                else if (segment === 'columna-a') html = window.renderNomColumnaATable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
+                else if (segment === 'columna-b') html = window.renderNomColumnaBTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
 
                 wrapper.innerHTML = html;
 
@@ -4557,9 +4319,49 @@
                         headerTitleEl.innerHTML = titleEl.innerHTML;
                     }
                 }
+
+                // Bind sort click on table headers after rendering
+                const ths = wrapper.querySelectorAll('.participation-table th.sortable');
+                ths.forEach(th => {
+                    th.addEventListener('click', () => {
+                        const col = th.dataset.sort;
+                        if (nomSortBy === col) {
+                            nomSortDir = nomSortDir === 'asc' ? 'desc' : 'asc';
+                        } else {
+                            nomSortBy = col;
+                            nomSortDir = 'asc';
+                        }
+                        render();
+                    });
+                });
+
+                // Update slider gradient to reflect current value
+                const sliderEl = document.getElementById('nom-participation-pct-slider');
+                if (sliderEl) {
+                    const pct = parseInt(sliderEl.value);
+                    sliderEl.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${pct}%, var(--ubits-border-1) ${pct}%, var(--ubits-border-1) 100%)`;
+                }
             };
 
-            segmentSelect.addEventListener('change', render);
+            // Slider events
+            const pctSlider = document.getElementById('nom-participation-pct-slider');
+            const pctValueEl = document.getElementById('nom-participation-pct-value');
+            if (pctSlider && pctValueEl) {
+                pctSlider.addEventListener('input', () => {
+                    const val = parseInt(pctSlider.value);
+                    nomMinPct = val;
+                    pctValueEl.textContent = val + '%';
+                    pctSlider.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${val}%, var(--ubits-border-1) ${val}%, var(--ubits-border-1) 100%)`;
+                    render();
+                });
+            }
+
+            segmentSelect.addEventListener('change', () => {
+                // Reset sort when segment changes
+                nomSortBy = 'name';
+                nomSortDir = 'asc';
+                render();
+            });
             render();
         };
 
