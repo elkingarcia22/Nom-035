@@ -1605,73 +1605,93 @@
             color: var(--ubits-accent-brand) !important;
         }
 
-        /* ===== COLUMN SEARCH + SLIDER IN TH ===== */
-
-        /* Sort trigger row inside th */
-        .nom-th-sort-row {
+        /* ===== COLUMN FILTER POPOVERS ===== */
+        .nom-th-inner {
             display: flex;
             align-items: center;
             gap: 4px;
-            cursor: pointer;
-            user-select: none;
         }
-        .nom-th-sort-row:hover {
+        .nom-th-filter-btn {
+            background: transparent;
+            border: none;
+            padding: 2px 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--ubits-fg-1-medium);
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.15s, background 0.15s;
+            line-height: 1;
+        }
+        .nom-th-filter-btn:hover {
+            color: var(--ubits-accent-brand);
+            background: color-mix(in srgb, var(--ubits-accent-brand) 10%, transparent);
+        }
+        .nom-th-filter-btn.active {
             color: var(--ubits-accent-brand);
         }
-        .nom-th-sort-row:hover .th-icon {
-            color: var(--ubits-accent-brand) !important;
-        }
-
-        /* Search input row inside segment column th */
-        .nom-th-search-row {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-top: 6px;
+        .nom-th-popover {
+            display: none;
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            z-index: 200;
             background: var(--ubits-bg-0);
-            border: 1px solid var(--ubits-border-1);
-            border-radius: 6px;
-            padding: 3px 8px;
-            cursor: default;
+            border: 1.5px solid var(--ubits-border-1);
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+            padding: 10px 12px;
+            min-width: 200px;
+        }
+        .nom-th-popover.open {
+            display: block;
+        }
+        .nom-th-popover-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--ubits-fg-1-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
         }
         .nom-col-search-input {
-            border: none !important;
+            border: 1.5px solid var(--ubits-border-1) !important;
+            border-radius: 6px !important;
             outline: none !important;
             box-shadow: none !important;
-            background: transparent !important;
-            font-size: 11px;
+            background: var(--ubits-bg-1) !important;
+            font-size: 12px;
             width: 100%;
             color: var(--ubits-fg-1-high);
             font-family: inherit;
+            padding: 5px 8px;
+            box-sizing: border-box;
+            transition: border-color 0.15s;
+        }
+        .nom-col-search-input:focus {
+            border-color: var(--ubits-accent-brand) !important;
         }
         .nom-col-search-input::placeholder {
             color: var(--ubits-fg-1-medium);
-            font-style: italic;
-        }
-
-        /* Slider row inside % column th */
-        .nom-th-slider-row {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-top: 6px;
-            cursor: default;
         }
         .nom-col-pct-slider {
             -webkit-appearance: none;
             appearance: none;
-            flex: 1;
+            width: 100%;
             height: 4px;
             border-radius: 4px;
             background: var(--ubits-border-1);
             outline: none;
             cursor: pointer;
+            display: block;
         }
         .nom-col-pct-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 13px;
-            height: 13px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
             background: var(--ubits-accent-brand);
             cursor: pointer;
@@ -1682,8 +1702,8 @@
             box-shadow: 0 0 0 2px var(--ubits-bg-0), 0 0 0 5px var(--ubits-accent-brand);
         }
         .nom-col-pct-slider::-moz-range-thumb {
-            width: 13px;
-            height: 13px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
             background: var(--ubits-accent-brand);
             cursor: pointer;
@@ -4016,7 +4036,9 @@
         };
 
         // Helper to build a grouped participation table (areas, leaders, country, city, age, sexo, columnaA, columnaB)
-        window._renderNomGroupedTable = function(groupKey, label, headerLabel, search, sortBy, sortDir, minPct) {
+        window._renderNomGroupedTable = function(groupKey, label, headerLabel, search, sortBy, sortDir, minPct, colSearch, minPctDisplay) {
+            colSearch = colSearch || '';
+            minPctDisplay = minPctDisplay || 0;
             const grouped = {};
             window.nomParticipationData.forEach(p => {
                 const key = p[groupKey];
@@ -4063,21 +4085,35 @@
                 <table class="participation-table">
                     <thead>
                         <tr>
-                            <th class="${sortClass('name')}" data-sort="name" style="min-width:180px;">
-                                <div class="nom-th-sort-row">${headerLabel} <i class="far fa-sort th-icon"></i></div>
-                                <div class="nom-th-search-row" onclick="event.stopPropagation()">
-                                    <i class="far fa-search" style="font-size:11px;color:var(--ubits-fg-1-medium);"></i>
-                                    <input type="text" class="nom-col-search-input" placeholder="Buscar ${headerLabel.toLowerCase()}..." style="border:none;outline:none;background:transparent;font-size:11px;width:100%;color:var(--ubits-fg-1-high);" />
+                            <th class="${sortClass('name')}" data-sort="name" style="position:relative;">
+                                <div class="nom-th-inner">
+                                    <span class="nom-th-sort-label">${headerLabel}</span>
+                                    <i class="far fa-sort th-icon"></i>
+                                    <button class="nom-th-filter-btn nom-search-btn${colSearch ? ' active' : ''}" title="Buscar" onclick="event.stopPropagation()" type="button">
+                                        <i class="far fa-search"></i>
+                                    </button>
+                                </div>
+                                <div class="nom-th-popover nom-search-popover${colSearch ? ' open' : ''}" onclick="event.stopPropagation()">
+                                    <div class="nom-th-popover-label">Buscar ${headerLabel}</div>
+                                    <input type="text" class="nom-col-search-input" placeholder="Escribe para buscar..." value="${colSearch}" />
                                 </div>
                             </th>
                             <th class="text-center ${sortClass('completed')}" data-sort="completed">Completados <i class="far fa-sort th-icon"></i></th>
                             <th class="text-center ${sortClass('total')}" data-sort="total">Total <i class="far fa-sort th-icon"></i></th>
-                            <th class="${sortClass('pct')}" data-sort="pct" style="min-width:200px;">
-                                <div class="nom-th-sort-row">% de participación <i class="far fa-sort th-icon"></i></div>
-                                <div class="nom-th-slider-row" onclick="event.stopPropagation()">
-                                    <span style="font-size:10px;font-weight:600;color:var(--ubits-fg-1-medium);white-space:nowrap;">≥</span>
-                                    <input type="range" class="nom-col-pct-slider" min="0" max="100" value="${minPct}" step="5" />
-                                    <span class="nom-col-pct-value" style="font-size:11px;font-weight:700;color:var(--ubits-accent-brand);min-width:30px;">${minPct}%</span>
+                            <th class="${sortClass('pct')}" data-sort="pct" style="position:relative;">
+                                <div class="nom-th-inner">
+                                    <span class="nom-th-sort-label">% de participación</span>
+                                    <i class="far fa-sort th-icon"></i>
+                                    <button class="nom-th-filter-btn nom-slider-btn${minPctDisplay > 0 ? ' active' : ''}" title="Filtrar por %" onclick="event.stopPropagation()" type="button">
+                                        <i class="far fa-filter"></i>
+                                    </button>
+                                </div>
+                                <div class="nom-th-popover nom-slider-popover${minPctDisplay > 0 ? ' open' : ''}" onclick="event.stopPropagation()">
+                                    <div class="nom-th-popover-label">% mínimo de participación</div>
+                                    <div style="display:flex;align-items:center;gap:8px;">
+                                        <input type="range" class="nom-col-pct-slider" min="0" max="100" value="${minPctDisplay}" step="5" />
+                                        <span class="nom-col-pct-value" style="font-size:12px;font-weight:700;color:var(--ubits-accent-brand);min-width:34px;text-align:right;">≥${minPctDisplay}%</span>
+                                    </div>
                                 </div>
                             </th>
                             <th class="text-center">Acciones</th>
@@ -4112,12 +4148,12 @@
             return html;
         };
 
-        window.renderNomAreasTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
-            return window._renderNomGroupedTable('area', 'Áreas', 'Áreas', search, sortBy, sortDir, minPct);
+        window.renderNomAreasTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0, colSearch = '', minPctDisplay = 0) {
+            return window._renderNomGroupedTable('area', 'Áreas', 'Áreas', search, sortBy, sortDir, minPct, colSearch, minPctDisplay);
         };
 
-        window.renderNomLeadersTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
-            return window._renderNomGroupedTable('leader', 'Líderes', 'Líderes', search, sortBy, sortDir, minPct);
+        window.renderNomLeadersTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0, colSearch = '', minPctDisplay = 0) {
+            return window._renderNomGroupedTable('leader', 'Líderes', 'Líderes', search, sortBy, sortDir, minPct, colSearch, minPctDisplay);
         };
 
         window.renderNomCollaboratorsTable = function(search = '') {
@@ -4169,28 +4205,28 @@
             return html;
         };
 
-        window.renderNomCountryTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
-            return window._renderNomGroupedTable('country', 'Países', 'País', search, sortBy, sortDir, minPct);
+        window.renderNomCountryTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0, colSearch = '', minPctDisplay = 0) {
+            return window._renderNomGroupedTable('country', 'Países', 'País', search, sortBy, sortDir, minPct, colSearch, minPctDisplay);
         };
 
-        window.renderNomCityTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
-            return window._renderNomGroupedTable('city', 'Ciudades', 'Ciudad', search, sortBy, sortDir, minPct);
+        window.renderNomCityTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0, colSearch = '', minPctDisplay = 0) {
+            return window._renderNomGroupedTable('city', 'Ciudades', 'Ciudad', search, sortBy, sortDir, minPct, colSearch, minPctDisplay);
         };
 
-        window.renderNomAgeTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
-            return window._renderNomGroupedTable('age', 'Edad', 'Rango de edad', search, sortBy, sortDir, minPct);
+        window.renderNomAgeTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0, colSearch = '', minPctDisplay = 0) {
+            return window._renderNomGroupedTable('age', 'Edad', 'Rango de edad', search, sortBy, sortDir, minPct, colSearch, minPctDisplay);
         };
 
-        window.renderNomSexoTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
-            return window._renderNomGroupedTable('sexo', 'Sexo', 'Sexo', search, sortBy, sortDir, minPct);
+        window.renderNomSexoTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0, colSearch = '', minPctDisplay = 0) {
+            return window._renderNomGroupedTable('sexo', 'Sexo', 'Sexo', search, sortBy, sortDir, minPct, colSearch, minPctDisplay);
         };
 
-        window.renderNomColumnaATable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
-            return window._renderNomGroupedTable('columnaA', 'Columna A', 'Columna A', search, sortBy, sortDir, minPct);
+        window.renderNomColumnaATable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0, colSearch = '', minPctDisplay = 0) {
+            return window._renderNomGroupedTable('columnaA', 'Columna A', 'Columna A', search, sortBy, sortDir, minPct, colSearch, minPctDisplay);
         };
 
-        window.renderNomColumnaBTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0) {
-            return window._renderNomGroupedTable('columnaB', 'Columna B', 'Columna B', search, sortBy, sortDir, minPct);
+        window.renderNomColumnaBTable = function(search = '', sortBy = 'name', sortDir = 'asc', minPct = 0, colSearch = '', minPctDisplay = 0) {
+            return window._renderNomGroupedTable('columnaB', 'Columna B', 'Columna B', search, sortBy, sortDir, minPct, colSearch, minPctDisplay);
         };
 
         window.initializeNomParticipationContent = function() {
@@ -4291,47 +4327,84 @@
             };
 
             const bindColumnControls = () => {
-                // ---- Column search (segment column) ----
+                // ---- Column search popover (segment column) ----
+                const searchBtn = wrapper.querySelector('.nom-search-btn');
+                const searchPopover = wrapper.querySelector('.nom-search-popover');
                 const colSearchInput = wrapper.querySelector('.nom-col-search-input');
-                if (colSearchInput) {
+
+                if (searchBtn && searchPopover && colSearchInput) {
                     colSearchInput.value = nomColSearch;
+
+                    searchBtn.addEventListener('click', e => {
+                        e.stopPropagation();
+                        const isOpen = searchPopover.classList.toggle('open');
+                        searchBtn.classList.toggle('active', isOpen);
+                        if (isOpen) {
+                            colSearchInput.focus();
+                            colSearchInput.select();
+                        }
+                    });
+
                     colSearchInput.addEventListener('click', e => e.stopPropagation());
                     colSearchInput.addEventListener('keydown', e => e.stopPropagation());
                     colSearchInput.addEventListener('input', e => {
                         e.stopPropagation();
                         nomColSearch = e.target.value;
+                        // Highlight button as active if has value
+                        searchBtn.classList.toggle('active', nomColSearch.length > 0 || searchPopover.classList.contains('open'));
                         filterRows();
+                    });
+                    // Clear search with Escape
+                    colSearchInput.addEventListener('keyup', e => {
+                        if (e.key === 'Escape') {
+                            nomColSearch = '';
+                            colSearchInput.value = '';
+                            searchPopover.classList.remove('open');
+                            searchBtn.classList.remove('active');
+                            filterRows();
+                        }
                     });
                 }
 
-                // ---- Column slider (% column) ----
+                // ---- Column slider popover (% column) ----
+                const sliderBtn = wrapper.querySelector('.nom-slider-btn');
+                const sliderPopover = wrapper.querySelector('.nom-slider-popover');
                 const colSlider = wrapper.querySelector('.nom-col-pct-slider');
                 const colPctValue = wrapper.querySelector('.nom-col-pct-value');
-                if (colSlider) {
+
+                const setPctGradient = (val) => {
+                    if (!colSlider) return;
+                    colSlider.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${val}%, var(--ubits-border-1) ${val}%, var(--ubits-border-1) 100%)`;
+                };
+
+                if (sliderBtn && sliderPopover && colSlider) {
                     colSlider.value = nomMinPct;
-                    // Set initial gradient
-                    const setPctGradient = (val) => {
-                        colSlider.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${val}%, var(--ubits-border-1) ${val}%, var(--ubits-border-1) 100%)`;
-                    };
                     setPctGradient(nomMinPct);
+
+                    sliderBtn.addEventListener('click', e => {
+                        e.stopPropagation();
+                        const isOpen = sliderPopover.classList.toggle('open');
+                        sliderBtn.classList.toggle('active', isOpen || nomMinPct > 0);
+                    });
+
                     colSlider.addEventListener('click', e => e.stopPropagation());
                     colSlider.addEventListener('input', e => {
                         e.stopPropagation();
                         nomMinPct = parseInt(e.target.value);
-                        if (colPctValue) colPctValue.textContent = nomMinPct + '%';
+                        if (colPctValue) colPctValue.textContent = '>=' + nomMinPct + '%';
+                        sliderBtn.classList.toggle('active', nomMinPct > 0 || sliderPopover.classList.contains('open'));
                         setPctGradient(nomMinPct);
                         filterRows();
                     });
                 }
 
-                // ---- Sort click on th.sortable ----
+                // ---- Sort: click on th (NOT on the filter buttons/popovers) ----
                 const ths = wrapper.querySelectorAll('.participation-table th.sortable');
                 ths.forEach(th => {
-                    // Only the sort-row triggers the sort, not the search/slider rows
-                    const sortTrigger = th.querySelector('.nom-th-sort-row') || th;
-                    sortTrigger.style.cursor = 'pointer';
-                    sortTrigger.addEventListener('click', (e) => {
-                        e.stopPropagation();
+                    th.addEventListener('click', (e) => {
+                        // Ignore clicks from filter buttons or popovers
+                        if (e.target.closest('.nom-th-filter-btn') ||
+                            e.target.closest('.nom-th-popover')) return;
                         const col = th.dataset.sort;
                         if (nomSortBy === col) {
                             nomSortDir = nomSortDir === 'asc' ? 'desc' : 'asc';
@@ -4343,7 +4416,16 @@
                     });
                 });
 
-                // Apply active filters after render
+                // Close popovers when clicking outside
+                document.addEventListener('click', () => {
+                    wrapper.querySelectorAll('.nom-th-popover.open').forEach(p => {
+                        p.classList.remove('open');
+                        const btn = p.previousElementSibling && p.previousElementSibling.querySelector('.nom-th-filter-btn');
+                        if (btn) btn.classList.toggle('active', false);
+                    });
+                }, { capture: false });
+
+                // Apply active filters after render (in case state is non-default)
                 filterRows();
             };
 
@@ -4352,15 +4434,15 @@
                 sessionStorage.setItem('nom_participation_active_segment', segment);
 
                 let html = '';
-                if (segment === 'areas') html = window.renderNomAreasTable('', nomSortBy, nomSortDir, 0);
-                else if (segment === 'leaders') html = window.renderNomLeadersTable('', nomSortBy, nomSortDir, 0);
+                if (segment === 'areas') html = window.renderNomAreasTable('', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct);
+                else if (segment === 'leaders') html = window.renderNomLeadersTable('', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct);
                 else if (segment === 'collaborators') html = window.renderNomCollaboratorsTable('');
-                else if (segment === 'country') html = window.renderNomCountryTable('', nomSortBy, nomSortDir, 0);
-                else if (segment === 'city') html = window.renderNomCityTable('', nomSortBy, nomSortDir, 0);
-                else if (segment === 'age') html = window.renderNomAgeTable('', nomSortBy, nomSortDir, 0);
-                else if (segment === 'sexo') html = window.renderNomSexoTable('', nomSortBy, nomSortDir, 0);
-                else if (segment === 'columna-a') html = window.renderNomColumnaATable('', nomSortBy, nomSortDir, 0);
-                else if (segment === 'columna-b') html = window.renderNomColumnaBTable('', nomSortBy, nomSortDir, 0);
+                else if (segment === 'country') html = window.renderNomCountryTable('', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct);
+                else if (segment === 'city') html = window.renderNomCityTable('', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct);
+                else if (segment === 'age') html = window.renderNomAgeTable('', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct);
+                else if (segment === 'sexo') html = window.renderNomSexoTable('', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct);
+                else if (segment === 'columna-a') html = window.renderNomColumnaATable('', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct);
+                else if (segment === 'columna-b') html = window.renderNomColumnaBTable('', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct);
 
                 wrapper.innerHTML = html;
 
