@@ -568,15 +568,21 @@
                 segmentsData.forEach(segment => {
                     const colors = getColor(segment.level);
                     const levelText = getRiskLevelText(segment.level);
+                    const isPrivate = segment.participants <= 15;
 
                     html += '<tr>';
                     html += '<td>' + segment.name + '</td>';
                     html += '<td>' + segment.participants + '</td>';
-                    html += '<td>' +
-                            '<span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; display: inline-block; min-width: 50px; text-align: center;">' +
-                            segment.avgRisk.toFixed(2) +
-                            '</span></td>';
-                    html += '<td><span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; font-size: 12px;">' + levelText + '</span></td>';
+                    if (isPrivate) {
+                        html += '<td style="text-align: center;"><span style="background: #f3f4f6; color: #9ca3af; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; display: inline-block; min-width: 50px; text-align: center; cursor: help;" title="Este segmento no alcanza el umbral de anonimato para poder mostrar los resultados.">Privado</span></td>';
+                        html += '<td style="text-align: center;"><span style="background: #f3f4f6; color: #9ca3af; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; font-size: 12px; cursor: help;" title="Este segmento no alcanza el umbral de anonimato para poder mostrar los resultados.">Privado</span></td>';
+                    } else {
+                        html += '<td>' +
+                                '<span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; display: inline-block; min-width: 50px; text-align: center;">' +
+                                segment.avgRisk.toFixed(2) +
+                                '</span></td>';
+                        html += '<td><span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; font-size: 12px;">' + levelText + '</span></td>';
+                    }
                     html += '</tr>';
                 });
 
