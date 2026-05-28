@@ -5580,13 +5580,75 @@
 
                                 <div class="results-table-container">
                                 <table class="results-table">
-                                    <thead>
+                                                                        <thead>
                                         <tr>
-                                            <th>Categoría</th>
-                                            <th>Usuarios en riesgo</th>
-                                            <th>% Afectados</th>
-                                            <th colspan="2">Puntaje Relativo</th>
-                                            <th>Nivel de Riesgo</th>
+                                            <th class="nom-sortable sort-text" data-col="0" style="position:relative;">
+                                                <div class="nom-th-inner">
+                                                    <span class="nom-th-sort-label">Categoría</span>
+                                                    <button class="nom-th-filter-btn nom-search-btn" title="Buscar" onclick="event.stopPropagation()" type="button">
+                                                        <i class="far fa-search"></i>
+                                                    </button>
+                                                    <i class="far fa-sort th-icon"></i>
+                                                </div>
+                                                <div class="nom-th-popover nom-search-popover" onclick="event.stopPropagation()">
+                                                    <div class="nom-th-popover-label">Buscar Categoría</div>
+                                                    <input type="text" class="nom-col-search-input" placeholder="Escribe para buscar..." />
+                                                </div>
+                                            </th>
+                                            <th class="nom-sortable sort-num" data-col="1" style="width: 150px;">
+                                                Usuarios en riesgo <i class="far fa-sort th-icon"></i>
+                                            </th>
+                                            <th class="nom-sortable sort-num" data-col="2" style="position:relative;">
+                                                <div class="nom-th-inner">
+                                                    <span class="nom-th-sort-label">% Afectados</span>
+                                                    <button class="nom-th-filter-btn nom-slider-btn" title="Filtrar por %" onclick="event.stopPropagation()" type="button">
+                                                        <i class="far fa-filter"></i>
+                                                    </button>
+                                                    <i class="far fa-sort th-icon"></i>
+                                                </div>
+                                                <div class="nom-th-popover nom-slider-popover" onclick="event.stopPropagation()">
+                                                    <div class="nom-th-popover-label">% mínimo de afectados</div>
+                                                    <div style="display:flex;align-items:center;gap:8px;">
+                                                        <input type="range" class="nom-col-pct-slider" min="0" max="100" value="0" step="5" />
+                                                        <span class="nom-col-pct-value" style="font-size:12px;font-weight:700;color:var(--ubits-accent-brand);min-width:34px;text-align:right;">≥0%</span>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="nom-sortable sort-num" data-col="3" colspan="2" style="position:relative;">
+                                                <div class="nom-th-inner">
+                                                    <span class="nom-th-sort-label">Puntaje Relativo</span>
+                                                    <button class="nom-th-filter-btn nom-score-btn" title="Filtrar por puntaje" onclick="event.stopPropagation()" type="button">
+                                                        <i class="far fa-filter"></i>
+                                                    </button>
+                                                    <i class="far fa-sort th-icon"></i>
+                                                </div>
+                                                <div class="nom-th-popover nom-score-popover" onclick="event.stopPropagation()">
+                                                    <div class="nom-th-popover-label">Puntaje mínimo</div>
+                                                    <div style="display:flex;align-items:center;gap:8px;">
+                                                        <input type="range" class="nom-col-score-slider" min="0" max="100" value="0" step="5" />
+                                                        <span class="nom-col-score-value" style="font-size:12px;font-weight:700;color:var(--ubits-accent-brand);min-width:34px;text-align:right;">≥0</span>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="nom-sortable sort-text" data-col="5" style="position:relative;">
+                                                <div class="nom-th-inner">
+                                                    <span class="nom-th-sort-label">Nivel de Riesgo</span>
+                                                    <button class="nom-th-filter-btn nom-risk-btn" title="Filtrar por riesgo" onclick="event.stopPropagation()" type="button">
+                                                        <i class="far fa-filter"></i>
+                                                    </button>
+                                                    <i class="far fa-sort th-icon"></i>
+                                                </div>
+                                                <div class="nom-th-popover nom-risk-popover" onclick="event.stopPropagation()">
+                                                    <div class="nom-th-popover-label" style="margin-bottom:8px;">Seleccionar niveles</div>
+                                                    <div style="display:flex; flex-direction:column; gap:6px;">
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="muy alto" checked> Muy Alto</label>
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="alto" checked> Alto</label>
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="medio" checked> Medio</label>
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="bajo" checked> Bajo</label>
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="nulo" checked> Nulo</label>
+                                                    </div>
+                                                </div>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -5866,15 +5928,77 @@
 
                                 <div class="results-table-container">
                                 <table class="results-table">
-<thead>
-<tr>
-<th>Categoría / Dominio</th>
-                                             <th>Usuarios en riesgo</th>
-                                             <th>% Afectados</th>
-                                              <th colspan="2">Puntaje Relativo</th>
-                                              <th>Nivel de Riesgo</th>
-                                          </tr>
-</thead>
+                                    <thead>
+                                        <tr>
+                                            <th class="nom-sortable sort-text" data-col="0" style="position:relative;">
+                                                <div class="nom-th-inner">
+                                                    <span class="nom-th-sort-label">Categoría / Dominio</span>
+                                                    <button class="nom-th-filter-btn nom-search-btn" title="Buscar" onclick="event.stopPropagation()" type="button">
+                                                        <i class="far fa-search"></i>
+                                                    </button>
+                                                    <i class="far fa-sort th-icon"></i>
+                                                </div>
+                                                <div class="nom-th-popover nom-search-popover" onclick="event.stopPropagation()">
+                                                    <div class="nom-th-popover-label">Buscar Categoría</div>
+                                                    <input type="text" class="nom-col-search-input" placeholder="Escribe para buscar..." />
+                                                </div>
+                                            </th>
+                                            <th class="nom-sortable sort-num" data-col="1" style="width: 150px;">
+                                                Usuarios en riesgo <i class="far fa-sort th-icon"></i>
+                                            </th>
+                                            <th class="nom-sortable sort-num" data-col="2" style="position:relative;">
+                                                <div class="nom-th-inner">
+                                                    <span class="nom-th-sort-label">% Afectados</span>
+                                                    <button class="nom-th-filter-btn nom-slider-btn" title="Filtrar por %" onclick="event.stopPropagation()" type="button">
+                                                        <i class="far fa-filter"></i>
+                                                    </button>
+                                                    <i class="far fa-sort th-icon"></i>
+                                                </div>
+                                                <div class="nom-th-popover nom-slider-popover" onclick="event.stopPropagation()">
+                                                    <div class="nom-th-popover-label">% mínimo de afectados</div>
+                                                    <div style="display:flex;align-items:center;gap:8px;">
+                                                        <input type="range" class="nom-col-pct-slider" min="0" max="100" value="0" step="5" />
+                                                        <span class="nom-col-pct-value" style="font-size:12px;font-weight:700;color:var(--ubits-accent-brand);min-width:34px;text-align:right;">≥0%</span>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="nom-sortable sort-num" data-col="3" colspan="2" style="position:relative;">
+                                                <div class="nom-th-inner">
+                                                    <span class="nom-th-sort-label">Puntaje Relativo</span>
+                                                    <button class="nom-th-filter-btn nom-score-btn" title="Filtrar por puntaje" onclick="event.stopPropagation()" type="button">
+                                                        <i class="far fa-filter"></i>
+                                                    </button>
+                                                    <i class="far fa-sort th-icon"></i>
+                                                </div>
+                                                <div class="nom-th-popover nom-score-popover" onclick="event.stopPropagation()">
+                                                    <div class="nom-th-popover-label">Puntaje mínimo</div>
+                                                    <div style="display:flex;align-items:center;gap:8px;">
+                                                        <input type="range" class="nom-col-score-slider" min="0" max="100" value="0" step="5" />
+                                                        <span class="nom-col-score-value" style="font-size:12px;font-weight:700;color:var(--ubits-accent-brand);min-width:34px;text-align:right;">≥0</span>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="nom-sortable sort-text" data-col="5" style="position:relative;">
+                                                <div class="nom-th-inner">
+                                                    <span class="nom-th-sort-label">Nivel de Riesgo</span>
+                                                    <button class="nom-th-filter-btn nom-risk-btn" title="Filtrar por riesgo" onclick="event.stopPropagation()" type="button">
+                                                        <i class="far fa-filter"></i>
+                                                    </button>
+                                                    <i class="far fa-sort th-icon"></i>
+                                                </div>
+                                                <div class="nom-th-popover nom-risk-popover" onclick="event.stopPropagation()">
+                                                    <div class="nom-th-popover-label" style="margin-bottom:8px;">Seleccionar niveles</div>
+                                                    <div style="display:flex; flex-direction:column; gap:6px;">
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="muy alto" checked> Muy Alto</label>
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="alto" checked> Alto</label>
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="medio" checked> Medio</label>
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="bajo" checked> Bajo</label>
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="nulo" checked> Nulo</label>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
 <tbody>
                                         <tr class="category-section">
                                           <td colspan="6"><strong>Ambiente de trabajo</strong></td>
@@ -6258,12 +6382,75 @@
                                 </div>
                                 
                                 <table class="results-table">
-                                    <thead>
+                                                                        <thead>
                                         <tr>
-                                             <th>Dimensión</th>
-                                             <th>Usuarios en riesgo</th>
-                                             <th>% Afectados</th>
-                                              <th colspan="2">Puntaje Relativo</th><th>Nivel de Riesgo</th>
+                                            <th class="nom-sortable sort-text" data-col="0" style="position:relative;">
+                                                <div class="nom-th-inner">
+                                                    <span class="nom-th-sort-label">Dimensión</span>
+                                                    <button class="nom-th-filter-btn nom-search-btn" title="Buscar" onclick="event.stopPropagation()" type="button">
+                                                        <i class="far fa-search"></i>
+                                                    </button>
+                                                    <i class="far fa-sort th-icon"></i>
+                                                </div>
+                                                <div class="nom-th-popover nom-search-popover" onclick="event.stopPropagation()">
+                                                    <div class="nom-th-popover-label">Buscar Dimensión</div>
+                                                    <input type="text" class="nom-col-search-input" placeholder="Escribe para buscar..." />
+                                                </div>
+                                            </th>
+                                            <th class="nom-sortable sort-num" data-col="1" style="width: 150px;">
+                                                Usuarios en riesgo <i class="far fa-sort th-icon"></i>
+                                            </th>
+                                            <th class="nom-sortable sort-num" data-col="2" style="position:relative;">
+                                                <div class="nom-th-inner">
+                                                    <span class="nom-th-sort-label">% Afectados</span>
+                                                    <button class="nom-th-filter-btn nom-slider-btn" title="Filtrar por %" onclick="event.stopPropagation()" type="button">
+                                                        <i class="far fa-filter"></i>
+                                                    </button>
+                                                    <i class="far fa-sort th-icon"></i>
+                                                </div>
+                                                <div class="nom-th-popover nom-slider-popover" onclick="event.stopPropagation()">
+                                                    <div class="nom-th-popover-label">% mínimo de afectados</div>
+                                                    <div style="display:flex;align-items:center;gap:8px;">
+                                                        <input type="range" class="nom-col-pct-slider" min="0" max="100" value="0" step="5" />
+                                                        <span class="nom-col-pct-value" style="font-size:12px;font-weight:700;color:var(--ubits-accent-brand);min-width:34px;text-align:right;">≥0%</span>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="nom-sortable sort-num" data-col="3" colspan="2" style="position:relative;">
+                                                <div class="nom-th-inner">
+                                                    <span class="nom-th-sort-label">Puntaje Relativo</span>
+                                                    <button class="nom-th-filter-btn nom-score-btn" title="Filtrar por puntaje" onclick="event.stopPropagation()" type="button">
+                                                        <i class="far fa-filter"></i>
+                                                    </button>
+                                                    <i class="far fa-sort th-icon"></i>
+                                                </div>
+                                                <div class="nom-th-popover nom-score-popover" onclick="event.stopPropagation()">
+                                                    <div class="nom-th-popover-label">Puntaje mínimo</div>
+                                                    <div style="display:flex;align-items:center;gap:8px;">
+                                                        <input type="range" class="nom-col-score-slider" min="0" max="100" value="0" step="5" />
+                                                        <span class="nom-col-score-value" style="font-size:12px;font-weight:700;color:var(--ubits-accent-brand);min-width:34px;text-align:right;">≥0</span>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="nom-sortable sort-text" data-col="5" style="position:relative;">
+                                                <div class="nom-th-inner">
+                                                    <span class="nom-th-sort-label">Nivel de Riesgo</span>
+                                                    <button class="nom-th-filter-btn nom-risk-btn" title="Filtrar por riesgo" onclick="event.stopPropagation()" type="button">
+                                                        <i class="far fa-filter"></i>
+                                                    </button>
+                                                    <i class="far fa-sort th-icon"></i>
+                                                </div>
+                                                <div class="nom-th-popover nom-risk-popover" onclick="event.stopPropagation()">
+                                                    <div class="nom-th-popover-label" style="margin-bottom:8px;">Seleccionar niveles</div>
+                                                    <div style="display:flex; flex-direction:column; gap:6px;">
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="muy alto" checked> Muy Alto</label>
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="alto" checked> Alto</label>
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="medio" checked> Medio</label>
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="bajo" checked> Bajo</label>
+                                                        <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="nulo" checked> Nulo</label>
+                                                    </div>
+                                                </div>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -13671,6 +13858,230 @@ document.getElementById('cnt').addEventListener('scroll',function(){
   });
 });
 <\/script>
+
+<script>
+// --- LOGIC FOR VISION GENERAL FILTERS ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Close popovers on outside click
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nom-th-popover') && !e.target.closest('.nom-th-filter-btn')) {
+            document.querySelectorAll('.nom-th-popover.open').forEach(p => p.classList.remove('open'));
+        }
+    });
+
+    const parseNum = (str) => {
+        const num = parseFloat(str.replace(/[^0-9.-]/g, ''));
+        return isNaN(num) ? 0 : num;
+    };
+
+    const initTableFilters = (table) => {
+        const tbody = table.querySelector('tbody');
+        if (!tbody) return;
+
+        let rows = Array.from(tbody.querySelectorAll('tr'));
+        let sortCol = null;
+        let sortDir = 'asc';
+        let textSearch = '';
+        let minPct = 0;
+        let minScore = 0;
+        let selectedRisks = new Set(['muy alto', 'alto', 'medio', 'bajo', 'nulo']);
+
+        const filterAndSort = () => {
+            // Apply filters
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length < 6) return;
+
+                const textVal = cells[0].textContent.toLowerCase();
+                const pctVal = parseNum(cells[2].textContent);
+                
+                const scoreSpan = cells[3].querySelector('.score-value');
+                const scoreVal = scoreSpan ? parseNum(scoreSpan.textContent) : parseNum(cells[3].textContent);
+
+                const riskBadge = cells[4].querySelector('.risk-badge');
+                const riskVal = riskBadge ? riskBadge.textContent.trim().toLowerCase() : '';
+
+                let visible = true;
+                if (textSearch && !textVal.includes(textSearch.toLowerCase())) visible = false;
+                if (pctVal < minPct) visible = false;
+                if (scoreVal < minScore) visible = false;
+                if (!selectedRisks.has(riskVal)) visible = false;
+
+                row.style.display = visible ? '' : 'none';
+            });
+
+            // Sorting
+            if (sortCol !== null) {
+                const visibleRows = rows.filter(r => r.style.display !== 'none');
+                const isNum = table.querySelector(`th[data-col="${sortCol}"]`).classList.contains('sort-num');
+                
+                visibleRows.sort((a, b) => {
+                    const cellsA = a.querySelectorAll('td');
+                    const cellsB = b.querySelectorAll('td');
+                    // score logic applies to col 3 (which spans 2 logically, but DOM-wise is index 3)
+                    // risk badge is index 4 DOM-wise
+                    
+                    const getVal = (cells) => {
+                        if (sortCol == 0) return cells[0].textContent.trim().toLowerCase();
+                        if (sortCol == 1) return parseNum(cells[1].textContent);
+                        if (sortCol == 2) return parseNum(cells[2].textContent);
+                        if (sortCol == 3) {
+                            const sv = cells[3].querySelector('.score-value');
+                            return sv ? parseNum(sv.textContent) : parseNum(cells[3].textContent);
+                        }
+                        if (sortCol == 5) { // mapped to risk badge which is td index 4
+                            const rb = cells[4].querySelector('.risk-badge');
+                            return rb ? rb.textContent.trim().toLowerCase() : '';
+                        }
+                        return '';
+                    };
+
+                    const valA = getVal(cellsA);
+                    const valB = getVal(cellsB);
+
+                    if (!isNum) {
+                        return sortDir === 'asc' ? String(valA).localeCompare(String(valB)) : String(valB).localeCompare(String(valA));
+                    } else {
+                        return sortDir === 'asc' ? valA - valB : valB - valA;
+                    }
+                });
+                visibleRows.forEach(r => tbody.appendChild(r));
+            }
+        };
+
+        // Header events
+        table.querySelectorAll('th.nom-sortable').forEach(th => {
+            const colIdx = parseInt(th.dataset.col);
+            const isNum = th.classList.contains('sort-num');
+
+            // Sort click
+            th.addEventListener('click', (e) => {
+                if (e.target.closest('.nom-th-filter-btn') || e.target.closest('.nom-th-popover')) return;
+                
+                if (sortCol === colIdx) {
+                    sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+                } else {
+                    sortCol = colIdx;
+                    sortDir = 'asc';
+                }
+
+                // reset other sort icons
+                table.querySelectorAll('th .fa-sort, th .fa-sort-up, th .fa-sort-down').forEach(icon => {
+                    icon.className = 'far fa-sort th-icon';
+                });
+
+                const icon = th.querySelector('.th-icon');
+                if (icon) {
+                    icon.className = `far fa-sort-${sortDir === 'asc' ? 'up' : 'down'} th-icon active`;
+                }
+                
+                filterAndSort();
+            });
+
+            // Search filter
+            const searchBtn = th.querySelector('.nom-search-btn');
+            const searchPopover = th.querySelector('.nom-search-popover');
+            const searchInput = th.querySelector('.nom-col-search-input');
+            if (searchBtn && searchPopover && searchInput) {
+                searchBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    document.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== searchPopover) p.classList.remove('open'); });
+                    const isOpen = searchPopover.classList.toggle('open');
+                    if (isOpen) searchInput.focus();
+                });
+                searchInput.addEventListener('input', e => {
+                    textSearch = e.target.value;
+                    searchBtn.classList.toggle('active', textSearch.length > 0);
+                    filterAndSort();
+                });
+                searchInput.addEventListener('keydown', e => {
+                    if (e.key === 'Escape') {
+                        searchPopover.classList.remove('open');
+                        searchInput.value = '';
+                        textSearch = '';
+                        searchBtn.classList.remove('active');
+                        filterAndSort();
+                    }
+                });
+            }
+
+            // Slider Filter %
+            const sliderBtn = th.querySelector('.nom-slider-btn');
+            const sliderPopover = th.querySelector('.nom-slider-popover');
+            const sliderInput = th.querySelector('.nom-col-pct-slider');
+            const sliderVal = th.querySelector('.nom-col-pct-value');
+            if (sliderBtn && sliderPopover && sliderInput) {
+                sliderBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    document.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== sliderPopover) p.classList.remove('open'); });
+                    sliderPopover.classList.toggle('open');
+                });
+                sliderInput.addEventListener('input', e => {
+                    minPct = parseInt(e.target.value);
+                    sliderVal.textContent = '>=' + minPct + '%';
+                    sliderBtn.classList.toggle('active', minPct > 0);
+                    
+                    const val = minPct;
+                    e.target.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${val}%, var(--ubits-border-1) ${val}%, var(--ubits-border-1) 100%)`;
+                    
+                    filterAndSort();
+                });
+            }
+
+            // Score Slider Filter
+            const scoreBtn = th.querySelector('.nom-score-btn');
+            const scorePopover = th.querySelector('.nom-score-popover');
+            const scoreInput = th.querySelector('.nom-col-score-slider');
+            const scoreVal = th.querySelector('.nom-col-score-value');
+            if (scoreBtn && scorePopover && scoreInput) {
+                scoreBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    document.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== scorePopover) p.classList.remove('open'); });
+                    scorePopover.classList.toggle('open');
+                });
+                scoreInput.addEventListener('input', e => {
+                    minScore = parseInt(e.target.value);
+                    scoreVal.textContent = '>=' + minScore;
+                    scoreBtn.classList.toggle('active', minScore > 0);
+                    
+                    const val = minScore;
+                    e.target.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${val}%, var(--ubits-border-1) ${val}%, var(--ubits-border-1) 100%)`;
+                    
+                    filterAndSort();
+                });
+            }
+
+            // Risk Multiselect Filter
+            const riskBtn = th.querySelector('.nom-risk-btn');
+            const riskPopover = th.querySelector('.nom-risk-popover');
+            const riskCheckboxes = th.querySelectorAll('.nom-risk-popover input[type="checkbox"]');
+            if (riskBtn && riskPopover && riskCheckboxes.length > 0) {
+                riskBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    document.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== riskPopover) p.classList.remove('open'); });
+                    riskPopover.classList.toggle('open');
+                });
+                riskCheckboxes.forEach(cb => {
+                    cb.addEventListener('change', () => {
+                        selectedRisks.clear();
+                        let allChecked = true;
+                        riskCheckboxes.forEach(c => {
+                            if (c.checked) selectedRisks.add(c.value);
+                            else allChecked = false;
+                        });
+                        riskBtn.classList.toggle('active', !allChecked);
+                        filterAndSort();
+                    });
+                });
+            }
+        });
+    };
+
+    // Initialize all results tables inside sub-panel-categories, sub-panel-domains, sub-panel-dimensions
+    document.querySelectorAll('#sub-panel-categories .results-table, #sub-panel-domains .results-table, #sub-panel-dimensions .results-table').forEach(initTableFilters);
+});
+</script>
+
 </body>
 </html>`;
             const blob = new Blob([html], { type: 'text/html' });
@@ -13691,5 +14102,229 @@ document.getElementById('cnt').addEventListener('scroll',function(){
             if (e.key === 'Escape') closeRpDrawer();
         });
     </script>
+
+<script>
+// --- LOGIC FOR VISION GENERAL FILTERS ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Close popovers on outside click
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nom-th-popover') && !e.target.closest('.nom-th-filter-btn')) {
+            document.querySelectorAll('.nom-th-popover.open').forEach(p => p.classList.remove('open'));
+        }
+    });
+
+    const parseNum = (str) => {
+        const num = parseFloat(str.replace(/[^0-9.-]/g, ''));
+        return isNaN(num) ? 0 : num;
+    };
+
+    const initTableFilters = (table) => {
+        const tbody = table.querySelector('tbody');
+        if (!tbody) return;
+
+        let rows = Array.from(tbody.querySelectorAll('tr'));
+        let sortCol = null;
+        let sortDir = 'asc';
+        let textSearch = '';
+        let minPct = 0;
+        let minScore = 0;
+        let selectedRisks = new Set(['muy alto', 'alto', 'medio', 'bajo', 'nulo']);
+
+        const filterAndSort = () => {
+            // Apply filters
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length < 6) return;
+
+                const textVal = cells[0].textContent.toLowerCase();
+                const pctVal = parseNum(cells[2].textContent);
+                
+                const scoreSpan = cells[3].querySelector('.score-value');
+                const scoreVal = scoreSpan ? parseNum(scoreSpan.textContent) : parseNum(cells[3].textContent);
+
+                const riskBadge = cells[4].querySelector('.risk-badge');
+                const riskVal = riskBadge ? riskBadge.textContent.trim().toLowerCase() : '';
+
+                let visible = true;
+                if (textSearch && !textVal.includes(textSearch.toLowerCase())) visible = false;
+                if (pctVal < minPct) visible = false;
+                if (scoreVal < minScore) visible = false;
+                if (!selectedRisks.has(riskVal)) visible = false;
+
+                row.style.display = visible ? '' : 'none';
+            });
+
+            // Sorting
+            if (sortCol !== null) {
+                const visibleRows = rows.filter(r => r.style.display !== 'none');
+                const isNum = table.querySelector(`th[data-col="${sortCol}"]`).classList.contains('sort-num');
+                
+                visibleRows.sort((a, b) => {
+                    const cellsA = a.querySelectorAll('td');
+                    const cellsB = b.querySelectorAll('td');
+                    // score logic applies to col 3 (which spans 2 logically, but DOM-wise is index 3)
+                    // risk badge is index 4 DOM-wise
+                    
+                    const getVal = (cells) => {
+                        if (sortCol == 0) return cells[0].textContent.trim().toLowerCase();
+                        if (sortCol == 1) return parseNum(cells[1].textContent);
+                        if (sortCol == 2) return parseNum(cells[2].textContent);
+                        if (sortCol == 3) {
+                            const sv = cells[3].querySelector('.score-value');
+                            return sv ? parseNum(sv.textContent) : parseNum(cells[3].textContent);
+                        }
+                        if (sortCol == 5) { // mapped to risk badge which is td index 4
+                            const rb = cells[4].querySelector('.risk-badge');
+                            return rb ? rb.textContent.trim().toLowerCase() : '';
+                        }
+                        return '';
+                    };
+
+                    const valA = getVal(cellsA);
+                    const valB = getVal(cellsB);
+
+                    if (!isNum) {
+                        return sortDir === 'asc' ? String(valA).localeCompare(String(valB)) : String(valB).localeCompare(String(valA));
+                    } else {
+                        return sortDir === 'asc' ? valA - valB : valB - valA;
+                    }
+                });
+                visibleRows.forEach(r => tbody.appendChild(r));
+            }
+        };
+
+        // Header events
+        table.querySelectorAll('th.nom-sortable').forEach(th => {
+            const colIdx = parseInt(th.dataset.col);
+            const isNum = th.classList.contains('sort-num');
+
+            // Sort click
+            th.addEventListener('click', (e) => {
+                if (e.target.closest('.nom-th-filter-btn') || e.target.closest('.nom-th-popover')) return;
+                
+                if (sortCol === colIdx) {
+                    sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+                } else {
+                    sortCol = colIdx;
+                    sortDir = 'asc';
+                }
+
+                // reset other sort icons
+                table.querySelectorAll('th .fa-sort, th .fa-sort-up, th .fa-sort-down').forEach(icon => {
+                    icon.className = 'far fa-sort th-icon';
+                });
+
+                const icon = th.querySelector('.th-icon');
+                if (icon) {
+                    icon.className = `far fa-sort-${sortDir === 'asc' ? 'up' : 'down'} th-icon active`;
+                }
+                
+                filterAndSort();
+            });
+
+            // Search filter
+            const searchBtn = th.querySelector('.nom-search-btn');
+            const searchPopover = th.querySelector('.nom-search-popover');
+            const searchInput = th.querySelector('.nom-col-search-input');
+            if (searchBtn && searchPopover && searchInput) {
+                searchBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    document.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== searchPopover) p.classList.remove('open'); });
+                    const isOpen = searchPopover.classList.toggle('open');
+                    if (isOpen) searchInput.focus();
+                });
+                searchInput.addEventListener('input', e => {
+                    textSearch = e.target.value;
+                    searchBtn.classList.toggle('active', textSearch.length > 0);
+                    filterAndSort();
+                });
+                searchInput.addEventListener('keydown', e => {
+                    if (e.key === 'Escape') {
+                        searchPopover.classList.remove('open');
+                        searchInput.value = '';
+                        textSearch = '';
+                        searchBtn.classList.remove('active');
+                        filterAndSort();
+                    }
+                });
+            }
+
+            // Slider Filter %
+            const sliderBtn = th.querySelector('.nom-slider-btn');
+            const sliderPopover = th.querySelector('.nom-slider-popover');
+            const sliderInput = th.querySelector('.nom-col-pct-slider');
+            const sliderVal = th.querySelector('.nom-col-pct-value');
+            if (sliderBtn && sliderPopover && sliderInput) {
+                sliderBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    document.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== sliderPopover) p.classList.remove('open'); });
+                    sliderPopover.classList.toggle('open');
+                });
+                sliderInput.addEventListener('input', e => {
+                    minPct = parseInt(e.target.value);
+                    sliderVal.textContent = '>=' + minPct + '%';
+                    sliderBtn.classList.toggle('active', minPct > 0);
+                    
+                    const val = minPct;
+                    e.target.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${val}%, var(--ubits-border-1) ${val}%, var(--ubits-border-1) 100%)`;
+                    
+                    filterAndSort();
+                });
+            }
+
+            // Score Slider Filter
+            const scoreBtn = th.querySelector('.nom-score-btn');
+            const scorePopover = th.querySelector('.nom-score-popover');
+            const scoreInput = th.querySelector('.nom-col-score-slider');
+            const scoreVal = th.querySelector('.nom-col-score-value');
+            if (scoreBtn && scorePopover && scoreInput) {
+                scoreBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    document.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== scorePopover) p.classList.remove('open'); });
+                    scorePopover.classList.toggle('open');
+                });
+                scoreInput.addEventListener('input', e => {
+                    minScore = parseInt(e.target.value);
+                    scoreVal.textContent = '>=' + minScore;
+                    scoreBtn.classList.toggle('active', minScore > 0);
+                    
+                    const val = minScore;
+                    e.target.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${val}%, var(--ubits-border-1) ${val}%, var(--ubits-border-1) 100%)`;
+                    
+                    filterAndSort();
+                });
+            }
+
+            // Risk Multiselect Filter
+            const riskBtn = th.querySelector('.nom-risk-btn');
+            const riskPopover = th.querySelector('.nom-risk-popover');
+            const riskCheckboxes = th.querySelectorAll('.nom-risk-popover input[type="checkbox"]');
+            if (riskBtn && riskPopover && riskCheckboxes.length > 0) {
+                riskBtn.addEventListener('click', e => {
+                    e.stopPropagation();
+                    document.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== riskPopover) p.classList.remove('open'); });
+                    riskPopover.classList.toggle('open');
+                });
+                riskCheckboxes.forEach(cb => {
+                    cb.addEventListener('change', () => {
+                        selectedRisks.clear();
+                        let allChecked = true;
+                        riskCheckboxes.forEach(c => {
+                            if (c.checked) selectedRisks.add(c.value);
+                            else allChecked = false;
+                        });
+                        riskBtn.classList.toggle('active', !allChecked);
+                        filterAndSort();
+                    });
+                });
+            }
+        });
+    };
+
+    // Initialize all results tables inside sub-panel-categories, sub-panel-domains, sub-panel-dimensions
+    document.querySelectorAll('#sub-panel-categories .results-table, #sub-panel-domains .results-table, #sub-panel-dimensions .results-table').forEach(initTableFilters);
+});
+</script>
+
 </body>
 </html>
