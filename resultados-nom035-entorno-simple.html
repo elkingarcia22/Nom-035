@@ -101,7 +101,34 @@
             }
         }
     
-        /* Indicador de Rangos NOM-035 */
+        .tooltip {
+            position: fixed;
+            background: #1f2937;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+            max-width: 260px;
+            z-index: 10000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            font-family: 'Inter', sans-serif;
+        }
+        .category-section td {
+    background: #f3f4f6;
+    font-weight: 700;
+    font-size: 14px;
+    color: #374151;
+    padding: 10px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* Indicador de Rangos NOM-035 */
         .range-indicator-container {
             width: 100%;
             min-width: 200px;
@@ -396,16 +423,17 @@
                                 <th>Categoría</th>
                                 <th>Dominio</th>
                                 <th>Dimensión</th>
-                                <th>Total Usuarios en Riesgo</th>
-                                <th>% Colaboradores Afectados</th>
+                                <th>Usuarios en riesgo</th>
+                                <th>% Afectados</th>
                                   <th colspan="2">Puntaje Relativo</th><th>Nivel de Riesgo</th>
                               </tr>
                           </thead>
                           <tbody id="results-tbody">
                              <!-- Contenido de la tabla se carga dinámicamente -->
-                         </tbody>
+                      </tbody>
                      </table>
-                    
+                     <div class="tooltip" id="tooltip"></div>
+                     
                     <!-- Filters Side Panel -->
                     <div class="filters-side-panel" id="table-filters-side-panel">
                         <div class="filters-header">
@@ -677,8 +705,8 @@
                                 <tr>
                                     <th>Dimensión</th>
                                     <th>Dominio</th>
-                                    <th>Total Usuarios en Riesgo</th>
-                                    <th>% Colaboradores Afectados</th>
+                                    <th>Usuarios en riesgo</th>
+                                    <th>% Afectados</th>
                                      <th>Nivel de Riesgo</th>
                                  </tr>
                              </thead>
@@ -1000,9 +1028,25 @@
             const th3 = ((result.ranges[2] / result.max) * 100).toFixed(1);
             const th4 = ((result.ranges[3] / result.max) * 100).toFixed(1);
 
+            const questionsByDomain = {
+                'Condiciones en el ambiente de trabajo': 5,
+                'Carga de trabajo': 15,
+                'Falta de control sobre el trabajo': 10,
+                'Jornada de trabajo': 2,
+                'Interferencia en la relación trabajo-familia': 4,
+                'Liderazgo': 9,
+                'Relaciones en el trabajo': 10,
+                'Violencia': 8,
+                'Reconocimiento del desempeño': 6,
+                'Insuficiente sentido de pertenencia e inestabilidad': 4,
+            };
+            const questions = questionsByDomain[result.domain] || 10;
+            const riskText = result.riskLevel.charAt(0).toUpperCase() + result.riskLevel.slice(1);
+            const tooltipHtml = '<strong>Detalle de la calificaci\u00f3n</strong><br>Puntaje Relativo: ' + result.score + '<br><br>\u00bfPor qu\u00e9 el riesgo es ' + riskText + '?<br>Para el dominio ' + result.domain + ', de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo ' + riskText + '.<br>Dimensi\u00f3n evaluada mediante ' + questions + ' preguntas.';
+
             return `
                 <div class="range-indicator-container">
-                    <div class="range-track">
+                    <div class="range-track" onmouseenter="var t=document.getElementById('tooltip'); if(t){ t.innerHTML='${tooltipHtml}'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; var r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="var t=document.getElementById('tooltip'); if(t) t.style.opacity='0';">
             <div style="position: absolute; left: 0; width: 54%; height: 100%; background: rgba(34, 197, 94, 0.15); z-index: 1; border-right: 1px dashed rgba(0,0,0,0.15);"></div>
             <div style="position: absolute; left: 54%; width: 46%; height: 100%; background: rgba(239, 68, 68, 0.05); z-index: 1;"></div>
         <div class="range-fill ${result.riskLevel}" style="position: relative; z-index: 2; width: ${width}%;"></div>
