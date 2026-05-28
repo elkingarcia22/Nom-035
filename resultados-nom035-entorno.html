@@ -546,10 +546,11 @@
                 }
 
                 const getColor = (level) => {
-                    if (level === 'muy-alto' || level === 'alto') return { bg: 'var(--ubits-semantic-warning-light)', text: 'var(--ubits-semantic-warning)' };
-                    if (level === 'medio') return { bg: 'var(--ubits-semantic-warning-light)', text: 'var(--ubits-semantic-warning)' };
-                    if (level === 'bajo') return { bg: 'var(--ubits-semantic-success-light)', text: 'var(--ubits-semantic-success)' };
-                    return { bg: 'var(--ubits-bg-1)', text: 'var(--ubits-fg-1-medium)' };
+                    if (level === 'muy-alto') return { bg: '#fca5a5', text: '#7f1d1d' };
+                    if (level === 'alto') return { bg: '#fdba74', text: '#7c2d12' };
+                    if (level === 'medio') return { bg: '#fde047', text: '#713f12' };
+                    if (level === 'bajo') return { bg: '#86efac', text: '#14532d' };
+                    return { bg: '#93c5fd', text: '#1e3a5f' };
                 };
 
                 const getRiskLevelText = (level) => {
@@ -630,14 +631,18 @@
             return 'nulo';
         };
 
+        const domainToCategory = {
+            'Ambiente de trabajo': 'Ambiente de trabajo',
+            'Organización del tiempo': 'Organización del tiempo de trabajo',
+            'Autonomía': 'Factores propios de la actividad',
+            'Carga mental': 'Factores propios de la actividad',
+            'Desarrollo': 'Entorno organizacional',
+            'Liderazgo': 'Liderazgo y relaciones en el trabajo'
+        };
+
         window.getHeatmapData = function(rowType = 'dimensiones', colType = 'department') {
             const data = {};
             const participants = window.individualParticipantsData || [];
-
-            console.log('🔍 getHeatmapData - Participantes disponibles:', participants.length);
-            if (participants.length > 0) {
-                console.log('🔍 Primer participante:', participants[0]);
-            }
 
             const getColumnValues = (type) => {
                 const values = new Set();
@@ -645,7 +650,25 @@
                     if (type === 'department') values.add(p.details?.department || 'Sin Departamento');
                     else if (type === 'position') values.add(p.details?.position || 'Sin Posición');
                     else if (type === 'country') values.add(p.details?.country || 'Sin País');
-                    else if (type === 'gender') values.add(p.details?.gender || 'Sin Género');
+                    else if (type === 'gender' || type === 'sexo') values.add(p.details?.gender || 'Sin Género');
+                    else if (type === 'leader') values.add(p.details?.leader || 'Sin Líder');
+                    else if (type === 'city') values.add(p.details?.city || 'Sin Ciudad');
+                    else if (type === 'age') {
+                        const age = p.details?.age;
+                        if (age) {
+                            if (age < 26) values.add('18-25 años');
+                            else if (age < 36) values.add('26-35 años');
+                            else if (age < 46) values.add('36-45 años');
+                            else if (age < 56) values.add('46-55 años');
+                            else values.add('56+ años');
+                        } else {
+                            values.add('Sin Edad');
+                        }
+                    } else if (type === 'columna-a') {
+                        values.add(p.columnaA || 'Sin Dato');
+                    } else if (type === 'columna-b') {
+                        values.add(p.columnaB || 'Sin Dato');
+                    }
                 });
                 return Array.from(values).sort();
             };
@@ -654,16 +677,32 @@
             if (rowType === 'dimensiones') {
                 if (participants.length > 0 && participants[0].dimensionsResults) {
                     rows = Object.keys(participants[0].dimensionsResults);
-                    console.log('🔍 Dimensiones encontradas:', rows.length, rows);
                 }
-            } else if (rowType === 'position') {
-                rows = getColumnValues('position');
-            } else if (rowType === 'gender') {
-                rows = getColumnValues('gender');
+            } else if (rowType === 'dominio') {
+                const domains = new Set();
+                participants.forEach(p => {
+                    if (p.dimensionsResults) {
+                        Object.values(p.dimensionsResults).forEach(d => {
+                            if (d.domain) domains.add(d.domain);
+                        });
+                    }
+                });
+                rows = Array.from(domains).sort();
+            } else if (rowType === 'categorias') {
+                const categories = new Set();
+                participants.forEach(p => {
+                    if (p.dimensionsResults) {
+                        Object.values(p.dimensionsResults).forEach(d => {
+                            if (d.domain && domainToCategory[d.domain]) {
+                                categories.add(domainToCategory[d.domain]);
+                            }
+                        });
+                    }
+                });
+                rows = Array.from(categories).sort();
             }
 
             const cols = getColumnValues(colType);
-            console.log('🔍 Columnas encontradas:', cols.length, cols);
 
             rows.forEach(row => {
                 data[row] = {};
@@ -672,19 +711,58 @@
                 });
             });
 
-            participants.forEach(participant => {
-                let colValue = '';
-                if (colType === 'department') colValue = participant.details?.department || 'Sin Departamento';
-                else if (colType === 'position') colValue = participant.details?.position || 'Sin Posición';
-                else if (colType === 'country') colValue = participant.details?.country || 'Sin País';
-                else if (colType === 'gender') colValue = participant.details?.gender || 'Sin Género';
+            const riskValue = (level) => {
+                if (!level) return -1;
+                const map = { 'nulo': 0, 'bajo': 1, 'medio': 2, 'alto': 3, 'muy-alto': 4,
+                              'Nulo': 0, 'Bajo': 1, 'Medio': 2, 'Alto': 3, 'Muy Alto': 4 };
+                return map[level] !== undefined ? map[level] : -1;
+            };
 
-                if (rowType === 'dimensiones' && participant.dimensionsResults) {
+            const riskLabel = (val) => {
+                const labels = ['nulo', 'bajo', 'medio', 'alto', 'muy-alto'];
+                return labels[Math.min(Math.max(Math.round(val), 0), 4)];
+            };
+
+            const getColValue = (p) => {
+                if (colType === 'department') return p.details?.department || 'Sin Departamento';
+                if (colType === 'position') return p.details?.position || 'Sin Posición';
+                if (colType === 'country') return p.details?.country || 'Sin País';
+                if (colType === 'gender' || colType === 'sexo') return p.details?.gender || 'Sin Género';
+                if (colType === 'leader') return p.details?.leader || 'Sin Líder';
+                if (colType === 'city') return p.details?.city || 'Sin Ciudad';
+                if (colType === 'columna-a') return p.columnaA || 'Sin Dato';
+                if (colType === 'columna-b') return p.columnaB || 'Sin Dato';
+                if (colType === 'age') {
+                    const age = p.details?.age;
+                    if (age) {
+                        if (age < 26) return '18-25 años';
+                        if (age < 36) return '26-35 años';
+                        if (age < 46) return '36-45 años';
+                        if (age < 56) return '46-55 años';
+                        return '56+ años';
+                    }
+                    return 'Sin Edad';
+                }
+                return '';
+            };
+
+            participants.forEach(participant => {
+                const colValue = getColValue(participant);
+
+                if (participant.dimensionsResults) {
                     Object.keys(participant.dimensionsResults).forEach(dimName => {
-                        if (data[dimName] && data[dimName][colValue]) {
-                            const score = participant.dimensionsResults[dimName].score || 0;
-                            data[dimName][colValue].scores.push(score);
-                            data[dimName][colValue].count += 1;
+                        const dim = participant.dimensionsResults[dimName];
+                        let groupKey = dimName;
+                        if (rowType === 'dominio') {
+                            groupKey = dim.domain || 'Sin Dominio';
+                        } else if (rowType === 'categorias') {
+                            const cat = domainToCategory[dim.domain];
+                            if (!cat) return;
+                            groupKey = cat;
+                        }
+                        if (data[groupKey] && data[groupKey][colValue]) {
+                            data[groupKey][colValue].scores.push(dim.score || 0);
+                            data[groupKey][colValue].count += 1;
                         }
                     });
                 }
@@ -699,6 +777,46 @@
                 });
             });
 
+            const computeRiskLevels = () => {
+                const rv = riskValue, rl = riskLabel;
+            participants.forEach(participant => {
+                const colValue = getColValue(participant);
+
+                    if (participant.dimensionsResults) {
+                        Object.keys(participant.dimensionsResults).forEach(dimName => {
+                            const dim = participant.dimensionsResults[dimName];
+                            let groupKey = dimName;
+                            if (rowType === 'dominio') {
+                                groupKey = dim.domain || 'Sin Dominio';
+                            } else if (rowType === 'categorias') {
+                                const cat = domainToCategory[dim.domain];
+                                if (!cat) return;
+                                groupKey = cat;
+                            }
+                            if (data[groupKey] && data[groupKey][colValue]) {
+                                if (!data[groupKey][colValue].riskLevels) {
+                                    data[groupKey][colValue].riskLevels = [];
+                                }
+                                data[groupKey][colValue].riskLevels.push(rv(dim.riskLevel));
+                            }
+                        });
+                    }
+                });
+
+                Object.keys(data).forEach(row => {
+                    Object.keys(data[row]).forEach(col => {
+                        const cell = data[row][col];
+                        if (cell.riskLevels && cell.riskLevels.length > 0) {
+                            const sum = cell.riskLevels.reduce((a, b) => a + b, 0);
+                            cell.riskAvg = sum / cell.riskLevels.length;
+                            cell.label = rl(cell.riskAvg);
+                        }
+                    });
+                });
+            };
+
+            computeRiskLevels();
+
             return { data, rows, cols };
         };
 
@@ -706,7 +824,9 @@
             const { data, rows, cols } = window.getHeatmapData(rowType, colType);
             if (rows.length === 0) return '<p style="text-align:center; color: var(--ubits-fg-1-placeholder); padding: 40px;">Sin datos disponibles</p>';
 
-            let html = '<table class="heatmap-table"><thead><tr><th style="min-width: 250px;">Dimensión</th>';
+            let html = '<table class="heatmap-table"><thead><tr><th style="min-width: 250px;">' +
+                (rowType === 'categorias' ? 'Categoría' : rowType === 'dominio' ? 'Dominio' : 'Dimensión') +
+                '</th>';
             cols.forEach(col => {
                 html += `<th>${col}</th>`;
             });
@@ -716,10 +836,10 @@
                 html += `<tr><td class="heatmap-row-name">${row}</td>`;
                 cols.forEach(col => {
                     const cellData = data[row][col];
+                    const riskLevel = cellData.label || 'nulo';
                     const score = cellData.avg || 0;
-                    const riskLevel = window.getRiskLevelFromScore(score / 20);
                     const displayScore = score > 0 ? score.toFixed(1) : '-';
-                    html += `<td><div class="hm-cell ${riskLevel}">${displayScore}</div></td>`;
+                    html += `<td><span class="hm-cell ${riskLevel}">${displayScore}</span></td>`;
                 });
                 html += '</tr>';
             });
@@ -732,79 +852,10 @@
             const wrapper = document.getElementById('heatmap-content-wrapper');
             if (!wrapper) return;
 
-            const dimensionsData = {
-                rows: ['Condiciones físicas', 'Condiciones seguridad', 'Exigencias cuantitativas', 'Exigencias mentales', 'Exigencias emocionales', 'Falta de control', 'Jornadas excesivas', 'Alto nivel atención', 'Actividades riesgo', 'Falta capacitación', 'Supervisión inadecuada', 'Violencia laboral', 'Acoso laboral'],
-                matrix: [[5,5,4,5,4,4,4,5], [5,4,4,4,4,4,4,4], [5,5,5,4,4,4,4,5], [4,5,5,4,5,4,4,5], [5,4,4,5,4,5,4,4], [5,5,4,5,4,4,4,5], [5,4,5,4,5,4,4,5], [4,5,4,4,4,4,4,4], [4,4,4,5,4,5,4,4], [4,4,5,4,4,4,4,5], [5,4,4,4,4,4,4,4], [4,4,4,4,4,4,4,4], [3,3,3,3,3,3,3,3]]
-            };
-
-            const categoriasData = {
-                rows: ['Liderazgo y comunicación', 'Relaciones interpersonales', 'Contenido del trabajo', 'Entorno físico', 'Estabilidad laboral', 'Carga de trabajo'],
-                matrix: [[5,4,4,5,4,4,4,4], [4,5,4,4,5,4,4,4], [5,4,5,4,4,4,4,5], [4,4,4,5,4,4,4,4], [4,4,4,4,4,4,5,4], [5,5,4,4,4,4,4,5]]
-            };
-
-            const dominioData = {
-                rows: ['Ambiente de trabajo', 'Carga de trabajo', 'Autonomía', 'Liderazgo', 'Desarrollo', 'Organización del tiempo'],
-                matrix: [[5,4,4,4,4,4,4,4], [5,5,5,4,4,4,4,5], [5,5,4,5,4,4,4,5], [5,4,4,4,4,4,4,4], [4,4,5,4,4,4,4,5], [5,4,5,4,5,4,4,5]]
-            };
-
-            const areasData = ['Ventas', 'Marketing', 'Tecnología', 'Producto', 'RRHH', 'Finanzas', 'Soporte', 'Operaciones'];
-            const lidersData = ['Líder A', 'Líder B', 'Líder C', 'Líder D', 'Líder E', 'Líder F', 'Líder G', 'Líder H'];
-            const citiesData = ['CDMX', 'Guadalajara', 'Monterrey', 'Puebla', 'Cancún', 'Querétaro', 'Tijuana', 'León'];
-            const countriesData = ['México', 'Argentina', 'Colombia', 'Perú', 'Chile', 'España', 'Brasil', 'Uruguay'];
-
             const renderHeatmap = () => {
                 const rowType = document.getElementById('heatmap-rows-select').value;
                 const colType = document.getElementById('heatmap-cols-select').value;
-
-                let rowData, colData;
-
-                if (rowType === 'dimensiones') rowData = dimensionsData;
-                else if (rowType === 'categorias') rowData = categoriasData;
-                else rowData = dominioData;
-
-                if (colType === 'department') colData = areasData;
-                else if (colType === 'leader') colData = lidersData;
-                else if (colType === 'city') colData = citiesData;
-                else if (colType === 'country') colData = countriesData;
-                else colData = areasData;
-
-                const getColor = (level) => {
-                    if (level === 5) return { bg: 'var(--ubits-semantic-danger-light)', text: 'var(--ubits-semantic-danger)' };
-                    if (level === 4) return { bg: 'var(--ubits-semantic-warning-light)', text: 'var(--ubits-semantic-warning)' };
-                    if (level === 3) return { bg: 'var(--ubits-semantic-warning-light)', text: 'var(--ubits-semantic-warning)' };
-                    if (level === 2) return { bg: 'var(--ubits-semantic-success-light)', text: 'var(--ubits-semantic-success)' };
-                    return { bg: 'var(--ubits-bg-1)', text: 'var(--ubits-fg-1-medium)' };
-                };
-
-                const getRiskText = (level) => {
-                    if (level === 5) return 'Muy Alto';
-                    if (level === 4) return 'Alto';
-                    if (level === 3) return 'Medio';
-                    if (level === 2) return 'Bajo';
-                    return 'Nulo';
-                };
-
-                let html = '<table class="results-table" style="text-align: center;">';
-                html += '<thead><tr><th style="text-align: left; min-width: 200px;">Item</th>';
-                colData.forEach(col => {
-                    html += '<th style="text-align: center; min-width: 75px;">' + col + '</th>';
-                });
-                html += '</tr></thead><tbody>';
-
-                rowData.rows.forEach((row, idx) => {
-                    html += '<tr>';
-                    html += '<td style="text-align: left; font-weight: 500;">' + row + '</td>';
-                    
-                    rowData.matrix[idx].forEach((level) => {
-                        const colors = getColor(level);
-                        const text = getRiskText(level);
-                        html += '<td style="background: ' + colors.bg + '; color: ' + colors.text + '; font-weight: 700; cursor: pointer;" title="' + text + '">' + level + '</td>';
-                    });
-                    html += '</tr>';
-                });
-
-                html += '</tbody></table>';
-                wrapper.innerHTML = html;
+                wrapper.innerHTML = window.renderHeatmap(rowType, colType);
             };
 
             renderHeatmap();
@@ -815,7 +866,7 @@
             if (rowSelect) rowSelect.addEventListener('change', renderHeatmap);
             if (colSelect) colSelect.addEventListener('change', renderHeatmap);
 
-            console.log('✅ Heatmap con colores de Vista General');
+            console.log('✅ Heatmap con datos reales de participantes');
         };
 
         window.generateNomParticipationData = function() {
@@ -4313,18 +4364,30 @@
             color: var(--ubits-fg-1-medium);
         }
 
-        .legend-item.nulo { color: var(--ubits-fg-1-placeholder); }
-        .legend-item.bajo { color: #16a34a; }
-        .legend-item.medio { color: var(--ubits-semantic-warning); }
-        .legend-item.alto { color: var(--ubits-semantic-warning); }
-        .legend-item.muy-alto { color: var(--ubits-semantic-danger); }
+        .legend-item.nulo { color: #1e3a5f; }
+        .legend-item.bajo { color: #14532d; }
+        .legend-item.medio { color: #713f12; }
+        .legend-item.alto { color: #7c2d12; }
+        .legend-item.muy-alto { color: #7f1d1d; }
+
+        .legend-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            margin-right: 4px;
+        }
+        .legend-dot.nulo { background: #93c5fd; }
+        .legend-dot.bajo { background: #86efac; }
+        .legend-dot.medio { background: #fde047; }
+        .legend-dot.alto { background: #fdba74; }
+        .legend-dot.muy-alto { background: #fca5a5; }
 
         .heatmap-table {
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
             width: 100%;
             background: var(--ubits-bg-0);
-            border-radius: var(--ubits-radius-lg);
-            overflow: hidden;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
@@ -4344,10 +4407,14 @@
 
         .heatmap-table th:first-child {
             text-align: left;
+            position: sticky;
+            left: 0;
+            z-index: 3;
+            background: #E8E9EC;
         }
 
         .heatmap-table td {
-            padding: 14px 16px;
+            padding: 12px 12px;
             border-bottom: 1px solid var(--ubits-bg-2);
             text-align: center;
         }
@@ -4361,39 +4428,39 @@
         }
 
         .hm-cell {
-            text-align: center;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: var(--ubits-radius-md);
-            padding: 12px 16px;
-            min-width: 100px;
             display: inline-block;
-            width: 100%;
+            padding: 8px 14px;
+            border-radius: var(--ubits-radius-md);
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: none;
+            white-space: nowrap;
+            min-width: 36px;
         }
 
         .hm-cell.nulo {
-            background: var(--ubits-bg-1);
-            color: var(--ubits-fg-1-medium);
+            background: #93c5fd;
+            color: #1e3a5f;
         }
 
         .hm-cell.bajo {
-            background: #d1fae5;
-            color: #065f46;
+            background: #86efac;
+            color: #14532d;
         }
 
         .hm-cell.medio {
-            background: var(--ubits-semantic-warning-light);
-            color: var(--ubits-semantic-warning);
+            background: #fde047;
+            color: #713f12;
         }
 
         .hm-cell.alto {
-            background: var(--ubits-semantic-warning-light);
-            color: #9a3412;
+            background: #fdba74;
+            color: #7c2d12;
         }
 
         .hm-cell.muy-alto {
-            background: var(--ubits-semantic-danger-light);
-            color: var(--ubits-semantic-danger);
+            background: #fca5a5;
+            color: #7f1d1d;
         }
 
         /* Segment Risk Cards */
@@ -4419,11 +4486,25 @@
             text-align: left;
             min-width: 280px;
             padding: 12px 16px;
+            position: sticky;
+            left: 0;
+            z-index: 1;
+            background: var(--ubits-bg-0);
+            border-right: 1px solid var(--ubits-border-1);
+        }
+
+        .heatmap-table tbody tr:hover .heatmap-row-name {
+            background: var(--ubits-bg-2);
+        }
+
+        .heatmap-table th:first-child {
+            border-right: 1px solid var(--ubits-border-2);
         }
 
         #heatmap-content-wrapper {
             overflow-x: auto;
             padding: 20px 0;
+            border-radius: var(--ubits-radius-lg);
         }
 
         .tabla-view {
@@ -6698,7 +6779,6 @@
                                                 <select id="heatmap-cols-select" class="heatmap-dropdown" style="display: none;">
                                                     <option value="department" selected>Áreas</option>
                                                     <option value="leader">Líderes</option>
-                                                    <option value="collaborators">Colaborador</option>
                                                     <option value="country">Países</option>
                                                     <option value="city">Ciudades</option>
                                                     <option value="age">Edad</option>
@@ -6714,7 +6794,6 @@
                                                     <div class="select-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 140px; max-height: 240px; overflow-y: auto !important;">
                                                         <div class="select-option selected" data-value="department" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Áreas</div>
                                                         <div class="select-option" data-value="leader" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Líderes</div>
-                                                        <div class="select-option" data-value="collaborators" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Colaborador</div>
                                                         <div class="select-option" data-value="country" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Países</div>
                                                         <div class="select-option" data-value="city" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Ciudades</div>
                                                         <div class="select-option" data-value="age" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Edad</div>
@@ -6734,11 +6813,11 @@
                                     
                                     <!-- Leyenda de colores -->
                                     <div class="heatmap-legend" style="margin: 0; display: flex; gap: 12px;">
-                                        <span class="legend-item nulo" style="font-size: 11px;">● Nulo</span>
-                                        <span class="legend-item bajo" style="font-size: 11px;">● Bajo</span>
-                                        <span class="legend-item medio" style="font-size: 11px;">● Medio</span>
-                                        <span class="legend-item alto" style="font-size: 11px;">● Alto</span>
-                                        <span class="legend-item muy-alto" style="font-size: 11px;">● Muy Alto</span>
+                                        <span class="legend-item"><span class="legend-dot nulo"></span> Nulo (0 - 1.4)</span>
+                                        <span class="legend-item"><span class="legend-dot bajo"></span> Bajo (1.5 - 2.4)</span>
+                                        <span class="legend-item"><span class="legend-dot medio"></span> Medio (2.5 - 3.4)</span>
+                                        <span class="legend-item"><span class="legend-dot alto"></span> Alto (3.5 - 4.4)</span>
+                                        <span class="legend-item"><span class="legend-dot muy-alto"></span> Muy Alto (4.5 - 5.0)</span>
                                     </div>
                                 </div>
 
