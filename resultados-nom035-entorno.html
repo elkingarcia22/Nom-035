@@ -4703,7 +4703,18 @@
 
 
     
-        /* Indicador de Rangos NOM-035 */
+        .category-section td {
+    background: #f3f4f6;
+    font-weight: 700;
+    font-size: 14px;
+    color: #374151;
+    padding: 10px 16px;
+    border-bottom: 1px solid #e5e7eb;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+/* Indicador de Rangos NOM-035 */
         .range-indicator-container {
             width: 100%;
             min-width: 200px;
@@ -5335,20 +5346,20 @@
                                     <thead>
                                         <tr>
                                             <th>Categoría</th>
-                                            <th>Total Usuarios en Riesgo</th>
-                                            <th>% Colaboradores Afectados</th>
+                                            <th>Usuarios en riesgo</th>
+                                            <th>% Afectados</th>
                                             <th colspan="2">Puntaje Relativo</th>
                                             <th>Nivel de Riesgo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Ambiente de trabajo</td>
-                                            <td class="risk-count">5</td>
-                                            <td class="percentage">3.3%</td>
-                                            <td colspan="2"><span class="score-value">34.5</span>
+                                         <tr>
+                                             <td>Ambiente de trabajo</td>
+                                             <td class="risk-count">5</td>
+                                             <td class="percentage">3.3%</td>
+                                             <td colspan="2"><span class="score-value">34.5</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 34.5%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 34.5<br><br>¿Por qué el riesgo es Bajo?<br>Para la categoría Ambiente de trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Bajo.<br>Dimensión evaluada mediante 5 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill bajo" style="width: 34.5%;"></div>
                                                     </div>
                                                     
@@ -5362,7 +5373,7 @@
                                             <td class="percentage">63.3%</td>
                                             <td colspan="2"><span class="score-value">51.5</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 51.5%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 51.5<br><br>¿Por qué el riesgo es Medio?<br>Para la categoría Factores propios de la actividad, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Medio.<br>Dimensión evaluada mediante 15 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill medio" style="width: 51.5%;"></div>
                                                     </div>
                                                     
@@ -5376,7 +5387,7 @@
                                             <td class="percentage">52.0%</td>
                                             <td colspan="2"><span class="score-value">25.3</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 25.3%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 25.3<br><br>¿Por qué el riesgo es Bajo?<br>Para la categoría Entorno organizacional, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Bajo.<br>Dimensión evaluada mediante 27 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill bajo" style="width: 25.3%;"></div>
                                                     </div>
                                                     
@@ -5390,7 +5401,7 @@
                                             <td class="percentage">12.0%</td>
                                             <td colspan="2"><span class="score-value">29.2</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 29.2%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 29.2<br><br>¿Por qué el riesgo es Medio?<br>Para la categoría Organización del tiempo de trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Medio.<br>Dimensión evaluada mediante 6 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill medio" style="width: 29.2%;"></div>
                                                     </div>
                                                     
@@ -5404,7 +5415,7 @@
                                             <td class="percentage">30.0%</td>
                                             <td colspan="2"><span class="score-value">18.2</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 18.2%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 18.2<br><br>¿Por qué el riesgo es Bajo?<br>Para la categoría Liderazgo y relaciones en el trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Bajo.<br>Dimensión evaluada mediante 19 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill bajo" style="width: 18.2%;"></div>
                                                     </div>
                                                     
@@ -5618,169 +5629,173 @@
 
                                 <div class="results-table-container">
                                 <table class="results-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Dominio</th>
-                                            <th>Categoría</th>
-                                            <th>Total Usuarios en Riesgo</th>
-                                             <th>% Colaboradores Afectados</th>
+<thead>
+<tr>
+<th>Categoría / Dominio</th>
+                                             <th>Usuarios en riesgo</th>
+                                             <th>% Afectados</th>
                                               <th colspan="2">Puntaje Relativo</th>
                                               <th>Nivel de Riesgo</th>
                                           </tr>
-                                      </thead>
-                                      <tbody>
-                                          <tr>
-                                              <td>Condiciones en el ambiente de trabajo</td>
-                                            <td>Ambiente de trabajo</td>
-                                            <td class="risk-count">20</td>
-                                            <td class="percentage">13.3%</td>
-                                            <td colspan="2"><span class="score-value">34.5</span>
+</thead>
+<tbody>
+                                        <tr class="category-section">
+                                          <td colspan="6"><strong>Ambiente de trabajo</strong></td>
+                                        </tr>
+                                        <tr>
+                                          <td>Condiciones en el ambiente de trabajo</td>
+                                          <td class="risk-count">20</td>
+                                          <td class="percentage">13.3%</td>
+                                          <td colspan="2"><span class="score-value">34.5</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 34.5%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 34.5<br><br>¿Por qué el riesgo es Bajo?<br>Para la dominio Condiciones en el ambiente de trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Bajo.<br>Dimensión evaluada mediante 5 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill bajo" style="width: 34.5%;"></div>
                                                     </div>
                                                     
                                                 </div>
                                             </td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                          <td><span class="risk-badge bajo">Bajo</span></td>
+                                        </tr>
+                                        <tr class="category-section">
+                                          <td colspan="6"><strong>Factores propios de la actividad</strong></td>
                                         </tr>
                                         <tr>
-                                            <td>Carga de trabajo</td>
-                                            <td>Factores propios de la actividad</td>
-                                            <td class="risk-count">90</td>
-                                            <td class="percentage">60.0%</td>
-                                            <td colspan="2"><span class="score-value">44.2</span>
+                                          <td>Carga de trabajo</td>
+                                          <td class="risk-count">90</td>
+                                          <td class="percentage">60.0%</td>
+                                          <td colspan="2"><span class="score-value">44.2</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 44.2%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 44.2<br><br>¿Por qué el riesgo es Medio?<br>Para la dominio Carga de trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Medio.<br>Dimensión evaluada mediante 15 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill medio" style="width: 44.2%;"></div>
                                                     </div>
                                                     
                                                 </div>
                                             </td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
+                                          <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                         <tr>
-                                            <td>Falta de control sobre el trabajo</td>
-                                            <td>Factores propios de la actividad</td>
-                                            <td class="risk-count">15</td>
-                                            <td class="percentage">10.0%</td>
-                                            <td colspan="2"><span class="score-value">55.0</span>
+                                          <td>Falta de control sobre el trabajo</td>
+                                          <td class="risk-count">15</td>
+                                          <td class="percentage">10.0%</td>
+                                          <td colspan="2"><span class="score-value">55.0</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 55.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 55<br><br>¿Por qué el riesgo es Medio?<br>Para la dominio Falta de control sobre el trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Medio.<br>Dimensión evaluada mediante 10 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill medio" style="width: 55.0%;"></div>
                                                     </div>
                                                     
                                                 </div>
                                             </td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
+                                          <td><span class="risk-badge medio">Medio</span></td>
+                                        </tr>
+                                        <tr class="category-section">
+                                          <td colspan="6"><strong>Organización del tiempo de trabajo</strong></td>
                                         </tr>
                                         <tr>
-                                            <td>Jornada de trabajo</td>
-                                            <td>Organización del tiempo de trabajo</td>
-                                            <td class="risk-count">76</td>
-                                            <td class="percentage">50.7%</td>
-                                            <td colspan="2"><span class="score-value">33.0</span>
+                                          <td>Jornada de trabajo</td>
+                                          <td class="risk-count">76</td>
+                                          <td class="percentage">50.7%</td>
+                                          <td colspan="2"><span class="score-value">33.0</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 33.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 33<br><br>¿Por qué el riesgo es Medio?<br>Para la dominio Jornada de trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Medio.<br>Dimensión evaluada mediante 2 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill medio" style="width: 33.0%;"></div>
                                                     </div>
                                                     
                                                 </div>
                                             </td>
-                                            <td><span class="risk-badge medio">Medio</span></td>
+                                          <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
                                         <tr>
-                                            <td>Interferencia en la relación trabajo-familia</td>
-                                            <td>Organización del tiempo de trabajo</td>
-                                            <td class="risk-count">88</td>
-                                            <td class="percentage">58.7%</td>
-                                            <td colspan="2"><span class="score-value">24.7</span>
+                                          <td>Interferencia en la relación trabajo-familia</td>
+                                          <td class="risk-count">88</td>
+                                          <td class="percentage">58.7%</td>
+                                          <td colspan="2"><span class="score-value">24.7</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 24.7%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 24.7<br><br>¿Por qué el riesgo es Nulo?<br>Para la dominio Interferencia en la relación trabajo-familia, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Nulo.<br>Dimensión evaluada mediante 4 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill nulo" style="width: 24.7%;"></div>
                                                     </div>
                                                     
                                                 </div>
                                             </td>
-                                            <td><span class="risk-badge nulo">Nulo</span></td>
+                                          <td><span class="risk-badge nulo">Nulo</span></td>
+                                        </tr>
+                                        <tr class="category-section">
+                                          <td colspan="6"><strong>Liderazgo y relaciones en el trabajo</strong></td>
                                         </tr>
                                         <tr>
-                                            <td>Liderazgo</td>
-                                            <td>Liderazgo y relaciones en el trabajo</td>
-                                            <td class="risk-count">82</td>
-                                            <td class="percentage">54.7%</td>
-                                            <td colspan="2"><span class="score-value">32.4</span>
+                                          <td>Liderazgo</td>
+                                          <td class="risk-count">82</td>
+                                          <td class="percentage">54.7%</td>
+                                          <td colspan="2"><span class="score-value">32.4</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 32.4%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 32.4<br><br>¿Por qué el riesgo es Nulo?<br>Para la dominio Liderazgo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Nulo.<br>Dimensión evaluada mediante 9 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill nulo" style="width: 32.4%;"></div>
                                                     </div>
                                                     
                                                 </div>
                                             </td>
-                                            <td><span class="risk-badge nulo">Nulo</span></td>
+                                          <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
                                         <tr>
-                                            <td>Relaciones en el trabajo</td>
-                                            <td>Liderazgo y relaciones en el trabajo</td>
-                                            <td class="risk-count">79</td>
-                                            <td class="percentage">52.7%</td>
-                                            <td colspan="2"><span class="score-value">21.2</span>
+                                          <td>Relaciones en el trabajo</td>
+                                          <td class="risk-count">79</td>
+                                          <td class="percentage">52.7%</td>
+                                          <td colspan="2"><span class="score-value">21.2</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 21.2%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 21.2<br><br>¿Por qué el riesgo es Nulo?<br>Para la dominio Relaciones en el trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Nulo.<br>Dimensión evaluada mediante 10 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill nulo" style="width: 21.2%;"></div>
                                                     </div>
                                                     
                                                 </div>
                                             </td>
-                                            <td><span class="risk-badge nulo">Nulo</span></td>
+                                          <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
                                         <tr>
-                                            <td>Violencia</td>
-                                            <td>Liderazgo y relaciones en el trabajo</td>
-                                            <td class="risk-count">85</td>
-                                            <td class="percentage">56.7%</td>
-                                            <td colspan="2"><span class="score-value">16.9</span>
+                                          <td>Violencia</td>
+                                          <td class="risk-count">85</td>
+                                          <td class="percentage">56.7%</td>
+                                          <td colspan="2"><span class="score-value">16.9</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 16.9%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 16.9<br><br>¿Por qué el riesgo es Nulo?<br>Para la dominio Violencia, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Nulo.<br>Dimensión evaluada mediante 8 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill nulo" style="width: 16.9%;"></div>
                                                     </div>
                                                     
                                                 </div>
                                             </td>
-                                            <td><span class="risk-badge nulo">Nulo</span></td>
+                                          <td><span class="risk-badge nulo">Nulo</span></td>
+                                        </tr>
+                                        <tr class="category-section">
+                                          <td colspan="6"><strong>Entorno organizacional</strong></td>
                                         </tr>
                                         <tr>
-                                            <td>Reconocimiento del desempeño</td>
-                                            <td>Entorno organizacional</td>
-                                            <td class="risk-count">92</td>
-                                            <td class="percentage">61.3%</td>
-                                            <td colspan="2"><span class="score-value">27.6</span>
+                                          <td>Reconocimiento del desempeño</td>
+                                          <td class="risk-count">92</td>
+                                          <td class="percentage">61.3%</td>
+                                          <td colspan="2"><span class="score-value">27.6</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 27.6%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 27.6<br><br>¿Por qué el riesgo es Bajo?<br>Para la dominio Reconocimiento del desempeño, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Bajo.<br>Dimensión evaluada mediante 6 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill bajo" style="width: 27.6%;"></div>
                                                     </div>
                                                     
                                                 </div>
                                             </td>
-                                            <td><span class="risk-badge bajo">Bajo</span></td>
+                                          <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
                                         <tr>
-                                            <td>Insuficiente sentido de pertenencia e inestabilidad</td>
-                                            <td>Entorno organizacional</td>
-                                            <td class="risk-count">84</td>
-                                            <td class="percentage">56.0%</td>
-                                            <td colspan="2"><span class="score-value">21.3</span>
+                                          <td>Insuficiente sentido de pertenencia e inestabilidad</td>
+                                          <td class="risk-count">84</td>
+                                          <td class="percentage">56.0%</td>
+                                          <td colspan="2"><span class="score-value">21.3</span>
                                                 <div class="range-indicator-container range-with-score">
-                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 21.3%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+                                                    <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 21.3<br><br>¿Por qué el riesgo es Nulo?<br>Para la dominio Insuficiente sentido de pertenencia e inestabilidad, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Nulo.<br>Dimensión evaluada mediante 4 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
                                                         <div class="range-fill nulo" style="width: 21.3%;"></div>
                                                     </div>
                                                     
                                                 </div>
                                             </td>
-                                            <td><span class="risk-badge nulo">Nulo</span></td>
+                                          <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
-                                    </tbody>
-                                </table>
+</tbody>
+</table>
                                 </div>
 
                                 <!-- Panel de Filtros para Dominios -->
@@ -6008,407 +6023,288 @@
                                 <table class="results-table">
                                     <thead>
                                         <tr>
-                                            <th>Dimensión</th>
-                                            <th>Dominio</th>
-                                            <th>Total Usuarios en Riesgo</th>
-                                            <th>% Colaboradores Afectados</th>
-                                             <th colspan="2">Puntaje Relativo</th><th>Nivel de Riesgo</th>
+                                             <th>Dimensión</th>
+                                             <th>Usuarios en riesgo</th>
+                                             <th>% Afectados</th>
+                                              <th colspan="2">Puntaje Relativo</th><th>Nivel de Riesgo</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Dimensión 1: Condiciones físicas -->
+                                        <tr class="category-section">
+                                          <td colspan="6"><strong>Condiciones en el ambiente de trabajo</strong></td>
+                                        </tr>
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Condiciones físicas</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Condiciones en el ambiente de trabajo</td>
+                                           <td>Condiciones físicas</td>
                                             <td class="risk-count">45</td>
                                             <td class="percentage">32.1%</td>
                                             <td colspan="2"><span class="score-value">67.2</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 67.2%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 67.2<br><br>¿Por qué el riesgo es Bajo?<br>Para la dominio Condiciones en el ambiente de trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Bajo.<br>Dimensión evaluada mediante 5 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 67.2%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 2: Condiciones de seguridad -->
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Condiciones de seguridad</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Condiciones en el ambiente de trabajo</td>
+                                           <td>Condiciones de seguridad</td>
                                             <td class="risk-count">38</td>
                                             <td class="percentage">27.1%</td>
                                             <td colspan="2"><span class="score-value">52.800000000000004</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 52.800000000000004%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 52.8<br><br>¿Por qué el riesgo es Bajo?<br>Para la dominio Condiciones en el ambiente de trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Bajo.<br>Dimensión evaluada mediante 5 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 52.800000000000004%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 3: Exigencias cuantitativas -->
+                                        <tr class="category-section">
+                                          <td colspan="6"><strong>Carga de trabajo</strong></td>
+                                        </tr>
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Exigencias cuantitativas</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Carga de trabajo</td>
+                                           <td>Exigencias cuantitativas</td>
                                             <td class="risk-count">42</td>
                                             <td class="percentage">30.0%</td>
                                             <td colspan="2"><span class="score-value">62</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 62.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 62<br><br>¿Por qué el riesgo es Nulo?<br>Para la dominio Carga de trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Nulo.<br>Dimensión evaluada mediante 15 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill nulo" style="width: 62%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 4: Exigencias mentales -->
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Exigencias mentales</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Carga de trabajo</td>
+                                           <td>Exigencias mentales</td>
                                             <td class="risk-count">50</td>
                                             <td class="percentage">35.7%</td>
                                             <td colspan="2"><span class="score-value">70.4</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 70.4%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 70.4<br><br>¿Por qué el riesgo es Bajo?<br>Para la dominio Carga de trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Bajo.<br>Dimensión evaluada mediante 15 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 70.4%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 5: Exigencias emocionales -->
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Exigencias emocionales</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Carga de trabajo</td>
+                                           <td>Exigencias emocionales</td>
                                             <td class="risk-count">48</td>
                                             <td class="percentage">34.3%</td>
                                             <td colspan="2"><span class="score-value">69.6</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Muy Alto<br>Puntaje relativo: 69.6%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 69.6<br><br>¿Por qué el riesgo es Muy alto?<br>Para la dominio Carga de trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Muy alto.<br>Dimensión evaluada mediante 15 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill muy-alto" style="width: 69.6%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge muy-alto">Muy alto</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 6: Falta de control sobre el trabajo -->
+                                        <tr class="category-section">
+                                          <td colspan="6"><strong>Falta de control sobre el trabajo</strong></td>
+                                        </tr>
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Falta de control sobre el trabajo</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
+                                           <td>Falta de control sobre el trabajo</td>
                                             <td class="risk-count">41</td>
                                             <td class="percentage">29.3%</td>
                                             <td colspan="2"><span class="score-value">80</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 80.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 80<br><br>¿Por qué el riesgo es Bajo?<br>Para la dominio Falta de control sobre el trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Bajo.<br>Dimensión evaluada mediante 10 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 80%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 7: Falta de claridad de rol -->
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Falta de claridad de rol</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
+                                           <td>Falta de claridad de rol</td>
                                             <td class="risk-count">36</td>
                                             <td class="percentage">25.7%</td>
                                             <td colspan="2"><span class="score-value">65.6</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 65.6%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 65.6<br><br>¿Por qué el riesgo es Medio?<br>Para la dominio Falta de control sobre el trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Medio.<br>Dimensión evaluada mediante 10 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill medio" style="width: 65.6%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 8: Falta de autonomía -->
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Falta de autonomía</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
+                                           <td>Falta de autonomía</td>
                                             <td class="risk-count">39</td>
                                             <td class="percentage">27.9%</td>
                                             <td colspan="2"><span class="score-value">79.6</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Alto<br>Puntaje relativo: 79.6%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 79.6<br><br>¿Por qué el riesgo es Alto?<br>Para la dominio Falta de control sobre el trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Alto.<br>Dimensión evaluada mediante 10 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill alto" style="width: 79.6%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge alto">Alto</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 9: Falta de reconocimiento -->
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Falta de reconocimiento</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Falta de control sobre el trabajo</td>
+                                           <td>Falta de reconocimiento</td>
                                             <td class="risk-count">20</td>
                                             <td class="percentage">13.3%</td>
                                             <td colspan="2"><span class="score-value">78.4</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 78.4%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 78.4<br><br>¿Por qué el riesgo es Bajo?<br>Para la dominio Falta de control sobre el trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Bajo.<br>Dimensión evaluada mediante 10 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 78.4%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 10: Jornada de trabajo -->
+                                        <tr class="category-section">
+                                          <td colspan="6"><strong>Jornada de trabajo</strong></td>
+                                        </tr>
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Jornada de trabajo</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Jornada de trabajo</td>
+                                           <td>Jornada de trabajo</td>
                                             <td class="risk-count">22</td>
                                             <td class="percentage">14.7%</td>
                                             <td colspan="2"><span class="score-value">70</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 70.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 70<br><br>¿Por qué el riesgo es Medio?<br>Para la dominio Jornada de trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Medio.<br>Dimensión evaluada mediante 2 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill medio" style="width: 70%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 11: Distribución de la jornada -->
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Distribución de la jornada</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Jornada de trabajo</td>
+                                           <td>Distribución de la jornada</td>
                                             <td class="risk-count">16</td>
                                             <td class="percentage">10.7%</td>
                                             <td colspan="2"><span class="score-value">71.6</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Muy Alto<br>Puntaje relativo: 71.6%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 71.6<br><br>¿Por qué el riesgo es Muy alto?<br>Para la dominio Jornada de trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Muy alto.<br>Dimensión evaluada mediante 2 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill muy-alto" style="width: 71.6%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge muy-alto">Muy alto</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 12: Pausas -->
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Pausas</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Jornada de trabajo</td>
+                                           <td>Pausas</td>
                                             <td class="risk-count">14</td>
                                             <td class="percentage">9.3%</td>
                                             <td colspan="2"><span class="score-value">38.8</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 38.8%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 38.8<br><br>¿Por qué el riesgo es Bajo?<br>Para la dominio Jornada de trabajo, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Bajo.<br>Dimensión evaluada mediante 2 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 38.8%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 13: Liderazgo -->
+                                        <tr class="category-section">
+                                          <td colspan="6"><strong>Liderazgo y Relaciones interpersonales</strong></td>
+                                        </tr>
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Liderazgo</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Liderazgo y Relaciones interpersonales</td>
+                                           <td>Liderazgo</td>
                                             <td class="risk-count">18</td>
                                             <td class="percentage">12.0%</td>
                                             <td colspan="2"><span class="score-value">36</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Alto<br>Puntaje relativo: 36.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 36<br><br>¿Por qué el riesgo es Alto?<br>Para la dominio Liderazgo y Relaciones interpersonales, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Alto.<br>Dimensión evaluada mediante 19 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill alto" style="width: 36%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge alto">Alto</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 14: Comunicación -->
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Comunicación</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Liderazgo y Relaciones interpersonales</td>
+                                           <td>Comunicación</td>
                                             <td class="risk-count">12</td>
                                             <td class="percentage">8.0%</td>
                                             <td colspan="2"><span class="score-value">64</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 64.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 64<br><br>¿Por qué el riesgo es Medio?<br>Para la dominio Liderazgo y Relaciones interpersonales, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Medio.<br>Dimensión evaluada mediante 19 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill medio" style="width: 64%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 15: Apoyo social -->
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Apoyo social</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Liderazgo y Relaciones interpersonales</td>
+                                           <td>Apoyo social</td>
                                             <td class="risk-count">8</td>
                                             <td class="percentage">5.3%</td>
                                             <td colspan="2"><span class="score-value">55.60000000000001</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 55.60000000000001%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 55.6<br><br>¿Por qué el riesgo es Nulo?<br>Para la dominio Liderazgo y Relaciones interpersonales, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Nulo.<br>Dimensión evaluada mediante 19 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill nulo" style="width: 55.60000000000001%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge nulo">Nulo</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 16: Relaciones interpersonales -->
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Relaciones interpersonales</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Liderazgo y Relaciones interpersonales</td>
+                                           <td>Relaciones interpersonales</td>
                                             <td class="risk-count">8</td>
                                             <td class="percentage">5.3%</td>
                                             <td colspan="2"><span class="score-value">46</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 46.0%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 46<br><br>¿Por qué el riesgo es Bajo?<br>Para la dominio Liderazgo y Relaciones interpersonales, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Bajo.<br>Dimensión evaluada mediante 19 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 46%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 17: Violencia laboral -->
+                                        <tr class="category-section">
+                                          <td colspan="6"><strong>Violencia laboral</strong></td>
+                                        </tr>
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Violencia laboral</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Violencia laboral</td>
+                                           <td>Violencia laboral</td>
                                             <td class="risk-count">32</td>
                                             <td class="percentage">21.3%</td>
                                             <td colspan="2"><span class="score-value">38.8</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Medio<br>Puntaje relativo: 38.8%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 38.8<br><br>¿Por qué el riesgo es Medio?<br>Para la dominio Violencia laboral, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Medio.<br>Dimensión evaluada mediante 8 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill medio" style="width: 38.8%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge medio">Medio</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 18: Equidad -->
+                                        <tr class="category-section">
+                                          <td colspan="6"><strong>Entorno organizacional</strong></td>
+                                        </tr>
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Equidad</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Entorno organizacional</td>
+                                           <td>Equidad</td>
                                             <td class="risk-count">19</td>
                                             <td class="percentage">12.7%</td>
                                             <td colspan="2"><span class="score-value">65.2</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Alto<br>Puntaje relativo: 65.2%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 65.2<br><br>¿Por qué el riesgo es Alto?<br>Para la categoría Entorno organizacional, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Alto.<br>Dimensión evaluada mediante 27 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill alto" style="width: 65.2%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge alto">Alto</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 19: Respeto -->
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Respeto</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Entorno organizacional</td>
+                                           <td>Respeto</td>
                                             <td class="risk-count">15</td>
                                             <td class="percentage">10.0%</td>
                                             <td colspan="2"><span class="score-value">20.8</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Bajo<br>Puntaje relativo: 20.8%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 20.8<br><br>¿Por qué el riesgo es Bajo?<br>Para la categoría Entorno organizacional, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Bajo.<br>Dimensión evaluada mediante 27 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill bajo" style="width: 20.8%;"></div>
         </div>
         
     </div></td>
                                             <td><span class="risk-badge bajo">Bajo</span></td>
                                         </tr>
-                                        
-                                        <!-- Dimensión 20: Seguridad laboral -->
                                         <tr class="dimension-row">
-                                            <td class="dimension-cell">
-                                                <div class="dimension-header-row">
-                                                    <span>Seguridad laboral</span>
-                                                </div>
-                                            </td>
-                                            <td class="dimension-domain-info">Entorno organizacional</td>
+                                           <td>Seguridad laboral</td>
                                             <td class="risk-count">11</td>
                                             <td class="percentage">7.3%</td>
                                             <td colspan="2"><span class="score-value">56.39999999999999</span>
     <div class="range-indicator-container range-with-score">
-        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de Puntaje</strong><br>Nivel de Riesgo: Nulo<br>Puntaje relativo: 56.39999999999999%<br><span style=\'font-size:10px;color:#9ca3af;\'>*Este porcentaje representa la posición del puntaje real dentro de la escala máxima definida por la NOM-035.</span>'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
+        <div class="range-track" onmouseenter="const t=document.getElementById('tooltip'); if(t){ t.innerHTML='<strong>Detalle de la calificación</strong><br>Puntaje Relativo: 56.4<br><br>¿Por qué el riesgo es Nulo?<br>Para la categoría Entorno organizacional, de acuerdo con la escala normativa de la NOM-035, el puntaje obtenido se clasifica como riesgo Nulo.<br>Dimensión evaluada mediante 27 preguntas.'; t.style.opacity='1'; t.style.whiteSpace='normal'; t.style.width='220px'; const r=this.getBoundingClientRect(); t.style.left=(r.left + window.scrollX)+'px'; t.style.top=(r.bottom + window.scrollY + 10)+'px'; }" onmouseleave="const t=document.getElementById('tooltip'); if(t) t.style.opacity='0';" >
             <div class="range-fill nulo" style="width: 56.39999999999999%;"></div>
         </div>
         
@@ -7917,7 +7813,7 @@
                 return;
             }
 
-            const headers = ['Dimensión', 'Dominio', 'Total Usuarios en Riesgo', '% Colaboradores Afectados', 'Nivel de Riesgo'];
+            const headers = ['Dimensión', 'Dominio', 'Usuarios en riesgo', '% Afectados', 'Nivel de Riesgo'];
             const data = [];
 
             rows.forEach(row => {
@@ -7965,7 +7861,7 @@
                 return;
             }
 
-            const headers = ['Categoría', 'Dominio', 'Dimensión', 'Total Usuarios en Riesgo', '% Colaboradores Afectados', 'Nivel de Riesgo'];
+            const headers = ['Categoría', 'Dominio', 'Dimensión', 'Usuarios en riesgo', '% Afectados', 'Nivel de Riesgo'];
             const data = [];
 
             rows.forEach(row => {
