@@ -545,14 +545,6 @@
                     ];
                 }
 
-                const getColor = (level) => {
-                    if (level === 'muy-alto') return { bg: '#fca5a5', text: '#7f1d1d' };
-                    if (level === 'alto') return { bg: '#fdba74', text: '#7c2d12' };
-                    if (level === 'medio') return { bg: '#fde047', text: '#713f12' };
-                    if (level === 'bajo') return { bg: '#86efac', text: '#14532d' };
-                    return { bg: '#93c5fd', text: '#1e3a5f' };
-                };
-
                 const getRiskLevelText = (level) => {
                     const texts = { 'muy-alto': 'MUY ALTO', 'alto': 'ALTO', 'medio': 'MEDIO', 'bajo': 'BAJO', 'nulo': 'NULO' };
                     return texts[level] || 'NULO';
@@ -564,11 +556,10 @@
                 html += '<th style="width: 100px;">Participantes</th>';
                 html += '<th style="width: 120px;">Usuarios en riesgo</th>';
                 html += '<th style="width: 200px;">Promedio Riesgo</th>';
-                html += '<th style="width: 120px;">Nivel General</th>';
+                html += '<th style="width: 120px;">Nivel de Riesgo</th>';
                 html += '</tr></thead><tbody>';
 
                 segmentsData.forEach(segment => {
-                    const colors = getColor(segment.level);
                     const levelText = getRiskLevelText(segment.level);
                     const isPrivate = segment.participants <= 15;
 
@@ -582,10 +573,10 @@
                     } else {
                         html += '<td>' + segment.usuariosEnRiesgo + '</td>';
                         html += '<td>' +
-                                '<span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; display: inline-block; min-width: 50px; text-align: center;">' +
+                                '<span class="risk-level risk-' + segment.level + '" style="padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; display: inline-block; min-width: 50px; text-align: center;">' +
                                 segment.avgRisk.toFixed(2) +
                                 '</span></td>';
-                        html += '<td><span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; font-size: 12px;">' + levelText + '</span></td>';
+                        html += '<td><span class="risk-badge ' + segment.level + '">' + levelText + '</span></td>';
                     }
                     html += '</tr>';
                 });
@@ -824,7 +815,9 @@
             const { data, rows, cols } = window.getHeatmapData(rowType, colType);
             if (rows.length === 0) return '<p style="text-align:center; color: var(--ubits-fg-1-placeholder); padding: 40px;">Sin datos disponibles</p>';
 
-            let html = '<table class="heatmap-table"><thead><tr><th style="min-width: 250px;">' +
+            const levelLabels = { nulo: 'Nulo', bajo: 'Bajo', medio: 'Medio', alto: 'Alto', 'muy-alto': 'Muy Alto' };
+
+            let html = '<table class="heatmap-table"><thead><tr><th style="min-width: 240px;">' +
                 (rowType === 'categorias' ? 'Categoría' : rowType === 'dominio' ? 'Dominio' : 'Dimensión') +
                 '</th>';
             cols.forEach(col => {
@@ -839,7 +832,8 @@
                     const riskLevel = cellData.label || 'nulo';
                     const score = cellData.avg || 0;
                     const displayScore = score > 0 ? score.toFixed(1) : '-';
-                    html += `<td><span class="hm-cell ${riskLevel}">${displayScore}</span></td>`;
+                    const labelText = levelLabels[riskLevel] || riskLevel;
+                    html += `<td><span class="hm-cell ${riskLevel}"><span class="hm-cell-score">${displayScore}</span><span class="hm-cell-label">${labelText}</span></span></td>`;
                 });
                 html += '</tr>';
             });
@@ -4351,58 +4345,76 @@
 
         .heatmap-legend {
             display: flex;
-            gap: 24px;
-            margin-bottom: 24px;
-            padding: 12px 0;
-            font-size: 13px;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
         }
 
         .legend-item {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            color: var(--ubits-fg-1-medium);
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 600;
         }
 
-        .legend-item.nulo { color: #1e3a5f; }
-        .legend-item.bajo { color: #14532d; }
-        .legend-item.medio { color: #713f12; }
-        .legend-item.alto { color: #7c2d12; }
-        .legend-item.muy-alto { color: #7f1d1d; }
+        .legend-item.nulo {
+            background: var(--ubits-semantic-info-light);
+            color: var(--ubits-semantic-info);
+        }
+        .legend-item.bajo {
+            background: var(--ubits-semantic-success-light);
+            color: var(--ubits-semantic-success);
+        }
+        .legend-item.medio {
+            background: #fef9c3;
+            color: #a16207;
+        }
+        .legend-item.alto {
+            background: #ffedd5;
+            color: #ea580c;
+        }
+        .legend-item.muy-alto {
+            background: var(--ubits-semantic-danger-light);
+            color: var(--ubits-semantic-danger);
+        }
 
         .legend-dot {
             display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 3px;
-            margin-right: 4px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
         }
-        .legend-dot.nulo { background: #93c5fd; }
-        .legend-dot.bajo { background: #86efac; }
-        .legend-dot.medio { background: #fde047; }
-        .legend-dot.alto { background: #fdba74; }
-        .legend-dot.muy-alto { background: #fca5a5; }
+        .legend-dot.nulo { background: var(--ubits-semantic-info); }
+        .legend-dot.bajo { background: var(--ubits-semantic-success); }
+        .legend-dot.medio { background: #a16207; }
+        .legend-dot.alto { background: #ea580c; }
+        .legend-dot.muy-alto { background: var(--ubits-semantic-danger); }
 
         .heatmap-table {
             border-collapse: separate;
             border-spacing: 0;
             width: 100%;
             background: var(--ubits-bg-0);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .heatmap-table thead {
-            background: #E8E9EC;
-            border-bottom: 2px solid var(--ubits-border-2);
+            background: #f1f3f6;
+            border-bottom: 1px solid var(--ubits-border-1);
         }
 
         .heatmap-table th {
-            padding: 16px;
+            padding: 11px 14px;
             text-align: center;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 700;
-            color: var(--ubits-fg-1-high);
-            text-transform: capitalize;
+            color: var(--ubits-fg-1-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
         }
 
         .heatmap-table th:first-child {
@@ -4410,57 +4422,93 @@
             position: sticky;
             left: 0;
             z-index: 3;
-            background: #E8E9EC;
+            background: #f1f3f6;
         }
 
         .heatmap-table td {
-            padding: 12px 12px;
-            border-bottom: 1px solid var(--ubits-bg-2);
+            padding: 9px 10px;
+            border-bottom: 1px solid var(--ubits-border-1);
             text-align: center;
         }
 
+        .heatmap-table tbody tr:nth-child(even) {
+            background: #fafbfc;
+        }
+
         .heatmap-table tbody tr:hover {
-            background: var(--ubits-bg-2);
+            background: #f0f4f8 !important;
+        }
+
+        .heatmap-table tbody tr:hover .heatmap-row-name {
+            background: #f0f4f8 !important;
+        }
+
+        .heatmap-table tbody tr:nth-child(even) .heatmap-row-name {
+            background: #fafbfc;
         }
 
         .heatmap-table tbody tr:last-child td {
             border-bottom: none;
         }
 
-        .hm-cell {
-            display: inline-block;
-            padding: 8px 14px;
-            border-radius: var(--ubits-radius-md);
-            font-size: 14px;
+        .hm-cell-label {
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            opacity: 0.75;
+            line-height: 1;
+        }
+
+        .hm-cell-score {
+            font-size: 12px;
             font-weight: 700;
-            text-transform: none;
+            line-height: 1;
+        }
+
+        .hm-cell {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 10px;
+            border-radius: var(--ubits-radius-2xl);
+            gap: 1px;
             white-space: nowrap;
-            min-width: 36px;
+            min-width: 56px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .hm-cell:hover {
+            transform: scale(1.08);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.13);
+            z-index: 2;
+            position: relative;
         }
 
         .hm-cell.nulo {
-            background: #93c5fd;
-            color: #1e3a5f;
+            background: var(--ubits-semantic-info-light);
+            color: var(--ubits-semantic-info);
         }
 
         .hm-cell.bajo {
-            background: #86efac;
-            color: #14532d;
+            background: var(--ubits-semantic-success-light);
+            color: var(--ubits-semantic-success);
         }
 
         .hm-cell.medio {
-            background: #fde047;
-            color: #713f12;
+            background: #fef9c3;
+            color: #a16207;
         }
 
         .hm-cell.alto {
-            background: #fdba74;
-            color: #7c2d12;
+            background: #ffedd5;
+            color: #ea580c;
         }
 
         .hm-cell.muy-alto {
-            background: #fca5a5;
-            color: #7f1d1d;
+            background: var(--ubits-semantic-danger-light);
+            color: var(--ubits-semantic-danger);
         }
 
         /* Segment Risk Cards */
@@ -4481,11 +4529,13 @@
         }
 
         .heatmap-row-name {
-            font-weight: 700;
+            font-weight: 600;
+            font-size: 13px;
             color: var(--ubits-fg-1-high);
             text-align: left;
-            min-width: 280px;
-            padding: 12px 16px;
+            min-width: 260px;
+            max-width: 300px;
+            padding: 10px 16px;
             position: sticky;
             left: 0;
             z-index: 1;
@@ -4494,17 +4544,16 @@
         }
 
         .heatmap-table tbody tr:hover .heatmap-row-name {
-            background: var(--ubits-bg-2);
+            background: #f8f9fb;
         }
 
         .heatmap-table th:first-child {
-            border-right: 1px solid var(--ubits-border-2);
+            border-right: 1px solid var(--ubits-border-1);
         }
 
         #heatmap-content-wrapper {
             overflow-x: auto;
-            padding: 20px 0;
-            border-radius: var(--ubits-radius-lg);
+            border-radius: 0 0 var(--ubits-radius-lg) var(--ubits-radius-lg);
         }
 
         .tabla-view {
@@ -5195,27 +5244,10 @@
                             <span class="status-badge">Completado</span>
                         </div>
                         <div style="margin-left: auto;">
-                            <div class="download-dropdown">
-                                <button class="ubits-button ubits-button--primary ubits-button--sm" type="button" id="download-btn" onclick="toggleDownloadDropdown()">
-                                    <i class="far fa-download"></i>
-                                    <span>Descargar</span>
-                                    <i class="far fa-chevron-down"></i>
-                                </button>
-                                <div class="download-dropdown-content" id="download-dropdown-content">
-                                    <a href="#" onclick="downloadResultsByDimension()">
-                                        <i class="far fa-layer-group"></i>
-                                        Resultados por dimensión
-                                    </a>
-                                    <a href="#" onclick="downloadGeneralResults()">
-                                        <i class="far fa-chart-bar"></i>
-                                        Resultados generales
-                                    </a>
-                                    <a href="#" onclick="downloadDimensionsByParticipant()">
-                                        <i class="far fa-user-chart"></i>
-                                        Dimensiones por participante
-                                    </a>
-                                </div>
-                            </div>
+                            <button class="ubits-button ubits-button--primary ubits-button--sm" type="button" id="rp-download-report-btn" onclick="openRpDrawer()">
+                                <i class="far fa-download"></i>
+                                <span>Descargar reporte</span>
+                            </button>
                         </div>
                     </div>
 
@@ -6812,12 +6844,12 @@
                                     </div>
                                     
                                     <!-- Leyenda de colores -->
-                                    <div class="heatmap-legend" style="margin: 0; display: flex; gap: 12px;">
-                                        <span class="legend-item"><span class="legend-dot nulo"></span> Nulo (0 - 1.4)</span>
-                                        <span class="legend-item"><span class="legend-dot bajo"></span> Bajo (1.5 - 2.4)</span>
-                                        <span class="legend-item"><span class="legend-dot medio"></span> Medio (2.5 - 3.4)</span>
-                                        <span class="legend-item"><span class="legend-dot alto"></span> Alto (3.5 - 4.4)</span>
-                                        <span class="legend-item"><span class="legend-dot muy-alto"></span> Muy Alto (4.5 - 5.0)</span>
+                                    <div class="heatmap-legend" style="margin: 0;">
+                                        <span class="legend-item nulo"><span class="legend-dot nulo"></span> Nulo <span style="opacity:0.65; font-weight:500;">0–1.4</span></span>
+                                        <span class="legend-item bajo"><span class="legend-dot bajo"></span> Bajo <span style="opacity:0.65; font-weight:500;">1.5–2.4</span></span>
+                                        <span class="legend-item medio"><span class="legend-dot medio"></span> Medio <span style="opacity:0.65; font-weight:500;">2.5–3.4</span></span>
+                                        <span class="legend-item alto"><span class="legend-dot alto"></span> Alto <span style="opacity:0.65; font-weight:500;">3.5–4.4</span></span>
+                                        <span class="legend-item muy-alto"><span class="legend-dot muy-alto"></span> Muy Alto <span style="opacity:0.65; font-weight:500;">4.5–5.0</span></span>
                                     </div>
                                 </div>
 
@@ -11744,5 +11776,298 @@ console.log('✅ [DATA] Data asignado a window');
         });
 </script>
     <div class="tooltip" id="tooltip"></div>
+
+    <!-- ===== REPORTE DRAWER – RIESGO PSICOSOCIAL ===== -->
+    <style>
+        .rp-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:1100;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+        .rp-overlay.show{opacity:1;visibility:visible}
+        .rp-drawer{position:fixed;top:0;right:0;width:400px;max-width:100vw;height:100dvh;background:var(--ubits-bg-0,#fff);z-index:1101;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .35s cubic-bezier(.16,1,.3,1);box-shadow:-4px 0 32px rgba(0,0,0,.12)}
+        .rp-drawer.show{transform:translateX(0)}
+        .rp-header{padding:20px 24px 0;flex-shrink:0}
+        .rp-header-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
+        .rp-header-top h2{margin:0;font-size:17px;font-weight:700;color:var(--ubits-fg-1-high,#1a1a2e);line-height:1.3}
+        .rp-close-btn{background:none;border:none;cursor:pointer;color:var(--ubits-fg-1-medium,#6b7280);font-size:18px;padding:4px;line-height:1;flex-shrink:0;margin-left:12px}
+        .rp-close-btn:hover{color:var(--ubits-fg-1-high,#1a1a2e)}
+        .rp-subtitle{font-size:13px;color:var(--ubits-fg-1-medium,#6b7280);margin:0 0 16px}
+        .rp-tabs{display:flex;border-bottom:1px solid var(--ubits-border-1,#e5e7eb);padding:0 24px}
+        .rp-tab{background:none;border:none;cursor:pointer;padding:10px 4px;margin-right:24px;font-size:14px;font-weight:500;color:var(--ubits-fg-1-medium,#6b7280);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s}
+        .rp-tab.active{color:var(--ubits-primary,#2563eb);border-bottom-color:var(--ubits-primary,#2563eb)}
+        .rp-body{flex:1;overflow-y:auto;padding:24px}
+        .rp-section-label{font-size:13px;font-weight:600;color:var(--ubits-fg-1-high,#1a1a2e);margin:0 0 12px}
+        .rp-report-card{border:1.5px solid var(--ubits-border-1,#e5e7eb);border-radius:12px;padding:16px;margin-bottom:12px;cursor:pointer;transition:border-color .2s,background .2s;position:relative}
+        .rp-report-card.selected{border-color:var(--ubits-primary,#2563eb);background:rgba(37,99,235,.04)}
+        .rp-report-card-header{display:flex;align-items:flex-start;gap:12px}
+        .rp-report-icon{width:38px;height:38px;border-radius:9px;background:var(--ubits-bg-1,#f3f4f6);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--ubits-fg-1-medium,#6b7280);flex-shrink:0}
+        .rp-report-card.selected .rp-report-icon{background:rgba(37,99,235,.1);color:var(--ubits-primary,#2563eb)}
+        .rp-report-info{flex:1}
+        .rp-report-info strong{display:block;font-size:14px;font-weight:600;color:var(--ubits-fg-1-high,#1a1a2e);margin-bottom:3px}
+        .rp-report-info span{font-size:12px;color:var(--ubits-fg-1-medium,#6b7280);line-height:1.5}
+        .rp-report-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--ubits-border-1,#d1d5db);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:border-color .2s}
+        .rp-report-card.selected .rp-report-radio{border-color:var(--ubits-primary,#2563eb)}
+        .rp-radio-dot{width:8px;height:8px;border-radius:50%;background:var(--ubits-primary,#2563eb);display:none}
+        .rp-report-card.selected .rp-radio-dot{display:block}
+        .rp-report-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+        .rp-tag{font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;background:var(--ubits-bg-1,#f3f4f6);color:var(--ubits-fg-1-medium,#6b7280)}
+        .rp-footer{padding:16px 24px;border-top:1px solid var(--ubits-border-1,#e5e7eb);flex-shrink:0;background:var(--ubits-bg-0,#fff)}
+        .rp-footer-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--ubits-primary,#2563eb);color:#fff;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s}
+        .rp-footer-btn:hover{opacity:.88}
+        .rp-footer-ghost{width:100%;padding:13px;border:1.5px solid var(--ubits-border-1,#e5e7eb);border-radius:10px;background:transparent;color:var(--ubits-fg-1-high,#1a1a2e);font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+        .rp-footer-ghost:hover{background:var(--ubits-bg-1,#f3f4f6)}
+        .rp-empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:12px;text-align:center}
+        .rp-empty-icon{font-size:36px;color:var(--ubits-fg-1-medium,#9ca3af)}
+        .rp-empty-state strong{font-size:15px;color:var(--ubits-fg-1-high,#1a1a2e)}
+        .rp-empty-state p{margin:0;font-size:13px;color:var(--ubits-fg-1-medium,#6b7280);line-height:1.5}
+        .rp-dl-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+        .rp-dl-header strong{font-size:14px;font-weight:600;color:var(--ubits-fg-1-high,#1a1a2e)}
+        .rp-dl-period{font-size:12px;font-weight:600;color:var(--ubits-fg-1-medium,#6b7280);letter-spacing:.05em}
+        .rp-dl-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--ubits-border-1,#e5e7eb)}
+        .rp-dl-item:last-child{border-bottom:none}
+        .rp-dl-info{flex:1;min-width:0}
+        .rp-dl-name{font-size:13px;font-weight:500;color:var(--ubits-fg-1-high,#1a1a2e);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .rp-dl-meta{font-size:12px;color:var(--ubits-fg-1-medium,#6b7280)}
+        .rp-dl-bar-wrap{height:4px;background:var(--ubits-border-1,#e5e7eb);border-radius:2px;margin-top:6px;overflow:hidden}
+        .rp-dl-bar{height:100%;background:var(--ubits-primary,#2563eb);border-radius:2px;transition:width .4s}
+        .rp-dl-pct{font-size:13px;font-weight:600;color:var(--ubits-primary,#2563eb);flex-shrink:0}
+        /* Mini widget */
+        .rp-mini{position:fixed;bottom:24px;right:24px;background:var(--ubits-bg-0,#fff);border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.16);z-index:1102;min-width:280px;max-width:340px;display:none;flex-direction:column;overflow:hidden}
+        .rp-mini.visible{display:flex}
+        .rp-mini-header{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer}
+        .rp-mini-spinner{width:22px;height:22px;border-radius:50%;border:2.5px solid var(--ubits-border-1,#e5e7eb);border-top-color:var(--ubits-primary,#2563eb);animation:rp-spin .9s linear infinite;flex-shrink:0}
+        .rp-mini-spinner.done{border:none;animation:none;display:flex;align-items:center;justify-content:center}
+        .rp-mini-spinner.done::after{content:'✓';color:var(--ubits-semantic-success,#16a34a);font-size:16px;font-weight:700}
+        @keyframes rp-spin{to{transform:rotate(360deg)}}
+        .rp-mini-info{flex:1;min-width:0}
+        .rp-mini-title{font-size:13px;font-weight:600;color:var(--ubits-fg-1-high,#1a1a2e);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .rp-mini-sub{font-size:12px;color:var(--ubits-fg-1-medium,#6b7280)}
+        .rp-mini-actions{display:flex;align-items:center;gap:4px}
+        .rp-mini-btn{background:none;border:none;cursor:pointer;color:var(--ubits-fg-1-medium,#6b7280);padding:4px 6px;font-size:13px;border-radius:4px}
+        .rp-mini-btn:hover{background:var(--ubits-bg-1,#f3f4f6)}
+        .rp-mini-body{padding:10px 14px 14px;border-top:1px solid var(--ubits-border-1,#f3f4f6)}
+        .rp-mini-label{font-size:11px;font-weight:700;letter-spacing:.07em;color:var(--ubits-fg-1-medium,#6b7280);text-transform:uppercase;margin-bottom:8px}
+        .rp-mini-fname{font-size:12px;color:var(--ubits-fg-1-medium,#6b7280);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .rp-mini-prog{display:flex;align-items:center;gap:10px}
+        .rp-mini-bar-wrap{flex:1;height:4px;background:var(--ubits-border-1,#e5e7eb);border-radius:2px;overflow:hidden}
+        .rp-mini-bar{height:100%;background:var(--ubits-primary,#2563eb);border-radius:2px;transition:width .4s;width:0%}
+        .rp-mini-pct{font-size:12px;font-weight:600;color:var(--ubits-primary,#2563eb);min-width:30px;text-align:right}
+        .rp-mini-collapsed .rp-mini-body{display:none}
+    </style>
+
+    <div class="rp-overlay" id="rpOverlay" onclick="closeRpDrawer()"></div>
+
+    <div class="rp-drawer" id="rpDrawer">
+        <div class="rp-header">
+            <div class="rp-header-top">
+                <h2>Reporte de riesgo psicosocial</h2>
+                <button class="rp-close-btn" onclick="closeRpDrawer()"><i class="far fa-times"></i></button>
+            </div>
+            <p class="rp-subtitle">Configura y descarga tu reporte de resultados</p>
+            <div class="rp-tabs">
+                <button class="rp-tab active" id="rpTab-reports" onclick="switchRpTab('reports')">Reportes</button>
+                <button class="rp-tab" id="rpTab-downloads" onclick="switchRpTab('downloads')">Descargas</button>
+            </div>
+        </div>
+
+        <!-- TAB: Reportes -->
+        <div class="rp-body" id="rpPanel-reports">
+            <p class="rp-section-label">Tipo de reporte</p>
+
+            <div class="rp-report-card selected" id="rpFmt-xlsx" onclick="selectRpFmt('xlsx')">
+                <div class="rp-report-card-header">
+                    <div class="rp-report-icon"><i class="far fa-file-excel"></i></div>
+                    <div class="rp-report-info">
+                        <strong>Resultados generales (XLSX)</strong>
+                        <span>Data completa de resultados con todos los niveles de análisis</span>
+                    </div>
+                    <div class="rp-report-radio"><div class="rp-radio-dot"></div></div>
+                </div>
+                <div class="rp-report-tags">
+                    <span class="rp-tag">Por categoría</span>
+                    <span class="rp-tag">Por dominio</span>
+                    <span class="rp-tag">Por dimensión</span>
+                    <span class="rp-tag">Participación por área</span>
+                    <span class="rp-tag">Por segmento</span>
+                    <span class="rp-tag">Nivel de riesgo org.</span>
+                    <span class="rp-tag">Totales</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: Descargas -->
+        <div class="rp-body" id="rpPanel-downloads" style="display:none">
+            <div class="rp-dl-header">
+                <strong>Lista de descargas</strong>
+                <span class="rp-dl-period">ÚLTIMOS 7 DÍAS</span>
+            </div>
+            <div id="rpDlList">
+                <div class="rp-empty-state">
+                    <i class="far fa-history rp-empty-icon"></i>
+                    <strong>Sin descargas recientes</strong>
+                    <p>Tus reportes generados aparecerán aquí para acceso rápido.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer reportes -->
+        <div class="rp-footer" id="rpFooter-reports">
+            <button class="rp-footer-btn" id="rpDlBtn" onclick="startRpDownload()">
+                <i class="far fa-download"></i>
+                <span id="rpDlBtnLabel">Descargar XLSX</span>
+            </button>
+        </div>
+        <!-- Footer descargas -->
+        <div class="rp-footer" id="rpFooter-downloads" style="display:none">
+            <button class="rp-footer-ghost" onclick="minimizeRpDrawer()">Minimizar y continuar</button>
+        </div>
+    </div>
+
+    <!-- Mini widget -->
+    <div class="rp-mini" id="rpMini">
+        <div class="rp-mini-header" onclick="expandRpDrawer()">
+            <div class="rp-mini-spinner" id="rpMiniSpinner"></div>
+            <div class="rp-mini-info">
+                <div class="rp-mini-title" id="rpMiniTitle">Preparando XLSX...</div>
+                <div class="rp-mini-sub" id="rpMiniSub">1 en progreso</div>
+            </div>
+            <div class="rp-mini-actions">
+                <button class="rp-mini-btn" onclick="event.stopPropagation();expandRpDrawer()" title="Expandir"><i class="far fa-arrow-up-right-from-square"></i></button>
+                <button class="rp-mini-btn" onclick="event.stopPropagation();toggleRpMiniCollapse()" id="rpMiniCollapseBtn"><i class="far fa-chevron-down"></i></button>
+                <button class="rp-mini-btn" onclick="event.stopPropagation();closeRpMini()"><i class="far fa-times"></i></button>
+            </div>
+        </div>
+        <div class="rp-mini-body" id="rpMiniBody">
+            <div class="rp-mini-label">Descargas activas</div>
+            <div class="rp-mini-fname" id="rpMiniFile">resultados-riesgo-psicosocial.xlsx</div>
+            <div style="font-size:12px;color:var(--ubits-fg-1-medium,#6b7280);margin-bottom:6px">Reporte en progreso</div>
+            <div class="rp-mini-prog">
+                <div class="rp-mini-bar-wrap"><div class="rp-mini-bar" id="rpMiniBar"></div></div>
+                <div class="rp-mini-pct" id="rpMiniPct">0%</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let rpFmt = 'xlsx';
+        let rpDownloads = [];
+        let rpProgress = 0;
+        let rpInterval = null;
+
+        function openRpDrawer() {
+            document.getElementById('rpOverlay').classList.add('show');
+            document.getElementById('rpDrawer').classList.add('show');
+            switchRpTab('reports');
+        }
+        function closeRpDrawer() {
+            document.getElementById('rpOverlay').classList.remove('show');
+            document.getElementById('rpDrawer').classList.remove('show');
+        }
+        function minimizeRpDrawer() {
+            closeRpDrawer();
+            if (rpDownloads.length > 0) {
+                document.getElementById('rpMini').classList.add('visible');
+                document.getElementById('rpMini').classList.remove('rp-mini-collapsed');
+            }
+        }
+        function expandRpDrawer() {
+            document.getElementById('rpMini').classList.remove('visible');
+            openRpDrawer();
+            switchRpTab('downloads');
+        }
+        function switchRpTab(tab) {
+            ['reports','downloads'].forEach(t => {
+                document.getElementById('rpTab-' + t).classList.toggle('active', t === tab);
+                document.getElementById('rpPanel-' + t).style.display = t === tab ? '' : 'none';
+                document.getElementById('rpFooter-' + t).style.display = t === tab ? '' : 'none';
+            });
+        }
+        function selectRpFmt(fmt) {
+            rpFmt = fmt;
+        }
+
+        function startRpDownload() {
+            const today = new Date().toISOString().split('T')[0];
+            const fileName = `resultados-riesgo-psicosocial-nom035-${today}.xlsx`;
+
+            rpDownloads.unshift({ name: fileName, progress: 0, done: false });
+            renderRpDlList();
+            switchRpTab('downloads');
+
+            // Prepare mini widget (hidden until minimize)
+            rpProgress = 0;
+            document.getElementById('rpMiniTitle').textContent = 'Preparando XLSX...';
+            document.getElementById('rpMiniSub').textContent = '1 en progreso';
+            document.getElementById('rpMiniFile').textContent = fileName;
+            document.getElementById('rpMiniSpinner').className = 'rp-mini-spinner';
+            document.getElementById('rpMiniBar').style.width = '0%';
+            document.getElementById('rpMiniPct').textContent = '0%';
+
+            if (rpInterval) clearInterval(rpInterval);
+            rpInterval = setInterval(function() {
+                rpProgress += Math.random() * 18 + 5;
+                if (rpProgress >= 100) {
+                    rpProgress = 100;
+                    clearInterval(rpInterval);
+                    rpInterval = null;
+                    rpDownloads[0].done = true;
+                    rpDownloads[0].progress = 100;
+                    document.getElementById('rpMiniSpinner').className = 'rp-mini-spinner done';
+                    document.getElementById('rpMiniTitle').textContent = 'Descarga comple...';
+                    document.getElementById('rpMiniSub').textContent = '0 en progreso';
+                    document.getElementById('rpMiniBar').style.width = '100%';
+                    document.getElementById('rpMiniPct').textContent = '100%';
+                    renderRpDlList();
+                    setTimeout(() => downloadRpXlsx(), 400);
+                } else {
+                    rpDownloads[0].progress = Math.round(rpProgress);
+                    renderRpDlList();
+                    document.getElementById('rpMiniBar').style.width = Math.round(rpProgress) + '%';
+                    document.getElementById('rpMiniPct').textContent = Math.round(rpProgress) + '%';
+                }
+            }, 400);
+        }
+
+        function renderRpDlList() {
+            const c = document.getElementById('rpDlList');
+            if (!rpDownloads.length) {
+                c.innerHTML = '<div class="rp-empty-state"><i class="far fa-history rp-empty-icon"></i><strong>Sin descargas recientes</strong><p>Tus reportes generados aparecerán aquí para acceso rápido.</p></div>';
+                return;
+            }
+            c.innerHTML = rpDownloads.map(dl => `
+                <div class="rp-dl-item">
+                    <div style="width:32px;height:32px;border-radius:8px;background:var(--ubits-bg-1,#f3f4f6);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="far fa-file-excel" style="color:var(--ubits-fg-1-medium,#6b7280)"></i>
+                    </div>
+                    <div class="rp-dl-info">
+                        <div class="rp-dl-name">${dl.name}</div>
+                        <div class="rp-dl-meta">${dl.done ? 'Listo para descargar' : 'Preparando reporte...'}</div>
+                        ${!dl.done ? `<div class="rp-dl-bar-wrap"><div class="rp-dl-bar" style="width:${dl.progress}%"></div></div>` : ''}
+                    </div>
+                    ${!dl.done
+                        ? `<div class="rp-dl-pct">${dl.progress}%</div>`
+                        : `<button onclick="downloadRpXlsx()" style="background:var(--ubits-primary,#2563eb);color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0">Descargar</button>`
+                    }
+                </div>
+            `).join('');
+        }
+
+        function downloadRpXlsx() {
+            // Delegate to existing download functions
+            if (typeof downloadGeneralResults === 'function') downloadGeneralResults();
+        }
+
+        function toggleRpMiniCollapse() {
+            const w = document.getElementById('rpMini');
+            const btn = document.getElementById('rpMiniCollapseBtn');
+            const collapsed = w.classList.toggle('rp-mini-collapsed');
+            btn.innerHTML = collapsed ? '<i class="far fa-chevron-up"></i>' : '<i class="far fa-chevron-down"></i>';
+        }
+        function closeRpMini() {
+            document.getElementById('rpMini').classList.remove('visible');
+            if (rpInterval) { clearInterval(rpInterval); rpInterval = null; }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeRpDrawer();
+        });
+    </script>
 </body>
 </html>
