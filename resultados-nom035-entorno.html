@@ -510,38 +510,38 @@
 
                 if (segmentType === 'department') {
                     segmentsData = [
-                        { name: 'Administración', participants: 2, avgRisk: 2.26, min: 0.25, max: 4.25, level: 'bajo' },
-                        { name: 'Finanzas', participants: 2, avgRisk: 1.09, min: 0.25, max: 2.00, level: 'nulo' },
-                        { name: 'Mantenimiento', participants: 1, avgRisk: 1.77, min: 0.75, max: 2.75, level: 'bajo' },
-                        { name: 'Marketing', participants: 1, avgRisk: 1.43, min: 0.50, max: 2.25, level: 'nulo' },
-                        { name: 'Producción', participants: 1, avgRisk: 2.25, min: 1.25, max: 3.25, level: 'bajo' },
-                        { name: 'Recursos Humanos', participants: 2, avgRisk: 1.13, min: 0.25, max: 2.25, level: 'nulo' },
-                        { name: 'Seguridad', participants: 1, avgRisk: 4.89, min: 4.00, max: 5.00, level: 'muy-alto' },
-                        { name: 'Tecnología', participants: 3, avgRisk: 1.94, min: 0.25, max: 3.60, level: 'bajo' },
-                        { name: 'Ventas', participants: 2, avgRisk: 4.75, min: 4.25, max: 5.00, level: 'muy-alto' }
+                        { name: 'Administración', participants: 35, avgRisk: 2.26, level: 'bajo' },
+                        { name: 'Finanzas', participants: 28, avgRisk: 1.09, level: 'nulo' },
+                        { name: 'Mantenimiento', participants: 22, avgRisk: 1.77, level: 'bajo' },
+                        { name: 'Marketing', participants: 18, avgRisk: 1.43, level: 'nulo' },
+                        { name: 'Producción', participants: 45, avgRisk: 2.25, level: 'bajo' },
+                        { name: 'Recursos Humanos', participants: 30, avgRisk: 1.13, level: 'nulo' },
+                        { name: 'Seguridad', participants: 15, avgRisk: 4.89, level: 'muy-alto' },
+                        { name: 'Tecnología', participants: 25, avgRisk: 1.94, level: 'bajo' },
+                        { name: 'Ventas', participants: 40, avgRisk: 4.75, level: 'muy-alto' }
                     ];
                 } else if (segmentType === 'leader') {
                     segmentsData = [
-                        { name: 'Líder A', participants: 5, avgRisk: 1.50, min: 0.50, max: 2.50, level: 'nulo' },
-                        { name: 'Líder B', participants: 4, avgRisk: 3.20, min: 2.00, max: 4.50, level: 'medio' },
-                        { name: 'Líder C', participants: 6, avgRisk: 2.10, min: 1.00, max: 3.50, level: 'bajo' }
+                        { name: 'Líder A', participants: 20, avgRisk: 1.50, level: 'nulo' },
+                        { name: 'Líder B', participants: 25, avgRisk: 3.20, level: 'medio' },
+                        { name: 'Líder C', participants: 30, avgRisk: 2.10, level: 'bajo' }
                     ];
                 } else if (segmentType === 'city') {
                     segmentsData = [
-                        { name: 'CDMX', participants: 10, avgRisk: 2.45, min: 1.00, max: 4.80, level: 'bajo' },
-                        { name: 'Guadalajara', participants: 8, avgRisk: 1.90, min: 0.50, max: 3.20, level: 'bajo' },
-                        { name: 'Monterrey', participants: 7, avgRisk: 4.10, min: 3.00, max: 5.00, level: 'alto' }
+                        { name: 'CDMX', participants: 45, avgRisk: 2.45, level: 'bajo' },
+                        { name: 'Guadalajara', participants: 25, avgRisk: 1.90, level: 'bajo' },
+                        { name: 'Monterrey', participants: 30, avgRisk: 4.10, level: 'alto' }
                     ];
                 } else if (segmentType === 'country') {
                     segmentsData = [
-                        { name: 'México', participants: 25, avgRisk: 2.80, min: 0.50, max: 5.00, level: 'medio' },
-                        { name: 'Colombia', participants: 15, avgRisk: 2.10, min: 1.00, max: 4.20, level: 'bajo' }
+                        { name: 'México', participants: 50, avgRisk: 2.80, level: 'medio' },
+                        { name: 'Colombia', participants: 35, avgRisk: 2.10, level: 'bajo' }
                     ];
                 } else if (segmentType === 'position') {
                     segmentsData = [
-                        { name: 'Gerente', participants: 5, avgRisk: 1.80, min: 1.00, max: 3.00, level: 'bajo' },
-                        { name: 'Analista', participants: 12, avgRisk: 3.50, min: 2.00, max: 5.00, level: 'alto' },
-                        { name: 'Operativo', participants: 20, avgRisk: 2.30, min: 0.50, max: 4.50, level: 'bajo' }
+                        { name: 'Gerente', participants: 15, avgRisk: 1.80, level: 'bajo' },
+                        { name: 'Analista', participants: 35, avgRisk: 3.50, level: 'alto' },
+                        { name: 'Operativo', participants: 50, avgRisk: 2.30, level: 'bajo' }
                     ];
                 }
 
@@ -562,8 +562,6 @@
                 html += '<th>Segmento</th>';
                 html += '<th style="width: 100px;">Participantes</th>';
                 html += '<th style="width: 200px;">Promedio Riesgo</th>';
-                html += '<th style="width: 80px;">Mínimo</th>';
-                html += '<th style="width: 80px;">Máximo</th>';
                 html += '<th style="width: 120px;">Nivel General</th>';
                 html += '</tr></thead><tbody>';
 
@@ -578,8 +576,6 @@
                             '<span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; display: inline-block; min-width: 50px; text-align: center;">' +
                             segment.avgRisk.toFixed(2) +
                             '</span></td>';
-                    html += '<td style="color: var(--ubits-semantic-success);">' + segment.min.toFixed(2) + '</td>';
-                    html += '<td style="color: var(--ubits-semantic-danger);">' + segment.max.toFixed(2) + '</td>';
                     html += '<td><span style="background: ' + colors.bg + '; color: ' + colors.text + '; padding: 4px 12px; border-radius: var(--ubits-radius-sm); font-weight: 600; font-size: 12px;">' + levelText + '</span></td>';
                     html += '</tr>';
                 });
