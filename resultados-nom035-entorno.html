@@ -1083,177 +1083,153 @@
         };
 
         // Estado global para filtrado y ordenamiento de tablas de participación
-        window.nomParticipationState = {
-            filters: {
-                search: '',
-                minParticipation: 0
-            },
-            sort: {
-                column: 'segment',
-                direction: 'asc'
-            }
+        
+        // ESTADO GLOBAL: Tabla de participación (Agrupada)
+        let nomSortBy = 'name'; // name, completed, total, percentage
+        let nomSortDir = 'asc';
+        let nomMinPct = 0;
+        let nomColSearch = '';
+
+        // ESTADO GLOBAL: Tabla de Colaboradores (Detallada)
+        let colabSortCol = 1; // 1: name, 2: area, 3: cargo, 4: status
+        let colabSortDir = 'asc';
+        let colabSearchName = '';
+        let colabSearchArea = '';
+        let colabSearchLeader = ''; // refers to Cargo in this context but let's keep it abstract
+        let colabStatusFilters = new Set(['Completada', '-']); // '-' is pending in data
+
+        window.toggleParticipationFilter = function(colId) {
+            // Deprecated, maintained for old bindings if any remain
         };
 
-        // Helper para manejar el ordenamiento
-        // Helper para procesar datos de tablas de participación (Filtrado y Ordenamiento)
-        window.getProcessedParticipationData = function(groupedData, columnMapping) {
-            let entries = Object.entries(groupedData).map(([name, data]) => ({
-                name,
-                completed: data.completed,
-                total: data.total,
-                percentage: Math.round((data.completed / data.total) * 100)
-            }));
-
-            // 1. Filtrado por búsqueda (Segmento)
-            const searchTerm = window.nomParticipationState.filters.search.toLowerCase();
-            if (searchTerm) {
-                entries = entries.filter(e => e.name.toLowerCase().includes(searchTerm));
-            }
-
-            // 2. Filtrado por % de participación
-            const minPct = window.nomParticipationState.filters.minParticipation;
-            if (minPct > 0) {
-                entries = entries.filter(e => e.percentage >= minPct);
-            }
-
-            // 3. Ordenamiento
-            const { column, direction } = window.nomParticipationState.sort;
-            entries.sort((a, b) => {
-                let valA, valB;
-                if (column === 'segment') { valA = a.name.toLowerCase(); valB = b.name.toLowerCase(); }
-                else if (column === 'completed') { valA = a.completed; valB = b.completed; }
-                else if (column === 'total') { valA = a.total; valB = b.total; }
-                else if (column === 'percentage') { valA = a.percentage; valB = b.percentage; }
-                else { return 0; }
-
-                if (valA < valB) return direction === 'asc' ? -1 : 1;
-                if (valA > valB) return direction === 'asc' ? 1 : -1;
-                return 0;
-            });
-
-            return entries;
+        window.handleParticipationSort = function(colId) {
+            // Deprecated, maintained for old bindings if any remain
         };
 
-        // Helper para generar HTML de cabecera con filtros y sort
+        window.getProcessedParticipationData = function(grouped, columns) {
+            // Deprecated
+            return [];
+        };
+
         window.renderParticipationHeader = function(title, columns) {
-            let html = `<thead><tr>`;
-            columns.forEach(col => {
-                const isSortable = col.sortable;
-                const isSearchable = col.searchable;
-                const isSlider = col.slider;
-                const sortClass = window.nomParticipationState.sort.column === col.id ? (window.nomParticipationState.sort.direction === 'asc' ? 'sort-asc' : 'sort-desc') : '';
-                
-                html += '<th class="' + (isSortable ? 'sortable ' + sortClass : '') + ' ' + (col.center ? 'text-center' : '') + '" onclick="window.handleParticipationSort(\'' + col.id + '\')">';
-                html += `<div class="nom-th-inner">`;
-                html += `${col.label}`;
-                
-                if (isSearchable || isSlider) {
-                    html += `<button class="nom-th-filter-btn" onclick="event.stopPropagation(); window.toggleParticipationFilter('${col.id}')"><i class="fas fa-filter"></i></button>`;
-                }
-
-                if (isSortable) {
-                    html += `<i class="far fa-sort th-icon"></i>`;
-                }
-                
-                html += `</div></th>`;
-            });
-            html += `<th class="text-center">Acciones</th></tr></thead>`;
-            return html;
-        };
-
-        // Helper para generar el popover de filtro
-        window.renderParticipationFilterPopover = function(colId) {
-            if (colId === 'segment') {
-                return `
-                    <div class="nom-th-popover-label">Buscar segmento</div>
-                    <input type="text" class="nom-col-search-input" placeholder="Filtrar..." 
-                           value="${window.nomParticipationState.filters.search}" 
-                           oninput="window.nomParticipationState.filters.search = this.value; window.renderNomParticipation();">
-                `;
-            } else if (colId === 'percentage') {
-                const val = window.nomParticipationState.filters.minParticipation;
-                return `
-                    <div class="nom-th-popover-label">Mínimo participación: ${val}%</div>
-                    <input type="range" class="nom-col-pct-slider" min="0" max="100" value="${val}" 
-                           oninput="this.previousElementSibling.textContent = 'Mínimo participación: ' + this.value + '%'; window.nomParticipationState.filters.minParticipation = parseInt(this.value); window.renderNomParticipation();">
-                `;
-            }
+            // Deprecated
             return '';
         };
 
-        window.toggleParticipationFilter = function(colId) {
-            const btns = document.querySelectorAll('.nom-th-filter-btn');
-            btns.forEach(btn => {
-                const popover = btn.nextElementSibling;
-                if (popover && popover.classList.contains('nom-th-popover')) {
-                    popover.classList.remove('open');
+        window.generateParticipationTableHTML = function(title, entries, columns) {
+            // Deprecated
+            return '';
+        };
+
+        // Renderizador para agrupados (Areas, Cargos, etc.)
+        window._renderNomGroupedTable = function(groupKey, label, headerLabel, search, sortBy, sortDir, minPct, colSearch, minPctDisplay) {
+            colSearch = colSearch || '';
+            minPctDisplay = minPctDisplay || 0;
+            const grouped = {};
+            window.nomParticipationData.forEach(p => {
+                const key = p[groupKey];
+                if (!key) return;
+                if (!grouped[key]) grouped[key] = { completed: 0, total: 0 };
+                grouped[key].total++;
+                if (p.status === 'Completada') grouped[key].completed++;
+            });
+
+            // Build rows array with percentage
+            let rows = Object.keys(grouped)
+                .filter(name => name.toLowerCase().includes(colSearch.toLowerCase()))
+                .map(name => {
+                    const data = grouped[name];
+                    const percentage = data.total > 0 ? Math.round((data.completed / data.total) * 100) : 0;
+                    return { name, completed: data.completed, total: data.total, percentage, pending: data.total - data.completed };
+                });
+
+            // Filter by percentage
+            if (minPctDisplay > 0) {
+                rows = rows.filter(r => r.percentage >= minPctDisplay);
+            }
+
+            // Sort
+            rows.sort((a, b) => {
+                let valA = a[sortBy];
+                let valB = b[sortBy];
+                if (typeof valA === 'string') {
+                    return sortDir === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                } else {
+                    return sortDir === 'asc' ? valA - valB : valB - valA;
                 }
             });
 
-            const btn = document.querySelector(`th[onclick*="${colId}"] .nom-th-filter-btn`);
-            if (btn) {
-                const popover = document.createElement('div');
-                popover.className = 'nom-th-popover open';
-                popover.innerHTML = window.renderParticipationFilterPopover(colId);
-                
-                // Close popover when clicking outside
-                const closeHandler = (e) => {
-                    if (!btn.contains(e.target) && !popover.contains(e.target)) {
-                        popover.remove();
-                        document.removeEventListener('click', closeHandler);
-                    }
-                };
-                document.addEventListener('click', closeHandler);
-                
-                btn.parentElement.appendChild(popover);
-                btn.classList.add('active');
-            }
-        };
-
-        window.handleParticipationSort = function(column) {
-            if (window.nomParticipationState.sort.column === column) {
-                window.nomParticipationState.sort.direction = window.nomParticipationState.sort.direction === 'asc' ? 'desc' : 'asc';
-            } else {
-                window.nomParticipationState.sort.column = column;
-                window.nomParticipationState.sort.direction = 'asc';
-            }
-            window.renderNomParticipation();
-        };
-
-        window.generateParticipationTableHTML = function(title, entries, columns) {
-            const filteredCount = entries.length;
             let html = `
                 <div class="participation-controls">
-                    <div class="participation-title">${title} <span class="filter-counter">${filteredCount} resultados</span></div>
+                    <div class="participation-title">Tabla de participación - ${label} <span class="filter-counter">${rows.length} resultados</span></div>
                 </div>
+                <div style="overflow-x: auto;">
                 <table class="participation-table">
-                    ${window.renderParticipationHeader(title, columns)}
+                    <thead><tr>
+                        <th class="nom-sortable sort-text" data-col="name" style="position:relative;">
+                            <div class="nom-th-inner">
+                                <span class="nom-th-sort-label">${headerLabel}</span>
+                                <button class="nom-th-filter-btn nom-search-btn ${colSearch ? 'active' : ''}" onclick="event.stopPropagation()">
+                                    <i class="far fa-search"></i>
+                                </button>
+                                <i class="far fa-sort th-icon ${sortBy === 'name' ? (sortDir === 'asc' ? 'fa-sort-up active' : 'fa-sort-down active') : ''}"></i>
+                            </div>
+                            <div class="nom-th-popover nom-search-popover" onclick="event.stopPropagation()">
+                                <div class="nom-th-popover-label">Buscar ${headerLabel}</div>
+                                <input type="text" class="nom-col-search-input" placeholder="Escribe para buscar..." value="${colSearch}" />
+                            </div>
+                        </th>
+                        <th class="nom-sortable sort-num" data-col="completed" style="width:120px;text-align:center;">
+                            <div class="nom-th-inner" style="justify-content:center;">
+                                <span class="nom-th-sort-label">Completados</span>
+                                <i class="far fa-sort th-icon ${sortBy === 'completed' ? (sortDir === 'asc' ? 'fa-sort-up active' : 'fa-sort-down active') : ''}"></i>
+                            </div>
+                        </th>
+                        <th class="nom-sortable sort-num" data-col="total" style="width:120px;text-align:center;">
+                            <div class="nom-th-inner" style="justify-content:center;">
+                                <span class="nom-th-sort-label">Totales</span>
+                                <i class="far fa-sort th-icon ${sortBy === 'total' ? (sortDir === 'asc' ? 'fa-sort-up active' : 'fa-sort-down active') : ''}"></i>
+                            </div>
+                        </th>
+                        <th class="nom-sortable sort-num" data-col="percentage" style="position:relative;width:250px;">
+                            <div class="nom-th-inner">
+                                <span class="nom-th-sort-label">% de participación</span>
+                                <button class="nom-th-filter-btn nom-slider-btn ${minPctDisplay > 0 ? 'active' : ''}" onclick="event.stopPropagation()">
+                                    <i class="far fa-filter"></i>
+                                </button>
+                                <i class="far fa-sort th-icon ${sortBy === 'percentage' ? (sortDir === 'asc' ? 'fa-sort-up active' : 'fa-sort-down active') : ''}"></i>
+                            </div>
+                            <div class="nom-th-popover nom-slider-popover" onclick="event.stopPropagation()">
+                                <div class="nom-th-popover-label">Participación mínima</div>
+                                <div style="display:flex;align-items:center;gap:8px;">
+                                    <input type="range" class="nom-col-pct-slider" min="0" max="100" value="${minPctDisplay}" step="5" style="background: linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${minPctDisplay}%, var(--ubits-border-1) ${minPctDisplay}%, var(--ubits-border-1) 100%)" />
+                                    <span class="nom-col-pct-value" style="font-size:12px;font-weight:700;color:var(--ubits-accent-brand);min-width:34px;text-align:right;">≥${minPctDisplay}%</span>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="text-center" style="width:140px;">Acciones</th>
+                    </tr></thead>
                     <tbody>`;
 
-            entries.forEach(entry => {
-                const percentage = entry.percentage;
-                const pending = entry.total - entry.completed;
-                
-                // Adjust title for the "Segment" column
-                const segmentName = entry.name;
-
+            rows.forEach(entry => {
                 html += `
                     <tr>
-                        <td class="fw-bold">${segmentName}</td>
+                        <td class="fw-bold">${entry.name}</td>
                         <td class="text-center">${entry.completed}</td>
                         <td class="text-center">${entry.total}</td>
                         <td>
                             <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
+                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${entry.percentage}%;"></div></div>
+                                <span class="participation-percentage">${entry.percentage}%</span>
                             </div>
                         </td>
                         <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${segmentName}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                            ${entry.pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${entry.pending} pendientes de ${entry.name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
-            html += '</tbody></table>' + `
+            html += '</tbody></table></div>';
+            html += `
                 <div class="participation-legend">
                     <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
                     <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
@@ -1263,48 +1239,26 @@
             return html;
         };
 
-        const participationColumns = [
-            { id: 'segment', label: 'Segmento', sortable: true, searchable: true, center: false },
-            { id: 'completed', label: 'Completados', sortable: true, searchable: false, center: true },
-            { id: 'total', label: 'Total', sortable: true, searchable: false, center: true },
-            { id: 'percentage', label: '% de participación', sortable: true, searchable: false, slider: true, center: false },
-        ];
-
-        window.renderNomAreasTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.area]) grouped[p.area] = { completed: 0, total: 0 };
-                grouped[p.area].total++;
-                if (p.status === 'Completada') grouped[p.area].completed++;
+        window.renderNomCollaboratorsTable = function() {
+            // Filter
+            let filtered = window.nomParticipationData.filter(p => {
+                if (colabSearchName && !p.name.toLowerCase().includes(colabSearchName.toLowerCase())) return false;
+                if (colabSearchArea && !p.area.toLowerCase().includes(colabSearchArea.toLowerCase())) return false;
+                if (colabSearchLeader && !p.cargo.toLowerCase().includes(colabSearchLeader.toLowerCase())) return false;
+                if (!colabStatusFilters.has(p.status)) return false;
+                return true;
             });
-            
-            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
-            return window.generateParticipationTableHTML('Tabla de participación - Áreas', processedData, participationColumns);
-        };
 
-
-        window.renderNomCargoTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.cargo]) grouped[p.cargo] = { completed: 0, total: 0 };
-                grouped[p.cargo].total++;
-                if (p.status === 'Completada') grouped[p.cargo].completed++;
+            // Sort
+            filtered.sort((a, b) => {
+                let valA, valB;
+                if (colabSortCol === 1) { valA = a.name; valB = b.name; }
+                else if (colabSortCol === 2) { valA = a.area; valB = b.area; }
+                else if (colabSortCol === 3) { valA = a.cargo; valB = b.cargo; }
+                else if (colabSortCol === 4) { valA = a.status; valB = b.status; }
+                
+                return colabSortDir === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
             });
-            
-            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
-            return window.generateParticipationTableHTML('Tabla de participación - Cargo', processedData, participationColumns);
-        };
-
-
-        window.renderNomCollaboratorsTable = function(search = '') {
-            console.log('🔍 [Participantes] renderNomCollaboratorsTable llamado con search:', search);
-            const filtered = window.nomParticipationData.filter(p =>
-                p.name.toLowerCase().includes(search) ||
-                p.username.toLowerCase().includes(search) ||
-                p.area.toLowerCase().includes(search) ||
-                p.cargo.toLowerCase().includes(search)
-            );
-            console.log('🔍 [Participantes] Resultados filtrados:', filtered.length, 'de', window.nomParticipationData.length);
 
             let html = `
                 <div class="participation-controls">
@@ -1320,10 +1274,61 @@
                         <thead>
                             <tr>
                                 <th style="width: 40px;"><input type="checkbox" id="nom-select-all-participation"></th>
-                                <th>Colaborador <i class="far fa-sort th-icon"></i></th>
-                                <th>Área <i class="far fa-sort th-icon"></i></th>
-                                <th>Líder <i class="far fa-sort th-icon"></i></th>
-                                <th class="text-center">Estado <i class="far fa-sort th-icon"></i></th>
+                                <th class="nom-sortable sort-text" data-col="1" style="position:relative;">
+                                    <div class="nom-th-inner">
+                                        <span class="nom-th-sort-label">Colaborador</span>
+                                        <button class="nom-th-filter-btn nom-search-btn ${colabSearchName ? 'active' : ''}" onclick="event.stopPropagation()">
+                                            <i class="far fa-search"></i>
+                                        </button>
+                                        <i class="far fa-sort th-icon ${colabSortCol === 1 ? (colabSortDir === 'asc' ? 'fa-sort-up active' : 'fa-sort-down active') : ''}"></i>
+                                    </div>
+                                    <div class="nom-th-popover nom-search-popover" onclick="event.stopPropagation()">
+                                        <div class="nom-th-popover-label">Buscar Colaborador</div>
+                                        <input type="text" class="nom-col-search-input" data-col="1" placeholder="Escribe para buscar..." value="${colabSearchName}" />
+                                    </div>
+                                </th>
+                                <th class="nom-sortable sort-text" data-col="2" style="position:relative;">
+                                    <div class="nom-th-inner">
+                                        <span class="nom-th-sort-label">Área</span>
+                                        <button class="nom-th-filter-btn nom-search-btn ${colabSearchArea ? 'active' : ''}" onclick="event.stopPropagation()">
+                                            <i class="far fa-search"></i>
+                                        </button>
+                                        <i class="far fa-sort th-icon ${colabSortCol === 2 ? (colabSortDir === 'asc' ? 'fa-sort-up active' : 'fa-sort-down active') : ''}"></i>
+                                    </div>
+                                    <div class="nom-th-popover nom-search-popover" onclick="event.stopPropagation()">
+                                        <div class="nom-th-popover-label">Buscar Área</div>
+                                        <input type="text" class="nom-col-search-input" data-col="2" placeholder="Escribe para buscar..." value="${colabSearchArea}" />
+                                    </div>
+                                </th>
+                                <th class="nom-sortable sort-text" data-col="3" style="position:relative;">
+                                    <div class="nom-th-inner">
+                                        <span class="nom-th-sort-label">Cargo</span>
+                                        <button class="nom-th-filter-btn nom-search-btn ${colabSearchLeader ? 'active' : ''}" onclick="event.stopPropagation()">
+                                            <i class="far fa-search"></i>
+                                        </button>
+                                        <i class="far fa-sort th-icon ${colabSortCol === 3 ? (colabSortDir === 'asc' ? 'fa-sort-up active' : 'fa-sort-down active') : ''}"></i>
+                                    </div>
+                                    <div class="nom-th-popover nom-search-popover" onclick="event.stopPropagation()">
+                                        <div class="nom-th-popover-label">Buscar Cargo</div>
+                                        <input type="text" class="nom-col-search-input" data-col="3" placeholder="Escribe para buscar..." value="${colabSearchLeader}" />
+                                    </div>
+                                </th>
+                                <th class="nom-sortable sort-text" data-col="4" style="position:relative;">
+                                    <div class="nom-th-inner" style="justify-content:center;">
+                                        <span class="nom-th-sort-label">Estado</span>
+                                        <button class="nom-th-filter-btn nom-risk-btn ${colabStatusFilters.size < 2 ? 'active' : ''}" onclick="event.stopPropagation()">
+                                            <i class="far fa-filter"></i>
+                                        </button>
+                                        <i class="far fa-sort th-icon ${colabSortCol === 4 ? (colabSortDir === 'asc' ? 'fa-sort-up active' : 'fa-sort-down active') : ''}"></i>
+                                    </div>
+                                    <div class="nom-th-popover nom-risk-popover" onclick="event.stopPropagation()">
+                                        <div class="nom-th-popover-label" style="margin-bottom:8px;">Filtrar por estado</div>
+                                        <div style="display:flex; flex-direction:column; gap:6px;">
+                                            <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="Completada" ${colabStatusFilters.has('Completada') ? 'checked' : ''}> Completada</label>
+                                            <label style="display:flex; align-items:center; gap:6px; font-size:12px; cursor:pointer;"><input type="checkbox" value="-" ${colabStatusFilters.has('-') ? 'checked' : ''}> Pendiente</label>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
@@ -1331,15 +1336,16 @@
 
             filtered.forEach(p => {
                 const statusClass = p.status === 'Completada' ? 'completed' : 'pending';
+                const statusText = p.status === 'Completada' ? 'Completada' : 'Pendiente';
                 html += `
                     <tr>
                         <td><input type="checkbox"></td>
                         <td>${p.name}</td>
                         <td>${p.area}</td>
                         <td>${p.cargo}</td>
-                        <td class="text-center"><span class="status-badge ${statusClass}">${p.status}</span></td>
+                        <td class="text-center"><span class="status-badge ${statusClass}">${statusText}</span></td>
                         <td class="text-center">
-                            <button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorio enviado a ${p.name}')"><i class="far fa-bell"></i></button>
+                            ${p.status !== 'Completada' ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorio enviado a ${p.name}')"><i class="far fa-bell"></i></button>` : ''}
                         </td>
                     </tr>`;
             });
@@ -1347,122 +1353,166 @@
             return html;
         };
 
-        window.renderNomCountryTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.country]) grouped[p.country] = { completed: 0, total: 0 };
-                grouped[p.country].total++;
-                if (p.status === 'Completada') grouped[p.country].completed++;
-            });
-            
-            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
-            return window.generateParticipationTableHTML('Tabla de participación - Países', processedData, participationColumns);
-        };
+        window.renderNomAreasTable = function() { return window._renderNomGroupedTable('area', 'Áreas', 'Área', '', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct); };
+        window.renderNomCargoTable = function() { return window._renderNomGroupedTable('cargo', 'Cargos', 'Cargo', '', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct); };
+        window.renderNomCountryTable = function() { return window._renderNomGroupedTable('country', 'Países', 'País', '', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct); };
+        window.renderNomCityTable = function() { return window._renderNomGroupedTable('city', 'Ciudades', 'Ciudad', '', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct); };
+        window.renderNomAgeTable = function() { return window._renderNomGroupedTable('age', 'Edad', 'Rango de edad', '', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct); };
+        window.renderNomSexoTable = function() { return window._renderNomGroupedTable('sexo', 'Sexo', 'Sexo', '', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct); };
+        window.renderNomColumnaATable = function() { return window._renderNomGroupedTable('colA', 'Columna A', 'Columna A', '', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct); };
+        window.renderNomColumnaBTable = function() { return window._renderNomGroupedTable('colB', 'Columna B', 'Columna B', '', nomSortBy, nomSortDir, 0, nomColSearch, nomMinPct); };
 
-
-        window.renderNomCityTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.city]) grouped[p.city] = { completed: 0, total: 0 };
-                grouped[p.city].total++;
-                if (p.status === 'Completada') grouped[p.city].completed++;
-            });
-            
-            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
-            return window.generateParticipationTableHTML('Tabla de participación - Ciudades', processedData, participationColumns);
-        };
-
-
-        window.renderNomAgeTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.age]) grouped[p.age] = { completed: 0, total: 0 };
-                grouped[p.age].total++;
-                if (p.status === 'Completada') grouped[p.age].completed++;
-            });
-            
-            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
-            return window.generateParticipationTableHTML('Tabla de participación - Edad', processedData, participationColumns);
-        };
-
-
-        window.renderNomSexoTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.sexo]) grouped[p.sexo] = { completed: 0, total: 0 };
-                grouped[p.sexo].total++;
-                if (p.status === 'Completada') grouped[p.sexo].completed++;
-            });
-            
-            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
-            return window.generateParticipationTableHTML('Tabla de participación - Sexo', processedData, participationColumns);
-        };
-
-
-        window.renderNomColumnaATable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.columnaA]) grouped[p.columnaA] = { completed: 0, total: 0 };
-                grouped[p.columnaA].total++;
-                if (p.status === 'Completada') grouped[p.columnaA].completed++;
-            });
-            
-            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
-            return window.generateParticipationTableHTML('Tabla de participación - Columna A', processedData, participationColumns);
-        };
-
-
-        window.renderNomColumnaBTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.columnaB]) grouped[p.columnaB] = { completed: 0, total: 0 };
-                grouped[p.columnaB].total++;
-                if (p.status === 'Completada') grouped[p.columnaB].completed++;
-            });
-            
-            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
-            return window.generateParticipationTableHTML('Tabla de participación - Columna B', processedData, participationColumns);
-        };
-
-
-        window.renderNomParticipation = function() {
+        const bindParticipationControls = () => {
             const wrapper = document.getElementById('nom-participation-table-wrapper');
-            const segmentSelect = document.getElementById('nom-participation-segment-select');
-            const searchInput = document.getElementById('nom-participation-search-input');
-            
-            if (!wrapper || !segmentSelect) return;
+            if (!wrapper) return;
 
-            const segment = segmentSelect.value;
-            sessionStorage.setItem('nom_participation_active_segment', segment);
+            // Global popover closer
+            const existingClose = window._nomPartClosePopovers;
+            if (existingClose) document.removeEventListener('click', existingClose);
+            window._nomPartClosePopovers = () => {
+                wrapper.querySelectorAll('.nom-th-popover.open').forEach(p => p.classList.remove('open'));
+            };
+            document.addEventListener('click', window._nomPartClosePopovers);
 
-            const searchTerm = window.nomParticipationState.filters.search.toLowerCase();
+            // Grouped table binds
+            wrapper.querySelectorAll('th.nom-sortable').forEach(th => {
+                const colId = th.dataset.col;
 
-            console.log('📊 Renderizando participación NOM:', segment, 'Búsqueda:', searchTerm);
+                // Sort click
+                th.addEventListener('click', (e) => {
+                    if (e.target.closest('.nom-th-filter-btn') || e.target.closest('.nom-th-popover')) return;
+                    
+                    const isColab = ['1', '2', '3', '4'].includes(String(colId));
+                    if (isColab) {
+                        const colNum = parseInt(colId);
+                        if (colabSortCol === colNum) {
+                            colabSortDir = colabSortDir === 'asc' ? 'desc' : 'asc';
+                        } else {
+                            colabSortCol = colNum;
+                            colabSortDir = 'asc';
+                        }
+                    } else {
+                        if (nomSortBy === colId) {
+                            nomSortDir = nomSortDir === 'asc' ? 'desc' : 'asc';
+                        } else {
+                            nomSortBy = colId;
+                            nomSortDir = 'asc';
+                        }
+                    }
+                    
+                    const segment = sessionStorage.getItem('nom_participation_active_segment');
+                    renderActiveSegment(segment);
+                });
+
+                // Search filters
+                const searchBtn = th.querySelector('.nom-search-btn');
+                const searchPopover = th.querySelector('.nom-search-popover');
+                const searchInput = th.querySelector('.nom-col-search-input');
+                if (searchBtn && searchPopover && searchInput) {
+                    searchBtn.addEventListener('click', e => {
+                        e.stopPropagation();
+                        wrapper.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== searchPopover) p.classList.remove('open'); });
+                        const isOpen = searchPopover.classList.toggle('open');
+                        if (isOpen) searchInput.focus();
+                    });
+                    searchInput.addEventListener('input', e => {
+                        const val = e.target.value;
+                        const dcol = e.target.dataset.col;
+                        if (dcol === '1') colabSearchName = val;
+                        else if (dcol === '2') colabSearchArea = val;
+                        else if (dcol === '3') colabSearchLeader = val;
+                        else nomColSearch = val;
+
+                        const segment = sessionStorage.getItem('nom_participation_active_segment');
+                        renderActiveSegment(segment);
+                    });
+                    searchInput.addEventListener('keydown', e => {
+                        if (e.key === 'Escape') {
+                            searchPopover.classList.remove('open');
+                            const dcol = e.target.dataset.col;
+                            if (dcol === '1') colabSearchName = '';
+                            else if (dcol === '2') colabSearchArea = '';
+                            else if (dcol === '3') colabSearchLeader = '';
+                            else nomColSearch = '';
+                            
+                            const segment = sessionStorage.getItem('nom_participation_active_segment');
+                            renderActiveSegment(segment);
+                        }
+                    });
+                }
+
+                // Slider filters
+                const sliderBtn = th.querySelector('.nom-slider-btn');
+                const sliderPopover = th.querySelector('.nom-slider-popover');
+                const sliderInput = th.querySelector('.nom-col-pct-slider');
+                if (sliderBtn && sliderPopover && sliderInput) {
+                    sliderBtn.addEventListener('click', e => {
+                        e.stopPropagation();
+                        wrapper.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== sliderPopover) p.classList.remove('open'); });
+                        sliderPopover.classList.toggle('open');
+                    });
+                    sliderInput.addEventListener('input', e => {
+                        nomMinPct = parseInt(e.target.value);
+                        const pct = nomMinPct;
+                        e.target.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${pct}%, var(--ubits-border-1) ${pct}%, var(--ubits-border-1) 100%)`;
+                        const segment = sessionStorage.getItem('nom_participation_active_segment');
+                        renderActiveSegment(segment);
+                    });
+                }
+
+                // Checkbox filters (Status)
+                const riskBtn = th.querySelector('.nom-risk-btn');
+                const riskPopover = th.querySelector('.nom-risk-popover');
+                const riskCheckboxes = th.querySelectorAll('.nom-risk-popover input[type="checkbox"]');
+                if (riskBtn && riskPopover && riskCheckboxes.length > 0) {
+                    riskBtn.addEventListener('click', e => {
+                        e.stopPropagation();
+                        wrapper.querySelectorAll('.nom-th-popover.open').forEach(p => { if (p !== riskPopover) p.classList.remove('open'); });
+                        riskPopover.classList.toggle('open');
+                    });
+                    riskCheckboxes.forEach(cb => {
+                        cb.addEventListener('change', () => {
+                            colabStatusFilters.clear();
+                            riskCheckboxes.forEach(c => {
+                                if (c.checked) colabStatusFilters.add(c.value);
+                            });
+                            const segment = sessionStorage.getItem('nom_participation_active_segment');
+                            renderActiveSegment(segment);
+                        });
+                    });
+                }
+            });
+        };
+
+        function renderActiveSegment(segment) {
+            const wrapper = document.getElementById('nom-participation-table-wrapper');
+            if (!wrapper) return;
 
             let html = '';
-            if (segment === 'areas') html = window.renderNomAreasTable(searchTerm);
-            else if (segment === 'cargo') html = window.renderNomCargoTable(searchTerm);
-            else if (segment === 'collaborators') html = window.renderNomCollaboratorsTable(searchTerm);
-            else if (segment === 'age') html = window.renderNomAgeTable(searchTerm);
-            else if (segment === 'sexo') html = window.renderNomSexoTable(searchTerm);
-            else if (segment === 'country') html = window.renderNomCountryTable(searchTerm);
-            else if (segment === 'city') html = window.renderNomCityTable(searchTerm);
-            else if (segment === 'columna-a') html = window.renderNomColumnaATable(searchTerm);
-            else if (segment === 'columna-b') html = window.renderNomColumnaBTable(searchTerm);
-            
+            if (segment === 'areas') html = window.renderNomAreasTable();
+            else if (segment === 'cargo') html = window.renderNomCargoTable();
+            else if (segment === 'collaborators') html = window.renderNomCollaboratorsTable();
+            else if (segment === 'country') html = window.renderNomCountryTable();
+            else if (segment === 'city') html = window.renderNomCityTable();
+            else if (segment === 'age') html = window.renderNomAgeTable();
+            else if (segment === 'sexo') html = window.renderNomSexoTable();
+            else if (segment === 'columna-a') html = window.renderNomColumnaATable();
+            else if (segment === 'columna-b') html = window.renderNomColumnaBTable();
+
             wrapper.innerHTML = html;
 
-            // Extraer título y contador dinámicos para la cabecera fija
+            // Update title in fixed header
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = html;
             const titleEl = tempDiv.querySelector('.participation-title');
             if (titleEl) {
                 const headerTitleEl = document.getElementById('nom-participation-table-title');
-                if (headerTitleEl) {
-                    headerTitleEl.innerHTML = titleEl.innerHTML;
-                }
+                if (headerTitleEl) headerTitleEl.innerHTML = titleEl.innerHTML;
             }
-        };
+
+            bindParticipationControls();
+        }
+
 
         window.initializeNomParticipationContent = function() {
             const wrapper = document.getElementById('nom-participation-table-wrapper');
@@ -1502,18 +1552,18 @@
                 };
 
                 segmentSelect.addEventListener('change', function() {
-                    window.renderNomParticipation();
+                    renderActiveSegment(document.getElementById('nom-participation-segment-select').value);
                     syncCustomSelect();
                 });
 
                 syncCustomSelect();
             } else {
                 segmentSelect.addEventListener('change', function() {
-                    window.renderNomParticipation();
+                    renderActiveSegment(document.getElementById('nom-participation-segment-select').value);
                 });
             }
 
-            window.renderNomParticipation();
+            renderActiveSegment(document.getElementById('nom-participation-segment-select').value);
         };
 
         window.initializeApp = function() {
