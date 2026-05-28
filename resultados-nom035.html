@@ -2734,16 +2734,13 @@
 
         // Normalizar nivel de riesgo
         function normalizeRiskLevel(riskLevel) {
-            if (riskLevel === 'muy-alto') {
+            if (riskLevel === 'muy-alto' || riskLevel === 'alto') {
                 return 'alto';
             }
-            if (riskLevel === 'alto') {
+            if (riskLevel === 'canalizado') {
                 return 'canalizado';
             }
-            if (riskLevel === 'medio') {
-                return 'alto';
-            }
-            // canalizado, bajo y nulo no tienen nivel de riesgo (retornan null)
+            // medio, bajo y nulo se muestran como nulos en esta vista
             return null;
         }
 
