@@ -12160,12 +12160,12 @@ body{font-family:'Inter',sans-serif;background:#323639;display:flex;flex-directi
 .badge-nulo{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
 
 /* Heatmap Grid */
-.hm-table{width:100%;border-collapse:separate;border-spacing:4px;font-size:11px;margin-bottom:20px}
-.hm-table th{background:#f1f5f9;color:#475569;font-weight:700;padding:10px;text-transform:uppercase;font-size:9px;letter-spacing:0.5px;border-radius:4px;text-align:center}
-.hm-table th.col-title{text-align:left;font-size:11px;padding-left:10px}
+.hm-table{width:100%;border-collapse:separate;border-spacing:3px;font-size:10px;margin-bottom:12px}
+.hm-table th{background:#f1f5f9;color:#475569;font-weight:700;padding:6px;text-transform:uppercase;font-size:8px;letter-spacing:0.5px;border-radius:3px;text-align:center}
+.hm-table th.col-title{text-align:left;font-size:10px;padding-left:8px}
 .hm-table td{padding:0}
-.hm-row-title{font-size:11px;font-weight:600;color:#1e293b;padding:10px;background:#f8fafc;border-radius:4px;border:1px solid #e2e8f0}
-.hm-cell{border-radius:6px;font-weight:700;font-size:13px;padding:12px 6px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.05);transition:transform 0.15s, box-shadow 0.15s}
+.hm-row-title{font-size:10px;font-weight:600;color:#1e293b;padding:6px 8px;background:#f8fafc;border-radius:4px;border:1px solid #e2e8f0}
+.hm-cell{border-radius:4px;font-weight:700;font-size:11px;padding:6px 3px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.05);transition:transform 0.15s, box-shadow 0.15s}
 .hm-cell:hover{transform:scale(1.04);box-shadow:0 4px 10px rgba(0,0,0,0.15);z-index:2;position:relative;cursor:pointer}
 .hm-cell.muy-alto{background-color:#fee2e2;color:#991b1b;border:1px solid #fecaca}
 .hm-cell.alto{background-color:#ffedd5;color:#c2410c;border:1px solid #fed7aa}
@@ -12494,9 +12494,9 @@ body{font-family:'Inter',sans-serif;background:#323639;display:flex;flex-directi
       </div>
       <div class="pdf-body">
         <h2 class="page-title">Análisis Específico: Categorías vs Áreas</h2>
-        <p class="page-subtitle">Esta tabla de calor (Heatmap) detalla las calificaciones promedio por categoría NOM-035 cruzadas por departamento. Permite focalizar planes de acción en los grupos de mayor vulnerabilidad.</p>
+        <p class="page-subtitle">Esta matriz detallada muestra las calificaciones promedio por categoría NOM-035. Se divide en dos grupos de áreas operativas y de soporte para asegurar una lectura clara de las celdas.</p>
         
-        <div class="section-title" style="margin-bottom: 20px;">Matriz de Categorías</div>
+        <div class="section-title" style="margin-bottom: 8px;">Grupo A: Áreas Operativas y Comerciales</div>
         <table class="hm-table">
           <thead>
             <tr>
@@ -12543,8 +12543,56 @@ body{font-family:'Inter',sans-serif;background:#323639;display:flex;flex-directi
             </tr>
           </tbody>
         </table>
+
+        <div class="section-title" style="margin-bottom: 8px; margin-top: 15px;">Grupo B: Administración y Soporte</div>
+        <table class="hm-table">
+          <thead>
+            <tr>
+              <th class="col-title" style="width: 250px;">Categoría de Riesgo</th>
+              <th>Finanzas</th>
+              <th>Logística</th>
+              <th>Calidad</th>
+              <th>Soporte TI</th>
+              <th>Dirección</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="hm-row-title">Ambiente de trabajo</td>
+              <td><div class="hm-cell bajo">15.2</div></td>
+              <td><div class="hm-cell alto">48.5</div></td>
+              <td><div class="hm-cell medio">26.4</div></td>
+              <td><div class="hm-cell medio">31.8</div></td>
+              <td><div class="hm-cell nulo">9.5</div></td>
+            </tr>
+            <tr>
+              <td class="hm-row-title">Factores propios de la actividad</td>
+              <td><div class="hm-cell medio">34.1</div></td>
+              <td><div class="hm-cell muy-alto">55.2</div></td>
+              <td><div class="hm-cell medio">28.0</div></td>
+              <td><div class="hm-cell alto">42.5</div></td>
+              <td><div class="hm-cell bajo">15.0</div></td>
+            </tr>
+            <tr>
+              <td class="hm-row-title">Organización del tiempo</td>
+              <td><div class="hm-cell alto">44.0</div></td>
+              <td><div class="hm-cell alto">48.2</div></td>
+              <td><div class="hm-cell bajo">22.5</div></td>
+              <td><div class="hm-cell muy-alto">51.0</div></td>
+              <td><div class="hm-cell alto">38.2</div></td>
+            </tr>
+            <tr>
+              <td class="hm-row-title">Liderazgo y relaciones</td>
+              <td><div class="hm-cell bajo">18.5</div></td>
+              <td><div class="hm-cell medio">34.2</div></td>
+              <td><div class="hm-cell bajo">16.0</div></td>
+              <td><div class="hm-cell medio">25.5</div></td>
+              <td><div class="hm-cell nulo">8.0</div></td>
+            </tr>
+          </tbody>
+        </table>
         
-        <div class="legend-wrapper">
+        <div class="legend-wrapper" style="margin-top: 15px; padding-top: 10px;">
           <div class="legend-item"><div class="legend-color" style="background:#fee2e2; border-color:#fecaca"></div> Muy Alto (≥ 50)</div>
           <div class="legend-item"><div class="legend-color" style="background:#ffedd5; border-color:#fed7aa"></div> Alto (35 - 49)</div>
           <div class="legend-item"><div class="legend-color" style="background:#fef9c3; border-color:#fef08a"></div> Medio (20 - 34)</div>
@@ -12566,9 +12614,9 @@ body{font-family:'Inter',sans-serif;background:#323639;display:flex;flex-directi
       </div>
       <div class="pdf-body">
         <h2 class="page-title">Análisis Específico: Dominios vs Áreas</h2>
-        <p class="page-subtitle">Este análisis exhaustivo por dominio cruza los factores de riesgo específicos de la NOM-035 con las áreas organizacionales. Identifique las causas raíz de la insatisfacción y la tensión laboral.</p>
+        <p class="page-subtitle">Este análisis detalla los factores de riesgo específicos por dominio. Se divide en dos grupos de áreas operativas y administrativas para optimizar la visualización de los datos.</p>
         
-        <div class="section-title" style="margin-bottom: 20px;">Matriz de Dominios</div>
+        <div class="section-title" style="margin-bottom: 8px;">Grupo A: Áreas Operativas y Comerciales</div>
         <table class="hm-table">
           <thead>
             <tr>
@@ -12631,8 +12679,72 @@ body{font-family:'Inter',sans-serif;background:#323639;display:flex;flex-directi
             </tr>
           </tbody>
         </table>
+
+        <div class="section-title" style="margin-bottom: 8px; margin-top: 15px;">Grupo B: Administración y Soporte</div>
+        <table class="hm-table">
+          <thead>
+            <tr>
+              <th class="col-title" style="width: 250px;">Dominio de Riesgo</th>
+              <th>Finanzas</th>
+              <th>Logística</th>
+              <th>Calidad</th>
+              <th>Soporte TI</th>
+              <th>Dirección</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="hm-row-title">Carga de trabajo</td>
+              <td><div class="hm-cell alto">38.2</div></td>
+              <td><div class="hm-cell muy-alto">62.4</div></td>
+              <td><div class="hm-cell medio">29.5</div></td>
+              <td><div class="hm-cell alto">45.0</div></td>
+              <td><div class="hm-cell bajo">22.1</div></td>
+            </tr>
+            <tr>
+              <td class="hm-row-title">Jornada de trabajo</td>
+              <td><div class="hm-cell alto">42.5</div></td>
+              <td><div class="hm-cell alto">48.2</div></td>
+              <td><div class="hm-cell bajo">18.0</div></td>
+              <td><div class="hm-cell muy-alto">52.4</div></td>
+              <td><div class="hm-cell medio">33.0</div></td>
+            </tr>
+            <tr>
+              <td class="hm-row-title">Falta de control</td>
+              <td><div class="hm-cell bajo">15.8</div></td>
+              <td><div class="hm-cell alto">38.0</div></td>
+              <td><div class="hm-cell bajo">22.4</div></td>
+              <td><div class="hm-cell medio">31.2</div></td>
+              <td><div class="hm-cell bajo">12.5</div></td>
+            </tr>
+            <tr>
+              <td class="hm-row-title">Liderazgo</td>
+              <td><div class="hm-cell bajo">14.2</div></td>
+              <td><div class="hm-cell bajo">28.0</div></td>
+              <td><div class="hm-cell bajo">12.5</div></td>
+              <td><div class="hm-cell bajo">22.0</div></td>
+              <td><div class="hm-cell nulo">5.4</div></td>
+            </tr>
+            <tr>
+              <td class="hm-row-title">Relaciones en el trabajo</td>
+              <td><div class="hm-cell bajo">12.8</div></td>
+              <td><div class="hm-cell bajo">24.0</div></td>
+              <td><div class="hm-cell nulo">9.0</div></td>
+              <td><div class="hm-cell bajo">18.4</div></td>
+              <td><div class="hm-cell nulo">4.5</div></td>
+            </tr>
+            <tr>
+              <td class="hm-row-title">Interferencia trabajo-familia</td>
+              <td><div class="hm-cell medio">33.0</div></td>
+              <td><div class="hm-cell alto">41.0</div></td>
+              <td><div class="hm-cell bajo">14.6</div></td>
+              <td><div class="hm-cell alto">38.5</div></td>
+              <td><div class="hm-cell bajo">15.8</div></td>
+            </tr>
+          </tbody>
+        </table>
         
-        <div class="legend-wrapper">
+        <div class="legend-wrapper" style="margin-top: 15px; padding-top: 10px;">
           <div class="legend-item"><div class="legend-color" style="background:#fee2e2; border-color:#fecaca"></div> Muy Alto (≥ 50)</div>
           <div class="legend-item"><div class="legend-color" style="background:#ffedd5; border-color:#fed7aa"></div> Alto (35 - 49)</div>
           <div class="legend-item"><div class="legend-color" style="background:#fef9c3; border-color:#fef08a"></div> Medio (20 - 34)</div>
