@@ -11955,6 +11955,10 @@ console.log('✅ [DATA] Data asignado a window');
                     }
                 </style>
                 <p class="rp-section-label" style="margin-bottom: 12px; font-weight: 700; font-size: 13px; color: var(--ubits-fg-1-high, #303a47);">Personalización del reporte</p>
+                <div id="rp-err-general" style="display: none; background: var(--ubits-semantic-danger-light, #fff0ee); border: 1px solid var(--ubits-semantic-danger, #e9343c); border-radius: var(--ubits-radius-sm, 8px); padding: 12px; margin-bottom: 12px; align-items: center; gap: 8px; color: var(--ubits-semantic-danger, #e9343c); font-size: 13px; font-weight: 500; box-sizing: border-box;">
+                    <i class="far fa-exclamation-circle" style="font-size: 16px;"></i>
+                    <span>Debes activar al menos una sección (Participación o Heatmaps) para generar el reporte.</span>
+                </div>
                 <div style="background: var(--ubits-bg-0, #fff); border: 1px solid var(--ubits-border-1, #d0d2d5); border-radius: var(--ubits-radius-sm, 8px); padding: 16px; display: flex; flex-direction: column; gap: 16px;">
                     
                     <!-- Sección 1: Participación -->
@@ -12001,6 +12005,10 @@ console.log('✅ [DATA] Data asignado a window');
                                 </div>
                             </div>
                         </div>
+                        <div id="rp-err-part" style="display: none; color: var(--ubits-semantic-danger, #e9343c); font-size: 12px; margin-top: 4px; align-items: center; gap: 4px; font-weight: 500;">
+                            <i class="far fa-exclamation-circle"></i>
+                            <span>Debes seleccionar al menos 1 demográfico para la sección de Participación.</span>
+                        </div>
                     </div>
 
                     <!-- Sección 2: Heatmaps -->
@@ -12046,6 +12054,10 @@ console.log('✅ [DATA] Data asignado a window');
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div id="rp-err-heat" style="display: none; color: var(--ubits-semantic-danger, #e9343c); font-size: 12px; margin-top: 4px; align-items: center; gap: 4px; font-weight: 500;">
+                            <i class="far fa-exclamation-circle"></i>
+                            <span>Debes seleccionar al menos 1 demográfico para la sección de Heatmaps.</span>
                         </div>
                     </div>
 
@@ -12107,6 +12119,77 @@ console.log('✅ [DATA] Data asignado a window');
 
     <script>
         let rpFmt = 'xlsx';
+        let rpHasAttemptedDownload = false;
+
+        window.validateRpPersonalization = function() {
+            if (!rpHasAttemptedDownload) return true;
+
+            const isPartActive = document.getElementById('toggle-part-section').checked;
+            const isHeatActive = document.getElementById('toggle-heat-section').checked;
+
+            const partDemos = window.rpSelectedDemos['rp-multi-part'] || [];
+            const heatDemos = window.rpSelectedDemos['rp-multi-heat'] || [];
+
+            let isPartInvalid = false;
+            let isHeatInvalid = false;
+            let isGeneralInvalid = false;
+
+            if (isPartActive && partDemos.length === 0) {
+                isPartInvalid = true;
+            }
+            if (isHeatActive && heatDemos.length === 0) {
+                isHeatInvalid = true;
+            }
+            if (!isPartActive && !isHeatActive) {
+                isGeneralInvalid = true;
+            }
+
+            // Update UI for general error
+            const errGeneral = document.getElementById('rp-err-general');
+            if (errGeneral) {
+                errGeneral.style.display = isGeneralInvalid ? 'flex' : 'none';
+            }
+
+            // Update UI for Participación error
+            const errPart = document.getElementById('rp-err-part');
+            const triggerPart = document.querySelector('#rp-multi-part .select-trigger');
+            if (errPart) {
+                if (isPartInvalid) {
+                    errPart.style.display = 'flex';
+                    if (triggerPart) {
+                        triggerPart.style.setProperty('border-color', 'var(--ubits-semantic-danger, #e9343c)', 'important');
+                        triggerPart.style.setProperty('box-shadow', '0 0 0 3px rgba(233, 52, 60, 0.15)', 'important');
+                    }
+                } else {
+                    errPart.style.display = 'none';
+                    if (triggerPart) {
+                        triggerPart.style.borderColor = '';
+                        triggerPart.style.boxShadow = '';
+                    }
+                }
+            }
+
+            // Update UI for Heatmaps error
+            const errHeat = document.getElementById('rp-err-heat');
+            const triggerHeat = document.querySelector('#rp-multi-heat .select-trigger');
+            if (errHeat) {
+                if (isHeatInvalid) {
+                    errHeat.style.display = 'flex';
+                    if (triggerHeat) {
+                        triggerHeat.style.setProperty('border-color', 'var(--ubits-semantic-danger, #e9343c)', 'important');
+                        triggerHeat.style.setProperty('box-shadow', '0 0 0 3px rgba(233, 52, 60, 0.15)', 'important');
+                    }
+                } else {
+                    errHeat.style.display = 'none';
+                    if (triggerHeat) {
+                        triggerHeat.style.borderColor = '';
+                        triggerHeat.style.boxShadow = '';
+                    }
+                }
+            }
+
+            return !(isPartInvalid || isHeatInvalid || isGeneralInvalid);
+        };
         let rpDownloads = [];
         let rpProgress = 0;
         let rpInterval = null;
@@ -12176,6 +12259,9 @@ console.log('✅ [DATA] Data asignado a window');
                 if (selectTrigger) {
                     selectTrigger.classList.remove('active');
                 }
+            }
+            if (window.validateRpPersonalization) {
+                window.validateRpPersonalization();
             }
         };
 
@@ -12312,6 +12398,9 @@ console.log('✅ [DATA] Data asignado a window');
                 const chk = document.getElementById('chk-' + suffix + '-' + val);
                 if (chk) chk.checked = isSelected;
             });
+            if (window.validateRpPersonalization) {
+                window.validateRpPersonalization();
+            }
         };
 
         // Close dropdowns on outside click
@@ -12356,47 +12445,7 @@ console.log('✅ [DATA] Data asignado a window');
             window.toggleSectionState('heat');
         }, 300);
 
-                function startRpDownload() {
-            const today = new Date().toISOString().split('T')[0];
-            const fileName = rpFmt === 'pdf' ? `reporte-riesgo-psicosocial-nom035-${today}.pdf` : `resultados-riesgo-psicosocial-nom035-${today}.xlsx`;
 
-            rpDownloads.unshift({ name: fileName, progress: 0, done: false, fmt: rpFmt });
-            renderRpDlList();
-            switchRpTab('downloads');
-
-            // Prepare mini widget (hidden until minimize)
-            rpProgress = 0;
-            document.getElementById('rpMiniTitle').textContent = rpFmt === 'pdf' ? 'Preparando PDF...' : 'Preparando XLSX...';
-            document.getElementById('rpMiniSub').textContent = '1 en progreso';
-            document.getElementById('rpMiniFile').textContent = fileName;
-            document.getElementById('rpMiniSpinner').className = 'rp-mini-spinner';
-            document.getElementById('rpMiniBar').style.width = '0%';
-            document.getElementById('rpMiniPct').textContent = '0%';
-
-            if (rpInterval) clearInterval(rpInterval);
-            rpInterval = setInterval(function() {
-                rpProgress += Math.random() * 18 + 5;
-                if (rpProgress >= 100) {
-                    rpProgress = 100;
-                    clearInterval(rpInterval);
-                    rpInterval = null;
-                    rpDownloads[0].done = true;
-                    rpDownloads[0].progress = 100;
-                    document.getElementById('rpMiniSpinner').className = 'rp-mini-spinner done';
-                    document.getElementById('rpMiniTitle').textContent = 'Descarga comple...';
-                    document.getElementById('rpMiniSub').textContent = '0 en progreso';
-                    document.getElementById('rpMiniBar').style.width = '100%';
-                    document.getElementById('rpMiniPct').textContent = '100%';
-                    renderRpDlList();
-                    setTimeout(() => downloadRpXlsx(), 400);
-                } else {
-                    rpDownloads[0].progress = Math.round(rpProgress);
-                    renderRpDlList();
-                    document.getElementById('rpMiniBar').style.width = Math.round(rpProgress) + '%';
-                    document.getElementById('rpMiniPct').textContent = Math.round(rpProgress) + '%';
-                }
-            }, 400);
-        }
 
         function renderRpDlList() {
             const c = document.getElementById('rpDlList');
@@ -12608,20 +12657,15 @@ console.log('✅ [DATA] Data asignado a window');
         };
 
         function startRpDownload() {
-            // Validation: check active sections and selected demographics
-            const isPartActive = document.getElementById('toggle-part-section').checked;
-            const isHeatActive = document.getElementById('toggle-heat-section').checked;
+            // Set attempted flag
+            rpHasAttemptedDownload = true;
             
-            if (isPartActive && (!window.rpSelectedDemos['rp-multi-part'] || window.rpSelectedDemos['rp-multi-part'].length === 0)) {
-                alert('Debes seleccionar al menos 1 demográfico para la sección de Participación.');
-                return;
-            }
-            if (isHeatActive && (!window.rpSelectedDemos['rp-multi-heat'] || window.rpSelectedDemos['rp-multi-heat'].length === 0)) {
-                alert('Debes seleccionar al menos 1 demográfico para la sección de Heatmaps.');
-                return;
-            }
-            if (!isPartActive && !isHeatActive) {
-                alert('Debes activar al menos una sección (Participación o Heatmaps) para generar el reporte.');
+            // Execute validation
+            if (!window.validateRpPersonalization()) {
+                const personalizationCard = document.getElementById('rp-personalization');
+                if (personalizationCard) {
+                    personalizationCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
                 return;
             }
 
