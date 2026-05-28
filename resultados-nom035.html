@@ -1823,6 +1823,23 @@
                                             </div>
                                         </div>
                                         
+                                        <!-- Filtro Nivel de Riesgo -->
+                                         <div style="display: flex; align-items: center; gap: 8px;">
+                                             <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); white-space: nowrap;">Riesgo:</span>
+                                             <div class="custom-single-select" id="nom-vista-colaborador-risk-filter" style="min-width: 120px; font-family: inherit;">
+                                                 <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: var(--ubits-bg-0); cursor: pointer;">
+                                                     <span class="select-text" id="nom-vista-colaborador-risk-text">Todos</span>
+                                                     <i class="fas fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
+                                                 </div>
+                                                 <div class="select-dropdown" id="nom-vista-colaborador-risk-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 120px; max-height: 240px; overflow-y: auto !important; z-index: 1000;">
+                                                     <div class="select-option selected" data-value="" style="font-size: 12px; font-weight: 500; padding: 8px 12px; cursor: pointer;">Todos</div>
+                                                     <div class="select-option" data-value="alto" style="font-size: 12px; font-weight: 500; padding: 8px 12px; cursor: pointer;">Alto</div>
+                                                     <div class="select-option" data-value="canalizado" style="font-size: 12px; font-weight: 500; padding: 8px 12px; cursor: pointer;">Canalizado</div>
+                                                     <div class="select-option" data-value="nulo" style="font-size: 12px; font-weight: 500; padding: 8px 12px; cursor: pointer;">Nulo</div>
+                                                 </div>
+                                             </div>
+                                         </div>
+
                                         <!-- Segmento demográfico -->
                                          <div style="display: flex; align-items: center; gap: 8px;">
                                              <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); white-space: nowrap;">Segmentar por:</span>
@@ -1895,15 +1912,33 @@
             
             if (filterText !== undefined && tabId === 'detalle-colaborador') {
                 setTimeout(() => {
-                    const searchContainer = document.getElementById('nom-vista-colaborador-search-container');
-                    const searchInput = document.getElementById('nom-vista-colaborador-search-input');
-                    
-                    if (searchContainer && searchInput) {
-                        searchContainer.style.display = 'block';
-                        searchInput.value = filterText;
-                        searchInput.dispatchEvent(new Event('input'));
+                    const riskDropdown = document.getElementById('nom-vista-colaborador-risk-dropdown');
+                    const riskText = document.getElementById('nom-vista-colaborador-risk-text');
+                    if (riskDropdown && riskText) {
+                        const options = riskDropdown.querySelectorAll('.select-option');
+                        options.forEach(opt => opt.classList.remove('selected'));
+                        const targetOption = riskDropdown.querySelector(`.select-option[data-value="${filterText}"]`);
+                        if (targetOption) {
+                            targetOption.classList.add('selected');
+                            riskText.textContent = targetOption.textContent;
+                        } else {
+                            const allOption = riskDropdown.querySelector('.select-option[data-value=""]');
+                            if (allOption) {
+                                allOption.classList.add('selected');
+                                riskText.textContent = allOption.textContent;
+                            }
+                        }
                         
-                        // Hacer scroll a la tabla suavemente
+                        // Clear search if we click a card
+                        const searchInput = document.getElementById('nom-vista-colaborador-search-input');
+                        if (searchInput) searchInput.value = '';
+                        
+                        // Re-render
+                        if (typeof renderNomVistaColaboradorTable === 'function') {
+                            renderNomVistaColaboradorTable(window.currentFilteredParticipants || participantsData, '');
+                        }
+                        
+                        // Scroll
                         const tableWrapper = document.getElementById('nom-vista-colaborador-table-wrapper');
                         if (tableWrapper) tableWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
@@ -2834,6 +2869,20 @@
 
             // Filtrar por búsqueda si es necesario
             let filteredData = participants;
+            
+            // Filter by risk if a dropdown is active
+            const riskDropdown = document.getElementById('nom-vista-colaborador-risk-dropdown');
+            if (riskDropdown) {
+                const selectedOption = riskDropdown.querySelector('.select-option.selected');
+                if (selectedOption && selectedOption.getAttribute('data-value')) {
+                    const selectedRisk = selectedOption.getAttribute('data-value');
+                    filteredData = filteredData.filter(p => {
+                        const normRisk = normalizeRiskLevel(p.riskLevel) || 'nulo';
+                        return normRisk === selectedRisk;
+                    });
+                }
+            }
+
             if (search) {
                 const searchLower = search.toLowerCase();
                 filteredData = filteredData.filter(p => 
@@ -2944,6 +2993,45 @@
                 });
             }
             
+            // Add custom select behaviour for risk dropdown
+            const riskSelect = document.getElementById('nom-vista-colaborador-risk-filter');
+            if (riskSelect) {
+                const trigger = riskSelect.querySelector('.select-trigger');
+                const dropdown = riskSelect.querySelector('.select-dropdown');
+                const text = riskSelect.querySelector('.select-text');
+                
+                if (trigger && dropdown) {
+                    trigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        trigger.classList.toggle('active');
+                        dropdown.classList.toggle('show');
+                    });
+                    
+                    const options = dropdown.querySelectorAll('.select-option');
+                    options.forEach(option => {
+                        option.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            options.forEach(opt => opt.classList.remove('selected'));
+                            option.classList.add('selected');
+                            if (text) text.textContent = option.textContent;
+                            trigger.classList.remove('active');
+                            dropdown.classList.remove('show');
+                            
+                            // Re-render table
+                            const searchInput = document.getElementById('nom-vista-colaborador-search-input');
+                            if (typeof renderNomVistaColaboradorTable === 'function') {
+                                renderNomVistaColaboradorTable(window.currentFilteredParticipants || participantsData, searchInput ? searchInput.value : '');
+                            }
+                        });
+                    });
+                    
+                    document.addEventListener('click', () => {
+                        trigger.classList.remove('active');
+                        dropdown.classList.remove('show');
+                    });
+                }
+            }
+
             // Add custom select behaviour for segment dropdown
             const segmentSelect = document.getElementById('nom-vista-colaborador-segment-custom-select');
             if (segmentSelect) {
