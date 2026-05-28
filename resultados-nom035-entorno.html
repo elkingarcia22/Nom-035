@@ -899,41 +899,166 @@
             console.log('✅ Datos de participación NOM generados: 150 registros');
         };
 
-        window.renderNomAreasTable = function(search = '') {
-            const grouped = {};
-            window.nomParticipationData.forEach(p => {
-                if (!grouped[p.area]) grouped[p.area] = { completed: 0, total: 0 };
-                grouped[p.area].total++;
-                if (p.status === 'Completada') grouped[p.area].completed++;
+        // Estado global para filtrado y ordenamiento de tablas de participación
+        window.nomParticipationState = {
+            filters: {
+                search: '',
+                minParticipation: 0
+            },
+            sort: {
+                column: 'segment',
+                direction: 'asc'
+            }
+        };
+
+        // Helper para manejar el ordenamiento
+        // Helper para procesar datos de tablas de participación (Filtrado y Ordenamiento)
+        window.getProcessedParticipationData = function(groupedData, columnMapping) {
+            let entries = Object.entries(groupedData).map(([name, data]) => ({
+                name,
+                completed: data.completed,
+                total: data.total,
+                percentage: Math.round((data.completed / data.total) * 100)
+            }));
+
+            // 1. Filtrado por búsqueda (Segmento)
+            const searchTerm = window.nomParticipationState.filters.search.toLowerCase();
+            if (searchTerm) {
+                entries = entries.filter(e => e.name.toLowerCase().includes(searchTerm));
+            }
+
+            // 2. Filtrado por % de participación
+            const minPct = window.nomParticipationState.filters.minParticipation;
+            if (minPct > 0) {
+                entries = entries.filter(e => e.percentage >= minPct);
+            }
+
+            // 3. Ordenamiento
+            const { column, direction } = window.nomParticipationState.sort;
+            entries.sort((a, b) => {
+                let valA, valB;
+                if (column === 'segment') { valA = a.name.toLowerCase(); valB = b.name.toLowerCase(); }
+                else if (column === 'completed') { valA = a.completed; valB = b.completed; }
+                else if (column === 'total') { valA = a.total; valB = b.total; }
+                else if (column === 'percentage') { valA = a.percentage; valB = b.percentage; }
+                else { return 0; }
+
+                if (valA < valB) return direction === 'asc' ? -1 : 1;
+                if (valA > valB) return direction === 'asc' ? 1 : -1;
+                return 0;
             });
 
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
+            return entries;
+        };
 
+        // Helper para generar HTML de cabecera con filtros y sort
+        window.renderParticipationHeader = function(title, columns) {
+            let html = `<thead><tr>`;
+            columns.forEach(col => {
+                const isSortable = col.sortable;
+                const isSearchable = col.searchable;
+                const isSlider = col.slider;
+                const sortClass = window.nomParticipationState.sort.column === col.id ? (window.nomParticipationState.sort.direction === 'asc' ? 'sort-asc' : 'sort-desc') : '';
+                
+                html += '<th class="' + (isSortable ? 'sortable ' + sortClass : '') + ' ' + (col.center ? 'text-center' : '') + '" onclick="window.handleParticipationSort(\'' + col.id + '\')">';
+                html += `<div class="nom-th-inner">`;
+                html += `${col.label}`;
+                
+                if (isSearchable || isSlider) {
+                    html += `<button class="nom-th-filter-btn" onclick="event.stopPropagation(); window.toggleParticipationFilter('${col.id}')"><i class="fas fa-filter"></i></button>`;
+                }
+
+                if (isSortable) {
+                    html += `<i class="far fa-sort th-icon"></i>`;
+                }
+                
+                html += `</div></th>`;
+            });
+            html += `<th class="text-center">Acciones</th></tr></thead>`;
+            return html;
+        };
+
+        // Helper para generar el popover de filtro
+        window.renderParticipationFilterPopover = function(colId) {
+            if (colId === 'segment') {
+                return `
+                    <div class="nom-th-popover-label">Buscar segmento</div>
+                    <input type="text" class="nom-col-search-input" placeholder="Filtrar..." 
+                           value="${window.nomParticipationState.filters.search}" 
+                           oninput="window.nomParticipationState.filters.search = this.value; window.renderNomParticipation();">
+                `;
+            } else if (colId === 'percentage') {
+                const val = window.nomParticipationState.filters.minParticipation;
+                return `
+                    <div class="nom-th-popover-label">Mínimo participación: ${val}%</div>
+                    <input type="range" class="nom-col-pct-slider" min="0" max="100" value="${val}" 
+                           oninput="this.previousElementSibling.textContent = 'Mínimo participación: ' + this.value + '%'; window.nomParticipationState.filters.minParticipation = parseInt(this.value); window.renderNomParticipation();">
+                `;
+            }
+            return '';
+        };
+
+        window.toggleParticipationFilter = function(colId) {
+            const btns = document.querySelectorAll('.nom-th-filter-btn');
+            btns.forEach(btn => {
+                const popover = btn.nextElementSibling;
+                if (popover && popover.classList.contains('nom-th-popover')) {
+                    popover.classList.remove('open');
+                }
+            });
+
+            const btn = document.querySelector(`th[onclick*="${colId}"] .nom-th-filter-btn`);
+            if (btn) {
+                const popover = document.createElement('div');
+                popover.className = 'nom-th-popover open';
+                popover.innerHTML = window.renderParticipationFilterPopover(colId);
+                
+                // Close popover when clicking outside
+                const closeHandler = (e) => {
+                    if (!btn.contains(e.target) && !popover.contains(e.target)) {
+                        popover.remove();
+                        document.removeEventListener('click', closeHandler);
+                    }
+                };
+                document.addEventListener('click', closeHandler);
+                
+                btn.parentElement.appendChild(popover);
+                btn.classList.add('active');
+            }
+        };
+
+        window.handleParticipationSort = function(column) {
+            if (window.nomParticipationState.sort.column === column) {
+                window.nomParticipationState.sort.direction = window.nomParticipationState.sort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                window.nomParticipationState.sort.column = column;
+                window.nomParticipationState.sort.direction = 'asc';
+            }
+            window.renderNomParticipation();
+        };
+
+        window.generateParticipationTableHTML = function(title, entries, columns) {
+            const filteredCount = entries.length;
             let html = `
                 <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Áreas <span class="filter-counter">${filtered.length} resultados</span></div>
+                    <div class="participation-title">${title} <span class="filter-counter">${filteredCount} resultados</span></div>
                 </div>
                 <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>Áreas <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
+                    ${window.renderParticipationHeader(title, columns)}
                     <tbody>`;
 
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
+            entries.forEach(entry => {
+                const percentage = entry.percentage;
+                const pending = entry.total - entry.completed;
+                
+                // Adjust title for the "Segment" column
+                const segmentName = entry.name;
+
                 html += `
                     <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
+                        <td class="fw-bold">${segmentName}</td>
+                        <td class="text-center">${entry.completed}</td>
+                        <td class="text-center">${entry.total}</td>
                         <td>
                             <div class="progress-container">
                                 <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
@@ -941,7 +1066,7 @@
                             </div>
                         </td>
                         <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
+                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${segmentName}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
                         </td>
                     </tr>`;
             });
@@ -954,6 +1079,26 @@
             `;
             return html;
         };
+
+        const participationColumns = [
+            { id: 'segment', label: 'Segmento', sortable: true, searchable: true, center: false },
+            { id: 'completed', label: 'Completados', sortable: true, searchable: false, center: true },
+            { id: 'total', label: 'Total', sortable: true, searchable: false, center: true },
+            { id: 'percentage', label: '% de participación', sortable: true, searchable: false, slider: true, center: false },
+        ];
+
+        window.renderNomAreasTable = function(search = '') {
+            const grouped = {};
+            window.nomParticipationData.forEach(p => {
+                if (!grouped[p.area]) grouped[p.area] = { completed: 0, total: 0 };
+                grouped[p.area].total++;
+                if (p.status === 'Completada') grouped[p.area].completed++;
+            });
+            
+            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
+            return window.generateParticipationTableHTML('Tabla de participación - Áreas', processedData, participationColumns);
+        };
+
 
         window.renderNomCargoTable = function(search = '') {
             const grouped = {};
@@ -962,54 +1107,11 @@
                 grouped[p.cargo].total++;
                 if (p.status === 'Completada') grouped[p.cargo].completed++;
             });
-
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
-
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Cargo <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>Cargo <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes del cargo ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+            
+            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
+            return window.generateParticipationTableHTML('Tabla de participación - Cargo', processedData, participationColumns);
         };
+
 
         window.renderNomCollaboratorsTable = function(search = '') {
             console.log('🔍 [Participantes] renderNomCollaboratorsTable llamado con search:', search);
@@ -1069,53 +1171,11 @@
                 grouped[p.country].total++;
                 if (p.status === 'Completada') grouped[p.country].completed++;
             });
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
-
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Países <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>País <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+            
+            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
+            return window.generateParticipationTableHTML('Tabla de participación - Países', processedData, participationColumns);
         };
+
 
         window.renderNomCityTable = function(search = '') {
             const grouped = {};
@@ -1124,53 +1184,11 @@
                 grouped[p.city].total++;
                 if (p.status === 'Completada') grouped[p.city].completed++;
             });
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
-
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Ciudades <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>Ciudad <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+            
+            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
+            return window.generateParticipationTableHTML('Tabla de participación - Ciudades', processedData, participationColumns);
         };
+
 
         window.renderNomAgeTable = function(search = '') {
             const grouped = {};
@@ -1179,53 +1197,11 @@
                 grouped[p.age].total++;
                 if (p.status === 'Completada') grouped[p.age].completed++;
             });
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
-
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Edad <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>Rango de edad <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+            
+            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
+            return window.generateParticipationTableHTML('Tabla de participación - Edad', processedData, participationColumns);
         };
+
 
         window.renderNomSexoTable = function(search = '') {
             const grouped = {};
@@ -1234,53 +1210,11 @@
                 grouped[p.sexo].total++;
                 if (p.status === 'Completada') grouped[p.sexo].completed++;
             });
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
-
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Sexo <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>Sexo <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+            
+            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
+            return window.generateParticipationTableHTML('Tabla de participación - Sexo', processedData, participationColumns);
         };
+
 
         window.renderNomColumnaATable = function(search = '') {
             const grouped = {};
@@ -1289,53 +1223,11 @@
                 grouped[p.columnaA].total++;
                 if (p.status === 'Completada') grouped[p.columnaA].completed++;
             });
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
-
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Columna A <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>Columna A <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+            
+            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
+            return window.generateParticipationTableHTML('Tabla de participación - Columna A', processedData, participationColumns);
         };
+
 
         window.renderNomColumnaBTable = function(search = '') {
             const grouped = {};
@@ -1344,52 +1236,49 @@
                 grouped[p.columnaB].total++;
                 if (p.status === 'Completada') grouped[p.columnaB].completed++;
             });
-            const filtered = Object.keys(grouped).filter(name => name.toLowerCase().includes(search));
+            
+            const processedData = window.getProcessedParticipationData(grouped, participationColumns);
+            return window.generateParticipationTableHTML('Tabla de participación - Columna B', processedData, participationColumns);
+        };
 
-            let html = `
-                <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - Columna B <span class="filter-counter">${filtered.length} resultados</span></div>
-                </div>
-                <table class="participation-table">
-                    <thead>
-                        <tr>
-                            <th>Columna B <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Completados <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Total <i class="far fa-sort th-icon"></i></th>
-                            <th>% de participación <i class="far fa-sort th-icon"></i></th>
-                            <th class="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
 
-            filtered.forEach(name => {
-                const data = grouped[name];
-                const percentage = Math.round((data.completed / data.total) * 100);
-                const pending = data.total - data.completed;
-                html += `
-                    <tr>
-                        <td class="fw-bold">${name}</td>
-                        <td class="text-center">${data.completed}</td>
-                        <td class="text-center">${data.total}</td>
-                        <td>
-                            <div class="progress-container">
-                                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${percentage}%;"></div></div>
-                                <span class="participation-percentage">${percentage}%</span>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            ${pending > 0 ? `<button class="ubits-button ubits-button--secondary ubits-button--sm reminder-btn" onclick="alert('Recordatorios enviados a los ${pending} pendientes de ${name}')"><i class="far fa-bell"></i> Recordar</button>` : '<span class="btn-success-check"><i class="fas fa-check-circle"></i> Todo ok</span>'}
-                        </td>
-                    </tr>`;
-            });
-            html += '</tbody></table>' + `
-                <div class="participation-legend">
-                    <div class="legend-item"><div class="legend-dot completed"></div> Completada</div>
-                    <div class="legend-item"><div class="legend-dot pending"></div> Pendiente / Sin completar</div>
-                    <div class="update-tag">Última actualización: hace 5 minutos</div>
-                </div>
-            `;
-            return html;
+        window.renderNomParticipation = function() {
+            const wrapper = document.getElementById('nom-participation-table-wrapper');
+            const segmentSelect = document.getElementById('nom-participation-segment-select');
+            const searchInput = document.getElementById('nom-participation-search-input');
+            
+            if (!wrapper || !segmentSelect) return;
+
+            const segment = segmentSelect.value;
+            sessionStorage.setItem('nom_participation_active_segment', segment);
+
+            const searchTerm = window.nomParticipationState.filters.search.toLowerCase();
+
+            console.log('📊 Renderizando participación NOM:', segment, 'Búsqueda:', searchTerm);
+
+            let html = '';
+            if (segment === 'areas') html = window.renderNomAreasTable(searchTerm);
+            else if (segment === 'cargo') html = window.renderNomCargoTable(searchTerm);
+            else if (segment === 'collaborators') html = window.renderNomCollaboratorsTable(searchTerm);
+            else if (segment === 'age') html = window.renderNomAgeTable(searchTerm);
+            else if (segment === 'sexo') html = window.renderNomSexoTable(searchTerm);
+            else if (segment === 'country') html = window.renderNomCountryTable(searchTerm);
+            else if (segment === 'city') html = window.renderNomCityTable(searchTerm);
+            else if (segment === 'columna-a') html = window.renderNomColumnaATable(searchTerm);
+            else if (segment === 'columna-b') html = window.renderNomColumnaBTable(searchTerm);
+            
+            wrapper.innerHTML = html;
+
+            // Extraer título y contador dinámicos para la cabecera fija
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            const titleEl = tempDiv.querySelector('.participation-title');
+            if (titleEl) {
+                const headerTitleEl = document.getElementById('nom-participation-table-title');
+                if (headerTitleEl) {
+                    headerTitleEl.innerHTML = titleEl.innerHTML;
+                }
+            }
         };
 
         window.initializeNomParticipationContent = function() {
@@ -1428,77 +1317,25 @@
                         }
                     });
                 };
-                
-                segmentSelect.addEventListener('change', syncCustomSelect);
+
+                segmentSelect.addEventListener('change', function() {
+                    window.renderNomParticipation();
+                    syncCustomSelect();
+                });
+
                 syncCustomSelect();
-            }
-
-            // Inicializar controles de búsqueda toggleable
-            const searchToggleBtn = document.getElementById('nom-participation-search-toggle-btn');
-            const searchContainer = document.getElementById('nom-participation-search-container');
-            const searchInput = document.getElementById('nom-participation-search-input');
-            const searchCloseBtn = document.getElementById('nom-participation-search-close-btn');
-
-            if (searchToggleBtn && searchContainer && searchInput && searchCloseBtn) {
-                searchToggleBtn.addEventListener('click', () => {
-                    searchContainer.style.display = 'block';
-                    searchInput.focus();
-                });
-
-                searchCloseBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    searchContainer.style.display = 'none';
-                    searchInput.value = '';
-                    render();
-                });
-
-                let debounceTimer;
-                searchInput.addEventListener('input', (e) => {
-                    console.log('🔍 [Participantes] Evento input disparado en buscador, valor:', e.target.value);
-                    clearTimeout(debounceTimer);
-                    debounceTimer = setTimeout(() => {
-                        console.log('🔍 [Participantes] Ejecutando render() tras debounce, buscando:', searchInput.value);
-                        render();
-                    }, 300);
+            } else {
+                segmentSelect.addEventListener('change', function() {
+                    window.renderNomParticipation();
                 });
             }
 
-            const render = () => {
-                const segment = segmentSelect.value;
-                sessionStorage.setItem('nom_participation_active_segment', segment);
-
-                const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
-
-                console.log('📊 Renderizando participación NOM:', segment, 'Búsqueda:', searchTerm);
-
-                let html = '';
-                if (segment === 'areas') html = window.renderNomAreasTable(searchTerm);
-                else if (segment === 'cargo') html = window.renderNomCargoTable(searchTerm);
-                else if (segment === 'collaborators') html = window.renderNomCollaboratorsTable(searchTerm);
-                else if (segment === 'age') html = window.renderNomAgeTable(searchTerm);
-                else if (segment === 'sexo') html = window.renderNomSexoTable(searchTerm);
-                
-
-                wrapper.innerHTML = html;
-
-                // Extraer título y contador dinámicos para la cabecera fija
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-                const titleEl = tempDiv.querySelector('.participation-title');
-                if (titleEl) {
-                    const headerTitleEl = document.getElementById('nom-participation-table-title');
-                    if (headerTitleEl) {
-                        headerTitleEl.innerHTML = titleEl.innerHTML;
-                    }
-                }
-            };
-
-            segmentSelect.addEventListener('change', render);
-            render();
+            window.renderNomParticipation();
         };
 
-        
         window.initializeApp = function() {
+
+
             console.log('🚀 [INIT] ===== INICIANDO APLICACIÓN =====');
 
             try {
@@ -1592,6 +1429,305 @@
             border-color: var(--ubits-accent-brand);
             box-shadow: 0 0 0 3px rgba(10, 107, 255, 0.1);
         }
+
+        /* ===== ESTILOS DE PARTICIPACIÓN (SHADCN) ===== */
+        .participation-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .participation-table thead tr {
+            background: #E8E9EC;
+            border-bottom: 1px solid var(--ubits-border-1);
+        }
+        .participation-table th {
+            padding: 16px 16px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--ubits-fg-1-medium);
+            letter-spacing: -0.01em;
+            text-transform: none;
+            border: none;
+        }
+        .participation-table td {
+            padding: 14px 16px;
+            font-size: 12px;
+            color: var(--ubits-fg-1-high);
+            border-bottom: 1px solid rgba(208, 210, 213, 0.25);
+            vertical-align: middle;
+        }
+        .participation-table th:first-child,
+        .participation-table td:first-child {
+            padding-left: 24px !important;
+        }
+        .participation-table th:last-child,
+        .participation-table td:last-child {
+            padding-right: 24px !important;
+        }
+        .participation-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .participation-table tbody tr:hover {
+            background: rgba(240, 244, 255, 0.5);
+        }
+        .participation-table .text-center { text-align: center; }
+        .participation-table .fw-bold { font-weight: 700; }
+        .participation-table .cell-name { font-weight: 700; }
+        .participation-table .th-icon { margin-left: 6px; color: var(--ubits-fg-1-medium); }
+        .btn-success-check {
+            color: var(--ubits-feedback-fg-success-subtle);
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .update-tag {
+            margin-left: auto;
+            color: var(--ubits-fg-1-medium);
+            font-style: italic;
+        }
+        .filter-counter {
+            font-weight: 400;
+            color: var(--ubits-fg-1-medium);
+            font-size: 14px;
+        }
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+        .progress-bar-bg {
+            flex: 1;
+            height: 8px;
+            background: var(--ubits-border-1);
+            border-radius: var(--ubits-radius-sm);
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--ubits-accent-brand);
+            border-radius: var(--ubits-radius-sm);
+            transition: width 0.3s ease;
+        }
+        .participation-percentage {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--ubits-fg-1-high);
+            min-width: 40px;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 10px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        .status-badge.completed {
+            background: rgba(16, 185, 129, 0.1);
+            color: rgb(16, 185, 129);
+        }
+        .status-badge.pending {
+            background: rgba(234, 236, 239, 0.8);
+            color: rgb(148, 163, 184);
+        }
+        .participation-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .participation-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--ubits-fg-1-high);
+        }
+        .reminder-btn {
+            background: var(--ubits-bg-0);
+            border: 1px solid var(--ubits-border-2);
+            padding: 8px 16px;
+            border-radius: var(--ubits-radius-md);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ubits-fg-1-medium);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .reminder-btn:hover {
+            background: var(--ubits-bg-2);
+            border-color: var(--ubits-border-1);
+        }
+        .reminder-btn.btn-sm {
+            padding: 4px 8px;
+            font-size: 10px;
+        }
+        .participation-legend {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+            padding: 12px;
+            background: var(--ubits-bg-2);
+            border-radius: var(--ubits-radius-md);
+            font-size: 12px;
+            color: var(--ubits-fg-1-medium);
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .legend-dot.completed { background: var(--ubits-accent-brand); }
+        .legend-dot.pending { background: var(--ubits-fg-1-medium); }
+
+        /* ===== SORT ICONS & ACTIVE STATES ===== */
+        .participation-table th.sortable {
+            cursor: pointer;
+            user-select: none;
+        }
+        .participation-table th.sortable:hover {
+            color: var(--ubits-accent-brand) !important;
+        }
+        .participation-table th.sort-asc .th-icon::before { content: '\f0de'; }
+        .participation-table th.sort-desc .th-icon::before { content: '\f0dd'; }
+        .participation-table th.sort-asc .th-icon,
+        .participation-table th.sort-desc .th-icon {
+            color: var(--ubits-accent-brand) !important;
+        }
+
+        /* ===== COLUMN FILTER POPOVERS ===== */
+        .nom-th-inner {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            position: relative;
+        }
+        .nom-th-filter-btn {
+            background: transparent;
+            border: none;
+            padding: 2px 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--ubits-fg-1-medium);
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.15s, background 0.15s;
+            line-height: 1;
+        }
+        .nom-th-filter-btn:hover {
+            color: var(--ubits-accent-brand);
+            background: color-mix(in srgb, var(--ubits-accent-brand) 10%, transparent);
+        }
+        .nom-th-filter-btn.active {
+            color: var(--ubits-accent-brand);
+        }
+        .nom-th-popover {
+            display: none;
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            z-index: 200;
+            background: var(--ubits-bg-0);
+            border: 1.5px solid var(--ubits-border-1);
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+            padding: 10px 12px;
+            min-width: 200px;
+        }
+        .nom-col-multiselect {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .nom-col-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 0;
+            font-size: 12px;
+            color: var(--ubits-fg-1-high);
+            cursor: pointer;
+        }
+        .nom-col-option input {
+            cursor: pointer;
+        }
+        .nom-th-popover.open {
+            display: block;
+        }
+        .nom-th-popover-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--ubits-fg-1-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
+        }
+        .nom-col-search-input {
+            border: 1.5px solid var(--ubits-border-1) !important;
+            border-radius: 6px !important;
+            outline: none !important;
+            box-shadow: none !important;
+            background: var(--ubits-bg-1) !important;
+            font-size: 12px;
+            width: 100%;
+            color: var(--ubits-fg-1-high);
+            font-family: inherit;
+            padding: 5px 8px;
+            box-sizing: border-box;
+            transition: border-color 0.15s;
+        }
+        .nom-col-search-input:focus {
+            border-color: var(--ubits-accent-brand) !important;
+        }
+        .nom-col-search-input::placeholder {
+            color: var(--ubits-fg-1-medium);
+        }
+        .nom-col-pct-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 4px;
+            border-radius: 4px;
+            background: var(--ubits-border-1);
+            outline: none;
+            cursor: pointer;
+            display: block;
+        }
+        .nom-col-pct-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--ubits-accent-brand);
+            cursor: pointer;
+            box-shadow: 0 0 0 2px var(--ubits-bg-0), 0 0 0 3px var(--ubits-accent-brand);
+            transition: box-shadow 0.15s;
+        }
+        .nom-col-pct-slider::-webkit-slider-thumb:hover {
+            box-shadow: 0 0 0 2px var(--ubits-bg-0), 0 0 0 5px var(--ubits-accent-brand);
+        }
+        .nom-col-pct-slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--ubits-accent-brand);
+            cursor: pointer;
+            border: none;
+        }
+
         /* Estilos específicos para la página de resultados */
         .results-container {
             display: flex;
@@ -5352,59 +5488,42 @@
                                     Tabla de participación - Áreas <span class="filter-counter" id="nom-participation-counter" style="font-weight: 400; color: var(--ubits-fg-1-medium); font-size: 14px; margin-left: 8px;"></span>
                                 </div>
                                 
-                                <!-- Al lado derecho: buscador (izquierda) y segmento (derecha) -->
-                                <div style="display: flex; align-items: center; gap: 12px;">
-                                    <!-- Buscador Toggleable -->
-                                    <div style="position: relative; display: flex; align-items: center;">
-                                        <button id="nom-participation-search-toggle-btn" style="background: var(--ubits-bg-1); border: 1.5px solid var(--ubits-border-1); border-radius: 8px; padding: 8px; cursor: pointer; color: var(--ubits-fg-1-high); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;" title="Buscar">
-                                            <i class="far fa-search"></i>
-                                        </button>
-
-                                        <div id="nom-participation-search-container" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); display: none; background: white; border: 1.5px solid var(--ubits-border-1); border-radius: 8px; z-index: 1000; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); width: 240px;">
-                                            <div style="display: flex; align-items: center; gap: 8px; padding: 4px 8px;">
-                                                <i class="far fa-search" style="color: var(--ubits-fg-1-medium); font-size: 13px; margin-left: 4px;"></i>
-                                                <input type="text" id="nom-participation-search-input" placeholder="Buscar..." style="padding: 6px 4px; border: none !important; outline: none !important; box-shadow: none !important; font-size: 12px; width: 100%; background: transparent; color: var(--ubits-fg-1-high);" />
-                                                <button id="nom-participation-search-close-btn" style="background: transparent; border: none; cursor: pointer; color: var(--ubits-fg-1-medium); display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;">
-                                                    <i class="far fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Segmento demográfico -->
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); white-space: nowrap;">Segmentar por:</span>
-                                        <select id="nom-participation-segment-select" style="display: none;">
-                                            <option value="areas" selected>Área</option>
-                                            <option value="leaders">Líder</option>
-                                            <option value="collaborators">Colaborador</option>
-                                            <option value="country">País</option>
-                                            <option value="city">Ciudad</option>
-                                            <option value="age">Edad</option>
-                                            <option value="sexo">Sexo</option>
-                                            <option value="columna-a">Columna A</option>
-                                            <option value="columna-b">Columna B</option>
-                                        </select>
-                                        
-                                        <div class="custom-select single-select" id="nom-participation-segment-custom-select" style="min-width: 160px; font-family: inherit;" tabindex="0">
-                                            <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
-                                                <span class="selected-text" id="nom-participation-segment-text">Área</span>
-                                                <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
-                                            </div>
-                                            <div class="select-dropdown" id="nom-participation-segment-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 160px; max-height: 240px; overflow-y: auto !important;">
-                                                <div class="select-option selected" data-value="areas" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Área</div>
-                                                <div class="select-option" data-value="leaders" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Líder</div>
-                                                <div class="select-option" data-value="collaborators" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Colaborador</div>
-                                                <div class="select-option" data-value="country" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">País</div>
-                                                <div class="select-option" data-value="city" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Ciudad</div>
-                                                <div class="select-option" data-value="age" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Edad</div>
-                                                <div class="select-option" data-value="sexo" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Sexo</div>
-                                                <div class="select-option" data-value="columna-a" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Columna A</div>
-                                                <div class="select-option" data-value="columna-b" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Columna B</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                 <!-- Al lado derecho: segmento (derecha) -->
+                                 <div style="display: flex; align-items: center; gap: 12px;">
+                                     <!-- Segmento demográfico -->
+                                     <div style="display: flex; align-items: center; gap: 8px;">
+                                         <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); white-space: nowrap;">Segmentar por:</span>
+                                         <select id="nom-participation-segment-select" style="display: none;">
+                                             <option value="areas" selected>Área</option>
+                                             <option value="leaders">Líder</option>
+                                             <option value="collaborators">Colaborador</option>
+                                             <option value="country">País</option>
+                                             <option value="city">Ciudad</option>
+                                             <option value="age">Edad</option>
+                                             <option value="sexo">Sexo</option>
+                                             <option value="columna-a">Columna A</option>
+                                             <option value="columna-b">Columna B</option>
+                                         </select>
+                                         
+                                         <div class="custom-select single-select" id="nom-participation-segment-custom-select" style="min-width: 160px; font-family: inherit;" tabindex="0">
+                                             <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
+                                                 <span class="selected-text" id="nom-participation-segment-text">Área</span>
+                                                 <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
+                                             </div>
+                                             <div class="select-dropdown" id="nom-participation-segment-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 160px; max-height: 240px; overflow-y: auto !important;">
+                                                 <div class="select-option selected" data-value="areas" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Área</div>
+                                                 <div class="select-option" data-value="leaders" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Líder</div>
+                                                 <div class="select-option" data-value="collaborators" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Colaborador</div>
+                                                 <div class="select-option" data-value="country" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">País</div>
+                                                 <div class="select-option" data-value="city" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Ciudad</div>
+                                                 <div class="select-option" data-value="age" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Edad</div>
+                                                 <div class="select-option" data-value="sexo" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Sexo</div>
+                                                 <div class="select-option" data-value="columna-a" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Columna A</div>
+                                                 <div class="select-option" data-value="columna-b" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Columna B</div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
                             </div>
                             <div style="background: white; overflow-x: auto;">
                                 <div id="nom-participation-table-wrapper">
