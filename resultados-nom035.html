@@ -1605,58 +1605,85 @@
             color: var(--ubits-accent-brand) !important;
         }
 
-        /* ===== SLIDER PARTICIPACIÓN ===== */
-        .nom-slider-wrapper {
+        /* ===== COLUMN SEARCH + SLIDER IN TH ===== */
+
+        /* Sort trigger row inside th */
+        .nom-th-sort-row {
             display: flex;
             align-items: center;
-            gap: 10px;
-            background: var(--ubits-bg-1);
-            border: 1.5px solid var(--ubits-border-1);
-            border-radius: 8px;
-            padding: 6px 12px;
-            height: 36px;
-            box-sizing: border-box;
+            gap: 4px;
+            cursor: pointer;
+            user-select: none;
         }
-        .nom-slider-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--ubits-fg-1-high);
-            white-space: nowrap;
-        }
-        .nom-slider-value {
-            font-size: 12px;
-            font-weight: 700;
+        .nom-th-sort-row:hover {
             color: var(--ubits-accent-brand);
-            min-width: 36px;
-            text-align: right;
         }
-        #nom-participation-pct-slider {
+        .nom-th-sort-row:hover .th-icon {
+            color: var(--ubits-accent-brand) !important;
+        }
+
+        /* Search input row inside segment column th */
+        .nom-th-search-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 6px;
+            background: var(--ubits-bg-0);
+            border: 1px solid var(--ubits-border-1);
+            border-radius: 6px;
+            padding: 3px 8px;
+            cursor: default;
+        }
+        .nom-col-search-input {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            font-size: 11px;
+            width: 100%;
+            color: var(--ubits-fg-1-high);
+            font-family: inherit;
+        }
+        .nom-col-search-input::placeholder {
+            color: var(--ubits-fg-1-medium);
+            font-style: italic;
+        }
+
+        /* Slider row inside % column th */
+        .nom-th-slider-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 6px;
+            cursor: default;
+        }
+        .nom-col-pct-slider {
             -webkit-appearance: none;
             appearance: none;
-            width: 100px;
+            flex: 1;
             height: 4px;
             border-radius: 4px;
-            background: linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) 0%, var(--ubits-border-1) 0%, var(--ubits-border-1) 100%);
+            background: var(--ubits-border-1);
             outline: none;
             cursor: pointer;
         }
-        #nom-participation-pct-slider::-webkit-slider-thumb {
+        .nom-col-pct-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 14px;
-            height: 14px;
+            width: 13px;
+            height: 13px;
             border-radius: 50%;
             background: var(--ubits-accent-brand);
             cursor: pointer;
             box-shadow: 0 0 0 2px var(--ubits-bg-0), 0 0 0 3px var(--ubits-accent-brand);
-            transition: box-shadow 0.2s;
+            transition: box-shadow 0.15s;
         }
-        #nom-participation-pct-slider::-webkit-slider-thumb:hover {
-            box-shadow: 0 0 0 3px var(--ubits-bg-0), 0 0 0 5px var(--ubits-accent-brand);
+        .nom-col-pct-slider::-webkit-slider-thumb:hover {
+            box-shadow: 0 0 0 2px var(--ubits-bg-0), 0 0 0 5px var(--ubits-accent-brand);
         }
-        #nom-participation-pct-slider::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
+        .nom-col-pct-slider::-moz-range-thumb {
+            width: 13px;
+            height: 13px;
             border-radius: 50%;
             background: var(--ubits-accent-brand);
             cursor: pointer;
@@ -1804,32 +1831,8 @@
                                         Tabla de participación - Áreas <span class="filter-counter" id="nom-participation-counter" style="font-weight: 400; color: var(--ubits-fg-1-medium); font-size: 14px; margin-left: 8px;"></span>
                                     </div>
                                     
-                                    <!-- Al lado derecho: buscador (izquierda) y segmento (derecha) -->
+                                    <!-- Al lado derecho: selector de segmento -->
                                     <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                                        <!-- Buscador Toggleable -->
-                                        <div style="position: relative; display: flex; align-items: center;">
-                                            <button id="nom-participation-search-toggle-btn" style="background: var(--ubits-bg-1); border: 1.5px solid var(--ubits-border-1); border-radius: 8px; padding: 8px; cursor: pointer; color: var(--ubits-fg-1-high); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;" title="Buscar">
-                                                <i class="far fa-search"></i>
-                                            </button>
- 
-                                            <div id="nom-participation-search-container" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); display: none; background: var(--ubits-bg-0); border: 1.5px solid var(--ubits-border-1); border-radius: 8px; z-index: 1000; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); width: 240px;">
-                                                <div style="display: flex; align-items: center; gap: 8px; padding: 4px 8px;">
-                                                    <i class="far fa-search" style="color: var(--ubits-fg-1-medium); font-size: 13px; margin-left: 4px;"></i>
-                                                    <input type="text" id="nom-participation-search-input" placeholder="Buscar..." style="padding: 6px 4px; border: none !important; outline: none !important; box-shadow: none !important; font-size: 12px; width: 100%; background: transparent; color: var(--ubits-fg-1-high);" />
-                                                    <button id="nom-participation-search-close-btn" style="background: transparent; border: none; cursor: pointer; color: var(--ubits-fg-1-medium); display: flex; align-items: center; justify-content: center; width: 24px; height: 24px;">
-                                                        <i class="far fa-times"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Slider % de participación -->
-                                        <div class="nom-slider-wrapper">
-                                            <span class="nom-slider-label"><i class="far fa-filter" style="margin-right:4px;"></i>% mín:</span>
-                                            <input type="range" id="nom-participation-pct-slider" min="0" max="100" value="0" step="5" />
-                                            <span class="nom-slider-value" id="nom-participation-pct-value">0%</span>
-                                        </div>
-                                        
                                         <!-- Segmento demográfico -->
                                          <div style="display: flex; align-items: center; gap: 8px;">
                                              <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); white-space: nowrap;">Segmentar por:</span>
@@ -4055,26 +4058,36 @@
 
             let html = `
                 <div class="participation-controls">
-                    <div class="participation-title">Tabla de participación - ${label} <span class="filter-counter">${rows.length} resultados</span></div>
+                    <div class="participation-title">Tabla de participación - ${label} <span class="filter-counter nom-row-counter">${rows.length} resultados</span></div>
                 </div>
                 <table class="participation-table">
                     <thead>
                         <tr>
-                            <th class="${sortClass('name')}" data-sort="name">${headerLabel} <i class="far fa-sort th-icon"></i></th>
+                            <th class="${sortClass('name')}" data-sort="name" style="min-width:180px;">
+                                <div class="nom-th-sort-row">${headerLabel} <i class="far fa-sort th-icon"></i></div>
+                                <div class="nom-th-search-row" onclick="event.stopPropagation()">
+                                    <i class="far fa-search" style="font-size:11px;color:var(--ubits-fg-1-medium);"></i>
+                                    <input type="text" class="nom-col-search-input" placeholder="Buscar ${headerLabel.toLowerCase()}..." style="border:none;outline:none;background:transparent;font-size:11px;width:100%;color:var(--ubits-fg-1-high);" />
+                                </div>
+                            </th>
                             <th class="text-center ${sortClass('completed')}" data-sort="completed">Completados <i class="far fa-sort th-icon"></i></th>
                             <th class="text-center ${sortClass('total')}" data-sort="total">Total <i class="far fa-sort th-icon"></i></th>
-                            <th class="${sortClass('pct')}" data-sort="pct">% de participación <i class="far fa-sort th-icon"></i></th>
+                            <th class="${sortClass('pct')}" data-sort="pct" style="min-width:200px;">
+                                <div class="nom-th-sort-row">% de participación <i class="far fa-sort th-icon"></i></div>
+                                <div class="nom-th-slider-row" onclick="event.stopPropagation()">
+                                    <span style="font-size:10px;font-weight:600;color:var(--ubits-fg-1-medium);white-space:nowrap;">≥</span>
+                                    <input type="range" class="nom-col-pct-slider" min="0" max="100" value="${minPct}" step="5" />
+                                    <span class="nom-col-pct-value" style="font-size:11px;font-weight:700;color:var(--ubits-accent-brand);min-width:30px;">${minPct}%</span>
+                                </div>
+                            </th>
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>`;
 
-            if (rows.length === 0) {
-                html += `<tr><td colspan="5" style="padding:32px; text-align:center; color: var(--ubits-fg-1-medium);">Sin resultados para los filtros aplicados</td></tr>`;
-            }
             rows.forEach(r => {
                 html += `
-                    <tr>
+                    <tr data-name="${r.name.toLowerCase()}" data-pct="${r.percentage}">
                         <td class="fw-bold">${r.name}</td>
                         <td class="text-center">${r.completed}</td>
                         <td class="text-center">${r.total}</td>
@@ -4255,75 +4268,70 @@
                 syncCustomSelect();
             }
 
-            // Inicializar controles de búsqueda toggleable
-            const searchToggleBtn = document.getElementById('nom-participation-search-toggle-btn');
-            const searchContainer = document.getElementById('nom-participation-search-container');
-            const searchInput = document.getElementById('nom-participation-search-input');
-            const searchCloseBtn = document.getElementById('nom-participation-search-close-btn');
-
-            if (searchToggleBtn && searchContainer && searchInput && searchCloseBtn) {
-                searchToggleBtn.addEventListener('click', () => {
-                    searchContainer.style.display = 'block';
-                    searchInput.focus();
-                });
-
-                searchCloseBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    searchContainer.style.display = 'none';
-                    searchInput.value = '';
-                    render();
-                });
-
-                let debounceTimer;
-                searchInput.addEventListener('input', () => {
-                    clearTimeout(debounceTimer);
-                    debounceTimer = setTimeout(() => {
-                        render();
-                    }, 300);
-                });
-            }
-
-            // Sort state for participation table
+            // Sort + filter state
             let nomSortBy = 'name';
             let nomSortDir = 'asc';
             let nomMinPct = 0;
+            let nomColSearch = '';
 
-            const render = () => {
-                const segment = segmentSelect.value;
-                sessionStorage.setItem('nom_participation_active_segment', segment);
+            // Filter rows in-place (no re-render) — preserves input focus
+            const filterRows = () => {
+                const rows = wrapper.querySelectorAll('.participation-table tbody tr[data-name]');
+                let visible = 0;
+                rows.forEach(row => {
+                    const nameMatch = row.dataset.name.includes(nomColSearch.toLowerCase());
+                    const pctMatch = parseInt(row.dataset.pct) >= nomMinPct;
+                    const show = nameMatch && pctMatch;
+                    row.style.display = show ? '' : 'none';
+                    if (show) visible++;
+                });
+                // Update counter
+                const counter = wrapper.querySelector('.nom-row-counter');
+                if (counter) counter.textContent = visible + ' resultados';
+            };
 
-                const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
-
-                console.log('📊 Renderizando participación NOM:', segment, 'Búsqueda:', searchTerm, 'Sort:', nomSortBy, nomSortDir, 'MinPct:', nomMinPct);
-
-                let html = '';
-                if (segment === 'areas') html = window.renderNomAreasTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
-                else if (segment === 'leaders') html = window.renderNomLeadersTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
-                else if (segment === 'collaborators') html = window.renderNomCollaboratorsTable(searchTerm);
-                else if (segment === 'country') html = window.renderNomCountryTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
-                else if (segment === 'city') html = window.renderNomCityTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
-                else if (segment === 'age') html = window.renderNomAgeTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
-                else if (segment === 'sexo') html = window.renderNomSexoTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
-                else if (segment === 'columna-a') html = window.renderNomColumnaATable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
-                else if (segment === 'columna-b') html = window.renderNomColumnaBTable(searchTerm, nomSortBy, nomSortDir, nomMinPct);
-
-                wrapper.innerHTML = html;
-
-                // Extraer título y contador dinámicos para la cabecera fija
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
-                const titleEl = tempDiv.querySelector('.participation-title');
-                if (titleEl) {
-                    const headerTitleEl = document.getElementById('nom-participation-table-title');
-                    if (headerTitleEl) {
-                        headerTitleEl.innerHTML = titleEl.innerHTML;
-                    }
+            const bindColumnControls = () => {
+                // ---- Column search (segment column) ----
+                const colSearchInput = wrapper.querySelector('.nom-col-search-input');
+                if (colSearchInput) {
+                    colSearchInput.value = nomColSearch;
+                    colSearchInput.addEventListener('click', e => e.stopPropagation());
+                    colSearchInput.addEventListener('keydown', e => e.stopPropagation());
+                    colSearchInput.addEventListener('input', e => {
+                        e.stopPropagation();
+                        nomColSearch = e.target.value;
+                        filterRows();
+                    });
                 }
 
-                // Bind sort click on table headers after rendering
+                // ---- Column slider (% column) ----
+                const colSlider = wrapper.querySelector('.nom-col-pct-slider');
+                const colPctValue = wrapper.querySelector('.nom-col-pct-value');
+                if (colSlider) {
+                    colSlider.value = nomMinPct;
+                    // Set initial gradient
+                    const setPctGradient = (val) => {
+                        colSlider.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${val}%, var(--ubits-border-1) ${val}%, var(--ubits-border-1) 100%)`;
+                    };
+                    setPctGradient(nomMinPct);
+                    colSlider.addEventListener('click', e => e.stopPropagation());
+                    colSlider.addEventListener('input', e => {
+                        e.stopPropagation();
+                        nomMinPct = parseInt(e.target.value);
+                        if (colPctValue) colPctValue.textContent = nomMinPct + '%';
+                        setPctGradient(nomMinPct);
+                        filterRows();
+                    });
+                }
+
+                // ---- Sort click on th.sortable ----
                 const ths = wrapper.querySelectorAll('.participation-table th.sortable');
                 ths.forEach(th => {
-                    th.addEventListener('click', () => {
+                    // Only the sort-row triggers the sort, not the search/slider rows
+                    const sortTrigger = th.querySelector('.nom-th-sort-row') || th;
+                    sortTrigger.style.cursor = 'pointer';
+                    sortTrigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
                         const col = th.dataset.sort;
                         if (nomSortBy === col) {
                             nomSortDir = nomSortDir === 'asc' ? 'desc' : 'asc';
@@ -4335,31 +4343,44 @@
                     });
                 });
 
-                // Update slider gradient to reflect current value
-                const sliderEl = document.getElementById('nom-participation-pct-slider');
-                if (sliderEl) {
-                    const pct = parseInt(sliderEl.value);
-                    sliderEl.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${pct}%, var(--ubits-border-1) ${pct}%, var(--ubits-border-1) 100%)`;
-                }
+                // Apply active filters after render
+                filterRows();
             };
 
-            // Slider events
-            const pctSlider = document.getElementById('nom-participation-pct-slider');
-            const pctValueEl = document.getElementById('nom-participation-pct-value');
-            if (pctSlider && pctValueEl) {
-                pctSlider.addEventListener('input', () => {
-                    const val = parseInt(pctSlider.value);
-                    nomMinPct = val;
-                    pctValueEl.textContent = val + '%';
-                    pctSlider.style.background = `linear-gradient(to right, var(--ubits-accent-brand) 0%, var(--ubits-accent-brand) ${val}%, var(--ubits-border-1) ${val}%, var(--ubits-border-1) 100%)`;
-                    render();
-                });
-            }
+            const render = () => {
+                const segment = segmentSelect.value;
+                sessionStorage.setItem('nom_participation_active_segment', segment);
+
+                let html = '';
+                if (segment === 'areas') html = window.renderNomAreasTable('', nomSortBy, nomSortDir, 0);
+                else if (segment === 'leaders') html = window.renderNomLeadersTable('', nomSortBy, nomSortDir, 0);
+                else if (segment === 'collaborators') html = window.renderNomCollaboratorsTable('');
+                else if (segment === 'country') html = window.renderNomCountryTable('', nomSortBy, nomSortDir, 0);
+                else if (segment === 'city') html = window.renderNomCityTable('', nomSortBy, nomSortDir, 0);
+                else if (segment === 'age') html = window.renderNomAgeTable('', nomSortBy, nomSortDir, 0);
+                else if (segment === 'sexo') html = window.renderNomSexoTable('', nomSortBy, nomSortDir, 0);
+                else if (segment === 'columna-a') html = window.renderNomColumnaATable('', nomSortBy, nomSortDir, 0);
+                else if (segment === 'columna-b') html = window.renderNomColumnaBTable('', nomSortBy, nomSortDir, 0);
+
+                wrapper.innerHTML = html;
+
+                // Update title in fixed header
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+                const titleEl = tempDiv.querySelector('.participation-title');
+                if (titleEl) {
+                    const headerTitleEl = document.getElementById('nom-participation-table-title');
+                    if (headerTitleEl) headerTitleEl.innerHTML = titleEl.innerHTML;
+                }
+
+                bindColumnControls();
+            };
 
             segmentSelect.addEventListener('change', () => {
-                // Reset sort when segment changes
                 nomSortBy = 'name';
                 nomSortDir = 'asc';
+                nomColSearch = '';
+                nomMinPct = 0;
                 render();
             });
             render();
