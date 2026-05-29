@@ -779,6 +779,7 @@
         .risk-alto { background: #ffedd5; color: #ea580c; }
         .risk-canalizado { background: var(--ubits-semantic-danger-light); color: var(--ubits-semantic-danger); }
         .risk-muy-alto { background: var(--ubits-semantic-danger-light); color: var(--ubits-semantic-danger); }
+        .risk-no-canalizado { background: #e5e7eb; color: #6b7280; }
 
         .no-selection {
             display: flex;
@@ -1799,7 +1800,7 @@
                     <!-- Métricas clave - FUERA DEL CONTENEDOR SUPERIOR -->
                     <div class="metrics-grid">
                         <!-- Métrica 1: Total canalizados -->
-                        <div class="metric-card" style="cursor: pointer;" onclick="filterByRiskAndSwitchTab('detalle-colaborador', 'canalizado')">
+                        <div class="metric-card" onclick="event.stopPropagation(); cardClickCanalizados()">
                             <div class="metric-header">
                                 <div class="metric-title-section">
                                     <div class="metric-icon">
@@ -1814,24 +1815,24 @@
                             </div>
                         </div>
 
-                        <!-- Métrica 2: Total de casos de riesgo -->
-                        <div class="metric-card" style="cursor: pointer;" onclick="filterByRiskAndSwitchTab('detalle-colaborador', 'alto')">
+                        <!-- Métrica 2: Total áreas afectadas -->
+                        <div class="metric-card" onclick="event.stopPropagation(); cardClickAreasAfectadas()">
                             <div class="metric-header">
                                 <div class="metric-title-section">
                                     <div class="metric-icon">
-                                        <i class="far fa-chart-bar"></i>
+                                        <i class="far fa-building"></i>
                                     </div>
-                                    <h3 class="metric-title">Total de casos en riesgo alto</h3>
+                                    <h3 class="metric-title">Total áreas afectadas de usuario de canalización</h3>
                                 </div>
                             </div>
                             <div class="metric-value-section">
-                                <div class="metric-main-number">5</div>
-                                <div class="metric-unit-text">Casos</div>
+                                <div class="metric-main-number" id="total-areas-canalizadas">0</div>
+                                <div class="metric-unit-text">Áreas</div>
                             </div>
                         </div>
 
                         <!-- Métrica 3: % de participación -->
-                        <div class="metric-card" style="cursor: pointer;" onclick="filterByRiskAndSwitchTab('participante', '')">
+                        <div class="metric-card" onclick="event.stopPropagation(); cardClickParticipacion()">
                             <div class="metric-header">
                                 <div class="metric-title-section">
                                     <div class="metric-icon">
@@ -2874,7 +2875,6 @@
         }
 
         // Inicializar panel de acontecimientos traumáticos
-        // Inicializar panel de acontecimientos traumáticos
         function initializeEmotionalPanel() {
             if (typeof renderNomVistaColaboradorTable === 'function') {
                 renderNomVistaColaboradorTable();
@@ -2882,52 +2882,77 @@
             if (typeof setupNomVistaColaboradorControls === 'function') {
                 setupNomVistaColaboradorControls();
             }
-            // setupSearch(); // Removido porque la nueva tabla tiene su propio buscador
+            updateTotalAreasCanalizadas();
+        }
+
+        function updateTotalAreasCanalizadas() {
+            const areas = new Set();
+            participantsData.forEach(p => {
+                if (p.riskLevel === 'canalizado' && p.details && p.details.department) {
+                    areas.add(p.details.department);
+                }
+            });
+            const el = document.getElementById('total-areas-canalizadas');
+            if (el) el.textContent = areas.size;
         }
 
         // Configurar clics en tarjetas de métricas
         function setupMetricsClickHandlers() {
-            const metricCards = document.querySelectorAll('.metric-card');
-
-            metricCards.forEach((card, index) => {
+            document.querySelectorAll('.metric-card').forEach(card => {
                 card.style.cursor = 'pointer';
-                card.addEventListener('click', function() {
-                    const metricTitle = this.querySelector('.metric-title')?.textContent || '';
-                    console.log('📊 Click en tarjeta de métrica:', metricTitle);
-
-                    // Remover el punto de todas las tarjetas
+                card.addEventListener('click', function(e) {
                     document.querySelectorAll('.metric-dot').forEach(dot => dot.remove());
-                    // Agregar el punto a la tarjeta clickeada
                     const header = this.querySelector('.metric-header');
                     if (header) {
                         const dot = document.createElement('div');
                         dot.className = 'metric-dot';
                         header.appendChild(dot);
                     }
-
-                    // Acciones según la tarjeta clickeada
-                    if (metricTitle.includes('canalizados')) {
-                        console.log('📊 Filtrando por: Canalizado');
-                        filterByRiskLevel('canalizado');
-                        const detalleTab = document.querySelector('.tab-button[data-tab="detalle-colaborador"]');
-                        if (detalleTab) detalleTab.click();
-                    } else if (metricTitle.includes('riesgo alto')) {
-                        console.log('📊 Filtrando por: Alto');
-                        filterByRiskLevel('alto');
-                        const detalleTab = document.querySelector('.tab-button[data-tab="detalle-colaborador"]');
-                        if (detalleTab) detalleTab.click();
-                    } else if (metricTitle.toLowerCase().includes('participación')) {
-                        console.log('📊 Limpiando filtros de riesgo y yendo a Participantes');
-                        const riskSelect = document.getElementById('risk-select');
-                        if (riskSelect) {
-                            riskSelect.value = '';
-                            riskSelect.dispatchEvent(new Event('change'));
-                        }
-                        const partTab = document.querySelector('.tab-button[data-tab="participante"]');
-                        if (partTab) partTab.click();
-                    }
                 });
             });
+        }
+
+        function cardClickCanalizados() {
+            window.nomVistaColaboradorState.filters.riesgo = ['Canalizado'];
+            window.nomVistaColaboradorState.search = '';
+            window.nomVistaColaboradorState.sort = { column: null, direction: 'asc' };
+            const searchInput = document.getElementById('nom-vista-colaborador-search-input');
+            if (searchInput) searchInput.value = '';
+            if (typeof renderNomVistaColaboradorTable === 'function') {
+                renderNomVistaColaboradorTable(participantsData, '');
+            }
+            const detalleTab = document.querySelector('.tab-button[data-tab="detalle-colaborador"]');
+            if (detalleTab) detalleTab.click();
+            setTimeout(() => {
+                const wrapper = document.getElementById('nom-vista-colaborador-table-wrapper');
+                if (wrapper) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 200);
+        }
+
+        function cardClickAreasAfectadas() {
+            window.nomVistaColaboradorState.filters.riesgo = ['Canalizado'];
+            window.nomVistaColaboradorState.search = '';
+            window.nomVistaColaboradorState.sort = { column: 'area', direction: 'asc' };
+            const searchInput = document.getElementById('nom-vista-colaborador-search-input');
+            if (searchInput) searchInput.value = '';
+            if (typeof renderNomVistaColaboradorTable === 'function') {
+                renderNomVistaColaboradorTable(participantsData, '');
+            }
+            const detalleTab = document.querySelector('.tab-button[data-tab="detalle-colaborador"]');
+            if (detalleTab) detalleTab.click();
+            setTimeout(() => {
+                const wrapper = document.getElementById('nom-vista-colaborador-table-wrapper');
+                if (wrapper) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 200);
+        }
+
+        function cardClickParticipacion() {
+            const partTab = document.querySelector('.tab-button[data-tab="participante"]');
+            if (partTab) partTab.click();
+            setTimeout(() => {
+                const wrapper = document.getElementById('nom-participation-table-wrapper');
+                if (wrapper) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 200);
         }
 
         // Función para filtrar por nivel de riesgo desde las métricas
@@ -2976,9 +3001,8 @@
                 if (property === 'area') return p.details && p.details.department ? p.details.department : 'N/A';
                 if (property === 'riesgo') {
                     const norm = normalizeRiskLevel(p.riskLevel);
-                    if (norm === 'alto') return 'Alto';
                     if (norm === 'canalizado') return 'Canalizado';
-                    return 'Nulo';
+                    return 'No canalizado';
                 }
                 return 'N/A';
             });
@@ -3027,8 +3051,7 @@
             if (filters.riesgo.length > 0) {
                 filteredData = filteredData.filter(p => {
                     const norm = normalizeRiskLevel(p.riskLevel);
-                    let label = "Nulo";
-                    if (norm === 'alto') label = "Alto";
+                    let label = "No canalizado";
                     if (norm === 'canalizado') label = "Canalizado";
                     return filters.riesgo.includes(label);
                 });
@@ -3048,8 +3071,12 @@
                         valA = (a.details && a.details.leader ? a.details.leader : 'N/A').toLowerCase();
                         valB = (b.details && b.details.leader ? b.details.leader : 'N/A').toLowerCase();
                     } else if (sort.column === 'riesgo') {
-                        valA = normalizeRiskLevel(a.riskLevel) || 'nulo';
-                        valB = normalizeRiskLevel(b.riskLevel) || 'nulo';
+                        const mapSort = (r) => {
+                            const norm = normalizeRiskLevel(r);
+                            return norm === 'canalizado' ? 'canalizado' : 'no-canalizado';
+                        };
+                        valA = mapSort(a.riskLevel);
+                        valB = mapSort(b.riskLevel);
                     }
 
                     if (valA < valB) return sort.direction === 'asc' ? -1 : 1;
@@ -3152,13 +3179,14 @@
                 } else {
                     filteredData.forEach(p => {
                         const normalizedRisk = normalizeRiskLevel(p.riskLevel);
-                        let riskLabel = "Nulo";
-                        if (normalizedRisk === "alto") riskLabel = "Alto";
-                        if (normalizedRisk === "canalizado") riskLabel = "Canalizado";
+                        let riskLabel = "No canalizado";
+                        let riskClass = "no-canalizado";
+                        if (normalizedRisk === "canalizado") {
+                            riskLabel = "Canalizado";
+                            riskClass = "canalizado";
+                        }
                         
-                        const riskBadge = normalizedRisk ?
-                            `<div class="risk-level risk-${normalizedRisk}">${riskLabel}</div>` :
-                            `<div class="risk-level risk-nulo">Nulo</div>`;
+                        const riskBadge = `<div class="risk-level risk-${riskClass}">${riskLabel}</div>`;
                         
                         html += `
                             <tr style="border-bottom: 1px solid var(--ubits-border-1); transition: background-color 0.2s ease;">
