@@ -494,6 +494,67 @@
             console.log('✅ Heatmap inicializado');
         };
 
+        window.getSegmentData = function(segmentType) {
+            let segmentsData = [];
+            const type = (segmentType || '').toLowerCase().trim();
+
+            if (type === 'department' || type === 'areas') {
+                segmentsData = [
+                    { name: 'Administración', participants: 35, usuariosEnRiesgo: 8, avgRisk: 2.26, level: 'bajo' },
+                    { name: 'Finanzas', participants: 28, usuariosEnRiesgo: 3, avgRisk: 1.09, level: 'nulo' },
+                    { name: 'Mantenimiento', participants: 22, usuariosEnRiesgo: 5, avgRisk: 1.77, level: 'bajo' },
+                    { name: 'Marketing', participants: 18, usuariosEnRiesgo: 2, avgRisk: 1.43, level: 'nulo' },
+                    { name: 'Producción', participants: 45, usuariosEnRiesgo: 11, avgRisk: 2.25, level: 'bajo' },
+                    { name: 'Recursos Humanos', participants: 30, usuariosEnRiesgo: 3, avgRisk: 1.13, level: 'nulo' },
+                    { name: 'Seguridad', participants: 15, usuariosEnRiesgo: 12, avgRisk: 4.89, level: 'muy-alto' },
+                    { name: 'Tecnología', participants: 25, usuariosEnRiesgo: 6, avgRisk: 1.94, level: 'bajo' },
+                    { name: 'Ventas', participants: 40, usuariosEnRiesgo: 32, avgRisk: 4.75, level: 'muy-alto' }
+                ];
+            } else if (type === 'leader') {
+                segmentsData = [
+                    { name: 'Líder A', participants: 20, usuariosEnRiesgo: 2, avgRisk: 1.50, level: 'nulo' },
+                    { name: 'Líder B', participants: 25, usuariosEnRiesgo: 11, avgRisk: 3.20, level: 'medio' },
+                    { name: 'Líder C', participants: 30, usuariosEnRiesgo: 7, avgRisk: 2.10, level: 'bajo' }
+                ];
+            } else if (type === 'city') {
+                segmentsData = [
+                    { name: 'CDMX', participants: 45, usuariosEnRiesgo: 11, avgRisk: 2.45, level: 'bajo' },
+                    { name: 'Guadalajara', participants: 25, usuariosEnRiesgo: 6, avgRisk: 1.90, level: 'bajo' },
+                    { name: 'Monterrey', participants: 30, usuariosEnRiesgo: 19, avgRisk: 4.10, level: 'alto' }
+                ];
+            } else if (type === 'country' || type === 'pais' || type === 'países') {
+                segmentsData = [
+                    { name: 'México', participants: 115, usuariosEnRiesgo: 48, avgRisk: 3.40, level: 'medio' },
+                    { name: 'Colombia', participants: 155, usuariosEnRiesgo: 32, avgRisk: 2.10, level: 'bajo' },
+                    { name: 'Perú', participants: 35, usuariosEnRiesgo: 12, avgRisk: 2.80, level: 'medio' }
+                ];
+            } else if (type === 'position' || type === 'cargo') {
+                segmentsData = [
+                    { name: 'Gerente', participants: 16, usuariosEnRiesgo: 4, avgRisk: 1.80, level: 'bajo' },
+                    { name: 'Supervisor', participants: 62, usuariosEnRiesgo: 15, avgRisk: 2.60, level: 'medio' },
+                    { name: 'Coordinador', participants: 37, usuariosEnRiesgo: 10, avgRisk: 2.10, level: 'bajo' },
+                    { name: 'Operario', participants: 190, usuariosEnRiesgo: 95, avgRisk: 4.20, level: 'alto' }
+                ];
+            } else if (type === 'sexo' || type === 'genero' || type === 'género') {
+                segmentsData = [
+                    { name: 'Femenino', participants: 135, usuariosEnRiesgo: 35, avgRisk: 2.40, level: 'bajo' },
+                    { name: 'Masculino', participants: 170, usuariosEnRiesgo: 58, avgRisk: 2.95, level: 'medio' }
+                ];
+            } else if (type === 'age' || type === 'edad') {
+                segmentsData = [
+                    { name: '< 30 años', participants: 100, usuariosEnRiesgo: 25, avgRisk: 2.35, level: 'bajo' },
+                    { name: '30 - 45 años', participants: 150, usuariosEnRiesgo: 48, avgRisk: 3.10, level: 'medio' },
+                    { name: '> 45 años', participants: 55, usuariosEnRiesgo: 18, avgRisk: 2.85, level: 'medio' }
+                ];
+            } else {
+                segmentsData = [
+                    { name: 'Grupo A', participants: 145, usuariosEnRiesgo: 40, avgRisk: 2.50, level: 'medio' },
+                    { name: 'Grupo B', participants: 145, usuariosEnRiesgo: 38, avgRisk: 2.30, level: 'bajo' }
+                ];
+            }
+            return segmentsData;
+        };
+
         window.initializeSegmentsContent = function() {
             console.log('🔧 Inicializando contenido de Segmentos...');
             const wrapper = document.getElementById('segments-table-wrapper');
@@ -514,44 +575,7 @@
                 const segmentType = document.getElementById('segments-row-select').value;
                 console.log('📊 Renderizando tabla para segmento:', segmentType);
 
-                let segmentsData = [];
-
-                if (segmentType === 'department') {
-                    segmentsData = [
-                        { name: 'Administración', participants: 35, usuariosEnRiesgo: 8, avgRisk: 2.26, level: 'bajo' },
-                        { name: 'Finanzas', participants: 28, usuariosEnRiesgo: 3, avgRisk: 1.09, level: 'nulo' },
-                        { name: 'Mantenimiento', participants: 22, usuariosEnRiesgo: 5, avgRisk: 1.77, level: 'bajo' },
-                        { name: 'Marketing', participants: 18, usuariosEnRiesgo: 2, avgRisk: 1.43, level: 'nulo' },
-                        { name: 'Producción', participants: 45, usuariosEnRiesgo: 11, avgRisk: 2.25, level: 'bajo' },
-                        { name: 'Recursos Humanos', participants: 30, usuariosEnRiesgo: 3, avgRisk: 1.13, level: 'nulo' },
-                        { name: 'Seguridad', participants: 15, usuariosEnRiesgo: 12, avgRisk: 4.89, level: 'muy-alto' },
-                        { name: 'Tecnología', participants: 25, usuariosEnRiesgo: 6, avgRisk: 1.94, level: 'bajo' },
-                        { name: 'Ventas', participants: 40, usuariosEnRiesgo: 32, avgRisk: 4.75, level: 'muy-alto' }
-                    ];
-                } else if (segmentType === 'leader') {
-                    segmentsData = [
-                        { name: 'Líder A', participants: 20, usuariosEnRiesgo: 2, avgRisk: 1.50, level: 'nulo' },
-                        { name: 'Líder B', participants: 25, usuariosEnRiesgo: 11, avgRisk: 3.20, level: 'medio' },
-                        { name: 'Líder C', participants: 30, usuariosEnRiesgo: 7, avgRisk: 2.10, level: 'bajo' }
-                    ];
-                } else if (segmentType === 'city') {
-                    segmentsData = [
-                        { name: 'CDMX', participants: 45, usuariosEnRiesgo: 11, avgRisk: 2.45, level: 'bajo' },
-                        { name: 'Guadalajara', participants: 25, usuariosEnRiesgo: 6, avgRisk: 1.90, level: 'bajo' },
-                        { name: 'Monterrey', participants: 30, usuariosEnRiesgo: 19, avgRisk: 4.10, level: 'alto' }
-                    ];
-                } else if (segmentType === 'country') {
-                    segmentsData = [
-                        { name: 'México', participants: 50, usuariosEnRiesgo: 22, avgRisk: 2.80, level: 'medio' },
-                        { name: 'Colombia', participants: 35, usuariosEnRiesgo: 8, avgRisk: 2.10, level: 'bajo' }
-                    ];
-                } else if (segmentType === 'position') {
-                    segmentsData = [
-                        { name: 'Gerente', participants: 15, usuariosEnRiesgo: 4, avgRisk: 1.80, level: 'bajo' },
-                        { name: 'Analista', participants: 35, usuariosEnRiesgo: 22, avgRisk: 3.50, level: 'alto' },
-                        { name: 'Operativo', participants: 50, usuariosEnRiesgo: 12, avgRisk: 2.30, level: 'bajo' }
-                    ];
-                }
+                let segmentsData = window.getSegmentData(segmentType);
 
                 const getRiskLevelText = (level) => {
                     const texts = { 'muy-alto': 'MUY ALTO', 'alto': 'ALTO', 'medio': 'MEDIO', 'bajo': 'BAJO', 'nulo': 'NULO' };
@@ -12749,6 +12773,43 @@ console.log('✅ [DATA] Data asignado a window');
             }
             csvContent += "\n\n";
 
+            // 1d. Segment Results for each selected demographic
+            if (isPartActive && selectedParts.length > 0) {
+                csvContent += "RESULTADOS ESPECÍFICOS POR SEGMENTO (DEMOGRÁFICOS)\n";
+                selectedParts.forEach(key => {
+                    let segmentType = key;
+                    if (key === 'areas') segmentType = 'department';
+                    else if (key === 'cargo') segmentType = 'position';
+                    else if (key === 'genero') segmentType = 'sexo';
+                    else if (key === 'edad') segmentType = 'age';
+                    else if (key === 'pais') segmentType = 'pais';
+
+                    const segmentNameMap = {
+                        'department': 'Áreas',
+                        'position': 'Cargo',
+                        'sexo': 'Género',
+                        'age': 'Rango de Edad',
+                        'pais': 'País'
+                    };
+                    const title = segmentNameMap[segmentType] || key;
+                    const segmentsData = window.getSegmentData(segmentType);
+
+                    csvContent += `Resultados por Segmento: ${title}\n`;
+                    csvContent += "Segmento;Participantes;Usuarios en Riesgo;Promedio Riesgo;Nivel de Riesgo\n";
+
+                    segmentsData.forEach(seg => {
+                        const isPrivate = seg.participants <= 15;
+                        if (isPrivate) {
+                            csvContent += `"${seg.name}";${seg.participants};"Privado";"Privado";"Privado"\n`;
+                        } else {
+                            const riskText = (seg.level || 'nulo').toUpperCase().replace('-', ' ');
+                            csvContent += `"${seg.name}";${seg.participants};${seg.usuariosEnRiesgo};"${seg.avgRisk.toFixed(2)}";"${riskText}"\n`;
+                        }
+                    });
+                    csvContent += "\n";
+                });
+            }
+
             // 2. Participation table
             if (isPartActive && selectedParts.length > 0) {
                 csvContent += "SECCIÓN DE PARTICIPACIÓN POR DEMOGRÁFICO\n";
@@ -13246,83 +13307,72 @@ console.log('✅ [DATA] Data asignado a window');
             }
 
             // --- BUILD SEGMENT TABLE DYNAMICALLY ---
-            if (!document.querySelector('#segments-table-wrapper .results-table')) {
-                if (typeof window.initializeSegmentsContent === 'function') {
-                    window.initializeSegmentsContent();
-                }
-            }
-            
-            let segmentTableRowsHtml = '';
-            const segmentSelect = document.getElementById('segments-row-select');
-            const selectedSegmentName = segmentSelect ? segmentSelect.options[segmentSelect.selectedIndex].text : 'Segmento';
-            
-            const segRows = document.querySelectorAll('#segments-table-wrapper .results-table tbody tr');
-            segRows.forEach(row => {
-                const cells = row.cells;
-                if (cells.length >= 5) {
-                    const name = cells[0].innerText.trim();
-                    const participants = cells[1].innerText.trim();
-                    const isPrivate = cells[2].innerText.includes('Privado');
-                    
+            function buildSegmentTableRows(segmentType) {
+                const data = window.getSegmentData(segmentType);
+                let rowsHtml = '';
+                
+                data.forEach(seg => {
+                    const isPrivate = seg.participants <= 15;
+                    const getRiskLevelText = (level) => {
+                        const texts = { 'muy-alto': 'MUY ALTO', 'alto': 'ALTO', 'medio': 'MEDIO', 'bajo': 'BAJO', 'nulo': 'NULO' };
+                        return texts[level] || 'NULO';
+                    };
+                    const levelText = getRiskLevelText(seg.level);
+
                     if (isPrivate) {
-                        segmentTableRowsHtml += `
+                        rowsHtml += `
             <tr style="height: 20px;">
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${participants}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.name}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.participants}</td>
               <td colspan="3" style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0; color: #9ca3af; font-style: italic; background: #f9fafb;">Privado (bajo umbral de anonimato)</td>
             </tr>
                         `;
                     } else {
-                        const riskCount = cells[2].innerText.trim();
-                        const riskLevelSpan = cells[3].querySelector('.risk-level') || cells[3];
-                        const riskAvg = riskLevelSpan ? riskLevelSpan.innerText.trim() : '';
-                        
-                        const riskBadge = cells[4].querySelector('.risk-badge') || cells[4];
-                        const riskText = riskBadge ? riskBadge.innerText.trim() : '';
-                        
                         let badgeClass = 'badge-nulo';
-                        const normRisk = riskText.toLowerCase().trim();
-                        if (normRisk.includes('muy alto')) badgeClass = 'badge-muy-alto';
+                        const normRisk = seg.level.toLowerCase().trim();
+                        if (normRisk.includes('muy-alto') || normRisk.includes('muy alto')) badgeClass = 'badge-muy-alto';
                         else if (normRisk.includes('alto')) badgeClass = 'badge-alto';
                         else if (normRisk.includes('medio')) badgeClass = 'badge-medio';
                         else if (normRisk.includes('bajo')) badgeClass = 'badge-bajo';
                         else if (normRisk.includes('nulo')) badgeClass = 'badge-nulo';
 
-                        segmentTableRowsHtml += `
+                        rowsHtml += `
             <tr style="height: 20px;">
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${participants}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${riskCount}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${riskAvg}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 7.5px; padding: 1px 4px; line-height: 1;">${riskText}</span></td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.name}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.participants}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.usuariosEnRiesgo}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.avgRisk.toFixed(2)}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 7.5px; padding: 1px 4px; line-height: 1;">${levelText}</span></td>
             </tr>
                         `;
                     }
-                }
-            });
-            if (!segmentTableRowsHtml) {
-                segmentTableRowsHtml = `
+                });
+                
+                if (!rowsHtml) {
+                    rowsHtml = `
             <tr>
               <td colspan="5" style="padding: 15px; text-align: center; color: #64748b; font-size: 10px;">No hay resultados por segmento cargados.</td>
             </tr>
-                `;
+                    `;
+                }
+                return rowsHtml;
             }
 
             pageNum++;
             const dimPageNum = pageNum;
             pages.push(`
-    <!-- Page ${dimPageNum}: Resultados por Dimensión y Segmento -->
+    <!-- Page ${dimPageNum}: Resultados por Dimensión -->
     <div class="pdf-page" id="page-${dimPageNum}">
       <div class="pdf-header">
         <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
-        <div class="pdf-header-title">Resultados por Dimensión y Segmento</div>
+        <div class="pdf-header-title">Resultados por Dimensión</div>
       </div>
       <div class="pdf-body">
-        <h2 class="page-title">Detalle de Resultados por Dimensión y Segmento</h2>
-        <p class="page-subtitle">Desglose detallado de las dimensiones de riesgo psicosocial de la NOM-035 y el desglose de los datos demográficos del segmento seleccionado.</p>
+        <h2 class="page-title">Detalle de Resultados por Dimensión</h2>
+        <p class="page-subtitle">Desglose detallado de las dimensiones de riesgo psicosocial de la NOM-035 en la organización.</p>
         
-        <div class="section-title" style="margin-bottom: 6px;">1. Detalle por Dimensión</div>
-        <table class="pdf-table" style="font-size: 9.5px; margin-bottom: 20px; line-height: 1.2;">
+        <div class="section-title" style="margin-bottom: 6px;">Resultados por Dimensión</div>
+        <table class="pdf-table" style="font-size: 9.5px; margin-bottom: 0; line-height: 1.2;">
           <thead>
             <tr>
               <th style="padding: 6px 10px; font-size: 8.5px;">Dimensión</th>
@@ -13336,22 +13386,6 @@ console.log('✅ [DATA] Data asignado a window');
             ${dimTableRowsHtml}
           </tbody>
         </table>
-
-        <div class="section-title" style="margin-bottom: 6px;">2. Resultados por Segmento (${selectedSegmentName})</div>
-        <table class="pdf-table" style="font-size: 9.5px; margin-bottom: 0; line-height: 1.2;">
-          <thead>
-            <tr>
-              <th style="padding: 6px 10px; font-size: 8.5px;">Segmento</th>
-              <th style="padding: 6px 10px; text-align: right; width: 120px; font-size: 8.5px;">Participantes</th>
-              <th style="padding: 6px 10px; text-align: right; width: 120px; font-size: 8.5px;">Usuarios en Riesgo</th>
-              <th style="padding: 6px 10px; text-align: right; width: 110px; font-size: 8.5px;">Promedio Riesgo</th>
-              <th style="padding: 6px 10px; text-align: center; width: 120px; font-size: 8.5px;">Nivel de Riesgo</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${segmentTableRowsHtml}
-          </tbody>
-        </table>
       </div>
       <div class="pdf-footer">
         <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
@@ -13363,13 +13397,80 @@ console.log('✅ [DATA] Data asignado a window');
             thumbs.push(`
     <div class="thumb" onclick="gp(${dimPageNum})">
       <div class="th-inner">
-        <div class="th-mini-title">Dim. & Seg.</div>
-        <div class="th-mini-desc">NOM-035 (${selectedSegmentName})</div>
+        <div class="th-mini-title">Dimensiones</div>
+        <div class="th-mini-desc">NOM-035</div>
         <div class="th-mini-logo">UBITS</div>
       </div>
       <div class="th-label">Pág. ${dimPageNum}</div>
     </div>
             `);
+
+            // Loop segment tables for selected demographics
+            selectedParts.forEach(key => {
+                let segmentType = key;
+                if (key === 'areas') segmentType = 'department';
+                else if (key === 'cargo') segmentType = 'position';
+                else if (key === 'genero') segmentType = 'sexo';
+                else if (key === 'edad') segmentType = 'age';
+                else if (key === 'pais') segmentType = 'pais';
+
+                const segmentNameMap = {
+                    'department': 'Áreas',
+                    'position': 'Cargo',
+                    'sexo': 'Género',
+                    'age': 'Rango de Edad',
+                    'pais': 'País'
+                };
+                const title = segmentNameMap[segmentType] || key;
+                const segmentRowsHtml = buildSegmentTableRows(segmentType);
+
+                pageNum++;
+                const segPageNum = pageNum;
+                pages.push(`
+    <!-- Page ${segPageNum}: Resultados por Segmento - ${title} -->
+    <div class="pdf-page" id="page-${segPageNum}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Resultados por Segmento: ${title}</div>
+      </div>
+      <div class="pdf-body">
+        <h2 class="page-title">Detalle de Resultados por Segmento: ${title}</h2>
+        <p class="page-subtitle">Desglose de los niveles de riesgo y participación según el dato demográfico de ${title.toLowerCase()}.</p>
+        
+        <div class="section-title" style="margin-bottom: 6px;">Resultados por Segmento: ${title}</div>
+        <table class="pdf-table" style="font-size: 9.5px; margin-bottom: 0; line-height: 1.2;">
+          <thead>
+            <tr>
+              <th style="padding: 6px 10px; font-size: 8.5px;">Segmento</th>
+              <th style="padding: 6px 10px; text-align: right; width: 120px; font-size: 8.5px;">Participantes</th>
+              <th style="padding: 6px 10px; text-align: right; width: 120px; font-size: 8.5px;">Usuarios en Riesgo</th>
+              <th style="padding: 6px 10px; text-align: right; width: 110px; font-size: 8.5px;">Promedio Riesgo</th>
+              <th style="padding: 6px 10px; text-align: center; width: 120px; font-size: 8.5px;">Nivel de Riesgo</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${segmentRowsHtml}
+          </tbody>
+        </table>
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${segPageNum}">Página ${segPageNum} de [TOTAL]</span>
+      </div>
+    </div>
+                `);
+
+                thumbs.push(`
+    <div class="thumb" onclick="gp(${segPageNum})">
+      <div class="th-inner">
+        <div class="th-mini-title">Seg. ${title}</div>
+        <div class="th-mini-desc">NOM-035</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${segPageNum}</div>
+    </div>
+                `);
+            });
 
             // Helper to render heatmap table
             function makeHeatmapTable(headers, rowsData) {
