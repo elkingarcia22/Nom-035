@@ -13184,7 +13184,7 @@ console.log('✅ [DATA] Data asignado a window');
         <div class="pdf-header-title">Resultados Generales de la Empresa</div>
       </div>
       <div class="pdf-body">
-        <h2 class="page-title">Puntajes por Categoría y Dominio</h2>
+        <h2 class="page-title">Puntajes por Categoría, Dominio y Dimensión</h2>
         <p class="page-subtitle">Resultados globales divididos por los niveles analíticos de la NOM-035. Las categorías agrupan conjuntos específicos de factores que influyen en el entorno laboral y los dominios detallan dichos factores.</p>
         
         <div class="section-title" style="margin-bottom: 6px;">1. Resultados por Categoría</div>
@@ -13230,7 +13230,7 @@ console.log('✅ [DATA] Data asignado a window');
     <div class="thumb" onclick="gp(${genResultsPageNum})">
       <div class="th-inner">
         <div class="th-mini-title">Resultados</div>
-        <div class="th-mini-desc">Categorías & Dominios</div>
+        <div class="th-mini-desc">Cat., Dom. y Dim.</div>
         <div class="th-mini-logo">UBITS</div>
       </div>
       <div class="th-label">Pág. ${genResultsPageNum}</div>
@@ -13365,13 +13365,13 @@ console.log('✅ [DATA] Data asignado a window');
     <div class="pdf-page" id="page-${dimPageNum}">
       <div class="pdf-header">
         <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
-        <div class="pdf-header-title">Resultados por Dimensión</div>
+        <div class="pdf-header-title">Resultados Generales de la Empresa</div>
       </div>
       <div class="pdf-body">
-        <h2 class="page-title">Detalle de Resultados por Dimensión</h2>
+        <h2 class="page-title">Puntajes por Categoría, Dominio y Dimensión</h2>
         <p class="page-subtitle">Desglose detallado de las dimensiones de riesgo psicosocial de la NOM-035 en la organización.</p>
         
-        <div class="section-title" style="margin-bottom: 6px;">Resultados por Dimensión</div>
+        <div class="section-title" style="margin-bottom: 6px;">3. Resultados por Dimensión</div>
         <table class="pdf-table" style="font-size: 9.5px; margin-bottom: 0; line-height: 1.2;">
           <thead>
             <tr>
@@ -13397,8 +13397,8 @@ console.log('✅ [DATA] Data asignado a window');
             thumbs.push(`
     <div class="thumb" onclick="gp(${dimPageNum})">
       <div class="th-inner">
-        <div class="th-mini-title">Dimensiones</div>
-        <div class="th-mini-desc">NOM-035</div>
+        <div class="th-mini-title">Resultados</div>
+        <div class="th-mini-desc">Dimensiones</div>
         <div class="th-mini-logo">UBITS</div>
       </div>
       <div class="th-label">Pág. ${dimPageNum}</div>
