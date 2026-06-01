@@ -7895,35 +7895,33 @@
                 return;
             }
 
-            const headers = ['Categoría', 'Dominio', 'Dimensión', 'Usuarios en riesgo', '% Afectados', 'Nivel de Riesgo'];
+            const headers = ['Categoría', 'Usuarios en riesgo', '% Afectados', 'Puntaje Promedio', 'Nivel de Riesgo'];
             const data = [];
 
             rows.forEach(row => {
                 const cells = row.querySelectorAll('td');
-                if (cells.length < 6) return;
+                if (cells.length < 5) return;
 
                 const rowData = [];
                 
                 // Extraer categoría
                 const category = cells[0].textContent.trim();
                 
-                // Extraer dominio
-                const domain = cells[1].textContent.trim();
-                
-                // Extraer dimensión
-                const dimension = cells[2].textContent.trim();
-                
                 // Extraer total usuarios en riesgo
-                const totalUsers = cells[3].textContent.trim();
+                const totalUsers = cells[1].textContent.trim();
                 
-                // Extraer porcentaje de colaboradores afectados
-                const percentage = cells[4].textContent.trim();
+                // Extraer porcentaje
+                const percentage = cells[2].textContent.trim();
+                
+                // Extraer puntaje
+                const scoreSpan = cells[3].querySelector('.score-value');
+                const scoreVal = scoreSpan ? scoreSpan.textContent.trim() : cells[3].textContent.trim().split('\n')[0];
                 
                 // Extraer nivel de riesgo
-                const riskBadge = cells[5] ? cells[5].querySelector('.risk-badge') : null;
+                const riskBadge = cells[4] ? cells[4].querySelector('.risk-badge') || cells[4].querySelector('.risk-value') || cells[4] : null;
                 const riskLevel = riskBadge ? riskBadge.textContent.trim() : '';
                 
-                rowData.push(category, domain, dimension, totalUsers, percentage, riskLevel);
+                rowData.push(category, totalUsers, percentage, scoreVal, riskLevel);
                 data.push(rowData);
             });
 
@@ -12681,24 +12679,71 @@ console.log('✅ [DATA] Data asignado a window');
 
             let csvContent = "";
 
-            // 1. Consolidated General results
-            csvContent += "RESULTADOS GENERALES DE LA EMPRESA\n";
-            csvContent += "Categoría;Dominio;Dimensión;Usuarios en riesgo;% Afectados;Nivel de Riesgo\n";
-            
-            const tbody = document.querySelector('#sub-panel-categories .results-table tbody');
-            if (tbody) {
-                const rows = tbody.querySelectorAll('tr');
+            // 1. Consolidated Categories
+            csvContent += "RESULTADOS POR CATEGORÍA\n";
+            csvContent += "Categoría;Usuarios en riesgo;% Afectados;Puntaje Promedio;Nivel de Riesgo\n";
+            const tbodyCat = document.querySelector('#sub-panel-categories .results-table tbody');
+            if (tbodyCat) {
+                const rows = tbodyCat.querySelectorAll('tr');
                 rows.forEach(row => {
                     const cells = row.querySelectorAll('td');
-                    if (cells.length >= 6) {
-                        const cat = cells[0].textContent.trim();
-                        const dom = cells[1].textContent.trim();
-                        const dim = cells[2].textContent.trim();
-                        const users = cells[3].textContent.trim();
-                        const pct = cells[4].textContent.trim();
-                        const riskBadge = cells[5] ? cells[5].querySelector('.risk-badge') : null;
+                    if (cells.length >= 5) {
+                        const name = cells[0].textContent.trim();
+                        const users = cells[1].textContent.trim();
+                        const pct = cells[2].textContent.trim();
+                        const scoreSpan = cells[3].querySelector('.score-value');
+                        const score = scoreSpan ? scoreSpan.textContent.trim() : cells[3].textContent.trim().split('\n')[0];
+                        const riskBadge = cells[4] ? cells[4].querySelector('.risk-badge') || cells[4].querySelector('.risk-value') || cells[4] : null;
                         const risk = riskBadge ? riskBadge.textContent.trim() : '';
-                        csvContent += `"${cat}";"${dom}";"${dim}";"${users}";"${pct}";"${risk}"\n`;
+                        csvContent += `"${name}";"${users}";"${pct}";"${score}";"${risk}"\n`;
+                    }
+                });
+            }
+            csvContent += "\n\n";
+
+            // 1b. Consolidated Dominios
+            csvContent += "RESULTADOS POR DOMINIO\n";
+            csvContent += "Dominio;Usuarios en riesgo;% Afectados;Puntaje Promedio;Nivel de Riesgo\n";
+            const tbodyDom = document.querySelector('#sub-panel-domains .results-table tbody');
+            if (tbodyDom) {
+                const rows = tbodyDom.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (row.classList.contains('category-section')) {
+                        csvContent += `\n--- ${cells[0].textContent.trim()} ---\n`;
+                    } else if (cells.length >= 5) {
+                        const name = cells[0].textContent.trim();
+                        const users = cells[1].textContent.trim();
+                        const pct = cells[2].textContent.trim();
+                        const scoreSpan = cells[3].querySelector('.score-value');
+                        const score = scoreSpan ? scoreSpan.textContent.trim() : cells[3].textContent.trim().split('\n')[0];
+                        const riskBadge = cells[4] ? cells[4].querySelector('.risk-badge') || cells[4].querySelector('.risk-value') || cells[4] : null;
+                        const risk = riskBadge ? riskBadge.textContent.trim() : '';
+                        csvContent += `"${name}";"${users}";"${pct}";"${score}";"${risk}"\n`;
+                    }
+                });
+            }
+            csvContent += "\n\n";
+
+            // 1c. Consolidated Dimensiones
+            csvContent += "RESULTADOS POR DIMENSIÓN\n";
+            csvContent += "Dimensión;Usuarios en riesgo;% Afectados;Puntaje Promedio;Nivel de Riesgo\n";
+            const tbodyDim = document.querySelector('#sub-panel-dimensions .results-table tbody');
+            if (tbodyDim) {
+                const rows = tbodyDim.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (row.classList.contains('category-section')) {
+                        csvContent += `\n--- ${cells[0].textContent.trim()} ---\n`;
+                    } else if (cells.length >= 5) {
+                        const name = cells[0].textContent.trim();
+                        const users = cells[1].textContent.trim();
+                        const pct = cells[2].textContent.trim();
+                        const scoreSpan = cells[3].querySelector('.score-value');
+                        const score = scoreSpan ? scoreSpan.textContent.trim() : cells[3].textContent.trim().split('\n')[0];
+                        const riskBadge = cells[4] ? cells[4].querySelector('.risk-badge') || cells[4].querySelector('.risk-value') || cells[4] : null;
+                        const risk = riskBadge ? riskBadge.textContent.trim() : '';
+                        csvContent += `"${name}";"${users}";"${pct}";"${score}";"${risk}"\n`;
                     }
                 });
             }
@@ -12949,6 +12994,124 @@ console.log('✅ [DATA] Data asignado a window');
                 `);
             });
 
+            // --- BUILD CATEGORIES TABLE DYNAMICALLY ---
+            let catTableRowsHtml = '';
+            const catRows = document.querySelectorAll('#sub-panel-categories .results-table tbody tr');
+            catRows.forEach(row => {
+                if (row.style.display === 'none') return;
+                
+                const cells = row.cells;
+                if (cells.length >= 5) {
+                    const name = cells[0].innerText.trim();
+                    const riskCount = cells[1].innerText.trim();
+                    const pctAffected = cells[2].innerText.trim();
+                    
+                    const scoreSpan = cells[3].querySelector('.score-value');
+                    let scoreVal = scoreSpan ? scoreSpan.innerText.trim() : cells[3].innerText.trim();
+                    const parsedScore = parseFloat(scoreVal);
+                    if (!isNaN(parsedScore)) {
+                        scoreVal = parsedScore.toFixed(1);
+                    }
+                    
+                    const riskBadge = cells[4].querySelector('.risk-badge') || cells[4].querySelector('.risk-value') || cells[4];
+                    const riskText = riskBadge ? riskBadge.innerText.trim() : '';
+                    
+                    let badgeClass = 'badge-nulo';
+                    const normRisk = riskText.toLowerCase().trim();
+                    if (normRisk.includes('muy alto')) badgeClass = 'badge-muy-alto';
+                    else if (normRisk.includes('alto')) badgeClass = 'badge-alto';
+                    else if (normRisk.includes('medio')) badgeClass = 'badge-medio';
+                    else if (normRisk.includes('bajo')) badgeClass = 'badge-bajo';
+                    else if (normRisk.includes('nulo')) badgeClass = 'badge-nulo';
+
+                    catTableRowsHtml += `
+            <tr style="height: 20px;">
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${riskCount}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${pctAffected}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${scoreVal}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 7.5px; padding: 1px 4px; line-height: 1;">${riskText}</span></td>
+            </tr>
+                    `;
+                }
+            });
+            if (!catTableRowsHtml) {
+                catTableRowsHtml = `
+            <tr>
+              <td colspan="5" style="padding: 10px; text-align: center; color: #64748b; font-size: 10px;">No hay categorías que coincidan con los filtros aplicados.</td>
+            </tr>
+                `;
+            }
+
+            // --- BUILD DOMAINS TABLE DYNAMICALLY ---
+            let domTableRowsHtml = '';
+            let currentDomCategoryHtml = '';
+            let currentDomCategoryHasVisibleDomains = false;
+            
+            const domRows = document.querySelectorAll('#sub-panel-domains .results-table tbody tr');
+            domRows.forEach(row => {
+                if (row.classList.contains('category-section')) {
+                    if (currentDomCategoryHtml && currentDomCategoryHasVisibleDomains) {
+                        domTableRowsHtml += currentDomCategoryHtml;
+                    }
+                    const titleText = row.querySelector('td')?.innerText || row.innerText;
+                    currentDomCategoryHtml = `
+            <tr class="dim-cat-section-row" style="background: #f8fafc;">
+              <td colspan="5" style="padding: 4px 6px; font-weight: 700; color: #475569; font-size: 9px; text-align: left; border-bottom: 1px solid #e2e8f0; text-transform: uppercase; letter-spacing: 0.5px;">${titleText}</td>
+            </tr>
+                    `;
+                    currentDomCategoryHasVisibleDomains = false;
+                } else {
+                    if (row.style.display === 'none') return;
+                    
+                    const cells = row.cells;
+                    if (cells.length >= 5) {
+                        const name = cells[0].innerText.trim();
+                        const riskCount = cells[1].innerText.trim();
+                        const pctAffected = cells[2].innerText.trim();
+                        
+                        const scoreSpan = cells[3].querySelector('.score-value');
+                        let scoreVal = scoreSpan ? scoreSpan.innerText.trim() : cells[3].innerText.trim();
+                        const parsedScore = parseFloat(scoreVal);
+                        if (!isNaN(parsedScore)) {
+                            scoreVal = parsedScore.toFixed(1);
+                        }
+                        
+                        const riskBadge = cells[4].querySelector('.risk-badge') || cells[4].querySelector('.risk-value') || cells[4];
+                        const riskText = riskBadge ? riskBadge.innerText.trim() : '';
+                        
+                        let badgeClass = 'badge-nulo';
+                        const normRisk = riskText.toLowerCase().trim();
+                        if (normRisk.includes('muy alto')) badgeClass = 'badge-muy-alto';
+                        else if (normRisk.includes('alto')) badgeClass = 'badge-alto';
+                        else if (normRisk.includes('medio')) badgeClass = 'badge-medio';
+                        else if (normRisk.includes('bajo')) badgeClass = 'badge-bajo';
+                        else if (normRisk.includes('nulo')) badgeClass = 'badge-nulo';
+
+                        currentDomCategoryHtml += `
+            <tr style="height: 20px;">
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${riskCount}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${pctAffected}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${scoreVal}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 7.5px; padding: 1px 4px; line-height: 1;">${riskText}</span></td>
+            </tr>
+                        `;
+                        currentDomCategoryHasVisibleDomains = true;
+                    }
+                }
+            });
+            if (currentDomCategoryHtml && currentDomCategoryHasVisibleDomains) {
+                domTableRowsHtml += currentDomCategoryHtml;
+            }
+            if (!domTableRowsHtml) {
+                domTableRowsHtml = `
+            <tr>
+              <td colspan="5" style="padding: 10px; text-align: center; color: #64748b; font-size: 10px;">No hay dominios que coincidan con los filtros aplicados.</td>
+            </tr>
+                `;
+            }
+
             // Resultados Generales de la Empresa Page
             pageNum++;
             const genResultsPageNum = pageNum;
@@ -12961,76 +13124,37 @@ console.log('✅ [DATA] Data asignado a window');
       </div>
       <div class="pdf-body">
         <h2 class="page-title">Puntajes por Categoría y Dominio</h2>
-        <p class="page-subtitle">Resultados globales divididos por los niveles analíticos de la NOM-035. Las categorías agrupan conjuntos específicos de factores que influyen en el entorno laboral.</p>
+        <p class="page-subtitle">Resultados globales divididos por los niveles analíticos de la NOM-035. Las categorías agrupan conjuntos específicos de factores que influyen en el entorno laboral y los dominios detallan dichos factores.</p>
         
-        <div class="section-title">1. Resultados por Categoría</div>
-        <table class="pdf-table" style="margin-bottom: 30px;">
+        <div class="section-title" style="margin-bottom: 6px;">1. Resultados por Categoría</div>
+        <table class="pdf-table" style="font-size: 9.5px; margin-bottom: 20px; line-height: 1.2;">
           <thead>
             <tr>
-              <th>Categoría de Evaluación</th>
-              <th style="text-align: right; width: 140px;">Puntaje Promedio</th>
-              <th style="text-align: center; width: 180px;">Nivel de Riesgo</th>
+              <th style="padding: 6px 10px; font-size: 8.5px;">Categoría de Evaluación</th>
+              <th style="padding: 6px 10px; text-align: right; width: 120px; font-size: 8.5px;">Usuarios en Riesgo</th>
+              <th style="padding: 6px 10px; text-align: right; width: 90px; font-size: 8.5px;">% Afectados</th>
+              <th style="padding: 6px 10px; text-align: right; width: 110px; font-size: 8.5px;">Puntaje Promedio</th>
+              <th style="padding: 6px 10px; text-align: center; width: 120px; font-size: 8.5px;">Nivel de Riesgo</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Ambiente de trabajo</td>
-              <td style="text-align: right; font-weight: 600;">45.2</td>
-              <td style="text-align: center;"><span class="badge badge-medio">Riesgo Medio</span></td>
-            </tr>
-            <tr>
-              <td>Factores propios de la actividad</td>
-              <td style="text-align: right; font-weight: 600;">68.5</td>
-              <td style="text-align: center;"><span class="badge badge-alto">Riesgo Alto</span></td>
-            </tr>
-            <tr>
-              <td>Organización del tiempo de trabajo</td>
-              <td style="text-align: right; font-weight: 600;">55.0</td>
-              <td style="text-align: center;"><span class="badge badge-alto">Riesgo Alto</span></td>
-            </tr>
-            <tr>
-              <td>Liderazgo y relaciones en el trabajo</td>
-              <td style="text-align: right; font-weight: 600;">32.1</td>
-              <td style="text-align: center;"><span class="badge badge-bajo">Riesgo Bajo</span></td>
-            </tr>
+            ${catTableRowsHtml}
           </tbody>
         </table>
         
-        <div class="section-title">2. Dominios Críticos (Top 5 con Mayor Riesgo)</div>
-        <table class="pdf-table">
+        <div class="section-title" style="margin-bottom: 6px;">2. Resultados por Dominio</div>
+        <table class="pdf-table" style="font-size: 9.5px; margin-bottom: 0; line-height: 1.2;">
           <thead>
             <tr>
-              <th>Dominio Específico</th>
-              <th>Categoría Perteneciente</th>
-              <th style="text-align: center; width: 180px;">Nivel de Riesgo</th>
+              <th style="padding: 6px 10px; font-size: 8.5px;">Dominio Específico</th>
+              <th style="padding: 6px 10px; text-align: right; width: 120px; font-size: 8.5px;">Usuarios en Riesgo</th>
+              <th style="padding: 6px 10px; text-align: right; width: 90px; font-size: 8.5px;">% Afectados</th>
+              <th style="padding: 6px 10px; text-align: right; width: 110px; font-size: 8.5px;">Puntaje Promedio</th>
+              <th style="padding: 6px 10px; text-align: center; width: 120px; font-size: 8.5px;">Nivel de Riesgo</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td style="font-weight: 600;">Carga de trabajo</td>
-              <td>Factores propios de la actividad</td>
-              <td style="text-align: center;"><span class="badge badge-muy-alto">Riesgo Muy Alto</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight: 600;">Jornada de trabajo</td>
-              <td>Organización del tiempo de trabajo</td>
-              <td style="text-align: center;"><span class="badge badge-alto">Riesgo Alto</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight: 600;">Condiciones en el ambiente de trabajo</td>
-              <td>Ambiente de trabajo</td>
-              <td style="text-align: center;"><span class="badge badge-medio">Riesgo Medio</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight: 600;">Interferencia en la relación trabajo-familia</td>
-              <td>Organización del tiempo de trabajo</td>
-              <td style="text-align: center;"><span class="badge badge-medio">Riesgo Medio</span></td>
-            </tr>
-            <tr>
-              <td style="font-weight: 600;">Liderazgo</td>
-              <td>Liderazgo y relaciones en el trabajo</td>
-              <td style="text-align: center;"><span class="badge badge-bajo">Riesgo Bajo</span></td>
-            </tr>
+            ${domTableRowsHtml}
           </tbody>
         </table>
       </div>
@@ -13677,7 +13801,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Apply filters
             rows.forEach(row => {
                 const cells = row.querySelectorAll('td');
-                if (cells.length < 6) return;
+                if (cells.length < 5) return;
 
                 const textVal = cells[0].textContent.toLowerCase();
                 const pctVal = parseNum(cells[2].textContent);
