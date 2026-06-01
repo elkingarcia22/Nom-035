@@ -13052,6 +13052,121 @@ console.log('✅ [DATA] Data asignado a window');
     </div>
             `);
 
+            // --- BUILD DIMENSIONS TABLE DYNAMICALLY ---
+            let dimTableRowsHtml = '';
+            let currentCategoryHtml = '';
+            let currentCategoryHasVisibleDimensions = false;
+            
+            const dimRows = document.querySelectorAll('#sub-panel-dimensions .results-table tbody tr');
+            dimRows.forEach(row => {
+                if (row.classList.contains('category-section')) {
+                    if (currentCategoryHtml && currentCategoryHasVisibleDimensions) {
+                        dimTableRowsHtml += currentCategoryHtml;
+                    }
+                    const titleText = row.querySelector('td')?.innerText || row.innerText;
+                    currentCategoryHtml = `
+            <tr class="dim-cat-section-row" style="background: #f8fafc;">
+              <td colspan="5" style="padding: 4px 6px; font-weight: 700; color: #475569; font-size: 9px; text-align: left; border-bottom: 1px solid #e2e8f0; text-transform: uppercase; letter-spacing: 0.5px;">${titleText}</td>
+            </tr>
+                    `;
+                    currentCategoryHasVisibleDimensions = false;
+                } else if (row.classList.contains('dimension-row')) {
+                    if (row.style.display === 'none') return;
+                    
+                    const cells = row.cells;
+                    if (cells.length >= 5) {
+                        const name = cells[0].innerText.trim();
+                        const riskCount = cells[1].innerText.trim();
+                        const pctAffected = cells[2].innerText.trim();
+                        
+                        const scoreSpan = cells[3].querySelector('.score-value');
+                        let scoreVal = scoreSpan ? scoreSpan.innerText.trim() : cells[3].innerText.trim();
+                        const parsedScore = parseFloat(scoreVal);
+                        if (!isNaN(parsedScore)) {
+                            scoreVal = parsedScore.toFixed(1);
+                        }
+                        
+                        const riskBadge = cells[4].querySelector('.risk-badge') || cells[4].querySelector('.risk-value') || cells[4];
+                        const riskText = riskBadge ? riskBadge.innerText.trim() : '';
+                        
+                        let badgeClass = 'badge-nulo';
+                        const normRisk = riskText.toLowerCase().trim();
+                        if (normRisk.includes('muy alto')) badgeClass = 'badge-muy-alto';
+                        else if (normRisk.includes('alto')) badgeClass = 'badge-alto';
+                        else if (normRisk.includes('medio')) badgeClass = 'badge-medio';
+                        else if (normRisk.includes('bajo')) badgeClass = 'badge-bajo';
+                        else if (normRisk.includes('nulo')) badgeClass = 'badge-nulo';
+
+                        currentCategoryHtml += `
+            <tr style="height: 20px;">
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${riskCount}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${pctAffected}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${scoreVal}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 7.5px; padding: 1px 4px; line-height: 1;">${riskText}</span></td>
+            </tr>
+                        `;
+                        currentCategoryHasVisibleDimensions = true;
+                    }
+                }
+            });
+            if (currentCategoryHtml && currentCategoryHasVisibleDimensions) {
+                dimTableRowsHtml += currentCategoryHtml;
+            }
+            if (!dimTableRowsHtml) {
+                dimTableRowsHtml = `
+            <tr>
+              <td colspan="5" style="padding: 20px; text-align: center; color: #64748b; font-size: 10px;">No hay dimensiones que coincidan con los filtros aplicados.</td>
+            </tr>
+                `;
+            }
+
+            pageNum++;
+            const dimPageNum = pageNum;
+            pages.push(`
+    <!-- Page ${dimPageNum}: Resultados por Dimensión -->
+    <div class="pdf-page" id="page-${dimPageNum}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Resultados por Dimensión</div>
+      </div>
+      <div class="pdf-body">
+        <h2 class="page-title">Detalle de Resultados por Dimensión</h2>
+        <p class="page-subtitle">Desglose detallado de las dimensiones evaluadas según la norma oficial mexicana NOM-035. Las dimensiones representan el nivel más específico de análisis.</p>
+        
+        <table class="pdf-table" style="font-size: 9.5px; margin-bottom: 0; line-height: 1.2;">
+          <thead>
+            <tr>
+              <th style="padding: 6px 10px; font-size: 8.5px;">Dimensión</th>
+              <th style="padding: 6px 10px; text-align: right; width: 120px; font-size: 8.5px;">Usuarios en Riesgo</th>
+              <th style="padding: 6px 10px; text-align: right; width: 90px; font-size: 8.5px;">% Afectados</th>
+              <th style="padding: 6px 10px; text-align: right; width: 110px; font-size: 8.5px;">Puntaje Relativo</th>
+              <th style="padding: 6px 10px; text-align: center; width: 120px; font-size: 8.5px;">Nivel de Riesgo</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${dimTableRowsHtml}
+          </tbody>
+        </table>
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${dimPageNum}">Página ${dimPageNum} de [TOTAL]</span>
+      </div>
+    </div>
+            `);
+
+            thumbs.push(`
+    <div class="thumb" onclick="gp(${dimPageNum})">
+      <div class="th-inner">
+        <div class="th-mini-title">Dimensiones</div>
+        <div class="th-mini-desc">NOM-035</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${dimPageNum}</div>
+    </div>
+            `);
+
             // Helper to render heatmap table
             function makeHeatmapTable(headers, rowsData) {
                 let ths = `<th class="col-title" style="width: 250px;">Concepto / Variable</th>`;
