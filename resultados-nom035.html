@@ -5953,13 +5953,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <button class="tb-btn" onclick="zoom(10)">&#43;</button>
   </div>
   <div class="tb-sep"></div>
-  <button class="tb-btn primary" onclick="alert('Descargando cartas-canalizacion-nom035-2026-05-28.zip...')">&#11015; Descargar ZIP</button>
+  <button class="tb-btn primary" onclick="downloadPdf()">&#11015; Descargar PDF</button>
   <button class="tb-btn" onclick="window.print()" title="Imprimir">&#128438;</button>
 </div>
 <div class="main">
   <div class="sidebar">${participants.map((p,i)=>thumb(p,i)).join('')}</div>
   <div class="content" id="cnt">${participants.map((p,i)=>letter(p,i)).join('')}</div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
 let cp=1,zl=100;
 function gp(n){n=Math.max(1,Math.min(${participants.length},+n));cp=n;document.getElementById('pi').value=n;document.querySelectorAll('.thumb').forEach((t,i)=>t.classList.toggle('active',i+1===n));document.getElementById('page-'+n).scrollIntoView({behavior:'smooth',block:'start'});}
@@ -5970,6 +5971,18 @@ document.getElementById('cnt').addEventListener('scroll',function(){
     if(r.top>=0&&r.top<window.innerHeight/2){cp=i+1;document.getElementById('pi').value=cp;document.querySelectorAll('.thumb').forEach((t,j)=>t.classList.toggle('active',j===i));}
   });
 });
+function downloadPdf(){
+  const element = document.getElementById('cnt');
+  const opt = {
+    margin: 0,
+    filename: 'cartas-canalizacion-nom035-' + new Date().toISOString().split('T')[0] + '.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+    jsPDF: { unit: 'px', format: [760, 1050], orientation: 'portrait' },
+    pagebreak: { mode: ['css', 'legacy'] }
+  };
+  html2pdf().set(opt).from(element).save();
+}
 <\/script>
 </body>
 </html>`;
