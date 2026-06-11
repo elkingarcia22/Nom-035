@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UBITS Playground - Resultados NOM 035 Riesgo psicosocial</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <script>
         console.log('🚀 [HEAD] Página iniciando...');
@@ -12685,6 +12686,8 @@ console.log('✅ [DATA] Data asignado a window');
                     
                     if (rpFmt === 'xlsx') {
                         downloadRpXlsx();
+                    } else if (rpFmt === 'pdf') {
+                        openEntornoPdfViewer();
                     }
                 } else {
                     rpDownloads[0].progress = Math.round(rpProgress);
@@ -13887,7 +13890,7 @@ body{font-family:'Inter',sans-serif;background:#323639;display:flex;flex-directi
     <button class="tb-btn" onclick="zoom(10)"><i class="far fa-search-plus"></i></button>
   </div>
   <div class="tb-sep"></div>
-  <button class="tb-btn primary" onclick="alert('Descargando reporte en formato PDF original...')"><i class="far fa-download"></i> Descargar PDF</button>
+  <button class="tb-btn primary" onclick="downloadPdf()"><i class="far fa-download"></i> Descargar PDF</button>
   <button class="tb-btn" onclick="window.print()" title="Imprimir"><i class="far fa-print"></i></button>
 </div>
 <div class="main">
@@ -13898,6 +13901,7 @@ body{font-family:'Inter',sans-serif;background:#323639;display:flex;flex-directi
     ${pages.join('\n')}
   </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
 let cp=1,zl=100;
 const totalPagesCount = ${totalPages};
@@ -13928,6 +13932,18 @@ document.getElementById('cnt').addEventListener('scroll',function(){
     }
   });
 });
+function downloadPdf(){
+  const element = document.getElementById('cnt');
+  const opt = {
+    margin: 0,
+    filename: 'reporte-riesgo-psicosocial-nom035-' + new Date().toISOString().split('T')[0] + '.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+    jsPDF: { unit: 'px', format: [794, 1123], orientation: 'portrait' },
+    pagebreak: { mode: ['css', 'legacy'] }
+  };
+  html2pdf().set(opt).from(element).save();
+}
 <\/script>
 
 </body>
