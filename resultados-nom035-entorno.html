@@ -13933,6 +13933,10 @@ document.getElementById('cnt').addEventListener('scroll',function(){
   });
 });
 function downloadPdf(){
+  if (typeof html2pdf === 'undefined') {
+    alert('Cargando generador de PDF... Por favor intenta de nuevo en unos segundos.');
+    return;
+  }
   const element = document.getElementById('cnt');
   const opt = {
     margin: 0,
