@@ -5960,7 +5960,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <div class="sidebar">${participants.map((p,i)=>thumb(p,i)).join('')}</div>
   <div class="content" id="cnt">${participants.map((p,i)=>letter(p,i)).join('')}</div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
 let cp=1,zl=100;
 function gp(n){n=Math.max(1,Math.min(${participants.length},+n));cp=n;document.getElementById('pi').value=n;document.querySelectorAll('.thumb').forEach((t,i)=>t.classList.toggle('active',i+1===n));document.getElementById('page-'+n).scrollIntoView({behavior:'smooth',block:'start'});}
@@ -5972,20 +5971,25 @@ document.getElementById('cnt').addEventListener('scroll',function(){
   });
 });
 function downloadPdf(){
-  if (typeof html2pdf === 'undefined') {
-    alert('Cargando generador de PDF... Por favor intenta de nuevo en unos segundos.');
-    return;
+  function loadAndRun(){
+    if(typeof html2pdf==='undefined'){
+      const s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+      s.onload=loadAndRun;
+      document.head.appendChild(s);
+      return;
+    }
+    const element=document.getElementById('cnt');
+    html2pdf().set({
+      margin:0,
+      filename:'cartas-canalizacion-nom035-'+new Date().toISOString().split('T')[0]+'.pdf',
+      image:{type:'jpeg',quality:0.98},
+      html2canvas:{scale:2,useCORS:true,letterRendering:true},
+      jsPDF:{unit:'px',format:[760,1050],orientation:'portrait'},
+      pagebreak:{mode:['css','legacy']}
+    }).from(element).save();
   }
-  const element = document.getElementById('cnt');
-  const opt = {
-    margin: 0,
-    filename: 'cartas-canalizacion-nom035-' + new Date().toISOString().split('T')[0] + '.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-    jsPDF: { unit: 'px', format: [760, 1050], orientation: 'portrait' },
-    pagebreak: { mode: ['css', 'legacy'] }
-  };
-  html2pdf().set(opt).from(element).save();
+  loadAndRun();
 }
 <\/script>
 </body>
