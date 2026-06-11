@@ -12174,15 +12174,22 @@ console.log('✅ [DATA] Data asignado a window');
         let rpProgress = 0;
         let rpInterval = null;
 
-        function openRpDrawer() {
-            document.getElementById('rpOverlay').classList.add('show');
-            document.getElementById('rpDrawer').classList.add('show');
+        window.openRpDrawer = function() {
+            console.log('🔑 Abriendo drawer de descarga...');
+            const overlay = document.getElementById('rpOverlay');
+            const drawer = document.getElementById('rpDrawer');
+            if (!overlay || !drawer) {
+                console.error('❌ No se encontró rpOverlay o rpDrawer');
+                return;
+            }
+            overlay.classList.add('show');
+            drawer.classList.add('show');
             switchRpTab('reports');
-        }
-        function closeRpDrawer() {
+        };
+        window.closeRpDrawer = function() {
             document.getElementById('rpOverlay').classList.remove('show');
             document.getElementById('rpDrawer').classList.remove('show');
-        }
+        };
         function minimizeRpDrawer() {
             closeRpDrawer();
             if (rpDownloads.length > 0) {
