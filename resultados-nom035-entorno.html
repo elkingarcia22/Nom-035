@@ -13547,8 +13547,8 @@ console.log('✅ [DATA] Data asignado a window');
                         // Categories page (groupA + groupB)
                         pageNum++;
                         const dCatPageId = pageNum;
-                        const dCatTblA = makeHeatmapTable(demoData.groupA, demoData.heatmaps.categories.groupA);
-                        const dCatTblB = makeHeatmapTable(demoData.groupB, demoData.heatmaps.categories.groupB);
+                        const dCatTblA = makeSegmentAnalysisTable(demoData.groupA, demoData.heatmaps.categories.groupA);
+                        const dCatTblB = makeSegmentAnalysisTable(demoData.groupB, demoData.heatmaps.categories.groupB);
                         pages.push(`
     <div class="pdf-page" id="page-${dCatPageId}">
       <div class="pdf-header">
@@ -13582,8 +13582,8 @@ console.log('✅ [DATA] Data asignado a window');
                         // Domains page (groupA + groupB)
                         pageNum++;
                         const dDomPageId = pageNum;
-                        const dDomTblA = makeHeatmapTable(demoData.groupA, demoData.heatmaps.domains.groupA);
-                        const dDomTblB = makeHeatmapTable(demoData.groupB, demoData.heatmaps.domains.groupB);
+                        const dDomTblA = makeSegmentAnalysisTable(demoData.groupA, demoData.heatmaps.domains.groupA);
+                        const dDomTblB = makeSegmentAnalysisTable(demoData.groupB, demoData.heatmaps.domains.groupB);
                         pages.push(`
     <div class="pdf-page" id="page-${dDomPageId}">
       <div class="pdf-header">
@@ -13618,8 +13618,8 @@ console.log('✅ [DATA] Data asignado a window');
                         if (demoData.heatmaps.dimensions) {
                             pageNum++;
                             const dDimPageId = pageNum;
-                            const dDimTblA = makeHeatmapTable(demoData.groupA, demoData.heatmaps.dimensions.groupA);
-                            const dDimTblB = makeHeatmapTable(demoData.groupB, demoData.heatmaps.dimensions.groupB);
+                            const dDimTblA = makeSegmentAnalysisTable(demoData.groupA, demoData.heatmaps.dimensions.groupA);
+                            const dDimTblB = makeSegmentAnalysisTable(demoData.groupB, demoData.heatmaps.dimensions.groupB);
                             pages.push(`
     <div class="pdf-page" id="page-${dDimPageId}">
       <div class="pdf-header">
@@ -13655,8 +13655,8 @@ console.log('✅ [DATA] Data asignado a window');
                         // Compact: Cat + Dom on one page
                         pageNum++;
                         const dCompPageId = pageNum;
-                        const dCompCatTbl = makeHeatmapTable(demoData.cols, demoData.heatmaps.categories);
-                        const dCompDomTbl = makeHeatmapTable(demoData.cols, demoData.heatmaps.domains);
+                        const dCompCatTbl = makeSegmentAnalysisTable(demoData.cols, demoData.heatmaps.categories);
+                        const dCompDomTbl = makeSegmentAnalysisTable(demoData.cols, demoData.heatmaps.domains);
                         pages.push(`
     <div class="pdf-page" id="page-${dCompPageId}">
       <div class="pdf-header">
@@ -13697,7 +13697,7 @@ console.log('✅ [DATA] Data asignado a window');
                         if (demoData.heatmaps.dimensions) {
                             pageNum++;
                             const dDimCpPageId = pageNum;
-                            const dDimCpTbl = makeHeatmapTable(demoData.cols, demoData.heatmaps.dimensions);
+                            const dDimCpTbl = makeSegmentAnalysisTable(demoData.cols, demoData.heatmaps.dimensions);
                             pages.push(`
     <div class="pdf-page" id="page-${dDimCpPageId}">
       <div class="pdf-header">
@@ -13731,7 +13731,7 @@ console.log('✅ [DATA] Data asignado a window');
                         // Non-split, non-compact: separate cat, dom, dim pages
                         pageNum++;
                         const dCatElseId = pageNum;
-                        const dCatElseTbl = makeHeatmapTable(demoData.cols, demoData.heatmaps.categories);
+                        const dCatElseTbl = makeSegmentAnalysisTable(demoData.cols, demoData.heatmaps.categories);
                         pages.push(`
     <div class="pdf-page" id="page-${dCatElseId}">
       <div class="pdf-header">
@@ -13762,7 +13762,7 @@ console.log('✅ [DATA] Data asignado a window');
 
                         pageNum++;
                         const dDomElseId = pageNum;
-                        const dDomElseTbl = makeHeatmapTable(demoData.cols, demoData.heatmaps.domains);
+                        const dDomElseTbl = makeSegmentAnalysisTable(demoData.cols, demoData.heatmaps.domains);
                         pages.push(`
     <div class="pdf-page" id="page-${dDomElseId}">
       <div class="pdf-header">
@@ -13794,7 +13794,7 @@ console.log('✅ [DATA] Data asignado a window');
                         if (demoData.heatmaps.dimensions) {
                             pageNum++;
                             const dDimElseId = pageNum;
-                            const dDimElseTbl = makeHeatmapTable(demoData.cols, demoData.heatmaps.dimensions);
+                            const dDimElseTbl = makeSegmentAnalysisTable(demoData.cols, demoData.heatmaps.dimensions);
                             pages.push(`
     <div class="pdf-page" id="page-${dDimElseId}">
       <div class="pdf-header">
@@ -13833,7 +13833,7 @@ console.log('✅ [DATA] Data asignado a window');
                 headers.forEach(h => {
                     ths += `<th>${h}</th>`;
                 });
-                
+
                 let trs = '';
                 Object.keys(rowsData).forEach(rowTitle => {
                     let tds = `<td class="hm-row-title">${rowTitle}</td>`;
@@ -13844,15 +13844,47 @@ console.log('✅ [DATA] Data asignado a window');
                         else if (val >= 35) rClass = 'alto';
                         else if (val >= 20) rClass = 'medio';
                         else if (val >= 10) rClass = 'bajo';
-                        
+
                         tds += `<td><div class="hm-cell ${rClass}">${val.toFixed(1)}</div></td>`;
                     });
                     trs += `<tr>${tds}</tr>`;
                 });
-                
+
                 return `
       <table class="hm-table">
         <thead><tr>${ths}</tr></thead>
+        <tbody>${trs}</tbody>
+      </table>
+                `;
+            }
+
+            // Renders a segment-oriented table: each ROW is a segment, each COLUMN is a category/domain/dimension
+            function makeSegmentAnalysisTable(segments, heatmapData) {
+                const concepts = Object.keys(heatmapData);
+                const colW = Math.max(60, Math.floor(480 / concepts.length));
+                let ths = `<th style="padding:6px 10px; font-size:8.5px; text-align:left; width:140px;">Segmento</th>`;
+                concepts.forEach(c => {
+                    ths += `<th style="padding:6px 6px; font-size:8px; text-align:center; width:${colW}px;">${c}</th>`;
+                });
+
+                let trs = '';
+                segments.forEach((seg, i) => {
+                    let tds = `<td style="padding:4px 10px; font-size:8.5px; font-weight:600; color:#1e293b; border-bottom:1px solid #e2e8f0;">${seg}</td>`;
+                    concepts.forEach(c => {
+                        const val = heatmapData[c][i];
+                        let bg = '#dbeafe'; let col = '#1e40af';
+                        if (val >= 50)      { bg = '#fee2e2'; col = '#991b1b'; }
+                        else if (val >= 35) { bg = '#ffedd5'; col = '#c2410c'; }
+                        else if (val >= 20) { bg = '#fef9c3'; col = '#713f12'; }
+                        else if (val >= 10) { bg = '#dcfce7'; col = '#166534'; }
+                        tds += `<td style="padding:3px 4px; text-align:center; border-bottom:1px solid #e2e8f0;"><span style="display:inline-block;background:${bg};color:${col};border-radius:4px;padding:2px 5px;font-size:8px;font-weight:700;">${val.toFixed(1)}</span></td>`;
+                    });
+                    trs += `<tr>${tds}</tr>`;
+                });
+
+                return `
+      <table class="pdf-table" style="font-size:8.5px; margin-bottom:0; line-height:1.2; border-collapse:separate; border-spacing:0; border:1px solid #e2e8f0; border-radius:6px; overflow:hidden;">
+        <thead><tr style="background:#f8fafc;">${ths}</tr></thead>
         <tbody>${trs}</tbody>
       </table>
                 `;
