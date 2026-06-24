@@ -12511,6 +12511,24 @@ console.log('✅ [DATA] Data asignado a window');
                             "Relaciones en el trabajo": [12.8, 24.0, 9.0, 18.4, 4.5],
                             "Interferencia trabajo-familia": [33.0, 41.0, 14.6, 38.5, 15.8]
                         }
+                    },
+                    dimensions: {
+                        groupA: {
+                            "Cond. del ambiente de trabajo": [42.1, 30.5, 20.8, 7.5, 27.2],
+                            "Carga cuantitativa": [72.5, 65.4, 68.0, 40.2, 46.8],
+                            "Ritmo de trabajo": [68.2, 58.0, 65.5, 38.5, 42.0],
+                            "Carga mental": [65.0, 52.1, 60.2, 35.0, 40.5],
+                            "Jornada laboral": [46.5, 42.8, 60.0, 12.0, 26.5],
+                            "Interf. trabajo-familia": [42.0, 37.5, 21.5, 8.0, 14.0]
+                        },
+                        groupB: {
+                            "Cond. del ambiente de trabajo": [15.0, 46.0, 25.0, 30.5, 9.2],
+                            "Carga cuantitativa": [36.0, 58.5, 27.5, 43.0, 14.5],
+                            "Ritmo de trabajo": [32.5, 55.0, 25.0, 40.0, 12.0],
+                            "Carga mental": [28.0, 50.0, 22.5, 38.0, 10.5],
+                            "Jornada laboral": [40.0, 46.5, 17.5, 50.0, 31.5],
+                            "Interf. trabajo-familia": [31.5, 40.0, 14.0, 37.0, 15.5]
+                        }
                     }
                 }
             },
@@ -12543,6 +12561,14 @@ console.log('✅ [DATA] Data asignado a window');
                         "Liderazgo": [26.4, 24.0, 12.5, 5.8],
                         "Relaciones en el trabajo": [16.8, 20.5, 10.2, 4.8],
                         "Interferencia trabajo-familia": [40.2, 36.4, 20.5, 12.4]
+                    },
+                    dimensions: {
+                        "Cond. del ambiente de trabajo": [40.5, 28.2, 19.5, 11.5],
+                        "Carga cuantitativa": [70.2, 58.5, 62.0, 34.5],
+                        "Ritmo de trabajo": [65.8, 55.0, 60.5, 30.0],
+                        "Carga mental": [62.0, 50.5, 56.0, 28.5],
+                        "Jornada laboral": [44.5, 40.2, 51.5, 31.0],
+                        "Interf. trabajo-familia": [38.5, 35.0, 19.5, 12.0]
                     }
                 }
             },
@@ -12574,6 +12600,14 @@ console.log('✅ [DATA] Data asignado a window');
                         "Liderazgo": [20.5, 22.0],
                         "Relaciones en el trabajo": [12.4, 14.2],
                         "Interferencia trabajo-familia": [32.1, 34.0]
+                    },
+                    dimensions: {
+                        "Cond. del ambiente de trabajo": [32.5, 34.8],
+                        "Carga cuantitativa": [50.2, 52.5],
+                        "Ritmo de trabajo": [48.0, 50.5],
+                        "Carga mental": [45.5, 47.8],
+                        "Jornada laboral": [40.5, 42.8],
+                        "Interf. trabajo-familia": [30.5, 32.5]
                     }
                 }
             },
@@ -12606,6 +12640,14 @@ console.log('✅ [DATA] Data asignado a window');
                         "Liderazgo": [18.2, 21.5, 23.0],
                         "Relaciones en el trabajo": [10.5, 13.8, 14.5],
                         "Interferencia trabajo-familia": [28.5, 34.2, 32.0]
+                    },
+                    dimensions: {
+                        "Cond. del ambiente de trabajo": [30.8, 35.2, 36.5],
+                        "Carga cuantitativa": [46.5, 52.0, 54.5],
+                        "Ritmo de trabajo": [44.0, 49.5, 51.8],
+                        "Carga mental": [42.5, 47.8, 50.0],
+                        "Jornada laboral": [37.0, 44.5, 41.5],
+                        "Interf. trabajo-familia": [27.5, 32.8, 31.0]
                     }
                 }
             },
@@ -12638,6 +12680,14 @@ console.log('✅ [DATA] Data asignado a window');
                         "Liderazgo": [20.1, 22.2, 21.0],
                         "Relaciones en el trabajo": [12.2, 14.0, 13.5],
                         "Interferencia trabajo-familia": [32.5, 34.1, 33.0]
+                    },
+                    dimensions: {
+                        "Cond. del ambiente de trabajo": [33.5, 34.5, 33.8],
+                        "Carga cuantitativa": [51.0, 52.5, 51.5],
+                        "Ritmo de trabajo": [48.5, 50.0, 49.0],
+                        "Carga mental": [46.0, 47.5, 46.8],
+                        "Jornada laboral": [41.0, 42.8, 41.5],
+                        "Interf. trabajo-familia": [31.0, 32.8, 32.0]
                     }
                 }
             }
@@ -13480,6 +13530,301 @@ console.log('✅ [DATA] Data asignado a window');
       <div class="th-label">Pág. ${segPageNum}</div>
     </div>
                 `);
+
+                // Generate Category, Domain and Dimension breakdown pages for this demographic
+                const demoData = rpDemoData[key];
+                if (demoData && demoData.heatmaps) {
+                    const legend = `
+        <div class="legend-wrapper" style="margin-top: 10px; padding-top: 8px;">
+          <div class="legend-item"><div class="legend-color" style="background:#fee2e2; border-color:#fecaca"></div> Muy Alto (≥ 50)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#ffedd5; border-color:#fed7aa"></div> Alto (35 - 49)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#fef9c3; border-color:#fef08a"></div> Medio (20 - 34)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#dcfce7; border-color:#bbf7d0"></div> Bajo (10 - 19)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#dbeafe; border-color:#bfdbfe"></div> Nulo (&lt; 10)</div>
+        </div>`;
+
+                    if (demoData.isSplit) {
+                        // Categories page (groupA + groupB)
+                        pageNum++;
+                        const dCatPageId = pageNum;
+                        const dCatTblA = makeHeatmapTable(demoData.groupA, demoData.heatmaps.categories.groupA);
+                        const dCatTblB = makeHeatmapTable(demoData.groupB, demoData.heatmaps.categories.groupB);
+                        pages.push(`
+    <div class="pdf-page" id="page-${dCatPageId}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Resultados por Categoría: ${title}</div>
+      </div>
+      <div class="pdf-body" style="justify-content: flex-start; gap: 10px;">
+        <h2 class="page-title" style="font-size: 16px; margin-bottom: 4px;">Categorías de Riesgo por ${title}</h2>
+        <p class="page-subtitle" style="font-size: 11px; margin-bottom: 10px;">Puntajes promedio por categoría NOM-035 según el segmento de ${title.toLowerCase()}.</p>
+        <div class="section-title" style="font-size: 12px; margin-bottom: 6px;">Grupo A</div>
+        ${dCatTblA}
+        <div class="section-title" style="font-size: 12px; margin-bottom: 6px; margin-top: 10px;">Grupo B</div>
+        ${dCatTblB}
+        ${legend}
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${dCatPageId}">Página ${dCatPageId} de [TOTAL]</span>
+      </div>
+    </div>`);
+                        thumbs.push(`
+    <div class="thumb" onclick="gp(${dCatPageId})">
+      <div class="th-inner">
+        <div class="th-mini-title">Cat. ${title}</div>
+        <div class="th-mini-desc">NOM-035</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${dCatPageId}</div>
+    </div>`);
+
+                        // Domains page (groupA + groupB)
+                        pageNum++;
+                        const dDomPageId = pageNum;
+                        const dDomTblA = makeHeatmapTable(demoData.groupA, demoData.heatmaps.domains.groupA);
+                        const dDomTblB = makeHeatmapTable(demoData.groupB, demoData.heatmaps.domains.groupB);
+                        pages.push(`
+    <div class="pdf-page" id="page-${dDomPageId}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Resultados por Dominio: ${title}</div>
+      </div>
+      <div class="pdf-body" style="justify-content: flex-start; gap: 10px;">
+        <h2 class="page-title" style="font-size: 16px; margin-bottom: 4px;">Dominios de Riesgo por ${title}</h2>
+        <p class="page-subtitle" style="font-size: 11px; margin-bottom: 10px;">Puntajes promedio por dominio NOM-035 según el segmento de ${title.toLowerCase()}.</p>
+        <div class="section-title" style="font-size: 12px; margin-bottom: 6px;">Grupo A</div>
+        ${dDomTblA}
+        <div class="section-title" style="font-size: 12px; margin-bottom: 6px; margin-top: 10px;">Grupo B</div>
+        ${dDomTblB}
+        ${legend}
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${dDomPageId}">Página ${dDomPageId} de [TOTAL]</span>
+      </div>
+    </div>`);
+                        thumbs.push(`
+    <div class="thumb" onclick="gp(${dDomPageId})">
+      <div class="th-inner">
+        <div class="th-mini-title">Dom. ${title}</div>
+        <div class="th-mini-desc">NOM-035</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${dDomPageId}</div>
+    </div>`);
+
+                        // Dimensions page (groupA + groupB)
+                        if (demoData.heatmaps.dimensions) {
+                            pageNum++;
+                            const dDimPageId = pageNum;
+                            const dDimTblA = makeHeatmapTable(demoData.groupA, demoData.heatmaps.dimensions.groupA);
+                            const dDimTblB = makeHeatmapTable(demoData.groupB, demoData.heatmaps.dimensions.groupB);
+                            pages.push(`
+    <div class="pdf-page" id="page-${dDimPageId}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Resultados por Dimensión: ${title}</div>
+      </div>
+      <div class="pdf-body" style="justify-content: flex-start; gap: 10px;">
+        <h2 class="page-title" style="font-size: 16px; margin-bottom: 4px;">Dimensiones de Riesgo por ${title}</h2>
+        <p class="page-subtitle" style="font-size: 11px; margin-bottom: 10px;">Puntajes promedio por dimensión NOM-035 según el segmento de ${title.toLowerCase()}.</p>
+        <div class="section-title" style="font-size: 12px; margin-bottom: 6px;">Grupo A</div>
+        ${dDimTblA}
+        <div class="section-title" style="font-size: 12px; margin-bottom: 6px; margin-top: 10px;">Grupo B</div>
+        ${dDimTblB}
+        ${legend}
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${dDimPageId}">Página ${dDimPageId} de [TOTAL]</span>
+      </div>
+    </div>`);
+                            thumbs.push(`
+    <div class="thumb" onclick="gp(${dDimPageId})">
+      <div class="th-inner">
+        <div class="th-mini-title">Dim. ${title}</div>
+        <div class="th-mini-desc">NOM-035</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${dDimPageId}</div>
+    </div>`);
+                        }
+
+                    } else if (demoData.isCompact) {
+                        // Compact: Cat + Dom on one page
+                        pageNum++;
+                        const dCompPageId = pageNum;
+                        const dCompCatTbl = makeHeatmapTable(demoData.cols, demoData.heatmaps.categories);
+                        const dCompDomTbl = makeHeatmapTable(demoData.cols, demoData.heatmaps.domains);
+                        pages.push(`
+    <div class="pdf-page" id="page-${dCompPageId}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Categorías y Dominios: ${title}</div>
+      </div>
+      <div class="pdf-body" style="justify-content: space-between; gap: 10px;">
+        <div>
+          <h2 class="page-title" style="font-size: 16px; margin-bottom: 4px;">Categorías y Dominios por ${title}</h2>
+          <p class="page-subtitle" style="font-size: 11px; margin-bottom: 10px;">Puntajes NOM-035 por categoría y dominio según ${title.toLowerCase()}.</p>
+        </div>
+        <div>
+          <div class="section-title" style="font-size: 12px; margin-bottom: 6px;">1. Resultados por Categoría</div>
+          ${dCompCatTbl}
+        </div>
+        <div style="margin-top: 10px;">
+          <div class="section-title" style="font-size: 12px; margin-bottom: 6px;">2. Resultados por Dominio</div>
+          ${dCompDomTbl}
+        </div>
+        ${legend}
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${dCompPageId}">Página ${dCompPageId} de [TOTAL]</span>
+      </div>
+    </div>`);
+                        thumbs.push(`
+    <div class="thumb" onclick="gp(${dCompPageId})">
+      <div class="th-inner">
+        <div class="th-mini-title">Cat./Dom. ${title}</div>
+        <div class="th-mini-desc">NOM-035</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${dCompPageId}</div>
+    </div>`);
+
+                        // Dimensions page
+                        if (demoData.heatmaps.dimensions) {
+                            pageNum++;
+                            const dDimCpPageId = pageNum;
+                            const dDimCpTbl = makeHeatmapTable(demoData.cols, demoData.heatmaps.dimensions);
+                            pages.push(`
+    <div class="pdf-page" id="page-${dDimCpPageId}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Resultados por Dimensión: ${title}</div>
+      </div>
+      <div class="pdf-body">
+        <h2 class="page-title" style="font-size: 16px; margin-bottom: 4px;">Dimensiones de Riesgo por ${title}</h2>
+        <p class="page-subtitle" style="font-size: 11px; margin-bottom: 10px;">Puntajes promedio por dimensión NOM-035 según ${title.toLowerCase()}.</p>
+        <div class="section-title" style="font-size: 12px; margin-bottom: 6px;">3. Resultados por Dimensión</div>
+        ${dDimCpTbl}
+        ${legend}
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${dDimCpPageId}">Página ${dDimCpPageId} de [TOTAL]</span>
+      </div>
+    </div>`);
+                            thumbs.push(`
+    <div class="thumb" onclick="gp(${dDimCpPageId})">
+      <div class="th-inner">
+        <div class="th-mini-title">Dim. ${title}</div>
+        <div class="th-mini-desc">NOM-035</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${dDimCpPageId}</div>
+    </div>`);
+                        }
+
+                    } else {
+                        // Non-split, non-compact: separate cat, dom, dim pages
+                        pageNum++;
+                        const dCatElseId = pageNum;
+                        const dCatElseTbl = makeHeatmapTable(demoData.cols, demoData.heatmaps.categories);
+                        pages.push(`
+    <div class="pdf-page" id="page-${dCatElseId}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Resultados por Categoría: ${title}</div>
+      </div>
+      <div class="pdf-body">
+        <h2 class="page-title" style="font-size: 16px; margin-bottom: 4px;">Categorías de Riesgo por ${title}</h2>
+        <p class="page-subtitle" style="font-size: 11px; margin-bottom: 10px;">Puntajes promedio por categoría NOM-035 según el segmento de ${title.toLowerCase()}.</p>
+        <div class="section-title" style="font-size: 12px; margin-bottom: 6px;">1. Resultados por Categoría</div>
+        ${dCatElseTbl}
+        ${legend}
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${dCatElseId}">Página ${dCatElseId} de [TOTAL]</span>
+      </div>
+    </div>`);
+                        thumbs.push(`
+    <div class="thumb" onclick="gp(${dCatElseId})">
+      <div class="th-inner">
+        <div class="th-mini-title">Cat. ${title}</div>
+        <div class="th-mini-desc">NOM-035</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${dCatElseId}</div>
+    </div>`);
+
+                        pageNum++;
+                        const dDomElseId = pageNum;
+                        const dDomElseTbl = makeHeatmapTable(demoData.cols, demoData.heatmaps.domains);
+                        pages.push(`
+    <div class="pdf-page" id="page-${dDomElseId}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Resultados por Dominio: ${title}</div>
+      </div>
+      <div class="pdf-body">
+        <h2 class="page-title" style="font-size: 16px; margin-bottom: 4px;">Dominios de Riesgo por ${title}</h2>
+        <p class="page-subtitle" style="font-size: 11px; margin-bottom: 10px;">Puntajes promedio por dominio NOM-035 según el segmento de ${title.toLowerCase()}.</p>
+        <div class="section-title" style="font-size: 12px; margin-bottom: 6px;">2. Resultados por Dominio</div>
+        ${dDomElseTbl}
+        ${legend}
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${dDomElseId}">Página ${dDomElseId} de [TOTAL]</span>
+      </div>
+    </div>`);
+                        thumbs.push(`
+    <div class="thumb" onclick="gp(${dDomElseId})">
+      <div class="th-inner">
+        <div class="th-mini-title">Dom. ${title}</div>
+        <div class="th-mini-desc">NOM-035</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${dDomElseId}</div>
+    </div>`);
+
+                        if (demoData.heatmaps.dimensions) {
+                            pageNum++;
+                            const dDimElseId = pageNum;
+                            const dDimElseTbl = makeHeatmapTable(demoData.cols, demoData.heatmaps.dimensions);
+                            pages.push(`
+    <div class="pdf-page" id="page-${dDimElseId}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Resultados por Dimensión: ${title}</div>
+      </div>
+      <div class="pdf-body">
+        <h2 class="page-title" style="font-size: 16px; margin-bottom: 4px;">Dimensiones de Riesgo por ${title}</h2>
+        <p class="page-subtitle" style="font-size: 11px; margin-bottom: 10px;">Puntajes promedio por dimensión NOM-035 según el segmento de ${title.toLowerCase()}.</p>
+        <div class="section-title" style="font-size: 12px; margin-bottom: 6px;">3. Resultados por Dimensión</div>
+        ${dDimElseTbl}
+        ${legend}
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${dDimElseId}">Página ${dDimElseId} de [TOTAL]</span>
+      </div>
+    </div>`);
+                            thumbs.push(`
+    <div class="thumb" onclick="gp(${dDimElseId})">
+      <div class="th-inner">
+        <div class="th-mini-title">Dim. ${title}</div>
+        <div class="th-mini-desc">NOM-035</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${dDimElseId}</div>
+    </div>`);
+                        }
+                    }
+                }
             });
 
             // Helper to render heatmap table
@@ -13573,6 +13918,49 @@ console.log('✅ [DATA] Data asignado a window');
       <div class="th-label">Pág. ${pageId}</div>
     </div>
                     `);
+
+                    // Dimensions page for compact demographic
+                    if (data.heatmaps.dimensions) {
+                        pageNum++;
+                        const pageIdDimCp = pageNum;
+                        const dimTableCp = makeHeatmapTable(data.cols, data.heatmaps.dimensions);
+                        pages.push(`
+    <!-- Page ${pageIdDimCp}: Heatmap Dimensiones por ${data.title} -->
+    <div class="pdf-page" id="page-${pageIdDimCp}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Matriz de Riesgo: Dimensiones por ${data.title}</div>
+      </div>
+      <div class="pdf-body">
+        <h2 class="page-title">Análisis Específico: Dimensiones vs ${data.title}</h2>
+        <p class="page-subtitle">Este análisis detalla los factores de riesgo por dimensión NOM-035 para cada nivel de ${data.title.toLowerCase()}.</p>
+        <div class="section-title" style="margin-bottom: 8px;">Calificaciones por Dimensión</div>
+        ${dimTableCp}
+        <div class="legend-wrapper" style="margin-top: 15px; padding-top: 10px;">
+          <div class="legend-item"><div class="legend-color" style="background:#fee2e2; border-color:#fecaca"></div> Muy Alto (≥ 50)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#ffedd5; border-color:#fed7aa"></div> Alto (35 - 49)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#fef9c3; border-color:#fef08a"></div> Medio (20 - 34)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#dcfce7; border-color:#bbf7d0"></div> Bajo (10 - 19)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#dbeafe; border-color:#bfdbfe"></div> Nulo (&lt; 10)</div>
+        </div>
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${pageIdDimCp}">Página ${pageIdDimCp} de [TOTAL]</span>
+      </div>
+    </div>
+                        `);
+                        thumbs.push(`
+    <div class="thumb" onclick="gp(${pageIdDimCp})">
+      <div class="th-inner">
+        <div class="th-mini-title">Heatmap Dim.</div>
+        <div class="th-mini-desc">por ${data.title}</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${pageIdDimCp}</div>
+    </div>
+                        `);
+                    }
 
                 } else if (data.isSplit) {
                     pageNum++;
@@ -13673,6 +14061,52 @@ console.log('✅ [DATA] Data asignado a window');
     </div>
                     `);
 
+                    // Dimensions pages for split demographic (groupA + groupB)
+                    if (data.heatmaps.dimensions) {
+                        pageNum++;
+                        const pageIdDimSplit = pageNum;
+                        const dimTableSplitA = makeHeatmapTable(data.groupA, data.heatmaps.dimensions.groupA);
+                        const dimTableSplitB = makeHeatmapTable(data.groupB, data.heatmaps.dimensions.groupB);
+                        pages.push(`
+    <!-- Page ${pageIdDimSplit}: Heatmap Dimensiones por ${data.title} -->
+    <div class="pdf-page" id="page-${pageIdDimSplit}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Matriz de Riesgo: Dimensiones por ${data.title}</div>
+      </div>
+      <div class="pdf-body">
+        <h2 class="page-title">Análisis Específico: Dimensiones vs ${data.title}</h2>
+        <p class="page-subtitle">Este análisis detalla los factores de riesgo por dimensión NOM-035. Se divide en dos grupos para optimizar la visualización de los datos.</p>
+        <div class="section-title" style="margin-bottom: 8px;">Grupo A</div>
+        ${dimTableSplitA}
+        <div class="section-title" style="margin-bottom: 8px; margin-top: 20px;">Grupo B</div>
+        ${dimTableSplitB}
+        <div class="legend-wrapper" style="margin-top: 15px; padding-top: 10px;">
+          <div class="legend-item"><div class="legend-color" style="background:#fee2e2; border-color:#fecaca"></div> Muy Alto (≥ 50)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#ffedd5; border-color:#fed7aa"></div> Alto (35 - 49)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#fef9c3; border-color:#fef08a"></div> Medio (20 - 34)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#dcfce7; border-color:#bbf7d0"></div> Bajo (10 - 19)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#dbeafe; border-color:#bfdbfe"></div> Nulo (&lt; 10)</div>
+        </div>
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${pageIdDimSplit}">Página ${pageIdDimSplit} de [TOTAL]</span>
+      </div>
+    </div>
+                        `);
+                        thumbs.push(`
+    <div class="thumb" onclick="gp(${pageIdDimSplit})">
+      <div class="th-inner">
+        <div class="th-mini-title">Heatmap Dim.</div>
+        <div class="th-mini-desc">por ${data.title}</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${pageIdDimSplit}</div>
+    </div>
+                        `);
+                    }
+
                 } else {
                     pageNum++;
                     const pageIdCat = pageNum;
@@ -13763,6 +14197,49 @@ console.log('✅ [DATA] Data asignado a window');
       <div class="th-label">Pág. ${pageIdDom}</div>
     </div>
                     `);
+
+                    // Dimensions page for non-split demographic
+                    if (data.heatmaps.dimensions) {
+                        pageNum++;
+                        const pageIdDimElse = pageNum;
+                        const dimTableElse = makeHeatmapTable(data.cols, data.heatmaps.dimensions);
+                        pages.push(`
+    <!-- Page ${pageIdDimElse}: Heatmap Dimensiones por ${data.title} -->
+    <div class="pdf-page" id="page-${pageIdDimElse}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Matriz de Riesgo: Dimensiones por ${data.title}</div>
+      </div>
+      <div class="pdf-body">
+        <h2 class="page-title">Análisis Específico: Dimensiones vs ${data.title}</h2>
+        <p class="page-subtitle">Este análisis detalla los factores de riesgo por dimensión NOM-035 para cada nivel de ${data.title.toLowerCase()}.</p>
+        <div class="section-title" style="margin-bottom: 8px;">Calificaciones por Dimensión</div>
+        ${dimTableElse}
+        <div class="legend-wrapper" style="margin-top: 15px; padding-top: 10px;">
+          <div class="legend-item"><div class="legend-color" style="background:#fee2e2; border-color:#fecaca"></div> Muy Alto (≥ 50)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#ffedd5; border-color:#fed7aa"></div> Alto (35 - 49)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#fef9c3; border-color:#fef08a"></div> Medio (20 - 34)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#dcfce7; border-color:#bbf7d0"></div> Bajo (10 - 19)</div>
+          <div class="legend-item"><div class="legend-color" style="background:#dbeafe; border-color:#bfdbfe"></div> Nulo (&lt; 10)</div>
+        </div>
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${pageIdDimElse}">Página ${pageIdDimElse} de [TOTAL]</span>
+      </div>
+    </div>
+                        `);
+                        thumbs.push(`
+    <div class="thumb" onclick="gp(${pageIdDimElse})">
+      <div class="th-inner">
+        <div class="th-mini-title">Heatmap Dim.</div>
+        <div class="th-mini-desc">por ${data.title}</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${pageIdDimElse}</div>
+    </div>
+                        `);
+                    }
                 }
             });
 
