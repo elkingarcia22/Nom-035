@@ -13690,11 +13690,13 @@ window.renderCollaboratorsRiskTable = function() {
     </div>
             `);
 
-            // Nivel de Riesgo por Colaborador
+            // Nivel de Riesgo por Colaborador (multi-page)
             {
                 const participants = window.individualParticipantsData || [];
-                let collabRows = '';
-                participants.forEach(p => {
+                const rowsPerPage = 42;
+                const totalPages = Math.max(1, Math.ceil(participants.length / rowsPerPage));
+
+                function buildCollabRow(p) {
                     const name = p.name || '';
                     const area = p.details?.department || '';
                     const cargo = p.details?.position || p.role || '';
@@ -13706,30 +13708,17 @@ window.renderCollaboratorsRiskTable = function() {
                     else if (normRisk.includes('alto')) badgeClass = 'badge-alto';
                     else if (normRisk.includes('medio')) badgeClass = 'badge-medio';
                     else if (normRisk.includes('bajo')) badgeClass = 'badge-bajo';
-                    collabRows += `
-            <tr style="page-break-inside: auto; height: 20px;">
+                    return `
+            <tr style="height: 20px;">
               <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
               <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${area}</td>
               <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${cargo}</td>
               <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${leader}</td>
               <td style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 7.5px; padding: 1px 4px; line-height: 1;">${riskText}</span></td>
             </tr>`;
-                });
+                }
 
-                pageNum++;
-                const collabPageNum = pageNum;
-                pages.push(`
-    <!-- Page ${collabPageNum}: Colaboradores -->
-    <div class="pdf-page" id="page-${collabPageNum}">
-      <div class="pdf-header">
-        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
-        <div class="pdf-header-title">Nivel de Riesgo por Colaborador</div>
-      </div>
-      <div class="pdf-body">
-        <h2 class="page-title" style="font-size: 16px; margin-bottom: 8px;">Nivel de Riesgo por Colaborador</h2>
-        <p class="page-subtitle" style="font-size: 11px; margin-bottom: 12px;">Desglose individual del nivel de riesgo psicosocial de cada colaborador evaluado de acuerdo a la NOM-035.</p>
-
-        <table class="pdf-table" style="font-size: 8.5px; line-height: 1.2; page-break-inside: auto;">
+                const tableHeaders = `
           <thead>
             <tr>
               <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Colaborador</th>
@@ -13738,26 +13727,49 @@ window.renderCollaboratorsRiskTable = function() {
               <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Líder</th>
               <th style="padding: 6px 8px; font-size: 8px; text-align: center; width: 100px;">Nivel de Riesgo</th>
             </tr>
-          </thead>
+          </thead>`;
+
+                for (let p = 0; p < totalPages; p++) {
+                    const start = p * rowsPerPage;
+                    const chunk = participants.slice(start, start + rowsPerPage);
+                    let chunkRows = chunk.map(c => buildCollabRow(c)).join('');
+
+                    pageNum++;
+                    const cp = pageNum;
+                    pages.push(`
+    <!-- Page ${cp}: Colaboradores (${p + 1}/${totalPages}) -->
+    <div class="pdf-page" id="page-${cp}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Nivel de Riesgo por Colaborador</div>
+      </div>
+      <div class="pdf-body">
+        ${p === 0 ? `
+        <h2 class="page-title" style="font-size: 16px; margin-bottom: 8px;">Nivel de Riesgo por Colaborador</h2>
+        <p class="page-subtitle" style="font-size: 11px; margin-bottom: 12px;">Desglose individual del nivel de riesgo psicosocial de cada colaborador evaluado de acuerdo a la NOM-035.</p>` : `
+        <h2 class="page-title" style="font-size: 14px; margin-bottom: 8px;">Nivel de Riesgo por Colaborador (continuación)</h2>`}
+        <table class="pdf-table" style="font-size: 8.5px; line-height: 1.2;">
+          ${tableHeaders}
           <tbody>
-            ${collabRows}
+            ${chunkRows}
           </tbody>
         </table>
       </div>
       <div class="pdf-footer">
         <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
-        <span class="pdf-page-num-placeholder" data-page="${collabPageNum}">Página ${collabPageNum} de [TOTAL]</span>
+        <span class="pdf-page-num-placeholder" data-page="${cp}">Página ${cp} de [TOTAL]</span>
       </div>
     </div>`);
-                thumbs.push(`
-    <div class="thumb" onclick="gp(${collabPageNum})">
+                    thumbs.push(`
+    <div class="thumb" onclick="gp(${cp})">
       <div class="th-inner">
-        <div class="th-mini-title">Colaboradores</div>
+        <div class="th-mini-title">${p === 0 ? 'Colaboradores' : 'Colab. (' + (p + 1) + '/' + totalPages + ')'}</div>
         <div class="th-mini-desc">Nivel de Riesgo</div>
         <div class="th-mini-logo">UBITS</div>
       </div>
-      <div class="th-label">Pág. ${collabPageNum}</div>
+      <div class="th-label">Pág. ${cp}</div>
     </div>`);
+                }
             }
 
             // Loop segment tables for selected demographics
