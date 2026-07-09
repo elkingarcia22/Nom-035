@@ -12189,10 +12189,6 @@ window.renderCollaboratorsRiskTable = function() {
                                         <input type="checkbox" id="chk-part-pais" style="accent-color: var(--ubits-accent-brand, #0c5bef); pointer-events: none; margin: 0;">
                                         <span class="option-text" style="font-size: 13px; color: var(--ubits-fg-1-high, #303a47); flex: 1;">País</span>
                                     </div>
-                                    <div class="select-option" data-value="colaboradores" onclick="toggleAutocompleteOption('rp-multi-part', 'colaboradores', event)" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; cursor: pointer; transition: background 0.15s;">
-                                        <input type="checkbox" id="chk-part-colaboradores" style="accent-color: var(--ubits-accent-brand, #0c5bef); pointer-events: none; margin: 0;">
-                                        <span class="option-text" style="font-size: 13px; color: var(--ubits-fg-1-high, #303a47); flex: 1;">Colaboradores</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -12516,8 +12512,7 @@ window.renderCollaboratorsRiskTable = function() {
             'cargo': 'Cargo',
             'genero': 'Género',
             'edad': 'Rango de Edad',
-            'pais': 'País',
-            'colaboradores': 'Colaboradores'
+            'pais': 'País'
         };
 
         window.toggleAutocompleteOption = function(id, val, event) {
@@ -13051,7 +13046,6 @@ window.renderCollaboratorsRiskTable = function() {
             if (isPartActive && selectedParts.length > 0) {
                 csvContent += "RESULTADOS ESPECÍFICOS POR SEGMENTO (DEMOGRÁFICOS)\n";
                 selectedParts.forEach(key => {
-                    if (key === 'colaboradores') return;
                     let segmentType = key;
                     if (key === 'areas') segmentType = 'department';
                     else if (key === 'cargo') segmentType = 'position';
@@ -13086,7 +13080,7 @@ window.renderCollaboratorsRiskTable = function() {
             }
 
             // 1e. Collaborators detail
-            if (isPartActive && selectedParts.includes('colaboradores')) {
+            {
                 const participants = window.individualParticipantsData || [];
                 csvContent += "RESULTADOS POR COLABORADOR\n";
                 csvContent += "Colaborador;Área;Cargo;Líder;Nivel de Riesgo\n";
@@ -13263,7 +13257,6 @@ window.renderCollaboratorsRiskTable = function() {
 
             // Participation pages (based on selectedParts)
             selectedParts.forEach(key => {
-                if (key === 'colaboradores') return;
                 pageNum++;
                 const data = rpDemoData[key];
                 if (!data) return;
@@ -13346,76 +13339,6 @@ window.renderCollaboratorsRiskTable = function() {
     </div>
                 `);
             });
-
-            // Collaborators page
-            if (selectedParts.includes('colaboradores')) {
-                const participants = window.individualParticipantsData || [];
-                let collabRows = '';
-                participants.forEach(p => {
-                    const name = p.name || '';
-                    const area = p.details?.department || '';
-                    const cargo = p.details?.position || p.role || '';
-                    const leader = p.details?.leader || '';
-                    const riskText = (p.riskLevel || 'nulo').toUpperCase().replace('-', ' ');
-                    let badgeClass = 'badge-nulo';
-                    const normRisk = (p.riskLevel || '').toLowerCase().trim();
-                    if (normRisk.includes('muy-alto') || normRisk.includes('muy alto')) badgeClass = 'badge-muy-alto';
-                    else if (normRisk.includes('alto')) badgeClass = 'badge-alto';
-                    else if (normRisk.includes('medio')) badgeClass = 'badge-medio';
-                    else if (normRisk.includes('bajo')) badgeClass = 'badge-bajo';
-                    collabRows += `
-            <tr style="height: 20px;">
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${area}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${cargo}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${leader}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 7.5px; padding: 1px 4px; line-height: 1;">${riskText}</span></td>
-            </tr>`;
-                });
-
-                pageNum++;
-                const collabPageNum = pageNum;
-                pages.push(`
-    <!-- Page ${collabPageNum}: Colaboradores -->
-    <div class="pdf-page" id="page-${collabPageNum}">
-      <div class="pdf-header">
-        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
-        <div class="pdf-header-title">Resultados por Colaborador</div>
-      </div>
-      <div class="pdf-body">
-        <h2 class="page-title" style="font-size: 16px; margin-bottom: 8px;">Nivel de Riesgo por Colaborador</h2>
-        <p class="page-subtitle" style="font-size: 11px; margin-bottom: 12px;">Desglose individual del nivel de riesgo psicosocial de cada colaborador evaluado de acuerdo a la NOM-035.</p>
-
-        <table class="pdf-table" style="font-size: 8.5px; line-height: 1.2;">
-          <thead>
-            <tr>
-              <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Colaborador</th>
-              <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Área</th>
-              <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Cargo</th>
-              <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Líder</th>
-              <th style="padding: 6px 8px; font-size: 8px; text-align: center; width: 100px;">Nivel de Riesgo</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${collabRows}
-          </tbody>
-        </table>
-      </div>
-      <div class="pdf-footer">
-        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
-        <span class="pdf-page-num-placeholder" data-page="${collabPageNum}">Página ${collabPageNum} de [TOTAL]</span>
-      </div>
-    </div>`);
-                thumbs.push(`
-    <div class="thumb" onclick="gp(${collabPageNum})">
-      <div class="th-inner">
-        <div class="th-mini-title">Colaboradores</div>
-        <div class="th-mini-desc">Riesgo Individual</div>
-        <div class="th-mini-logo">UBITS</div>
-      </div>
-      <div class="th-label">Pág. ${collabPageNum}</div>
-    </div>`);
-            }
 
             // --- BUILD CATEGORIES TABLE DYNAMICALLY ---
             let catTableRowsHtml = '';
@@ -13767,9 +13690,78 @@ window.renderCollaboratorsRiskTable = function() {
     </div>
             `);
 
+            // Nivel de Riesgo por Colaborador
+            {
+                const participants = window.individualParticipantsData || [];
+                let collabRows = '';
+                participants.forEach(p => {
+                    const name = p.name || '';
+                    const area = p.details?.department || '';
+                    const cargo = p.details?.position || p.role || '';
+                    const leader = p.details?.leader || '';
+                    const riskText = (p.riskLevel || 'nulo').toUpperCase().replace('-', ' ');
+                    let badgeClass = 'badge-nulo';
+                    const normRisk = (p.riskLevel || '').toLowerCase().trim();
+                    if (normRisk.includes('muy-alto') || normRisk.includes('muy alto')) badgeClass = 'badge-muy-alto';
+                    else if (normRisk.includes('alto')) badgeClass = 'badge-alto';
+                    else if (normRisk.includes('medio')) badgeClass = 'badge-medio';
+                    else if (normRisk.includes('bajo')) badgeClass = 'badge-bajo';
+                    collabRows += `
+            <tr style="page-break-inside: auto; height: 20px;">
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${area}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${cargo}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${leader}</td>
+              <td style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 7.5px; padding: 1px 4px; line-height: 1;">${riskText}</span></td>
+            </tr>`;
+                });
+
+                pageNum++;
+                const collabPageNum = pageNum;
+                pages.push(`
+    <!-- Page ${collabPageNum}: Colaboradores -->
+    <div class="pdf-page" id="page-${collabPageNum}">
+      <div class="pdf-header">
+        <div class="pdf-header-logo">UBITS | <span>Planta Ecatepec</span></div>
+        <div class="pdf-header-title">Nivel de Riesgo por Colaborador</div>
+      </div>
+      <div class="pdf-body">
+        <h2 class="page-title" style="font-size: 16px; margin-bottom: 8px;">Nivel de Riesgo por Colaborador</h2>
+        <p class="page-subtitle" style="font-size: 11px; margin-bottom: 12px;">Desglose individual del nivel de riesgo psicosocial de cada colaborador evaluado de acuerdo a la NOM-035.</p>
+
+        <table class="pdf-table" style="font-size: 8.5px; line-height: 1.2; page-break-inside: auto;">
+          <thead>
+            <tr>
+              <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Colaborador</th>
+              <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Área</th>
+              <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Cargo</th>
+              <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Líder</th>
+              <th style="padding: 6px 8px; font-size: 8px; text-align: center; width: 100px;">Nivel de Riesgo</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${collabRows}
+          </tbody>
+        </table>
+      </div>
+      <div class="pdf-footer">
+        <span class="pdf-footer-conf">CONFIDENCIAL | NOM-035</span>
+        <span class="pdf-page-num-placeholder" data-page="${collabPageNum}">Página ${collabPageNum} de [TOTAL]</span>
+      </div>
+    </div>`);
+                thumbs.push(`
+    <div class="thumb" onclick="gp(${collabPageNum})">
+      <div class="th-inner">
+        <div class="th-mini-title">Colaboradores</div>
+        <div class="th-mini-desc">Nivel de Riesgo</div>
+        <div class="th-mini-logo">UBITS</div>
+      </div>
+      <div class="th-label">Pág. ${collabPageNum}</div>
+    </div>`);
+            }
+
             // Loop segment tables for selected demographics
             selectedParts.forEach(key => {
-                if (key === 'colaboradores') return;
                 let segmentType = key;
                 if (key === 'areas') segmentType = 'department';
                 else if (key === 'cargo') segmentType = 'position';
