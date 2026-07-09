@@ -11527,7 +11527,7 @@ window.renderCollaboratorsRiskTable = function() {
             html2 += '</select>';
             html2 += '<span id="collab-card-count" style="font-size:13px;color:var(--ubits-fg-1-medium);font-weight:600;white-space:nowrap;">' + dimData.length + ' dimensiones</span>';
             html2 += '</div>';
-            html2 += '<div id="collab-cards-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">';
+            html2 += '<div id="collab-cards-list" style="display:flex;flex-direction:column;gap:10px;">';
             html2 += buildCollabCards(dimData);
             html2 += '</div>';
             html2 += '</div></div><div class="filters-backdrop show" id="collab-detail-backdrop"></div>';
@@ -11552,7 +11552,7 @@ window.renderCollaboratorsRiskTable = function() {
             (function() {
                 var searchInput = document.getElementById('collab-card-search');
                 var filterSelect = document.getElementById('collab-card-filter-risk');
-                var grid = document.getElementById('collab-cards-grid');
+                var grid = document.getElementById('collab-cards-list');
                 var countSpan = document.getElementById('collab-card-count');
 
                 function filterCards() {
