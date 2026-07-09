@@ -12168,7 +12168,7 @@ window.renderCollaboratorsRiskTable = function() {
                                     </div>
                                 </div>
                                 
-                                <div class="select-dropdown" style="width: 100%; border-radius: var(--ubits-radius-sm, 6px); margin-top: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); background: var(--ubits-bg-0, #fff); border: 1px solid var(--ubits-border-2, #b9bbc1); position: absolute; z-index: 1000; display: none; max-height: 200px; overflow-y: auto; box-sizing: border-box;">
+                                <div class="select-dropdown" style="width: 100%; border-radius: var(--ubits-radius-sm, 6px); margin-top: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); background: var(--ubits-bg-0, #fff); border: 1px solid var(--ubits-border-2, #b9bbc1); position: absolute; z-index: 1000; display: none; max-height: 260px; overflow-y: scroll; box-sizing: border-box;">
                                     <div class="select-option" data-value="areas" onclick="toggleAutocompleteOption('rp-multi-part', 'areas', event)" style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; cursor: pointer; transition: background 0.15s; border-bottom: 1px solid var(--ubits-bg-2, #F3F3F4);">
                                         <input type="checkbox" id="chk-part-areas" style="accent-color: var(--ubits-accent-brand, #0c5bef); pointer-events: none; margin: 0;">
                                         <span class="option-text" style="font-size: 13px; color: var(--ubits-fg-1-high, #303a47); flex: 1;">Áreas</span>
@@ -12516,7 +12516,8 @@ window.renderCollaboratorsRiskTable = function() {
             'cargo': 'Cargo',
             'genero': 'Género',
             'edad': 'Rango de Edad',
-            'pais': 'País'
+            'pais': 'País',
+            'colaboradores': 'Colaboradores'
         };
 
         window.toggleAutocompleteOption = function(id, val, event) {
