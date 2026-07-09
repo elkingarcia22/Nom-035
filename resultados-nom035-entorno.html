@@ -13773,12 +13773,12 @@ gp(1);
                     else if (normRisk.includes('nulo')) badgeClass = 'badge-nulo';
 
                     catTableRowsHtml += `
-            <tr style="height: 20px;">
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${riskCount}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${pctAffected}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${scoreVal}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 7.5px; padding: 1px 4px; line-height: 1;">${riskText}</span></td>
+            <tr>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${riskCount}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${pctAffected}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${scoreVal}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 9px; padding: 3px 8px;">${riskText}</span></td>
             </tr>
                     `;
                 }
@@ -13837,12 +13837,12 @@ gp(1);
                         else if (normRisk.includes('nulo')) badgeClass = 'badge-nulo';
 
                         currentDomCategoryHtml += `
-            <tr style="height: 20px;">
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${riskCount}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${pctAffected}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${scoreVal}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 7.5px; padding: 1px 4px; line-height: 1;">${riskText}</span></td>
+            <tr>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${riskCount}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${pctAffected}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${scoreVal}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 9px; padding: 3px 8px;">${riskText}</span></td>
             </tr>
                         `;
                         currentDomCategoryHasVisibleDomains = true;
@@ -13878,7 +13878,7 @@ gp(1);
         <table class="pdf-table" style="font-size: 9.5px; margin-bottom: 20px; line-height: 1.2;">
           <thead>
             <tr>
-              <th style="padding: 6px 10px; font-size: 8.5px;">Categoría de Evaluación</th>
+              <th style="padding: 8px 12px; font-size: 10px;">Categoría de Evaluación</th>
               <th style="padding: 6px 10px; text-align: right; width: 120px; font-size: 8.5px;">Usuarios en Riesgo</th>
               <th style="padding: 6px 10px; text-align: right; width: 90px; font-size: 8.5px;">% Afectados</th>
               <th style="padding: 6px 10px; text-align: right; width: 110px; font-size: 8.5px;">Puntaje Promedio</th>
@@ -13894,7 +13894,7 @@ gp(1);
         <table class="pdf-table" style="font-size: 9.5px; margin-bottom: 0; line-height: 1.2;">
           <thead>
             <tr>
-              <th style="padding: 6px 10px; font-size: 8.5px;">Dominio Específico</th>
+              <th style="padding: 8px 12px; font-size: 10px;">Dominio Específico</th>
               <th style="padding: 6px 10px; text-align: right; width: 120px; font-size: 8.5px;">Usuarios en Riesgo</th>
               <th style="padding: 6px 10px; text-align: right; width: 90px; font-size: 8.5px;">% Afectados</th>
               <th style="padding: 6px 10px; text-align: right; width: 110px; font-size: 8.5px;">Puntaje Promedio</th>
@@ -13970,12 +13970,12 @@ gp(1);
                         else if (normRisk.includes('nulo')) badgeClass = 'badge-nulo';
 
                         currentCategoryHtml += `
-            <tr style="height: 20px;">
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${riskCount}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${pctAffected}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${scoreVal}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 7.5px; padding: 1px 4px; line-height: 1;">${riskText}</span></td>
+            <tr>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${riskCount}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${pctAffected}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${scoreVal}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 9px; padding: 3px 8px;">${riskText}</span></td>
             </tr>
                         `;
                         currentCategoryHasVisibleDimensions = true;
@@ -14008,10 +14008,10 @@ gp(1);
 
                     if (isPrivate) {
                         rowsHtml += `
-            <tr style="height: 20px;">
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.name}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.participants}</td>
-              <td colspan="3" style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0; color: #9ca3af; font-style: italic; background: #f9fafb;">Privado (bajo umbral de anonimato)</td>
+            <tr>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.name}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.participants}</td>
+              <td colspan="3" style="padding: 8px 12px; font-size: 10px; text-align: center; border-bottom: 1px solid #e2e8f0; color: #9ca3af; font-style: italic; background: #f9fafb;">Privado (bajo umbral de anonimato)</td>
             </tr>
                         `;
                     } else {
@@ -14024,12 +14024,12 @@ gp(1);
                         else if (normRisk.includes('nulo')) badgeClass = 'badge-nulo';
 
                         rowsHtml += `
-            <tr style="height: 20px;">
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.name}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.participants}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.usuariosEnRiesgo}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.avgRisk.toFixed(2)}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 7.5px; padding: 1px 4px; line-height: 1;">${levelText}</span></td>
+            <tr>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.name}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.participants}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: right; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.usuariosEnRiesgo}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: right; font-weight: 600; border-bottom: 1px solid #e2e8f0; color: #334155;">${seg.avgRisk.toFixed(2)}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 9px; padding: 3px 8px;">${levelText}</span></td>
             </tr>
                         `;
                     }
@@ -14062,7 +14062,7 @@ gp(1);
         <table class="pdf-table" style="font-size: 9.5px; margin-bottom: 0; line-height: 1.2;">
           <thead>
             <tr>
-              <th style="padding: 6px 10px; font-size: 8.5px;">Dimensión</th>
+              <th style="padding: 8px 12px; font-size: 10px;">Dimensión</th>
               <th style="padding: 6px 10px; text-align: right; width: 120px; font-size: 8.5px;">Usuarios en Riesgo</th>
               <th style="padding: 6px 10px; text-align: right; width: 90px; font-size: 8.5px;">% Afectados</th>
               <th style="padding: 6px 10px; text-align: right; width: 110px; font-size: 8.5px;">Puntaje Relativo</th>
@@ -14111,23 +14111,23 @@ gp(1);
                     else if (normRisk.includes('medio')) badgeClass = 'badge-medio';
                     else if (normRisk.includes('bajo')) badgeClass = 'badge-bajo';
                     return `
-            <tr style="height: 20px;">
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${area}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${cargo}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${leader}</td>
-              <td style="padding: 3px 6px; font-size: 8.5px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 7.5px; padding: 1px 4px; line-height: 1;">${riskText}</span></td>
+            <tr>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${name}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${area}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${cargo}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155;">${leader}</td>
+              <td style="padding: 8px 12px; font-size: 10px; text-align: center; border-bottom: 1px solid #e2e8f0;"><span class="badge ${badgeClass}" style="font-size: 9px; padding: 3px 8px;">${riskText}</span></td>
             </tr>`;
                 }
 
                 const tableHeaders = `
           <thead>
             <tr>
-              <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Colaborador</th>
-              <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Área</th>
-              <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Cargo</th>
-              <th style="padding: 6px 8px; font-size: 8px; text-align: left;">Líder</th>
-              <th style="padding: 6px 8px; font-size: 8px; text-align: center; width: 100px;">Nivel de Riesgo</th>
+              <th style="padding: 8px 12px; font-size: 10px; text-align: left;">Colaborador</th>
+              <th style="padding: 8px 12px; font-size: 10px; text-align: left;">Área</th>
+              <th style="padding: 8px 12px; font-size: 10px; text-align: left;">Cargo</th>
+              <th style="padding: 8px 12px; font-size: 10px; text-align: left;">Líder</th>
+              <th style="padding: 8px 12px; font-size: 10px; text-align: center; width: 100px;">Nivel de Riesgo</th>
             </tr>
           </thead>`;
 
@@ -14150,7 +14150,7 @@ gp(1);
         <h2 class="page-title" style="font-size: 16px; margin-bottom: 8px;">Nivel de Riesgo por Colaborador</h2>
         <p class="page-subtitle" style="font-size: 11px; margin-bottom: 12px;">Desglose individual del nivel de riesgo psicosocial de cada colaborador evaluado de acuerdo a la NOM-035.</p>` : `
         <h2 class="page-title" style="font-size: 14px; margin-bottom: 8px;">Nivel de Riesgo por Colaborador (continuación)</h2>`}
-        <table class="pdf-table" style="font-size: 8.5px; line-height: 1.2;">
+        <table class="pdf-table" style="line-height: 1.2;">
           ${tableHeaders}
           <tbody>
             ${chunkRows}
@@ -14207,14 +14207,14 @@ gp(1);
         <p class="page-subtitle">Desglose de los niveles de riesgo y participación según el dato demográfico de ${title.toLowerCase()}.</p>
         
         <div class="section-title" style="margin-bottom: 6px;">Resultados por Segmento: ${title}</div>
-        <table class="pdf-table" style="font-size: 9.5px; margin-bottom: 0; line-height: 1.2;">
+        <table class="pdf-table" style="margin-bottom: 0;">
           <thead>
             <tr>
-              <th style="padding: 6px 10px; font-size: 8.5px;">Segmento</th>
-              <th style="padding: 6px 10px; text-align: right; width: 120px; font-size: 8.5px;">Participantes</th>
-              <th style="padding: 6px 10px; text-align: right; width: 120px; font-size: 8.5px;">Usuarios en Riesgo</th>
-              <th style="padding: 6px 10px; text-align: right; width: 110px; font-size: 8.5px;">Promedio Riesgo</th>
-              <th style="padding: 6px 10px; text-align: center; width: 120px; font-size: 8.5px;">Nivel de Riesgo</th>
+              <th style="padding: 8px 12px; font-size: 10px;">Segmento</th>
+              <th style="padding: 8px 12px; text-align: right; width: 120px; font-size: 10px;">Participantes</th>
+              <th style="padding: 8px 12px; text-align: right; width: 120px; font-size: 10px;">Usuarios en Riesgo</th>
+              <th style="padding: 8px 12px; text-align: right; width: 110px; font-size: 10px;">Promedio Riesgo</th>
+              <th style="padding: 8px 12px; text-align: center; width: 120px; font-size: 10px;">Nivel de Riesgo</th>
             </tr>
           </thead>
           <tbody>
@@ -14570,15 +14570,15 @@ gp(1);
             // Renders a segment-oriented table: each ROW is a segment, each COLUMN is a category/domain/dimension
             function makeSegmentAnalysisTable(segments, heatmapData) {
                 const concepts = Object.keys(heatmapData);
-                const colW = Math.max(60, Math.floor(480 / concepts.length));
-                let ths = `<th style="padding:6px 10px; font-size:8.5px; text-align:left; width:140px;">Segmento</th>`;
+                const colW = Math.max(70, Math.floor(500 / concepts.length));
+                let ths = `<th style="padding:8px 12px; font-size:10px; text-align:left; width:140px;">Segmento</th>`;
                 concepts.forEach(c => {
-                    ths += `<th style="padding:6px 6px; font-size:8px; text-align:center; width:${colW}px;">${c}</th>`;
+                    ths += `<th style="padding:8px 8px; font-size:9px; text-align:center; width:${colW}px;">${c}</th>`;
                 });
 
                 let trs = '';
                 segments.forEach((seg, i) => {
-                    let tds = `<td style="padding:4px 10px; font-size:8.5px; font-weight:600; color:#1e293b; border-bottom:1px solid #e2e8f0;">${seg}</td>`;
+                    let tds = `<td style="padding:6px 12px; font-size:9.5px; font-weight:600; color:#1e293b; border-bottom:1px solid #e2e8f0;">${seg}</td>`;
                     concepts.forEach(c => {
                         const val = heatmapData[c][i];
                         let bg = '#dbeafe'; let col = '#1e40af';
@@ -14586,13 +14586,13 @@ gp(1);
                         else if (val >= 35) { bg = '#ffedd5'; col = '#c2410c'; }
                         else if (val >= 20) { bg = '#fef9c3'; col = '#713f12'; }
                         else if (val >= 10) { bg = '#dcfce7'; col = '#166534'; }
-                        tds += `<td style="padding:3px 4px; text-align:center; border-bottom:1px solid #e2e8f0;"><span style="display:inline-block;background:${bg};color:${col};border-radius:4px;padding:2px 5px;font-size:8px;font-weight:700;">${val.toFixed(1)}</span></td>`;
+                        tds += `<td style="padding:5px 6px; text-align:center; border-bottom:1px solid #e2e8f0;"><span style="display:inline-block;background:${bg};color:${col};border-radius:4px;padding:3px 7px;font-size:9px;font-weight:700;">${val.toFixed(1)}</span></td>`;
                     });
                     trs += `<tr>${tds}</tr>`;
                 });
 
                 return `
-      <table class="pdf-table" style="font-size:8.5px; margin-bottom:0; line-height:1.2; border-collapse:separate; border-spacing:0; border:1px solid #e2e8f0; border-radius:6px; overflow:hidden;">
+      <table class="pdf-table" style="font-size:9.5px; margin-bottom:0; border-collapse:separate; border-spacing:0; border:1px solid #e2e8f0; border-radius:6px; overflow:hidden;">
         <thead><tr style="background:#f8fafc;">${ths}</tr></thead>
         <tbody>${trs}</tbody>
       </table>
