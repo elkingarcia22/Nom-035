@@ -11484,19 +11484,16 @@ window.renderCollaboratorsRiskTable = function() {
                 var cards = '';
                 data.forEach(function(d) {
                     var badge = getRiskBadge(d.riskLevel);
-                    cards += '<div class="collab-dim-card" data-score="' + d.score + '" data-level="' + d.riskLevel.toLowerCase().replace(/\s+/g, '-') + '" data-domain="' + d.domain.toLowerCase() + '" style="background:#fff;border:1px solid var(--ubits-border-1);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;transition:box-shadow .2s;cursor:default;">';
+                    cards += '<div class="collab-dim-card" data-score="' + d.score + '" data-level="' + d.riskLevel.toLowerCase().replace(/\s+/g, '-') + '" data-domain="' + d.domain.toLowerCase() + '" style="background:#fff;border:1px solid var(--ubits-border-1);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s;cursor:default;">';
                     cards += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">';
-                    cards += '<div style="flex:1;min-width:0;">';
-                    cards += '<div style="font-size:14px;font-weight:700;color:var(--ubits-fg-1-high);line-height:1.3;">' + d.name + '</div>';
-                    cards += '<div style="font-size:12px;color:var(--ubits-fg-1-medium);margin-top:2px;">' + d.domain + '</div>';
-                    cards += '</div>';
+                    cards += '<div style="font-size:14px;font-weight:700;color:var(--ubits-fg-1-high);line-height:1.3;flex:1;min-width:0;">' + d.name + '</div>';
                     cards += '<div style="text-align:right;flex-shrink:0;">';
                     cards += '<div style="font-size:22px;font-weight:800;color:var(--ubits-fg-1-high);line-height:1;">' + d.score + '</div>';
                     cards += '<div style="font-size:9px;color:var(--ubits-fg-1-medium);text-transform:uppercase;letter-spacing:.5px;">Puntaje</div>';
                     cards += '</div>';
                     cards += '</div>';
-                    cards += '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px;">';
-                    cards += '<span style="font-size:11px;color:var(--ubits-fg-1-placeholder);">' + (d.domain ? 'Dominio: ' + d.domain : '') + '</span>';
+                    cards += '<div style="display:flex;justify-content:space-between;align-items:center;">';
+                    cards += (d.domain ? '<span style="font-size:11px;font-weight:600;color:var(--ubits-fg-1-medium);background:var(--ubits-bg-2,#f3f4f6);padding:3px 10px;border-radius:6px;">' + d.domain + '</span>' : '<span></span>');
                     cards += badge;
                     cards += '</div>';
                     cards += '</div>';
