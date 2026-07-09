@@ -248,6 +248,9 @@
                             activeSubPanel.classList.add('active');
                             activeSubPanel.style.display = 'block';
                             console.log('✅ Sub-panel restaurado al volver a Vista General:', activeSubPanel.id);
+                            if (currentSub === 'collaborators' && typeof window.renderCollaboratorsRiskTable === 'function') {
+                                window.renderCollaboratorsRiskTable();
+                            }
                         }
                     }
                 }
@@ -301,6 +304,15 @@
                             targetPanel.classList.add('active');
                             targetPanel.style.display = 'block';
                             console.log('✅ Activando sub-panel:', targetPanel.id);
+                            if (targetSub === 'collaborators') {
+                                console.log('📊 Calling renderCollaborators...');
+                                console.log('📊 typeof render:', typeof window.renderCollaboratorsRiskTable);
+                                if (typeof window.renderCollaboratorsRiskTable === 'function') {
+                                    window.renderCollaboratorsRiskTable();
+                                } else {
+                                    console.error('📊 renderCollaboratorsRiskTable is NOT a function');
+                                }
+                            }
                         }
                     });
                 });
@@ -338,6 +350,8 @@
             if (typeof initializeDimensionsTableControls === 'function') {
                 initializeDimensionsTableControls();
             }
+            // Inicializar filtros de colaboradores
+            
 
 
             // ── Inicializar buscador de tabla Dimensiones ──────────────────────
@@ -5816,6 +5830,7 @@
                                                 <option value="categories" selected>Categoría</option>
                                                 <option value="domains">Dominio</option>
                                                 <option value="dimensions">Dimensiones</option>
+                                                <option value="collaborators">Colaboradores</option>
                                             </select>
                                             <div class="custom-select single-select view-by-custom-select" style="min-width: 140px; font-family: inherit;" tabindex="0">
                                                 <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
@@ -5826,6 +5841,7 @@
                                                     <div class="select-option selected" data-value="categories" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Categoría</div>
                                                     <div class="select-option" data-value="domains" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dominio</div>
                                                     <div class="select-option" data-value="dimensions" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dimensiones</div>
+                                                    <div class="select-option" data-value="collaborators" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Colaboradores</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -6164,6 +6180,7 @@
                                                 <option value="categories">Categoría</option>
                                                 <option value="domains" selected>Dominio</option>
                                                 <option value="dimensions">Dimensiones</option>
+                                                <option value="collaborators">Colaboradores</option>
                                             </select>
                                             <div class="custom-select single-select view-by-custom-select" style="min-width: 140px; font-family: inherit;" tabindex="0">
                                                 <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
@@ -6174,6 +6191,7 @@
                                                     <div class="select-option" data-value="categories" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Categoría</div>
                                                     <div class="select-option selected" data-value="domains" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dominio</div>
                                                     <div class="select-option" data-value="dimensions" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dimensiones</div>
+                                                    <div class="select-option" data-value="collaborators" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Colaboradores</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -6618,6 +6636,7 @@
                                                 <option value="categories">Categoría</option>
                                                 <option value="domains">Dominio</option>
                                                 <option value="dimensions" selected>Dimensiones</option>
+                                                <option value="collaborators">Colaboradores</option>
                                             </select>
                                             <div class="custom-select single-select view-by-custom-select" style="min-width: 140px; font-family: inherit;" tabindex="0">
                                                 <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
@@ -6628,6 +6647,7 @@
                                                     <div class="select-option" data-value="categories" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Categoría</div>
                                                     <div class="select-option" data-value="domains" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dominio</div>
                                                     <div class="select-option selected" data-value="dimensions" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dimensiones</div>
+                                                    <div class="select-option" data-value="collaborators" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Colaboradores</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -7331,12 +7351,50 @@
                                 <div id="dimensions-filters-backdrop" class="filters-backdrop"></div>
                                 
                                 </div> <!-- Cierre de dimensions-content -->
-                                
-                                
-                                <!-- Sección Individual -->
+                            </div> <!-- Cierre background:white de dimensions -->
+                        </div> <!-- Cierre sub-panel-dimensions -->
+
+                        <!-- Sub-panel Colaboradores -->
+                        <div id="sub-panel-collaborators" class="sub-tab-panel">
+                            <div style="background: white;">
+                                <div class="table-header">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <h2 style="font-size: 16px; font-weight: 700; color: var(--ubits-fg-1-high); margin: 0;">Análisis por colaborador</h2>
+                                        <span style="font-size: 14px; color: var(--ubits-fg-1-medium);" id="collaborators-count"></span>
+                                    </div>
+                                    <div class="table-controls" style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="display: flex; align-items: center; gap: 8px; margin-right: 4px;">
+                                            <span style="font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high);">Ver por:</span>
+                                            <select class="view-by-select-hidden" style="display: none;">
+                                                <option value="categories">Categoría</option>
+                                                <option value="domains">Dominio</option>
+                                                <option value="dimensions">Dimensiones</option>
+                                                <option value="collaborators" selected>Colaboradores</option>
+                                            </select>
+                                            <div class="custom-select single-select view-by-custom-select" style="min-width: 140px; font-family: inherit;" tabindex="0">
+                                                <div class="select-trigger" style="padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--ubits-border-1); font-size: 12px; font-weight: 600; color: var(--ubits-fg-1-high); height: 36px; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; background: white;">
+                                                    <span class="selected-text">Colaboradores</span>
+                                                    <i class="far fa-chevron-down select-arrow" style="font-size: 12px; color: var(--ubits-fg-1-medium);"></i>
+                                                </div>
+                                                <div class="select-dropdown" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); min-width: 140px;">
+                                                    <div class="select-option" data-value="categories" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Categoría</div>
+                                                    <div class="select-option" data-value="domains" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dominio</div>
+                                                    <div class="select-option" data-value="dimensions" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Dimensiones</div>
+                                                    <div class="select-option selected" data-value="collaborators" style="font-size: 12px; font-weight: 500; padding: 8px 12px;">Colaboradores</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div> <!-- Cierre sub-panels-container -->
-                        </div> <!-- Cierre new-general-view-panel -->
+                                <div id="collaborators-risk-table-container" class="results-table-container">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sección Individual -->
+                        </div>
+                    </div> <!-- Cierre sub-panels-container -->
+                </div> <!-- Cierre new-general-view-panel -->
 
                         <!-- Tab Content - Heatmap -->
                         <div class="tab-panel" id="new-heat-map-panel" style="background: white; border: 1px solid var(--ubits-border-1); border-radius: 8px; box-shadow: 0 1px 3px rgba(15,23,42,0.05); overflow: visible;">
@@ -11339,6 +11397,157 @@ const individualParticipantsData = [{"id":1,"name":"Valentina Martínez","role":
 window.individualParticipantsData = individualParticipantsData;
 console.log('✅ [DATA] Data asignado a window');
 
+// --- RENDER COLLABORATORS ACCORDION TABLE ---
+window.collaboratorsExpanded = window.collaboratorsExpanded || {};
+
+window.renderCollaboratorsRiskTable = function() {
+    console.log('📊 RENDER COLLABORATORS CALLED');
+    const container = document.getElementById('collaborators-risk-table-container');
+    console.log('📊 Container found:', !!container);
+    if (!container) return;
+    console.log('📊 Data length:', window.individualParticipantsData?.length);
+
+    const participants = window.individualParticipantsData || [];
+    if (!participants.length) {
+        container.innerHTML = '<p style="text-align:center;padding:40px;color:var(--ubits-fg-1-placeholder);">Sin datos de colaboradores</p>';
+        return;
+    }
+
+    const allDimensions = [];
+    const dimSet = new Set();
+    participants.forEach(p => {
+        if (p.dimensionsResults) {
+            Object.keys(p.dimensionsResults).forEach(d => {
+                if (!dimSet.has(d)) {
+                    dimSet.add(d);
+                    allDimensions.push(d);
+                }
+            });
+        }
+    });
+
+    document.getElementById('collaborators-count').textContent = `${participants.length} colaboradores`;
+
+    const getRiskBadge = (level) => {
+        const norm = (level || '').toLowerCase().trim();
+        const cls = norm.replace(/\s+/g, '-');
+        const txt = { 'muy-alto': 'MUY ALTO', 'muy alto': 'MUY ALTO', 'alto': 'ALTO', 'medio': 'MEDIO', 'bajo': 'BAJO', 'nulo': 'NULO' }[norm] || level || 'NULO';
+        return `<span class="risk-badge ${cls}" style="font-size:11px;padding:2px 10px;">${txt}</span>`;
+    };
+
+    let html = '<table class="results-table" id="collaborators-risk-table" style="width:100%;"><thead><tr>';
+    html += '<th style="text-align:left;">Colaborador</th>';
+    html += '<th style="text-align:left;">Área</th>';
+    html += '<th style="text-align:left;">Cargo</th>';
+    html += '<th style="text-align:left;">Líder</th>';
+    html += '<th style="text-align:center;">Riesgo general</th>';
+    html += '<th style="text-align:center;width:100px;">Acción</th>';
+    html += '</tr></thead><tbody>';
+
+    participants.forEach(function(p, idx) {
+        var overall = p.riskLevel || 'Nulo';
+        var det = p.details || {};
+        html += '<tr>';
+        html += '<td style="font-weight:600;">' + (p.name || '') + '</td>';
+        html += '<td>' + (det.department || '') + '</td>';
+        html += '<td>' + (det.position || '') + '</td>';
+        html += '<td>' + (det.leader || '') + '</td>';
+        html += '<td style="text-align:center;">' + getRiskBadge(overall) + '</td>';
+        html += '<td style="text-align:center;"><button class="ubits-button ubits-button--secondary ubits-button--sm collab-view-detail" data-idx="' + idx + '" style="font-size:11px;padding:4px 10px;">Ver detalle</button></td>';
+        html += '</tr>';
+    });
+
+    html += '</tbody></table>';
+    container.innerHTML = html;
+
+    // Attach detail button handlers
+    container.querySelectorAll('.collab-view-detail').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var idx = parseInt(this.dataset.idx);
+            var p = participants[idx];
+            if (!p) return;
+            var dims = allDimensions;
+            var html2 = '<div class="filters-panel show" id="collab-detail-panel" style="z-index:1001;width:65%;max-width:900px;">';
+            html2 += '<div class="filters-header">';
+            html2 += '<h3>' + (p.name || '') + ' — Dimensiones</h3>';
+            html2 += '<button class="ubits-button ubits-button--tertiary ubits-button--sm ubits-button--icon-only close-filters-btn" id="collab-detail-close-btn"><i class="far fa-times"></i></button>';
+            html2 += '</div>';
+            html2 += '<div class="filters-content" style="padding:0;overflow-y:auto;flex:1;">';
+            html2 += '<table class="results-table" id="collab-dim-table" style="width:100%;font-size:13px;">';
+            html2 += '<thead><tr>';
+            html2 += '<th class="nom-sortable sort-text" data-colsort="dim" style="text-align:left;padding:10px 12px;position:relative;"><div class="nom-th-inner"><span class="nom-th-sort-label">Dimensión</span><i class="far fa-sort th-icon"></i></div></th>';
+            html2 += '<th class="nom-sortable sort-text" data-colsort="domain" style="text-align:left;padding:10px 12px;"><div class="nom-th-inner"><span class="nom-th-sort-label">Dominio</span><i class="far fa-sort th-icon"></i></div></th>';
+            html2 += '<th class="nom-sortable sort-num" data-colsort="score" style="text-align:center;padding:10px 12px;"><div class="nom-th-inner" style="justify-content:center;"><span class="nom-th-sort-label">Puntaje</span><i class="far fa-sort th-icon"></i></div></th>';
+            html2 += '<th class="nom-sortable sort-text" data-colsort="level" style="text-align:center;padding:10px 12px;"><div class="nom-th-inner" style="justify-content:center;"><span class="nom-th-sort-label">Nivel</span><i class="far fa-sort th-icon"></i></div></th>';
+            html2 += '</tr></thead><tbody id="collab-dim-tbody">';
+            dims.forEach(function(dim) {
+                var d = p.dimensionsResults ? p.dimensionsResults[dim] : null;
+                if (!d) return;
+                html2 += '<tr style="border-bottom:1px solid var(--ubits-border-2);">';
+                html2 += '<td style="padding:10px 12px;">' + dim + '</td>';
+                html2 += '<td style="padding:10px 12px;color:var(--ubits-fg-1-medium);">' + (d.domain || '') + '</td>';
+                html2 += '<td style="padding:10px 12px;text-align:center;">' + (d.score || d.percentage || '') + '</td>';
+                html2 += '<td style="padding:10px 12px;text-align:center;">' + getRiskBadge(d.riskLevel) + '</td>';
+                html2 += '</tr>';
+            });
+            html2 += '</tbody></table></div></div><div class="filters-backdrop show" id="collab-detail-backdrop"></div>';
+
+            // Remove existing panel if any
+            var oldPanel = document.getElementById('collab-detail-panel');
+            if (oldPanel) oldPanel.remove();
+            var oldBackdrop = document.getElementById('collab-detail-backdrop');
+            if (oldBackdrop) oldBackdrop.remove();
+
+            document.body.insertAdjacentHTML('beforeend', html2);
+
+            (function() {
+                var p2 = document.getElementById('collab-detail-panel');
+                var b2 = document.getElementById('collab-detail-backdrop');
+                function ccd() { if (p2) p2.remove(); if (b2) b2.remove(); }
+                document.getElementById('collab-detail-close-btn').addEventListener('click', ccd);
+                document.getElementById('collab-detail-backdrop').addEventListener('click', ccd);
+            })();
+
+            // Attach sort to dimension table
+            var dimTable = document.getElementById('collab-dim-table');
+            if (dimTable) {
+                var dimSortDir = {};
+                dimTable.querySelectorAll('th.nom-sortable').forEach(function(th) {
+                    th.addEventListener('click', function() {
+                        var col = this.getAttribute('data-colsort');
+                        var tbody = document.getElementById('collab-dim-tbody');
+                        var rows = Array.from(tbody.querySelectorAll('tr'));
+                        var isNum = this.classList.contains('sort-num');
+                        var idx = Array.from(this.parentNode.children).indexOf(this);
+                        dimSortDir[col] = dimSortDir[col] === 'asc' ? 'desc' : 'asc';
+                        var dir = dimSortDir[col] || 'asc';
+                        dimTable.querySelectorAll('.th-icon').forEach(function(ic) { ic.className = 'far fa-sort th-icon'; });
+                        var ic = this.querySelector('.th-icon');
+                        if (ic) ic.className = 'far fa-sort-' + (dir === 'asc' ? 'up' : 'down') + ' th-icon active';
+                        rows.sort(function(a, b) {
+                            var va = (a.children[idx] ? a.children[idx].textContent.trim() : '');
+                            var vb = (b.children[idx] ? b.children[idx].textContent.trim() : '');
+                            if (col === 'level') {
+                                var w = {'NULO':0,'BAJO':1,'MEDIO':2,'ALTO':3,'MUY ALTO':4};
+                                va = w[va.toUpperCase()] || 0;
+                                vb = w[vb.toUpperCase()] || 0;
+                            } else if (col === 'score') {
+                                va = parseFloat(va) || 0;
+                                vb = parseFloat(vb) || 0;
+                            }
+                            if (typeof va === 'number') return dir === 'asc' ? va - vb : vb - va;
+                            return dir === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
+                        });
+                        rows.forEach(function(r) { tbody.appendChild(r); });
+                    });
+                });
+            }
+        });
+    });
+
+    
+};
 
         // --- GLOBAL AUTO CONVERTER FOR ALL SELECTS ---
         window.autoConvertAllSelects = function() {
