@@ -11468,30 +11468,69 @@ window.renderCollaboratorsRiskTable = function() {
             var p = participants[idx];
             if (!p) return;
             var dims = allDimensions;
+            var dimData = [];
+            dims.forEach(function(dim) {
+                var d = p.dimensionsResults ? p.dimensionsResults[dim] : null;
+                if (!d) return;
+                dimData.push({ name: dim, domain: d.domain || '', score: d.score || d.percentage || 0, riskLevel: d.riskLevel || 'nulo' });
+            });
+
+            function buildCollabCards(data) {
+                var cards = '';
+                data.forEach(function(d) {
+                    var badge = getRiskBadge(d.riskLevel);
+                    var levelColor = '#dbeafe';
+                    var levelBorder = '#bfdbfe';
+                    var normRisk = (d.riskLevel || '').toLowerCase().trim();
+                    if (normRisk.includes('muy alto') || normRisk.includes('muy-alto')) { levelColor = '#fee2e2'; levelBorder = '#fecaca'; }
+                    else if (normRisk.includes('alto')) { levelColor = '#ffedd5'; levelBorder = '#fed7aa'; }
+                    else if (normRisk.includes('medio')) { levelColor = '#fef9c3'; levelBorder = '#fef08a'; }
+                    else if (normRisk.includes('bajo')) { levelColor = '#dcfce7'; levelBorder = '#bbf7d0'; }
+                    cards += '<div class="collab-dim-card" data-score="' + d.score + '" data-level="' + d.riskLevel.toLowerCase().replace(/\s+/g, '-') + '" data-domain="' + d.domain.toLowerCase() + '" style="background:#fff;border:1px solid ' + levelBorder + ';border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;transition:box-shadow .2s,border-color .2s;cursor:default;">';
+                    cards += '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">';
+                    cards += '<div style="flex:1;min-width:0;">';
+                    cards += '<div style="font-size:14px;font-weight:700;color:var(--ubits-fg-1-high);line-height:1.3;">' + d.name + '</div>';
+                    cards += '<div style="font-size:12px;color:var(--ubits-fg-1-medium);margin-top:2px;">' + d.domain + '</div>';
+                    cards += '</div>';
+                    cards += '<div style="text-align:right;flex-shrink:0;">';
+                    cards += '<div style="font-size:22px;font-weight:800;color:var(--ubits-fg-1-high);line-height:1;">' + d.score + '</div>';
+                    cards += '<div style="font-size:9px;color:var(--ubits-fg-1-medium);text-transform:uppercase;letter-spacing:.5px;">Puntaje</div>';
+                    cards += '</div>';
+                    cards += '</div>';
+                    cards += '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px;">';
+                    cards += '<span style="font-size:11px;color:var(--ubits-fg-1-placeholder);">' + (d.domain ? 'Dominio: ' + d.domain : '') + '</span>';
+                    cards += badge;
+                    cards += '</div>';
+                    cards += '</div>';
+                });
+                return cards;
+            }
+
             var html2 = '<div class="filters-panel show" id="collab-detail-panel" style="z-index:1001;width:65%;max-width:900px;">';
             html2 += '<div class="filters-header">';
             html2 += '<h3>' + (p.name || '') + ' — Dimensiones</h3>';
             html2 += '<button class="ubits-button ubits-button--tertiary ubits-button--sm ubits-button--icon-only close-filters-btn" id="collab-detail-close-btn"><i class="far fa-times"></i></button>';
             html2 += '</div>';
-            html2 += '<div class="filters-content" style="padding:0;overflow-y:auto;flex:1;">';
-            html2 += '<table class="results-table" id="collab-dim-table" style="width:100%;font-size:13px;">';
-            html2 += '<thead><tr>';
-            html2 += '<th class="nom-sortable sort-text" data-colsort="dim" style="text-align:left;padding:10px 12px;position:relative;"><div class="nom-th-inner"><span class="nom-th-sort-label">Dimensión</span><i class="far fa-sort th-icon"></i></div></th>';
-            html2 += '<th class="nom-sortable sort-text" data-colsort="domain" style="text-align:left;padding:10px 12px;"><div class="nom-th-inner"><span class="nom-th-sort-label">Dominio</span><i class="far fa-sort th-icon"></i></div></th>';
-            html2 += '<th class="nom-sortable sort-num" data-colsort="score" style="text-align:center;padding:10px 12px;"><div class="nom-th-inner" style="justify-content:center;"><span class="nom-th-sort-label">Puntaje</span><i class="far fa-sort th-icon"></i></div></th>';
-            html2 += '<th class="nom-sortable sort-text" data-colsort="level" style="text-align:center;padding:10px 12px;"><div class="nom-th-inner" style="justify-content:center;"><span class="nom-th-sort-label">Nivel</span><i class="far fa-sort th-icon"></i></div></th>';
-            html2 += '</tr></thead><tbody id="collab-dim-tbody">';
-            dims.forEach(function(dim) {
-                var d = p.dimensionsResults ? p.dimensionsResults[dim] : null;
-                if (!d) return;
-                html2 += '<tr style="border-bottom:1px solid var(--ubits-border-2);">';
-                html2 += '<td style="padding:10px 12px;">' + dim + '</td>';
-                html2 += '<td style="padding:10px 12px;color:var(--ubits-fg-1-medium);">' + (d.domain || '') + '</td>';
-                html2 += '<td style="padding:10px 12px;text-align:center;">' + (d.score || d.percentage || '') + '</td>';
-                html2 += '<td style="padding:10px 12px;text-align:center;">' + getRiskBadge(d.riskLevel) + '</td>';
-                html2 += '</tr>';
-            });
-            html2 += '</tbody></table></div></div><div class="filters-backdrop show" id="collab-detail-backdrop"></div>';
+            html2 += '<div class="filters-content" style="padding:16px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:16px;">';
+            html2 += '<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">';
+            html2 += '<div style="flex:1;min-width:200px;position:relative;">';
+            html2 += '<i class="far fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ubits-fg-1-placeholder);font-size:14px;pointer-events:none;"></i>';
+            html2 += '<input type="text" id="collab-card-search" placeholder="Buscar dimensión..." style="width:100%;padding:9px 12px 9px 36px;border:1px solid var(--ubits-border-1);border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:#fff;box-sizing:border-box;">';
+            html2 += '</div>';
+            html2 += '<select id="collab-card-filter-risk" style="padding:9px 32px 9px 12px;border:1px solid var(--ubits-border-1);border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;min-width:150px;background-image:url(\"data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%2712%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%236b7280%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpolyline points=%276 9 12 15 18 9%27%3E%3C/polyline%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 10px center;background-size:14px;">';
+            html2 += '<option value="">Todos los niveles</option>';
+            html2 += '<option value="muy-alto">Muy Alto</option>';
+            html2 += '<option value="alto">Alto</option>';
+            html2 += '<option value="medio">Medio</option>';
+            html2 += '<option value="bajo">Bajo</option>';
+            html2 += '<option value="nulo">Nulo</option>';
+            html2 += '</select>';
+            html2 += '<span id="collab-card-count" style="font-size:13px;color:var(--ubits-fg-1-medium);font-weight:600;white-space:nowrap;">' + dimData.length + ' dimensiones</span>';
+            html2 += '</div>';
+            html2 += '<div id="collab-cards-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">';
+            html2 += buildCollabCards(dimData);
+            html2 += '</div>';
+            html2 += '</div></div><div class="filters-backdrop show" id="collab-detail-backdrop"></div>';
 
             // Remove existing panel if any
             var oldPanel = document.getElementById('collab-detail-panel');
@@ -11509,40 +11548,28 @@ window.renderCollaboratorsRiskTable = function() {
                 document.getElementById('collab-detail-backdrop').addEventListener('click', ccd);
             })();
 
-            // Attach sort to dimension table
-            var dimTable = document.getElementById('collab-dim-table');
-            if (dimTable) {
-                var dimSortDir = {};
-                dimTable.querySelectorAll('th.nom-sortable').forEach(function(th) {
-                    th.addEventListener('click', function() {
-                        var col = this.getAttribute('data-colsort');
-                        var tbody = document.getElementById('collab-dim-tbody');
-                        var rows = Array.from(tbody.querySelectorAll('tr'));
-                        var isNum = this.classList.contains('sort-num');
-                        var idx = Array.from(this.parentNode.children).indexOf(this);
-                        dimSortDir[col] = dimSortDir[col] === 'asc' ? 'desc' : 'asc';
-                        var dir = dimSortDir[col] || 'asc';
-                        dimTable.querySelectorAll('.th-icon').forEach(function(ic) { ic.className = 'far fa-sort th-icon'; });
-                        var ic = this.querySelector('.th-icon');
-                        if (ic) ic.className = 'far fa-sort-' + (dir === 'asc' ? 'up' : 'down') + ' th-icon active';
-                        rows.sort(function(a, b) {
-                            var va = (a.children[idx] ? a.children[idx].textContent.trim() : '');
-                            var vb = (b.children[idx] ? b.children[idx].textContent.trim() : '');
-                            if (col === 'level') {
-                                var w = {'NULO':0,'BAJO':1,'MEDIO':2,'ALTO':3,'MUY ALTO':4};
-                                va = w[va.toUpperCase()] || 0;
-                                vb = w[vb.toUpperCase()] || 0;
-                            } else if (col === 'score') {
-                                va = parseFloat(va) || 0;
-                                vb = parseFloat(vb) || 0;
-                            }
-                            if (typeof va === 'number') return dir === 'asc' ? va - vb : vb - va;
-                            return dir === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
-                        });
-                        rows.forEach(function(r) { tbody.appendChild(r); });
+            // Attach search and filter
+            (function() {
+                var searchInput = document.getElementById('collab-card-search');
+                var filterSelect = document.getElementById('collab-card-filter-risk');
+                var grid = document.getElementById('collab-cards-grid');
+                var countSpan = document.getElementById('collab-card-count');
+
+                function filterCards() {
+                    var q = (searchInput.value || '').toLowerCase().trim();
+                    var riskFilter = filterSelect.value;
+                    var filtered = dimData.filter(function(d) {
+                        if (q && !d.name.toLowerCase().includes(q) && !d.domain.toLowerCase().includes(q)) return false;
+                        if (riskFilter && d.riskLevel.toLowerCase().replace(/\s+/g, '-') !== riskFilter) return false;
+                        return true;
                     });
-                });
-            }
+                    grid.innerHTML = buildCollabCards(filtered);
+                    countSpan.textContent = filtered.length + ' dimensiones';
+                }
+
+                searchInput.addEventListener('input', filterCards);
+                filterSelect.addEventListener('change', filterCards);
+            })();
         });
     });
 
